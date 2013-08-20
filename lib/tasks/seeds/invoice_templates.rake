@@ -3,7 +3,7 @@ files = Dir["#{Rails.root}/db/seeds/invoice_templates/*.yml"].map{ |f| [File.bas
 namespace :db do
   namespace :seed do
     namespace :invoice_templates do |ns|
-      scope = ns.instance_variable_get('@scope').join(':')
+      scope = ns.instance_variable_get('@scope').to_a.join(':')
 
       files.each do |name, file|
         namespace name do

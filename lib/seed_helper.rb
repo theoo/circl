@@ -19,7 +19,7 @@ module SeedHelper
             puts 'done!'
           end
 
-          scope = namespace.instance_variable_get('@scope').join(':')
+          scope = namespace.instance_variable_get('@scope').to_a.join(':')
           desc "resets #{name} (destroys then creates)"
           task :reset => ["#{scope}:destroy", "#{scope}:create"]
         end

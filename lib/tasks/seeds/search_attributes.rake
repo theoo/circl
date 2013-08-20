@@ -2,7 +2,7 @@ files = Dir["#{Rails.root}/db/seeds/search_attributes/*.yml"].map{ |f| [File.bas
 namespace :db do
   namespace :seed do
     namespace :search_attributes do |namespace|
-      scope = namespace.instance_variable_get('@scope').join(':')
+      scope = namespace.instance_variable_get('@scope').to_a.join(':')
 
       files.each do |model, file|
         namespace model do
