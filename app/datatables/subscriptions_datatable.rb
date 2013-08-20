@@ -112,7 +112,9 @@ class SubscriptionsDatatable
               s.interval_ends_on,
               s.created_at,
               s.updated_at,
-              s.sort')
+              s.sort,
+              invoices.value_in_cents,
+              receipts.value_in_cents')
 
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
@@ -142,7 +144,7 @@ class SubscriptionsDatatable
   end
 
   def sort_column
-    columns = %w{id parent_id title value invoices receipts invoices_value receipts_value overpaid_value created_at}
+    columns = %w{id parent_id title id count(invoices.*) count(receipts.*) invoices.value_in_cents receipts.value_in_cents id created_at}
     columns[params[:iSortCol_0].to_i]
   end
 

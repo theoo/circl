@@ -69,7 +69,7 @@ class AffairsDatatable
                     .joins('LEFT JOIN invoices ON invoices.affair_id = affairs.id')
                     .joins('LEFT JOIN receipts ON receipts.invoice_id = invoices.id')
                     .joins(:owner)
-                    .group('affairs.id')
+                    .group('affairs.id, people.last_name')
     affairs = affairs.order("#{sort_column} #{sort_direction}")
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
@@ -96,7 +96,7 @@ class AffairsDatatable
   def sort_column
     columns = [ :id,
                 :title,
-                :owner_name,
+                'people.last_name',
                 :invoices_count,
                 :receipts_count,
                 :invoices_sum,

@@ -84,7 +84,7 @@ class InvoicesDatatable
   end
 
   def sort_column
-    columns = %w{id buyer_name title value status created_at}
+    columns = %w{id affairs.buyer_id title value_in_cents status created_at}
     columns[params[:iSortCol_0].to_i]
   end
 
