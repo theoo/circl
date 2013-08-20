@@ -1,0 +1,14 @@
+---
+- model: Job
+  name: id
+  indexing: id
+  mapping:
+    type: integer
+    index: not_analyzed
+
+- model: Job
+  name: name
+  indexing: name
+  mapping:
+    type: string
+    index: not_analyzed

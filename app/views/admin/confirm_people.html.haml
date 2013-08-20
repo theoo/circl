@@ -1,0 +1,92 @@
+- # We use person.errors.empty? instead of person.valid? because it
+- # resets the errors array every time and we filled it manually
+%link{:rel => :stylesheet, :type => 'text/css', :href => asset_path('import.css')}
+
+#content_wrapper
+  #content{ :style => 'box-sizing: border-box; padding: 10px;' }
+
+    %h1= I18n.t('admin.views.people_found_in_file')
+
+    #import_help!= I18n.t('admin.views.people_import_help')
+
+    - if @infos[:people].size > 0
+      %table#import
+        %thead
+          %tr
+            %th= I18n.t('admin.import.row')
+            %th= I18n.t('person.views.is_valid')
+            %th= I18n.t('admin.import.errors')
+            %th= I18n.t('person.views.first_name')
+            %th= I18n.t('person.views.last_name')
+            %th= I18n.t('person.views.title')
+            %th= I18n.t('person.views.is_an_organization')
+            %th= I18n.t('person.views.organization_name')
+            %th= I18n.t('person.views.address')
+            %th= I18n.t('person.views.location')
+            %th= I18n.t('person.views.phone')
+            %th= I18n.t('person.views.second_phone')
+            %th= I18n.t('person.views.mobile')
+            %th= I18n.t('person.views.email')
+            %th= I18n.t('person.views.second_email')
+            %th= I18n.t('person.views.job')
+            %th= I18n.t('person.views.birth_date')
+            %th= I18n.t('person.views.nationality')
+            %th= I18n.t('person.views.avs_number')
+            %th= I18n.t('person.views.bank_informations')
+            %th= I18n.t('person.views.roles')
+            %th= I18n.t('admin.import.main_communication_language')
+            %th= I18n.t('person.views.communication_languages')
+            %th= I18n.t('person.views.translation_aptitudes')
+            %th= I18n.t('person.views.private_tags')
+            %th= I18n.t('person.views.public_tags')
+            %th= I18n.t('person.views.hidden')
+
+        %tbody
+          - @infos[:people].each_with_index do |person, i|
+            %tr{ :class => person.errors.empty? ? '' : 'import_error' }
+              %td= (i + 2)
+              %td= person.errors.empty?
+              %td
+                - person.errors.messages.each do |k, a|
+                  = "#{k}:"
+                  %br
+                  - a.each do |s|
+                    = hidden_field_tag "people[][errors][#{k}][]", s
+                    = "#{'&nbsp;' * 4}#{s}".html_safe
+                    %br
+              %td= person.first_name
+              %td= person.last_name
+              %td= person.title
+              %td= person.is_an_organization
+              %td= person.organization_name
+              %td= person.address
+              %td= relation_to_string(person.location)
+              %td= person.phone
+              %td= person.second_phone
+              %td= person.mobile
+              %td= person.email
+              %td= person.second_email
+              %td= relation_to_string(person.job)
+              %td= person.birth_date
+              %td= person.nationality
+              %td= person.avs_number
+              %td= person.bank_informations
+              %td= relation_to_string(person.roles)
+              %td= relation_to_string(person.main_communication_language)
+              %td= relation_to_string(person.communication_languages)
+              %td= relation_to_string(person.translation_aptitudes)
+              %td= relation_to_string(person.private_tags)
+              %td= relation_to_string(person.public_tags)
+              %td= person.hidden
+
+      - if @infos[:errors].empty?
+        = form_tag(admin_import_people_path, :method => :post) do
+          = submit_tag I18n.t('admin.views.proceed_with_import')
+
+    - unless @infos[:errors].empty?
+      %h1= I18n.t('admin.views.people_file_errors')
+
+      .error
+        - @infos[:errors].each do |line|
+          = line
+          %br

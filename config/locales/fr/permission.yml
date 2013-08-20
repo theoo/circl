@@ -1,0 +1,34 @@
+---
+fr:
+  permission:
+    errors:
+      attribute_not_found: L'attribut n'a pas été trouvé
+      condition_does_not_evaluate: Cette condition ne peut pas être évaluée.
+      forbidden: Accès refusé
+      forbidden_explanation: Vous n'avez pas accès à cette ressource.
+      internal_server_error: Erreur interne du serveur
+      internal_server_error_explanation: Un problème interne empêche le bon fonctionnement du programme.
+      invalid_parameters: paramètres invalides
+      invalid_parameters_explanation: Les paramètres transmis au contrôleur ne sont pas suffisants ou incorrects.
+      invalid_request: Requête invalide
+      invalid_request_explanation: Le format ou le contenu de la requête est inapporprié.
+      page_not_found: Page non trouvé
+      page_not_found_explanation: La page recherchée n'existe pas.
+      record_not_found: Enregistrement non trouvé
+      record_not_found_explanation: L'enregistrement cherché n'existe pas.
+      service_unavailable: Service indisponible
+      service_unavailable_explanation: Le service est temporairement indisponible
+      subject_must_point_to_model_if_condition_present: Le sujet doit pointer vers un modèle si une condition est présente.
+    views:
+      action: action
+      cannot_fetch_permissions: Impossible de récupérer les permissions
+      contextmenu:
+        add_permission: ajouter la permission
+        edit_permission: modifier la permission
+        remove_permission: retirer la permission
+      hash_conditions: tableau de conditions
+      subject: sujet
+      table:
+        action: action
+        hash_conditions: tableau de conditions
+        subject: sujet

@@ -1,0 +1,91 @@
+---
+en:
+  subscription:
+    add_members: add members
+    edit_export_filter: edit export filter
+    errors:
+      can_not_delete_if_has_children: A subscription cannot be destroyed if it has children
+      can_not_delete_if_has_receipts: A subscription cannot be destroyed if it has existing receipts. Revelent receipts must be destroyed first
+      cannot_remove_members_if_there_is_receipts: Cannot remove members from subscription if it has receipts
+      cannot_transfer_overpaid_value_if_subscription_value_is_zero: Cannot transfert overpaid value if the source subscription value is zero
+    mail:
+      member_added_to_subscription_title: Member added to subscription
+      please_find_a_link_to_access_the_subscription_pdf: Please find a link to access the subscription pdf
+      subscription_and_its_invoices_were_updated: Subscription "%{title}" and its invoices were updated
+      subscription_pdf_title: Subscription pdf
+      table:
+        email: email
+        first_name: first name
+        invoice_template: invoice template
+        is_an_organization: is an organization
+        last_name: last name
+        members_count: members count
+        organization_name: organization name
+        person_id: person
+        private_tag: private tag
+        value: value
+      the_following_members_were_added_to_the_subscription: The following members were added to the subscription
+      the_following_members_were_already_in_the_subscription: The following members were already in the subscription
+      the_following_members_were_updated: The following members were updated
+    views:
+      contextmenu:
+        add_members_to_subscription: add members to subscription
+        destroy_subscription: destroy subscription
+        edit_subscription: edit subscription
+        remove_members_from_subscription: remove members from subscription
+        remove_subscription: remove subscription
+        subscription_reminder: create a reminder subscription
+        transfer_overpaid_value: transfer overpaid value
+        view_subscription_buyers: show buyers
+        view_subscription_members: view members
+        view_subscription_members_who_didnt_paid: view members who didn't paid
+        view_subscription_members_who_paid: view members who paid
+        view_subscription_pdf: download invoices PDF
+        view_subscription_receivers: show receivers
+      description: description
+      from: from
+      interval_title: dates of this subscription interval
+      reminder: reminder
+      subscription: subscription
+      table:
+        id: id
+        parent_id: parent id
+        description: description
+        interval_starts_on: begin of subscription
+        interval_ends_on: end of subscription
+        update_at: updated date
+        created_at: creation date
+        from: from
+        invoices: invoices
+        invoices_value: invoices value
+        overpaid_value: overpaid value
+        receipts: receipts
+        receipts_value: receipts value
+        title: title
+        to: to
+        value: value
+      tag_tool:
+        date: date
+        member: member
+        members_following_theses_attributes: members following theses attributes
+        of_a: of a
+        paid: paid
+        pre_search_query: pre search query
+        private_tag_name: private tag name
+        send: add
+        subscription_at_this_date: subscription at this date
+        tag_name_missing: missing a tag name
+        tag_with: tag with
+        unprocessable_request: unprocessable request
+        wrong_date: wrong date format
+      template: template
+      title: title
+      to: to
+      tool_box:
+        tag_tool: tag tool
+      value: value
+      values:
+        invoice_template: invoice template
+        private_tag: private tag
+        value: value
+      values_title: values and invoices template associated with private tags

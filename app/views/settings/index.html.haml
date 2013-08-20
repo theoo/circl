@@ -1,0 +1,51 @@
+.submenu
+
+  .tools
+    %ul
+      %li= link_to I18n.t("common.expand_all_widgets"), '#', :id => 'expand_all_widgets'
+      %li= link_to I18n.t("common.clip_all_widgets"), '#', :id => 'clip_all_widgets'
+      %li= link_to I18n.t("common.rearrange_widgets"), '#', :id => 'rearrange_widgets'
+
+#content_wrapper
+  #content
+    - flash_messages
+
+    - if can? :update, Language
+      #settings_languages.widget.pinable
+        %legend= I18n.t("settings.views.languages")
+        .content
+
+    - if can? :update, Location
+      #settings_locations.widget.pinable
+        %legend= I18n.t("settings.views.locations")
+        .content
+
+    - if can? :update, Job
+      #settings_jobs.widget
+        %legend= I18n.t("settings.views.jobs")
+        .content
+
+    - if can? :update, InvoiceTemplate
+      #settings_invoice_templates.widget.pinable
+        %legend= I18n.t("settings.views.invoice_templates")
+        .content
+
+    - if can? :update, Role
+      #settings_roles.widget.pinable
+        %legend= I18n.t("settings.views.roles")
+        .content
+
+    - if can? :update, SearchAttribute
+      #settings_search_attributes.widget.pinable
+        %legend= I18n.t("settings.views.search_attributes")
+        .content
+
+    - if can? :update, LdapAttribute
+      #settings_ldap_attributes.widget.pinable
+        %legend= I18n.t("settings.views.ldap_attributes")
+        .content
+
+    - if can? :update, ApplicationSetting
+      #settings_application_settings.widget.pinable
+        %legend= I18n.t("settings.views.application_settings")
+        .content

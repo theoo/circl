@@ -1,0 +1,16 @@
+---
+fr:
+  application_setting:
+    errors:
+      cant_change_key: impossible de changer la clé
+      missing_attribute: La clé '%{key}' n'est pas définie.
+      value_is_too_long: la valeur est trop longue
+    views:
+      content_length: longueur du contenu
+      contextmenu:
+        edit: modifier
+      key: clé
+      table:
+        key: clé
+        value: valeur
+      value: valeur

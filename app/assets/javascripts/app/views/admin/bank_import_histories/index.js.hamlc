@@ -1,0 +1,9 @@
+
+%h3= I18n.t("bank_import_history.views.previously_uploaded_lines_title")
+
+%table.datatable{ :action => '/admin/bank_import_histories' }
+  %thead
+    %tr
+      %th= I18n.t('bank_import_history.views.table.file_name')
+      %th.desc= I18n.t('bank_import_history.views.table.media_date')
+      %th= I18n.t('bank_import_history.views.table.reference_line')

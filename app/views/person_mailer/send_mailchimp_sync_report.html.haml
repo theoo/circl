@@ -1,0 +1,43 @@
+%h1
+  = I18n.t("misc.mailchimp.mail.sync_report_title")
+%p
+  - if @report.sync_success?
+    %h2
+      = I18n.t("misc.mailchimp.mail.synchronization_succeed")
+    %p
+      = I18n.t("misc.mailchimp.mail.job_report")+ ":"
+      %br
+      - @report.activity_messages[0..-2].each do |message|
+        = message
+        %br
+      - status = OpenStruct.new(@report.activity_messages[-1])
+      - if status.errors
+        - status.errors.map!{ |h| OpenStruct.new(h) }.sort_by!{ |o| [o.code, o.email] }
+        = "#{status.add_count} person added, #{status.update_count} person updated"
+        %br
+
+    - if status.errors
+      %h2= "#{status.error_count} errors"
+
+      %table
+        %thead
+          %tr
+            %th= I18n.t("misc.mailchimp.mail.table.code")
+            %th= I18n.t("misc.mailchimp.mail.table.email")
+            %th= I18n.t("misc.mailchimp.mail.table.message")
+            %tbody
+              - status.errors.each do |info|
+                %tr
+                  %td= info.code
+                  %td= info.email
+                  %td= info.message
+
+  - else
+    %h2
+      = I18n.t("misc.mailchimp.mail.failed_to_synchronize")
+    %p
+      = I18n.t("misc.mailchimp.mail.failure_report")+ ":"
+      %br
+      - @report.failure_messages.each do |message|
+        = message
+        %br

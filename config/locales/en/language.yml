@@ -1,0 +1,14 @@
+---
+en:
+  language:
+    views:
+      code: code
+      communication_language: communication language
+      contextmenu:
+        destroy_language: destroy language
+        edit_language: edit language
+        view_members: view members
+      name: name
+      table:
+        code: code
+        name: name

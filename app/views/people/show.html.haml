@@ -1,0 +1,111 @@
+-# Folding preferences is handled by a cookie and updated by update_folding_cookie javacript method.
+-# The cookie is an array of string where space are substitued by underscores "_".
+
+.submenu
+  .tools
+    %ul
+      %li= link_to I18n.t("common.expand_all_widgets"), '#', :id => 'expand_all_widgets'
+      %li= link_to I18n.t("common.clip_all_widgets"), '#', :id => 'clip_all_widgets'
+      %li= link_to I18n.t("common.rearrange_widgets"), '#', :id => 'rearrange_widgets'
+
+  %ul
+    - if can? :change_password, @person
+      %li= link_to I18n.t('person.views.change_password'), change_password_person_path(@person)
+
+    - if can? :destroy, @person
+      %li= link_to I18n.t('person.views.destroy'), person_path(@person), :method => :delete, :confirm => I18n.t('common.are_you_sure')
+
+
+#content_wrapper
+  #content
+    = hidden_field :person, :id
+
+    - flash_messages
+
+    - if params[:action] == 'paginate'
+      #pagination.ui-widget-header.ui-corner-tl.ui-corner-tr
+
+        .previous_person
+          - if @before
+            = link_to_if @before, image_tag('small_arrows.png'), paginate_people_path(:query => @query.to_json, :index => 0), :class => 'first_item'
+            = link_to_if @before, raw(image_tag('big_arrow.png') + @before.try(:name)), paginate_people_path(:query => @query.to_json, :index => @index - 1), :class => 'previous_item'
+
+        .next_person
+          - if @after
+
+            = link_to_if @after, raw(@after.try(:name) + image_tag('big_arrow.png')), paginate_people_path(:query => @query.to_json, :index => @index + 1), :class => 'next_item'
+            = link_to_if @after, image_tag('small_arrows.png'), paginate_people_path(:query => @query.to_json, :index => @total_entries - 1), :class => 'last_item'
+
+        .current_person
+          .name
+            = @person.name
+          .index
+            = "#{@index + 1} / #{@total_entries}"
+
+
+    - error_messages_for(@person)
+
+    - if can? :read, @person
+      #person.widget
+        %legend= I18n.t('person.views.personal_information')
+        .content
+
+    /- if can? :read, @person => EmploymentContract
+    /  #employment_contracts.widget
+    /    %legend= I18n.t('person.views.employment_contracts')
+    /    .content
+
+    - if can? :read, @person => Comment
+      #person_comments.widget.pinable
+        %legend= I18n.t('person.views.comments')
+        .content
+
+    /- if can? :read, @person => Activity
+    /  #person_activities.widget
+    /    %legend= I18n.t('person.views.activities')
+    /    .content
+
+    - if can? :read, @person => Activity
+      #person_histories.widget.pinable
+        %legend= I18n.t('person.views.histories')
+        .content
+
+    - if can? :read, @person => PeopleRole
+      #person_roles.widget
+        %legend= I18n.t('person.views.roles')
+        .content
+
+    - if can? :read, @person => Affair
+      #person_affairs.widget.pinable
+        %legend= I18n.t('person.views.affairs')
+        .content
+
+    /- if can? :read, @person => Task
+    /  #tasks.widget
+    /    %legend= I18n.t('person.views.tasks')
+    /    .content
+
+    - if can? :read, @person => PeoplePrivateTag
+      #person_private_tags.widget
+        %legend= I18n.t('person.views.private_tags')
+        .content
+
+    - if can? :read, @person => PeoplePublicTag
+      #person_public_tags.widget
+        %legend= I18n.t('person.views.public_tags')
+        .content
+
+    - if can? :read, @person => PeopleCommunicationLanguage
+      #person_communication_languages.widget
+        %legend= I18n.t('person.views.communication_languages')
+        .content
+
+    - if can? :read, @person => TranslationAptitude
+      #person_translation_aptitudes.widget
+        %legend= I18n.t('person.views.translation_aptitudes')
+        .content
+
+    - if can? :read, @person => Salaries::Salary
+      #person_salaries.widget.pinable
+        %legend= I18n.t('person.views.salaries')
+        .content

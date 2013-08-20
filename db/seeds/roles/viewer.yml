@@ -1,0 +1,51 @@
+---
+- subject: Activity
+  action: read
+
+- subject: Affair
+  action: read
+
+- subject: AffairsSubscription
+  action: read
+
+- subject: Comment
+  action: read
+
+- subject: Directory
+  action: read
+
+- subject: EmploymentContract
+  action: read
+
+- subject: Invoice
+  action: read
+
+- subject: InvoiceTemplate
+  action: read
+
+- subject: Person
+  action: read
+
+- subject: PeopleCommunicationLanguage
+  action: read
+
+- subject: PeoplePrivateTag
+  action: read
+
+- subject: PeoplePublicTag
+  action: read
+
+- subject: QueryPreset
+  action: read
+
+- subject: Receipt
+  action: read
+
+- subject: Subscription
+  action: read
+
+- subject: Task
+  action: read
+
+- subject: TranslationAptitude
+  action: read

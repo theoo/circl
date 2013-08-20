@@ -1,0 +1,32 @@
+---
+en:
+  directory:
+    errors:
+      query_invalid: Query "%{query}" is invalid.
+      search_error: ! 'The search engine returned an error: %{error}'
+      you_need_to_select_at_least_one_attribute_to_display: You need to select at least one attribute to display.
+    notices:
+      result_return_only_one_person: The query returning only one person it has been redirected to editing.
+    views:
+      add_person: add person
+      add_to_subscription: add to subscription
+      add_to_tag: add this tag
+      contextmenu:
+        change_person_password: change person's password
+        destroy_person: remove from the directory
+        show_person: view person's information
+      fields:
+        available_attributes: Available attributes
+        drag_and_drop_me: drag and drop me here
+        presets: Presets
+        selected_attributes: Selected attributes
+        sorting_order: Attributes order
+      filters: filters
+      generate_pdf: generate PDF
+      quick_search_placeholder: Quick search
+      results: Results
+      search: Search
+      search_help_link: toggle help
+      search_help_text: ! '<b>For a simple search:</b><br /> Type a name, email or address the search field and click search.<br/> <br/> <b>Advanced search:</b><br/> <a onclick="App.search_query({search_string: ''email:* AND main_communication_language.name:french''})">email:* AND main_communication_language.name:french</a><br/> <a onclick="App.search_query({search_string: ''last_paid_subscriptions.id:2''})">last_paid_subscriptions.id:2</a><br/> <a onclick="App.search_query({search_string: ''last_paid_subscriptions.id:(2 3 4)''})">last_paid_subscriptions.id:(2 3 4)</a><br/> <b>more information:</b><br/> More information can be found on lucene''s website:<br/> <a href=''http://lucene.apache.org/core/3_6_0/queryparsersyntax.html''>http://lucene.apache.org/core/3_6_0/queryparsersyntax.html</a>'
+      search_the_directory: CIRCL Search
+      sync_mailchimp: sync mailchimp

@@ -1,0 +1,48 @@
+%form
+  .validation_errors_placeholder
+
+  %label= I18n.t('salaries.tax.views.title')
+  %input{ :type => 'text',
+          :name => 'title',
+          :value => @tax.title }
+
+  .block
+    .stackable-block
+      %label= I18n.t('salaries.tax.views.employee_account')
+      %input{ :type => 'text',
+              :name => 'employee_account',
+              :value => @tax.employee_account }
+
+    .stackable-block
+      %label= I18n.t('salaries.tax.views.employer_account')
+      %input{ :type => 'text',
+              :name => 'employer_account',
+              :value => @tax.employer_account }
+
+  .block
+    .stackable-block
+      %label= I18n.t('salaries.tax.views.model')
+      %select{:name => 'model'}
+        - for model in @all_models
+          - if @tax.model == model
+            %option{:value => model, :selected => true}= model
+          - else
+            %option{:value => model}= model
+
+    .stackable-block
+      %label= I18n.t('salaries.tax.views.exporter_group')
+      - available_groups = { none: I18n.t("common.none"), exporter_avs_group: 'AVS', exporter_lpp_group: 'LPP', exporter_is_group: 'IS' }
+      - # only one group can be set as true
+      - for group, name of available_groups
+        %input{:type => 'hidden', :name => group, :value => 'false'}
+      %select{:name => 'exporter_group'}
+        - for group, name of available_groups
+          - if @tax[group] == true
+            %option{:value => group, :selected => true}= name
+          - else
+            %option{:value => group}= name
+  .block
+    .float_right
+      %label.white &nbsp;
+      != @partial('submit_button')(@tax)
+      %label.white &nbsp;

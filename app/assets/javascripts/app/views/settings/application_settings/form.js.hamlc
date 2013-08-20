@@ -1,0 +1,27 @@
+%form
+  .validation_errors_placeholder
+
+  .block
+    .float_right
+      %label.white &nbsp;
+      != @partial('submit_button')(@application_setting)
+
+    %label= I18n.t('application_setting.views.key')
+    %input{ :type => 'text',
+            :name => 'key',
+            :value => @application_setting.key,
+            :class => 'required' }
+  .block
+    %label= I18n.t('application_setting.views.value')
+    .full_width_textarea
+      %textarea{:name => 'value',
+                :rows => 5,
+                :class => 'like_an_input required' }
+        = @application_setting.value
+
+    #char_counter{:class => 'float_right', :style => 'margin: 0 5px'}
+    .float_right= I18n.t('application_setting.views.content_length')
+    %br
+    %br
+
+.block

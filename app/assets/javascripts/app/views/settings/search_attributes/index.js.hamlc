@@ -1,0 +1,35 @@
+- edit_search_trad = I18n.t('search_attribute.views.contextmenu.edit_search_attribute')
+- destroy_search_trad = I18n.t('search_attribute.views.contextmenu.destroy_search_attribute')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_search_trad,
+            :data-event => 'search_attribute-edit',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => destroy_search_trad,
+            :data-event => 'search_attribute-destroy',
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th.asc= I18n.t('search_attribute.views.table.model')
+      %th= I18n.t('search_attribute.views.table.name')
+      %th= I18n.t('search_attribute.views.table.group')
+
+  %tbody
+    - for attr in App.SearchAttribute.all()
+
+      - actions = [ edit_search_trad, destroy_search_trad ]
+
+      %tr{:data-id => attr.id,
+          :data-actions => actions }
+        %td= attr.id
+        %td= attr.model
+        %td= attr.name
+        %td= attr.group
+
+.toolbox{ id: 'receipts_export' }
+  %legend= I18n.t('common.toolbox')
+  %a.button{ href: '/settings/search_attributes/synchronize', 'data-method': 'post', rel: 'nofollow' }= I18n.t('common.synchronize')

@@ -1,0 +1,32 @@
+%div{:style => 'text-align: center; margin: 20px 0;'}
+  = image_tag('logo.png', :alt => 'Directory')
+
+%div{:style => 'width: 525px;', :class => 'centered'}
+
+  - flash_messages
+
+  .widget
+    %legend
+      = I18n.t('devise.views.request_new_password')
+
+    %div{:style => 'padding: 1em 0; width: 80%; margin: 0 auto;'}
+      %h2= I18n.t("devise.views.request_new_password_explanation_title")
+      = I18n.t("devise.views.request_new_password_explanation")
+
+      = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+        - devise_error_messages!
+
+        %div{:class => 'half', :style => 'margin: 10px auto;'}
+          = f.label :email
+          = f.email_field :email, :style => 'width: 100%'
+
+          = f.submit I18n.t('devise.views.request_new_password'), :style => 'width: 100%'
+
+          %br
+          %br
+
+          = link_to I18n.t("devise.views.back_to_login_page"),
+                    new_person_session_path,
+                    :class => 'arrow_left',
+                    :style => 'width: 100%'
+          %br

@@ -1,0 +1,32 @@
+---
+fr:
+  directory:
+    errors:
+      query_invalid: requête "%{query}" invalide
+      search_error: erreur lors de la recherche -> %{error}
+      you_need_to_select_at_least_one_attribute_to_display: Vous devez sélectionner au moins un attributs à afficher.
+    notices:
+      result_return_only_one_person: Le résultat ne retournant qu'une personne votre requête à été redirigée vers l'édition.
+    views:
+      add_person: ajouter une personne
+      add_to_subscription: ajouter à l'inscription
+      add_to_tag: ajouter ce tag
+      contextmenu:
+        change_person_password: changer le mot de passe
+        destroy_person: supprimer de l'annuaire
+        show_person: consulter les informations
+      fields:
+        available_attributes: Attributs disponibles
+        drag_and_drop_me: glisser-déposer ici
+        presets: Pré-réglages
+        selected_attributes: Attributs sélectionnés
+        sorting_order: Ordre de tri
+      filters: filtres
+      generate_pdf: générer le PDF
+      quick_search_placeholder: Recherche rapide
+      results: Résultats
+      search: Rechercher
+      search_help_link: aide pour la recherche
+      search_help_text: ! '<b>exemple de recherche simple:</b><br /> Ecrivez un nom, un email ou une adresse dans le champs de recherche et clickez "rechercher".<br/> <br/> <b>exemple de recherche avancée:</b><br/> les critères de recherche font référence à des attributs de la base de donnée et doivent être traduit en anglais:<br /> tags -> tags<br /> inscription -> subscriptions<br /> langue de communication principale -> main_communication_language<br /> les opérateurs logiques sont traduits ainsi et doivent être écrit en majuscule. et -> AND<br /> ou -> OR<br /> n est pas -> NOT<br /> <a onclick="App.search_query({search_string: ''email:* AND main_communication_language.name:french''})">email:* AND main_communication_language.name:french</a><br/> <a onclick="App.search_query({search_string: ''last_paid_subscriptions.id:2''})">last_paid_subscriptions.id:2</a><br/> <a onclick="App.search_query({search_string: ''last_paid_subscriptions.id:(2 3 4)''})">last_paid_subscriptions.id:(2 3 4)</a><br/> <br/> <b>pour plus d''information:</b><br/> Plus d''information peut être trouvé sur le site de lucene:<br /> <a href="http://lucene.apache.org/core/3_6_0/queryparsersyntax.html">http://lucene.apache.org/core/3_6_0/queryparsersyntax.html</a>'
+      search_the_directory: Rechercher dans CIRCL
+      sync_mailchimp: synchroniser mailchimp

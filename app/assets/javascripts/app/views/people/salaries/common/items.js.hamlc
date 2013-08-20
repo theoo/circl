@@ -1,0 +1,72 @@
+%h3.section= I18n.t('salaries.salary.views.items')
+
+.validation_errors_placeholder
+
+%form
+  %table.category
+    %thead
+      %tr
+        %th= I18n.t('salaries.item.views.position')
+        %th= I18n.t('salaries.item.views.title')
+        %th= I18n.t('salaries.item.views.value')
+        - for tax in App.SalaryTax.all()
+          %th= tax.title
+        %th= I18n.t('salaries.item.views.category')
+        %th= I18n.t('salaries.item.views.actions')
+
+    %tbody
+      - for item, unique_id in @salary.items
+        %tr{:data-position => unique_id}
+          %td.handle
+            %span.sort_handle.ui-icon.ui-icon-arrowthick-2-n-s
+          %td
+            %input{ :name => "items[#{unique_id}][id]", :type => 'hidden', :value => item.id }
+            %input{ :name => "items[#{unique_id}][position]", :type => 'hidden', :value => item.position }
+            %input{ :name => "items[#{unique_id}][title]", :type => 'text', :value => item.title }
+          %td
+            %input{ :name => "items[#{unique_id}][value]",
+                    :type => 'number',
+                    :step => 0.01,
+                    :value => item.value }
+          - for tax in App.SalaryTax.all()
+            %td.tax
+              %input{ :name => "items[#{unique_id}][tax_ids][]",
+                      :type => 'checkbox',
+                      :checked => (tax.id in item.tax_ids),
+                      :value => tax.id,
+                      :class => 'normal' }
+          %td
+            %input{ :name => "items[#{unique_id}][category]", :type => 'text', :value => item.category }
+          %td
+            %input{ :type => 'button', :value => 'Remove', :class => 'remove' }
+            %input{ :type => 'button', :value => 'Adjust', :class => 'adjust' }
+
+      / New item
+      - unique_id = @salary.items.length + 1
+      %tr
+        %td.handle
+          %span.sort_handle.ui-icon.ui-icon-arrowthick-2-n-s
+        %td
+          %input{ :name => "items[#{unique_id}][salary_id]", :type => 'hidden', :value => @salary.id }
+          %input{ :name => "items[#{unique_id}][position]", :type => 'hidden', :value => unique_id }
+          %input{ :name => "items[#{unique_id}][title]", :type => 'text' }
+        %td
+          %input{ :name => "items[#{unique_id}][value]",
+                  :type => 'number',
+                  :step => 0.01 }
+        - for tax in App.SalaryTax.all()
+          %td.tax
+            %input{ :name => "items[#{unique_id}][tax_ids][]",
+                    :type => 'checkbox',
+                    :checked => false,
+                    :value => tax.id,
+                    :class => 'normal' }
+        %td
+          %input{ :name => "items[#{unique_id}][category]", :type => 'text' }
+        %td
+
+  %br
+
+  .block
+  .align_right
+    != @partial('submit_button')(@salary)

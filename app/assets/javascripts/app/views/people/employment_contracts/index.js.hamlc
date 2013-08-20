@@ -1,0 +1,30 @@
+- edit_ec_trad = I18n.t("employment_contract.views.contextmenu.edit")
+- destroy_ec_trad = I18n.t("employment_contract.views.contextmenu.destroy")
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_ec_trad,
+            :data-event => "employment-contract-edit",
+            :data-icon => 'edit' }
+
+  %command{ :data-label => destroy_ec_trad,
+            :data-event => "employment-contract-destroy",
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th start
+      %th end
+      %th percentage
+      %th description
+
+  %tbody
+    - for ec in App.PersonEmploymentContract.all()
+      - actions = [edit_ec_trad, destroy_ec_trad]
+      / TODO: check if this entry can be destroyed before display destroy
+
+      %tr{:data-id => ec.id, :data-actions => actions }
+        %td= ec.interval_starts_on
+        %td= ec.interval_ends_on
+        %td.number= ec.percentage
+        %td= ec.description

@@ -1,0 +1,11 @@
+---
+- name: Newsletter
+  parent_id:
+- name: Entreprise
+  parent_id: 1
+- name: Activités
+  parent_id: 1
+- name: Partenaires
+  parent_id: 1
+- name: Nouveautés
+  parent_id: 1

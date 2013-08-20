@@ -1,0 +1,28 @@
+%h2= I18n.t("salaries.item.views.taxed_items")
+
+%table.taxed_items
+  %tr
+  - options[:fields].each do |field|
+    %th= I18n.t("salaries.item.views.table." + field.to_s)
+
+  - salary.taxed_items.each do |data|
+    %tr
+      - options[:fields].each do |f|
+        - field = data.send(f)
+
+        - if field.is_a? Time
+          %td= field.to_date
+        - elsif field.is_a? Money
+          %td.number= field.to_view
+        - else
+          %td= field
+
+
+  - if options[:fields].index(:value)
+    %tr
+      - options[:fields].each do |f|
+        - if f == :value
+          %td.number
+            %b= salary.taxed_items_total.to_view
+        - else
+          %td

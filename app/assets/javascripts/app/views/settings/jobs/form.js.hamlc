@@ -1,0 +1,21 @@
+%form
+  .validation_errors_placeholder
+  .block
+    .float_right
+      %label.white &nbsp;
+      != @partial('submit_button')(@job)
+  
+    %label= I18n.t('job.views.name')
+    %input{ :type => 'text',
+            :name => 'name',
+            :value => @job.name,
+            :class => 'required' }
+  .block
+    .full_width_textarea
+      %label= I18n.t('job.views.description')
+      %textarea{:name => 'description',
+                :rows => 5,
+                :class => 'like_an_input' }
+        = @job.description
+
+.block

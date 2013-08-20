@@ -1,0 +1,14 @@
+.bvr
+  .bvr_organisation_address1
+    %pre #BVR_ADDRESS
+  .bvr_organisation_address2
+    %pre #BVR_ADDRESS
+  .bvr_member_address1 #INVOICE_ADDRESS
+  .bvr_member_address2 #INVOICE_ADDRESS
+  .bvr_account1 #BVR_ACCOUNT
+  .bvr_account2 #BVR_ACCOUNT
+  .bvr_value1 #BVR_VALUE
+  .bvr_value2 #BVR_VALUE
+  .bvr_reference_number1 #BVR_REFERENCE_NUMBER
+  .bvr_reference_number2 #BVR_SPACED_REFERENCE_NUMBER
+  .bvr_codeline #BVR_CODELINE

@@ -1,0 +1,201 @@
+---
+en:
+  salaries:
+    copy_reference: copy reference to a group of people
+    export: export salaries
+    export_salary_certificates: export to eLohnausweisSSK
+    export_to_accounting: export to accounting software
+    export_to_avs: export to OCAS
+    export_to_elohnausweisssk: export to elohnausweisssk
+    export_to_ocas: export to OCAS
+    item:
+      line: line
+      views:
+        actions: actions
+        category: category
+        position: position
+        summary: summary
+        table:
+          category: category
+          created_at: creation date
+          id: id
+          position: position
+          title: title
+          value: value
+        taxed_items: taxed items
+        title: title
+        untaxed_items: untaxed items
+        value: value
+    salary:
+      errors:
+        from_and_to_dates_should_be_in_the_same_year: From and to dates should belong to the same year.
+        from_date_should_be_before_to_date: From date should be before to date.
+        missing_reference: missing reference
+        missing_template: There is no salary template yet. Please start by creating one first.
+        the_required_information_about_this_person_are_not_satisfied: ! 'The required information about this person are not satisfied. Please ensure the following fields are filled: ''%{required_fields}'' before creating a new salary.'
+        to_date_should_be_after_from_date: To date should be after from date.
+        unable_to_destroy_a_reference_which_has_children_salaries: Unable to destroy a reference which has children salaries.
+      is_not_a_reference: is not a reference
+      template_item_category: Revenues
+      template_item_title: Gross pay
+      views:
+        account: account number
+        activity_rate: activity rate
+        brut_account: gross pay account
+        children_count: number of children
+        civil_status: marital status
+        contextmenu:
+          check_as_paid: check as paid
+          copy_reference: copy reference to a group of people
+          destroy_salary: destroy salary
+          edit_salary: edit salary
+          salary_preview: salary preview
+          show_salary_pdf: show salary pdf
+        counterpart_account: counterpart account number
+        creation_date: creation date
+        details: details
+        edit_salary: edit salary
+        employer_account: employer account
+        employer_part: employer part
+        export_interval_explanation: Selected intervale should be related to salaries interval and not salaries creation date.
+        from: from
+        gross: GROSS
+        gross_pay: gross salary
+        items: items
+        married: married
+        net: NET
+        net_account: net pay account
+        net_salary_total: net salary
+        new_salary: new salary
+        reference: reference
+        references: references
+        salaries: salaries
+        salary: salary
+        salary_template: document template
+        summary: summary
+        table:
+          created_at: creation date
+          employee_percent: employee percent
+          employee_use_percent: employee use percent
+          employee_value: employee value
+          employer_percent: employer percent
+          employer_use_percent: employer use percent
+          employer_value: employer value
+          id: id
+          is_template: is a template
+          net_salary: net salary
+          paid: paid
+          person: employee
+          reference: reference
+          reference_title: reference title
+          reference_value: reference value
+          salary_id: salary id
+          tax_id: tax id
+          template: template
+          template_title: template title
+          title: title
+          type: type
+          unpaid: unpaid
+          updated_at: update date
+          year: year
+        tax_data: deductions
+        template: template
+        templates: templates
+        title: title
+        to: to
+        year: year
+        yearly_salary: annual salary
+        yearly_salary_count: number of salaries for the current year
+    salary_template:
+      views:
+        contextmenu:
+          destroy_salary_template: destroy salary template
+          edit_salary_template: edit salary template
+        edit_template: edit template
+        new_template: new template
+        placeholders:
+          person_address: person's address
+          person_bank_information: person's bank information
+          person_name: person's name
+          placeholders: placeholders
+          salary_advanced_details: advanced salary details (employee and organization deductions)
+          salary_created_at: salary creation date
+          salary_details: salary details (employee deductions)
+          salary_from: salary interval begin
+          salary_id: salary unique ID
+          salary_interval_in_days: salary interval in days
+          salary_month_year: salary month and year
+          salary_title: salary title
+          salary_to: salary interval end
+          salary_yearly_salary: annual salary
+        summary: summary
+        table:
+          created_at: created at
+          employee_percent: employee percent
+          employee_value: employee value
+          employer_percent: employer percent
+          employer_value: employer value
+          reference_value: reference value
+          thumb: thumbnail
+          title: title
+        template:
+          person_bank_information: bank information
+          salary_advanced_details: detailed deductions
+          salary_created_at: salary creation date
+          salary_details: deductions
+          salary_from: salary interval start
+          salary_id: salary ID
+          salary_interval: salary interval
+          salary_interval_in_days: number of days
+          salary_to: salary interval end
+          salary_yearly_salary: annual revenue
+        title: title
+    summary:
+      views:
+        category: category
+        net_salary_total: NET total
+        total: total
+    tas:
+      errors:
+        unable_to_destroy_a_tax_which_is_used: Unable to destroy a tax in use.
+    tax:
+      errors:
+        unable_to_destroy_a_tax_which_is_used: Unable to destroy a deduction which is used.
+      views:
+        age_tax_example_file_desc: Age based deduction example file
+        available_years: available years
+        contextmenu:
+          destroy_tax: destroy deduction
+          edit_tax: edit deduction
+          show_tax_data: show deduction data
+          upload_tax_data: update deduction data
+        destination_account: destination account
+        employee_account: account for employee deductions
+        employer_account: account for employer deductions
+        example_files_explanation: Below are three example files to download as template to update deductions. More information can be found on <a href='http://tracker.circl.ch/projects/circl/wiki/D%C3%A9ductions'>CIRCL documentation wiki</a>.
+        example_files_title: Example files
+        exporter_group: certificate group
+        generic_tax_example_file_desc: Generic deduction example file
+        is_tax_example_file_desc: (Geneva) Withholding tax example file
+        model: model
+        number_of_rows: number of rows
+        title: title
+        total: total
+        upload_tax: upload deduction
+    tax_data:
+      views:
+        actions: actions
+        employee_percent: employee rate (%)
+        employee_value: employee value
+        employer_percent: employer rate (%)
+        employer_value: employer value
+        position: position
+        reference_value: reference value
+        taxed_value: deducted value
+        title: title
+    views:
+      contextmenu:
+        preview_pdf: preview pdf
+      salary_templates: Salary templates
+      taxes: Deductions
+      taxes_data: Deduction data

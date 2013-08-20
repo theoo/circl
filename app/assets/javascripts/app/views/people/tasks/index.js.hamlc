@@ -1,0 +1,26 @@
+- edit_task_trad = I18n.t('task.views.contextmenu.edit_task')
+- destroy_task_trad = I18n.t('task.views.contextmenu.destroy_task')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_task_trad,
+            :data-event => "task-edit",
+            :data-icon => 'edit' }
+
+  %command{ :data-label => destroy_task_trad,
+            :data-event => "task-destroy",
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th= I18n.t('task.views.table.date')
+      %th= I18n.t('task.views.table.duration')
+      %th= I18n.t('task.views.table.description')
+
+  %tbody
+    - for task in App.PersonTask.all()
+      - actions = [edit_task_trad, destroy_task_trad]
+      %tr{:data-id => task.id, :data-actions => actions}
+        %td= task.date
+        %td= task.duration
+        %td= task.description

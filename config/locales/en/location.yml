@@ -1,0 +1,23 @@
+---
+en:
+  location:
+    errors:
+      cannot_destroy_location_if_people_depend_on_it: A location cannot be destroyed if it has people depending on it.
+      no_parent_location: parent location is not set
+    views:
+      contextmenu:
+        destroy_location: destroy location
+        edit_location: edit location
+      iso_alpha2: iso alpha2
+      iso_alpha3: iso alpha3
+      iso_numerical: iso numerical
+      name: name
+      parent: parent
+      phone_prefix: phone prefix
+      post_code_or_zip: post code or zip
+      table:
+        iso_code_a2: iso code a2
+        name: name
+        parent: parent
+        phone_prefix: phone prefix
+        postal_code_prefix: postal code prefix

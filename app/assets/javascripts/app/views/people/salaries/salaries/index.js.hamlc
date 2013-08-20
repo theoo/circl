@@ -1,0 +1,62 @@
+%h3.section= I18n.t('salaries.salary.views.salaries')
+
+%form
+  .validation_errors_placeholder
+
+  %input{ :name => 'person_id', :type => 'hidden', :value => @person_id }
+  %input{ :name => 'is_reference', :type => 'hidden', :value => 'false' }
+
+  // Allow salary creation only it at least one reference exists
+  - if App.Salary.references().length > 0
+    %div{:style => 'width: 200px; margin: 0 auto;'}
+      %label= I18n.t('salaries.salary.views.reference')
+      %select{:name => 'parent_id'}
+        - for t in App.Salary.references()
+          %option{:value => t.id}= t.title
+      %input{ :type => 'submit', :data-title => I18n.t('common.create'), :class => 'no_sending' }
+
+  - else
+    .error= I18n.t("salaries.salary.errors.missing_reference")
+
+- edit_salary_trad     = I18n.t('salaries.salary.views.contextmenu.edit_salary')
+- show_salary_pdf_trad = I18n.t('salaries.salary.views.contextmenu.show_salary_pdf')
+- salary_preview_trad  = I18n.t('salaries.salary.views.contextmenu.salary_preview')
+- destroy_salary_trad  = I18n.t('salaries.salary.views.contextmenu.destroy_salary')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_salary_trad,
+            :data-event => 'salary-edit',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => show_salary_pdf_trad,
+            :data-event => 'salary-pdf',
+            :data-icon => 'pdf' }
+
+  %command{ :data-label => salary_preview_trad,
+            :data-event => 'salary-preview',
+            :data-icon => 'pdf' }
+
+  %command{ :data-label => destroy_salary_trad,
+            :data-event => 'salary-destroy',
+            :data-icon => 'delete' }
+
+%table{:name => "person_salaries", :class => "with_contextmenu datatable"}
+  %thead
+    %tr
+      %th= I18n.t('salaries.salary.views.table.id')
+      %th= I18n.t('salaries.salary.views.table.reference_title')
+      %th= I18n.t('salaries.salary.views.table.title')
+      %th= I18n.t('salaries.salary.views.gross_pay')
+      %th= I18n.t('salaries.salary.views.table.net_salary')
+      %th= I18n.t('salaries.salary.views.table.paid')
+
+  %tbody
+    - for salary in App.Salary.instances()
+      - actions = [edit_salary_trad, show_salary_pdf_trad, salary_preview_trad, destroy_salary_trad]
+      %tr{:data-id => salary.id, :data-actions => actions}
+        %td= salary.id
+        %td= salary.reference_title
+        %td= salary.title
+        %td.number= salary.gross_pay.to_view() if salary.gross_pay
+        %td.number= salary.net_salary.to_view() if salary.net_salary
+        %td= I18n.t("common." + salary.paid)

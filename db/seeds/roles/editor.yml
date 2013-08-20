@@ -1,0 +1,48 @@
+---
+- subject: Activity
+  action: manage
+
+- subject: Affair
+  action: manage
+
+- subject: AffairsSubscription
+  action: manage
+
+- subject: Comment
+  action: manage
+
+- subject: Directory
+  action: manage
+
+- subject: EmploymentContract
+  action: manage
+
+- subject: Invoice
+  action: manage
+
+- subject: Person
+  action: update
+
+- subject: Person
+  action: change_password
+
+- subject: Person
+  action: update_password
+
+- subject: PeopleCommunicationLanguage
+  action: manage
+
+- subject: PeoplePrivateTag
+  action: manage
+
+- subject: PeoplePublicTag
+  action: manage
+
+- subject: Receipt
+  action: manage
+
+- subject: Task
+  action: manage
+
+- subject: TranslationAptitude
+  action: manage

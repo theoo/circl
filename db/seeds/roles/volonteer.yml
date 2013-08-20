@@ -1,0 +1,8 @@
+---
+- subject: Task
+  action: manage
+  hash_conditions: '{:person_id => user.id}'
+
+- subject: TranslationAptitude
+  action: manage
+  hash_conditions: '{:person_id => user.id}'

@@ -1,0 +1,36 @@
+.validation_errors_placeholder
+
+.centered_text
+  %input{:type => 'submit', :data-title => "new template", :disabled => 'disabled'}
+  .white &nbsp;
+
+- edit_invoice_template_trad = I18n.t('invoice_template.views.contextmenu.edit_invoice_template')
+- destroy_invoice_template_trad = I18n.t('invoice_template.views.contextmenu.destroy_invoice_template')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_invoice_template_trad,
+            :data-event => 'invoice_template-edit',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => destroy_invoice_template_trad,
+            :data-event => 'invoice_template-destroy',
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th= I18n.t('invoice_template.views.table.thumb')
+      %th= I18n.t('invoice_template.views.table.title')
+      %th= I18n.t('invoice_template.views.table.language')
+      %th= I18n.t('invoice_template.views.table.bvr_account')
+      %th.desc= I18n.t('invoice_template.views.table.created_at')
+  %tbody
+    - for invoice_template in App.InvoiceTemplate.all()
+      - actions = [ edit_invoice_template_trad, destroy_invoice_template_trad ]
+      %tr{:data-id => invoice_template.id, :data-actions => actions }
+        %td
+          %img{:src => invoice_template.thumb_url, :alt => 'thumbnail'}
+        %td= invoice_template.title
+        %td= invoice_template.language_name
+        %td.number= invoice_template.bvr_account
+        %td= invoice_template.created_at

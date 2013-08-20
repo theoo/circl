@@ -1,0 +1,100 @@
+---
+fr:
+  person:
+    dashboard:
+      welcome: Bienvenue
+    errors:
+      an_email_is_required_if_it_is_loggable: Un email est requis pour que la personne puisse se connecter.
+      avs_number_control_key_is_invalid: la clé de contrôle ne correspond pas, veuillez vérifier la saisie du numéro.
+      avs_number_is_invalid: le numéro AVS est invalide, le format devrait être 756.XXXX.XXXX.XX
+      cannot_remove_admin_role_for_first_user: Il n'est pas possible de supprimer le rôle administrateur de la première personne.
+      cant_be_org_without_org_name: Ne peut pas être une organisation sans un nom d'organisation.
+      cant_delete_first_admin: Vous ne pouvez pas effacer le premier administrateur.
+      cant_delete_person_who_has_invoices: Il est impossible de détruire une personne dont dépend une facture.
+      cant_delete_person_who_has_running_contract: Il est impossible de détruire une personne dont un contrat dépend.
+      cant_delete_person_who_has_salaries: Il est impossible de détruire une personne dont dépend un salaire.
+      combination_of_first_name_and_last_name_already_taken: Cette combinaison de nom et prénom est déjà prise.
+      invalid_current_password: Le mot de passe actuel invalide.
+      main_language_already_in_communication_languages: Cette langue principale est déjà sélectionnée dans les langues de communication secondaires.
+      no_second_email_if_no_primary_email: Impossible d'ajouter un email secondaire sans email principal.
+      organization_not_ticked_but_no_person_info: Vous devez cocher 'organisation' si il n'y a pas d'information personnelle.
+      second_email_should_be_different: L'email secondaire doit être différent de l'email principal.
+      the_required_information_about_this_employee_are_not_satisfied: Cette personne a des salaires. L'attribut '%{field}' est requis.
+    import:
+      cannot_parse: Impossible d'analyser le fichier.
+      invalid_#{name}: ! '#{name} est un nom invalide'
+      invalid_communication_language: Langue de communication invalide "%{communication_language}"
+      invalid_job: Métier invalide "%{job}"
+      invalid_line: Ligne non valide
+      invalid_location: Localité invalide "%{location}"
+      invalid_main_communication_language: Langue principale de communication invalide "%{main_communication_language}"
+      invalid_private_tag: Tag privé invalide "%{private_tag}"
+      invalid_public_tag: Tag public invalide "%{public_tag}"
+      invalid_role: Rôle invalide "%{role}"
+      invalid_translation_aptitude: Aptitude de traduction invalide "%{translation_aptitude}"
+      line: ligne
+    mail:
+      background_task_error_report: Rapport d'erreur de la tâche d'arrière plan
+      imported_people: Personnes importées
+      mailchimp_synchronisation_report: Rapport de synchronisation Mailchimp
+      members_were_added_to_subscription: Des membres ont été ajouté à l'inscription
+      pdf_for_subscription: PDF de l'inscription
+      people_import_report: Rapport d'importation des personnes
+      people_import_report_title: Rapport de l'import de personnes
+      receipts_import_report: Rapport d'importation des reçus
+      report_error:
+        datetime: date et heure
+        directory_id: ID unique de l'annuaire
+        directory_name: Nom de l'annuaire
+        exception_trace: Backtrace de l'exception
+        person: Personne
+        something_wrong_happened: Quelque chose d'incorrect est arrivé sur un annuaire en production. Veuillez consulter le backtrace ci-dessous et le fichier de log production.log.
+        title: Une erreur critique a eu lieu sur un serveur en production
+      report_error_subject: Une erreur critique (500) a eu lieu sur un serveur en production
+      subscription_where_updated: l'inscription à été mise à jour
+    views:
+      activities: Activités
+      address: Adresse
+      affairs: Projets / Affaires
+      api: API
+      autentication_token: jeton d'authentification
+      avs_number: numéro AVS
+      bank_informations: Informations bancaires
+      birth_date: date de naissance
+      cancel: annuler
+      change_password: changer de mot de passe
+      comments: Commentaires
+      communication_languages: Langues de communications secondaires
+      current_password: mot de passe actuel
+      destroy: supprimer
+      email: email
+      employee_information: Informations de l'employé
+      employment_contracts: Contrats d'emploi
+      first_name: prénom
+      generate_authentication_token: (re)générer
+      hidden: caché
+      histories: Historique de la fiche contact
+      is_an_organization: est une organisation
+      is_valid: est valide
+      job: métier
+      last_name: nom de famille
+      location: Localité / lieu
+      logout: déconnexion
+      mobile: mobile
+      nationality: nationalité
+      new_password: nouveau mot de passe
+      new_password_confirmation: confirmation du nouveau mot de passe
+      organization_name: nom de l'organisation
+      personal_information: Informations personnelles
+      phone: téléphone
+      private_tags: Tags privés
+      public_tags: Tags publics
+      roles: Rôles
+      salaries: Salaires
+      second_email: email secondaire
+      second_phone: téléphone secondaire
+      tasks: Pointeuse
+      this_person_uniq_id: Identifiant unique de cette personne (ID)
+      title: titre
+      translation_aptitudes: Aptitudes de traduction
+      update_password: mettre à jour le mot de passe

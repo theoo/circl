@@ -1,0 +1,8 @@
+%h1
+  = I18n.t("subscription.mail.subscription_pdf_title")
+
+%p
+  = I18n.t("subscription.mail.please_find_a_link_to_access_the_subscription_pdf")
+  = "\"" + @subscription.title + "\""
+
+%a{:href => @subscription.pdf_public_url }= @subscription.pdf_public_url

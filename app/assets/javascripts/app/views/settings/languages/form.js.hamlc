@@ -1,0 +1,23 @@
+%form
+  .validation_errors_placeholder
+
+  .block
+    .stackable-block
+      %label= I18n.t('language.views.name')
+      %input{ :type => 'text',
+              :name => 'name',
+              :value => @language.name,
+              :class => 'required' }
+
+    .stackable-block
+      %label= I18n.t('language.views.code')
+      %input{ :type => 'text',
+              :name => 'code',
+              :value => @language.code,
+              :class => 'small' }
+
+    .float_right
+      %label.white &nbsp;
+      != @partial('submit_button')(@language)
+
+.block

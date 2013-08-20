@@ -1,0 +1,68 @@
+---
+en:
+  common:
+    a_webapp_developped_by: A webapp developped by
+    add: add
+    administration: Administration
+    already_synchronizing: The synchronization is already in progress.
+    are_you_sure: are you sure?
+    browser:
+      a_modern_browser_is_requied: A modern browser compilant with HTML5/JS/CSS3 is required.
+      currently_supported_browser_are: CIRCL currently supports theses browsers
+      mobile_browsers: mobile browsers
+      multiplateform_browsers: multiplateform browsers
+    clip_all_widgets: clip all widgets
+    create: create
+    dashboard: Dashboard
+    destroy: destroy
+    directory: Directory
+    error: error
+    errors:
+      absence_of_identifier: Absence of identifier.
+      date_cannot_be_in_the_future: The date cannot be in the future.
+      date_must_match_format: date must match format DD-MM-YYYY
+      does_not_point_to_valid_model: Does not point to valid model.
+      duration_must_be_positive: The duration must be positive.
+      end_must_be_after_start: The ending date must be after the starting date.
+      if_you_think_it_s_a_bug: ! 'If you think that you found a bug, please send us an email: <a href=''mailto:support@circl.ch''>support@circl.ch</a>'
+      invalid_date: The date is invalid.
+      invalid_phone: The format is invalid, you have to use a format like "+11 22 333 44 55" (between 7 and 18 numbers).
+      must_provide_first_name_if_last_name: You must provide a first name if there is a last name.
+      must_provide_last_name_if_first_name: You must provide a last name if there is a first name.
+      please_verify_rights_and_record: Please verify that you are allowed to do this action and check if this action apply to the current record.
+    expand_all_widgets: expand all widgets
+    export_to: export to
+    failed_to_create: Failed to create.
+    failed_to_destroy: Failed to destroy.
+    failed_to_retrive_data: Failed to retrive data.
+    failed_to_update: Failed to update.
+    false: 'no'
+    file: file
+    from: from
+    id: id
+    language_name: english
+    none: none
+    not_implemented: This feature is not yet implemented
+    notice: notice
+    parent: parent
+    rearrange_widgets: rearrange widgets
+    released_under: released under version 3 of the
+    requires_browser_update: A browser update is required to view this page.
+    salaries: Payroll
+    sending: sending...
+    settings: Settings
+    successfully_created: successfully created
+    successfully_destroyed: successfully destroyed
+    successfully_updated: successfully updated
+    synchronization_started: The synchronization started.
+    synchronize: Synchronize
+    this_application_unique_id: This application unique id is
+    to: to
+    toolbox: toolbox
+    toolbox_export: Export
+    toolbox_import_bank_file: Import bank file
+    toolbox_template: template
+    true: 'yes'
+    update: update
+    use_right_click_save_as: use right click to 'save link as'
+    year: year

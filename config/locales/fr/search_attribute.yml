@@ -1,0 +1,18 @@
+---
+fr:
+  search_attribute:
+    errors:
+      not_json: ! 'Mauvais protocole (attendu: JSON)'
+    views:
+      contextmenu:
+        destroy_search_attribute: détuire l'attribut
+        edit_search_attribute: modifier l'attribut
+      group: groupe
+      indexing: indexation
+      mapping: représentation
+      model: modèle
+      name: nom
+      table:
+        group: groupe
+        model: modèle
+        name: nom

@@ -1,0 +1,20 @@
+---
+en:
+  tag:
+    errors:
+      cannot_be_its_own_parent: The tag cannot be its own parent.
+      cannot_destroy_tag_if_it_has_members: A tag cannot be destroyed if it has members.
+    views:
+      add_members: add members
+      contextmenu:
+        add_members: add members
+        destroy_tag: destroy tag
+        edit_tag: edit tag
+        remove_all_members: untag all members
+        view_tag_members: view tag members
+      name: name
+      parent: parent
+      table:
+        members: members
+        name: name
+        parent: parent

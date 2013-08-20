@@ -1,0 +1,32 @@
+- edit_attr_trad = I18n.t('ldap_attribute.views.contextmenu.edit_attribute')
+- destroy_attr_trad = I18n.t('ldap_attribute.views.contextmenu.destroy_attribute')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_attr_trad,
+            :data-event => 'ldap_attribute-edit',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => destroy_attr_trad,
+            :data-event => 'ldap_attribute-destroy',
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th.asc= I18n.t('common.id')
+      %th= I18n.t('ldap_attribute.views.table.name')
+      %th= I18n.t('ldap_attribute.views.table.mapping')
+
+  %tbody
+    - for attr in App.LdapAttribute.all()
+
+      - actions = [ edit_attr_trad, destroy_attr_trad ]
+
+      %tr{:data-id => attr.id, :data-actions => actions }
+        %td= attr.id
+        %td= attr.name
+        %td= attr.mapping
+
+.toolbox{ id: 'receipts_export' }
+  %legend= I18n.t('common.toolbox')
+  %a.button{ href: '/settings/ldap_attributes/synchronize', 'data-method': 'post', rel: 'nofollow' }= I18n.t('common.synchronize')

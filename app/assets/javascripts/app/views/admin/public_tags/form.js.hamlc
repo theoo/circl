@@ -1,0 +1,23 @@
+%form
+  .validation_errors_placeholder
+
+  .float_right
+    %label.white &nbsp;
+    != @partial('submit_button')(@tag)
+
+  .autocompleted
+    %label= I18n.t('tag.views.parent')
+    %input{ :type => 'search',
+            :name => 'tag_parent_id',
+            :value => @tag.parent_name,
+            :action => '/admin/public_tags/search' }
+
+    %input{ :type => 'hidden',
+            :name => 'parent_id',
+            :value => @tag.parent_id }
+  .block
+    %label= I18n.t('tag.views.name')
+    %input{ :type => 'text',
+            :name => 'name',
+            :class => 'required',
+            :value => @tag.name }

@@ -1,0 +1,28 @@
+---
+- model: Location
+  name: id
+  indexing: id
+  mapping:
+    type: integer
+    index: not_analyzed
+
+- model: Location
+  name: name
+  indexing: name
+  mapping:
+    type: string
+    analyzer: snowball
+
+- model: Location
+  name: postal_code_prefix
+  indexing: postal_code_prefix
+  mapping:
+    type: string
+    analyzer: snowball
+
+- model: Location
+  name: country
+  indexing: country.try(:name)
+  mapping:
+    type: string
+    analyzer: snowball

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://staging.circl.ch/" />
+<title>is_an_organization_is_ticked_if_has_name_and_no_person_info</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">is_an_organization_is_ticked_if_has_name_and_no_person_info</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/people/2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@id='person']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>getEval</td>
+	<td>window.$('#person').trigger('unfolded')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//input[@name='is_an_organization']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//input[@name='first_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//input[@name='last_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='organization_name']</td>
+	<td>Complex IT Sàrl</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='first_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>//input[@name='last_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>uncheck</td>
+	<td>//input[@name='is_an_organization']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>//input[@value='update']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>//div[@id='person']/div/div/form/div/div/ul/li/b</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyText</td>
+	<td>//div[@id='person']/div/div/form/div/div/ul/li/b</td>
+	<td>exact:is_an_organization:</td>
+</tr>
+</tbody></table>
+</body>
+</html>

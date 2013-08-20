@@ -1,0 +1,49 @@
+%h1
+  = I18n.t("subscription.mail.member_added_to_subscription_title")
+  = "#{@subscription.title}"
+
+%p
+  = I18n.t("subscription.mail.the_following_members_were_added_to_the_subscription")
+  = "(#{@new_people.size}):"
+
+  %table
+    %thead
+      %tr
+        %th= I18n.t("subscription.mail.table.person_id")
+        %th= I18n.t("subscription.mail.table.first_name")
+        %th= I18n.t("subscription.mail.table.last_name")
+        %th= I18n.t("subscription.mail.table.is_an_organization")
+        %th= I18n.t("subscription.mail.table.organization_name")
+        %th= I18n.t("subscription.mail.table.email")
+    %tbody
+      - @new_people.each do |person|
+        %tr
+          %td= person.id
+          %th= person.first_name
+          %th= person.last_name
+          %th= person.is_an_organization
+          %th= person.organization_name
+          %th= person.email
+
+%p
+  = I18n.t("subscription.mail.the_following_members_were_already_in_the_subscription")
+  = "(#{@existing_people.size}):"
+
+  %table
+    %thead
+      %tr
+        %th= I18n.t("subscription.mail.table.person_id")
+        %th= I18n.t("subscription.mail.table.first_name")
+        %th= I18n.t("subscription.mail.table.last_name")
+        %th= I18n.t("subscription.mail.table.is_an_organization")
+        %th= I18n.t("subscription.mail.table.organization_name")
+        %th= I18n.t("subscription.mail.table.email")
+    %tbody
+      - @existing_people.each do |person|
+        %tr
+          %td= person.id
+          %th= person.first_name
+          %th= person.last_name
+          %th= person.is_an_organization
+          %th= person.organization_name
+          %th= person.email

@@ -1,0 +1,52 @@
+%br
+#salaries_export
+  .validation_errors_placeholder
+
+  %form{ :method =>'get', :action => '/salaries/salaries/export' }
+
+    .block
+      .stackable-block
+        %label{ :for => 'salary_is_paid', :class => 'inline'}= I18n.t('salaries.salary.views.table.paid')
+        .small
+          %input{ :name => 'paid',
+                  :id => 'salary_is_paid',
+                  :type => 'checkbox',
+                  :checked => true,
+                  :value => 1 }
+
+      .stackable-block
+        %label{ :for => 'salary_is_unpaid', :class => 'inline'}= I18n.t('salaries.salary.views.table.unpaid')
+        .small
+          %input{ :name => 'unpaid',
+                  :id => 'salary_is_unpaid',
+                  :type => 'checkbox',
+                  :checked => true,
+                  :value => 1 }
+
+    .block
+      = I18n.t("salaries.salary.views.export_interval_explanation")
+
+    .block
+      .stackable-block
+        %label{:for => 'salary_from'}= I18n.t('common.from')
+        %input{:type => 'text',
+               :name => 'from',
+               :id => 'salary_from',
+               :class => 'datepicker required',
+               :value => @export.from }
+
+      .stackable-block
+        %label{:for => 'salary_to'}= I18n.t('common.to')
+        %input{:type => 'text',
+               :name => 'to',
+               :id => 'salary_to',
+               :class => 'datepicker required',
+               :value => @export.to }
+
+      .stackable-block
+        %form
+          %br
+          %input.no_sending{ :type => 'submit', :value => I18n.t('common.toolbox_export') }
+
+      .block
+        %br

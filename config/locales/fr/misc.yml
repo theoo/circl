@@ -1,0 +1,16 @@
+---
+fr:
+  misc:
+    mailchimp:
+      already_synchronizing: Une synchronisation est déjà en cours, veuillez attendre le rapport par email.
+      mail:
+        failed_to_synchronize: La synchronisation a échouée
+        failure_report: Rapport d'échec
+        job_report: Rapport de la tâche
+        sync_report_title: Rapport de synchronisation
+        synchronization_succeed: La synchronisation a réussi
+        table:
+          code: code
+          email: email
+          message: message
+      synchronization_started: La synchronisation à démarré, un rapport sera expédié par email à %{email}.

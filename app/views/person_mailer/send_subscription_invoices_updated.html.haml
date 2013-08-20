@@ -1,0 +1,20 @@
+%h1
+  = I18n.t("subscription.mail.subscription_and_its_invoices_were_updated", :title => @subscription.title)
+
+%h2
+  = I18n.t("subscription.mail.the_following_members_were_updated") + ":"
+
+  %table
+    %thead
+      %tr
+        %th= I18n.t("subscription.mail.table.private_tag")
+        %th= I18n.t("subscription.mail.table.value")
+        %th= I18n.t("subscription.mail.table.invoice_template")
+        %th= I18n.t("subscription.mail.table.members_count")
+    %tbody
+      - @subscription.values.each do |value|
+        %tr
+          %td= value.private_tag.try(:name)
+          %td= value.value.to_view
+          %td= value.invoice_template.try(:title)
+          %td= @subscription.people_for(value.private_tag.try(:name)).count

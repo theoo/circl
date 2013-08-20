@@ -1,0 +1,199 @@
+---
+fr:
+  salaries:
+    copy_reference: copier la référence vers un groupe de personnes
+    export: Exporter les salaires
+    export_salary_certificates: ! "Exporter vers le logiciel de génération \n des certificats de salaire"
+    export_to_accounting: Exporter vers la comptabilité
+    export_to_avs: Exporter vers l'attestation de salaires OCAS
+    export_to_elohnausweisssk: Exporter vers elohnausweisssk
+    export_to_ocas: Exporter vers l'attestation de salaires OCAS
+    item:
+      line: ligne
+      views:
+        actions: actions
+        category: catégorie
+        position: position
+        summary: Résumé
+        table:
+          category: categorie
+          created_at: date de création
+          id: id
+          position: position
+          title: titre
+          value: valeur
+        taxed_items: Objets de référence
+        title: titre
+        untaxed_items: Objets additionels
+        value: valeur
+    salary:
+      errors:
+        from_and_to_dates_should_be_in_the_same_year: Les dates "de" et "à" devraient appartenir à la même année.
+        from_date_should_be_before_to_date: La date "de" devait être avant la date "à".
+        missing_reference: référence manquante
+        missing_template: Auncun modèle de salaire n'existe. Veuillez commencer par en créer un.
+        the_required_information_about_this_person_are_not_satisfied: ! 'Les informations personnelles resquises de cet employé n''ont pas été complétées et emplêchent la création d''un salaire. Veuillez vérifier et mettre à jour les champs suivants de cette personne: ''%{required_fields}'' avant de créer un salaire.'
+        to_date_should_be_after_from_date: La date "à" devait être après la date "de".
+        unable_to_destroy_a_reference_which_has_children_salaries: Impossible de détruire un salaire de référence dont des salaires dépendent.
+      is_not_a_reference: n'est pas une référence
+      template_item_category: Revenus
+      template_item_title: Revenu brut
+      views:
+        activity_rate: taux d'occupation
+        brut_account: compte du salaire brut
+        children_count: nombre d'enfants
+        civil_status: état civil
+        contextmenu:
+          check_as_paid: marquer comme payé
+          copy_reference: copier la référence vers un groupe de personnes
+          destroy_salary: détruire le salaire
+          edit_salary: modifier le salaire
+          salary_preview: prévisualisation du salaire
+          show_salary_pdf: afficher le PDF du salaire
+        creation_date: date de création
+        details: détails
+        edit_salary: modifier le salaire
+        employer_account: compte des retenues employeur
+        employer_part: part employeur
+        export_interval_explanation: L'intervale sélectionnée doit correspondre à l'intervale couverte par les salaires et non à leurs dates de création.
+        from: de
+        gross: BRUT
+        gross_pay: salaire brut
+        items: objets
+        married: marrié(e)
+        net: NET
+        net_account: compte du salaire net
+        net_salary_total: Salaire net
+        new_salary: nouveau salaire
+        reference: référence
+        references: références
+        salaries: salaires
+        salary: salaire
+        salary_template: modèle de salaire
+        summary: résumé
+        table:
+          created_at: créer le
+          employee_percent: part employé
+          employee_use_percent: pourcentage utilisé
+          employee_value: valeur employé
+          employer_percent: part employeur
+          employer_use_percent: pourcentage utilisé
+          employer_value: valeur employeur
+          id: id
+          is_template: est un modèle
+          net_salary: salaire net
+          paid: payé
+          person: employé
+          reference: référence
+          reference_title: titre de la référence
+          reference_value: valeur de la référence
+          salary_id: salary id
+          tax_id: tax id
+          template: modèle
+          template_title: titre du modèle
+          title: titre
+          type: type
+          unpaid: non payé
+          updated_at: date de mise à jour
+          year: année
+        tax_data: retenues
+        template: modèle
+        templates: modèles
+        title: titre
+        to: à
+        year: année
+        yearly_salary: salaire annuel
+        yearly_salary_count: nombre de salaire par an
+    salary_template:
+      views:
+        contextmenu:
+          destroy_salary_template: détruire le modèle de salaire
+          edit_salary_template: modifier le modèle de salaire
+        edit_template: modifier le modèle
+        new_template: nouveau modèle
+        placeholders:
+          person_address: adresse de la personne
+          person_bank_information: informations bancaires de la personne
+          person_name: nom complet de la personne
+          placeholders: emplacements
+          salary_advanced_details: détails avancés du salaire (retenues employé et organisation)
+          salary_created_at: date de création du salaire
+          salary_details: détails du salaire (retenues employé)
+          salary_from: début de l'intervale du salaire
+          salary_id: ID unique du salaire
+          salary_interval_in_days: intervale du salaire en jours
+          salary_month_year: mois et année du salaire
+          salary_title: titre du salaire
+          salary_to: fin de l'intervale du salaire
+          salary_yearly_salary: salaire annuel
+        summary: résumé
+        table:
+          created_at: créé le
+          employee_percent: part employé
+          employee_value: valeur employé
+          employer_percent: part employeur
+          employer_value: valeur employeur
+          reference_value: valeur de référence
+          thumb: miniature
+          title: titre
+        template:
+          person_bank_information: informations bancaires
+          salary_advanced_details: retenues détaillées
+          salary_created_at: date d'émission du salaire
+          salary_details: retenues
+          salary_from: début de l'intervale
+          salary_id: ID du salaire
+          salary_interval: intervale du salaire
+          salary_interval_in_days: nombre de jours
+          salary_to: fin de l'intervale
+          salary_yearly_salary: revenu annuel
+        title: titre
+    summary:
+      views:
+        category: catégorie
+        net_salary_total: salaire net total
+        total: total
+    tas:
+      errors:
+        unable_to_destroy_a_tax_which_is_used: unable to destroy a tax which is used
+    tax:
+      errors:
+        unable_to_destroy_a_tax_which_is_used: Impossible de détruire une retenue employée.
+      views:
+        age_tax_example_file_desc: Fichier d'exemple pour une retenue basée sur l'age
+        available_years: années disponibles
+        contextmenu:
+          destroy_tax: détruire la retenue
+          edit_tax: modifier la retenue
+          show_tax_data: inspecter les données
+          upload_tax_data: téléverser une mise à jour
+        destination_account: compte de destination
+        employee_account: compte des retenues employés
+        employer_account: compte des retenues employeurs
+        example_files_explanation: Ci-dessous peuvent être téléchargés trois fichiers d'exemple pour mettre à jour les retenues. D'avantage d'information peut être obtenue sur <a href='http://tracker.circl.ch/projects/circl/wiki/D%C3%A9ductions'>la documentation de CIRCL</a>.
+        example_files_title: Fichieris d'exemple
+        exporter_group: groupe de retenue des certificats
+        generic_tax_example_file_desc: Fichier d'exemple pour une retenue générique
+        is_tax_example_file_desc: Fichier d'exemple pour la retenue de l'impôt à la source
+        model: modèle
+        number_of_rows: nombre de lignes
+        title: titre
+        total: total
+        upload_tax: téléverser une mise à jour
+    tax_data:
+      views:
+        actions: actions
+        employee_percent: taux employé(e) (%)
+        employee_value: valeur employé(e)
+        employer_percent: taux employeur (%)
+        employer_value: valeur employeur
+        position: position
+        reference_value: valeur de référence
+        taxed_value: valeur déduite
+        title: titre
+    views:
+      contextmenu:
+        preview_pdf: prévisualisation du salaire
+      salary_templates: Modèles de salaire
+      taxes: Déductions
+      taxes_data: données de retenue

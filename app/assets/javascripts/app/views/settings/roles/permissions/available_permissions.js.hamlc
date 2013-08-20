@@ -1,0 +1,23 @@
+%menu.context_menu_actions
+  %command{ :data-label => I18n.t('permission.views.contextmenu.add_permission'),
+            :data-event => 'available-permission-add',
+            :data-icon => 'delete' }
+
+%table{:name => 'settings_available_permissions', :class => 'with_contextmenu datatable'}
+  %thead
+    %tr
+      %th= I18n.t('permission.views.table.action')
+      %th= I18n.t('permission.views.table.subject')
+
+  %tbody
+    - for permission in @available_permissions
+
+      - actions = [ I18n.t('permission.views.contextmenu.add_permission') ]
+
+      %tr{:data-id => permission.id,
+          :data-actions => actions }
+        %td= permission.action
+        %td= permission.subject
+
+/ add space between tables
+%br

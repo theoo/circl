@@ -1,0 +1,109 @@
+#  CIRCL Directory
+#  Copyright (C) 2011 Complex IT sàrl
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU Affero General Public License as
+#  published by the Free Software Foundation, either version 3 of the
+#  License, or (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU Affero General Public License for more details.
+#
+#  You should have received a copy of the GNU Affero General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+#= require jquery
+#= require jquery.contextMenu
+#= require jquery.cookie
+#= require jquery.ui
+#= require jquery.ui.position
+#= require jquery.iframe-transport
+#= require jquery_serialize_object
+#
+#= require jquery_ujs
+#= require password_strength
+#= require jquery.strength
+#
+#= require hamlcoffee
+#= require app
+#= require_tree ./datatables
+
+Ui.initialize_ui();
+
+##################
+### PROTOTYPING ##
+##################
+
+# very simple humanize method...
+String.prototype.humanize = ->
+  string = @
+  string = string.replace("_", " ")
+  string = string.substring(0, 1).toUpperCase() + string.substring(1)
+  string
+
+Array.prototype.to_property = ->
+  hash = {}
+  hash[@[0]] = @[1]
+  hash
+
+# quick search
+$(document).ready ->
+  $("#quick_search form").on 'submit', (e) ->
+    input = $('#quick_search_string')[0]
+    value = input.value
+    if(value.match(/\d+/g) != null)
+      window.location = '/people/' + value
+    else
+      window.location = '/directory?query=' + App.escape_query({ search_string: input.value })
+    return false
+
+  # This overrides HTML5 behavior which doesn't clear inputs on focus but when typing
+  $("#quick_search input[type='search']").on 'focus', (e) ->
+    $(e.target).attr('placeholder', '')
+
+  # This resets the placeholder when clicking on the clear button
+  $("#quick_search input[type='search']").on 'search', (e) ->
+    $(e.target).attr('placeholder', I18n.t('directory.views.quick_search_placeholder'))
+
+Number.prototype.to_view = (num)->
+    # this defines currency precision - decimals
+    num = @ unless num
+
+    # TODO load config from application settings
+    thousands_separator = "'"
+    decimal_mark = "."
+    with_currency = false
+    precision = 2
+
+    money = num.toFixed(precision)
+
+    # ensure this computation is usefull
+    if num >= 1000
+      # split the fixed in two
+      a = String(money).match(/^(\d+)(.\d{2})$/)
+      integers = a[1]
+      decimals = a[2]
+
+      # test the length and save remains of the modulo of three
+      remaining_digits_length = integers.length % 3
+      remaining_digits = integers.slice(0,remaining_digits_length) # from the begining to the index
+      thousands = integers.slice(remaining_digits_length) # from the index to the end
+
+      if thousands.length > 3
+        thousands = thousands.match(/\d{3}/g)
+      else
+        thousands = [thousands]
+
+      thousands.splice(0,0,remaining_digits) if remaining_digits_length > 0
+      integers_with_separators = thousands.join(thousands_separator)
+
+      money = integers_with_separators + decimals
+
+    return money # as a string
+
+# If I dared to write somewhere how javascript sucks that would be here.
+Date.prototype.to_view = (date)->
+  # TODO localization
+  @.getDate() + "-" + (@.getMonth() + 1) + "-" + @.getFullYear()

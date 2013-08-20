@@ -1,0 +1,490 @@
+---
+- model: Person
+  name: id
+  indexing: id
+  mapping:
+    type: multi_field
+    fields:
+      id:
+        type: integer
+        index: not_analyzed
+      sort:
+        type: integer
+        index: not_analyzed
+  group: Person
+
+- model: Person
+  name: title
+  indexing: title
+  mapping:
+    type: multi_field
+    fields:
+      title:
+        type: string
+        index: not_analyzed
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: first_name
+  indexing: first_name
+  mapping:
+    type: multi_field
+    fields:
+      first_name:
+        type : string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: last_name
+  indexing: last_name
+  mapping:
+    type: multi_field
+    fields:
+      last_name:
+        type : string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: hidden
+  indexing: hidden
+  mapping:
+    type: multi_field
+    fields:
+      hidden:
+        type: boolean
+        index: not_analyzed
+      sort:
+        type: boolean
+        index: not_analyzed
+  group: Person
+
+- model: Person
+  name: is_an_organization
+  indexing: is_an_organization
+  mapping:
+    type: multi_field
+    fields:
+      is_an_organization:
+        type: boolean
+        index: not_analyzed
+      sort:
+        type: boolean
+        index: not_analyzed
+  group: Person
+
+- model: Person
+  name: organization_name
+  indexing: organization_name
+  mapping:
+    type: multi_field
+    fields:
+      organization_name:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: phone
+  indexing: phone
+  mapping:
+    type: multi_field
+    fields:
+      phone:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: second_phone
+  indexing: second_phone
+  mapping:
+    type: multi_field
+    fields:
+      second_phone:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: mobile
+  indexing: mobile
+  mapping:
+    type: multi_field
+    fields:
+      mobile:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: address
+  indexing: address
+  mapping:
+    type: multi_field
+    fields:
+      address:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: email
+  indexing: email
+  mapping:
+    type: multi_field
+    fields:
+      email:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: second_email
+  indexing: second_email
+  mapping:
+    type: multi_field
+    fields:
+      second_email:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: npa
+  indexing: location.try(:postal_code_prefix)
+  mapping:
+    type: multi_field
+    fields:
+      npa:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: town
+  indexing: location.try(:name)
+  mapping:
+    type: multi_field
+    fields:
+      town:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: npa_town
+  indexing: location.try(:npa_town)
+  mapping:
+    type: multi_field
+    fields:
+      npa_town:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: country
+  indexing: location.try(:country).try(:name)
+  mapping:
+    type: multi_field
+    fields:
+      country:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: birth_date
+  indexing: birth_date.try(:iso8601)
+  mapping:
+    type: multi_field
+    fields:
+      birth_date:
+        type: date
+        index: not_analyzed
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: nationality
+  indexing: nationality
+  mapping:
+    type: multi_field
+    fields:
+      nationality:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: avs_number
+  indexing: avs_number
+  mapping:
+    type: multi_field
+    fields:
+      avs_number:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: bank_informations
+  indexing: bank_informations
+  mapping:
+    type: multi_field
+    fields:
+      bank_informations:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: created_at
+  indexing: created_at.iso8601
+  mapping:
+    type: multi_field
+    fields:
+      created_at:
+        type: date
+        index: not_analyzed
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+# Relations
+- model: Person
+  name: job
+  indexing: job.try(:as_indexed_json)
+  mapping:
+    type: object
+    properties: Job.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: private_tags
+  indexing: private_tags.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: PrivateTag.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: public_tags
+  indexing: public_tags.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: PublicTag.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: roles
+  indexing: roles.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Role.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: translation_aptitudes
+  indexing: translation_aptitudes.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: TranslationAptitude.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: main_communication_language
+  indexing: main_communication_language.try(:as_indexed_json)
+  mapping:
+    type: object
+    properties: Language.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: communication_languages
+  indexing: communication_languages.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Language.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: subscriptions
+  indexing: subscriptions.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Subscription.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: paid_subscriptions
+  indexing: paid_subscriptions.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Subscription.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: unpaid_subscriptions
+  indexing: unpaid_subscriptions.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Subscription.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: subscriptions_as_buyer
+  indexing: subscriptions_as_buyer.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Subscription.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: subscriptions_as_receiver
+  indexing: subscriptions_as_receiver.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Subscription.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: affairs
+  indexing: affairs.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Affair.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: paid_affairs
+  indexing: paid_affairs.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Affair.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: unpaid_affairs
+  indexing: unpaid_affairs.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Affair.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: affairs_as_buyer
+  indexing: affairs_as_buyer.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Affair.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: affairs_as_receiver
+  indexing: affairs_as_receiver.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Affair.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: invoices
+  indexing: invoices.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Invoice.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: receipts
+  indexing: receipts.map(&:as_indexed_json)
+  mapping:
+    type: object
+    properties: Receipt.mapping
+    include_in_all: false
+  group: Relations
+
+# Permissions
+- model: Person
+  name: accessible_by
+  indexing: accessible_by
+  mapping:
+    type: string
+    index: not_analyzed
+    include_in_all: false
+  group:

@@ -1,0 +1,9 @@
+.validation_errors_placeholder
+
+#search
+  %center
+    %h1= I18n.t('directory.views.search_the_directory')
+
+    %input{:type => 'search', :name => 'search_string', :id => 'search_string', :value => @query_preset.query?.search_string }
+    %br
+    %input{:type => 'submit', :data-action => 'search', :data-title => @text }

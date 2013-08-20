@@ -1,0 +1,14 @@
+---
+fr:
+  comment:
+    views:
+      contextmenu:
+        close_comment: clore le commentaire
+        destroy_comment: détruire le commentaire
+        edit_comment: modifier le commentaire
+      description: description
+      table:
+        comment: commentaire
+        created_at: date
+        editor: éditeur
+      title: titre

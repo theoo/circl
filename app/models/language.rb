@@ -1,0 +1,96 @@
+=begin
+  CIRCL Directory
+  Copyright (C) 2011 Complex IT sàrl
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation, either version 3 of the
+  License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+=end
+
+# == Schema Information
+#
+# Table name: languages
+#
+# *id*::   <tt>integer, not null, primary key</tt>
+# *name*:: <tt>string(255), default("")</tt>
+# *code*:: <tt>string(255), default("")</tt>
+#--
+# == Schema Information End
+#++
+
+class Language < ActiveRecord::Base
+
+  ################
+  ### INCLUDES ###
+  ################
+
+  include ChangesTracker
+  include ElasticSearch::Mapping
+  include ElasticSearch::Indexing
+
+  #################
+  ### CALLBACKS ###
+  #################
+
+  #################
+  ### RELATIONS ###
+  #################
+
+  has_many :main_people,
+           :class_name => 'Person',
+           :foreign_key => :main_communication_language_id
+  has_many  :translation_aptitudes
+  has_many  :invoice_templates
+  has_many  :salaries_salary_templates
+
+  has_and_belongs_to_many :communication_people, #communication_languages
+                          :class_name => 'Person',
+                          :join_table => 'people_communication_languages',
+                          :uniq => true,
+                          :after_add => :update_elasticsearch_index,
+                          :after_remove => :update_elasticsearch_index
+
+  ###################
+  ### VALIDATIONS ###
+  ###################
+
+  validates_presence_of :name
+  validates_uniqueness_of :name
+
+  # Validate fields of type 'string' length
+  validates_length_of :name, :maximum => 255
+  validates_length_of :code, :maximum => 255
+
+
+  ########################
+  ### INSTANCE METHODS ###
+  ########################
+
+  # Returns the code as a downcased symbol.
+  def symbol
+    # Code is user-defined, ensure it's existing.
+    sym = self.code.downcase.to_sym
+    I18n.available_locales.index(sym) ? sym : :en
+  end
+
+  def reindex_people_if_needed
+    reindex_people unless tracked_changes.empty?
+    true
+  end
+
+  def reindex_people
+    ids = main_people.map(&:id) + communication_people.map(&:id)
+    BackgroundTasks::UpdateIndexForPeople.schedule(:people_ids => ids.uniq)
+    true
+  end
+
+end

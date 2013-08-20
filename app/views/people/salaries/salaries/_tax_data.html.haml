@@ -1,0 +1,35 @@
+%h2= I18n.t("salaries.views.taxes")
+
+%table.tax_data
+  %thead
+    %tr
+    - options[:fields].each do |field|
+      %th= I18n.t("salaries.salary.views.table." + field.to_s)
+
+  %tbody
+    - salary.tax_data.each do |data|
+      %tr
+        - options[:fields].each do |f|
+          - field = data.send(f)
+
+          - if field.is_a? Time
+            %td= field.to_date
+          - elsif field.is_a? Money
+            %td.number= field.to_view
+          - else
+            %td= field
+
+    - employee_value_index = options[:fields].index(:employee_value)
+    - employer_value_index = options[:fields].index(:employer_value)
+
+    - if employee_value_index or employer_value_index
+      %tr
+        - options[:fields].each do |f|
+          - if f == :employee_value
+            %td.number
+              %b= salary.employee_value_total.to_view
+          - elsif f == :employer_value
+            %td.number
+              %b= salary.employer_value_total.to_view
+          - else
+            %td

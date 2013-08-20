@@ -1,0 +1,17 @@
+%br
+#salaries_export
+  .validation_errors_placeholder
+
+  %form{ :method =>'get', :action => '/salaries/salaries/export_certificates' }
+
+    .block
+      .stackable-block
+        %label{:for => 'salaries_year'}= I18n.t('common.year')
+        %select{:name => 'year', :id => 'salaries_year'}
+          - for y in [@from...@to]
+            %option{:value => y}= y
+          %option{:value => @to, :selected => true}= y
+
+      .stackable-block
+        .white &nbsp;
+        %input.no_sending{ :type => 'submit', :value => I18n.t('common.toolbox_export') }

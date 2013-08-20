@@ -1,0 +1,41 @@
+%form
+  .validation_errors_placeholder
+
+  .block
+    .float_right
+      != @partial('submit_button')(@search_attribute)
+
+    %label= I18n.t('search_attribute.views.model')
+    %input{ :type => 'text',
+            :name => 'model',
+            :value => @search_attribute.model,
+            :class => 'required' }
+  .block
+    %label= I18n.t('search_attribute.views.name')
+    %input{ :type => 'text',
+            :name => 'name',
+            :value => @search_attribute.name,
+            :class => 'required' }
+
+  .block
+    %label= I18n.t('search_attribute.views.indexing')
+    .full_width_textarea
+      %textarea{:name => 'indexing',
+                :rows => 5,
+                :class => 'like_an_input required' }
+        = @search_attribute.indexing
+  .block
+    %label= I18n.t('search_attribute.views.mapping')
+    .full_width_textarea
+      %textarea{:name => 'mapping',
+                :rows => 5,
+                :class => 'like_an_input required' }
+        = JSON.stringify(@search_attribute.mapping, null, 4)
+
+  .block
+    %label= I18n.t('search_attribute.views.group')
+    %input{ :type => 'text',
+            :name => 'group',
+            :value => @search_attribute.group }
+
+.block

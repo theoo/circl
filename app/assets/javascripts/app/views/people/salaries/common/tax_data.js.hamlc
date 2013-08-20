@@ -1,0 +1,99 @@
+%h3.section= I18n.t('salaries.salary.views.tax_data')
+
+.validation_errors_placeholder
+
+%form
+  %table.category
+    %thead
+      %tr
+        %th= I18n.t('salaries.tax_data.views.position')
+        %th= I18n.t('salaries.tax_data.views.title')
+        %th= I18n.t('salaries.tax_data.views.reference_value')
+        %th= I18n.t('salaries.tax_data.views.taxed_value')
+        %th= I18n.t('salaries.tax_data.views.employer_percent')
+        %th= I18n.t('salaries.tax_data.views.employer_value')
+        %th= I18n.t('salaries.tax_data.views.employee_percent')
+        %th= I18n.t('salaries.tax_data.views.employee_value')
+        %th= I18n.t('salaries.tax_data.views.actions')
+
+    %tbody
+      - for data, unique_id in @salary.tax_data
+        %tr{:data-position => unique_id}
+          %td.handle
+            %span.sort_handle.ui-icon.ui-icon-arrowthick-2-n-s
+          %td
+            %input{ :name => 'tax_data[#{unique_id}][id]',
+                    :type => 'hidden',
+                    :value => data.id }
+            %input{ :name => 'tax_data[#{unique_id}][position]',
+                    :type => 'hidden',
+                    :value => unique_id }
+            = data.tax_title
+          %td.align_right
+            = data.reference_value.to_view() if data.reference_value
+          %td.align_right
+            = data.taxed_value.to_view() if data.taxed_value
+          %td.tax
+            %input{ :name => 'tax_data[#{unique_id}][employer_percent]',
+                    :type => 'number',
+                    :data-type => 'percentage',
+                    :step => 0.001,
+                    :min => 0.0,
+                    :value => data.employer_percent }
+            %input{ :name => 'tax_data[#{unique_id}][employer_use_percent]',
+                    :type => 'radio',
+                    :value => 1,
+                    :checked => data.employer_use_percent }
+          %td.tax
+            %input{ :name => 'tax_data[#{unique_id}][employer_value]',
+                    :data-type => 'value',
+                    :type => 'number',
+                    :step => 0.01,
+                    :min => 0.0,
+                    :value => data.employer_value }
+            %input{ :type => 'radio',
+                    :name => 'tax_data[#{unique_id}][employer_use_percent]',
+                    :value => 0,
+                    :checked => !data.employer_use_percent }
+          %td.tax
+            %input{ :name => 'tax_data[#{unique_id}][employee_percent]',
+                    :data-type => 'percentage',
+                    :type => 'number',
+                    :step => 0.001,
+                    :min => 0.0,
+                    :value => data.employee_percent }
+            %input{ :name => 'tax_data[#{unique_id}][employee_use_percent]',
+                    :type => 'radio',
+                    :value => 1,
+                    :checked => data.employee_use_percent }
+          %td.tax
+            %input{ :name => 'tax_data[#{unique_id}][employee_value]',
+                    :data-type => 'value',
+                    :type => 'number',
+                    :step => 0.01,
+                    :min => 0.0,
+                    :value => data.employee_value }
+            %input{ :name => 'tax_data[#{unique_id}][employee_use_percent]',
+                    :type => 'radio',
+                    :value => 0,
+                    :checked => !data.employee_use_percent }
+          %td
+            %input{ :type => 'button', :value => 'Reset', :class => 'reset' }
+            %input{ :type => 'button', :value => 'Adjust', :class => 'adjust' }
+
+      %tr.bold
+        %td
+        %td
+        %td
+        %td
+        %td
+        %td.number= @salary.employer_value_total.to_view() if @salary.employer_value_total
+        %td
+        %td.number= @salary.employee_value_total.to_view() if @salary.employee_value_total
+        %td
+
+  %br
+
+  .block
+  .align_right
+    != @partial('submit_button')(@salary)

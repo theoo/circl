@@ -1,0 +1,122 @@
+%h1
+  = I18n.t("receipt.mail.receipts_file_import_report_title")
+
+%p
+  - if @errors
+
+    %h2
+      = I18n.t("receipt.mail.errors_occured")
+
+    = I18n.t("receipt.mail.one_or_more_lines_are_not_formated_correctly") + "."
+    %br
+    = I18n.t("receipt.mail.lines_should_be_formatted_as_following") + ":"
+
+    %table
+      %thead
+        %tr
+          %th= I18n.t("receipt.mail.table.part")
+          %th= I18n.t("receipt.mail.table.number_of_characters")
+          %th= I18n.t("receipt.mail.table.from")
+          %th= I18n.t("receipt.mail.table.to")
+          %th= I18n.t("receipt.mail.table.info")
+      %tbody
+        %tr
+          %td= I18n.t("receipt.mail.table.application_id")
+          %td 6
+          %td 1
+          %td 6
+          %td= I18n.t("receipt.mail.table.padded_by_zeros_at_its_left")
+        %tr
+          %td= I18n.t("receipt.mail.table.invoice_date")
+          %td 6
+          %td 7
+          %td 12
+          %td= I18n.t("receipt.mail.table.date_format_ddmmyy")
+        %tr
+          %td= I18n.t("receipt.mail.table.person_id")
+          %td 6
+          %td 13
+          %td 18
+          %td= I18n.t("receipt.mail.table.padded_by_zeros_at_its_left")
+        %tr
+          %td= I18n.t("receipt.mail.table.invoice_id")
+          %td 6
+          %td 19
+          %td 24
+          %td= I18n.t("receipt.mail.table.padded_by_zeros_at_its_left")
+        %tr
+          %td= I18n.t("receipt.mail.table.available_digits")
+          %td 2
+          %td 25
+          %td 26
+          %td= I18n.t("receipt.mail.table.should_be_two_zeros")
+        %tr
+          %td= I18n.t("receipt.mail.table.checksum_digits")
+          %td 1
+          %td 27
+          %td 27
+          %td
+
+    %br
+    = I18n.t("receipt.mail.errors_occured_on_theses_lines") + ":"
+
+    %table
+      %thead
+        %tr
+          %th= I18n.t("receipt.mail.table.message")
+          %th= I18n.t("receipt.mail.table.account")
+          %th= I18n.t("receipt.mail.table.type")
+          %th= I18n.t("receipt.mail.table.bvr_reference")
+          %th= I18n.t("receipt.mail.table.value")
+          %th= I18n.t("receipt.mail.table.date_value")
+      %tbody
+        - @errors.each do |info|
+          - if info.has_key? :line
+            - h = BankImporter::Postfinance.parse_receipt(info[:line]) || {}
+            %tr
+              %td= info[:message]
+              %td= info[:line]
+              %td= h[:account]
+              %td= h[:type]
+              %td= h[:bvr_ref]
+              %td= h[:value_in_cents] ? Money.new(h[:value_in_cents]).to_view : ''
+              %td= h[:date_value]
+          - else
+            %tr
+              %td{:colspan => 7}= info.inspect
+
+%p
+  %h2
+    = I18n.t("receipt.mail.receipts")
+
+  %table
+    %thead
+      %tr
+        %th= I18n.t("receipt.mail.table.person_id")
+        %th= I18n.t("receipt.mail.table.invoice_id")
+        %th= I18n.t("receipt.mail.table.receipt_id")
+        %th= I18n.t("receipt.mail.table.receipt_date")
+        %th= I18n.t("receipt.mail.table.receipt_value")
+        %th= I18n.t("receipt.mail.table.already_imported")
+        %th= I18n.t("receipt.mail.table.rectification")
+        %th= I18n.t("receipt.mail.table.selected")
+    %tbody
+      - @receipts.each do |info|
+        %tr
+          %td
+            - if Person.exists?(info[:owner_id])
+              - person = Person.find(info[:owner_id])
+              = link_to person.name, person_path(person)
+              (
+              = info[:owner_id]
+              )
+            - else
+              = info[:owner_id]
+
+          %td= info[:invoice_id]
+          %td= info[:receipt_id]
+          %td= info[:value_date]
+          %td= info[:rectification] == 'true' ? ("#{Money.new(info[:old_value_in_cents].to_i).to_view} -> #{Money.new(info[:value_in_cents].to_i).to_view}") : Money.new(info[:value_in_cents].to_i).to_view
+          %td= info[:already_imported]
+          %td= info[:rectification]
+          %td= !!info[:selected]

@@ -1,0 +1,4 @@
+---
+- subject: Person
+  action: restricted_attributes
+  hash_conditions: '{:id => user.id}'

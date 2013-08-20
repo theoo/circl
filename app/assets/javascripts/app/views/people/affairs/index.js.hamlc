@@ -1,0 +1,87 @@
+- edit_affair_trad = I18n.t('affair.views.contextmenu.edit_affair')
+- edit_prestations_trad = I18n.t('affair.views.contextmenu.edit_prestations')
+- edit_invoices_and_receipts_trad = I18n.t('affair.views.contextmenu.edit_invoices_and_receipts')
+- destroy_affair_trad = I18n.t('affair.views.contextmenu.destroy_affair')
+- show_owner_trad = I18n.t('affair.views.contextmenu.show_owner')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_affair_trad,
+            :data-event => 'affair-edit',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => edit_prestations_trad,
+            :data-event => 'affair-edit-prestations',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => edit_invoices_and_receipts_trad,
+            :data-event => 'affair-edit-invoices-and-receipts',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => show_owner_trad,
+            :data-event => 'affair-show-owner',
+            :data-icon => 'show' }
+
+  %command{ :data-label => destroy_affair_trad,
+            :data-event => 'affair-destroy',
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th= I18n.t('affair.views.table.id')
+      %th= I18n.t('affair.views.table.title')
+      %th= I18n.t('affair.views.table.value')
+      %th= I18n.t('affair.views.table.invoices_value')
+      %th= I18n.t('affair.views.table.receipts_value')
+      %th= I18n.t('affair.views.table.relations')
+      %th= I18n.t('affair.views.table.status')
+      %th.desc= I18n.t('affair.views.table.created_at')
+
+  %tbody
+    - for affair in App.PersonAffair.all()
+      - affair.owner_id = parseInt(affair.owner_id)
+      - @person_id = parseInt(@person_id)
+
+      - if affair.owner_id == @person_id
+        - actions = [edit_affair_trad, edit_prestations_trad, edit_invoices_and_receipts_trad, destroy_affair_trad]
+        - classes = ''
+
+      - else
+        - classes = 'someone_else'
+        - actions = [show_owner_trad]
+
+      %tr{:data-id => affair.id, :data-actions => actions, :class => classes}
+        %td= affair.id
+        %td= affair.title
+        %td.number= affair.value.to_view()
+        %td.number= affair.invoices_value.to_view()
+        %td.number= affair.receipts_value.to_view()
+        %td
+          = I18n.t("affair.views.table.owner")  + ": "
+          - if affair.owner_id == @person_id
+            .me
+              = affair.owner_name
+          - else
+            .someone_else
+              = affair.owner_name
+          %br
+
+          = I18n.t("affair.views.table.buyer")  + ": "
+          - if affair.buyer_id == @person_id
+            .me
+              = affair.buyer_name
+          - else
+            .someone_else
+              = affair.buyer_name
+          %br
+
+          = I18n.t("affair.views.table.receiver") + ": "
+          - if affair.receiver_id == @person_id
+            .me
+              = affair.receiver_name
+          - else
+            .someone_else
+              = affair.receiver_name
+
+        %td= affair.statuses
+        %td= affair.created_at

@@ -1,0 +1,5 @@
+.presets
+  %h3= I18n.t('directory.views.fields.presets')
+  %ul
+    - for query_preset in App.QueryPreset.all()
+      %li{:class => 'preset ui-state-default', :data-id => query_preset.id}= query_preset.name

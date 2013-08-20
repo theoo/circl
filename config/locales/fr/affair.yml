@@ -1,0 +1,43 @@
+---
+fr:
+  affair:
+    view:
+      edit_invoices_and_receipts: modifier les factures & reçus
+      edit_prestations: modifier les prestations
+    views:
+      buyer: payeur
+      contextmenu:
+        destroy_affair: détuire l'affaire
+        edit_affair: modifier l'affaire
+        edit_invoices_and_receipts: modifier les factures & reçus
+        edit_prestations: modifier les prestations
+        show_owner: consulter la page du propriétaire
+      description: description
+      from: de
+      owner: personne
+      receiver: receveur
+      statuses:
+        cancelled: annulée
+        offered: offerte
+        open: ouverte
+        overpaid: surpayée
+        paid: payée
+        partially_paid: partiellement payée
+        underpaid: sous-payée
+      table:
+        buyer: payeur
+        created_at: crée le
+        id: id
+        invoices_count: nombre de factures
+        invoices_value: valeur des factures
+        owner: propriétaire
+        paid: payé
+        receipts_count: nombre de reçus
+        receipts_value: valeur des reçus
+        receiver: receveur
+        relations: relations
+        status: statut
+        title: titre
+        value: valeur
+      title: titre
+      value: valeur

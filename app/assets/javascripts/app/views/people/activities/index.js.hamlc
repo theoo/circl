@@ -1,0 +1,19 @@
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th.desc= I18n.t('activity.views.table.created_at')
+      %th= I18n.t('activity.views.table.person')
+      %th= I18n.t('activity.views.table.action')
+      %th= I18n.t('activity.views.table.resource_type')
+      %th= I18n.t('activity.views.table.resource_id')
+      %th= I18n.t('activity.views.table.description')
+
+  %tbody
+    - for activity in @activities
+      %tr{:data-id => activity.id}
+        %td= activity.created_at
+        %td= activity.person_name
+        %td= activity.action
+        %td= activity.resource_type
+        %td= activity.resource_id
+        %td= activity.formatted_data

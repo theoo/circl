@@ -1,0 +1,33 @@
+---
+en:
+  devise:
+    mail:
+      change_my_password: Change my password
+      click_the_link_below_to_unlock_your_account: ! 'Click the link below to unlock your account:'
+      confirm_my_account: Confirm my account
+      hello: Hello
+      if_you_didnt_request_this: If you didn't request this, please ignore this email.
+      someone_has_requested_a_link_to_change_your_password: Someone has requested a link to change your password, and you can do this through the link below.
+      unlock_my_account: Unlock my account
+      welcome: Welcome
+      you_can_confirm_your_account_through_the_link_below: ! 'You can confirm your account through the link below:'
+      your_account_has_been_locked: Your account has been locked due to an excessive amount of unsuccessful sign in attempts.
+      your_password_wont_change_until_you_access_the_link_above_and_create_a_new_one: Your password won't change until you access the link above and create a new one.
+    views:
+      back_to_login_page: Back to login page
+      change_my_password: change my password
+      change_your_password: change your password
+      confirm_new_password: confirm new password
+      email: email
+      i_dont_have_an_account: I dont have an account
+      i_have_an_account: I have an account
+      login: Login
+      new_password: new password
+      password: password
+      remember_me: remember me
+      request_new_password: Request new password
+      request_new_password_explanation: You must be registered to the directory beforehand.
+      request_new_password_explanation_title: Please insert your email address below to request a new password.
+      resend_confirmation_instructions: resend confirmation instructions
+      resend_unlock_instructions: resend unlock instructions
+      sign_in: Sign in

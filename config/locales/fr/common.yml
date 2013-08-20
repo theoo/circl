@@ -1,0 +1,68 @@
+---
+fr:
+  common:
+    a_webapp_developped_by: Une application développée par
+    add: ajouter
+    administration: Administration
+    already_synchronizing: Une synchronisation est déjà en cours.
+    are_you_sure: en êtes-vous sur?
+    browser:
+      a_modern_browser_is_requied: Un navigateur moderne et compatible avec HTML5/JS/CSS3 est requis.
+      currently_supported_browser_are: CIRCL supporte actuellement ces navigateurs
+      mobile_browsers: navigateurs mobiles
+      multiplateform_browsers: navigateurs multiplateforme
+    clip_all_widgets: fermer tous les widgets
+    create: créer
+    dashboard: Tableau de bord
+    destroy: détruire
+    directory: Annuaire
+    error: erreur
+    errors:
+      absence_of_identifier: Identifiant manquant.
+      date_cannot_be_in_the_future: La date ne peut pas être dans le futur.
+      date_must_match_format: la date doit correspondre au format JJ-MM-AAAA
+      does_not_point_to_valid_model: Ne pointe pas vers un modèle valable.
+      duration_must_be_positive: La durée doit être positive.
+      end_must_be_after_start: La date de fin doit être après la date de début.
+      if_you_think_it_s_a_bug: ! 'Si vous pensez qu''il s''agit d''un bug, veuillez nous écire par email à l''adresse: <a href=''mailto:support@circl.ch''>support@circl.ch</a>'
+      invalid_date: La date n'est pas valide.
+      invalid_phone: Le format n'est pas valide, vous devez utiliser un format comme "+11 22 333 44 55" (entre 7 et 18 numéros).
+      must_provide_first_name_if_last_name: Il doit y avoir un prénom s'il y a un nom de famille.
+      must_provide_last_name_if_first_name: Il doit y avoir un nom de famille s'il y a un prénom.
+      please_verify_rights_and_record: Veuillez vérifier que vous êtes autorisé à effectuer cette action, et assurez vous que cette action est valable pour cet enregistrement.
+    expand_all_widgets: ouvrir toutes les widgets
+    export_to: exporter vers
+    failed_to_create: Echec lors de la création.
+    failed_to_destroy: Echec lors de la destruction.
+    failed_to_retrive_data: Impossible de récupérer les données.
+    failed_to_update: Echec lors de la mise à jour.
+    false: non
+    file: fichier
+    from: de
+    id: id
+    language_name: français
+    none: aucun
+    not_implemented: Cette fonctionalité n'est pas encore implémentée
+    notice: Notification
+    parent: parent
+    rearrange_widgets: réarranger tous les widgets
+    released_under: livré sous la version 3 de la license
+    requires_browser_update: Une mise à jour de votre navigateur est requise pour consulter cette page.
+    salaries: Salaires
+    sending: envoi...
+    settings: Configuration
+    successfully_created: création réussie
+    successfully_destroyed: destruction réussie
+    successfully_updated: mise à jour réussie
+    synchronization_started: La synchronisation à démarré.
+    synchronize: Synchroniser
+    this_application_unique_id: L'identifiant unique de cette application est
+    to: à
+    toolbox: boîte à outil
+    toolbox_export: Exporter
+    toolbox_import_bank_file: Importer un fichier bancaire
+    toolbox_template: modèle
+    true: oui
+    update: mettre à jour
+    use_right_click_save_as: utilisez le click droit et sélectionnez 'enregistrer le lien sous...'
+    year: année

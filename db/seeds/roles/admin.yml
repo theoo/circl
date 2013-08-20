@@ -1,0 +1,39 @@
+---
+- subject: ApplicationSetting
+  action: manage
+
+- subject: InvoiceTemplate
+  action: manage
+
+- subject: Job
+  action: manage
+
+- subject: Language
+  action: manage
+
+- subject: LdapAttribute
+  action: manage
+
+- subject: Location
+  action: manage
+
+- subject: Permission
+  action: manage
+
+- subject: Person
+  action: manage
+
+- subject: PeopleRole
+  action: manage
+
+- subject: Role
+  action: manage
+
+- subject: SearchAttribute
+  action: manage
+
+- subject: Setting
+  action: manage
+
+- subject: BackgroundTask
+  action: manage

@@ -1,0 +1,60 @@
+.submenu
+  %ul
+    - if can? :create, Person
+      %li= link_to I18n.t('directory.views.add_person'), '#', :id => 'add_new_person'
+    - if can? :mailchimp, Directory
+      %li= link_to I18n.t('directory.views.sync_mailchimp'), directory_mailchimp_path, :method => :post, :confirm => I18n.t('common.are_you_sure')
+
+#content_wrapper.page
+  #content.directory
+    %input{ :id => "json_query",
+            :name => "json_query",
+            :type => "hidden",
+            :value => @query.to_json.html_safe }
+
+    - flash_messages
+
+    #search_form
+
+    .block.clear
+
+    %br
+
+    %center
+      %h1= I18n.t('directory.views.results')
+
+    %menu.context_menu_actions
+      - show_person_trad = I18n.t('directory.views.contextmenu.show_person')
+      - destroy_person_trad = I18n.t('directory.views.contextmenu.destroy_person')
+      - change_person_password_trad = I18n.t('directory.views.contextmenu.change_person_password')
+
+      %command{ 'data-label' => show_person_trad,
+                'data-event' => 'person-show',
+                'data-icon' => 'edit' }
+
+      %command{ 'data-label' => change_person_password_trad,
+                'data-event' => 'person-change-password',
+                'data-icon' => 'edit' }
+
+      %command{ 'data-label' => destroy_person_trad,
+                'data-event' => 'person-destroy',
+                'data-icon' => 'delete' }
+
+    %table#results.with_contextmenu
+      %thead
+        %tr
+          - @query[:selected_attributes].each do |field|
+            %th= field
+          %th score
+
+    .toolbox
+      %legend= I18n.t('common.toolbox')
+      %ul
+        %li
+          = I18n.t('common.export_to')
+          = link_to 'CSV', nil, :class => 'button', :id => 'export_to', 'data-type' => 'csv'
+          -#= link_to 'XML', nil, :onclick => "return to_format('xml')", :class => 'button'
+          = '(' + I18n.t('common.use_right_click_save_as') + ')'
+
+    .block.clear
+      %br

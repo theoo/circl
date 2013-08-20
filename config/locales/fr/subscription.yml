@@ -1,0 +1,91 @@
+---
+fr:
+  subscription:
+    add_members: ajouter des membres
+    edit_export_filter: modifier le filtre d'export
+    errors:
+      can_not_delete_if_has_children: Impossible de détruire une inscription qui a des enfants
+      can_not_delete_if_has_receipts: Impossible de détruire l'inscription dont un reçu dépend. Le reçu concerné doit être supprimé avant.
+      cannot_remove_members_if_there_is_receipts: Impossible de retirer les membres s'il des reçus ont été saisis
+      cannot_transfer_overpaid_value_if_subscription_value_is_zero: Impossible de transférer les paiements excédants si l'inscription d'origine à une valeur de zéro
+    mail:
+      member_added_to_subscription_title: Des membres ont été ajouté à l'inscription
+      please_find_a_link_to_access_the_subscription_pdf: Veuillez trouver ci-joint un lien vers le PDF de l'inscription
+      subscription_and_its_invoices_were_updated: L'inscription et ses factures ont étées mis à jour
+      subscription_pdf_title: PDF de l'inscription
+      table:
+        email: email
+        first_name: prénom
+        invoice_template: modèle de facture
+        is_an_organization: est une organisation
+        last_name: nom
+        members_count: compte des membres
+        organization_name: nom de l'organisation
+        person_id: ID de la personne
+        private_tag: tag privé
+        value: valeur
+      the_following_members_were_added_to_the_subscription: Les membres suivants ont étés ajouté à l'inscription
+      the_following_members_were_already_in_the_subscription: Les membres suivants étaient déjà dans l'inscription
+      the_following_members_were_updated: Les membres suivants ont étés mis à jour
+    views:
+      contextmenu:
+        add_members_to_subscription: ajouter des membres à l'inscription
+        destroy_subscription: détruire l'inscription
+        edit_subscription: modifier l'inscription
+        remove_members_from_subscription: retirer tous les membres de l'inscription
+        remove_subscription: retirer l'inscription
+        subscription_reminder: créer une inscription de rappel
+        transfer_overpaid_value: transférer les paiements excédants
+        view_subscription_buyers: voir les payeurs
+        view_subscription_members: voir les membres
+        view_subscription_members_who_didnt_paid: voir les membres qui n'ont pas payé
+        view_subscription_members_who_paid: voir les membres qui ont payé
+        view_subscription_pdf: télécharger le PDF des factures
+        view_subscription_receivers: voir les receveurs
+      description: description
+      from: de
+      interval_title: dates de l'intervalle de cette inscription
+      reminder: rappel
+      subscription: inscription
+      table:
+        id: id
+        parent_id: id du parent
+        description: description
+        interval_starts_on: début de l'inscription
+        interval_ends_on: fin de l'inscription
+        update_at: date de mise à jour
+        created_at: date de création
+        from: de
+        invoices: factures
+        invoices_value: total des factures
+        overpaid_value: paiements excédants
+        receipts: reçus
+        receipts_value: total des reçus
+        title: titre
+        to: à
+        value: valeur
+      tag_tool:
+        date: date
+        member: membre
+        members_following_theses_attributes: les membre résultant de la recherche suivante
+        of_a: d'une inscription
+        paid: payée
+        pre_search_query: recherche de pré sélection
+        private_tag_name: nom du tag privé
+        send: ajouter
+        subscription_at_this_date: à la date suivante
+        tag_name_missing: nom du tag privé manquant
+        tag_with: tagger avec
+        unprocessable_request: unprocessable request
+        wrong_date: format de date incorrect
+      template: modèle
+      title: titre
+      to: à
+      tool_box:
+        tag_tool: outil à taguer
+      value: valeur
+      values:
+        invoice_template: modèle de facture
+        private_tag: tag privé
+        value: valeur
+      values_title: valeurs et modèles de facture associés aux tags privés

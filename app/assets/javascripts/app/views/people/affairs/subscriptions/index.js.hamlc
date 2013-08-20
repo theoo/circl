@@ -1,0 +1,30 @@
+- destroy_subscription_trad = I18n.t('subscription.views.contextmenu.remove_subscription')
+
+%menu.context_menu_actions
+  %command{ :data-label => destroy_subscription_trad,
+            :data-event => 'subscription-destroy',
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th= I18n.t('subscription.views.table.title')
+      %th= I18n.t('subscription.views.table.from')
+      %th= I18n.t('subscription.views.table.to')
+      %th= I18n.t('subscription.views.table.value')
+      %th.desc= I18n.t('subscription.views.table.created_at')
+
+  %tbody
+    - for s in App.PersonAffairSubscription.all()
+      -# s = App.Subscription.find(s.subscription_id)
+      - actions = [ destroy_subscription_trad ]
+
+      %tr{:data-id => s.id,
+          :data-actions => actions}
+        %td= s.id
+        %td= s.title
+        %td= s.interval_starts_on
+        %td= s.interval_ends_on
+        %td.number= s.value.to_view() if s.value
+        %td= s.created_at

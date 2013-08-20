@@ -1,0 +1,49 @@
+%form
+  .validation_errors_placeholder
+
+  .stackable-block
+    %label= I18n.t('affair.views.title')
+    %input{:type => 'text',
+           :name => 'title',
+           :class => 'required',
+           :value => @affair.title}
+
+  .block
+
+  .full_width_textarea
+    %label= I18n.t('affair.views.description')
+    %textarea{:name => 'description',
+              :rows => 4,
+              :class => 'like_an_input'}
+      = @affair.description
+
+  .block
+
+  .half.left
+    .autocompleted
+      %label= I18n.t('affair.views.buyer')
+      %input{:type => 'search',
+             :name => 'buyer_name',
+             :class => 'required',
+             :value => @affair.buyer_name,
+             :action => '/people/search'}
+      %input{:type => 'hidden',
+             :name => 'buyer_id',
+             :value => @affair.buyer_id}
+
+    .autocompleted
+      %label= I18n.t('affair.views.receiver')
+      %input{:type => 'search',
+             :name => 'receiver_name',
+             :class => 'required',
+             :value => @affair.receiver_name,
+             :action => '/people/search'}
+      %input{:type => 'hidden',
+             :name => 'receiver_id',
+             :value => @affair.receiver_id}
+
+  .float_right
+    != @partial('submit_button')(@affair)
+
+.block
+

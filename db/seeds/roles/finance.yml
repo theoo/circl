@@ -1,0 +1,51 @@
+---
+- subject: Admin
+  action: manage
+
+- subject: Affair
+  action: manage
+
+- subject: BankImportHistory
+  action: manage
+
+- subject: Invoice
+  action: manage
+
+- subject: PrivateTag
+  action: manage
+
+- subject: PublicTag
+  action: manage
+
+- subject: QueryPreset
+  action: manage
+
+- subject: Receipt
+  action: manage
+
+- subject: Salaries
+  action: manage
+
+- subject: Salaries::HtmlTemplate
+  action: manage
+
+- subject: Salaries::SalaryTemplate
+  action: manage
+
+- subject: Salaries::Item
+  action: manage
+
+- subject: Salaries::Period
+  action: manage
+
+- subject: Salaries::Salary
+  action: manage
+
+- subject: Salaries::Tax
+  action: manage
+
+- subject: Salaries::TaxData
+  action: manage
+
+- subject: Subscription
+  action: manage

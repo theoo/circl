@@ -1,0 +1,22 @@
+%form
+  .validation_errors_placeholder
+
+  .stackable-block
+    %label= I18n.t('ldap_attribute.views.name')
+    %input{ :type => 'text',
+            :name => 'name',
+            :value => @ldap_attribute.name,
+            :class => 'required' }
+
+  .stackable-block
+    %label= I18n.t('ldap_attribute.views.mapping')
+    %input{ :type => 'text',
+            :name => 'mapping',
+            :value => @ldap_attribute.mapping,
+            :class => 'required' }
+
+  .float_right
+    %label.white .
+    != @partial('submit_button')(@ldap_attribute)
+
+.block.clear

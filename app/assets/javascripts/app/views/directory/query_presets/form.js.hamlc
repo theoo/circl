@@ -1,0 +1,63 @@
+.filter
+  %input{:type => 'hidden', :name => 'preset_id', :value => @query_preset.id }
+  
+  .validation_errors_placeholder
+
+  .preset_actions.centered
+    %label{:for => 'name'}= I18n.t('query_preset.views.name')
+    %input{:type => 'text',
+           :name => 'name',
+           :style => 'width: 100%;',
+           :class => 'required',
+           :value => @query_preset.name}
+
+    .centered_text
+      - unless @query_preset.isNew()
+        %input{:type => 'submit', :data-action => 'update', :data-title => I18n.t('common.update')}
+
+      %input{:type => 'submit', :data-action => 'add', :data-title => I18n.t('common.add')}
+
+      - unless @query_preset.isNew()
+        %input{:type => 'submit', :data-action => 'destroy', :data-title => I18n.t('common.destroy')}
+
+  .selected_attributes
+    %h3= I18n.t('directory.views.fields.selected_attributes')
+    .sortable.droppable
+      %ul
+      - if @query_preset.query?.selected_attributes
+        - for field in @query_preset.query.selected_attributes
+          %li{'data-name' => field}
+            = field.humanize()
+      - else
+        %li{:class => 'placeholder'}= I18n.t('directory.views.fields.drag_and_drop_me')
+
+  .all_attributes
+    %h3= I18n.t('directory.views.fields.available_attributes')
+
+    - for group, fields of @search_attributes
+      %legend= group
+      .draggable
+        %ul
+        - for field in fields
+          %li{'data-name' => field}
+            = field.humanize()
+
+  .attributes_order
+    %h3= I18n.t('directory.views.fields.sorting_order')
+    .sortable.droppable
+      %ul
+      - if @query_preset.query?.attributes_order
+        - for pair in @query_preset.query.attributes_order
+          - key = Object.keys(pair)[0]
+          - value = pair[key]
+          %li{'data-name' => key, 'data-order' => value}
+            = key.humanize()
+      - else
+        %li{:class => 'placeholder'}= I18n.t('directory.views.fields.drag_and_drop_me')
+
+
+  .block
+
+- if @text?
+  .block.align_right
+    %input{:type => 'submit', :data-action => 'next', :data-title => @text}

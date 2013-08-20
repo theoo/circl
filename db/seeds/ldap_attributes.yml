@@ -1,0 +1,39 @@
+---
+- name: accessibleBy
+  mapping: "accessible_by"
+- name: commonName
+  mapping: "ldap_cn"
+- name: countryName
+  mapping: "location.try(:country).try(:iso_code_a2)"
+- name: friendlyCountryName
+  mapping: "location.try(:country).try(:name)"
+- name: givenName
+  mapping: "first_name"
+- name: localityName
+  mapping: "location.try(:name)"
+- name: mail
+  mapping: "[email, second_email]"
+- name: mobile
+  mapping: "mobile"
+- name: objectclass
+  mapping: "%w{top circl}"
+- name: organizationName
+  mapping: "organization_name"
+- name: postalAddress
+  mapping: "full_address"
+- name: postalCode
+  mapping: "location.try(:postal_code_prefix)"
+- name: roles
+  mapping: "roles.map(&:name)"
+- name: street
+  mapping: "address"
+- name: surname
+  mapping: "ldap_sn"
+- name: telephoneNumber
+  mapping: "[phone, second_phone].reject{|s| s.blank?}"
+- name: title
+  mapping: "title"
+- name: uid
+  mapping: "id.to_s"
+- name: userPassword
+  mapping: "\"{SHA}#{encrypted_password}\""

@@ -1,0 +1,36 @@
+- edit_comment_trad = I18n.t("comment.views.contextmenu.edit_comment")
+- close_comment_trad = I18n.t("comment.views.contextmenu.close_comment")
+- destroy_comment_trad = I18n.t("comment.views.contextmenu.destroy_comment")
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_comment_trad,
+            :data-event => "comment-edit",
+            :data-icon => 'edit' }
+
+  %command{ :data-label => close_comment_trad,
+            :data-event => "comment-close",
+            :data-icon => 'check' }
+
+  %command{ :data-label => destroy_comment_trad,
+            :data-event => "comment-destroy",
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th.desc= I18n.t('comment.views.table.created_at')
+      %th= I18n.t('comment.views.table.editor')
+      %th= I18n.t('comment.views.table.comment')
+
+  %tbody
+    - for comment in App.PersonComment.all()
+      - actions = [edit_comment_trad, destroy_comment_trad]
+      - actions.push(close_comment_trad) unless comment.is_closed
+
+      %tr{:data-id => comment.id, :data-actions => actions}
+        %td= comment.created_at
+        %td= comment.person_name
+        %td
+          %b= comment.title
+          %br
+          != comment.description.replace(/\n/g, '<br/>')

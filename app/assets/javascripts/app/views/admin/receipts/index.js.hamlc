@@ -1,0 +1,28 @@
+- edit_receipt_trad = I18n.t('receipt.views.contextmenu.edit_receipt')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_receipt_trad,
+            :data-event => 'receipt-edit',
+            :data-icon => 'edit' }
+
+%table.with_contextmenu.datatable{ :action => '/admin/receipts' }
+  %thead
+    %tr
+      %th= I18n.t('receipt.views.table.id')
+      %th= I18n.t('receipt.views.table.owner_name')
+      %th= I18n.t('receipt.views.table.affair_title')
+      %th= I18n.t('receipt.views.table.invoice_value')
+      %th= I18n.t('receipt.views.table.value')
+      %th= I18n.t('receipt.views.table.value_date')
+      %th.desc= I18n.t('receipt.views.table.creation_date')
+
+.toolbox{ :id => 'receipts_export' }
+  %legend= I18n.t('common.toolbox')
+
+  %form
+    %input.no_sending{:type => 'submit',
+                      :name => 'receipts_export',
+                      :value => I18n.t('common.toolbox_export') }
+    %input.no_sending{:type => 'submit',
+                      :name => 'receipts_import',
+                      :value => I18n.t('common.toolbox_import_bank_file') }

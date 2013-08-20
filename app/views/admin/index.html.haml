@@ -1,0 +1,51 @@
+.submenu
+  .tools
+    %ul
+      %li= link_to I18n.t("common.expand_all_widgets"), '#', :id => 'expand_all_widgets'
+      %li= link_to I18n.t("common.clip_all_widgets"), '#', :id => 'clip_all_widgets'
+      %li= link_to I18n.t("common.rearrange_widgets"), '#', :id => 'rearrange_widgets'
+
+#content_wrapper
+  #content
+    - flash_messages
+
+    - if can? :update, PrivateTag
+      #admin_private_tags.widget.pinable
+        %legend= I18n.t('admin.views.private_tags')
+        .content
+
+    - if can? :update, PublicTag
+      #admin_public_tags.widget.pinable
+        %legend= I18n.t('admin.views.public_tags')
+        .content
+
+    - if can? :update, Affair
+      #admin_affairs.widget.pinable
+        %legend= I18n.t('admin.views.affairs')
+        .content
+
+    - if can? :update, Subscription
+      #admin_subscriptions.widget.pinable
+        %legend= I18n.t('admin.views.subscriptions')
+        .content
+
+    - if can? :update, Invoice
+      #admin_invoices.widget.pinable
+        %legend= I18n.t('admin.views.invoices')
+        .content
+
+    - if can? :update, Receipt
+      #admin_receipts.widget.pinable
+        %legend= I18n.t('admin.views.receipts')
+        .content
+
+    - if can? :create, Person
+      #admin_import_people.widget
+        %legend= I18n.t('admin.views.import_people')
+        .content
+          = link_to I18n.t('admin.views.people_example_file'), asset_path('people_example.csv')
+          = '(' + I18n.t('common.use_right_click_save_as') + ')'
+          = form_tag(admin_confirm_people_path, :multipart => true) do
+            %label= I18n.t('admin.views.select_file')
+            %input{:type => :file, :name => :people_file}
+            %input{:type => :submit, :value => I18n.t('admin.views.upload')}

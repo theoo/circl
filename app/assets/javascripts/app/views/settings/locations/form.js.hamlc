@@ -1,0 +1,62 @@
+%form
+  .validation_errors_placeholder
+
+  .float_right
+    %label.white &nbsp;
+    != @partial('submit_button')(@location)
+
+  .autocompleted
+    %label= I18n.t('location.views.parent')
+    %input{ :type => 'search',
+            :name => 'parent_name',
+            :value => @location.parent_name,
+            :action => '/settings/locations/search',
+            :class => 'required' }
+
+    %input{ :type => 'hidden',
+            :name => 'parent_id',
+            :value => @location.parent_id }
+
+  .block
+    %label= I18n.t('location.views.name')
+    %input{ :type => 'text',
+            :name => 'name',
+            :value => @location.name,
+            :class => 'required' }
+
+  .stackable-block
+    %label= I18n.t('location.views.post_code_or_zip')
+    %input{ :type => 'text',
+            :name => 'postal_code_prefix',
+            :value => @location.postal_code_prefix,
+            :class => 'small' }
+
+  .stackable-block
+    %label= I18n.t('location.views.phone_prefix')
+    %input{ :type => 'text',
+            :name => 'phone_prefix',
+            :value => @location.phone_prefix,
+            :class => 'small' }
+
+  .stackable-block
+    %label= I18n.t('location.views.iso_alpha2')
+    %input{ :type => 'text',
+            :name => 'iso_code_a2',
+            :value => @location.iso_code_a2,
+            :class => 'small' }
+
+  .stackable-block
+    %label= I18n.t('location.views.iso_alpha3')
+    %input{ :type => 'text',
+            :name => 'iso_code_a3',
+            :value => @location.iso_code_a3,
+            :class => 'small' }
+
+  .stackable-block
+    %label= I18n.t('location.views.iso_numerical')
+    %input{ :type => 'text',
+            :name => 'iso_code_num',
+            :value => @location.iso_code_num,
+            :class => 'small' }
+
+.block

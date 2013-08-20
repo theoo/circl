@@ -1,0 +1,20 @@
+- edit_location_trad = I18n.t('location.views.contextmenu.edit_location')
+- destroy_location_trad = I18n.t('location.views.contextmenu.destroy_location')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_location_trad,
+            :data-event => 'location-edit',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => destroy_location_trad,
+            :data-event => 'location-destroy',
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable{ :action => '/settings/locations' }
+  %thead
+    %tr
+      %th= I18n.t('location.views.table.name')
+      %th= I18n.t('location.views.table.parent')
+      %th= I18n.t('location.views.table.iso_code_a2')
+      %th= I18n.t('location.views.table.postal_code_prefix')
+      %th= I18n.t('location.views.table.phone_prefix')

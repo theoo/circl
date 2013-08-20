@@ -1,0 +1,149 @@
+%form
+  .validation_errors_placeholder
+
+  .block
+    .stackable-block
+      %label= I18n.t('subscription.views.title')
+      %input{:type => 'text',
+             :name => 'title',
+             :class => 'required',
+             :value => @subscription.title}
+
+    .stackable-block
+      .autocompleted
+        %label= I18n.t('common.parent')
+        %input{ :type => 'search',
+                :name => 'subscription_parent_title',
+                :value => @subscription.parent_title,
+                :action => '/admin/subscriptions/search' }
+
+        %input{ :type => 'hidden',
+                :name => 'parent_id',
+                :value => @subscription.parent_id }
+
+  .block
+  .full_width_textarea
+    %label= I18n.t('subscription.views.description')
+    %textarea{:name => 'description',
+              :rows => 5,
+              :class => 'like_an_input'}
+      = @subscription.description
+
+
+  .block
+    %h3= I18n.t('subscription.views.interval_title')
+    .stackable-block
+      %label= I18n.t('subscription.views.from')
+      %input{:type => 'text',
+             :name => 'interval_starts_on',
+             :class => 'datepicker',
+             :value => @subscription.interval_starts_on }
+
+    .stackable-block
+      %label= I18n.t('subscription.views.to')
+      %input{:type => 'text',
+             :name => 'interval_ends_on',
+             :class => 'datepicker',
+             :value => @subscription.interval_ends_on }
+
+  .block
+    %br
+    %h3= I18n.t('subscription.views.values_title')
+
+    %table{:class => "category", :style => 'width: 484px'}
+      %thead
+        %tr
+          %th
+          %th= I18n.t('subscription.views.values.private_tag')
+          %th= I18n.t('subscription.views.values.value')
+          %th= I18n.t('subscription.views.values.invoice_template')
+          %th
+
+      %tbody
+        - for value, index in @subscription.values
+          %tr{'data-id' => value.id, :class => 'item'}
+            %td.handle
+              %span.sort_handle.ui-icon.ui-icon-arrowthick-2-n-s
+
+            %td
+              .autocompleted
+                %input{ :name => "values[][private_tag_name]",
+                        :type => 'search',
+                        :value => value.private_tag_name,
+                        :class => 'small',
+                        :action => '/admin/private_tags/search' }
+
+                %input{ :type => 'hidden',
+                        :name => 'values[][private_tag_id]',
+                        :value => value.private_tag_id }
+
+              %input{ :name => "values[][position]", :type => 'hidden', :value => value.position }
+              %input{ :name => "values[][id]", :type => 'hidden', :value => value.id }
+
+            %td
+              %input{ :type => 'number',
+                        :step => 0.01,
+                        :min => 0,
+                        :max => 1000000,
+                        :name => 'values[][value]',
+                        :value => value.value }
+
+            %td
+              %select{:name => 'values[][invoice_template_id]'}
+                - for l in App.InvoiceTemplate.all()
+                  - if value.invoice_template_id == l.id
+                    %option{:value => l.id, :selected => true}= l.title
+                  - else
+                    %option{:value => l.id}= l.title
+
+            %td
+              %input{ :type => 'button',
+                      :value => '-',
+                      :name => 'remove_item' }
+
+        %tr{'data-name' => 'value_item_template', :style => 'display: none;'}
+          %td.handle
+            %span.sort_handle.ui-icon.ui-icon-arrowthick-2-n-s
+
+          %td
+            .autocompleted
+              %input{ :name => "values[][private_tag_name]",
+                      :type => 'search',
+                      :class => 'small',
+                      :action => '/admin/private_tags/search' }
+
+              %input{ :type => 'hidden',
+                      :name => 'values[][private_tag_id]' }
+
+            %input{ :name => "values[][position]", :type => 'hidden' }
+
+          %td
+            %input{ :type => 'number',
+                      :step => 0.01,
+                      :min => 0,
+                      :max => 1000000,
+                      :name => 'values[][value]' }
+          %td
+            %select{:name => 'values[][invoice_template_id]'}
+              %option{:value => ""}
+              - for l in App.InvoiceTemplate.all()
+                %option{:value => l.id}= l.title
+
+          %td
+            %input{ :type => 'button',
+                    :value => '-',
+                    :name => 'remove_item' }
+
+        %tr{'data-name' => 'value_item_add'}
+          %td
+          %td
+          %td
+          %td
+          %td
+            %input{ :type => 'button', :value => '+', :name => 'add_item' }
+
+  .float_right
+    .white &nbsp;
+    != @partial('submit_button')(@subscription)
+
+.block

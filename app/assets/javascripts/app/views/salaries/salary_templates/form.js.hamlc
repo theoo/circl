@@ -1,0 +1,48 @@
+%form
+  .validation_errors_placeholder
+
+  %div{:class => 'float_left', :style => 'width: 250px;'}
+    .block
+      %label= I18n.t('salaries.salary_template.views.title')
+      %input{ :type => 'text',
+              :name => 'title',
+              :value => @salary_template.title }
+
+      != @partial('submit_button')(@salary_template)
+
+    .block
+      %label= I18n.t('salary_template.views.language')
+      %select{:name => 'language_id',
+              :class => 'required'}
+        - for l in App.Language.all()
+          - if @salary_template.language_id == l.id
+            %option{:value => l.id, :selected => true}= l.name
+          - else
+            %option{:value => l.id}= l.name
+
+  %span#salary_template_placeholder_button.button
+    = I18n.t("salary_template.views.display_placeholders")
+
+  - if @salary_template.placeholders
+    %div{:class => 'float_right', :style => 'width: 720px; display: none;', :id => 'salary_template_placeholders_list'}
+      %label= I18n.t('salary_template.views.placeholders')
+      %dl.placeholders
+        - for p,v in @salary_template.placeholders.simples
+          %dt= "#" + p
+          %dd= I18n.t('salary_template.views.' + p.toLowerCase())
+
+      %dl.placeholders
+        - for p,v in @salary_template.placeholders.iterators
+          %dt= "#" + p + "{}"
+          %dd= I18n.t('salary_template.views.' + p.toLowerCase())
+
+  .block
+    .white &nbsp;
+    .full_width_textarea
+      %textarea{:id => 'wysiwyg',
+                :name => 'html',
+                :rows => 25,
+                :class => 'wysiwyg' }
+        = @salary_template.html
+
+.block

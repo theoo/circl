@@ -1,0 +1,15 @@
+---
+- name: Association
+  parent_id:
+- name: Entreprise
+  parent_id:
+- name: Membre
+  parent_id: 1
+- name: Collaborateur
+  parent_id: 1
+- name: Client
+  parent_id: 2
+- name: Fournisseur
+  parent_id: 2
+- name: Collaborateur
+  parent_id: 2

@@ -1,0 +1,37 @@
+---
+- subject: Language
+  action: read
+
+- subject: PeopleCommunicationLanguage
+  action: manage
+  hash_conditions: '{:person_id => user.id}'
+
+- subject: Person
+  action: dashboard
+  hash_conditions: '{:id => user.id}'
+
+- subject: Person
+  action: read
+  hash_conditions: '{:id => user.id}'
+
+- subject: Person
+  action: update
+  hash_conditions: '{:id => user.id}'
+
+- subject: Person
+  action: change_password
+  hash_conditions: '{:id => user.id}'
+
+- subject: Person
+  action: update_password
+  hash_conditions: '{:id => user.id}'
+
+# Autocompleters
+- subject: Job
+  action: search
+
+- subject: Location
+  action: search
+
+- subject: Person
+  action: title_search

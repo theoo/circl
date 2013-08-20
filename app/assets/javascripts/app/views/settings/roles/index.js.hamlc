@@ -1,0 +1,41 @@
+- edit_role_trad = I18n.t('role.views.contextmenu.edit_role')
+- edit_permissions_trad = I18n.t('role.views.contextmenu.edit_permissions')
+- view_role_members_trad = I18n.t('role.views.contextmenu.view_role_members')
+- destroy_role_trad = I18n.t('role.views.contextmenu.destroy_role')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_role_trad,
+            :data-event => 'role-edit',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => edit_permissions_trad,
+            :data-event => 'permissions-edit',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => view_role_members_trad,
+            :data-event => 'role-members',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => destroy_role_trad,
+            :data-event => 'role-destroy',
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th.asc= I18n.t('role.views.table.name')
+      %th= I18n.t('role.views.table.description')
+      %th= I18n.t('role.views.table.members')
+
+  %tbody
+    - for role in App.Role.all()
+
+      - actions = [ edit_role_trad, edit_permissions_trad, view_role_members_trad, destroy_role_trad ]
+
+      %tr{:data-id => role.id,
+          :data-actions => actions }
+        %td= role.id
+        %td= role.name
+        %td= role.description
+        %td.number= role.members_count

@@ -1,0 +1,100 @@
+---
+en:
+  person:
+    dashboard:
+      welcome: Welcome
+    errors:
+      an_email_is_required_if_it_is_loggable: An email is required in order to log into CIRCL.
+      avs_number_control_key_is_invalid: the control key doesn't match, please ensure the number is correct
+      avs_number_is_invalid: avs number is invalid, format should be 756.XXXX.XXXX.XX
+      cannot_remove_admin_role_for_first_user: Cannot remove admin role from the first user.
+      cant_be_org_without_org_name: Cannot be an organization without organization name.
+      cant_delete_first_admin: Cannot destroy the first admin.
+      cant_delete_person_who_has_invoices: Cannot destroy a person who has invoices. Revelent invoices must first be destroyed.
+      cant_delete_person_who_has_running_contract: Cannot destroy a person who has current contracts.
+      cant_delete_person_who_has_salaries: Cannot destroy a person who has salaries. Revelent salaries must first be destroyed.
+      combination_of_first_name_and_last_name_already_taken: This combination of first name and last name is already taken.
+      invalid_current_password: The current password is invalid.
+      main_language_already_in_communication_languages: A language cannot be selected in both 'main communication language' and 'secondary communication languages' widget.
+      no_second_email_if_no_primary_email: It is not possible to add a second email if the first email is left blank.
+      organization_not_ticked_but_no_person_info: This entry should be set as an organization as long as there is no personal information.
+      second_email_should_be_different: The second email should not be the same as the first email.
+      the_required_information_about_this_employee_are_not_satisfied: This person has salaries. '%{field}' attribute is required.
+    import:
+      cannot_parse: Cannot parse the file.
+      invalid_#{name}: ! 'invalid #{name}'
+      invalid_communication_language: Invalid communication language "%{communication_language}"
+      invalid_job: Invalid job "%{job}"
+      invalid_line: Invalid line
+      invalid_location: Invalid location "%{location}"
+      invalid_main_communication_language: Invalid main communication language "%{main_communication_language}"
+      invalid_private_tag: Invalid private tag "%{private_tag}"
+      invalid_public_tag: Invalid public tag "%{public_tag}"
+      invalid_role: Invalid role "%{role}"
+      invalid_translation_aptitude: Invalid translation aptitude "%{translation_aptitude}"
+      line: line
+    mail:
+      background_task_error_report: Background task error report
+      imported_people: Imported people
+      mailchimp_synchronisation_report: Mailchimp synchronisation report
+      members_were_added_to_subscription: Members were added to subscription
+      pdf_for_subscription: Subscription PDF
+      people_import_report: People import report
+      people_import_report_title: People import report
+      receipts_import_report: Receipts import report
+      report_error:
+        datetime: date and time
+        directory_id: directory unique ID
+        directory_name: directory name
+        exception_trace: Exception backtrace
+        person: person
+        something_wrong_happened: Something wrong happened, please verify production.log and the backtrace below.
+        title: A critical error happened on a production directory
+      report_error_subject: An error (500) occured on a production directory!
+      subscription_where_updated: subscription where updated
+    views:
+      activities: Activities
+      address: Address
+      affairs: Projects / Affairs
+      api: API
+      autentication_token: autentication token
+      avs_number: avs number
+      bank_informations: bank information
+      birth_date: birth date
+      cancel: cancel
+      change_password: change password
+      comments: Comments
+      communication_languages: Secondary communication languages
+      current_password: current password
+      destroy: destroy
+      email: email
+      employee_information: Employee information
+      employment_contracts: Employment contracts
+      first_name: first name
+      generate_authentication_token: (re)generate
+      hidden: hidden
+      histories: Contact file history
+      is_an_organization: is an organization
+      is_valid: is valid
+      job: job
+      last_name: last name
+      location: location
+      logout: logout
+      mobile: mobile
+      nationality: nationality
+      new_password: new password
+      new_password_confirmation: new password confirmation
+      organization_name: organization name
+      personal_information: Personal information
+      phone: phone
+      private_tags: Private tags
+      public_tags: Public tags
+      roles: Roles
+      salaries: Salaries
+      second_email: second email
+      second_phone: second phone
+      tasks: tasks
+      this_person_uniq_id: This person unique id is
+      title: title
+      translation_aptitudes: Translation aptitudes
+      update_password: update password

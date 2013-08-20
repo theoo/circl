@@ -1,0 +1,56 @@
+---
+- model: Affair
+  name: id
+  indexing: id
+  mapping:
+    type: integer
+    index: not_analyzed
+
+- model: Affair
+  name: owner_id
+  indexing: owner_id
+  mapping:
+    type: integer
+    index: not_analyzed
+
+- model: Affair
+  name: buyer_id
+  indexing: buyer_id
+  mapping:
+    type: integer
+    index: not_analyzed
+
+- model: Affair
+  name: receiver_id
+  indexing: receiver_id
+  mapping:
+    type: integer
+    index: not_analyzed
+
+- model: Affair
+  name: title
+  indexing: title
+  mapping:
+    type: string
+    analyzer: snowball
+
+- model: Affair
+  name: value
+  indexing: value.to_f
+  mapping:
+    type: float
+    index: not_analyzed
+
+- model: Affair
+  name: created_at
+  indexing: created_at.iso8601
+  mapping:
+    type: date
+    index: not_analyzed
+
+- model: Affair
+  name: statuses
+  indexing: get_statuses
+  mapping:
+    type: string
+    index: not_analyzed

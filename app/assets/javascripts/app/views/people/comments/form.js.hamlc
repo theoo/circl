@@ -1,0 +1,23 @@
+%form
+  .validation_errors_placeholder
+
+  .float_right
+    .white &nbsp;
+    != @partial("submit_button")(@comment)
+
+  .stackable_block
+    %label= I18n.t('comment.views.title')
+    %input{ :type => 'text',
+            :name => 'title',
+            :class => 'required',
+            :value => @comment.title }
+
+  .full_width_textarea
+    %label= I18n.t('comment.views.description')
+    %textarea{:name => 'description',
+              :rows => 5,
+              :class => 'like_an_input required'}
+      = @comment.description
+
+  %input{:type => 'hidden', :name => 'resource_type', :value => 'Person'}
+  %input{:type => 'hidden', :name => 'resource_id', :value => @comment.person_id}

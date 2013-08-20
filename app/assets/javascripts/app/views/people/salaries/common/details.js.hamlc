@@ -1,0 +1,132 @@
+%h3.section= I18n.t('salaries.salary.views.details')
+
+.validation_errors_placeholder
+
+%form
+
+  %input{ :type => 'hidden',
+          :name => 'person_id',
+          :value => @salary.person_id }
+
+  %table{:style => 'width: 100%', :class => 'details'}
+    %tr
+      %td
+        .block
+          - set_focus = 'set_focus' if @salary.parent_id # is not a reference
+          %label= I18n.t('salaries.salary.views.title')
+          %input{ :name => 'title',
+                  :type => 'text',
+                  :value => @salary.title,
+                  :class => set_focus }
+
+        .block
+          .stackable-block
+            %label= I18n.t('salaries.salary.views.salary_template')
+            %select{:name => 'salary_template_id'}
+              - for h in App.SalarySalaryTemplate.all()
+                - if @salary.salary_template_id == h.id
+                  %option{:value => h.id, :selected => true}= h.title
+                - else
+                  %option{:value => h.id}= h.title
+
+          .stackable-block
+            %label= I18n.t('salaries.salary.views.creation_date')
+            %input{:type => 'text',
+                   :name => 'created_at',
+                   :class => 'datepicker',
+                   :value => @salary.created_at }
+
+        .block
+          .stackable-block
+            %label= I18n.t('salaries.salary.views.from')
+            %input{:type => 'text',
+                   :name => 'from',
+                   :class => 'datepicker',
+                   :value => @salary.from }
+
+          .stackable-block
+            %label= I18n.t('salaries.salary.views.to')
+            %input{:type => 'text',
+                   :name => 'to',
+                   :class => 'datepicker',
+                   :value => @salary.to }
+
+      %td
+        .block
+          %label= I18n.t('salaries.salary.views.activity_rate')
+          %input{ :name => 'activity_rate',
+                  :type => 'number',
+                  :min => 0,
+                  :max => 100,
+                  :step => 1,
+                  :value => @salary.activity_rate }
+          = "%"
+
+        .block
+          %label= I18n.t('salaries.salary.views.children_count')
+          %input{ :name => 'children_count',
+                  :type => 'number',
+                  :min => 0,
+                  :step => 1,
+                  :value => @salary.children_count }
+        .block
+          %label= I18n.t('salaries.salary.views.civil_status')
+          %label{ :for => 'salary_is_married', :class => 'inline'}= I18n.t('salaries.salary.views.married')
+          %input{ :name => 'married',
+                  :id => 'salary_is_married',
+                  :type => 'checkbox',
+                  :checked => @salary.married,
+                  :value => 1 }
+
+      - if @salary.is_reference
+        %td
+          .block
+            %label= I18n.t('salaries.salary.views.yearly_salary')
+            %input{ :name => 'yearly_salary',
+                    :type => 'number',
+                    :min => 0.0,
+                    :step => 0.01,
+                    :value => @salary.yearly_salary }
+
+          .block
+            %label= I18n.t('salaries.salary.views.yearly_salary_count')
+            %input{ :name => 'yearly_salary_count',
+                    :type => 'number',
+                    :min => 1,
+                    :step => 1,
+                    :value => @salary.yearly_salary_count }
+
+      %td
+        .block
+          %label= I18n.t('salaries.salary.views.brut_account')
+          %input{ :name => 'brut_account',
+                  :type => 'text',
+                  :value => @salary.brut_account }
+
+        .block
+          %label= I18n.t('salaries.salary.views.net_account')
+          %input{ :name => 'net_account',
+                  :type => 'text',
+                  :value => @salary.net_account }
+
+        .block
+          %label= I18n.t('salaries.salary.views.employer_account')
+          %input{ :name => 'employer_account',
+                  :type => 'text',
+                  :value => @salary.employer_account }
+
+      %td
+        %label= I18n.t('salaries.salary.views.table.paid')
+        %label{ :for => 'salary_is_paid', :class => 'inline'}= I18n.t('salaries.salary.views.table.paid')
+        .small
+          %input{ :name => 'paid',
+                  :id => 'salary_is_paid',
+                  :type => 'checkbox',
+                  :checked => @salary.paid,
+                  :value => 1 }
+
+  .align_right
+    %br
+    != @partial('submit_button')(@salary)
+
+.block

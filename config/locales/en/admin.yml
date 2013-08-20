@@ -1,0 +1,41 @@
+---
+en:
+  admin:
+    add_members_email_will_be_sent: Members are being added, an report will be emailed to %{email}.
+    import:
+      errors: errors
+      main_communication_language: main communication language
+      row: row
+    no_file_submitted: no file submitted
+    pdf_will_be_sent: The pdf link will be emailed to %{email} when merge is complete.
+    people_imported: Persons imported, a report has been emailed to %{email}.
+    receipts_imported: Receipts imported, an report has been emailed to %{email}.
+    views:
+      affairs: Affairs
+      already_imported: already imported
+      import: import
+      import_people: Import people
+      import_receipts: Import receipts
+      invoice_date: invoice date
+      invoice_title: invoice title
+      invoice_value: invoice value
+      invoices: invoices
+      people_example_file: people example file
+      people_file_errors: people file errors
+      people_found_in_file: Importing persons
+      people_import_help: The following individuals were found.<br/> Please verify that the report below matches your file, then click 'proceed to import'.<br/><br/> If there are errors, the invalid lines will be highlighted in red and you will not be able to proceed to import until your file is corrected.<br/>By moving your mouse over the highlighted fields more information about the error will be provided.
+      person: person
+      private_tags: Private tags
+      proceed_with_import: proceed to import
+      public_tags: Public tags
+      receipt_date: receipt date
+      receipt_value: receipt value
+      receipts: Receipts
+      receipts_file_errors: File cannot be parsed
+      receipts_found_in_file: Importing receipts
+      receipts_import_help: The following receipts were found.<br/> Please verify that the information is correct, then click 'proceed to import'.<br/><br/> The previously imported lines will be highlighted in yellow and the postfinance corrections will be highlighted in blue.<br/>Please select the lines you want to import.
+      rectification: rectification
+      select_file: select file
+      subscriptions: Subscriptions
+      upload: upload
+    wrong_file_format: wrong file format

@@ -1,0 +1,34 @@
+---
+en:
+  permission:
+    errors:
+      attribute_not_found: Attribute not found
+      condition_does_not_evaluate: The condition does not evaluate
+      forbidden: Access forbidden
+      forbidden_explanation: You don't have access to this ressource.
+      internal_server_error: Internal server error
+      internal_server_error_explanation: An error occured, please reload the page and contact the technical support.
+      invalid_parameters: invalid parameters
+      invalid_parameters_explanation: The request's parameters are not sufficient or incorrect.
+      invalid_request: Invalid request
+      invalid_request_explanation: The request is invalid or malformed. Please ensure URL is correct.
+      page_not_found: Page not found
+      page_not_found_explanation: The page you are looking for does not exist.
+      record_not_found: Record not found
+      record_not_found_explanation: The record you are looking for does not exist.
+      service_unavailable: Service temporarly unavailable
+      service_unavailable_explanation: Please wait a minute and reload the page.
+      subject_must_point_to_model_if_condition_present: The subject must point to a model if condition is present.
+    views:
+      action: action
+      cannot_fetch_permissions: Cannot fetch permissions
+      contextmenu:
+        add_permission: add permission
+        edit_permission: edit permission
+        remove_permission: remove permission
+      hash_conditions: hash conditions
+      subject: subject
+      table:
+        action: action
+        hash_conditions: hash conditions
+        subject: subject

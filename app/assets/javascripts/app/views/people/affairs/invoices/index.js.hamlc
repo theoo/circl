@@ -1,0 +1,54 @@
+- edit_invoice_trad = I18n.t('invoice.views.contextmenu.edit_invoice')
+- pdf_invoice_trad = I18n.t('invoice.views.contextmenu.show_pdf')
+- preview_invoice_trad = I18n.t('invoice.views.contextmenu.preview_pdf')
+- destroy_invoice_trad = I18n.t('invoice.views.contextmenu.destroy_invoice')
+- add_receipt_trad = I18n.t('invoice.views.contextmenu.add_receipt')
+
+- if @can?.invoice.update
+  %menu.context_menu_actions
+    %command{ :data-label => edit_invoice_trad,
+              :data-event => 'invoice-edit',
+              :data-icon => 'edit' }
+
+    %command{ :data-label => pdf_invoice_trad,
+              :data-event => 'invoice-pdf',
+              :data-icon => 'pdf' }
+
+    %command{ :data-label => preview_invoice_trad,
+              :data-event => 'invoice-preview',
+              :data-icon => 'pdf' }
+
+    %command{ :data-label => destroy_invoice_trad,
+              :data-event => 'invoice-destroy',
+              :data-icon => 'delete' }
+
+    %command{ :data-label => add_receipt_trad,
+              :data-event => 'receipt-add',
+              :data-icon => 'add' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th= I18n.t('invoice.views.table.id')
+      %th= I18n.t('invoice.views.table.buyer')
+      %th= I18n.t('invoice.views.table.title')
+      %th= I18n.t('invoice.views.table.invoice_value')
+      %th= I18n.t('invoice.views.table.balance_value')
+      %th= I18n.t('invoice.views.table.status')
+      %th.desc= I18n.t('invoice.views.table.invoice_date')
+
+  %tbody
+    - for i in @invoices
+      - actions = [ edit_invoice_trad, pdf_invoice_trad, add_receipt_trad, preview_invoice_trad ]
+      - if i.receipts_value <= 0
+        - actions.push destroy_invoice_trad
+
+      %tr{:data-id => i.id,
+          :data-actions => actions}
+        %td= i.id
+        %td= i.buyer_name
+        %td= i.title
+        %td.number= i.value.to_view()
+        %td.number= i.balance_value.to_view()
+        %td= i.statuses
+        %td= i.created_at

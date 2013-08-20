@@ -1,0 +1,27 @@
+= javascript_include_tag 'tinymce-jquery'
+
+.submenu
+  .tools
+    %ul
+      %li= link_to I18n.t("common.expand_all_widgets"), '#', :id => 'expand_all_widgets'
+      %li= link_to I18n.t("common.clip_all_widgets"), '#', :id => 'clip_all_widgets'
+      %li= link_to I18n.t("common.rearrange_widgets"), '#', :id => 'rearrange_widgets'
+
+#content_wrapper
+  #content
+    - flash_messages
+
+    - if can? :read, Salaries::Salary
+      #salaries_salaries.widget.pinable
+        %legend= I18n.t('common.salaries')
+        .content
+
+    - if can? :create, Salaries::SalaryTemplate
+      #salaries_salary_templates.widget.pinable
+        %legend= I18n.t('salaries.views.salary_templates')
+        .content
+
+    - if can? :create, Salaries::Tax
+      #salaries_taxes.widget.pinable
+        %legend= I18n.t('salaries.views.taxes')
+        .content

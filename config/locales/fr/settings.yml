@@ -1,0 +1,12 @@
+---
+fr:
+  settings:
+    views:
+      application_settings: Paramètres de l'application
+      invoice_templates: Modèles de facture
+      jobs: Métiers
+      languages: Langues
+      ldap_attributes: Attributs LDAP
+      locations: Localités
+      roles: Rôles
+      search_attributes: Attributs de recherche

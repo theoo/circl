@@ -1,0 +1,12 @@
+---
+en:
+  settings:
+    views:
+      application_settings: Application settings
+      invoice_templates: Invoice templates
+      jobs: Jobs
+      languages: Languages
+      ldap_attributes: LDAP attributes
+      locations: Locations
+      roles: Roles
+      search_attributes: Search attributes

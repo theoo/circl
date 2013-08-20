@@ -1,0 +1,32 @@
+.validation_errors_placeholder
+
+.centered_text
+  %input{:type => 'submit', :data-title => I18n.t("salary_template.views.new_template")}
+  .white &nbsp;
+
+- edit_salary_template_trad = I18n.t('salaries.salary_template.views.contextmenu.edit_salary_template')
+- destroy_salary_template_trad = I18n.t('salaries.salary_template.views.contextmenu.destroy_salary_template')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_salary_template_trad,
+            :data-event => 'salary_template-edit',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => destroy_salary_template_trad,
+            :data-event => 'salary_template-destroy',
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th= I18n.t('salaries.salary_template.views.table.thumb')
+      %th= I18n.t('salaries.salary_template.views.table.title')
+      %th.desc= I18n.t('salaries.salary_template.views.table.created_at')
+  %tbody
+    - for salary_template in App.SalarySalaryTemplate.all()
+      - actions = [ edit_salary_template_trad, destroy_salary_template_trad ]
+      %tr{:data-id => salary_template.id, :data-actions => actions }
+        %td
+          %img{:src => salary_template.thumb_url, :alt => 'thumbnail'}
+        %td= salary_template.title
+        %td= salary_template.created_at

@@ -1,0 +1,39 @@
+%form
+  .validation_errors_placeholder
+
+  %input{:type => 'hidden',
+    :name => 'person_id',
+    :value => @person_id}
+
+  .stackable-block
+    %label= I18n.t('employment_contract.views.interval_starts_on')
+    %input{ :type => 'text',
+            :class => 'datepicker',
+            :name => 'interval_starts_on',
+            :value => @employment_contract.interval_starts_on }
+
+  .stackable-block
+    %label= I18n.t('employment_contract.views.interval_ends_on')
+    %input{ :type => 'text',
+            :class => 'datepicker',
+            :name => 'interval_ends_on',
+            :value => @employment_contract.interval_ends_on }
+
+  .stackable-block
+    %label= I18n.t('employment_contract.views.percentage')
+    %input{ :type => 'number',
+            :name => 'percentage',
+            :min => 0,
+            :max => 100,
+            :value => @employment_contract.percentage}
+
+  .float_right
+    %br
+    != @partial("submit_button")(@employment_contract)
+
+  .block
+
+  %label= I18n.t('employment_contract.views.description')
+  .full_width_textarea
+    %textarea{:name => 'description', :rows => 5, :class => 'like_an_input'}
+      = @employment_contract.description

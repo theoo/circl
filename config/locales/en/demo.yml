@@ -1,0 +1,13 @@
+en:
+  demo:
+    views:
+      title: Try CIRCL Directory !
+      try: Try
+      as_admin: as an <b>administrator</b>
+      admin: "An administrator have access to all directory information: members, settings, invoices, comments, etc.<br /><br />
+<b>email:</b> admin@circl.ch <br/>
+<b>mot de passe:</b> admin@circl"
+      as_member: as a regular <b>member</b>
+      member: "A member can only access its personal information in a simplified layout.<br /><br />
+<b>email:</b> member@circl.ch<br/>
+<b>mot de passe:</b> member@circl"

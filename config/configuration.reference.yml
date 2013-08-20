@@ -1,0 +1,87 @@
+# General
+host: www.hostname.com
+directory_url: http://www.hostname.com/path
+directory_admin_email: alert@circl.ch
+
+# Mailers
+mailers:
+  development:
+    default:
+      from: foo@bar.com
+    smtp_settings=:
+      address: smtp.gmail.com
+      port: 587
+      domain: gmail.com
+      user_name: foo@gmail.com
+      password: secret
+      authentication: plain
+      enable_starttls_auto: true
+  production:
+    default:
+      from: foo@bar.com
+    smtp_settings=:
+      address: smtp.gmail.com
+      port: 587
+      domain: gmail.com
+      user_name: foo@gmail.com
+      password: secret
+      authentication: plain
+      enable_starttls_auto: true
+
+# Elasticsearch
+elasticsearch:
+  enable_indexing: true # it won't make sense to disable it here
+  url: http://127.0.0.1:9200
+  name: people
+  max_per_page: 1000000
+  index:
+    number_of_shards: 5
+    number_of_replicas: 1
+    analysis:
+      analyzer:
+        string_lowercase:
+          tokenizer: keyword
+          filter: lowercase
+
+# LDAP
+ldap:
+  enabled: true
+  path: '/var/lib/ldap/name'
+  admin:
+    host: localhost
+    port: 389
+    base: 'dc=name,dc=circl,dc=ch'
+    auth:
+      method: :simple
+      username: 'cn=admin,dc=name,dc=circl,dc=ch'
+      password: 'password'
+  config:
+    host: localhost
+    port: 389
+    base: 'cn=config'
+    auth:
+      method: :simple
+      username: 'cn=config'
+      password: 'password'
+
+# PDFKit
+pdfkit:
+  default_options:
+    encoding: utf-8
+    page_size: A4
+    print_media_type: true
+    margin_top: 0mm
+    margin_right: 0mm
+    margin_bottom: 0mm
+    margin_left: 0mm
+
+# IMGKit
+imgkit:
+  default_options:
+    quality: 60
+  default_format: :jpg
+
+# Permissions
+permissions:
+  Person:
+    - restricted_attributes

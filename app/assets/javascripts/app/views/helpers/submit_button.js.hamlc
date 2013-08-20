@@ -1,0 +1,5 @@
+- if @isNew? && @isNew()
+  - title = I18n.t('common.create')
+- else
+  - title = I18n.t('common.update')
+%input{:type => 'submit', :data-title => title}

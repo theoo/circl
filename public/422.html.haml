@@ -1,0 +1,10 @@
+#content_wrapper{:style => 'margin-left: 0;'}
+  #content{:style => 'background-image: url("/assets/422.jpg");', :class => 'error'}
+    .error_page
+      %h1 Oooops!
+      %br
+      %h1= I18n.t('permission.errors.invalid_request')
+      = I18n.t('permission.errors.invalid_request_explanation')
+      %br
+      %br
+      != I18n.t('common.errors.if_you_think_it_s_a_bug')

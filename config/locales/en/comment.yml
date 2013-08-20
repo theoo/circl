@@ -1,0 +1,14 @@
+---
+en:
+  comment:
+    views:
+      contextmenu:
+        close_comment: close comment
+        destroy_comment: destroy comment
+        edit_comment: edit comment
+      description: description
+      table:
+        comment: comment
+        created_at: date
+        editor: editor
+      title: title

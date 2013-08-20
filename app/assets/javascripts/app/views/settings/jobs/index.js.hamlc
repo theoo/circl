@@ -1,0 +1,30 @@
+- edit_job_trad = I18n.t('job.views.contextmenu.edit_job')
+- show_job_members_trad = I18n.t('job.views.contextmenu.view_job_members')
+- destroy_job_trad = I18n.t('job.views.contextmenu.destroy_job')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_job_trad,
+            :data-event => 'job-edit',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => show_job_members_trad,
+            :data-event => 'job-members',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => destroy_job_trad,
+            :data-event => 'job-destroy',
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th.asc= I18n.t('job.views.table.name')
+      %th= I18n.t('job.views.table.members_count')
+  %tbody
+    - for job in App.Job.all()
+      - actions = [ edit_job_trad, show_job_members_trad, destroy_job_trad ]
+      %tr{:data-id => job.id, :data-actions => actions }
+        %td= job.id
+        %td= job.name
+        %td.number= job.members_count

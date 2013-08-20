@@ -1,0 +1,61 @@
+%form
+  .validation_errors_placeholder
+
+  .block
+    %label= I18n.t('invoice.views.template')
+    %select{:name => 'invoice_template_id', :class => 'required'}
+      - for l in App.InvoiceTemplate.all()
+        - if @invoice.invoice_template_id == l.id
+          %option{:value => l.id, :selected => true}= l.title
+        - else
+          %option{:value => l.id}= l.title
+
+  .block
+    %label= I18n.t('invoice.views.title')
+    %input{:type => 'text',
+           :name => 'title',
+           :class => 'required',
+           :value => @invoice.title}
+
+  .block
+    .full_width_textarea
+      %label= I18n.t('invoice.views.description')
+      %textarea{:name => 'description',
+                :rows => 5,
+                :class => 'like_an_input'}
+        = @invoice.description
+
+  .block
+    .float_left
+      %label= I18n.t('invoice.views.printed_address')
+      %textarea{:name => 'printed_address',
+                :rows => 5,
+                :class => 'like_an_input'}
+        = @invoice.printed_address
+
+  .block.notice
+    %br
+    = I18n.t("invoice.views.wipe_content_to_update_address")
+
+  .block
+    .stackable-block
+      %label= I18n.t('invoice.views.value')
+      %input{ :type => 'number',
+              :step => 0.01,
+              :class => 'required',
+              :min => 0,
+              :max => 99999999.99,
+              :name => 'value',
+              :value => @invoice.value }
+
+    .stackable-block
+      %label= I18n.t('invoice.views.invoice_date')
+      %input{:type => 'text',
+             :name => 'created_at',
+             :class => 'datepicker required',
+             :value => @invoice.created_at }
+
+    .float_right
+      != @partial('submit_button')(@invoice)
+
+  .block

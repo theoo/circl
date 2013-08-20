@@ -1,0 +1,14 @@
+---
+fr:
+  task:
+    views:
+      contextmenu:
+        destroy_task: détruire la tâche
+        edit_task: modifier la tâche
+      date: date
+      description: description
+      duration: durée
+      table:
+        date: date
+        description: description
+        duration: durée

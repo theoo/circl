@@ -1,0 +1,31 @@
+%form
+  .validation_errors_placeholder
+
+  %h3= I18n.t("salaries.tax.views.example_files_title")
+  != I18n.t("salaries.tax.views.example_files_explanation")
+  %br
+  %br
+
+  %ol
+    %li 1.
+      %a{:href => 'assets/tax_generic.csv'}
+        = I18n.t("salaries.tax.views.generic_tax_example_file_desc")
+    %li 2.
+      %a{:href => 'assets/tax_age.csv'}
+        = I18n.t("salaries.tax.views.age_tax_example_file_desc")
+    %li 3.
+      %a{:href => 'assets/tax_is.txt'}
+        = I18n.t("salaries.tax.views.is_tax_example_file_desc")
+
+  %input{ :type => 'hidden', :name => 'tax_id', :value => @tax.id }
+  %br
+  %br
+
+  .stackable-block
+    %label= I18n.t('admin.views.select_file')
+    %input{ :type => 'file', :name => 'file' }
+
+  .float_right
+    %input{ :type => 'submit', 
+            :value => I18n.t('admin.views.upload'),
+            :data-title => I18n.t("admin.views.upload") }

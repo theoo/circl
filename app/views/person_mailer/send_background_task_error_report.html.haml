@@ -1,0 +1,6 @@
+%h1= I18n.t("background_task.mail.error_report_title")
+
+%p
+	- @messages.each do |message|
+		%pre
+			!= message

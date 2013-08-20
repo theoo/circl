@@ -1,0 +1,12 @@
+---
+fr:
+  ldap_attribute:
+    views:
+      contextmenu:
+        destroy_attribute: détruire l'attribut
+        edit_attribute: modifier attribut
+      mapping: mapping
+      name: nom
+      table:
+        mapping: mapping
+        name: nom

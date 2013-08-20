@@ -1,0 +1,24 @@
+%h1= I18n.t("person.mail.report_error.title")
+
+= I18n.t("person.mail.report_error.something_wrong_happened")
+
+%dl
+  %dt= I18n.t("person.mail.report_error.directory_name")
+  %dd= link_to Rails.configuration.settings['host'], Rails.configuration.settings['directory_url']
+
+  %dt= I18n.t("person.mail.report_error.directory_id")
+  %dd= ApplicationSetting.value(:application_id)
+
+  %dt= I18n.t("person.mail.report_error.datetime")
+  %dd= Time.now
+
+  - if @current_person
+    %dt= I18n.t("person.mail.report_error.person")
+    %dd= link_to @current_person.full_name, person_path(@current_person)
+
+
+%hr
+
+= I18n.t("person.mail.report_error.exception_trace")
+
+!= @exception.backtrace.join("<br />")

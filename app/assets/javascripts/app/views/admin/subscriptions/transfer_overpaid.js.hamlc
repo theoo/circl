@@ -1,0 +1,17 @@
+%form
+  .validation_errors_placeholder
+
+  .stackable-block
+    .left
+      .autocompleted
+        %label= I18n.t('receipt.views.subscription_title')
+        %input{:type => 'search',
+               :name => 'transfer_to_subscription_title',
+               :value => '',
+               :action => '/admin/subscriptions/search'}
+        %input{:type => 'hidden',
+               :name => 'transfer_to_subscription_id'}
+
+  .stackable-block
+    .white &nbsp;
+    != @partial('submit_button')(@subscription)

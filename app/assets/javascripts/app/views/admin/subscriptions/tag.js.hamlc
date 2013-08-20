@@ -1,0 +1,55 @@
+%form
+  .validation_errors_placeholder
+
+  .block
+    %h3= I18n.t("subscription.views.tag_tool.tag_with")
+
+    .autocompleted
+      %label= I18n.t('subscription.views.tag_tool.private_tag_name')
+      %input{:type => 'search',
+             :name => 'private_tag_name',
+             :value => '',
+             :action => '/admin/private_tags/search'}
+      %input{:type => 'hidden',
+             :name => 'private_tag_id'}
+    %br
+    %br
+
+  .block
+    %h3= I18n.t("subscription.views.tag_tool.members_following_theses_attributes")
+
+    /%label= I18n.t('subscription.views.tag_tool.pre_search_query')
+    /%input{:type => 'search',
+    /       :name => 'search_query',
+    /       :value => '',
+    /       :class => 'large'}
+
+  .block
+    %br
+    %label{:for => 'subscription_member', :class => 'inline'}= I18n.t('subscription.views.tag_tool.member')
+    %input{ :type => 'checkbox',
+            :id => 'subscription_member',
+            :name => 'subscription_member',
+            :checked => '',
+            :value => 1 }
+
+    = I18n.t("subscription.views.tag_tool.of_a")
+
+    %label{:for => 'subscription_paid', :class => 'inline'}= I18n.t('subscription.views.tag_tool.paid')
+    %input{ :type => 'checkbox',
+            :id => 'subscription_paid',
+            :name => 'subscription_paid',
+            :checked => true,
+            :value => 1 }
+
+    = I18n.t("subscription.views.tag_tool.subscription_at_this_date")
+
+  .block
+    %label= I18n.t('subscription.views.tag_tool.date')
+    %input{:type => 'text',
+           :name => 'date',
+           :class => 'datepicker',
+           :value => '' }
+
+  .block.align_right
+    %input{:type => 'submit', :data-title => I18n.t('subscription.views.tag_tool.send')}

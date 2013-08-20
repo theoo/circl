@@ -1,0 +1,23 @@
+- edit_invoice_trad = I18n.t('directory.views.contextmenu.show_person')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_invoice_trad,
+            :data-event => 'person-edit',
+            :data-icon => 'edit' }
+
+%table.with_contextmenu.datatable{ :action => '/admin/invoices' }
+  %thead
+    %tr
+      %th= I18n.t('invoice.views.table.id')
+      %th= I18n.t('invoice.views.table.buyer')
+      %th= I18n.t('invoice.views.table.title')
+      %th= I18n.t('invoice.views.table.value')
+      %th= I18n.t('invoice.views.table.status')
+      %th.desc= I18n.t('invoice.views.table.creation_date')
+
+
+.toolbox{ :id => 'invoices_export' }
+  %legend= I18n.t('common.toolbox')
+
+  %form
+    %input.no_sending{ :type => 'submit', :value => I18n.t('common.toolbox_export') }

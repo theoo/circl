@@ -1,0 +1,17 @@
+---
+- name: default
+  query:
+    search_string:
+    selected_attributes:
+      - id
+      - organization_name
+      - first_name
+      - last_name
+      - phone
+      - email
+      - address
+      - npa
+      - town
+    attributes_order:
+      - first_name: asc
+      - last_name: asc

@@ -1,0 +1,14 @@
+---
+fr:
+  translation_aptitude:
+    errors:
+      translation_aptitude_languages_should_be_different: Les deux langues devrait être différentes.
+      translation_aptitude_should_be_uniq_for_a_person: Un pair de langue devrait être unique pour une même personne.
+    views:
+      contextmenu:
+        destroy_translation_aptitude: détruire l'aptitude de traduction
+      from: de
+      table:
+        from: de
+        to: à
+      to: à

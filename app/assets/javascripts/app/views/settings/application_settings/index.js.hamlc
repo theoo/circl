@@ -1,0 +1,20 @@
+- edit_as_trad = I18n.t('application_setting.views.contextmenu.edit')
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_as_trad,
+            :data-event => 'application_setting-edit',
+            :data-icon => 'edit' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th.asc= I18n.t('application_setting.views.table.key')
+      %th= I18n.t('application_setting.views.table.value')
+  %tbody
+    - for application_setting in App.ApplicationSetting.all()
+
+      - actions = [ edit_as_trad ]
+
+      %tr{:data-id => application_setting.id, :data-actions => actions }
+        %td= application_setting.key
+        %td= application_setting.value

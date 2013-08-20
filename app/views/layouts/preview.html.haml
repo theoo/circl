@@ -1,0 +1,11 @@
+!!! 5
+%html{:lang => I18n.locale}
+  %head
+    %meta{:charset => 'utf-8'}
+    %meta{'http-equiv' => 'content-type', :content => 'text/html; charset=utf-8'}
+    = stylesheet_link_tag 'resetter', 'pdf_common', 'custom_fonts', :media => 'all'
+    = stylesheet_link_tag 'pdf_preview', :media => 'all'
+
+  %body
+    .a4_page
+      = yield(:layout)

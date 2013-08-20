@@ -1,0 +1,30 @@
+
+%h3= I18n.t("bank_import_history.views.export_title")
+
+.validation_errors_placeholder
+
+%form{ :method =>'get',
+       :action => '/admin/bank_import_histories/export.csv' }
+
+  .block
+    .stackable-block
+      %label= I18n.t('common.from')
+      %input{:type => 'text',
+             :name => 'from',
+             :class => 'datepicker required' }
+
+    .stackable-block
+      %label= I18n.t('common.to')
+      %input{:type => 'text',
+             :name => 'to',
+             :class => 'datepicker required' }
+
+    .stackable-block
+      %form
+        %br
+        %input.no_sending{:type => 'submit',
+                          :value => I18n.t('common.toolbox_export'),
+                          :name => 'export_bank_import_history'}
+
+    .block
+      %br

@@ -1,0 +1,97 @@
+---
+en:
+  receipt:
+    import:
+      already_imported: already imported
+      cannot_find_invoice: Cannot find invoice (id %{invoice_id}).
+      cannot_find_owner: Cannot find the owner (id %{owner_id}).
+      cannot_find_receipt: Cannot find receipt.
+      cannot_parse_line: Cannot parse line.
+      cannot_parse_receipt: Cannot parse receipt.
+      cannot_parse_reference_number: Cannot parse reference number.
+      checksum_mismatch: The BVR checksum does not match.
+      correction_without_rectification: A line contains a correction but no rectification.
+      invoice_found_but_its_creation_date_mismatch: Invoice found, but its creation date mismatch.
+      invoice_found_but_its_owner_mismatch: Invoice found, but its owner mismatch.
+      line: line
+      total_cannot_parse: Cannot parse total.
+      total_mismatch: The total mismatches (%{total} != %{computed_total}).
+      total_receipts_count_mismatch: The total receipts count mismatches (%{receipts_count} != %{computed_receipts_count}).
+      unknown_type: unknown type
+    import_status:
+      already_imported: already imported
+      correct: correct
+      error_correction: error correction
+      rectification: rectification
+    mail:
+      errors_occured: Errors occured
+      errors_occured_on_theses_lines: Errors occured on theses lines
+      lines_should_be_formatted_as_following: Lines should be formatted as following
+      one_or_more_lines_are_not_formated_correctly: One or more lines are not formated correctly
+      receipts: Receipts
+      receipts_file_import_report_title: Receipts file import report
+      table:
+        account: account
+        already_imported: already imported
+        application_id: application
+        available_digits: available digits
+        bvr_reference: bvr reference
+        checksum_digits: checksum digits
+        date_format_ddmmyy: date format ( dd mm yy )
+        date_value: date value
+        from: from
+        info: info
+        invoice_date: invoice date
+        invoice_id: invoice
+        message: message
+        number_of_characters: number of characters
+        padded_by_zeros_at_its_left: padded by zeros at its left
+        part: part
+        person_id: person
+        receipt_date: receipt date
+        receipt_id: receipt
+        receipt_value: receipt value
+        rectification: rectification
+        selected: selected
+        should_be_two_zeros: should be two zeros (00)
+        to: to
+        type: type
+        value: value
+    media_date: file date
+    no_receipts_selected: no receipts were selected
+    receipts_count: receipts count
+    validations:
+      owner_required: owner required
+    value_total: value total
+    views:
+      account: account
+      account_counterpart: counterpart
+      affair_title: affair title
+      contextmenu:
+        destroy_receipt: destroy receipt
+        edit_receipt: edit receipt
+      counterpart_account: counterpart account
+      created_at: creation date
+      export: receipts export
+      id: id
+      import_bank_file: import bank file
+      import_status: import status
+      invoice: invoice
+      invoice_template: invoice template
+      invoice_title: invoice title
+      line: line
+      means_of_payment: means of payment
+      owner: owner
+      receipts: receipts
+      subscription_title: subscription title
+      table:
+        affair_title: affair title
+        creation_date: creation date
+        id: id
+        invoice_value: invoice value
+        owner_name: owner name
+        value: value
+        value_date: value date
+      total: total
+      value: value
+      value_date: value date

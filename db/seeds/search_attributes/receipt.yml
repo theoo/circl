@@ -1,0 +1,35 @@
+---
+- model: Receipt
+  name: id
+  indexing: id
+  mapping:
+    type: integer
+    index: not_analyzed
+
+- model: Receipt
+  name: value
+  indexing: value.to_f
+  mapping:
+    type: float
+    index: not_analyzed
+
+- model: Receipt
+  name: value_date
+  indexing: value_date.iso8601
+  mapping:
+    type: date
+    index: not_analyzed
+
+- model: Receipt
+  name: means_of_payment
+  indexing: means_of_payment
+  mapping:
+    type: string
+    analyzer: snowball
+
+- model: Receipt
+  name: created_at
+  indexing: created_at.iso8601
+  mapping:
+    type: date
+    index: not_analyzed

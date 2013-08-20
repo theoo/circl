@@ -1,0 +1,64 @@
+- edit_salary_trad = I18n.t('salaries.salary.views.contextmenu.edit_salary')
+- check_as_paid_salary_trad = I18n.t('salaries.salary.views.contextmenu.check_as_paid')
+- copy_salary_reference_trad = I18n.t('salaries.salary.views.contextmenu.copy_reference')
+- destroy_salary_trad = I18n.t('salaries.salary.views.contextmenu.destroy_salary')
+
+.validation_errors_placeholder
+
+%menu.context_menu_actions
+  %command{ :data-label => edit_salary_trad,
+            :data-event => 'salary-edit',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => check_as_paid_salary_trad,
+            :data-event => 'salary-paid',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => copy_salary_reference_trad,
+            :data-event => 'salary-copy',
+            :data-icon => 'edit' }
+
+  %command{ :data-label => destroy_salary_trad,
+            :data-event => 'salary-destroy',
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th= I18n.t('salaries.salary.views.table.id')
+      %th= I18n.t('salaries.salary.views.table.person')
+      %th= I18n.t('salaries.salary.views.table.title')
+      %th= I18n.t('salaries.salary.views.table.reference')
+      %th= I18n.t('salaries.salary.views.from')
+      %th= I18n.t('salaries.salary.views.to')
+      %th= I18n.t('salaries.salary.views.gross_pay')
+      %th= I18n.t('salaries.salary.views.table.net_salary')
+      %th= I18n.t('salaries.salary.views.table.paid')
+      %th= I18n.t('salaries.salary.views.table.created_at')
+
+  %tbody
+    - for salary in App.Salary.all()
+      - actions = [edit_salary_trad, destroy_salary_trad]
+      - actions.push(check_as_paid_salary_trad) if ! salary.paid && ! salary.is_reference
+      - actions.push(copy_salary_reference_trad) if salary.is_reference
+
+      %tr{:data-id => salary.id, :data-actions => actions}
+        %td= salary.id
+        %td= salary.person_name
+        %td= salary.title
+        %td= I18n.t('common.' + salary.is_reference)
+        %td= salary.from
+        %td= salary.to
+        %td.number= salary.gross_pay.to_view() if salary.gross_pay
+        %td.number= salary.net_salary.to_view() if salary.net_salary
+        %td= I18n.t('common.' + salary.paid)
+        %td= salary.created_at
+
+.toolbox{ :id => 'invoices_export' }
+  %legend= I18n.t('common.toolbox')
+
+  %form
+    %input.no_sending{ :type => 'submit', :id => 'export', :value => I18n.t('salaries.export') }
+    %input.no_sending{ :type => 'submit', :id => 'export_to_accounting', :value => I18n.t('salaries.export_to_accounting') }
+    %input.no_sending{ :type => 'submit', :id => 'export_to_ocas', :value => I18n.t('salaries.export_to_ocas') }
+    %input.no_sending{ :type => 'submit', :id => 'export_to_eLohnausweisSSK', :value => I18n.t('salaries.export_salary_certificates') }

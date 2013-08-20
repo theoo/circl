@@ -1,0 +1,41 @@
+---
+fr:
+  admin:
+    add_members_email_will_be_sent: Le processus d'import des membres à commencé, un rapport sera envoyé par email à %{email} lorsqu'il sera fini.
+    import:
+      errors: erreurs
+      main_communication_language: langue de communication principale
+      row: ligne
+    no_file_submitted: Veuillez sélectionner un fichier
+    pdf_will_be_sent: Un lien vers le pdf sera envoyé à %{email} lorsque la fusion sera terminée.
+    people_imported: Les personnes ont étés importées, un rapport a été envoyé par email à %{email}
+    receipts_imported: les reçus ont étés importés, un rapport a été envoyé par email à %{email}
+    views:
+      affairs: Affaires
+      already_imported: déjà importé
+      import: importer
+      import_people: Import de personnes
+      import_receipts: Import de reçus
+      invoice_date: date de la facture
+      invoice_title: titre de la facture
+      invoice_value: valeur de la facture
+      invoices: Factures
+      people_example_file: fichier d'exemple
+      people_file_errors: erreurs dans le fichier
+      people_found_in_file: personne(s) trouvées dans le fichier
+      people_import_help: Voici les personnes qui ont été trouvées dans le fichier.<br/> Verifiez l'exactitude des informations, puis cliquez sur le bouton 'suivant' pour confirmer l'import.<br/><br/> Si la validation des lignes échoue, les lignes concernées seront colorées en rouge et vous devrez recommencer le processus avec un fichier corrigé.<br/>En passant la souris sur une ligne rouge vous pourrez obtenir plus d'information sur l'erreur.
+      person: personne
+      private_tags: Tags privés
+      proceed_with_import: continuer avec l'importation
+      public_tags: Tags publics
+      receipt_date: date du reçu
+      receipt_value: valeur du reçu
+      receipts: Reçus
+      receipts_file_errors: erreur(s) dans le fichier
+      receipts_found_in_file: reçu(s) trouvé(s) dans le fichier
+      receipts_import_help: Voici les reçus qui ont été trouvées dans le fichier.<br/> Verifiez l'exactitude des informations, puis cliquez sur le bouton 'suivant' pour confirmer l'import.<br/><br/> Les reçus qui ont déjà été importés apparaitront en jaune, et les corrections de postfinance seront colorées en bleu.<br><br> Il est possible de sélectionner par une coche les lignes à importer.
+      rectification: rectification
+      select_file: Veuillez choisir un fichier
+      subscriptions: Inscriptions
+      upload: téléverser
+    wrong_file_format: Mauvais format de fichier

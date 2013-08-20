@@ -1,0 +1,28 @@
+---
+- model: PublicTag
+  name: id
+  indexing: id
+  mapping:
+    type: integer
+    index: not_analyzed
+
+- model: PublicTag
+  name: name
+  indexing: name
+  mapping:
+    type: string
+    index: not_analyzed
+
+- model: PublicTag
+  name: parent_id
+  indexing: parent.try(:id)
+  mapping:
+    type: integer
+    index: not_analyzed
+
+- model: PublicTag
+  name: parent_name
+  indexing: parent.try(:name)
+  mapping:
+    type: string
+    index: not_analyzed

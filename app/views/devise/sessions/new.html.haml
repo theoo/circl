@@ -1,0 +1,38 @@
+%div{:style => 'text-align: center; margin: 20px 0;'}
+  = image_tag('logo.png', :alt => 'Directory')
+
+%div{:style => 'width: 524px;', :class => 'centered'}
+
+  - flash_messages
+
+  .widget.centered
+    %legend
+      = I18n.t('devise.views.login')
+
+    = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+      %div{:style => 'width: 229px; padding: 10px; float: right;'}
+        %h2= I18n.t("devise.views.i_dont_have_an_account")
+        - if devise_mapping.recoverable? && controller_name != 'passwords'
+          = link_to I18n.t('devise.views.request_new_password'),
+                    new_password_path(resource_name),
+                    :class => 'button',
+                    :style => 'margin-top: 30px; padding: 10px 5px;'
+
+      %div{:style => 'width: 228px; margin: 0 259px 10px 10px; padding: 10px 10px 10px 0; border-right: solid 1px #ccc;'}
+        %h2= I18n.t("devise.views.i_have_an_account")
+
+        %label= I18n.t('devise.views.email')
+        = f.email_field :email, :class => 'set_focus'
+
+        %label= I18n.t('devise.views.password')
+        = f.password_field :password
+
+        %br
+        .align_left
+          .white &nbsp;
+          - if devise_mapping.rememberable?
+            = f.check_box :remember_me, { :class => 'normal' }
+            %label{:for => 'person_remember_me', :class => 'inline'}= I18n.t('devise.views.remember_me')
+
+        .align_right
+          = f.submit I18n.t('devise.views.sign_in')

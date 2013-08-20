@@ -1,0 +1,24 @@
+%div{:style => 'text-align: center; margin: 20px 0;'}
+  /= TODO: insert company name here.
+  = image_tag('logo.png', :alt => 'Directory')
+
+%div{:style => 'width: 525px;', :class => 'centered'}
+
+  - flash_messages
+
+  .widget
+    %legend
+      = I18n.t('devise.views.resend_unlock_instructions')
+
+    %div{:style => 'padding: 1em 0; width: 80%; margin: 0 auto;'}
+      = form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f|
+        - devise_error_messages!
+
+        %div{:class => 'half', :style => 'margin: 10px auto;'}
+          = f.label :email
+          = f.email_field :email, :style => 'width: 100%'
+
+          = f.submit I18n.t('devise.views.resend_unlock_instructions')
+
+      = render :partial => 'devise/shared/links'
+

@@ -1,0 +1,75 @@
+%br
+#receipts_export
+  .validation_errors_placeholder
+
+  %form{ :method =>'get', :action => '/admin/receipts/export' }
+
+    .block
+      .stackable-block
+        .autocompleted
+          %label= I18n.t('receipt.views.subscription_title')
+          %input{:type => 'search',
+                 :name => 'subscription_title',
+                 :value => '',
+                 :action => '/admin/subscriptions/search'}
+          %input{:type => 'hidden',
+                 :name => 'subscription_id',
+                 :value => ''}
+
+      .stackable-block
+        .autocompleted
+          %label= I18n.t('receipt.views.means_of_payment')
+          %input{:type => 'search',
+                 :name => 'means_of_payment',
+                 :class => 'small',
+                 :value => '',
+                 :action => '/admin/receipts/means_of_payments' }
+          %input{:type => 'hidden',
+                 :name => 'receipt_id',
+                 :value => ''}
+
+    .block
+      .stackable-block
+        %label= I18n.t('common.toolbox_template')
+        %select{:name => 'type'}
+          - for l in ['banana', 'git', 'office_maker', 'csv']
+            %option{:value => l}= l
+
+      .stackable-block
+        %label= I18n.t('receipt.views.account')
+        %input{:type => 'text',
+               :step => '1',
+               :class => 'small required',
+               :name => 'account',
+               :value => @account }
+
+      .stackable-block
+        %label= I18n.t('receipt.views.counterpart_account')
+        %input{:type => 'text',
+               :step => '1',
+               :class => 'small required',
+               :name => 'counterpart_account',
+               :value => @counterpart_account }
+
+    .block
+      .stackable-block
+        %label= I18n.t('common.from')
+        %input{:type => 'text',
+               :name => 'from',
+               :class => 'datepicker required',
+               :value => '' }
+
+      .stackable-block
+        %label= I18n.t('common.to')
+        %input{:type => 'text',
+               :name => 'to',
+               :class => 'datepicker required',
+               :value => '' }
+
+      .stackable-block
+        %form
+          %br
+          %input.no_sending{ :type => 'submit', :value => I18n.t('common.toolbox_export') }
+
+      .block
+        %br

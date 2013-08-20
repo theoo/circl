@@ -1,0 +1,74 @@
+%form
+  .validation_errors_placeholder
+
+  %div{:class => 'float_left', :style => 'width: 250px;'}
+    .block
+      .block
+        %label= I18n.t('invoice_template.views.title')
+        %input{ :type => 'text',
+                :name => 'title',
+                :value => @invoice_template.title,
+                :class => 'required' }
+
+      .block
+        %label= I18n.t('invoice_template.views.language')
+        %select{:name => 'language_id',
+                :class => 'required'}
+          - for l in App.Language.all()
+            - if @invoice_template.language_id == l.id
+              %option{:value => l.id, :selected => true}= l.name
+            - else
+              %option{:value => l.id}= l.name
+
+      %label{:for => 'invoice_template_with_bvr', :class => 'inline'}= I18n.t('invoice_template.views.with_bvr')
+      %input{ :type => 'checkbox',
+        :id => 'invoice_template_with_bvr',
+        :name => 'with_bvr',
+        :checked => @invoice_template.with_bvr,
+        :value => 1 }
+
+      %label{:for => 'invoice_template_show_invoice_value', :class => 'inline'}= I18n.t('invoice_template.views.show_invoice_value')
+      %input{ :type => 'checkbox',
+        :id => 'invoice_template_show_invoice_value',
+        :name => 'show_invoice_value',
+        :checked => @invoice_template.show_invoice_value,
+        :value => 1 }
+
+      != @partial('submit_button')(@invoice_template)
+
+      %label= I18n.t('invoice_template.views.bvr_address')
+      %textarea{:name => 'bvr_address',
+                :rows => 4,
+                :class => 'like_an_input'}
+        = @invoice_template.bvr_address
+
+      %label= I18n.t('invoice_template.views.bvr_account_number')
+      %input{ :type => 'text',
+              :name => 'bvr_account',
+              :value => @invoice_template.bvr_account }
+
+  %span#invoice_template_placeholder_button.button
+    = I18n.t("invoice_template.views.placeholders.display_placeholders")
+
+  %div{:class => 'float_right', :style => 'width: 720px; display: none;', :id => 'invoice_template_placeholders_list'}
+    %label= I18n.t('invoice_template.views.placeholders.placeholders')
+    %dl.placeholders
+      - for p,v in @invoice_template.placeholders.simples
+        %dt= "#" + p
+        %dd= I18n.t('invoice_template.views.placeholders.' + p.toLowerCase())
+
+    %dl.placeholders
+      - for p,v in @invoice_template.placeholders.iterators
+        %dt= "#" + p + "{}"
+        %dd= I18n.t('invoice_template.views.placeholders.' + p.toLowerCase())
+
+  .block
+    .white &nbsp;
+    .full_width_textarea
+      %textarea{:id => 'wysiwyg',
+                :name => 'html',
+                :rows => 25,
+                :class => 'wysiwyg' }
+        = @invoice_template.html
+
+.block

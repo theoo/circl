@@ -1,0 +1,30 @@
+%form
+  .validation_errors_placeholder
+
+  .float_right
+    %label.white &nbsp;
+    != @partial("submit_button")(@task)
+
+  .stackable-block
+    %label= I18n.t('task.views.date')
+    %input{ :type => 'text',
+            :name => 'date',
+            :class => 'datepicker',
+            :value => @task.date }
+
+  .stackable-block
+    %label= I18n.t('task.views.duration')
+    %input{ :type => 'number',
+            :name => 'duration',
+            :min => 0,
+            :max => 999,
+            :value => @task.duration}
+
+  .block
+
+  .full_width_textarea
+    %label= I18n.t('task.views.description')
+    %textarea{ :name => 'description',
+               :rows => 5,
+               :class => 'like_an_input'}
+      = @task.description

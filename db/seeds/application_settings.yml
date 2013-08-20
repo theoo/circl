@@ -1,0 +1,41 @@
+---
+- key: application_id
+  value: '0'
+- key: me
+  value: '1'
+- key: default_locale
+  value: 'en'
+- key: mailchimp_list_name
+  value: 'name'
+- key: mailchimp_api_key
+  value: '00000000000000000000000000000000-us0'
+- key: mailchimp_connection_secure
+  value: 'true'
+- key: mailchimp_connection_timeout
+  value: '120'
+- key: invoices_prefix
+  value: invoices
+- key: invoices_debit_account
+  value: '1111'
+- key: invoices_credit_account
+  value: '2222'
+- key: invoices_vat_code
+  value: '1300'
+- key: invoices_vat_rate
+  value: '8'
+- key: receipts_prefix
+  value: receipts
+- key: receipts_debit_account
+  value: '3333'
+- key: receipts_credit_account
+  value: '4444'
+- key: receipts_vat_code
+  value: '1300'
+- key: receipts_vat_rate
+  value: '8'
+- key: salaries_prefix
+  value: salary
+- key: salaries_employee_deductions_prefix
+  value: employee deductions
+- key: salaries_employer_deductions_prefix
+  value: employer deductions

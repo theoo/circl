@@ -1,0 +1,11 @@
+---
+- code: FR
+  name: français
+- code: EN
+  name: english
+- code: DE
+  name: deutsch
+- code: ES
+  name: español
+- code: IT
+  name: italiano

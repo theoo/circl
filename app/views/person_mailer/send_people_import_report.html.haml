@@ -1,0 +1,130 @@
+%h1
+  = I18n.t("person.mail.people_import_report_title")
+
+- unless @valid_people.empty?
+  %h2
+    = I18n.t("person.mail.imported_people")
+
+  %table
+    %thead
+      %tr
+        %th person id
+        %th first_name
+        %th last_name
+        %th title
+        %th is_an_organization
+        %th organization_name
+        %th address
+        %th location
+        %th phone
+        %th second_phone
+        %th mobile
+        %th email
+        %th second_email
+        %th job
+        %th birth_date
+        %th nationality
+        %th avs_number
+        %th bank_informations
+        %th roles
+        %th main_communication_language
+        %th communication_languages
+        %th translation_aptitudes
+        %th private_tags
+        %th public_tags
+        %th hidden
+    %tbody
+      - @valid_people.each do |person|
+        %tr
+          %td= person.id
+          %th= person.first_name
+          %th= person.last_name
+          %th= person.title
+          %th= person.is_an_organization
+          %th= person.organization_name
+          %th= person.address
+          %th= relation_to_string(person.location)
+          %th= person.phone
+          %th= person.second_phone
+          %th= person.mobile
+          %th= person.email
+          %th= person.second_email
+          %th= relation_to_string(person.job)
+          %th= person.birth_date
+          %th= person.nationality
+          %th= person.avs_number
+          %th= person.bank_informations
+          %th= relation_to_string(person.roles)
+          %th= relation_to_string(person.main_communication_language)
+          %th= relation_to_string(person.communication_languages)
+          %th= relation_to_string(person.translation_aptitudes)
+          %th= relation_to_string(person.private_tags)
+          %th= relation_to_string(person.public_tags)
+          %th= person.hidden
+
+- unless @invalid_people.empty?
+  %h2
+    Invalid People
+
+  %table
+    %thead
+      %tr
+        %th errors
+        %th first_name
+        %th last_name
+        %th title
+        %th is_an_organization
+        %th organization_name
+        %th address
+        %th location
+        %th phone
+        %th second_phone
+        %th mobile
+        %th email
+        %th second_email
+        %th job
+        %th birth_date
+        %th nationality
+        %th avs_number
+        %th bank_informations
+        %th roles
+        %th main_communication_language
+        %th communication_languages
+        %th translation_aptitudes
+        %th private_tags
+        %th public_tags
+        %th hidden
+    %tbody
+      - @invalid_people.each do |person|
+        %tr
+          %td
+            - person.errors.messages.each do |k, a|
+              = "#{k}:"
+              %br
+              - a.each do |s|
+                = "#{'&nbsp;' * 4}#{s}".html_safe
+                %br
+          %th= person.first_name
+          %th= person.last_name
+          %th= person.title
+          %th= person.is_an_organization
+          %th= person.organization_name
+          %th= person.address
+          %th= relation_to_string(person.location)
+          %th= person.phone
+          %th= person.second_phone
+          %th= person.mobile
+          %th= person.email
+          %th= person.second_email
+          %th= relation_to_string(person.job)
+          %th= person.birth_date
+          %th= person.nationality
+          %th= person.avs_number
+          %th= person.bank_informations
+          %th= relation_to_string(person.roles)
+          %th= relation_to_string(person.main_communication_language)
+          %th= relation_to_string(person.communication_languages)
+          %th= relation_to_string(person.translation_aptitudes)
+          %th= relation_to_string(person.private_tags)
+          %th= relation_to_string(person.public_tags)
+          %th= person.hidden

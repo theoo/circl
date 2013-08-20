@@ -1,0 +1,26 @@
+- destroy_background_task_trad = I18n.t("background_task.views.contextmenu.destroy_background_task")
+
+%menu.context_menu_actions
+  %command{ :data-label => destroy_background_task_trad,
+            :data-event => "background-task-destroy",
+            :data-icon => 'delete' }
+
+%table.with_contextmenu.datatable
+  %thead
+    %tr
+      %th= I18n.t('background_task.views.table.created_at')
+      %th= I18n.t('background_task.views.table.person')
+      %th= I18n.t('background_task.views.table.title')
+      %th= I18n.t('background_task.views.table.status')
+
+  %tbody
+    - for background_task in App.BackgroundTask.all()
+      - actions = []
+      - if @can?.background_task.manage and background_task.status != 'running'
+        - actions.push(destroy_background_task_trad)
+
+      %tr{:data-id => background_task.id, :data-actions => actions}
+        %td= background_task.created_at
+        %td= background_task.person_name
+        %td= background_task.title
+        %td= I18n.t("background_task.views.statuses." + background_task.status)
