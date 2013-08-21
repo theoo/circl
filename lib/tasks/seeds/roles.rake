@@ -2,7 +2,7 @@ files = Dir["#{Rails.root}/db/seeds/roles/*.yml"].map{ |f| [File.basename(f, '.y
 namespace :db do
   namespace :seed do
     namespace :roles do |namespace|
-      scope = namespace.instance_variable_get('@scope').to_a.join(':')
+      scope = namespace.instance_variable_get('@scope').to_a.reverse.join(':')
 
       files.each do |role, file|
         namespace role do
