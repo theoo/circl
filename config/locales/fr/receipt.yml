@@ -3,7 +3,9 @@ fr:
   receipt:
     import:
       already_imported: déjà importé
-      cannot_find_invoice: Impossible de trouver la facture (id %{invoice_id}).
+      already_imported_but_corresponding_receipt_not_found: La ligne a déjà été importée mais le reçu correspondant est introuvable!
+      cannot_find_affair_for_this_invoice: Impossible de trouver l'affaire %{affair_id} associée à cette facture %{invoice_id} pour cette personne (id %{owner_id}).
+      cannot_find_invoice: Impossible de trouver la facture (id %{invoice_id}) pour cette personne (id %{owner_id}).
       cannot_find_owner: Impossible de trouver le propriétaire (id %{owner_id}).
       cannot_find_receipt: Impossible de trouver le reçu.
       cannot_parse_line: Import d'analyser la ligne.
@@ -14,6 +16,7 @@ fr:
       invoice_found_but_its_creation_date_mismatch: La facture a été trouvée mais la date de création ne correspond pas.
       invoice_found_but_its_owner_mismatch: La facture a été trouvée mais le propriétaire ne correspond pas.
       line: ligne
+      rectification_for_inexistant_receipt: Rectification pour un reçu inexistant (invoice id %{invoice_id}). Vous pourriez essayer de réimporter le fichier après ce premier import.
       total_cannot_parse: Impossible de parser la ligne de total.
       total_mismatch: Le total ne correspond pas (%{total} != %{computed_total})
       total_receipts_count_mismatch: Le nombre de reçus ne correspond pas (%{receipts_count} != %{computed_receipts_count})

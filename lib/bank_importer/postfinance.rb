@@ -39,13 +39,24 @@ module BankImporter
             info[:receipt] = Receipt.where(info[:receipt]).first
 
           when 'rectification'
-            new_value = info[:receipt].new_value_in_cents
+            # extract new value
+            new_value = info[:receipt][:new_value_in_cents]
             info[:receipt].delete(:new_value_in_cents)
             # If there is more than one receipt, assume it's the first...
-            r = Receipt.find(info[:receipt]).first
+
+            r = Receipt.where(info[:receipt]).first
+
+            if r.nil?
+              info[:errors] = { :message => I18n.t("receipt.import.rectification_for_inexistant_receipt",
+                                              :invoice_id => info[:receipt][:invoice_id]),
+                                :line => info[:line].strip,
+                                :decoded_line => info[:decoded_line] }
+              info[:status] = 'error'
+              next
+            end
+
             r.value_in_cents = new_value
             info[:receipt] = r
-
           end
         end
 
@@ -99,7 +110,6 @@ module BankImporter
             # Ok, parsing passed
             computed_total += hash[:value_in_cents]
 
-
             # Check if owner exists
             unless Person.exists?(hash[:owner_id])
               raise ParsingError, I18n.t('receipt.import.cannot_find_owner', :owner_id => hash[:owner_id])
@@ -109,7 +119,17 @@ module BankImporter
             if Invoice.exists?(hash[:invoice_id])
               invoice = Invoice.find(hash[:invoice_id])
             else
-              raise ParsingError, I18n.t('receipt.import.cannot_find_invoice', :invoice_id => hash[:invoice_id])
+              raise ParsingError, I18n.t('receipt.import.cannot_find_invoice',
+                :invoice_id => hash[:invoice_id],
+                :owner_id => hash[:owner_id])
+            end
+
+            # Some rare case where the invoice is orphan
+            unless invoice.affair
+              raise ParsingError, I18n.t('receipt.import.cannot_find_affair_for_this_invoice',
+                :affair_id => invoice.affair_id,
+                :owner_id => hash[:owner_id],
+                :invoice_id => invoice.id)
             end
 
             # Ensure this is the correct invoice
@@ -127,9 +147,14 @@ module BankImporter
             if BankImportHistory.where(:reference_line => line.strip).size > 0
               # this line has already been imported
               receipts = invoice.receipts.where(:value_date => hash[:date_value], :value_in_cents => hash[:value_in_cents])
-              receipt = {:id => receipts.first.id}
-              infos[line_number][:status] = 'already_imported'
-              raise ParsingError, I18n.t('receipt.import.already_imported')
+              if receipts.size > 0
+                receipt = {:id => receipts.first.id}
+                infos[line_number][:status] = 'already_imported'
+                raise ParsingError, I18n.t('receipt.import.already_imported')
+              else
+                infos[line_number][:status] = 'error'
+                raise ParsingError, I18n.t('receipt.import.already_imported_but_corresponding_receipt_not_found')
+              end
             end
 
             # Check what kind of line it is, credit, error correction or rectification
@@ -180,7 +205,7 @@ module BankImporter
             # in any case, append line and receipt to the hash
             infos[line_number][:receipt] = receipt
             infos[line_number][:line] = line.strip
-            infos[line_number][:decorded_line] = hash
+            infos[line_number][:decoded_line] = hash
           end
         end
 

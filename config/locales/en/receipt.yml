@@ -3,7 +3,9 @@ en:
   receipt:
     import:
       already_imported: already imported
-      cannot_find_invoice: Cannot find invoice (id %{invoice_id}).
+      already_imported_but_corresponding_receipt_not_found: The line were already imported but corresponding receipt cannot be found!
+      cannot_find_affair_for_this_invoice: Cannot find affair %{affair_id} related to invoice %{invoice_id} pour for this person (id %{owner_id}).
+      cannot_find_invoice: Cannot find invoice (id %{invoice_id}) for this person (id %{owner_id}).
       cannot_find_owner: Cannot find the owner (id %{owner_id}).
       cannot_find_receipt: Cannot find receipt.
       cannot_parse_line: Cannot parse line.
@@ -14,6 +16,7 @@ en:
       invoice_found_but_its_creation_date_mismatch: Invoice found, but its creation date mismatch.
       invoice_found_but_its_owner_mismatch: Invoice found, but its owner mismatch.
       line: line
+      rectification_for_inexistant_receipt: Rectification for a non-existing receipt (invoice id %{invoice_id}). You should try to re-import this file after this import.
       total_cannot_parse: Cannot parse total.
       total_mismatch: The total mismatches (%{total} != %{computed_total}).
       total_receipts_count_mismatch: The total receipts count mismatches (%{receipts_count} != %{computed_receipts_count}).

@@ -71,16 +71,17 @@
           %th= I18n.t("receipt.mail.table.date_value")
       %tbody
         - @errors.each do |info|
-          - if info.has_key? :line
-            - h = BankImporter::Postfinance.parse_receipt(info[:line]) || {}
-            %tr
-              %td= info[:message]
-              %td= info[:line]
-              %td= h[:account]
-              %td= h[:type]
-              %td= h[:bvr_ref]
-              %td= h[:value_in_cents] ? Money.new(h[:value_in_cents]).to_view : ''
-              %td= h[:date_value]
+          - if info.is_a? Hash
+            - if info.has_key? :line
+              - h = BankImporter::Postfinance.parse_receipt(info[:line]) || {}
+              %tr
+                %td= info[:message]
+                %td= info[:line]
+                %td= h[:account]
+                %td= h[:type]
+                %td= h[:bvr_ref]
+                %td= h[:value_in_cents] ? Money.new(h[:value_in_cents]).to_view : ''
+                %td= h[:date_value]
           - else
             %tr
               %td{:colspan => 7}= info.inspect
