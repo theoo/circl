@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'rake', '10.1.0'
 gem 'rails', '3.1.1'
 
 ### database
