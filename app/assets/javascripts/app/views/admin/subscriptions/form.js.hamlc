@@ -21,6 +21,10 @@
                 :name => 'parent_id',
                 :value => @subscription.parent_id }
 
+        %input{ :type => 'hidden',
+                :name => 'status',
+                :value => @status }
+
   .block
   .full_width_textarea
     %label= I18n.t('subscription.views.description')

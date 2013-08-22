@@ -28,7 +28,9 @@
 # == Schema Information End
 #++
 
-# Options are: subscriptions_id, :person, :people_ids
+# Options are:
+#   :required => [:subscriptions_id, :person, :people_ids]
+#   :optional => [:parent_subscription_id, :status]
 class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
 
   def self.generate_title(options)
@@ -43,25 +45,52 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
 
     existing_people_ids = []
     new_people_ids = []
-    options[:people_ids].each do |id|
-      p = Person.find(id)
-      if p.subscriptions.include?(subscription)
-        existing_people_ids << p.id
-        next
+
+    transaction do
+      options[:people_ids].each do |id|
+        p = Person.find(id)
+
+        # Do not add existing people in this subscription
+        if p.subscriptions.include?(subscription)
+          existing_people_ids << p.id
+          next
+        end
+
+        # Depending on the status of this subscription, copy
+        # former affair's owner/buyer/receiver
+        if ! options[:status].blank? # 'renewal' or 'reminder'
+          ref_affair = p.affairs
+                        .joins(:subscriptions)
+                        .where('subscription_id = ?', options[:parent_subscription_id])
+                        .first
+          if ref_affair
+            owner    = ref_affair.owner
+            buyer    = ref_affair.buyer
+            receiver = ref_affair.receiver
+          else
+            raise ArgumentError, "reference affair not found for parent subscription #{options[:parent_subscription_id]}" #
+          end
+        end
+
+        # If no owner/buyer/receiver were defined, set defaults
+        owner    ||= p
+        buyer    ||= p
+        receiver ||= p
+
+        a = p.affairs.create!(:title => subscription.title,
+                              :owner => owner,
+                              :buyer => buyer,
+                              :receiver => receiver,
+                              :value => subscription.value_for(p),
+                              :subscriptions => [subscription])
+        # Append it an invoice
+        a.invoices.create!(:title => subscription.title,
+                           :value => subscription.value_for(p),
+                           :invoice_template => subscription.invoice_template_for(p),
+                           :printed_address => p.address_for_bvr )
+
+        new_people_ids << p.id
       end
-
-      a = p.affairs.create!(:title => subscription.title,
-                            :owner => p,
-                            :buyer => p,
-                            :receiver => p,
-                            :value => subscription.value_for(p),
-                            :subscriptions => [subscription])
-      a.invoices.create!(:title => subscription.title,
-                         :value => subscription.value_for(p),
-                         :invoice_template => subscription.invoice_template_for(p),
-                         :printed_address => p.address_for_bvr )
-
-      new_people_ids << p.id
     end
 
     PersonMailer.send_members_added_to_subscription(options[:person],

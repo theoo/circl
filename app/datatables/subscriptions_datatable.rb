@@ -46,8 +46,9 @@ class SubscriptionsDatatable
     remove_members_from_subscription_trad = I18n.t('subscription.views.contextmenu.remove_members_from_subscription')
     view_subscription_pdf_trad = I18n.t('subscription.views.contextmenu.view_subscription_pdf')
     transfer_overpaid_value_trad = I18n.t('subscription.views.contextmenu.transfer_overpaid_value')
-    subscription_reminder_trad = I18n.t('subscription.views.contextmenu.subscription_reminder')
     destroy_subscription_trad = I18n.t('subscription.views.contextmenu.destroy_subscription')
+    subscription_reminder_trad = I18n.t('subscription.views.contextmenu.subscription_reminder')
+    subscription_renewal_trad = I18n.t('subscription.views.contextmenu.subscription_renewal')
 
     subscriptions.map do |subscription|
       actions = [ edit_subscription_trad,
@@ -63,6 +64,7 @@ class SubscriptionsDatatable
       actions << view_subscription_members_who_paid_trad if subscription.receipts.count > 0
       actions << view_subscription_members_who_didnt_paid_trad if subscription.people.count > 0
       actions << transfer_overpaid_value_trad if subscription.overpaid_value > 0.to_money
+      actions << subscription_renewal_trad if subscription.people.count > 0
       actions << subscription_reminder_trad if subscription.receipts.count < subscription.invoices.size
       actions << destroy_subscription_trad if subscription.receipts.count <= 0
 

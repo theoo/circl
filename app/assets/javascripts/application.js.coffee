@@ -105,5 +105,9 @@ Number.prototype.to_view = (num)->
 
 # If I dared to write somewhere how javascript sucks that would be here.
 Date.prototype.to_view = (date)->
-  # TODO localization
+  # TODO localization, check also the rest of the code for localization
   @.getDate() + "-" + (@.getMonth() + 1) + "-" + @.getFullYear()
+
+String.prototype.to_date = ->
+  ary = @.split("-").reverse()
+  new Date(parseInt(ary[0]), parseInt(ary[1]) - 1, parseInt(ary[2]))

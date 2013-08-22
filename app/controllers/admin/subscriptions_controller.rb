@@ -176,6 +176,9 @@ class Admin::SubscriptionsController < ApplicationController
     succeed = false
 
     Subscription.transaction do
+      # Only allow reminders to be the child of a subscription
+      @subscription.parent_id = nil unless params[:status] == 'reminder'
+
       # raise the error and rollback transaction if validation fails
       raise ActiveRecord::Rollback unless @subscription.save
 
@@ -193,10 +196,26 @@ class Admin::SubscriptionsController < ApplicationController
         end
       end
 
-      if @subscription.parent_id
+      if params[:parent_id]
+        case params[:status]
+        when 'reminder'
+          people_ids = @subscription.parent
+                                    .get_people_from_affairs_status(:open)
+                                    .map(&:id)
+        when 'renewal'
+          people_ids = Subscription.find(params[:parent_id])
+                                    .get_people_from_affairs_status(:paid)
+                                    .map(&:id)
+        else
+          @subscription.errors.add(:base, I18n.t("subscription.errors.parent_id_is_set_without_status"))
+          raise ActiveRecord::Rollback
+        end
+
         BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(:subscription_id => @subscription.id,
-          :people_ids => @subscription.parent.get_people_from_affairs_status(:open).map(&:id),
-          :person => current_person)
+          :people_ids => people_ids,
+          :person => current_person,
+          :parent_subscription_id => params[:parent_id],
+          :status => params[:status])
       end
       succeed = true
     end

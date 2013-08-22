@@ -113,20 +113,52 @@ class New extends ValueItemsController
     if params
       if params.parent_id
         @parent_id = params.parent_id
-        Subscription.one 'refresh', =>
-          # create a new child based on its parent's data
-          parent = Subscription.find(@parent_id)
-          @template =
-            parent_title: parent.title
-            parent_id:    parent.id
-            title:        I18n.t("subscription.views.reminder") +  ": " + parent.title
-            values:       parent.values
-            description:  parent.description
-            invoice_template_id: parent.invoice_template_id
-            interval_starts_on:  parent.interval_starts_on
-            interval_ends_on:    parent.interval_ends_on
+        @status = params.type
 
-          @render()
+        switch params.type
+          when 'reminder'
+            Subscription.one 'refresh', =>
+              # create a new child based on its parent's data
+              parent = Subscription.find(@parent_id)
+              @template =
+                parent_title: parent.title
+                parent_id:    parent.id
+                title:        I18n.t("subscription.views.reminder") +  ": " + parent.title
+                values:       parent.values
+                description:  parent.description
+                invoice_template_id: parent.invoice_template_id
+                interval_starts_on:  parent.interval_starts_on
+                interval_ends_on:    parent.interval_ends_on
+
+              @render()
+              # Lock the parent field so user cannot change it by mistake
+              @el.find("input[name='subscription_parent_title']").button(disabled: true)
+
+          when 'renewal'
+            Subscription.one 'refresh', =>
+              parent = Subscription.find(@parent_id)
+
+              if parent.interval_starts_on
+                # create a new child based on its parent's data
+                # Compute the new date in accord to the former interval
+                from = parent.interval_starts_on.to_date()
+                to = parent.interval_ends_on.to_date()
+                new_from = new Date(to.getFullYear(), to.getMonth(), to.getDate()+1)
+                new_to = new Date(new_from.getTime() + (to - from))
+
+              @template =
+                # parent_title: parent.title # parent title is hidden
+                parent_id:    parent.id # parent will be removed after renewal
+                title:        I18n.t("subscription.views.renewal") +  ": " + parent.title
+                values:       parent.values
+                description:  parent.description
+                invoice_template_id: parent.invoice_template_id
+                interval_starts_on:  new_from.to_view() if new_from
+                interval_ends_on:    new_to.to_view() if new_to
+
+              @render()
+              # Lock the parent field so user cannot add one by mistake
+              @el.find("input[name='subscription_parent_title']").button(disabled: true)
 
         Subscription.fetch(id: @parent_id)
     else
@@ -153,6 +185,7 @@ class New extends ValueItemsController
     attr = $(e.target).serializeObject()
     attr.values = @fetch_items()
     @subscription = new Subscription(attr)
+    @subscription.status = @status
     @save_with_notifications @subscription, @render
 
 class Edit extends ValueItemsController
@@ -203,6 +236,7 @@ class Index extends App.ExtendedController
     'subscription-members-remove':              'remove_members'
     'subscription-transfer-overpaid-value':     'transfer_overpaid_value'
     'subscription-reminder':                    'create_reminder'
+    'subscription-renewal':                     'renew'
     'submit form':                              'stack_tag_tool_window'
 
   constructor: (params) ->
@@ -337,7 +371,15 @@ class Index extends App.ExtendedController
     id = $(e.target).subscription_id()
     Subscription.one 'refresh', =>
       subscription = Subscription.find(id)
-      @trigger 'new', {parent_id: subscription.id}
+      @trigger 'new', {parent_id: subscription.id, type: 'reminder'}
+
+    Subscription.fetch(id: id)
+
+  renew: (e) ->
+    id = $(e.target).subscription_id()
+    Subscription.one 'refresh', =>
+      subscription = Subscription.find(id)
+      @trigger 'new', {parent_id: subscription.id, type: 'renewal'}
 
     Subscription.fetch(id: id)
 
@@ -435,9 +477,11 @@ class App.AdminSubscriptions extends Spine.Controller
 
     @index.bind 'new', (params) =>
       @new.active(params)
+      @edit.hide()
 
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
+      @new.hide()
 
     @index.bind 'destroyError', (id, errors) =>
       @edit.active id: id

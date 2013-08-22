@@ -35,6 +35,7 @@ en:
         remove_members_from_subscription: remove members from subscription
         remove_subscription: remove subscription
         subscription_reminder: create a reminder subscription
+        subscription_renewal: renew subscription
         transfer_overpaid_value: transfer overpaid value
         view_subscription_buyers: show buyers
         view_subscription_members: view members
@@ -46,6 +47,7 @@ en:
       from: from
       interval_title: dates of this subscription interval
       reminder: reminder
+      renewal: renewal
       subscription: subscription
       table:
         id: id

@@ -10,6 +10,7 @@
 - remove_members_from_subscription_trad = I18n.t('subscription.views.contextmenu.remove_members_from_subscription')
 - transfer_overpaid_value_trad = I18n.t('subscription.views.contextmenu.transfer_overpaid_value')
 - subscription_reminder_trad = I18n.t('subscription.views.contextmenu.subscription_reminder')
+- subscription_renewal_trad = I18n.t('subscription.views.contextmenu.subscription_renewal')
 
 %menu.context_menu_actions
 
@@ -63,6 +64,10 @@
 
   %command{ :data-label => subscription_reminder_trad,
             :data-event => 'subscription-reminder',
+            :data-icon => 'copy' }
+
+  %command{ :data-label => subscription_renewal_trad,
+            :data-event => 'subscription-renewal',
             :data-icon => 'copy' }
 
 %table.with_contextmenu.datatable{ :action => '/admin/subscriptions' }
