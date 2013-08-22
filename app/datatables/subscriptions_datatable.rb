@@ -98,7 +98,7 @@ class SubscriptionsDatatable
   end
 
   def fetch_subscriptions
-    subscriptions = Subscription.select("s.*")
+    subscriptions = Subscription.select("DISTINCT(s.*)")
       .from("subscriptions_as_tree() s")
       .joins("LEFT JOIN affairs_subscriptions ON affairs_subscriptions.subscription_id = s.id")
       .joins("LEFT JOIN affairs ON affairs.id = affairs_subscriptions.affair_id")
