@@ -13,4 +13,4 @@ fr:
           code: code
           email: email
           message: message
-      synchronization_started: La synchronisation à démarré, un rapport sera expédié par email à %{email}.
+      synchronization_started: La synchronisation a démarrée, un rapport sera expédié par email à %{email}.
