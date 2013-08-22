@@ -7,7 +7,7 @@ namespace :db do
       files.each do |model, file|
         namespace model do
           task :create => :environment do
-            print "Creating search attribute:#{model}... "
+            print "Creating search attribute: #{model}... "
             (YAML.load_file(file) || []).each do |h|
               e = SearchAttribute.new
               e.model    = h['model']
@@ -21,8 +21,29 @@ namespace :db do
           end
 
           task :destroy => :environment do
-            print "Destroying search attribute:#{model}... "
+            print "Destroying search attribute: #{model}... "
             SearchAttribute.where(:model => model.camelize).destroy_all
+            puts 'done!'
+          end
+
+          desc "Add missing search attributes..."
+          task :upgrade => :environment do
+            print "Add missing search attributes for model #{model}... "
+
+            (YAML.load_file(file) || []).each do |h|
+              sa = SearchAttribute.where(:model => model.camelize, :name => h['name'])
+              # if search attribute doesn't exist
+              unless sa.size > 0
+                e = SearchAttribute.new
+                e.model    = h['model']
+                e.name     = h['name']
+                e.indexing = h['indexing']
+                e.mapping  = h['mapping']
+                e.group    = h['group']
+                e.save!
+              end
+            end
+
             puts 'done!'
           end
 
@@ -39,7 +60,7 @@ namespace :db do
         end
       end
 
-      %w{create destroy reset}.each do |str|
+      %w{create destroy reset upgrade}.each do |str|
         desc str
         task str => files.map{ |model, file| "#{scope}:#{model}:#{str}" }
       end
