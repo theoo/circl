@@ -196,7 +196,7 @@ class Admin::SubscriptionsController < ApplicationController
         end
       end
 
-      if params[:parent_id]
+      if ! params[:parent_id].blank?
         case params[:status]
         when 'reminder'
           people_ids = @subscription.parent

@@ -8,6 +8,7 @@ fr:
       can_not_delete_if_has_receipts: Impossible de détruire l'inscription dont un reçu dépend. Le reçu concerné doit être supprimé avant.
       cannot_remove_members_if_there_is_receipts: Impossible de retirer les membres s'il des reçus ont été saisis
       cannot_transfer_overpaid_value_if_subscription_value_is_zero: Impossible de transférer les paiements excédants si l'inscription d'origine à une valeur de zéro
+      parent_id_is_set_without_status: Il n'est pas possible de définir parent_id si aucun status n'est donné.
     mail:
       member_added_to_subscription_title: Des membres ont été ajouté à l'inscription
       please_find_a_link_to_access_the_subscription_pdf: Veuillez trouver ci-joint un lien vers le PDF de l'inscription
@@ -35,7 +36,7 @@ fr:
         remove_members_from_subscription: retirer tous les membres de l'inscription
         remove_subscription: retirer l'inscription
         subscription_reminder: créer une inscription de rappel
-        subscription_renewal: renouveller l'inscription
+        subscription_renewal: renouveler l'inscription
         transfer_overpaid_value: transférer les paiements excédants
         view_subscription_buyers: voir les payeurs
         view_subscription_members: voir les membres

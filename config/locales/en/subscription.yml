@@ -8,6 +8,7 @@ en:
       can_not_delete_if_has_receipts: A subscription cannot be destroyed if it has existing receipts. Revelent receipts must be destroyed first
       cannot_remove_members_if_there_is_receipts: Cannot remove members from subscription if it has receipts
       cannot_transfer_overpaid_value_if_subscription_value_is_zero: Cannot transfert overpaid value if the source subscription value is zero
+      parent_id_is_set_without_status: Cannot set parent_id if no status given.
     mail:
       member_added_to_subscription_title: Member added to subscription
       please_find_a_link_to_access_the_subscription_pdf: Please find a link to access the subscription pdf
