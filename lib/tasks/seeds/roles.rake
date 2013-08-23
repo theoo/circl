@@ -30,11 +30,13 @@ namespace :db do
             r = Role.where(:name => role)
             if r.size > 0
               r = r.first
-              (YAML.load_file(file) || []).each do |perm|
-                r.permissions.create!(perm) unless r.permissions.where(perm).count > 0
-              end
             else
-              raise ArgumentError, "Role #{role} doesn't exist in database, create it first."
+              r = Role.create!(:name => role)
+              print "Added missing role #{role}... "
+            end
+
+            (YAML.load_file(file) || []).each do |perm|
+              r.permissions.create!(perm) unless r.permissions.where(perm).count > 0
             end
 
             puts 'done!'
