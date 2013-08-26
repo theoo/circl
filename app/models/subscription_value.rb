@@ -37,7 +37,8 @@ class SubscriptionValue < ActiveRecord::Base
   ### CALLBACKS ##
   ################
 
-  before_save :set_position_if_none_given
+  before_validation :set_position_if_none_given
+  # before_destroy :ensure_is_destroyable
 
   ################
   ### INCLUDES ###
@@ -46,11 +47,6 @@ class SubscriptionValue < ActiveRecord::Base
   include ChangesTracker
   extend  MoneyComposer
 
-  #################
-  ### CALLBACKS ###
-  #################
-
-  # before_destroy :ensure_is_destroyable
 
   #################
   ### RELATIONS ###
@@ -81,7 +77,13 @@ class SubscriptionValue < ActiveRecord::Base
   private
 
   def set_position_if_none_given
-    self.position ||= 0
+    unless self.position
+      self.position = if self.subscription.values.count > 0
+        self.subscription.values.last.position + 1
+      else
+        0
+      end
+    end
   end
 
 end
