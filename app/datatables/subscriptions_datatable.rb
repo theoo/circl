@@ -27,7 +27,7 @@ class SubscriptionsDatatable
     {
       sEcho: params[:sEcho].to_i,
       iTotalRecords: Subscription.count,
-      iTotalDisplayRecords: subscriptions.total_entries,
+      iTotalDisplayRecords: Subscription.count,
       aaData: data
     }
   end
@@ -35,7 +35,6 @@ class SubscriptionsDatatable
   private
 
   def data
-
     edit_subscription_trad = I18n.t('subscription.views.contextmenu.edit_subscription')
     view_subscription_members_trad = I18n.t('subscription.views.contextmenu.view_subscription_members')
     view_subscription_buyers_trad = I18n.t('subscription.views.contextmenu.view_subscription_buyers')
