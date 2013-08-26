@@ -36,7 +36,7 @@ elasticsearch:
   max_per_page: 1000000
   index:
     number_of_shards: 5
-    number_of_replicas: 1
+    number_of_replicas: 0 # should be 1 if you have a replica
     analysis:
       analyzer:
         string_lowercase:
