@@ -162,10 +162,10 @@ class App.SettingsInvoiceTemplates extends Spine.Controller
     super
 
     @edit_template_window = Ui.stack_window('edit-invoice-template-window', {width: 1000, position: 'top', remove_on_close: false})
-    $(@edit_template_window).dialog({title: I18n.t('invoice_template.view.edit_template')})
+    $(@edit_template_window).dialog({title: I18n.t('invoice_template.views.edit_template')})
 
     @new_template_window = Ui.stack_window('new-invoice-template-window', {width: 1000, position: 'top', remove_on_close: false})
-    $(@new_template_window).dialog({title: I18n.t('invoice_template.view.new_template')})
+    $(@new_template_window).dialog({title: I18n.t('invoice_template.views.new_template')})
 
     @index = new Index
     @edit = new Edit({el: @edit_template_window})

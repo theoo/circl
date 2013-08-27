@@ -1,7 +1,7 @@
 .validation_errors_placeholder
 
 .centered_text
-  %input{:type => 'submit', :data-title => "new template", :disabled => 'disabled'}
+  %input{:type => 'submit', :data-title => I18n.t('invoice_template.views.new_template'), :disabled => 'disabled'}
   .white &nbsp;
 
 - edit_invoice_template_trad = I18n.t('invoice_template.views.contextmenu.edit_invoice_template')

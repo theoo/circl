@@ -6,10 +6,9 @@ en:
       bvr_address_and_bvr_account_are_required_if_with_bvr_is_set: The BVR address and BVR account are required if "print BVR" is selected.
       can_not_delete_if_invoices_are_subscribed: A template cannot be destroyed if it has invoices. Revelent invoices must first be destroyed.
       can_not_delete_if_subscriptions_are_subscribed: This template is being used by subscriptions, it must be first remove from those subscriptions in order to be destroyed.
-    view:
-      edit_template: edit template
-      new_template: new template
     views:
+      edit_template: edit template
+      new_template: new invoice template
       bvr_account_number: BVR account number
       bvr_address: BVR address
       contextmenu:
