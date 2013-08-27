@@ -1,6 +1,5 @@
 source 'http://rubygems.org'
 
-gem 'rake', '10.1.0'
 gem 'rails', '3.1.1'
 
 ### database
@@ -27,16 +26,16 @@ gem 'password_strength', '0.3.2'
 gem 'json', '1.7.3'
 
 ### Views/UI specific
-gem 'will_paginate', '3.0.3'
 gem 'haml_coffee_assets', '1.1.0'
 
 gem 'tinymce-rails', '3.5.7.1'
 gem 'tinymce-rails-langs', '0.1'
 
-gem 'sass-rails'
+gem 'sass-rails', '3.1.0'
 gem 'haml-rails', '0.3.4'
-gem 'jquery-rails', '1.0.19'
+# gem 'jquery-rails', '1.0.19'
 gem 'spine-rails', '0.1.0'
+# gem 'bootstrap-sass-rails', '3.0.0.2'
 
 group :assets do
   # gem 'uglifier'
@@ -63,9 +62,11 @@ gem 'hominid', '3.0.4'
 
 ### rake
 gem 'rake-progressbar', '0.0.5'
+gem 'rake', '10.1.0'
 
 ### custom gem
 # gem 'plugin', :path => 'path/to/circl/plugin'
+# gem 'choisir', :path => '/home/to/Code/rails/circl_plugins/choisir'
 
 ### development console and testing
 group :development, :test do
