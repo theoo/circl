@@ -3,6 +3,10 @@
   %head
     %meta{"http-equiv" => "content-type", :content => "text/html;charset=UTF-8"}
     %meta{:name => 'session-remaining-time', :content => Devise.timeout_in + 5.seconds}
+
+    // SOURCE http://getbootstrap.com/css/
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
+
     %title= "CIRCL"
     = favicon_link_tag
     = stylesheet_link_tag 'main'
@@ -11,7 +15,7 @@
     = javascript_include_tag "i18n/datatables/#{I18n.locale}.js"
     = javascript_include_tag 'application'
 
-    - # tinymce is in a gem, cannot be loaded through application
+    - # FIXME tinymce is in a gem, cannot be loaded through application
     = javascript_include_tag 'tinymce-jquery'
 
     - # optional controller's javascript file (not common)
@@ -26,11 +30,10 @@
       Spine.Model.host = '#{request.protocol}#{request.host_with_port}';
 
   %body
-    #wrap
+    .container
       = render :partial => 'layouts/header'
 
-      #content_container
-        ~ yield
+      ~ yield
 
       = render :partial => 'layouts/footer'
 

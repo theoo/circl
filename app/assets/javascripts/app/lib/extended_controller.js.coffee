@@ -50,11 +50,11 @@ class App.ExtendedController extends Spine.Controller
 
   # stacked windows
   open: =>
-    $(@el).dialog('open')
+    $(@el).modal('show')
     @trigger 'open'
 
   close: =>
-    $(@el).dialog('close')
+    $(@el).modal('hide')
     @trigger 'close'
 
   renderErrors: (errors) ->

@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 Invoice = App.Invoice
 
 $.fn.invoice = ->
@@ -46,8 +45,8 @@ class Index extends App.ExtendedController
     e.preventDefault()
     window = Ui.stack_window('export-invoices', {width: 400, remove_on_close: true})
     controller = new App.ExportInvoices({el: window})
-    $(window).dialog({title: I18n.t('invoice.views.export')})
-    $(window).dialog('open')
+    $(window).modal({title: I18n.t('invoice.views.export')})
+    $(window).modal('show')
     controller.activate()
 
 class App.ExportInvoices extends App.ExtendedController

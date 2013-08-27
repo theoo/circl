@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 RolePermission = App.RolePermission
 Permission = App.Permission
 
@@ -92,8 +91,8 @@ class Edit extends App.ExtendedController
 
   active: (params) ->
     @id = params.id if params.id
-    @el.dialog(title: I18n.t('role.view.edit_permissions'))
-    @el.dialog('open')
+    @el.modal(title: I18n.t('role.view.edit_permissions'))
+    @el.modal('show')
     @render()
 
   render: =>
@@ -105,7 +104,7 @@ class Edit extends App.ExtendedController
   submit: (e) ->
     e.preventDefault()
     @save_with_notifications @permission.fromForm(e.target), =>
-      @el.dialog('close')
+      @el.modal('hide')
 
 class App.SettingsRolePermissions extends Spine.Controller
   className: 'role_permissions'
@@ -117,7 +116,7 @@ class App.SettingsRolePermissions extends Spine.Controller
       "#{Spine.Model.host}/settings/roles/#{params.role_id}/permissions"
 
     # flush data and remove container when closing window
-    @el.dialog
+    @el.modal
       close: (event, ui) ->
         RolePermission.refresh([], clear: true)
 

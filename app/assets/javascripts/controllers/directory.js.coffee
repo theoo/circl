@@ -98,8 +98,8 @@ $(document).ready ->
     widget = Ui.stack_window(container_id, {width: 500, position: ['top', 30], remove_on_close: true})
     people_controller = new App.People({el: widget})
     people_controller.activate()
-    widget.dialog({title: I18n.t('directory.views.add_person')})
-    widget.dialog('open')
+    widget.modal({title: I18n.t('directory.views.add_person')})
+    widget.modal('show')
     Ui.bind_datepicker()
 
   # finally load ui

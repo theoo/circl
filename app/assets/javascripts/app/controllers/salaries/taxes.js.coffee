@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 SalaryTax = App.SalaryTax
 
 $.fn.tax = ->
@@ -110,8 +109,8 @@ class Index extends App.ExtendedController
     e.preventDefault()
     window = Ui.stack_window('upload-salary-taxes', {width: 500, remove_on_close: true})
     controller = new App.UploadSalaryTaxes({el: window; id: tax.id})
-    $(window).dialog({title: I18n.t('salaries.tax.views.upload_tax')})
-    $(window).dialog('open')
+    $(window).modal({title: I18n.t('salaries.tax.views.upload_tax')})
+    $(window).modal('show')
     controller.activate()
 
   destroy: (e) ->

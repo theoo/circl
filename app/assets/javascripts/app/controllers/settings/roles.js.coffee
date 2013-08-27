@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 Role = App.Role
 Permission = App.Permission
 
@@ -96,8 +95,8 @@ class Index extends App.ExtendedController
 
     Ui.stack_window(container_id, {width: 1200, remove_on_close: true})
     @permissions_controller = new App.SettingsRolePermissions({role_id: role.id, el: '#' + container_id})
-    $('#' + container_id).dialog({title: "#{I18n.t('role.view.edit_permissions_for_role')} '#{role.name}'"})
-    $('#' + container_id).dialog('open')
+    $('#' + container_id).modal({title: "#{I18n.t('role.view.edit_permissions_for_role')} '#{role.name}'"})
+    $('#' + container_id).modal('show')
     @permissions_controller.activate()
 
 class App.SettingsRoles extends Spine.Controller

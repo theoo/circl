@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 InvoiceTemplate = App.InvoiceTemplate
 Language = App.Language
 
@@ -78,7 +77,7 @@ class New extends InvoiceTemplateController
       @invoice_template.show_invoice_value = true
       @html @view('settings/invoice_templates/form')(@)
       Ui.load_ui(@el)
-      $(@el).dialog('open')
+      $(@el).modal('show')
 
   submit: (e) ->
     e.preventDefault()
@@ -162,10 +161,10 @@ class App.SettingsInvoiceTemplates extends Spine.Controller
     super
 
     @edit_template_window = Ui.stack_window('edit-invoice-template-window', {width: 1000, position: 'top', remove_on_close: false})
-    $(@edit_template_window).dialog({title: I18n.t('invoice_template.views.edit_template')})
+    $(@edit_template_window).modal({title: I18n.t('invoice_template.views.edit_template')})
 
     @new_template_window = Ui.stack_window('new-invoice-template-window', {width: 1000, position: 'top', remove_on_close: false})
-    $(@new_template_window).dialog({title: I18n.t('invoice_template.views.new_template')})
+    $(@new_template_window).modal({title: I18n.t('invoice_template.views.new_template')})
 
     @index = new Index
     @edit = new Edit({el: @edit_template_window})

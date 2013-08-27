@@ -1,11 +1,11 @@
-%header
+%header.row
   .tools
-    - if person_signed_in?
-      - if can? :read, BackgroundTask
-        #background_tasks_counter.background_tasks
-
-    .lang
-      != select_languages
+    //- if person_signed_in?
+    //  - if can? :read, BackgroundTask
+    //    #background_tasks_counter.background_tasks
+    //
+    //.lang
+    //  != select_languages
 
     - if person_signed_in?
       %small
@@ -16,13 +16,13 @@
     .title CIRCL
 
   - if person_signed_in?
-    %nav
+    %nav.col-xs-12.col-sm-12.col-md-12.col-lg-12
       %ul
-        -# - if can? :dashboard, current_person
-        -#   %li
-        -#     = link_to I18n.t("common.dashboard"),
-        -#               dashboard_person_path(current_person),
-        -#               :class => ('on' if request.path == dashboard_person_path(current_person))
+        - if can? :dashboard, current_person
+          %li
+            = link_to I18n.t("common.dashboard"),
+                      dashboard_person_path(current_person),
+                      :class => ('on' if request.path == dashboard_person_path(current_person))
 
         - person = @person ? @person : current_person
         - if can? :read, person

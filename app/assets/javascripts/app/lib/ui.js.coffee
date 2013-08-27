@@ -42,7 +42,7 @@ class Ui
 
   load_ui: (context) =>
     @load_jqueryui(context)
-    @load_contextmenus(context)
+#    @load_contextmenus(context)
     @load_foldable_widgets(context)
     @load_autocompleters(context)
     @load_multi_autocompleters(context)
@@ -452,13 +452,13 @@ class Ui
     fullscreen_widget = $(window)
     fullscreen_widget.addClass('fullscreen_widget')
 
-    fullscreen_widget.dialog({title: title})
+    fullscreen_widget.modal({title: title})
     # move widget content to fullscreen widget
     fullscreen_widget.append content
     # this override deactivate() Spine method
     content.css(display: 'block') 
 
-    fullscreen_widget.dialog('open')
+    fullscreen_widget.modal('show')
 
 
   cookie_name: 'folding'
@@ -658,13 +658,13 @@ class Ui
     if options.position
       defaults = $.extend({}, defaults, {position: options.position})
 
-    win.dialog(defaults)
+    # win.modal(defaults)
     @append_corner_box win.parent().find(".ui-dialog-titlebar")
 
     return(win)
 
   reposition_dialogs: ->
-    $('.ui-dialog-content:visible').dialog('option', 'position', 'middle')
+    $('.ui-dialog-content:visible').modal('option', 'position', 'middle')
 
   append_corner_box: (legend) ->
     if legend.find('.right-corner-box').size() == 0 # it may not be the first time

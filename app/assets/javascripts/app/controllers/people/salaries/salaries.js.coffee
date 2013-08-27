@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 Person = App.Person
 Salary = App.Salary
 
@@ -91,13 +90,13 @@ class Index extends App.ExtendedController
   preview: (e) ->
     salary = $(e.target).salary()
     win = Ui.stack_window('preview-salary', {width: 900, height: $(window).height(), remove_on_close: true})
-    $(win).dialog({title: I18n.t('salaries.views.contextmenu.preview_pdf')})
+    $(win).modal({title: I18n.t('salaries.views.contextmenu.preview_pdf')})
     iframe = $("<iframe src='" +
                 "#{Salary.url()}/#{salary.id}.html" +
                 "' width='100%' " + "height='" + ($(window).height() - 60) +
                 "'></iframe>")
     $(win).html iframe
-    $(win).dialog('open')
+    $(win).modal('show')
 
   destroy: (e) ->
     salary = $(e.target).salary()
@@ -135,15 +134,15 @@ class App.PersonSalaries extends Spine.Controller
   new: (salary) ->
     window = Ui.stack_window('edit-salary-window', {fullscreen: true, people_salaries_salariestion: 'top', remove_on_close: true})
     controller = new App.SalaryEditor({el: window, salary: salary})
-    $(window).dialog({title: I18n.t('salaries.salary.views.new_salary')})
-    $(window).dialog('open')
+    $(window).modal({title: I18n.t('salaries.salary.views.new_salary')})
+    $(window).modal('show')
     controller.activate()
 
   edit: (salary) ->
     window = Ui.stack_window('edit-salary-window', {fullscreen: true, position: 'top', remove_on_close: true})
     controller = new App.SalaryEditor({el: window, salary: salary})
-    $(window).dialog({title: I18n.t('salaries.salary.views.edit_salary')})
-    $(window).dialog('open')
+    $(window).modal({title: I18n.t('salaries.salary.views.edit_salary')})
+    $(window).modal('show')
     controller.activate()
 
   activate: ->

@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 Person = App.Person
 PersonAffair = App.PersonAffair
 
@@ -98,8 +97,8 @@ class Index extends App.ExtendedController
 
     window = Ui.stack_window('edit-prestations-window', {width: 800, remove_on_close: true, remove_callback: on_close})
     controller = new App.PersonAffairPrestations({el: window, person_id: @person_id, affair_id: affair.id})
-    $(window).dialog({title: I18n.t('affair.view.edit_prestations')})
-    $(window).dialog('open')
+    $(window).modal({title: I18n.t('affair.view.edit_prestations')})
+    $(window).modal('show')
     controller.activate()
 
   edit_invoices_and_receipts: (e) ->
@@ -113,8 +112,8 @@ class Index extends App.ExtendedController
 
     window = Ui.stack_window('edit-invoices-and-receipts-window', {width: 1200, remove_on_close: true})
     controller = new App.PersonAffairInvoicesAndReceipts({el: window, person_id: @person_id, affair_id: affair.id})
-    $(window).dialog({title: I18n.t('affair.view.edit_invoices_and_receipts')})
-    $(window).dialog('open')
+    $(window).modal({title: I18n.t('affair.view.edit_invoices_and_receipts')})
+    $(window).modal('show')
     controller.activate()
 
   show_owner: (e) ->

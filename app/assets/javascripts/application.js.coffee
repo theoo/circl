@@ -15,22 +15,23 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #= require jquery
-#= require jquery.contextMenu
 #= require jquery.cookie
-#= require jquery.ui
-#= require jquery.ui.position
 #= require jquery.iframe-transport
 #= require jquery_serialize_object
 #
-#= require jquery_ujs
+#= require jquery-ui
 #= require password_strength
 #= require jquery.strength
+#
+#= require bootstrap
 #
 #= require hamlcoffee
 #= require app
 #= require_tree ./datatables
 
-Ui.initialize_ui();
+$ = jQuery
+
+Ui.initialize_ui()
 
 ##################
 ### PROTOTYPING ##

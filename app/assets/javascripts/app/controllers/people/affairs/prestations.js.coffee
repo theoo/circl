@@ -16,7 +16,6 @@
 
 # TODO move this into PersonAffairSubscription
 
-$ = jQuery.sub()
 PersonAffairSubscription = App.PersonAffairSubscription
 
 $.fn.subscription = ->

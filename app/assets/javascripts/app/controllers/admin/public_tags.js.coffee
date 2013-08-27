@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 PublicTag = App.PublicTag
 
 $.fn.tag = ->
@@ -104,13 +103,13 @@ class Index extends App.ExtendedController
       ajax_success = (data, textStatus, jqXHR) =>
         Ui.spin_off controller.search.el
         Ui.notify controller.search.el, I18n.t('common.successfully_updated'), 'notice'
-        $(win).dialog('close')
+        $(win).modal('hide')
         PublicTag.fetch(id: tag.id)
 
       PublicTag.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
-    $(win).dialog({title: I18n.t('tag.views.contextmenu.add_members')})
-    $(win).dialog('open')
+    $(win).modal({title: I18n.t('tag.views.contextmenu.add_members')})
+    $(win).modal('show')
     controller.activate()
 
   remove_members: (e) ->

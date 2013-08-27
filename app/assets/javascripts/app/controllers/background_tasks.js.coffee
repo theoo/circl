@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 BackgroundTask = App.BackgroundTask
 
 $.fn.background_task = ->
@@ -61,7 +60,7 @@ class Counter extends App.ExtendedController
     else
       button.button( "option", "disabled", false );
 
-    button.effect('highlight', {color: "#E2E4FF"})
+    # button.effect('highlight', {color: "#E2E4FF"})
 
   list: (e) ->
     e.preventDefault()
@@ -78,13 +77,14 @@ class App.BackgroundTasks extends Spine.Controller
 
     window = Ui.stack_window('background_tasks_list', {width: 800})
     @index = new Index({el: window})
-    @index_window = $(window).dialog({title: I18n.t('background_task.views.background_tasks_list_title')})
+    # @index_window = $(window).modal({title: I18n.t('background_task.views.background_tasks_list_title')})
+    @index_window = $(window).modal('hide')
 
     @append(@counter)
     BackgroundTask.fetch()
 
     @counter.bind 'dialog', =>
-      @index_window.dialog('open')
+      @index_window.modal('show')
       @index.activate({})
 
     App.Permissions.get { person_id: params.person_id, can: { background_task: ['read', 'manage'] }}, (data) => @index.activate(can: data)

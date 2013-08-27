@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 Salary = App.Salary
 
 $.fn.salary = ->
@@ -77,30 +76,30 @@ class Index extends App.ExtendedController
       ajax_success = (data, textStatus, jqXHR) =>
         Ui.spin_off controller.search.el
         Ui.notify controller.search.el, I18n.t('common.successfully_updated'), 'notice'
-        $(win).dialog('close')
+        $(win).modal('hide')
         Salary.refresh([], clear: true)
         Salary.fetch()
 
       Salary.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
-    $(win).dialog({title: I18n.t('salaries.copy_reference')})
-    $(win).dialog('open')
+    $(win).modal({title: I18n.t('salaries.copy_reference')})
+    $(win).modal('show')
     controller.activate()
 
   stack_export_window: (e) ->
     e.preventDefault()
     window = Ui.stack_window('export-salaries', {width: 400, remove_on_close: true})
     controller = new App.ExportSalaries({el: window})
-    $(window).dialog({title: I18n.t('salaries.export')})
-    $(window).dialog('open')
+    $(window).modal({title: I18n.t('salaries.export')})
+    $(window).modal('show')
     controller.activate()
 
   stack_export_to_accounting_window: (e) ->
     e.preventDefault()
     window = Ui.stack_window('export-accounting-salaries', {width: 400, remove_on_close: true})
     controller = new App.ExportToAccountingSalaries({el: window})
-    $(window).dialog({title: I18n.t('salaries.export_to_accounting')})
-    $(window).dialog('open')
+    $(window).modal({title: I18n.t('salaries.export_to_accounting')})
+    $(window).modal('show')
     controller.activate()
 
   stack_export_to_ocas_window: (e) ->
@@ -108,8 +107,8 @@ class Index extends App.ExtendedController
 
     window = Ui.stack_window('export-ocas-salaries', {width: 400, remove_on_close: true})
     controller = new App.ExportToOcasSalaries({el: window})
-    $(window).dialog({title: I18n.t('salaries.export_to_ocas')})
-    $(window).dialog('open')
+    $(window).modal({title: I18n.t('salaries.export_to_ocas')})
+    $(window).modal('show')
     controller.activate()
 
   stack_export_to_eLohnausweisSSK_window: (e) ->
@@ -117,8 +116,8 @@ class Index extends App.ExtendedController
 
     window = Ui.stack_window('export-elohnausweisssk-salaries', {width: 400, remove_on_close: true})
     controller = new App.ExportToELohnausweisSSKSalaries({el: window})
-    $(window).dialog({title: I18n.t('salaries.export_to_elohnausweisssk')})
-    $(window).dialog('open')
+    $(window).modal({title: I18n.t('salaries.export_to_elohnausweisssk')})
+    $(window).modal('show')
     controller.activate()
 
 class App.ExportSalaries extends App.ExtendedController

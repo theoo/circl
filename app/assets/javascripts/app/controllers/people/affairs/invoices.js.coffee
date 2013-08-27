@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 Person = App.Person
 Affair = App.Affair
 PersonAffairInvoice = App.PersonAffairInvoice
@@ -124,13 +123,13 @@ class Index extends App.ExtendedController
   preview: (e) ->
     invoice = $(e.target).invoice()
     win = Ui.stack_window('preview-invoice', {width: 900, height: $(window).height(), remove_on_close: true})
-    $(win).dialog({title: I18n.t('invoice.views.contextmenu.preview_pdf')})
+    $(win).modal({title: I18n.t('invoice.views.contextmenu.preview_pdf')})
     iframe = $("<iframe src='" +
                 "#{PersonAffairInvoice.url()}/#{invoice.id}.html" +
                 "' width='100%' " + "height='" + ($(window).height() - 60) +
                 "'></iframe>")
     $(win).html iframe
-    $(win).dialog('open')
+    $(win).modal('show')
 
   destroy: (e) ->
     invoice = $(e.target).invoice()

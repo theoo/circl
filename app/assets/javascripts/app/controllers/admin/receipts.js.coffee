@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 Receipt = App.Receipt
 InvoiceTemplate = App.InvoiceTemplate
 
@@ -153,16 +152,16 @@ class Index extends App.ExtendedController
     e.preventDefault()
     window = Ui.stack_window('export-receipts', {width: 400, remove_on_close: true})
     controller = new App.ExportReceipts({el: window})
-    $(window).dialog({title: I18n.t('receipt.views.export')})
-    $(window).dialog('open')
+    $(window).modal({title: I18n.t('receipt.views.export')})
+    $(window).modal('show')
     controller.activate()
 
   stack_import_window: (e) ->
     e.preventDefault()
     window = Ui.stack_window('import-receipts', {width: 800, remove_on_close: true})
     controller = new App.ImportReceipts({el: window})
-    $(window).dialog({title: I18n.t('receipt.views.import_bank_file')})
-    $(window).dialog('open')
+    $(window).modal({title: I18n.t('receipt.views.import_bank_file')})
+    $(window).modal('show')
     controller.activate()
 
 class App.ExportReceipts extends App.ExtendedController

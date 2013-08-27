@@ -14,7 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-$ = jQuery.sub()
 Subscription = App.Subscription
 InvoiceTemplate = App.InvoiceTemplate
 
@@ -263,10 +262,10 @@ class Index extends App.ExtendedController
       win = Ui.stack_window('filter-subscription-pdf-window', {width: 1200, remove_on_close: true})
       controller = new App.DirectoryQueryPresets(el: win, edit: { text: I18n.t('directory.views.generate_pdf') })
       controller.bind 'edit', (preset) =>
-        $(win).dialog('close')
+        $(win).modal('hide')
         window.location = "#{Subscription.url()}/#{subscription.id}.pdf?#{preset.to_params()}"
-      $(win).dialog({title: I18n.t('subscription.edit_export_filter')})
-      $(win).dialog('open')
+      $(win).modal({title: I18n.t('subscription.edit_export_filter')})
+      $(win).modal('show')
       controller.activate()
 
     Subscription.fetch(id: id)
@@ -323,13 +322,13 @@ class Index extends App.ExtendedController
         ajax_success = (data, textStatus, jqXHR) =>
           Ui.spin_off controller.search.el
           Ui.notify controller.search.el, I18n.t('common.successfully_updated'), 'notice'
-          $(win).dialog('close')
+          $(win).modal('hide')
           window.location = '/admin'
 
         Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
-      $(win).dialog({title: I18n.t('subscription.add_members')})
-      $(win).dialog('open')
+      $(win).modal({title: I18n.t('subscription.add_members')})
+      $(win).modal('show')
       controller.activate()
 
     Subscription.fetch(id: id)
@@ -361,8 +360,8 @@ class Index extends App.ExtendedController
 
       win = Ui.stack_window('subscription-transfer-overpaid-value-window', {width: 500, remove_on_close: true})
       controller = new TransferOverpaidValue(el: win, subscription_id: subscription.id)
-      $(win).dialog({title: I18n.t('subscription.views.contextmenu.transfer_overpaid_value')})
-      $(win).dialog('open')
+      $(win).modal({title: I18n.t('subscription.views.contextmenu.transfer_overpaid_value')})
+      $(win).modal('show')
       controller.render()
 
     Subscription.fetch(id: id)
@@ -387,8 +386,8 @@ class Index extends App.ExtendedController
     e.preventDefault()
     win = Ui.stack_window('subscription-tag-tool-window', {width: 500, remove_on_close: true})
     controller = new TagTool(el: win)
-    $(win).dialog({title: I18n.t('subscription.views.tool_box.tag_tool')})
-    $(win).dialog('open')
+    $(win).modal({title: I18n.t('subscription.views.tool_box.tag_tool')})
+    $(win).modal('show')
     controller.render()
 
 class TransferOverpaidValue extends App.ExtendedController
@@ -420,7 +419,7 @@ class TransferOverpaidValue extends App.ExtendedController
     ajax_success = (data, textStatus, jqXHR) =>
       Ui.spin_off @el
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
-      $(@el).dialog('close')
+      $(@el).modal('hide')
       Subscription.fetch()
 
     Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
@@ -455,7 +454,7 @@ class TagTool extends App.ExtendedController
       Ui.spin_off @el
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       App.PrivateTag.fetch({id: attr.private_tag_id})
-      $(@el).dialog('close')
+      $(@el).modal('hide')
 
     Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
