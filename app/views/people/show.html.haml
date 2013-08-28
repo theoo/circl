@@ -1,20 +1,20 @@
 -# Folding preferences is handled by a cookie and updated by update_folding_cookie javacript method.
 -# The cookie is an array of string where space are substitued by underscores "_".
 
-.submenu
-  .tools
-    %ul
-      %li= link_to I18n.t("common.expand_all_widgets"), '#', :id => 'expand_all_widgets'
-      %li= link_to I18n.t("common.clip_all_widgets"), '#', :id => 'clip_all_widgets'
-      %li= link_to I18n.t("common.rearrange_widgets"), '#', :id => 'rearrange_widgets'
+.row
+  .col-lg-12
+    .btn-group.pull-right
+      - if can? :change_password, @person
+        = link_to I18n.t('person.views.change_password'),
+            change_password_person_path(@person),
+            :class => 'btn btn-default'
 
-  %ul
-    - if can? :change_password, @person
-      %li= link_to I18n.t('person.views.change_password'), change_password_person_path(@person)
-
-    - if can? :destroy, @person
-      %li= link_to I18n.t('person.views.destroy'), person_path(@person), :method => :delete, :confirm => I18n.t('common.are_you_sure')
-
+      - if can? :destroy, @person
+        = link_to I18n.t('person.views.destroy'),
+            person_path(@person),
+            :method => :delete,
+            :confirm => I18n.t('common.are_you_sure'),
+            :class => 'btn btn-danger'
 
 #content_wrapper
   #content
