@@ -77,12 +77,14 @@ class SubscriptionValue < ActiveRecord::Base
   private
 
   def set_position_if_none_given
-    unless self.position
-      self.position = if self.subscription.values.count > 0
-        self.subscription.values.last.position + 1
-      else
-        0
+    pos = self.position
+    unless position
+      if self.subscription
+        if self.subscription.values.count > 0
+          pos = self.subscription.values.last.position + 1
+        end
       end
+      self.position = pos ? pos : 0
     end
   end
 
