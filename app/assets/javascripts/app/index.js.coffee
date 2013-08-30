@@ -55,9 +55,9 @@ class @App extends Spine.Controller
   subapp: (element, class_name) ->
     # TODO Raise a message if application controller cannot be found.
     # console.log "App." + class_name + " does not exist." unless "App." + class_name
-    instance = eval "new App." + class_name + "({el: element.find('>.content'), person_id: this.person_id})"
-    element.bind 'folded', -> instance.deactivate()
-    element.bind 'unfolded', -> instance.activate()
+    instance = eval "new App." + class_name + "({el: element.find('>.panel-body'), person_id: this.person_id})"
+    element.bind 'unload-panel', -> instance.deactivate()
+    element.bind 'load-panel', -> instance.activate()
 
 class @PersonEdit extends App
 

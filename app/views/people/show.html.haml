@@ -3,26 +3,27 @@
 
 .row
   .col-lg-12
-    .btn-group.pull-right
-      - if can? :change_password, @person
-        = link_to I18n.t('person.views.change_password'),
-            change_password_person_path(@person),
-            :class => 'btn btn-default'
+    .form.text-right
+      .btn-group.form-group
+        - if can? :change_password, @person
+          = link_to I18n.t('person.views.change_password'),
+              change_password_person_path(@person),
+              :class => 'btn btn-default'
 
-      - if can? :destroy, @person
-        = link_to I18n.t('person.views.destroy'),
-            person_path(@person),
-            :method => :delete,
-            :confirm => I18n.t('common.are_you_sure'),
-            :class => 'btn btn-danger'
+        - if can? :destroy, @person
+          = link_to I18n.t('person.views.destroy'),
+              person_path(@person),
+              :method => :delete,
+              :confirm => I18n.t('common.are_you_sure'),
+              :class => 'btn btn-danger'
 
-#content_wrapper
-  #content
-    = hidden_field :person, :id
+  = hidden_field :person, :id
 
-    - flash_messages
 
-    - if params[:action] == 'paginate'
+- if params[:action] == 'paginate'
+  .row
+    .col-lg-12
+      // TODO Bootstrap
       #pagination.ui-widget-header.ui-corner-tl.ui-corner-tr
 
         .previous_person
@@ -42,70 +43,84 @@
           .index
             = "#{@index + 1} / #{@total_entries}"
 
-
+.row
+  .col-lg-3
+  .col-lg-6
     - error_messages_for(@person)
+  .col-lg-3
+
+.row
+  .col-lg-6
 
     - if can? :read, @person
-      #person.widget
-        %legend= I18n.t('person.views.personal_information')
-        .content
+      #person.panel.panel-primary
+        .panel-heading
+          .panel-title
+            = I18n.t('person.views.personal_information')
+        .panel-body
 
-    /- if can? :read, @person => EmploymentContract
-    /  #employment_contracts.widget
-    /    %legend= I18n.t('person.views.employment_contracts')
-    /    .content
-
-    - if can? :read, @person => Comment
-      #person_comments.widget.pinable
-        %legend= I18n.t('person.views.comments')
-        .content
-
-    /- if can? :read, @person => Activity
-    /  #person_activities.widget
-    /    %legend= I18n.t('person.views.activities')
-    /    .content
-
-    - if can? :read, @person => Activity
-      #person_histories.widget.pinable
-        %legend= I18n.t('person.views.histories')
-        .content
-
-    - if can? :read, @person => PeopleRole
-      #person_roles.widget
-        %legend= I18n.t('person.views.roles')
-        .content
-
-    - if can? :read, @person => Affair
-      #person_affairs.widget.pinable
-        %legend= I18n.t('person.views.affairs')
-        .content
-
-    /- if can? :read, @person => Task
-    /  #tasks.widget
-    /    %legend= I18n.t('person.views.tasks')
-    /    .content
-
+  .col-lg-6
     - if can? :read, @person => PeoplePrivateTag
-      #person_private_tags.widget
-        %legend= I18n.t('person.views.private_tags')
-        .content
+      #person_private_tags.panel.panel-default
+        .panel-heading
+          .panel-title
+            = I18n.t('person.views.private_tags')
+        .panel-body
 
     - if can? :read, @person => PeoplePublicTag
-      #person_public_tags.widget
-        %legend= I18n.t('person.views.public_tags')
-        .content
+      #person_private_tags.panel.panel-default
+        .panel-heading
+          .panel-title
+            = I18n.t('person.views.public_tags')
+        .panel-body
 
-    - if can? :read, @person => PeopleCommunicationLanguage
-      #person_communication_languages.widget
-        %legend= I18n.t('person.views.communication_languages')
-        .content
+    //- if can? :read, @person => EmploymentContract
+    //  #employment_contracts.widget
+    //    %legend= I18n.t('person.views.employment_contracts')
+    //    .content
 
-    - if can? :read, @person => TranslationAptitude
-      #person_translation_aptitudes.widget
-        %legend= I18n.t('person.views.translation_aptitudes')
-        .content
+    //- if can? :read, @person => Comment
+    //  #person_comments.widget.pinable
+    //    %legend= I18n.t('person.views.comments')
+    //    .content
 
-    - if can? :read, @person => Salaries::Salary
-      #person_salaries.widget.pinable
-        %legend= I18n.t('person.views.salaries')
-        .content
+    ///- if can? :read, @person => Activity
+    ///  #person_activities.widget
+    ///    %legend= I18n.t('person.views.activities')
+    ///    .content
+
+    //- if can? :read, @person => Activity
+    //  #person_histories.widget.pinable
+    //    %legend= I18n.t('person.views.histories')
+    //    .content
+
+    //- if can? :read, @person => PeopleRole
+    //  #person_roles.widget
+    //    %legend= I18n.t('person.views.roles')
+    //    .content
+
+    //- if can? :read, @person => Affair
+    //  #person_affairs.widget.pinable
+    //    %legend= I18n.t('person.views.affairs')
+    //    .content
+
+    ///- if can? :read, @person => Task
+    ///  #tasks.widget
+    ///    %legend= I18n.t('person.views.tasks')
+    ///    .content
+
+
+    //- if can? :read, @person => PeopleCommunicationLanguage
+    //  #person_communication_languages.widget
+    //    %legend= I18n.t('person.views.communication_languages')
+    //    .content
+
+    //- if can? :read, @person => TranslationAptitude
+    //  #person_translation_aptitudes.widget
+    //    %legend= I18n.t('person.views.translation_aptitudes')
+    //    .content
+
+    //- if can? :read, @person => Salaries::Salary
+    //  #person_salaries.widget.pinable
+    //    %legend= I18n.t('person.views.salaries')
+    //    .content

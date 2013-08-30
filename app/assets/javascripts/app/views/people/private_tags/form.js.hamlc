@@ -3,13 +3,14 @@
 
 - display_tag = (tag) =>
   - id = _.uniqueId('private_tag')
-  %input{ :type => 'checkbox',
-      :id => id,
-      :name => 'private_tag_ids[]',
-      :checked => has_tag(tag),
-      :value => tag.id }
+  .checkbox
+    %input{ :type => 'checkbox',
+        :id => id,
+        :name => 'private_tag_ids[]',
+        :checked => has_tag(tag),
+        :value => tag.id }
 
-  %label{:for => id, :class => 'inline'}= tag.name
+    %label{:for => id, :class => 'inline'}= tag.name
 
 - display_tree = (tags) =>
   - for tag in tags
@@ -21,7 +22,7 @@
           = display_tree(tag.children())
 
 .block
-  %form
+  %form.form-inline
     .validation_errors_placeholder
 
     - display_tree(@root_tags)
