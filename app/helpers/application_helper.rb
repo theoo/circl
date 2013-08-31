@@ -21,19 +21,13 @@ module ApplicationHelper
   # build the container for flash messages
   def flash_messages
     if flash[:notice]
-      haml_tag :div, :class => 'notice_explanation ui-state-highlight ui-corner-all' do
-        haml_tag :span, :class => 'ui-icon ui-icon-info float_left'
-        haml_tag :legend, I18n.t('common.notice'), :style => 'padding-bottom: 10px; font-weight: bolder;'
-
+      haml_tag :div, :class => 'alert alert-info' do
         haml_concat flash[:notice]
       end
     end
 
     if flash[:error] or flash[:alert]
-      haml_tag :div, :class => 'error_explanation ui-state-error ui-corner-all' do
-        haml_tag :span, :class => 'ui-icon ui-icon-alert float_left'
-        haml_tag :legend, I18n.t('common.error'), :style => 'padding-bottom: 10px; font-weight: bolder;'
-
+      haml_tag :div, :class => 'alert alert-danger' do
         haml_concat flash[:alert]
         haml_concat flash[:error]
       end
@@ -43,9 +37,8 @@ module ApplicationHelper
   # build the container for error messages
   def error_messages_for(obj)
     if obj.errors && obj.errors.any?
-      haml_tag :div, :class => 'error_explanation ui-state-error ui-corner-all' do
+      haml_tag :div, :class => 'alert alert-danger' do
         haml_tag :h2 do
-          haml_tag 'span.ui-icon.ui-icon-alert.float_left'
           haml_concat I18n.t('activerecord.errors.template.header', :model => 'model', :count => obj.errors.count)
         end
         haml_tag :p, I18n.t('activerecord.errors.template.body')

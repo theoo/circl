@@ -10,12 +10,12 @@
         :checked => has_tag(tag),
         :value => tag.id }
 
-    %label{:for => id, :class => 'inline'}= tag.name
+    %label{:for => id}= tag.name
 
 - display_tree = (tags) =>
   - for tag in tags
     - has_children = tag.children().length > 0
-    %div{ :style => "display: #{if has_children then 'block' else 'inline'}" }
+    %div
       - display_tag(tag)
       - if has_children
         %div{ :style => 'margin-left: 20px;'}

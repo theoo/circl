@@ -46,6 +46,10 @@ class Ui
     @load_password_strength(context)
     @load_panels(context)
 
+    # FIXME http://getbootstrap.com/javascript/#tooltips the event
+    # should be trigged without calling this line (?)
+    $('a[data-toggle=tooltip]').tooltip()
+
   initialize_ui: =>
     @load_locale()
     @bind_datepicker()
