@@ -54,6 +54,7 @@ class Ui
     @load_locale()
     @bind_datepicker()
     @timeout_session()
+    @setup_datatable()
 
 #--- delegated to events ---
   bind_datepicker: ->
@@ -81,6 +82,10 @@ class Ui
     I18n.defaultLocale = $('html').attr('lang')
     I18n.locale = $('html').attr('lang')
 
+#--- datatables setup ---
+  setup_datatable: ->
+    # $.fn.dataTableExt.oStdClasses.sSortable = "custom_asc";
+
 #--- ui ---
   load_jqueryui: (context) ->
     context.find('.set_focus').focus()
@@ -96,6 +101,9 @@ class Ui
   load_datatable: (table) ->
     # ensure datatable isn't already loaded on this table
     if table.closest(".dataTables_wrapper").length == 0
+      # Extend table with bootstrap classes
+      table.addClass("table table-hover table-condensed table-responsive")
+
       # default sorting option (class .desc or .asc on <th>)
       # will apply only if previous state isn't saved in localstorage
       sort_parameter = [0, 'asc'] # desfault if no .desc or .asc class is set
@@ -128,15 +136,17 @@ class Ui
     local_storage_load = (oSettings) ->
       return JSON.parse(localStorage.getItem(widget_name))
 
+    # $(nPaging).append('<ul class="pagination">'+ '<li class="prev disabled"><a href="#"><i class="icon-double-angle-left"></i> '+oLang.sPrevious+'</a></li>'+ '<li class="next disabled"><a href="#">'+oLang.sNext+' <i class="icon-double-angle-right"></i></a></li>'+ '</ul>')
+
     params =
       oLanguage: I18n.datatable_translations # TODO scope like I18n.datatable_translations[I18n.locale]
       aaSorting: [sort_parameter]
       bStateSave: true
       fnStateSave: local_storage_save
       fnStateLoad: local_storage_load
-      bJQueryUI: true
-      sPaginationType: 'full_numbers'
-      sScrollX: '100%'
+      bJQueryUI: false # We'll use bootstrap only, not the ui-state-default classes mess
+      sPaginationType: 'bootstrap'
+      sDom: "<'row'<'col-lg-6'T><'col-lg-6'f>r>t<'panel-body'<'row'<'col-lg-12 pagination-footer'pi>>"
 
     action = table.attr('action')
     if action
@@ -159,6 +169,18 @@ class Ui
 
     table.dataTable params
 
+    # Customize appearance
+
+    # SEARCH - Add the placeholder for Search and Turn this into in-line formcontrol
+    search_input = table.closest('.dataTables_wrapper').find('div[id$=_filter] input')
+    label = search_input.parent()
+    parent = label.parent()
+    label.remove()
+    parent.addClass('panel-body')
+    parent.append search_input
+    search_input.attr('placeholder', I18n.datatable_translations['sSearch'])
+    search_input.addClass('form-control input-sm')
+
 
   load_password_strength: (context) ->
     # display password strength on .strong_password input[type=password] fields
@@ -177,11 +199,6 @@ class Ui
               .html(strength.status)
 
 #--- ui tools ---
-  unlock_submit: (context) ->
-    context.find('input[type=submit]').each ->
-      $(@).removeAttr 'disabled'
-      $(@).attr value: $(@).attr('data-title')
-
   load_panels: (context) =>
     context.find('.panel').each (index, panel) =>
       $(panel).trigger('load-panel') # trigger it when loading page

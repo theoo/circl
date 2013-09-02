@@ -40,6 +40,9 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="comment-reopen"]': 'reopen'
+    'click button[name="comment-close"]': 'close'
+    'click button[name="comment-destroy"]': 'destroy'
 
   constructor: ->
     super
@@ -59,11 +62,22 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @comment.fromForm(e.target), @hide
 
+  reopen: (e) ->
+    @comment.is_closed = false
+    @save_with_notifications @comment
+
+  close: (e) ->
+    @comment.is_closed = true
+    @save_with_notifications @comment
+
+  destroy: (e) ->
+    if confirm(I18n.t("common.are_you_sure"))
+      @destroy_with_notifications @comment, => @trigger 'new'
+
+
 class Index extends App.ExtendedController
   events:
-    'comment-edit':    'edit'
-    'comment-close':   'close'
-    'comment-destroy': 'destroy'
+    'click tr.item': 'edit'
 
   constructor: (params) ->
     super
@@ -77,16 +91,10 @@ class Index extends App.ExtendedController
     comment = $(e.target).comment()
     @trigger 'edit', comment.id
 
-  close: (e) ->
-    comment = $(e.target).comment()
-    if confirm(I18n.t("common.are_you_sure"))
-      comment.is_closed = true
-      @save_with_notifications comment
-
-  destroy: (e) ->
-    comment = $(e.target).comment()
-    if confirm(I18n.t("common.are_you_sure"))
-      @destroy_with_notifications comment
+  activate: (params) =>
+    console.log params
+    @active_comment_id = params.active_comment_id
+    @render()
 
 class App.PersonComments extends Spine.Controller
   className: 'comments'
@@ -105,6 +113,7 @@ class App.PersonComments extends Spine.Controller
     @append(@new, @edit, @index)
 
     @index.bind 'edit', (id) =>
+      @index.activate(active_comment_id: id)
       @edit.active(id: id)
 
     @edit.bind 'show', => @new.hide()
@@ -112,7 +121,7 @@ class App.PersonComments extends Spine.Controller
 
     @index.bind 'destroyError', (id, errors) =>
       @edit.active id: id
-      @edit.renderErrors errors
+      @edit.render_errors errors
 
   activate: ->
     super

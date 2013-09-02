@@ -176,7 +176,7 @@ class App.SettingsInvoiceTemplates extends Spine.Controller
     @index.bind 'new', => @new.active()
 
     @index.bind 'destroyError', (id, errors) =>
-      @index.renderErrors errors
+      @index.render_errors errors
 
   activate: ->
     super

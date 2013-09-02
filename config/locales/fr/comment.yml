@@ -3,9 +3,8 @@ fr:
   comment:
     views:
       contextmenu:
-        close_comment: clore le commentaire
-        destroy_comment: détruire le commentaire
-        edit_comment: modifier le commentaire
+        close: clore
+        reopen: réouvrir
       description: description
       table:
         comment: commentaire

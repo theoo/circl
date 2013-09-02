@@ -17,7 +17,8 @@
 Role = App.Role
 Permission = App.Permission
 
-$.fn.role = ->
+# .role method is used by jQuery Ui and may conflict
+$.fn.get_role = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
   Role.find(elementID)
@@ -76,20 +77,20 @@ class Index extends App.ExtendedController
     Ui.load_ui(@el)
 
   edit: (e) ->
-    role = $(e.target).role()
+    role = $(e.target).get_role()
     @trigger 'edit', role.id
 
   destroy: (e) ->
-    role = $(e.target).role()
+    role = $(e.target).get_role()
     if confirm(I18n.t('common.are_you_sure'))
       @destroy_with_notifications role
 
   view_members: (e) ->
-    role = $(e.target).role()
+    role = $(e.target).get_role()
     App.search_query(search_string: "roles.id:#{role.id}")
 
   edit_permissions: (e) ->
-    role = $(e.target).role()
+    role = $(e.target).get_role()
 
     container_id = 'edit-permissions-window'
 
@@ -118,7 +119,7 @@ class App.SettingsRoles extends Spine.Controller
 
     @index.bind 'destroyError', (id, errors) =>
       @edit.active id: id
-      @edit.renderErrors errors
+      @edit.render_errors errors
 
   activate: ->
     super

@@ -107,7 +107,7 @@ class App.SettingsLocations extends Spine.Controller
     @index.bind 'destroyError', (id, errors) =>
       Location.one 'refresh', =>
         @edit.active id: id
-        @edit.renderErrors errors
+        @edit.render_errors errors
       Location.fetch(id: id)
 
   activate: ->

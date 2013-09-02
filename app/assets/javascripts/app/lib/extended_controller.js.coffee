@@ -57,31 +57,67 @@ class App.ExtendedController extends Spine.Controller
     $(@el).modal('hide')
     @trigger 'close'
 
-  renderErrors: (errors) ->
-    el = $(@el)
+  reset_notifications: ->
+    # remove previous errors
+    $(@el).find('.has-error').each (index, field_with_error) ->
+      $(field_with_error).removeClass('has-error')
+      $(field_with_error).popover('destroy')
 
-    # remove red fields
-    el.find('.field_with_errors, .ui-state-error-text').removeClass('field_with_errors').removeClass('ui-state-error-text')
+  render_errors: (errors) ->
+    @reset_notifications()
+
+    # Set panel as 'danger' bootstrap class
+    panel = $(@el).closest('.panel')
+    panel.removeClass 'panel-primary panel-default'
+    panel.addClass 'panel-danger'
 
     # render error partial
-    el.find('.validation_errors_placeholder').html(@partial('error_messages_for')(errors: errors))
+    # TODO remove useless partial 'error_messages_for.js.hamlc'
+    # el.find('.validation_errors_placeholder').html(@partial('error_messages_for')(errors: errors))
 
     # point fields with errors
     for attr, msg of errors
-      field_with_error = el.find("[name='#{attr}']")
+      field_with_error = $(@el).find("[name='#{attr}']")
       unless first_field
         first_field = field_with_error
+
       unless field_with_error.length > 0
-        field_with_error = el.find("[name='#{attr}_id']")
+        field_with_error = $(@el).find("[name='#{attr}_id']")
+
       field_with_error = field_with_error.parent()
-      field_with_error.addClass('field_with_errors')
-      field_with_error.find('label').addClass('ui-state-error-text')
+
+      # Add some red
+      field_with_error.addClass('has-error')
+
+      # Add error explanation
+      field_with_error.popover
+        # container: 'body' # This is recommended in bootstrap doc but will break reset_notifications
+        content: msg
+        trigger: 'manual'
+        placement: 'auto bottom'
+      field_with_error.popover('show')
 
     # Focus first error field
     first_field.focus()
 
-    # release submit button
-    Ui.unlock_submit(@el)
+
+  render_success: ->
+    @reset_notifications()
+
+    # Set panel as 'success' bootstrap class
+    panel = $(@el).closest('.panel')
+    panel.removeClass 'panel-primary panel-default panel-danger'
+    panel.addClass 'panel-success'
+
+    restore_panel_status = ->
+      original_class = if panel.data('primary_panel') then 'panel-primary' else 'panel-default'
+
+      # jQuery UI transition, only working on borders
+      panel.switchClass 'panel-success', original_class, {duration: 3000, easing: 'easeInOutCubic'}
+      # TODO Make transition work on panel-heading sub-class too
+
+    setTimeout(restore_panel_status, 1000)
+
 
   original_attributes: (record) ->
     current = record.dup()
@@ -93,7 +129,7 @@ class App.ExtendedController extends Spine.Controller
       # On error, destroy the record that was inserted by Spine
       record.unbind(@)
       record.destroy ajax: false
-      @renderErrors $.parseJSON(xhr.responseText)
+      @render_errors $.parseJSON(xhr.responseText)
 
   ajax_prepare_error_for_update: (record) ->
     attributes = @original_attributes(record)
@@ -101,7 +137,7 @@ class App.ExtendedController extends Spine.Controller
       # On error, restore the original attribute in the collection
       record.unbind(@)
       record.constructor.refresh attributes
-      @renderErrors $.parseJSON(xhr.responseText)
+      @render_errors $.parseJSON(xhr.responseText)
 
   ajax_prepare: (record, success) ->
     if record.isNew()
@@ -116,25 +152,16 @@ class App.ExtendedController extends Spine.Controller
         obj[key] = data[key]
       record.constructor.refresh(obj)
       success(newrecord.id) if success
+      @render_success()
 
   save_with_notifications: (record, success) ->
     is_new = record.isNew()
 
-    # Ui
-    Ui.spin_on(@el)
-    record.one 'error ajaxError ajaxSuccess', =>
-      Ui.spin_off @el
-    record.one 'error ajaxError', =>
-      text = if is_new then I18n.t('common.failed_to_create') else I18n.t('common.failed_to_update')
-      Ui.notify @el, text, 'error'
-    record.one 'ajaxSuccess', =>
-      text = if is_new then I18n.t('common.successfully_created') else I18n.t('common.successfully_updated')
-      Ui.notify @el, text, 'notice'
-
+    # TODO Don't know why this lies here, ajax_prepare catch ajaxError which should be enough
     # Validation errors
-    record.bind 'error', (unused, message) =>
-      record.unbind(@)
-      @renderErrors message.errors
+    # record.bind 'error', (unused, message) =>
+    #   record.unbind(@)
+    #   @render_errors message.errors
 
     # Ajax
     @ajax_prepare(record, success)
@@ -143,13 +170,12 @@ class App.ExtendedController extends Spine.Controller
 
   destroy_with_notifications: (record, success) ->
     # Ui
-    Ui.spin_on(@el)
     ui_error = =>
-      Ui.spin_off @el
-      Ui.notify @el, I18n.t('common.failed_to_destroy'), 'error'
+      # TODO Notify
+      # Ui.notify @el, I18n.t('common.failed_to_destroy'), 'error'
     ui_success = =>
-      Ui.spin_off @el
-      Ui.notify @el, I18n.t('common.successfully_destroyed'), 'notice'
+      # TODO Notify
+      # Ui.notify @el, I18n.t('common.successfully_destroyed'), 'notice'
 
     # Ajax
     ajax_error = (xhr, statusText, error) =>

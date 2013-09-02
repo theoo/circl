@@ -83,7 +83,7 @@ class App.SalaryTaxDatas extends Spine.Controller
       $(@el).fadeTo('slow', 1.0);
 
   customRenderErrors: (errors) ->
-    @renderErrors(errors)
+    @render_errors(errors)
 
     # point rows errors
     for pos, arr of errors
@@ -107,12 +107,10 @@ class App.SalaryTaxDatas extends Spine.Controller
     id    = row.find('input').filter(@name_filter('id')).attr('value')
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @customRenderErrors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       for key, value of data
         continue if key.match(/use_percent/)
@@ -135,12 +133,10 @@ class App.SalaryTaxDatas extends Spine.Controller
     id    = row.find('input').filter(@name_filter('id')).attr('value')
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @customRenderErrors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.spin_off @el
       Ui.notify
       for key, value of data
         field = row.find('input').filter(@name_filter(key))
@@ -163,17 +159,14 @@ class App.SalaryTaxDatas extends Spine.Controller
     SalaryTaxData.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
   submit: (e) ->
-    Ui.spin_on @el
     e.preventDefault()
     attr = $(e.target).serializeObject()
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @customRenderErrors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       Salary.refresh(data)
 

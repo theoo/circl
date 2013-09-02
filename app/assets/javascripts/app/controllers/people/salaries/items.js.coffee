@@ -97,12 +97,10 @@ class App.SalaryItems extends App.ExtendedController
     input = row.find('input').filter(@name_filter('value'))
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @customRenderErrors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       for key, value of data
         field = row.find('input').filter(@name_filter(key))
@@ -120,7 +118,7 @@ class App.SalaryItems extends App.ExtendedController
     SalaryItem.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
   customRenderErrors: (errors) ->
-    @renderErrors(errors)
+    @render_errors(errors)
 
     # point rows with errors
     for desc, arr of errors
@@ -135,17 +133,14 @@ class App.SalaryItems extends App.ExtendedController
         input.parents('td').addClass('field_with_errors')
 
   submit: (e) ->
-    Ui.spin_on @el
     e.preventDefault()
     attr = $(e.target).serializeObject()
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @customRenderErrors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       Salary.refresh(data)
 

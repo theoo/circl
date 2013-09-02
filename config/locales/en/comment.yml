@@ -3,9 +3,8 @@ en:
   comment:
     views:
       contextmenu:
-        close_comment: close comment
-        destroy_comment: destroy comment
-        edit_comment: edit comment
+        close: close
+        reopen: reopen
       description: description
       table:
         comment: comment

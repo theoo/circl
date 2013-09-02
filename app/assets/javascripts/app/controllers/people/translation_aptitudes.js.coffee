@@ -79,7 +79,7 @@ class App.PersonTranslationAptitudes extends Spine.Controller
 
     @index.bind 'destroyError', (id, errors) =>
       @new.active id: id
-      @new.renderErrors errors
+      @new.render_errors errors
 
   activate: ->
     super

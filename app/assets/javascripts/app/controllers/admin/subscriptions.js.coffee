@@ -317,7 +317,7 @@ class Index extends App.ExtendedController
         ajax_error = (xhr, statusText, error) =>
           Ui.spin_off controller.search.el
           Ui.notify controller.search.el, I18n.t('common.failed_to_update'), 'error'
-          controller.search.renderErrors $.parseJSON(xhr.responseText)
+          controller.search.render_errors $.parseJSON(xhr.responseText)
 
         ajax_success = (data, textStatus, jqXHR) =>
           Ui.spin_off controller.search.el
@@ -335,19 +335,16 @@ class Index extends App.ExtendedController
 
   remove_members: (e) ->
     id = $(e.target).subscription_id()
-    Ui.spin_on @el
-
+    
     settings =
       url: "#{Subscription.url()}/#{id}/remove_members"
       type: 'DELETE',
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
-      @renderErrors $.parseJSON(xhr.responseText)
+      @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
 
     Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
@@ -404,20 +401,17 @@ class TransferOverpaidValue extends App.ExtendedController
   submit: (e) ->
     e.preventDefault()
     attr = $(e.target).serializeObject()
-    Ui.spin_on @el
-
+    
     settings =
       url: "#{Subscription.url()}/#{@subscription_id}/transfer_overpaid_value"
       type: 'POST',
       data: JSON.stringify(attr)
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
-      @renderErrors $.parseJSON(xhr.responseText)
+      @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       $(@el).modal('hide')
       Subscription.fetch()
@@ -438,20 +432,17 @@ class TagTool extends App.ExtendedController
   submit: (e) ->
     e.preventDefault()
     attr = $(e.target).serializeObject()
-    Ui.spin_on @el
-
+    
     settings =
       url: "#{Subscription.url()}/tag_tool"
       type: 'POST',
       data: JSON.stringify(attr)
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
-      @renderErrors $.parseJSON(xhr.responseText)
+      @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       App.PrivateTag.fetch({id: attr.private_tag_id})
       $(@el).modal('hide')
@@ -484,7 +475,7 @@ class App.AdminSubscriptions extends Spine.Controller
 
     @index.bind 'destroyError', (id, errors) =>
       @edit.active id: id
-      @edit.renderErrors errors
+      @edit.render_errors errors
 
   activate: ->
     super

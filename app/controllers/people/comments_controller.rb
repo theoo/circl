@@ -78,7 +78,7 @@ class People::CommentsController < ApplicationController
   private
 
   def load_comments
-    @comments = @person.comments_edited_by_others.where(:is_closed => false)
+    @comments = @person.comments_edited_by_others
   end
 
   def create_comment

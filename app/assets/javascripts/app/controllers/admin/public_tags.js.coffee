@@ -98,7 +98,7 @@ class Index extends App.ExtendedController
       ajax_error = (xhr, statusText, error) =>
         Ui.spin_off controller.search.el
         Ui.notify controller.search.el, I18n.t('common.failed_to_update'), 'error'
-        controller.search.renderErrors $.parseJSON(xhr.responseText)
+        controller.search.render_errors $.parseJSON(xhr.responseText)
 
       ajax_success = (data, textStatus, jqXHR) =>
         Ui.spin_off controller.search.el
@@ -120,12 +120,10 @@ class Index extends App.ExtendedController
       type: 'POST'
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
-      @renderErrors $.parseJSON(xhr.responseText)
+      @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       PublicTag.fetch(id: tag.id)
 
@@ -156,7 +154,7 @@ class App.AdminPublicTags extends Spine.Controller
 
     @index.bind 'destroyError', (id, errors) =>
       @edit.active id: id
-      @edit.renderErrors errors
+      @edit.render_errors errors
 
   activate: ->
     super

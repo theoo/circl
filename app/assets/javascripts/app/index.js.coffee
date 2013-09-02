@@ -55,7 +55,7 @@ class @App extends Spine.Controller
   subapp: (element, class_name) ->
     # TODO Raise a message if application controller cannot be found.
     # console.log "App." + class_name + " does not exist." unless "App." + class_name
-    instance = eval "new App." + class_name + "({el: element.find('>.panel-body'), person_id: this.person_id})"
+    instance = eval "new App." + class_name + "({el: element, person_id: this.person_id})"
     element.bind 'unload-panel', -> instance.deactivate()
     element.bind 'load-panel', -> instance.activate()
 
@@ -67,18 +67,18 @@ class @PersonEdit extends App
     @person_id = params.id
 
     @subapp($('#person'), 'People')
-    @subapp($('#person_activities'), 'PersonActivities')
-    @subapp($('#person_histories'), 'PersonHistories')
-    @subapp($('#person_affairs'), 'PersonAffairs')
+    # @subapp($('#person_activities'), 'PersonActivities')
+    # @subapp($('#person_histories'), 'PersonHistories')
+    # @subapp($('#person_affairs'), 'PersonAffairs')
     @subapp($('#person_comments'), 'PersonComments')
-    @subapp($('#person_communication_languages'), 'PersonCommunicationLanguages')
-    @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
+    # @subapp($('#person_communication_languages'), 'PersonCommunicationLanguages')
+    # @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
     @subapp($('#person_private_tags'), 'PersonPrivateTags')
     @subapp($('#person_public_tags'), 'PersonPublicTags')
-    @subapp($('#person_roles'), 'PersonRoles')
-    @subapp($('#person_salaries'), 'PersonSalaries')
-    @subapp($('#person_tasks'), 'PersonTasks')
-    @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
+    # @subapp($('#person_roles'), 'PersonRoles')
+    # @subapp($('#person_salaries'), 'PersonSalaries')
+    # @subapp($('#person_tasks'), 'PersonTasks')
+    # @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
 
 class @Admin extends App
 

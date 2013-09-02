@@ -124,10 +124,10 @@ class App.PersonSalaries extends Spine.Controller
 
     # Render errors on index
     @salary_index.bind 'destroyError', (id, errors) =>
-      @salary_index.renderErrors errors
+      @salary_index.render_errors errors
 
     @reference_index.bind 'destroyError', (id, errors) =>
-      @reference_index.renderErrors errors
+      @reference_index.render_errors errors
 
     @append(@salary_index, @reference_index)
 

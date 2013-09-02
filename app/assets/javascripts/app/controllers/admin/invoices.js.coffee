@@ -88,7 +88,7 @@ class App.ExportInvoices extends App.ExtendedController
 
     unless errors.is_empty()
       e.preventDefault()
-      @renderErrors(errors.errors)
+      @render_errors(errors.errors)
 
   render: ->
     @html @view('admin/invoices/export')(@)

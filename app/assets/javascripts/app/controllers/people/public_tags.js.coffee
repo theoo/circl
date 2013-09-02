@@ -38,7 +38,6 @@ class Edit extends App.ExtendedController
     Ui.load_ui(@el)
 
   submit: (e) ->
-    Ui.spin_on @el
     e.preventDefault()
     attr = $(e.target).serializeObject()
 
@@ -48,12 +47,10 @@ class Edit extends App.ExtendedController
       data: JSON.stringify(attr)
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
-      @renderErrors $.parseJSON(xhr.responseText)
+      @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       # Store the modifications in Spine
       PersonPublicTag.refresh(data, clear: true)

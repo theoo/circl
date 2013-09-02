@@ -137,7 +137,7 @@ class App.SalariesTaxes extends Spine.Controller
 
     @index.bind 'destroyError', (id, errors) =>
       @edit.active id: id
-      @edit.renderErrors errors
+      @edit.render_errors errors
 
   activate: ->
     super
@@ -147,7 +147,7 @@ class App.SalariesTaxes extends Spine.Controller
       text = I18n.t('common.failed_to_update')
       Ui.notify @el, text, 'error'
       response = JSON.parse(xhr.responseText)
-      @renderErrors(response.errors)
+      @render_errors(response.errors)
 
     ajax_success = (data, textStatus, jqXHR) =>
       @new.set_models(data.models)
@@ -189,7 +189,7 @@ class App.UploadSalaryTaxes extends App.ExtendedController
       if Object.keys(response.errors).length > 0
         text = I18n.t('common.failed_to_update')
         Ui.notify @el, text, 'error'
-        @renderErrors(response.errors)
+        @render_errors(response.errors)
 
       # success
       else

@@ -67,17 +67,14 @@ class Index extends App.ExtendedController
 
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
-      Ui.spin_on @el
       subscription = $(e.target).subscription()
       e.preventDefault()
 
       ajax_error = (xhr, statusText, error) =>
-        Ui.spin_off @el
         Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
-        @renderErrors $.parseJSON(xhr.responseText)
+        @render_errors $.parseJSON(xhr.responseText)
 
       ajax_success = (data, textStatus, jqXHR) =>
-        Ui.spin_off @el
         Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
         # Force complete reload
         PersonAffairSubscription.refresh([], clear: true)

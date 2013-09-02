@@ -1,21 +1,4 @@
-- edit_comment_trad = I18n.t("comment.views.contextmenu.edit_comment")
-- close_comment_trad = I18n.t("comment.views.contextmenu.close_comment")
-- destroy_comment_trad = I18n.t("comment.views.contextmenu.destroy_comment")
-
-%menu.context_menu_actions
-  %command{ :data-label => edit_comment_trad,
-            :data-event => "comment-edit",
-            :data-icon => 'edit' }
-
-  %command{ :data-label => close_comment_trad,
-            :data-event => "comment-close",
-            :data-icon => 'check' }
-
-  %command{ :data-label => destroy_comment_trad,
-            :data-event => "comment-destroy",
-            :data-icon => 'delete' }
-
-%table.with_contextmenu.datatable
+%table.datatable
   %thead
     %tr
       %th.desc= I18n.t('comment.views.table.created_at')
@@ -24,10 +7,13 @@
 
   %tbody
     - for comment in App.PersonComment.all()
-      - actions = [edit_comment_trad, destroy_comment_trad]
-      - actions.push(close_comment_trad) unless comment.is_closed
+      - classes = ['item']
+      - classes.push 'warning' if comment.is_closed
+      - classes.push 'active' if comment.id == @active_comment_id
+      - console.log comment.id
+      - console.log @active_comment_id
 
-      %tr{:data-id => comment.id, :data-actions => actions}
+      %tr{:data-id => comment.id, :class => classes.join(" ")}
         %td= comment.created_at
         %td= comment.person_name
         %td

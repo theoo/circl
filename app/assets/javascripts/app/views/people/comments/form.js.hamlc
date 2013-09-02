@@ -1,23 +1,46 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  .float_right
-    .white &nbsp;
-    != @partial("submit_button")(@comment)
+          .form-group
+            %label{:for => 'comment_title', :class => 'label-control'}
+              = I18n.t('comment.views.title')
+            %input{ :type => 'text',
+                    :name => 'title',
+                    :id => 'comment_title',
+                    :class => 'required form-control',
+                    :value => @comment.title }
 
-  .stackable_block
-    %label= I18n.t('comment.views.title')
-    %input{ :type => 'text',
-            :name => 'title',
-            :class => 'required',
-            :value => @comment.title }
+          .form-group
+            %label{:for => 'comment_description', :class => 'label-control'}
+              = I18n.t('comment.views.description')
+            %textarea{:name => 'description',
+                      :id => 'comment_description',
+                      :rows => 5,
+                      :class => 'required form-control'}
+              = @comment.description
 
-  .full_width_textarea
-    %label= I18n.t('comment.views.description')
-    %textarea{:name => 'description',
-              :rows => 5,
-              :class => 'like_an_input required'}
-      = @comment.description
+          %input{:type => 'hidden', :name => 'resource_type', :value => 'Person'}
+          %input{:type => 'hidden', :name => 'resource_id', :value => @comment.person_id}
 
-  %input{:type => 'hidden', :name => 'resource_type', :value => 'Person'}
-  %input{:type => 'hidden', :name => 'resource_id', :value => @comment.person_id}
+    .row
+      .col-lg-12
+        .btn-group
+          - unless @comment.isNew?()
+            - if @comment.is_closed
+              %button{:name => "comment-reopen",
+                      :class => 'btn btn-default' }
+                = I18n.t("comment.views.contextmenu.reopen")
+            - else
+              %button{:name => "comment-close",
+                      :class => 'btn btn-default' }
+                = I18n.t("comment.views.contextmenu.close")
+
+            %button{:name => "comment-destroy",
+                    :class => 'btn btn-danger' }
+              = I18n.t("common.destroy")
+
+        .pull-right
+          != @partial("submit_button")(@comment)

@@ -52,12 +52,17 @@
 .row
   .col-lg-6
 
-    - if can? :read, @person
-      #person.panel.panel-primary
+    // - if can? :read, @person
+    //   #person{:class => 'panel panel-primary', 'data-primary_panel' => "true"}
+    //     .panel-heading
+    //       .panel-title
+    //         = I18n.t('person.views.personal_information')
+
+    - if can? :read, @person => Comment
+      #person_comments.panel.panel-default
         .panel-heading
           .panel-title
-            = I18n.t('person.views.personal_information')
-        .panel-body
+            = I18n.t('person.views.comments')
 
   .col-lg-6
     - if can? :read, @person => PeoplePrivateTag
@@ -65,39 +70,34 @@
         .panel-heading
           .panel-title
             = I18n.t('person.views.private_tags')
-        .panel-body
 
     - if can? :read, @person => PeoplePublicTag
-      #person_private_tags.panel.panel-default
+      #person_public_tags.panel.panel-default
         .panel-heading
           .panel-title
             = I18n.t('person.views.public_tags')
-        .panel-body
 
     //- if can? :read, @person => EmploymentContract
     //  #employment_contracts.widget
     //    %legend= I18n.t('person.views.employment_contracts')
     //    .content
 
-    //- if can? :read, @person => Comment
-    //  #person_comments.widget.pinable
-    //    %legend= I18n.t('person.views.comments')
+    //- if can? :read, @person => Activity
+    //  #person_activities.widget
+    //    %legend= I18n.t('person.views.activities')
     //    .content
-
-    ///- if can? :read, @person => Activity
-    ///  #person_activities.widget
-    ///    %legend= I18n.t('person.views.activities')
-    ///    .content
 
     //- if can? :read, @person => Activity
     //  #person_histories.widget.pinable
     //    %legend= I18n.t('person.views.histories')
     //    .content
 
-    //- if can? :read, @person => PeopleRole
-    //  #person_roles.widget
-    //    %legend= I18n.t('person.views.roles')
-    //    .content
+    // - if can? :read, @person => PeopleRole
+    //   #person_roles.panel.panel-default
+    //     .panel-heading
+    //       .panel-title
+    //         = I18n.t('person.views.roles')
+    //     .panel-body
 
     //- if can? :read, @person => Affair
     //  #person_affairs.widget.pinable

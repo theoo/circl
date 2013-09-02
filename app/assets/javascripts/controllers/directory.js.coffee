@@ -46,7 +46,7 @@ $(document).ready ->
             data: aoData
             success: fnCallback
             error: (xhr) ->
-                directory.search.renderErrors($.parseJSON(xhr.responseText))
+                directory.search.render_errors($.parseJSON(xhr.responseText))
                 empty =
                   "sEcho": 1
                   "iTotalRecords": 0

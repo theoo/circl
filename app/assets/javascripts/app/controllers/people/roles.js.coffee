@@ -17,11 +17,6 @@
 PersonRole = App.PersonRole
 Role = App.Role
 
-$.fn.role = ->
-  elementID   = $(@).data('id')
-  elementID ||= $(@).parents('[data-id]').data('id')
-  PersonRole.find(elementID)
-
 class Index extends App.ExtendedController
   events:
     'submit form': 'update'
@@ -47,12 +42,10 @@ class Index extends App.ExtendedController
       data: {ids: ids}
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
-      @renderErrors $.parseJSON(xhr.responseText)
+      @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.spin_off @el
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       PersonRole.refresh(data, {clear: true})
       @render()

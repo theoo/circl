@@ -1,31 +1,33 @@
-- has_tag = (tag) =>
-  - return App.PersonPrivateTag.select((private_tag) -> private_tag.private_tag_id == tag.id).length > 0
+.panel-body
+  - has_tag = (tag) =>
+    - return App.PersonPrivateTag.select((private_tag) -> private_tag.private_tag_id == tag.id).length > 0
 
-- display_tag = (tag) =>
-  - id = _.uniqueId('private_tag')
-  .checkbox
-    %input{ :type => 'checkbox',
-        :id => id,
-        :name => 'private_tag_ids[]',
-        :checked => has_tag(tag),
-        :value => tag.id }
+  - display_tag = (tag) =>
+    - id = _.uniqueId('private_tag')
+    .checkbox
+      %input{ :type => 'checkbox',
+          :id => id,
+          :name => 'private_tag_ids[]',
+          :checked => has_tag(tag),
+          :value => tag.id }
 
-    %label{:for => id}= tag.name
+      %label{:for => id}= tag.name
 
-- display_tree = (tags) =>
-  - for tag in tags
-    - has_children = tag.children().length > 0
-    %div
-      - display_tag(tag)
-      - if has_children
-        %div{ :style => 'margin-left: 20px;'}
-          = display_tree(tag.children())
+  - display_tree = (tags) =>
+    - for tag in tags
+      - has_children = tag.children().length > 0
+      %div
+        - display_tag(tag)
+        - if has_children
+          %div{ :style => 'margin-left: 20px;'}
+            = display_tree(tag.children())
 
-.block
   %form.form-inline
     .validation_errors_placeholder
 
     - display_tree(@root_tags)
 
-    .float_right
-      != @partial('submit_button')()
+  .row
+    .col-lg-12
+      .pull-right
+        != @partial('submit_button')()

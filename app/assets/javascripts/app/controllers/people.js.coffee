@@ -108,7 +108,7 @@ class App.People extends Spine.Controller
                           @edit.active { can: data }
                         else
                           @new.active { can: data }
-    if @person_id?
-      @new.hide()
-    else
-      @edit.hide()
+    # if @person_id?
+    #   @new.hide()
+    # else
+    #   @edit.hide()

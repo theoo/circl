@@ -202,7 +202,7 @@ class App.ExportReceipts extends App.ExtendedController
 
     unless errors.is_empty()
       e.preventDefault()
-      @renderErrors(errors.errors)
+      @render_errors(errors.errors)
 
   render: ->
     @html @view('admin/receipts/export')(@)

@@ -71,7 +71,7 @@ class Index extends App.ExtendedController
       ajax_error = (xhr, statusText, error) =>
         Ui.spin_off controller.search.el
         Ui.notify controller.search.el, I18n.t('common.failed_to_update'), 'error'
-        controller.search.renderErrors $.parseJSON(xhr.responseText)
+        controller.search.render_errors $.parseJSON(xhr.responseText)
 
       ajax_success = (data, textStatus, jqXHR) =>
         Ui.spin_off controller.search.el
@@ -152,7 +152,7 @@ class App.ExportSalaries extends App.ExtendedController
 
     unless errors.is_empty()
       e.preventDefault()
-      @renderErrors(errors.errors)
+      @render_errors(errors.errors)
 
   render: ->
     @html @view('salaries/salaries/export')(@)
@@ -195,7 +195,7 @@ class App.ExportToAccountingSalaries extends App.ExtendedController
 
     unless errors.is_empty()
       e.preventDefault()
-      @renderErrors(errors.errors)
+      @render_errors(errors.errors)
 
   render: ->
     @html @view('salaries/salaries/export_to_accounting')(@)
@@ -223,7 +223,7 @@ class App.ExportToOcasSalaries extends App.ExtendedController
 
     unless errors.is_empty()
       e.preventDefault()
-      @renderErrors(errors.errors)
+      @render_errors(errors.errors)
 
   render: ->
     @html @view('salaries/salaries/export_to_ocas')(@)
@@ -267,7 +267,7 @@ class App.ExportToELohnausweisSSKSalaries extends App.ExtendedController
 
     unless errors.is_empty()
       e.preventDefault()
-      @renderErrors(errors.errors)
+      @render_errors(errors.errors)
 
   render: ->
     @html @view('salaries/salaries/export_to_elohnausweisssk')(@)
@@ -303,7 +303,7 @@ class App.SalariesSalaries extends Spine.Controller
 
     # Render errors on index
     @index.bind 'destroyError', (id, errors) =>
-      @index.renderErrors errors
+      @index.render_errors errors
 
     @append(@index)
 

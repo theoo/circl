@@ -10,13 +10,13 @@ I18n.datatable_translations =
     "sLengthMenu":     "Show _MENU_ entries",
     "sLoadingRecords": "Loading...",
     "sProcessing":     "Processing...",
-    "sSearch":         "Search:",
+    "sSearch":         "Search",
     "sZeroRecords":    "No matching records found",
     "oPaginate": {
-        "sFirst":    "First",
-        "sLast":     "Last",
-        "sNext":     "Next",
-        "sPrevious": "Previous"
+        "sFirst":    "&laquo;",
+        "sLast":     "&raquo;",
+        "sNext":     ">",
+        "sPrevious": "<"
     },
     "oAria": {
         "sSortAscending":  ": activate to sort column ascending",

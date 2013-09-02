@@ -1,5 +1,4 @@
 @import "custom_fonts.css"
-@import "jquery.dataTables.css"
 @import "bootstrap.css"
 @import "jquery-ui-bootstrap/jquery-ui-custom.css"
 @import "jquery-ui-bootstrap/jquery-ui-ie.css"
@@ -49,6 +48,22 @@ body
 
 a.btn
   box-sizing: content-box
+
+
+// datatable
+
+table.datatable
+  .sorting_desc, .sorting_asc, .sorting
+    cursor: pointer
+
+  margin-bottom: 0
+
+  tbody
+    tr.item
+      cursor: pointer
+
+.pagination-footer
+  text-align: center
 
 // // TYPO
 // @mixin drop-shadow

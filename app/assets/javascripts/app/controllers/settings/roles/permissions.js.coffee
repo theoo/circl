@@ -68,11 +68,9 @@ class SelectedPermissionsIndex extends App.ExtendedController
     Ui.load_ui(@el)
 
   edit: (e) ->
-    Ui.spin_on @el
     permission = $(e.target).selected_permission()
 
     RolePermission.one 'refresh', =>
-      Ui.spin_off @el
       @trigger('edit', {role_id: permission.role_id, id: permission.id})
 
     RolePermission.fetch(id: permission.id)

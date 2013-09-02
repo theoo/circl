@@ -370,10 +370,10 @@ class App.DirectoryQueryPresets extends App.ExtendedController
       if @has_edit
         @edit.active id: id
         unless @has_search
-          @edit.renderErrors errors
+          @edit.render_errors errors
       if @has_search
         @search.active(id: id)
-        @search.renderErrors errors
+        @search.render_errors errors
 
   activate: ->
     super
