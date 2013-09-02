@@ -9,9 +9,6 @@
     - for comment in App.PersonComment.all()
       - classes = ['item']
       - classes.push 'warning' if comment.is_closed
-      - classes.push 'active' if comment.id == @active_comment_id
-      - console.log comment.id
-      - console.log @active_comment_id
 
       %tr{:data-id => comment.id, :class => classes.join(" ")}
         %td= comment.created_at

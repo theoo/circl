@@ -116,8 +116,7 @@ class App.ExtendedController extends Spine.Controller
       panel.switchClass 'panel-success', original_class, {duration: 3000, easing: 'easeInOutCubic'}
       # TODO Make transition work on panel-heading sub-class too
 
-    setTimeout(restore_panel_status, 1000)
-
+    setTimeout(restore_panel_status, 3000)
 
   original_attributes: (record) ->
     current = record.dup()
