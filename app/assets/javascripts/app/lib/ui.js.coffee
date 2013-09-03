@@ -84,7 +84,7 @@ class Ui
 
 #--- datatables setup ---
   setup_datatable: ->
-    # $.fn.dataTableExt.oStdClasses.sSortable = "custom_asc";
+    # $.fn.dataTableExt.oStdClasses.sSortable = "glyphicon glyphicon-sort";
 
 #--- ui ---
   load_jqueryui: (context) ->
@@ -136,8 +136,6 @@ class Ui
     local_storage_load = (oSettings) ->
       return JSON.parse(localStorage.getItem(widget_name))
 
-    # $(nPaging).append('<ul class="pagination">'+ '<li class="prev disabled"><a href="#"><i class="icon-double-angle-left"></i> '+oLang.sPrevious+'</a></li>'+ '<li class="next disabled"><a href="#">'+oLang.sNext+' <i class="icon-double-angle-right"></i></a></li>'+ '</ul>')
-
     params =
       oLanguage: I18n.datatable_translations # TODO scope like I18n.datatable_translations[I18n.locale]
       aaSorting: [sort_parameter]
@@ -180,6 +178,31 @@ class Ui
     parent.append search_input
     search_input.attr('placeholder', I18n.datatable_translations['sSearch'])
     search_input.addClass('form-control input-sm')
+
+    # SORTING
+    table.find('th.sorting').prepend("<span class='glyphicon glyphicon-sort'/>&nbsp;")
+    table.find('th.sorting_asc').prepend("<span class='glyphicon glyphicon-sort-by-attributes'/>&nbsp;")
+    table.find('th.sorting_desc').prepend("<span class='glyphicon glyphicon-sort-by-attributes-alt'/>&nbsp;")
+
+    table.find('th.sorting, th.sorting_desc, th.sorting_asc').on 'click', (e) ->
+
+      # reset all columns
+      table.find('th.sorting, th.sorting_desc, th.sorting_asc').each (index, i) ->
+        th = $(i)
+        th.find('span.glyphicon').remove()
+        icon = $("<span class='glyphicon glyphicon-sort'/>")
+        th.prepend icon
+
+      th = $(e.target)
+      th.find('span.glyphicon').remove()
+      icon = $("<span class='glyphicon'/>")
+      th.prepend icon
+      if th.hasClass('sorting_asc')
+        icon.removeClass('glyphicon-sort-by-attributes-alt')
+        icon.addClass('glyphicon-sort-by-attributes')
+      else
+        icon.removeClass('glyphicon-sort-by-attributes')
+        icon.addClass('glyphicon-sort-by-attributes-alt')
 
 
   load_password_strength: (context) ->

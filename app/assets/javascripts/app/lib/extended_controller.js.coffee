@@ -60,8 +60,8 @@ class App.ExtendedController extends Spine.Controller
   reset_notifications: ->
     # remove previous errors
     $(@el).find('.has-error').each (index, field_with_error) ->
+      $(field_with_error).find('input, textarea, checkbox').popover('destroy')
       $(field_with_error).removeClass('has-error')
-      $(field_with_error).popover('destroy')
 
   render_errors: (errors) ->
     @reset_notifications()
@@ -84,14 +84,14 @@ class App.ExtendedController extends Spine.Controller
       unless field_with_error.length > 0
         field_with_error = $(@el).find("[name='#{attr}_id']")
 
-      field_with_error = field_with_error.parent()
-
       # Add some red
-      field_with_error.addClass('has-error')
+      field_with_error.parent().addClass('has-error')
 
       # Add error explanation
       field_with_error.popover
-        # container: 'body' # This is recommended in bootstrap doc but will break reset_notifications
+        # This is recommended in bootstrap doc but will break reset_notifications
+        # container: 'body'
+        # Popover is bound strait to the corresponding field and it seams to work fine.
         content: msg
         trigger: 'manual'
         placement: 'auto bottom'
@@ -99,7 +99,6 @@ class App.ExtendedController extends Spine.Controller
 
     # Focus first error field
     first_field.focus()
-
 
   render_success: ->
     @reset_notifications()
@@ -153,28 +152,32 @@ class App.ExtendedController extends Spine.Controller
       success(newrecord.id) if success
       @render_success()
 
-  save_with_notifications: (record, success) ->
+  save_with_notifications: (record, success_callback) ->
     is_new = record.isNew()
 
-    # TODO Don't know why this lies here, ajax_prepare catch ajaxError which should be enough
-    # Validation errors
-    # record.bind 'error', (unused, message) =>
-    #   record.unbind(@)
-    #   @render_errors message.errors
+    # Spine Validation errors
+    record.bind 'error', (unused, message) =>
+      record.unbind(@)
+      @render_errors message.errors
 
     # Ajax
-    @ajax_prepare(record, success)
+    @ajax_prepare(record, success_callback)
 
     record.save()
 
-  destroy_with_notifications: (record, success) ->
+  destroy_with_notifications: (record, success_callback) ->
     # Ui
     ui_error = =>
-      # TODO Notify
-      # Ui.notify @el, I18n.t('common.failed_to_destroy'), 'error'
+      # Set panel as 'danger' bootstrap class
+      panel = $(@el).closest('.panel')
+      panel.removeClass 'panel-primary panel-default'
+      panel.addClass 'panel-danger'
+
     ui_success = =>
-      # TODO Notify
-      # Ui.notify @el, I18n.t('common.successfully_destroyed'), 'notice'
+      # Set panel as 'danger' bootstrap class
+      panel = $(@el).closest('.panel')
+      panel.removeClass 'panel-primary panel-default'
+      panel.addClass 'panel-success'
 
     # Ajax
     ajax_error = (xhr, statusText, error) =>
@@ -184,7 +187,7 @@ class App.ExtendedController extends Spine.Controller
     ajax_success = (xhr, statusText, error) =>
       record.destroy(ajax: false)
       record.constructor.trigger 'refresh'
-      success() if success
+      success_callback() if success_callback
 
     # TODO we could avoid the manual ajax request by binding after destroy, see https://github.com/maccman/spine/issues/327
     # (tho maybe it's better to wait for the spine refactoring which would return promises objects)
@@ -198,3 +201,22 @@ class App.ExtendedController extends Spine.Controller
   # validations
   validate_date_format: (date) =>
     Ui.validate_date_format(date)
+
+  activate_in_list: (target) ->
+    tr = $(target).closest('tr')
+
+    tr.addClass('active')
+
+    # Save status of current item and remove its class
+    for status in ['warning', 'danger', 'success']
+      if tr.hasClass(status)
+        tr.data('status', status)
+        tr.removeClass(status)
+
+    tr.siblings().each (index, i) ->
+      item = $(i)
+      # Restore status of all items
+      item.addClass(item.data('status')) if item.data('status')
+
+      item.removeClass('active')
+

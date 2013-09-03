@@ -57,6 +57,7 @@ class Edit extends App.ExtendedController
     @comment = PersonComment.find(@id)
     @html @view('people/comments/form')(@)
     Ui.load_ui(@el)
+    @comment.trigger 'activate_in_list'
 
   submit: (e) ->
     e.preventDefault()
@@ -72,7 +73,7 @@ class Edit extends App.ExtendedController
 
   destroy: (e) ->
     if confirm(I18n.t("common.are_you_sure"))
-      @destroy_with_notifications @comment, => @trigger 'new'
+      @destroy_with_notifications @comment
 
 class Index extends App.ExtendedController
   events:
@@ -88,6 +89,7 @@ class Index extends App.ExtendedController
 
   edit: (e) ->
     comment = $(e.target).comment()
+    comment.bind 'activate_in_list', => @activate_in_list(e.target)
     @trigger 'edit', comment.id
 
 class App.PersonComments extends Spine.Controller
@@ -110,31 +112,11 @@ class App.PersonComments extends Spine.Controller
     @edit.bind 'hide', => @new.show()
 
     @index.bind 'edit', (id) =>
-      @reset_index_statuses()
-
-      # Display current edited item in index
-      item = $(@index.el).find("tr[data-id=#{id}]")
-      item.removeClass('warning')
-      item.addClass('active')
-
       @edit.active(id: id)
-
-    # Reset active class on current item
-    PersonComment.bind 'ajaxSuccess', (args) =>
-      @reset_index_statuses()
 
     @index.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
-
-  reset_index_statuses: ->
-    $(@index.el).find("tr.active").each (index, i) ->
-      item = $(i)
-      # Restore warning status
-      if item.comment().is_closed
-        item.addClass('warning')
-
-      item.removeClass("active")
 
   activate: ->
     super

@@ -39,7 +39,3 @@ class App.PersonComment extends Spine.Model
       e.add description: I18n.t("activerecord.errors.messages.blank")
 
     return e unless e.is_empty()
-
-  close: ->
-    @is_closed = true
-    @.save()
