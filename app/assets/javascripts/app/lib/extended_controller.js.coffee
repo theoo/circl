@@ -208,17 +208,24 @@ class App.ExtendedController extends Spine.Controller
     Ui.validate_date_format(date)
 
   activate_in_list: (target) ->
-    tr = $(target).closest('tr')
+    # if target is undefined it will clear the list
+    if $(target).length > 0
+      tr = $(target).closest('tr')
 
-    tr.addClass('active')
+      tr.addClass('active')
 
-    # Save status of current item and remove its class
-    for status in ['warning', 'danger', 'success']
-      if tr.hasClass(status)
-        tr.data('status', status)
-        tr.removeClass(status)
+      # Save status of current item and remove its class
+      for status in ['warning', 'danger', 'success']
+        if tr.hasClass(status)
+          tr.data('status', status)
+          tr.removeClass(status)
 
-    tr.siblings().each (index, i) ->
+      trs = tr.siblings()
+
+    else
+      trs = $(@el).find('tr')
+
+    trs.each (index, i) ->
       item = $(i)
       # Restore status of all items
       item.addClass(item.data('status')) if item.data('status')

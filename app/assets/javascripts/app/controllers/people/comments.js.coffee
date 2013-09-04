@@ -57,7 +57,6 @@ class Edit extends App.ExtendedController
     @comment = PersonComment.find(@id)
     @html @view('people/comments/form')(@)
     Ui.load_ui(@el)
-    @comment.trigger 'activate_in_list'
 
   submit: (e) ->
     e.preventDefault()
@@ -78,6 +77,7 @@ class Edit extends App.ExtendedController
 class Index extends App.ExtendedController
   events:
     'click tr.item': 'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -87,10 +87,16 @@ class Index extends App.ExtendedController
     @html @view('people/comments/index')(@)
     Ui.load_ui(@el)
 
+  table_redraw: =>
+    if @comment
+      target = $(@el).find("tr[data-id=#{@comment.id}]")
+
+    @activate_in_list(target)
+
   edit: (e) ->
-    comment = $(e.target).comment()
-    comment.bind 'activate_in_list', => @activate_in_list(e.target)
-    @trigger 'edit', comment.id
+    @comment = $(e.target).comment()
+    @activate_in_list(e.target)
+    @trigger 'edit', @comment.id
 
 class App.PersonComments extends Spine.Controller
   className: 'comments'
