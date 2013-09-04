@@ -23,11 +23,15 @@
             = display_tree(tag.children())
 
   %form.form-inline
-    .validation_errors_placeholder
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-    - display_tree(@root_tags)
+    .row
+      .col-lg-12
+        - display_tree(@root_tags)
 
-  .row
-    .col-lg-12
-      .pull-right
-        != @partial('submit_button')()
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')()

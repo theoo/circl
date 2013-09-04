@@ -47,11 +47,10 @@ class Edit extends App.ExtendedController
       data: JSON.stringify(attr)
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
+      @render_success()
       # Store the modifications in Spine
       PersonPrivateTag.refresh(data, clear: true)
 
