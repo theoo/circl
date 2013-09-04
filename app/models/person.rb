@@ -119,12 +119,16 @@ class Person < ActiveRecord::Base
 
   # logs what this "user" have done (to any entry)
   has_many    :activities,
+              :order => 'created_at DESC',
+              :limit => '100',
               :dependent => :destroy
 
   # logs what this person's entry have undergone
   has_many    :alterations,
               :class_name => 'Activity',
               :as => :resource,
+              :order => 'created_at DESC',
+              :limit => '100',
               :dependent => :destroy
 
   # comments made by this person
