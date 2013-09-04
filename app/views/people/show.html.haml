@@ -65,27 +65,28 @@
             = I18n.t('person.views.comments')
 
   .col-lg-6
-    - if can? :read, @person => PeoplePrivateTag
-      #person_private_tags.panel.panel-default
-        .panel-heading
-          .panel-title
-            = I18n.t('person.views.private_tags')
+    // - if can? :read, @person => PeoplePrivateTag
+    //   #person_private_tags.panel.panel-default
+    //     .panel-heading
+    //       .panel-title
+    //         = I18n.t('person.views.private_tags')
 
-    - if can? :read, @person => PeoplePublicTag
-      #person_public_tags.panel.panel-default
-        .panel-heading
-          .panel-title
-            = I18n.t('person.views.public_tags')
+    // - if can? :read, @person => PeoplePublicTag
+    //   #person_public_tags.panel.panel-default
+    //     .panel-heading
+    //       .panel-title
+    //         = I18n.t('person.views.public_tags')
 
     //- if can? :read, @person => EmploymentContract
     //  #employment_contracts.widget
     //    %legend= I18n.t('person.views.employment_contracts')
     //    .content
 
-    //- if can? :read, @person => Activity
-    //  #person_activities.widget
-    //    %legend= I18n.t('person.views.activities')
-    //    .content
+    - if can? :read, @person => Activity
+      #person_activities.panel.panel-default
+        .panel-heading
+          .panel-title
+            = I18n.t('person.views.activities')
 
     //- if can? :read, @person => Activity
     //  #person_histories.widget.pinable

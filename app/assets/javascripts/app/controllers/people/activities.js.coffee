@@ -17,6 +17,9 @@
 PersonActivity = App.PersonActivity
 
 class Index extends App.ExtendedController
+  events:
+    'datatable_redraw': "table_redraw"
+
   constructor: (params) ->
     super
     PersonActivity.bind('refresh', @render)
@@ -25,6 +28,10 @@ class Index extends App.ExtendedController
     @activities = PersonActivity.all()
     @html @view('people/activities/index')(@)
     Ui.load_ui(@el)
+
+  table_redraw: =>
+    $(@el).find('tr').each (index, tr) ->
+      $(tr).popover()
 
 class App.PersonActivities extends Spine.Controller
   className: 'activities'
