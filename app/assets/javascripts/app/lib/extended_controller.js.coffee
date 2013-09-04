@@ -97,6 +97,11 @@ class App.ExtendedController extends Spine.Controller
         placement: 'auto bottom'
       field_with_error.popover('show')
 
+      field_with_error.siblings(".popover").on 'click', ->
+        # Yes, it's a strange way to select field_with_error, but field_with_error itself
+        # returns the last field with error instead of the current one.
+        $(@).closest('.has-error').find('input, textarea, checkbox').popover("hide")
+
     # Focus first error field
     first_field.focus()
 
