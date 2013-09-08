@@ -1,20 +1,23 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  - for role in App.Role.all()
-    - id = _.uniqueId('role')
-    - checked = App.PersonRole.all().map( (r) -> return r.id ).indexOf(role.id) != -1
-    %input{ :type => 'checkbox',
-            :id => id,
-            :name => 'roles_ids[]',
-            :checked => checked,
-            :value => role.id }
-    %label{:for => id, :class => 'inline'}= role.name
+    .row
+      .col-lg-12
+        - for role in App.Role.all()
+          - id = _.uniqueId('role')
+          - checked = App.PersonRole.all().map( (r) -> return r.id ).indexOf(role.id) != -1
+          .checkbox
+            %input{ :type => 'checkbox',
+                    :id => id,
+                    :name => 'roles_ids[]',
+                    :checked => checked,
+                    :value => role.id }
+            %label{:for => id}= role.name
 
-  %br
-
-  .float_right
-    != @partial('submit_button')()
-
-.block
-  %br
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')()

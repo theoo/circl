@@ -44,11 +44,16 @@ $secondary_menu_bg: #5b5b5b
 // Main navigation
 
 body
-  padding-top: 70px
 
 a.btn
   box-sizing: content-box
 
+header
+  nav
+    margin-bottom: 0 !important // Override Bootstrap
+
+#secondary_navigation
+  z-index: 999 // Fixes z-index conflict with user's dropdown
 
 // datatable
 

@@ -6,14 +6,12 @@ en:
       edit_prestations: edit provisions
     views:
       buyer: buyer
-      contextmenu:
+      actions:
         destroy_affair: destroy affair
-        edit_affair: edit affair
-        edit_invoices_and_receipts: edit invoices and receipts
-        edit_prestations: edit provisions
         show_owner: show this affair on owner's page
       description: description
       from: from
+      invoice_and_receipts: invoices and receipts
       owner: owner
       receiver: receiver
       statuses:
@@ -24,6 +22,10 @@ en:
         paid: paid
         partially_paid: partially paid
         underpaid: underpaid
+      subscriptions: Subscriptions
+      extras: Extras
+      tasks: Tasks
+      products: Products
       table:
         buyer: buyer
         created_at: creation date

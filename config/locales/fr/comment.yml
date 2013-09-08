@@ -2,7 +2,7 @@
 fr:
   comment:
     views:
-      contextmenu:
+      actions:
         close: clore
         reopen: réouvrir
       description: description

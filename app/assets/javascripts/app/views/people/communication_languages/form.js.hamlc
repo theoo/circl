@@ -1,18 +1,21 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  - for lang in App.Language.all()
-    - id = _.uniqueId('comlang')
-    %input{ :type => 'checkbox',
-      :id => id,
-      :name => 'communication_language_ids[]',
-      :checked => @has_communication_language(lang.id),
-      :value => lang.id }
-    %label{:for => id, :class => 'inline'}= lang.name
+    .row
+      .col-lg-12
+        - for lang in App.Language.all()
+          - id = _.uniqueId('comlang')
+          .checkbox
+            %input{ :type => 'checkbox',
+              :id => id,
+              :name => 'communication_language_ids[]',
+              :checked => @has_communication_language(lang.id),
+              :value => lang.id }
+            %label{:for => id}= lang.name
 
-  .float_right
-    .white &nbsp;
-    != @partial('submit_button')(@job)
-
-.block
-  %br
+    .row
+      .col-lg-12
+        != @partial('submit_button')(@job)

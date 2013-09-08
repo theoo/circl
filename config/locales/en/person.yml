@@ -87,6 +87,7 @@ en:
       organization_name: organization name
       personal_information: Personal information
       phone: phone
+      permissions: Permissions
       private_tags: Private tags
       public_tags: Public tags
       roles: Roles

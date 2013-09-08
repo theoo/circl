@@ -47,12 +47,18 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="affair-edit-prestations"]': 'edit_prestations'
+    'click button[name="affair-edit-invoices-and-receipts"]': 'edit_invoices_and_receipts'
+    'click button[name="affair-show-owner"]': 'show_owner'
+    'click button[name="affair-destroy"]': 'destroy'
 
   constructor: ->
     super
 
   active: (params) ->
     @id = params.id if params.id
+    @person_id = params.person_id if params.person_id
+    # Load subscriptions, tasks, products and extras
     @render()
 
   render: =>
@@ -66,13 +72,17 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @affair.fromForm(e.target), @hide
 
+  show_owner: (e) ->
+    window.location = "/people/#{@affair.owner_id}?folding=person_affairs"
+
+  destroy: (e) ->
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications(@affair)
+
 class Index extends App.ExtendedController
   events:
-    'affair-edit': 'edit'
-    'affair-edit-prestations': 'edit_prestations'
-    'affair-edit-invoices-and-receipts': 'edit_invoices_and_receipts'
-    'affair-show-owner': 'show_owner'
-    'affair-destroy': 'destroy'
+    'click tr.item': 'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -87,43 +97,11 @@ class Index extends App.ExtendedController
     affair = $(e.target).affair()
     @trigger 'edit', affair.id
 
-  edit_prestations: (e) ->
-    affair = $(e.target).affair()
+  table_redraw: =>
+    if @affair
+      target = $(@el).find("tr[data-id=#{@affair.id}]")
 
-    on_close = ->
-      # Remove obsoletes events
-      App.Subscription.unbind('refresh')
-      App.PersonAffairSubscription.unbind('refresh')
-
-    window = Ui.stack_window('edit-prestations-window', {width: 800, remove_on_close: true, remove_callback: on_close})
-    controller = new App.PersonAffairPrestations({el: window, person_id: @person_id, affair_id: affair.id})
-    $(window).modal({title: I18n.t('affair.view.edit_prestations')})
-    $(window).modal('show')
-    controller.activate()
-
-  edit_invoices_and_receipts: (e) ->
-    affair = $(e.target).affair()
-
-    # TODO: Remove obsoletes events
-    # on_close = ->
-    #  # Remove obsoletes events
-    #  App.Subscription.unbind('refresh')
-    #  App.PersonAffairSubscription.unbind('refresh')
-
-    window = Ui.stack_window('edit-invoices-and-receipts-window', {width: 1200, remove_on_close: true})
-    controller = new App.PersonAffairInvoicesAndReceipts({el: window, person_id: @person_id, affair_id: affair.id})
-    $(window).modal({title: I18n.t('affair.view.edit_invoices_and_receipts')})
-    $(window).modal('show')
-    controller.activate()
-
-  show_owner: (e) ->
-    affair = $(e.target).affair()
-    window.location = "/people/#{affair.owner_id}?folding=person_affairs"
-
-  destroy: (e) ->
-    affair = $(e.target).affair()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications(affair)
+    @activate_in_list(target)
 
 class App.PersonAffairs extends Spine.Controller
   className: 'affairs'
@@ -141,11 +119,11 @@ class App.PersonAffairs extends Spine.Controller
     @new = new New(person_id: @person_id)
     @append(@new, @edit, @index)
 
-    @index.bind 'edit', (id) =>
-      @edit.active(id: id)
-
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
+
+    @index.bind 'edit', (id) =>
+      @edit.active(id: id, person_id: @person_id)
 
     @index.bind 'destroyError', (id, errors) =>
       @edit.active id: id

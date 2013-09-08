@@ -1,12 +1,5 @@
 - errors_count = if @errors? then Object.keys(@errors).length else 0
 - if errors_count
   .alert.alert-danger
-    %h2
-      = I18n.t('activerecord.errors.template.header', { model: 'form', count: errors_count })
-    %p= I18n.t('activerecord.errors.template.body')
-    %ul
-      - for attr, msg of @errors
-        %li
-          %b
-            = attr + ":"
-          = msg.join(", ")
+    - for attr, msg of @errors
+      = msg.join(", ")

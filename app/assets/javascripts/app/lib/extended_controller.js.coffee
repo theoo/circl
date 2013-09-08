@@ -60,7 +60,7 @@ class App.ExtendedController extends Spine.Controller
   reset_notifications: ->
     # remove previous errors
     $(@el).find('.has-error').each (index, field_with_error) ->
-      $(field_with_error).find('input, textarea, checkbox').popover('destroy')
+      $(field_with_error).find('input, textarea, checkbox, select').popover('destroy')
       $(field_with_error).removeClass('has-error')
 
   render_errors: (errors) ->
@@ -71,9 +71,8 @@ class App.ExtendedController extends Spine.Controller
     panel.removeClass 'panel-primary panel-default'
     panel.addClass 'panel-danger'
 
-    # render error partial
-    # TODO remove useless partial 'error_messages_for.js.hamlc'
-    # el.find('.validation_errors_placeholder').html(@partial('error_messages_for')(errors: errors))
+    # Object to store errors which doesn't belongs to an input field (general errors)
+    general_errors = {}
 
     # point fields with errors
     for attr, msg of errors
@@ -83,6 +82,10 @@ class App.ExtendedController extends Spine.Controller
 
       unless field_with_error.length > 0
         field_with_error = $(@el).find("[name='#{attr}_id']")
+
+      # If this no fields are found, push it in general_errors Object
+      unless field_with_error.length > 0
+        general_errors[attr] = msg
 
       # Add some red
       field_with_error.parent().addClass('has-error')
@@ -100,7 +103,13 @@ class App.ExtendedController extends Spine.Controller
       field_with_error.siblings(".popover").on 'click', ->
         # Yes, it's a strange way to select field_with_error, but field_with_error itself
         # returns the last field with error instead of the current one.
-        $(@).closest('.has-error').find('input, textarea, checkbox').popover("hide")
+        $(@).closest('.has-error').find('input, textarea, checkbox, select').popover("hide")
+
+    # Print general errors:
+    # In the rare case where errors are raised on base, display a global alert in validation placeholder.
+    $(@el)
+      .find('.validation_errors_placeholder')
+      .html(@partial('error_messages_for')(errors: general_errors))
 
     # Focus first error field
     first_field.focus()

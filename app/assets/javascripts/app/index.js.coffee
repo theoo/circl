@@ -67,18 +67,20 @@ class @PersonEdit extends App
     @person_id = params.id
 
     @subapp($('#person'), 'People')
-    @subapp($('#person_activities'), 'PersonActivities')
-    @subapp($('#person_histories'), 'PersonHistories')
-    @subapp($('#person_affairs'), 'PersonAffairs')
-    @subapp($('#person_comments'), 'PersonComments')
     @subapp($('#person_communication_languages'), 'PersonCommunicationLanguages')
-    @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
+    @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
     @subapp($('#person_private_tags'), 'PersonPrivateTags')
     @subapp($('#person_public_tags'), 'PersonPublicTags')
-    @subapp($('#person_roles'), 'PersonRoles')
+    @subapp($('#person_affairs'), 'PersonAffairs')
+    @subapp($('#person_affairs_subscriptions'), 'PersonAffairSubscriptions')
+    # @subapp($('#person_affairs_tasks'), 'PersonAffairTasks')
+    # @subapp($('#person_affairs_products'), 'PersonAffairProducts')
+    # @subapp($('#person_affairs_extras'), 'PersonAffairExtras')
+    @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
     @subapp($('#person_salaries'), 'PersonSalaries')
-    @subapp($('#person_tasks'), 'PersonTasks')
-    @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
+    @subapp($('#person_roles'), 'PersonRoles')
+    @subapp($('#person_comments'), 'PersonComments')
+    @subapp($('#person_activities'), 'PersonActivities')
 
 class @Admin extends App
 

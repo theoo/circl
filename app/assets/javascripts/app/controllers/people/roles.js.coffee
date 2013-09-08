@@ -32,7 +32,6 @@ class Index extends App.ExtendedController
     Ui.load_ui(@el)
 
   update: (e) =>
-    Ui.spin_on(@el)
     e.preventDefault()
     ids = $(e.target).find('input:checked').map( -> return $(@).attr('value') ).toArray()
 
@@ -42,13 +41,11 @@ class Index extends App.ExtendedController
       data: {ids: ids}
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
+      @render_success()
       PersonRole.refresh(data, {clear: true})
-      @render()
 
     # TODO make this send JSON params instead of HTML form params
     Spine.Ajax.queue =>

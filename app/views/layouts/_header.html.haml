@@ -1,92 +1,93 @@
 %header
 
   - if person_signed_in?
-    %nav.navbar.navbar-default.navbar-fixed-top.navbar-inverse{:role => "navigation"}
-      .navbar-header.col-lg-1
-        // extra-small resolutions
-        %button{:class => 'navbar-toggle', 'data-togle' => 'collapse', 'data-target' => '.navbar-ex1-collapse'}
-          %span.sr-only
-            = I18n.t("common.toogle-navigation")
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
+    %nav.navbar.navbar-default.navbar-static-top.navbar-inverse{:role => "navigation"}
+      .row
+        .navbar-header.col-lg-1
+          // extra-small resolutions
+          %button{:class => 'navbar-toggle', 'data-togle' => 'collapse', 'data-target' => '.navbar-ex1-collapse'}
+            %span.sr-only
+              = I18n.t("common.toogle-navigation")
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
 
-        %span{:class => 'navbar-brand', :style => 'padding: 0'}
-          = image_tag 'logo_mini_white.png'
+          %span{:class => 'navbar-brand', :style => 'padding: 0 0 0 15px'}
+            = image_tag 'logo_mini_white.png'
 
-      .col-lg-6
-        .collapse.navbar-collapse.navbar-ex1-collapse
-          %ul.nav.navbar-nav
-            - if can? :index, Directory
-              %li
-                = link_to I18n.t('common.directory'),
-                          directory_path,
-                          :class => ('on' if request.path == directory_path)
-
-            - if can? :index, Admin
-              %li
-                = link_to I18n.t('common.administration'),
-                          admin_path,
-                          :class => ('on' if request.path == admin_path)
-
-            - if can? :index, Salaries
-              %li
-                = link_to I18n.t('common.salaries'),
-                          salaries_path,
-                          :class => ('on' if request.path == salaries_path)
-
-            - if can? :index, Setting
-              %li
-                = link_to I18n.t('common.settings'),
-                          settings_path,
-                          :class => ('on' if request.path == settings_path)
-
-      .col-lg-3
-        - if can? :index, Directory
-          = form_tag directory_path,
-              :method => 'get',
-              :class => 'navbar-form navbar-left',
-              :role => 'search' do
-            .form-group
-              .input-group
-                %input{ :type => 'search',
-                        :class => 'form-control',
-                        :name => 'quick_search_string',
-                        :id => 'quick_search_string',
-                        :placeholder => I18n.t('directory.views.quick_search_placeholder') }
-                .input-group-btn
-                  %button{:type => 'submit', :class => 'btn btn-default'}
-                    = I18n.t("directory.views.search")
-
-      .col-lg-2
-        %ul.nav.navbar-nav.navbar-right
-          //- if person_signed_in?
-          //  - if can? :read, BackgroundTask
-          //    #background_tasks_counter.background_tasks
-          //
-          //.lang
-          //  != select_languages
-
-          - if person_signed_in?
-            %li.dropdown
-              %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
-                = current_person.name
-                %b.caret
-              %ul.dropdown-menu
-                - if can? :dashboard, current_person
-                  %li
-                    = link_to I18n.t("common.dashboard"),
-                              dashboard_person_path(current_person)
-
-                - if can? :read, current_person
-                  %li
-                    = link_to I18n.t("person.views.personal_information"), person_path(current_person)
-
-                  %li
-                    = link_to I18n.t("person.views.account_settings"), person_path(current_person)
-
+        .col-lg-6
+          .collapse.navbar-collapse.navbar-ex1-collapse
+            %ul.nav.navbar-nav
+              - if can? :index, Directory
                 %li
-                  = link_to(I18n.t('person.views.logout'),
-                    destroy_person_session_path,
-                    :method => 'delete',
-                    :class => 'button')
+                  = link_to I18n.t('common.directory'),
+                            directory_path,
+                            :class => ('on' if request.path == directory_path)
+
+              - if can? :index, Admin
+                %li
+                  = link_to I18n.t('common.administration'),
+                            admin_path,
+                            :class => ('on' if request.path == admin_path)
+
+              - if can? :index, Salaries
+                %li
+                  = link_to I18n.t('common.salaries'),
+                            salaries_path,
+                            :class => ('on' if request.path == salaries_path)
+
+              - if can? :index, Setting
+                %li
+                  = link_to I18n.t('common.settings'),
+                            settings_path,
+                            :class => ('on' if request.path == settings_path)
+
+        .col-lg-3
+          - if can? :index, Directory
+            = form_tag directory_path,
+                :method => 'get',
+                :class => 'navbar-form navbar-left',
+                :role => 'search' do
+              .form-group
+                .input-group
+                  %input{ :type => 'search',
+                          :class => 'form-control',
+                          :name => 'quick_search_string',
+                          :id => 'quick_search_string',
+                          :placeholder => I18n.t('directory.views.quick_search_placeholder') }
+                  .input-group-btn
+                    %button{:type => 'submit', :class => 'btn btn-default'}
+                      = I18n.t("directory.views.search")
+
+        .col-lg-2
+          %ul.nav.navbar-nav.navbar-right
+            //- if person_signed_in?
+            //  - if can? :read, BackgroundTask
+            //    #background_tasks_counter.background_tasks
+            //
+            //.lang
+            //  != select_languages
+
+            - if person_signed_in?
+              %li.dropdown
+                %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
+                  = current_person.name
+                  %b.caret
+                %ul.dropdown-menu
+                  - if can? :dashboard, current_person
+                    %li
+                      = link_to I18n.t("common.dashboard"),
+                                dashboard_person_path(current_person)
+
+                  - if can? :read, current_person
+                    %li
+                      = link_to I18n.t("person.views.personal_information"), person_path(current_person)
+
+                    %li
+                      = link_to I18n.t("person.views.account_settings"), person_path(current_person)
+
+                  %li
+                    = link_to(I18n.t('person.views.logout'),
+                      destroy_person_session_path,
+                      :method => 'delete',
+                      :class => 'button')

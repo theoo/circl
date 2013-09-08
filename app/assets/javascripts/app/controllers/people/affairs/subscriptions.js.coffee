@@ -71,16 +71,15 @@ class Index extends App.ExtendedController
       e.preventDefault()
 
       ajax_error = (xhr, statusText, error) =>
-        Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
         @render_errors $.parseJSON(xhr.responseText)
 
       ajax_success = (data, textStatus, jqXHR) =>
-        Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
         # Force complete reload
         PersonAffairSubscription.refresh([], clear: true)
         PersonAffairSubscription.fetch()
         # Refresh affairs
         App.PersonAffair.fetch()
+        @render_success()
 
       settings =
         url: PersonAffairSubscription.url(),
@@ -90,23 +89,25 @@ class Index extends App.ExtendedController
       PersonAffairSubscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
 # PersonAffairSubscriptions
-class App.PersonAffairPrestations extends Spine.Controller
+class App.PersonAffairSubscriptions extends Spine.Controller
   className: 'subscriptions'
 
   constructor: (params) ->
     super
 
     @person_id = params.person_id
-    @affair_id = params.affair_id
-
-    PersonAffairSubscription.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@affair_id}/subscriptions"
 
     @index = new Index
     @new = new New
     @append(@new, @index)
 
-  activate: ->
+  activate: (params) ->
     super
+    alert "an affair id is required" unless params.affair_id
+    @affair_id = params.affair_id
+
+    PersonAffairSubscription.url = =>
+      "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@affair_id}/subscriptions"
+
     PersonAffairSubscription.fetch()
     @new.render()

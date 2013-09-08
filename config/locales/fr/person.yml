@@ -86,6 +86,7 @@ fr:
       new_password_confirmation: confirmation du nouveau mot de passe
       organization_name: nom de l'organisation
       personal_information: Informations personnelles
+      permissions: Accès
       phone: téléphone
       private_tags: Tags privés
       public_tags: Tags publics

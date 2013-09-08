@@ -25,7 +25,6 @@ class ApplicationController < ActionController::Base
 
   before_filter :authenticate_person!
   before_filter :set_locale
-  before_filter :unfold_requested_widget
   before_filter :route_browser
 
   protected
@@ -103,14 +102,6 @@ class ApplicationController < ActionController::Base
     end
     cookies[:locale] = default_locale unless cookies[:locale]
     I18n.locale = cookies[:locale]
-  end
-
-  def unfold_requested_widget
-    if params[:folding]
-      current_cookies = cookies[:folding].split("&")
-      current_cookies << params[:folding]
-      cookies[:folding] = current_cookies.uniq.join("&")
-    end
   end
 
   def route_browser

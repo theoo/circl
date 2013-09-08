@@ -6,14 +6,12 @@ fr:
       edit_prestations: modifier les prestations
     views:
       buyer: payeur
-      contextmenu:
+      actions:
         destroy_affair: détuire l'affaire
-        edit_affair: modifier l'affaire
-        edit_invoices_and_receipts: modifier les factures & reçus
-        edit_prestations: modifier les prestations
         show_owner: consulter la page du propriétaire
       description: description
       from: de
+      invoice_and_receipts: factures et reçus
       owner: personne
       receiver: receveur
       statuses:
@@ -24,6 +22,10 @@ fr:
         paid: payée
         partially_paid: partiellement payée
         underpaid: sous-payée
+      subscriptions: Inscriptions
+      extras: Extras
+      tasks: Tâches
+      products: Produits
       table:
         buyer: payeur
         created_at: crée le

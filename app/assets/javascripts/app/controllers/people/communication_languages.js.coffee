@@ -47,13 +47,11 @@ class Edit extends App.ExtendedController
     attr = $(e.target).serializeObject()
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
-      # Store the modifications in Spine
       PersonCommunicationLanguage.refresh(data, clear: true)
+      @render_success()
 
     settings =
       url: PersonCommunicationLanguage.url(),

@@ -1,49 +1,74 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  .stackable-block
-    %label= I18n.t('affair.views.title')
-    %input{:type => 'text',
-           :name => 'title',
-           :class => 'required',
-           :value => @affair.title}
+    .row
+      .col-lg-12
+        .form-group
+          %label{:for => 'affair_title'}
+            = I18n.t('affair.views.title')
+          %input{:type => 'text',
+                 :name => 'title',
+                 :id => 'affair_title',
+                 :class => 'required form-control',
+                 :value => @affair.title}
 
-  .block
+    .row
+      .col-lg-12
+        .form-group
+          %label{:for => 'affair_description'}
+            = I18n.t('affair.views.description')
+          %textarea{:name => 'description',
+                    :rows => 4,
+                    :id => 'affair_description',
+                    :class => 'form-control'}
+            = @affair.description
 
-  .full_width_textarea
-    %label= I18n.t('affair.views.description')
-    %textarea{:name => 'description',
-              :rows => 4,
-              :class => 'like_an_input'}
-      = @affair.description
+    .row
+      .col-lg-6
+        .autocompleted.form-group
+          %label{:for => 'affair_buyer'}
+            = I18n.t('affair.views.buyer')
+          %input{:type => 'search',
+                 :name => 'buyer_name',
+                 :id => 'affair_buyer',
+                 :class => 'required form-control',
+                 :value => @affair.buyer_name,
+                 :action => '/people/search'}
+          %input{:type => 'hidden',
+                 :name => 'buyer_id',
+                 :value => @affair.buyer_id}
 
-  .block
+      .col-lg-6
+        .autocompleted.form-group
+          %label{:for => 'affair_receiver'}
+            = I18n.t('affair.views.receiver')
+          %input{ :type => 'search',
+                  :name => 'receiver_name',
+                  :id => 'affair_receiver',
+                  :class => 'required form-control',
+                  :value => @affair.receiver_name,
+                  :action => '/people/search'}
+          %input{ :type => 'hidden',
+                  :name => 'receiver_id',
+                  :value => @affair.receiver_id}
 
-  .half.left
-    .autocompleted
-      %label= I18n.t('affair.views.buyer')
-      %input{:type => 'search',
-             :name => 'buyer_name',
-             :class => 'required',
-             :value => @affair.buyer_name,
-             :action => '/people/search'}
-      %input{:type => 'hidden',
-             :name => 'buyer_id',
-             :value => @affair.buyer_id}
+    .row
+      .col-lg-12
+        .btn-group
+          - unless @affair.isNew?()
+            - if parseInt(@person_id) == parseInt(@affair.owner_id)
+              %button{:name => "affair-destroy",
+                      :class => 'btn btn-danger' }
+                = I18n.t('common.destroy')
 
-    .autocompleted
-      %label= I18n.t('affair.views.receiver')
-      %input{:type => 'search',
-             :name => 'receiver_name',
-             :class => 'required',
-             :value => @affair.receiver_name,
-             :action => '/people/search'}
-      %input{:type => 'hidden',
-             :name => 'receiver_id',
-             :value => @affair.receiver_id}
+            - else
+              %button{:name => "affair-show-owner",
+                      :class => 'btn btn-default' }
+                = I18n.t('affair.views.actions.show_owner')
 
-  .float_right
-    != @partial('submit_button')(@affair)
 
-.block
-
+        .pull-right
+          != @partial('submit_button')(@affair)

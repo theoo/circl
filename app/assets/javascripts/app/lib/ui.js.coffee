@@ -136,8 +136,11 @@ class Ui
     local_storage_load = (oSettings) ->
       return JSON.parse(localStorage.getItem(widget_name))
 
+    datatable_translations = I18n.datatable_translations
+    datatable_translations.sSearch = '' # Temporarly disable search label, applied to placeholder afterward.
+
     params =
-      oLanguage: I18n.datatable_translations # TODO scope like I18n.datatable_translations[I18n.locale]
+      oLanguage: datatable_translations # TODO scope like I18n.datatable_translations[I18n.locale]
       aaSorting: [sort_parameter]
       bStateSave: true
       fnStateSave: local_storage_save
@@ -173,11 +176,15 @@ class Ui
     # SEARCH - Add the placeholder for Search and Turn this into in-line formcontrol
     search_input = table.closest('.dataTables_wrapper').find('div[id$=_filter] input')
     label = search_input.parent()
+
+    # Override bootstrap inline-block
+    # input is inside a label (!), moving input one level higher and removing label cause event
+    # not to work.
+    label.attr(style: 'display: block;')
+
     parent = label.parent()
-    label.remove()
     parent.addClass('panel-body')
-    parent.append search_input
-    search_input.attr('placeholder', I18n.datatable_translations['sSearch'])
+    search_input.attr('placeholder', "Rechercher")
     search_input.addClass('form-control input-sm')
 
     # SORTING
@@ -224,7 +231,7 @@ class Ui
 
 #--- ui tools ---
   load_panels: (context) =>
-    context.find('.panel').each (index, panel) =>
+    context.find('.panel:not(.placeholder)').each (index, panel) =>
       $(panel).trigger('load-panel') # trigger it when loading page
 
   unpin_widget: (widget) ->
