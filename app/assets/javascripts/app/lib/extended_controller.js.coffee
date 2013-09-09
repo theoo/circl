@@ -174,7 +174,6 @@ class App.ExtendedController extends Spine.Controller
       record.unbind(@)
       @render_errors message.errors
 
-    # Ajax
     @ajax_prepare(record, success_callback)
 
     record.save()
@@ -216,6 +215,7 @@ class App.ExtendedController extends Spine.Controller
   validate_date_format: (date) =>
     Ui.validate_date_format(date)
 
+  # UI
   activate_in_list: (target) ->
     # if target is undefined it will clear the list
     if $(target).length > 0
@@ -241,3 +241,14 @@ class App.ExtendedController extends Spine.Controller
 
       item.removeClass('active')
 
+  disable_panel: ->
+    $(@el).find("input, select, checkbox, textarea").each (index, i) ->
+      $(i).prop('disabled', true)
+
+    $(@el).closest(".panel").addClass 'panel-disabled'
+
+  enable_panel: ->
+    $(@el).find("input, select, checkbox, textarea").each (index, i) ->
+      $(i).prop('disabled', false)
+
+    $(@el).closest(".panel").removeClass 'panel-disabled'
