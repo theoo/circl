@@ -63,7 +63,7 @@ class EmploymentContract < ActiveRecord::Base
   validates_numericality_of :percentage,
                             :greater_than_or_equal_to => 0,
                             :less_than_or_equal_to => 100,
-                            :only_integer => true
+                            :only_integer => false
 
   validates_with IntervalValidator
   validates_with DateValidator, :attribute => :interval_starts_on

@@ -1,59 +1,60 @@
-.row
-  .col-lg-12.text-center
-    = image_tag('logo.png', :alt => 'Directory')
+.container
+  .row
+    .col-lg-12.text-center
+      = image_tag('logo.png', :alt => 'Directory')
 
-.row
-  .col-lg-3
-  .col-lg-6
-    - flash_messages
-  .col-lg-3
+  .row
+    .col-lg-3
+    .col-lg-6
+      - flash_messages
+    .col-lg-3
 
-.row
-  .col-lg-3
-  .col-lg-6
-    .panel.panel-default
-      .panel-heading
-        .panel-title
-          = I18n.t('devise.views.login')
+  .row
+    .col-lg-3.col-md-3.col-sm-2
+    .col-lg-6.col-md-6.col-sm-8
+      .panel.panel-default
+        .panel-heading
+          .panel-title
+            = I18n.t('devise.views.login')
 
-      .panel-body
-        = form_for(resource,
-          :as => resource_name,
-          :url => session_path(resource_name),
-          :role => 'login') do |f|
+        .panel-body
+          = form_for(resource,
+            :as => resource_name,
+            :url => session_path(resource_name),
+            :role => 'login') do |f|
 
-          .form-group
-            %label{:for => 'login_email'}
-              = I18n.t('devise.views.email')
-            = f.email_field :email,
-                            :id => 'login_email',
-                            :class => 'set_focus form-control'
+            .form-group
+              %label{:for => 'login_email'}
+                = I18n.t('devise.views.email')
+              = f.email_field :email,
+                              :id => 'login_email',
+                              :class => 'set_focus form-control'
 
-          .form-group
-            %label{:for => 'login_password'}
-              = I18n.t('devise.views.password')
-            = f.password_field :password,
-                                :id => 'login_password',
-                                :class => 'form-control'
+            .form-group
+              %label{:for => 'login_password'}
+                = I18n.t('devise.views.password')
+              = f.password_field :password,
+                                  :id => 'login_password',
+                                  :class => 'form-control'
 
-          .row
-            .col-lg-6
-              - if devise_mapping.rememberable?
-                .checkbox
-                  = f.check_box :remember_me
-                  %label{:for => 'person_remember_me', :class => 'inline'}
-                    = I18n.t('devise.views.remember_me')
+            .row
+              .col-lg-6
+                - if devise_mapping.rememberable?
+                  .checkbox
+                    = f.check_box :remember_me
+                    %label{:for => 'person_remember_me', :class => 'inline'}
+                      = I18n.t('devise.views.remember_me')
 
-              - if devise_mapping.recoverable? && controller_name != 'passwords'
-                = link_to I18n.t('devise.views.request_new_password'),
-                          new_password_path(resource_name),
-                          'data-toggle' => 'tooltip',
-                          'data-trigger' => 'hover',
-                          'data-placement' => 'bottom',
-                          'title' => I18n.t("devise.help.request_new_password_tooltip")
+                - if devise_mapping.recoverable? && controller_name != 'passwords'
+                  = link_to I18n.t('devise.views.request_new_password'),
+                            new_password_path(resource_name),
+                            'data-toggle' => 'tooltip',
+                            'data-trigger' => 'hover',
+                            'data-placement' => 'bottom',
+                            'title' => I18n.t("devise.help.request_new_password_tooltip")
 
-            .col-lg-6
-              = f.submit I18n.t('devise.views.sign_in'), :class => 'btn btn-primary pull-right'
+              .col-lg-6
+                = f.submit I18n.t('devise.views.sign_in'), :class => 'btn btn-primary pull-right'
 
 
-  .col-lg-3
+    .col-lg-3.col-md-3.col-sm-2
