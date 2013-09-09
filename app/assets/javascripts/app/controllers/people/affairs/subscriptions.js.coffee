@@ -14,8 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# TODO move this into PersonAffairSubscription
-
 PersonAffairSubscription = App.PersonAffairSubscription
 
 $.fn.subscription = ->
@@ -29,14 +27,19 @@ class New extends App.ExtendedController
 
   constructor: (params) ->
     super
+    PersonAffairSubscription.bind('refresh', @render)
 
-  active: (params) ->
+  active: (params) =>
     @render()
+
+  disabled: =>
+    PersonAffairSubscription.url() == undefined
 
   render: =>
     @show()
     @html @view('people/affairs/subscriptions/form')(@)
     Ui.load_ui(@el)
+    if @disabled() then @disable_panel() else @enable_panel()
 
   submit: (e) ->
     e.preventDefault()
@@ -56,14 +59,18 @@ class Index extends App.ExtendedController
   constructor: (params) ->
     super
     PersonAffairSubscription.refresh([], clear: true)
-    PersonAffairSubscription.bind('refresh', @render)
+    PersonAffairSubscription.bind('refresh', @active)
 
-  active: (params) ->
+  active: (params) =>
     @render()
+
+  disabled: =>
+    PersonAffairSubscription.url() == undefined
 
   render: =>
     @html @view('people/affairs/subscriptions/index')(@)
     Ui.load_ui(@el)
+    if @disabled() then @disable_panel() else @enable_panel()
 
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
@@ -103,11 +110,11 @@ class App.PersonAffairSubscriptions extends Spine.Controller
 
   activate: (params) ->
     super
-    alert "an affair id is required" unless params.affair_id
-    @affair_id = params.affair_id
+    # URL is defined in Affair Edit controller.
+    # PersonAffairSubscription.url = =>
+    #   "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@affair_id}/subscriptions"
 
-    PersonAffairSubscription.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@affair_id}/subscriptions"
-
-    PersonAffairSubscription.fetch()
-    @new.render()
+    # Render empty values (placeholders)
+    PersonAffairSubscription.refresh([], clear: true)
+    @index.active()
+    @new.active()

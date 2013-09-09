@@ -231,7 +231,7 @@ class Ui
 
 #--- ui tools ---
   load_panels: (context) =>
-    context.find('.panel:not(.placeholder)').each (index, panel) =>
+    context.find('.panel').each (index, panel) =>
       $(panel).trigger('load-panel') # trigger it when loading page
 
   unpin_widget: (widget) ->

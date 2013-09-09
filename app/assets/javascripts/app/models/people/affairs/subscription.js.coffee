@@ -20,6 +20,9 @@ class App.PersonAffairSubscription extends Spine.Model
 
   @extend Spine.Model.Ajax
 
+  # URL is defined when loading an affair
+  @url: -> undefined
+
   constructor: ->
     super
 
@@ -28,6 +31,5 @@ class App.PersonAffairSubscription extends Spine.Model
 
     if @subscription_id.length == 0
       errors.add [I18n.t("subscription.views.title"), I18n.t("activerecord.errors.messages.blank")].to_property()
-
 
     return errors unless errors.is_empty()

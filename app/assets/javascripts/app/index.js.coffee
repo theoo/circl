@@ -72,10 +72,10 @@ class @PersonEdit extends App
     @subapp($('#person_private_tags'), 'PersonPrivateTags')
     @subapp($('#person_public_tags'), 'PersonPublicTags')
     @subapp($('#person_affairs'), 'PersonAffairs')
-    @subapp($('#person_affairs_subscriptions'), 'PersonAffairSubscriptions')
-    # @subapp($('#person_affairs_tasks'), 'PersonAffairTasks')
-    # @subapp($('#person_affairs_products'), 'PersonAffairProducts')
-    # @subapp($('#person_affairs_extras'), 'PersonAffairExtras')
+    @subapp($('#person_affair_subscriptions'), 'PersonAffairSubscriptions')
+    # @subapp($('#person_affair_tasks'), 'PersonAffairTasks')
+    # @subapp($('#person_affair_products'), 'PersonAffairProducts')
+    # @subapp($('#person_affair_extras'), 'PersonAffairExtras')
     @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
     @subapp($('#person_salaries'), 'PersonSalaries')
     @subapp($('#person_roles'), 'PersonRoles')
@@ -90,12 +90,15 @@ class @Admin extends App
     # required by receipts and invoices widgets
     App.ApplicationSetting.fetch()
 
-    @subapp($('#admin_affairs'), 'AdminAffairs')
-    @subapp($('#admin_invoices'), 'AdminInvoices')
     @subapp($('#admin_private_tags'), 'AdminPrivateTags')
     @subapp($('#admin_public_tags'), 'AdminPublicTags')
-    @subapp($('#admin_receipts'), 'AdminReceipts')
+
+    @subapp($('#admin_affairs'), 'AdminAffairs')
     @subapp($('#admin_subscriptions'), 'AdminSubscriptions')
+
+    @subapp($('#admin_invoices'), 'AdminInvoices')
+    @subapp($('#admin_receipts'), 'AdminReceipts')
+
 
 class @Salaries extends App
 

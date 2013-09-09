@@ -16,6 +16,10 @@
 
 Person = App.Person
 PersonAffair = App.PersonAffair
+PersonAffairSubscription = App.PersonAffairSubscription
+# PersonAffairTask = App.PersonAffairTask
+# PersonAffairProduct = App.PersonAffairProduct
+# PersonAffairExtra = App.PersonAffairExtra
 
 $.fn.affair = ->
   elementID   = $(@).data('id')
@@ -58,8 +62,25 @@ class Edit extends App.ExtendedController
   active: (params) ->
     @id = params.id if params.id
     @person_id = params.person_id if params.person_id
-    # Load subscriptions, tasks, products and extras
+    @load_dependencies()
     @render()
+
+  load_dependencies: ->
+    # Subscriptions
+    PersonAffairSubscription.url = =>
+      "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/subscriptions"
+    PersonAffairSubscription.refresh([], clear: true)
+    PersonAffairSubscription.fetch()
+
+    # Tasks
+
+    # Products
+
+    # Extras
+
+  unload_dependencies: ->
+    PersonAffairSubscription.url = => undefined
+    PersonAffairSubscription.refresh([], clear: true)
 
   render: =>
     return unless PersonAffair.exists(@id)
@@ -71,6 +92,7 @@ class Edit extends App.ExtendedController
   submit: (e) ->
     e.preventDefault()
     @save_with_notifications @affair.fromForm(e.target), @hide
+    @unload_dependencies()
 
   show_owner: (e) ->
     window.location = "/people/#{@affair.owner_id}?folding=person_affairs"
@@ -78,6 +100,7 @@ class Edit extends App.ExtendedController
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
       @destroy_with_notifications(@affair)
+      @hide()
 
 class Index extends App.ExtendedController
   events:
@@ -95,6 +118,7 @@ class Index extends App.ExtendedController
 
   edit: (e) ->
     affair = $(e.target).affair()
+    @activate_in_list(e.target)
     @trigger 'edit', affair.id
 
   table_redraw: =>
@@ -126,7 +150,6 @@ class App.PersonAffairs extends Spine.Controller
       @edit.active(id: id, person_id: @person_id)
 
     @index.bind 'destroyError', (id, errors) =>
-      @edit.active id: id
       @edit.render_errors errors
 
   activate: ->

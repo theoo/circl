@@ -40,6 +40,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="employment-contract-destroy"]': 'destroy'
 
   constructor: ->
     super
@@ -59,10 +60,16 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @employment_contract.fromForm(e.target), @hide
 
+  destroy: (e) ->
+    e.preventDefault()
+    if confirm(I18n.t("common.are_you_sure"))
+      @destroy_with_notifications @employment_contract
+      @hide()
+
 class Index extends App.ExtendedController
   events:
-    'employment-contract-edit':    'edit'
-    'employment-contract-destroy': 'destroy'
+    'click tr.item': 'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -74,12 +81,14 @@ class Index extends App.ExtendedController
 
   edit: (e) ->
     employment_contract = $(e.target).employment_contract()
+    @activate_in_list(e.target)
     @trigger 'edit', employment_contract.id
 
-  destroy: (e) ->
-    employment_contract = $(e.target).employment_contract()
-    if confirm(I18n.t("common.are_you_sure"))
-      @destroy_with_notifications employment_contract
+  table_redraw: =>
+    if @affair
+      target = $(@el).find("tr[data-id=#{@affair.id}]")
+
+    @activate_in_list(target)
 
 class App.PersonEmploymentContracts extends Spine.Controller
   className: 'employment_contracts'
@@ -103,8 +112,7 @@ class App.PersonEmploymentContracts extends Spine.Controller
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
 
-    @index.bind 'destroyError', (id, errors) =>
-      @edit.active id: id
+    @edit.bind 'destroyError', (id, errors) =>
       @edit.render_errors errors
 
   activate: ->

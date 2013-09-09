@@ -114,32 +114,32 @@
         .col-lg-6
           - # TODO Adjust access to every panel
           - if can? :read, @person => Affair
-            #person_affairs.panel.panel-default
+            #person_affairs.panel.panel-primary
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.affairs')
 
         .col-lg-6
           - if can? :read, @person => Affair
-            #person_affairs_subscriptions.panel.panel-default.placeholder
+            #person_affair_subscriptions.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('affair.views.subscriptions')
 
           // - if can? :read, @person => Affair
-          //   #person_affairs_tasks.panel.panel-default
+          //   #person_affair_tasks.panel.panel-default
           //     .panel-heading
           //       .panel-title
           //         = I18n.t('affair.views.tasks')
 
           // - if can? :read, @person => Affair
-          //   #person_affairs_products.panel.panel-default
+          //   #person_affair_products.panel.panel-default
           //     .panel-heading
           //       .panel-title
           //         = I18n.t('affair.views.products')
 
           // - if can? :read, @person => Affair
-          //   #person_affairs_extras.panel.panel-default
+          //   #person_affair_extras.panel.panel-default
           //     .panel-heading
           //       .panel-title
           //         = I18n.t('affair.views.extras')
@@ -153,10 +153,11 @@
           //    .content
 
         .col-lg-6
-          //- if can? :read, @person => EmploymentContract
-          //  #employment_contracts.widget
-          //    %legend= I18n.t('person.views.employment_contracts')
-          //    .content
+          - if can? :read, @person => EmploymentContract
+            #person_employment_contracts.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('person.views.employment_contracts')
 
     #permissions.tab-pane.fade
       .row

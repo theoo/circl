@@ -1,21 +1,27 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  .block
-    .float_left
-      .autocompleted
-        %label= I18n.t('subscription.views.subscription')
-        %input{:type => 'search',
-               :name => 'subscription_title',
-               :value => '',
-               :class => 'required',
-               :action => '/admin/subscriptions/search'}
-        %input{:type => 'hidden',
-          :name => 'subscription_id',
-          :value => ''}
+    .row
+      .col-lg-12
+        .autocompleted.form-group
+          %label{:for => 'affair_subscription_title'}
+            = I18n.t('subscription.views.subscription')
+          %input{:type => 'search',
+                 :name => 'subscription_title',
+                 :id => 'affair_subscription_title',
+                 :value => '',
+                 :class => 'required form-control',
+                 :action => '/admin/subscriptions/search'}
+          %input{:type => 'hidden',
+            :name => 'subscription_id',
+            :value => ''}
 
 
-    .float_right
-      != @partial('submit_button')()
-
-  .block
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')()
+        -# destroy_subscription_trad = I18n.t('subscription.views.contextmenu.remove_subscription')

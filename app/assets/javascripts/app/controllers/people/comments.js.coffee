@@ -73,6 +73,7 @@ class Edit extends App.ExtendedController
   destroy: (e) ->
     if confirm(I18n.t("common.are_you_sure"))
       @destroy_with_notifications @comment
+      @hide()
 
 class Index extends App.ExtendedController
   events:
@@ -120,8 +121,7 @@ class App.PersonComments extends Spine.Controller
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
 
-    @index.bind 'destroyError', (id, errors) =>
-      @edit.active id: id
+    @edit.bind 'destroyError', (id, errors) =>
       @edit.render_errors errors
 
   activate: ->
