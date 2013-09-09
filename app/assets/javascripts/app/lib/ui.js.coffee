@@ -45,6 +45,7 @@ class Ui
     @load_number_precision(context)
     @load_password_strength(context)
     @load_panels(context)
+    @load_tabs(context)
 
     # FIXME http://getbootstrap.com/javascript/#tooltips the event
     # should be trigged without calling this line (?)
@@ -212,6 +213,31 @@ class Ui
         icon.removeClass('glyphicon-sort-by-attributes')
         icon.addClass('glyphicon-sort-by-attributes-alt')
 
+
+  load_tabs: (context) ->
+    rewrite_url_anchor = (anchor_name) ->
+      url = window.location.hash
+      params = url.match(/(\?.*)$/)
+      params = if params then params[0] else ""
+      window.location.hash = anchor_name + params
+      # window.location.hash = anchor_name + params
+      # TODO prevent browser from scrolling to anchor, it may exist a better solution.
+      @.scrollTo(0,0)
+
+    nav = context.find("#sub_nav")
+    nav.find("a").click (e) ->
+      e.preventDefault()
+      $(@).tab('show')
+
+    nav.find("a").on 'shown.bs.tab', (e) ->
+      rewrite_url_anchor $(e.target).attr('href')
+
+    anchor = window.location.hash.match(/^(#[a-z]+)\??/)
+    anchor = anchor[1] if anchor
+
+    tab_link = nav.find("a[href=" + anchor + "]")
+    tab_link = nav.find("a:first") if tab_link.length == 0
+    tab_link.tab('show')
 
   load_password_strength: (context) ->
     # display password strength on .strong_password input[type=password] fields
