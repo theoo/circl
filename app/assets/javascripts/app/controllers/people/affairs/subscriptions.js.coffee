@@ -16,7 +16,7 @@
 
 PersonAffairSubscription = App.PersonAffairSubscription
 
-$.fn.subscription = ->
+$.fn.person_affair_subscription = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
   PersonAffairSubscription.find(elementID)
@@ -54,7 +54,7 @@ class New extends App.ExtendedController
 
 class Index extends App.ExtendedController
   events:
-    'subscription-destroy': 'destroy'
+    'click tr.item': 'destroy'
 
   constructor: (params) ->
     super
@@ -73,9 +73,10 @@ class Index extends App.ExtendedController
     if @disabled() then @disable_panel() else @enable_panel()
 
   destroy: (e) ->
+    e.preventDefault()
+    subscription = $(e.target).person_affair_subscription()
+
     if confirm(I18n.t('common.are_you_sure'))
-      subscription = $(e.target).subscription()
-      e.preventDefault()
 
       ajax_error = (xhr, statusText, error) =>
         @render_errors $.parseJSON(xhr.responseText)

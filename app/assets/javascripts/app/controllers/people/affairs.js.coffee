@@ -38,15 +38,19 @@ class New extends App.ExtendedController
   render: =>
     return unless Person.exists(@person_id)
     @person = Person.find(@person_id)
-    @affair = new PersonAffair
+    @affair = new PersonAffair()
     @affair.owner_id = @affair.buyer_id = @affair.receiver_id = @person.id
     @affair.owner_name = @affair.buyer_name = @affair.receiver_name = @person.name
     @html @view('people/affairs/form')(@)
     Ui.load_ui(@el)
 
-  submit: (e) ->
+  submit: (e) =>
     e.preventDefault()
-    @save_with_notifications @affair.fromForm(e.target), @render
+
+    redirect_to_edit = (id) =>
+      @trigger('edit', id)
+
+    @save_with_notifications @affair.fromForm(e.target), redirect_to_edit
 
 class Edit extends App.ExtendedController
   events:
@@ -99,8 +103,7 @@ class Edit extends App.ExtendedController
 
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications(@affair)
-      @hide()
+      @destroy_with_notifications @affair, @hide
 
 class Index extends App.ExtendedController
   events:
@@ -111,6 +114,12 @@ class Index extends App.ExtendedController
     super
     @person_id = params.person_id
     PersonAffair.bind('refresh', @render)
+
+  active: (params) ->
+    if params
+      @person_id = params.person_id
+      @affair = PersonAffair.find(params.affair_id)
+    @render()
 
   render: =>
     @html @view('people/affairs/index')(@)
@@ -144,7 +153,13 @@ class App.PersonAffairs extends Spine.Controller
     @append(@new, @edit, @index)
 
     @edit.bind 'show', => @new.hide()
-    @edit.bind 'hide', => @new.show()
+    @edit.bind 'hide', =>
+      @new.render()
+      @new.show()
+
+    @new.bind 'edit', (id) =>
+      @edit.active(id: id, person_id: @person_id)
+      @index.active(affair_id: id, person_id: @person_id)
 
     @index.bind 'edit', (id) =>
       @edit.active(id: id, person_id: @person_id)
