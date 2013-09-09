@@ -13,6 +13,7 @@ fr:
     views:
       affairs: Affaires
       already_imported: déjà importé
+      finances: Finances
       import: importer
       import_people: Import de personnes
       import_receipts: Import de reçus
@@ -37,5 +38,6 @@ fr:
       rectification: rectification
       select_file: Veuillez choisir un fichier
       subscriptions: Inscriptions
+      tags: Tags
       upload: téléverser
     wrong_file_format: Mauvais format de fichier

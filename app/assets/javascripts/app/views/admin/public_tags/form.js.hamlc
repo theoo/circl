@@ -1,23 +1,35 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  .float_right
-    %label.white &nbsp;
-    != @partial('submit_button')(@tag)
+    .row
+      .col-lg-12          
+        .col-lg-6
+          .form-group
+            %label{:for => 'tag_name'}
+              = I18n.t('tag.views.name')
+            %input{ :type => 'text',
+                    :id => 'tag_name',
+                    :name => 'name',
+                    :class => 'required form-control',
+                    :value => @tag.name }
+        .col-lg-6
+          .form-group.autocompleted
+            %label{:for => 'tag_parent_id'}
+              = I18n.t('tag.views.parent')
+            %input{ :type => 'search',
+                    :id => 'tag_parent_id',
+                    :name => 'tag_parent_id',
+                    :class => 'form-control',
+                    :value => @tag.parent_name,
+                    :action => '/admin/public_tags/search' }
+            %input{ :type => 'hidden',
+                    :name => 'parent_id',
+                    :value => @tag.parent_id }
 
-  .autocompleted
-    %label= I18n.t('tag.views.parent')
-    %input{ :type => 'search',
-            :name => 'tag_parent_id',
-            :value => @tag.parent_name,
-            :action => '/admin/public_tags/search' }
-
-    %input{ :type => 'hidden',
-            :name => 'parent_id',
-            :value => @tag.parent_id }
-  .block
-    %label= I18n.t('tag.views.name')
-    %input{ :type => 'text',
-            :name => 'name',
-            :class => 'required',
-            :value => @tag.name }
+        .col-lg-12
+          .form-group.pull-right
+            %label.white &nbsp;
+            != @partial('submit_button')(@tag)

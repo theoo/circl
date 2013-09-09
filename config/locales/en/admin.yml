@@ -13,6 +13,7 @@ en:
     views:
       affairs: Affairs
       already_imported: already imported
+      finances: Finance
       import: import
       import_people: Import people
       import_receipts: Import receipts
@@ -37,5 +38,6 @@ en:
       rectification: rectification
       select_file: select file
       subscriptions: Subscriptions
+      tags: Tags
       upload: upload
     wrong_file_format: wrong file format
