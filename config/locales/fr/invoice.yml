@@ -6,14 +6,11 @@ fr:
     views:
       account: compte
       account_counterpart: contrepartie
-      contextmenu:
+      actions:
         add_receipt: ajouter un reçu
-        destroy_invoice: détruire cette facture
-        destroy_receipt: détruire ce reçu
-        edit_invoice: modifier cette facture
-        edit_receipt: modifier ce reçu
-        preview_pdf: prévisualisation du pdf
-        show_pdf: voir le PDF
+        preview_pdf: prévisualiser
+        pdf: PDF
+        download_pdf: télécharger
       counterpart_account: counterpart account
       description: description
       export: export des factures

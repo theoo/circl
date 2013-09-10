@@ -6,14 +6,11 @@ en:
     views:
       account: account
       account_counterpart: counterpart
-      contextmenu:
+      actions:
         add_receipt: add receipt
-        destroy_invoice: destroy invoice
-        destroy_receipt: destroy receipt
-        edit_invoice: edit invoice
-        edit_receipt: edit receipt
-        preview_pdf: preview pdf
-        show_pdf: show pdf
+        preview_pdf: preview
+        pdf: PDF
+        download_pdf: download
       counterpart_account: counterpart account
       description: description
       export: invoices export

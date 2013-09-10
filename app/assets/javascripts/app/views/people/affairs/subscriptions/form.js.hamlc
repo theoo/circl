@@ -23,4 +23,3 @@
       .col-lg-12
         .pull-right
           != @partial('submit_button')()
-        -# destroy_subscription_trad = I18n.t('subscription.views.contextmenu.remove_subscription')

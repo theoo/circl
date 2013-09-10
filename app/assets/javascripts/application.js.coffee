@@ -105,11 +105,18 @@ Number.prototype.to_view = (num)->
 
     return money # as a string
 
+Number.prototype.pad = (length) ->
+  str = @ + ""
+  while (str.length < length)
+    str = "0" + str;
+  str
+
 # If I dared to write somewhere how javascript sucks that would be here.
 Date.prototype.to_view = (date)->
   # TODO localization, check also the rest of the code for localization
-  @.getDate() + "-" + (@.getMonth() + 1) + "-" + @.getFullYear()
+  @.getDate().pad(2) + "-" + (@.getMonth() + 1).pad(2) + "-" + @.getFullYear()
 
 String.prototype.to_date = ->
   ary = @.split("-").reverse()
   new Date(parseInt(ary[0]), parseInt(ary[1]) - 1, parseInt(ary[2]))
+  "1-1-2013"

@@ -64,7 +64,6 @@ class Ui
     # $(document).delegate 'input[type="date"]', 'click', (e) ->
     #  e.preventDefault() # disable HTML5 default behavior
 
-    # $(document).delegate 'input[type="date"]', 'focus', ->
     $(document).delegate 'input.datepicker', 'focus', ->
       $(@).datepicker
         inline: true
@@ -89,15 +88,30 @@ class Ui
 
 #--- ui ---
   load_jqueryui: (context) ->
+    # Set focus on input with .set_focus class
     context.find('.set_focus').focus()
 
-    # datatables
+    # Load datatables
     context.find('.datatable').each (index, table) =>
       @load_datatable $(table)
 
-    # requied fields
-    $('input.required, textarea.required').siblings('label').addClass('required')
+    # Mark required fields
+    context.find('input.required, textarea.required').siblings('label').addClass('required')
     # $('input.required').attr("required", true) # this enable HTML5 validation, might conflict with datepicker.
+
+    # Add icon to datepickers
+    dp = context.find('input.datepicker')
+    if dp.length > 0
+      dp.each ->
+        parent = $(@).closest('.form-group')
+        # label = parent.find('label')
+        input_group = $("<span class='input-group'>")
+        input_addon = $("<span class='input-group-addon'>")
+        icon = $("<span class='glyphicon glyphicon-calendar'>")
+        input_addon.append icon
+        input_group.append $(@)
+        input_group.append input_addon
+        parent.append input_group
 
   load_datatable: (table) ->
     # ensure datatable isn't already loaded on this table
@@ -105,6 +119,7 @@ class Ui
       # Extend table with bootstrap classes
       table.addClass("table table-hover table-condensed table-responsive")
 
+      # TODO Use something like this plus bSortable to disable sorting on specific columns
       # default sorting option (class .desc or .asc on <th>)
       # will apply only if previous state isn't saved in localstorage
       sort_parameter = [0, 'asc'] # desfault if no .desc or .asc class is set

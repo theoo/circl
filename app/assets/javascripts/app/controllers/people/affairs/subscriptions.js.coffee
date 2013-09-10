@@ -54,7 +54,7 @@ class New extends App.ExtendedController
 
 class Index extends App.ExtendedController
   events:
-    'click tr.item': 'destroy'
+    'click button[name=subscription-destroy]': 'destroy'
 
   constructor: (params) ->
     super

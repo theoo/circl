@@ -7,13 +7,17 @@
       %th= I18n.t('subscription.views.table.to')
       %th= I18n.t('subscription.views.table.value')
       %th.desc= I18n.t('subscription.views.table.created_at')
+      %th.actions
 
   %tbody
     - for s in App.PersonAffairSubscription.all()
-      %tr{:data-id => s.id, :class => 'item'}
+      %tr{:data-id => s.id}
         %td= s.id
         %td= s.title
         %td= s.interval_starts_on
         %td= s.interval_ends_on
         %td.number= s.value.to_view() if s.value
         %td= s.created_at
+        %td
+          %button{:name => 'subscription-destroy', :class => 'btn btn-danger btl-xs'}
+            .glyphicon.glyphicon-remove

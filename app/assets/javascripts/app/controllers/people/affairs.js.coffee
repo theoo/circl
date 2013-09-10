@@ -20,6 +20,8 @@ PersonAffairSubscription = App.PersonAffairSubscription
 # PersonAffairTask = App.PersonAffairTask
 # PersonAffairProduct = App.PersonAffairProduct
 # PersonAffairExtra = App.PersonAffairExtra
+PersonAffairInvoice = App.PersonAffairInvoice
+PersonAffairReceipt = App.PersonAffairReceipt
 
 $.fn.affair = ->
   elementID   = $(@).data('id')
@@ -70,21 +72,52 @@ class Edit extends App.ExtendedController
     @render()
 
   load_dependencies: ->
-    # Subscriptions
-    PersonAffairSubscription.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/subscriptions"
-    PersonAffairSubscription.refresh([], clear: true)
-    PersonAffairSubscription.fetch()
+    if @id
+      # Subscriptions
+      PersonAffairSubscription.url = =>
+        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/subscriptions"
+      PersonAffairSubscription.refresh([], clear: true)
+      PersonAffairSubscription.fetch()
 
-    # Tasks
+      # Tasks
+      # PersonAffairInvoice.url = =>
+      #  "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/invoices"
 
-    # Products
+      # Products
+      # PersonAffairInvoice.url = =>
+      #  "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/invoices"
 
-    # Extras
+      # Extras
+      # PersonAffairInvoice.url = =>
+      #  "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/invoices"
+
+      # Invoices
+      # #person_affairs, which is @el of App.PersonAffairs
+      person_affair_invoices_ctrl = $("#person_affair_invoices").data('controller')
+      person_affair_invoices_ctrl.activate(person_id: @person_id, affair_id: @id)
+      PersonAffairInvoice.url = =>
+        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/invoices"
+      PersonAffairInvoice.refresh([], clear: true)
+      PersonAffairInvoice.fetch()
+
+      # Receipts
+      # PersonAffairReceipt.url = =>
+      #   "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/receipts"
+      # PersonAffairReceipt.refresh([], clear: true)
+      # PersonAffairReceipt.fetch()
 
   unload_dependencies: ->
+    # Subscriptions
     PersonAffairSubscription.url = => undefined
     PersonAffairSubscription.refresh([], clear: true)
+
+    # Invoices
+    PersonAffairInvoice.url = => undefined
+    PersonAffairInvoice.refresh([], clear: true)
+
+    # Receipts
+    PersonAffairReceipt.url = => undefined
+    PersonAffairReceipt.refresh([], clear: true)
 
   render: =>
     return unless PersonAffair.exists(@id)

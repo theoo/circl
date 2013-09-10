@@ -1,6 +1,0 @@
-%h1
-  = I18n.t('invoice.views.invoices')
-  %span.float_right
-    = I18n.t('invoice.views.total')
-    - func = (sum, e) -> sum + e.value
-    = App.PersonAffairInvoice.all().reduce(func, 0).to_view()

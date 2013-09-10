@@ -20,6 +20,9 @@ class App.PersonAffairReceipt extends Spine.Model
 
   @extend Spine.Model.Ajax
 
+  # URL is defined when loading an affair
+  @url: -> undefined
+
   constructor: ->
     super
 
@@ -27,15 +30,15 @@ class App.PersonAffairReceipt extends Spine.Model
     errors = new App.ErrorsList
 
     if @invoice_id.length == 0
-      errors.add [I18n.t("receipt.views.invoice_title"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['title', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     if @value.length == 0
-      errors.add [I18n.t("receipt.views.value"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['value', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     if @value_date.length == 0
-      errors.add [I18n.t("receipt.views.value_date"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['value_date', I18n.t("activerecord.errors.messages.blank")].to_property()
     else
       unless Ui.validate_date_format(@value_date)
-        errors.add [I18n.t("receipt.views.value_date"), I18n.t('common.errors.date_must_match_format')].to_property()
+        errors.add ['value_date', I18n.t('common.errors.date_must_match_format')].to_property()
 
     return errors unless errors.is_empty()

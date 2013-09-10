@@ -144,6 +144,20 @@
           //       .panel-title
           //         = I18n.t('affair.views.extras')
 
+      .row
+        .col-lg-6
+          - if can? :read, @person => Invoice
+            #person_affair_invoices.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('affair.views.invoices')
+        .col-lg-6
+          // - if can? :read, @person => Affair
+          //   #person_affair_extras.panel.panel-default
+          //     .panel-heading
+          //       .panel-title
+          //         = I18n.t('affair.views.extras')
+
     #salaries.tab-pane.fade
       .row
         .col-lg-6

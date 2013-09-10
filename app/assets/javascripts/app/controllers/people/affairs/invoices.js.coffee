@@ -15,7 +15,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Person = App.Person
-Affair = App.Affair
+PersonAffair = App.PersonAffair
 PersonAffairInvoice = App.PersonAffairInvoice
 PersonAffairReceipt = App.PersonAffairReceipt
 Permissions = App.Permissions
@@ -31,32 +31,37 @@ class New extends App.ExtendedController
     'submit form': 'submit'
 
   constructor: (params) ->
-    @person_id = params.person_id if params.person_id
-    @affair_id = params.affair_id if params.affair_id
-    Person.bind('refresh', @render)
-    Affair.bind('refresh', @render)
-    InvoiceTemplate.bind('refresh', @render)
+    #Person.bind('refresh', @render)
+    # PersonAffair.bind('refresh', @active)
+    PersonAffairInvoice.bind('refresh', @active)
+    InvoiceTemplate.bind('refresh', @active)
     super
 
-  active: (params) ->
+  active: (params) =>
+    @person_id = params.person_id if params.person_id
+    @affair_id = params.affair_id if params.affair_id
     @can = params.can if params.can
     @render()
 
   render: =>
-    unless @can?.invoice.create && Person.exists(@person_id) && Affair.exists(@affair_id)
-      @hide()
-      return
-    @person = Person.find(@person_id)
-    @affair = Affair.find(@affair_id)
-    @invoice = new PersonAffairInvoice(value: 0)
-    @invoice.printed_address = @person.address_for_bvr
-    @invoice.title = @affair.title
-    @invoice.description = @affair.description
-    @invoice.value = @affair.value
-    @invoice.created_at = (new Date).to_view()
-    @show()
+    if @can?.invoice.create && Person.exists(@person_id) && PersonAffair.exists(@affair_id)
+      @person = Person.find(@person_id)
+      @affair = PersonAffair.find(@affair_id)
+      @invoice = new PersonAffairInvoice(value: 0)
+      @invoice.printed_address = @person.address_for_bvr
+      @invoice.title = @affair.title
+      @invoice.description = @affair.description
+      @invoice.value = @affair.value
+      @invoice.created_at = (new Date).to_view()
+    else
+      @invoice = new PersonAffairInvoice(value: 0)
+
     @html @view('people/affairs/invoices/form')(@)
     Ui.load_ui(@el)
+    if @disabled() then @disable_panel() else @enable_panel()
+
+  disabled: =>
+    PersonAffairInvoice.url() == undefined
 
   submit: (e) ->
     e.preventDefault()
@@ -66,6 +71,10 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'button[]':     'pdf'
+    'invoice-preview': 'preview'
+    'invoice-destroy': 'destroy'
+    'receipt-add':     'add_receipt'
 
   constructor: (params) ->
     super
@@ -90,13 +99,31 @@ class Edit extends App.ExtendedController
     @invoice.fromForm(e.target)
     @save_with_notifications @invoice, @hide
 
+  pdf: (e) ->
+    window.location = "#{PersonAffairInvoice.url()}/#{@invoice.id}.pdf"
+
+  preview: (e) ->
+    invoice = $(e.target).invoice()
+    win = Ui.stack_window('preview-invoice', {width: 900, height: $(window).height(), remove_on_close: true})
+    $(win).modal({title: I18n.t('invoice.views.contextmenu.preview_pdf')})
+    iframe = $("<iframe src='" +
+                "#{PersonAffairInvoice.url()}/#{invoice.id}.html" +
+                "' width='100%' " + "height='" + ($(window).height() - 60) +
+                "'></iframe>")
+    $(win).html iframe
+    $(win).modal('show')
+
+  destroy: (e) ->
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @invoice
+
+  add_receipt: (e) ->
+    @trigger 'receipt-add', @invoice
+
 class Index extends App.ExtendedController
   events:
-    'invoice-edit':    'edit'
-    'invoice-pdf':     'pdf'
-    'invoice-preview': 'preview'
-    'invoice-destroy': 'destroy'
-    'receipt-add':     'add_receipt'
+    'click tr.item':    'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -112,43 +139,19 @@ class Index extends App.ExtendedController
     @html @view('people/affairs/invoices/index')(@)
     Ui.load_ui(@el)
 
+  disabled: =>
+    PersonAffairInvoice.url() == undefined
+    if @disabled() then @disable_panel() else @enable_panel()
+
   edit: (e) ->
-    invoice = $(e.target).invoice()
-    @trigger 'edit', invoice.id
+    @invoice = $(e.target).invoice()
+    @activate_in_list(e.target)
+    @trigger 'edit', @invoice.id
 
-  pdf: (e) ->
-    invoice = $(e.target).invoice()
-    window.location = "#{PersonAffairInvoice.url()}/#{invoice.id}.pdf"
-
-  preview: (e) ->
-    invoice = $(e.target).invoice()
-    win = Ui.stack_window('preview-invoice', {width: 900, height: $(window).height(), remove_on_close: true})
-    $(win).modal({title: I18n.t('invoice.views.contextmenu.preview_pdf')})
-    iframe = $("<iframe src='" +
-                "#{PersonAffairInvoice.url()}/#{invoice.id}.html" +
-                "' width='100%' " + "height='" + ($(window).height() - 60) +
-                "'></iframe>")
-    $(win).html iframe
-    $(win).modal('show')
-
-  destroy: (e) ->
-    invoice = $(e.target).invoice()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications invoice
-
-  add_receipt: (e) ->
-    invoice = $(e.target).invoice()
-    @trigger 'receipt-add', invoice
-
-class Header extends Spine.Controller
-
-  constructor: (params) ->
-    super
-    PersonAffairInvoice.bind('refresh', @render)
-
-  render: =>
-    @html @view('people/affairs/invoices/header')(@)
-    Ui.load_ui(@el)
+  table_redraw: =>
+    if @invoice
+      target = $(@el).find("tr[data-id=#{@invoice.id}]")
+    @activate_in_list(target)
 
 class App.PersonAffairInvoices extends Spine.Controller
   className: 'invoices'
@@ -156,17 +159,19 @@ class App.PersonAffairInvoices extends Spine.Controller
   constructor: (params) ->
     super
 
-    @person_id = params.person_id
-    @affair_id = params.affair_id
+    # person_id and affair_id are required to build invoice template:
+    # bvr address, affair value, etc.
+    if params
+      @person_id = params.person_id if params.person_id
+      @affair_id = params.affair_id if params.affair_id
 
-    PersonAffairInvoice.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@affair_id}/invoices"
+    # PersonAffairInvoice.url = =>
+    #   "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@affair_id}/invoices"
 
-    @header = new Header
     @index = new Index
     @edit = new Edit
-    @new = new New(person_id: @person_id, affair_id: @affair_id)
-    @append(@header, @new, @edit, @index)
+    @new = new New
+    @append(@new, @edit, @index)
 
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
@@ -174,22 +179,26 @@ class App.PersonAffairInvoices extends Spine.Controller
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
 
+    @index.bind 'error', (id, errors) =>
+      @edit.active id: id
+      @edit.render_errors errors
+
     @index.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 
-  activate: ->
-    super
-    Person.fetch(id: @person_id)
-    Affair.fetch(id: @affair_id)
-    PersonAffairInvoice.refresh([], clear: true)
-    PersonAffairInvoice.fetch()
     InvoiceTemplate.fetch()
     Permissions.get { person_id: @person_id, can: { invoice: ['create', 'update'] }}, (data) =>
-                                                         @edit.active {can: data}
-                                                         @edit.hide()
-                                                         @new.active {person_id: @person_id, can: data}
-                                                         @index.active {can: data}
-    @edit.hide()
-    @new.render()
-    @header.render()
+      @edit.active {can: data}
+      @edit.hide()
+      @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
+      @index.active {can: data}
+
+  activate: (params) ->
+    super
+
+    if params
+      @person_id = params.person_id if params.person_id
+      @affair_id = params.affair_id if params.affair_id
+
+    @new.active(person_id: @person_id, affair_id: @affair_id)

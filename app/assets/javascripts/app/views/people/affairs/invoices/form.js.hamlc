@@ -1,61 +1,107 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  .block
-    %label= I18n.t('invoice.views.template')
-    %select{:name => 'invoice_template_id', :class => 'required'}
-      - for l in App.InvoiceTemplate.all()
-        - if @invoice.invoice_template_id == l.id
-          %option{:value => l.id, :selected => true}= l.title
-        - else
-          %option{:value => l.id}= l.title
+    .row
+      .col-lg-8
+        .form-group
+          %label{:for => 'person_affair_invoice_title'}
+            = I18n.t('invoice.views.title')
+          %input{:type => 'text',
+                 :name => 'title',
+                 :id => 'person_affair_invoice_title',
+                 :class => 'required form-control',
+                 :value => @invoice.title}
 
-  .block
-    %label= I18n.t('invoice.views.title')
-    %input{:type => 'text',
-           :name => 'title',
-           :class => 'required',
-           :value => @invoice.title}
+      .col-lg-4
+        .form-group
+          %label{:for => 'person_affair_invoice_template_id'}
+            = I18n.t('invoice.views.template')
+          %select{:name => 'invoice_template_id',
+                  :id => 'person_affair_invoice_template_id',
+                  :class => 'required form-control'}
+            - for l in App.InvoiceTemplate.all()
+              - if @invoice.invoice_template_id == l.id
+                %option{:value => l.id, :selected => true}= l.title
+              - else
+                %option{:value => l.id}= l.title
+    .row
+      .col-lg-12
+        .form-group
+          %label{:for => 'person_affair_invoice_description'}
+            = I18n.t('invoice.views.description')
+          %textarea{:name => 'description',
+                    :id => 'person_affair_invoice_description',
+                    :rows => 5,
+                    :class => 'form-control'}
+            = @invoice.description
+    .row
+      .col-lg-7
+        .form-group
+          %label{:for => 'person_affair_invoice_printed_address'}= I18n.t('invoice.views.printed_address')
+          %textarea{:name => 'printed_address',
+                    :id => 'person_affair_invoice_printed_address',
+                    :rows => 5,
+                    :class => 'form-control'}
+            = @invoice.printed_address
+          .help-block
+            = I18n.t("invoice.views.wipe_content_to_update_address")
+            .label.label-info
+              info
 
-  .block
-    .full_width_textarea
-      %label= I18n.t('invoice.views.description')
-      %textarea{:name => 'description',
-                :rows => 5,
-                :class => 'like_an_input'}
-        = @invoice.description
+      .col-lg-5
+        .form-group
+          %label{:for => 'person_affair_invoice_created_at'}
+            = I18n.t('invoice.views.invoice_date')
+          %input{:type => 'text',
+                 :name => 'created_at',
+                 :id => 'person_affair_invoice_created_at',
+                 :class => 'datepicker required form-control',
+                 :value => @invoice.created_at }
 
-  .block
-    .float_left
-      %label= I18n.t('invoice.views.printed_address')
-      %textarea{:name => 'printed_address',
-                :rows => 5,
-                :class => 'like_an_input'}
-        = @invoice.printed_address
+        .form-group
+          %label{:for => 'person_affair_invoice_value'}
+            = I18n.t('invoice.views.value')
+          .input-group
+            %input{ :type => 'number',
+                    :step => 0.01,
+                    :id => 'person_affair_invoice_value',
+                    :class => 'required form-control',
+                    :min => 0,
+                    :max => 99999999.99,
+                    :name => 'value',
+                    :value => @invoice.value }
+            .input-group-addon
+              CHF
 
-  .block.notice
-    %br
-    = I18n.t("invoice.views.wipe_content_to_update_address")
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')(@invoice)
 
-  .block
-    .stackable-block
-      %label= I18n.t('invoice.views.value')
-      %input{ :type => 'number',
-              :step => 0.01,
-              :class => 'required',
-              :min => 0,
-              :max => 99999999.99,
-              :name => 'value',
-              :value => @invoice.value }
+        - unless @invoice.isNew()
+          .btn-group
+            .btn-group
+              %button{:data-toggle => 'dropdown',
+                      :type => 'button',
+                      :class => 'btn btn-default dropdown-toggle' }
+                = I18n.t('invoice.views.actions.pdf')
+                .caret
 
-    .stackable-block
-      %label= I18n.t('invoice.views.invoice_date')
-      %input{:type => 'text',
-             :name => 'created_at',
-             :class => 'datepicker required',
-             :value => @invoice.created_at }
+              %ul.dropdown-menu
+                %li
+                  %a{:href => '#', :name => 'invoice-preview-pdf'}
+                    = I18n.t('invoice.views.actions.preview_pdf')
+                %li
+                  %a{:href => '#', :name => 'invoice-download-pdf'}
+                    = I18n.t('invoice.views.actions.download_pdf')
 
-    .float_right
-      != @partial('submit_button')(@invoice)
+            %button{:name => "invoice-add_receipt",
+                    :class => 'btn btn-default' }
+              = I18n.t('invoice.views.actions.add_receipt')
 
-  .block
+            %button{:name => "invoice-destroy",
+                    :class => 'btn btn-danger' }
+              = I18n.t('common.destroy')

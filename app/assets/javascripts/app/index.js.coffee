@@ -56,6 +56,7 @@ class @App extends Spine.Controller
     # TODO Raise a message if application controller cannot be found.
     # console.log "App." + class_name + " does not exist." unless "App." + class_name
     instance = eval "new App." + class_name + "({el: element, person_id: this.person_id})"
+    element.data('controller', instance)
     element.bind 'unload-panel', -> instance.deactivate()
     element.bind 'load-panel', -> instance.activate()
 
@@ -76,6 +77,8 @@ class @PersonEdit extends App
     # @subapp($('#person_affair_tasks'), 'PersonAffairTasks')
     # @subapp($('#person_affair_products'), 'PersonAffairProducts')
     # @subapp($('#person_affair_extras'), 'PersonAffairExtras')
+    @subapp($('#person_affair_invoices'), 'PersonAffairInvoices')
+    # @subapp($('#person_affair_receipts'), 'PersonAffairReceipts')
     @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
     @subapp($('#person_salaries'), 'PersonSalaries')
     @subapp($('#person_roles'), 'PersonRoles')
