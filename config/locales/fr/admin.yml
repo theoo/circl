@@ -39,5 +39,6 @@ fr:
       select_file: Veuillez choisir un fichier
       subscriptions: Inscriptions
       tags: Tags
+      tools: Outils
       upload: téléverser
     wrong_file_format: Mauvais format de fichier

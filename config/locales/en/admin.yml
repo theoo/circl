@@ -39,5 +39,6 @@ en:
       select_file: select file
       subscriptions: Subscriptions
       tags: Tags
+      tools: Tools
       upload: upload
     wrong_file_format: wrong file format
