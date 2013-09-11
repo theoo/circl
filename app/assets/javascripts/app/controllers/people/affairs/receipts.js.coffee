@@ -15,6 +15,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Person = App.Person
+PersonAffair = App.PersonAffair
 PersonAffairReceipt = App.PersonAffairReceipt
 PersonAffairInvoice = App.PersonAffairInvoice
 
@@ -28,38 +29,58 @@ class New extends App.ExtendedController
     'submit form': 'submit'
 
   constructor: (params) ->
-    @person_id = params.person_id if params.person_id
-    @affair_id = params.affair_id if params.affair_id
     super
+    PersonAffairInvoice.bind('refresh', @active)
+    PersonAffairReceipt.bind('refresh', @active)
 
-  active: (params) ->
-    @invoice = params.invoice if params.invoice
+  active: (params) =>
+    if params
+      @person_id = params.person_id if params.person_id
+      @affair_id = params.affair_id if params.affair_id
+      @invoice = params.invoice if params.invoice
     @render()
 
   render: =>
     @show()
     @receipt = new PersonAffairReceipt(value: 0)
+
+    # TODO replace CCP by global variable
     @receipt.means_of_payment = 'CCP'
+
     if @invoice
       @receipt.value = @invoice.value
       @receipt.invoice_id = @invoice.id
       @receipt.invoice_title = @invoice.title
+
+    if @affair_id
+      @affair = PersonAffair.find(@affair_id)
+      if @affair.invoices_value > @affair.receipts_value
+        @receipt.value = @affair.invoices_value - @affair.receipts_value
+
     @html @view('people/affairs/receipts/form')(@)
     Ui.load_ui(@el)
+    if @disabled() then @disable_panel() else @enable_panel()
+
+  disabled: =>
+    PersonAffairReceipt.url() == undefined
 
   submit: (e) ->
     e.preventDefault()
+
+    # reset invoice so next receipt if empty
+    @invoice = undefined
+
     @save_with_notifications @receipt.fromForm(e.target), =>
+      PersonAffair.fetch()
       PersonAffairInvoice.fetch()
       @render()
 
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="receipt-destroy"]': 'destroy'
 
   constructor: (params) ->
-    @person_id = params.person_id if params.person_id
-    @affair_id = params.affair_id if params.affair_id
     super
 
   active: (params) ->
@@ -70,20 +91,33 @@ class Edit extends App.ExtendedController
   render: =>
     return unless PersonAffairReceipt.exists(@id)
     @receipt = PersonAffairReceipt.find(@id)
+
+    @affair = PersonAffair.find(@receipt.affair_id)
+
     @html @view('people/affairs/receipts/form')(@)
     Ui.load_ui(@el)
+
+  update_callback: =>
+    PersonAffair.fetch()
+    PersonAffairInvoice.fetch()
+    @hide()
 
   submit: (e) ->
     e.preventDefault()
     @receipt.fromForm(e.target)
-    @save_with_notifications @receipt, =>
-      PersonAffairInvoice.fetch()
-      @hide()
+    @save_with_notifications @receipt, @update_callback
+
+  destroy: (e) ->
+    e.preventDefault()
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @receipt, @update_callback
 
 class Index extends App.ExtendedController
   events:
-    'receipt-edit':    'edit'
-    'receipt-destroy': 'destroy'
+    'click tr.item':    'edit'
+    'datatable_redraw': 'table_redraw'
+    'mouseover tr.item':'item_over'
+    'mouseout tr.item': 'item_out'
 
   constructor: (params) ->
     super
@@ -96,25 +130,44 @@ class Index extends App.ExtendedController
     @receipts = PersonAffairReceipt.all()
     @html @view('people/affairs/receipts/index')(@)
     Ui.load_ui(@el)
+    if @disabled() then @disable_panel() else @enable_panel()
+
+  disabled: =>
+    PersonAffairReceipt.url() == undefined
 
   edit: (e) ->
     receipt = $(e.target).receipt()
+    @activate_in_list(e.target)
+
+    # Activate invoice in its list
+    $("#person_affair_invoices").data('controller').index.render()
+    @toggle_item e, true, 'success'
+
     @trigger 'edit', receipt.id
 
-  destroy: (e) ->
-    receipt = $(e.target).receipt()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications receipt
+  table_redraw: =>
+    if @receipt
+      target = $(@el).find("tr[data-id=#{@receipt.id}]")
+    @activate_in_list(target)
 
-class Header extends Spine.Controller
+  item_over: (e) =>
+    @toggle_item e, true
 
-  constructor: (params) ->
-    super
-    PersonAffairReceipt.bind('refresh', @render)
+  item_out: (e) =>
+    @toggle_item e, false
 
-  render: =>
-    @html @view('people/affairs/receipts/header')(@)
-    Ui.load_ui(@el)
+  toggle_item: (e, status, sclass = 'warning') =>
+    invoice_id = $(e.target).receipt().invoice_id
+
+    if invoice_id
+      person_affair_invoices_ctrl = $("#person_affair_invoices").data('controller')
+      invoice_item = person_affair_invoices_ctrl.el.find("tr[data-id=#{invoice_id}]")
+
+      if invoice_item
+        if status
+          invoice_item.addClass(sclass)
+        else
+          invoice_item.removeClass(sclass)
 
 class App.PersonAffairReceipts extends Spine.Controller
   className: 'receipts'
@@ -122,17 +175,17 @@ class App.PersonAffairReceipts extends Spine.Controller
   constructor: (params) ->
     super
 
-    @person_id = params.person_id
-    @affair_id = params.affair_id
+    if params
+      @person_id = params.person_id if params.person_id
+      @affair_id = params.affair_id if params.affair_id
 
-    PersonAffairReceipt.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@affair_id}/receipts"
+    #PersonAffairReceipt.url = =>
+    #  "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@affair_id}/receipts"
 
-    @header = new Header
     @index = new Index
-    @edit = new Edit(person_id: @person_id, affair_id: @affair_id)
-    @new = new New(person_id: @person_id, affair_id: @affair_id)
-    @append(@header, @new, @edit, @index)
+    @edit = new Edit
+    @new = new New
+    @append(@new, @edit, @index)
 
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
@@ -140,14 +193,19 @@ class App.PersonAffairReceipts extends Spine.Controller
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
 
+    @index.bind 'error', (id, errors) =>
+      @edit.active id: id
+      @edit.render_errors errors
+
     @index.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 
-  activate: ->
+  activate: (params) ->
     super
-    PersonAffairReceipt.refresh([], clear: true)
-    PersonAffairReceipt.fetch()
-    @edit.hide()
-    @new.render()
-    @header.render()
+
+    if params
+      @person_id = params.person_id if params.person_id
+      @affair_id = params.affair_id if params.affair_id
+
+    @new.active(person_id: @person_id, affair_id: @affair_id)

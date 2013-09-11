@@ -30,7 +30,7 @@ class App.PersonAffairReceipt extends Spine.Model
     errors = new App.ErrorsList
 
     if @invoice_id.length == 0
-      errors.add ['title', I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['invoice', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     if @value.length == 0
       errors.add ['value', I18n.t("activerecord.errors.messages.blank")].to_property()

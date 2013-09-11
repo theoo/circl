@@ -1,6 +1,9 @@
 ---
 en:
   common:
+    preview: preview
+    close: close
+    apply: apply
     a_webapp_developped_by: A webapp developped by
     add: add
     administration: Administration

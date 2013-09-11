@@ -9,6 +9,7 @@ fr:
       actions:
         add_receipt: ajouter un reçu
         preview_pdf: prévisualiser
+        preview_pdf_in_new_tab: prévisualiser dans un nouvel onglet
         pdf: PDF
         download_pdf: télécharger
       counterpart_account: counterpart account

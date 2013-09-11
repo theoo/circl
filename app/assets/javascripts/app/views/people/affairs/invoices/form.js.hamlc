@@ -83,10 +83,21 @@
 
         - unless @invoice.isNew()
           .btn-group
+            %button{:name => "invoice-destroy",
+                    :class => 'btn btn-danger' }
+              .glyphicon.glyphicon-remove
+              = I18n.t('common.destroy')
+
+            %button{:name => "invoice-add-receipt",
+                    :class => 'btn btn-default' }
+              .glyphicon.glyphicon-plus
+              = I18n.t('invoice.views.actions.add_receipt')
+
             .btn-group
               %button{:data-toggle => 'dropdown',
                       :type => 'button',
                       :class => 'btn btn-default dropdown-toggle' }
+                .glyphicon.glyphicon-paperclip
                 = I18n.t('invoice.views.actions.pdf')
                 .caret
 
@@ -98,10 +109,4 @@
                   %a{:href => '#', :name => 'invoice-download-pdf'}
                     = I18n.t('invoice.views.actions.download_pdf')
 
-            %button{:name => "invoice-add_receipt",
-                    :class => 'btn btn-default' }
-              = I18n.t('invoice.views.actions.add_receipt')
 
-            %button{:name => "invoice-destroy",
-                    :class => 'btn btn-danger' }
-              = I18n.t('common.destroy')

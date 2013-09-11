@@ -5,6 +5,8 @@ fr:
       edit_invoices_and_receipts: modifier les factures & reçus
       edit_prestations: modifier les prestations
     views:
+      invoices: Factures
+      receipts: Reçus
       buyer: payeur
       actions:
         destroy_affair: détuire l'affaire

@@ -422,6 +422,16 @@ class Ui
 
 
 #--- in page tools ---
+  build_modal: (uniq_id, options = {}) ->
+    # build a new target div if not existing
+    win = $("#" + uniq_id)
+    win = $("<div class='modal fade' id='"+uniq_id+"' tabindex='-1' role='dialog' />") unless win.length > 0
+
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
   stack_window: (uniq_id, options = {}) ->
     # build a new target div if not existing
     win = $("#" + uniq_id)
@@ -482,7 +492,7 @@ class Ui
       valid_children : '+body[style]',
       language: I18n.locale,
       body_class: 'a4_page',
-      content_css: ['/assets/resetter.css', '/assets/custom_fonts.css', '/assets/pdf_common.css', '/assets/pdf_preview.css'],
+      content_css: ['/assets/custom_fonts.css', '/assets/pdf_common.css', '/assets/pdf_preview.css'],
       plugins: 'autoresize,fullscreen,table,autolink,lists,spellchecker,pagebreak,style,layer,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,noneditable,visualchars,nonbreaking,xhtmlxtras,template',
       theme: 'advanced',
       theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",

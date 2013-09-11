@@ -5,6 +5,8 @@ en:
       edit_invoices_and_receipts: edit invoices and receipts
       edit_prestations: edit provisions
     views:
+      invoices: Invoices
+      receipts: Receipts
       buyer: buyer
       actions:
         destroy_affair: destroy affair

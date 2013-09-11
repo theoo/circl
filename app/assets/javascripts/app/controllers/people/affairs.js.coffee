@@ -37,6 +37,9 @@ class New extends App.ExtendedController
     Person.bind('refresh', @render)
     super
 
+  active: (params) =>
+    @render()
+
   render: =>
     return unless Person.exists(@person_id)
     @person = Person.find(@person_id)
@@ -64,6 +67,7 @@ class Edit extends App.ExtendedController
 
   constructor: ->
     super
+    @balance = new Balance
 
   active: (params) ->
     @id = params.id if params.id
@@ -80,16 +84,12 @@ class Edit extends App.ExtendedController
       PersonAffairSubscription.fetch()
 
       # Tasks
-      # PersonAffairInvoice.url = =>
-      #  "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/invoices"
 
       # Products
-      # PersonAffairInvoice.url = =>
-      #  "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/invoices"
 
       # Extras
-      # PersonAffairInvoice.url = =>
-      #  "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/invoices"
+
+      @balance.active(affair_id: @id)
 
       # Invoices
       # #person_affairs, which is @el of App.PersonAffairs
@@ -101,10 +101,13 @@ class Edit extends App.ExtendedController
       PersonAffairInvoice.fetch()
 
       # Receipts
-      # PersonAffairReceipt.url = =>
-      #   "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/receipts"
-      # PersonAffairReceipt.refresh([], clear: true)
-      # PersonAffairReceipt.fetch()
+      person_affair_receipts_ctrl = $("#person_affair_receipts").data('controller')
+      person_affair_receipts_ctrl.activate(person_id: @person_id, affair_id: @id)
+      PersonAffairReceipt.url = =>
+        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/receipts"
+      PersonAffairReceipt.refresh([], clear: true)
+      PersonAffairReceipt.fetch()
+
 
   unload_dependencies: ->
     # Subscriptions
@@ -169,6 +172,33 @@ class Index extends App.ExtendedController
 
     @activate_in_list(target)
 
+class Balance extends App.ExtendedController
+  constructor: (params) ->
+    super
+    @el = $("#balance")
+    PersonAffair.bind 'refresh', @active
+
+  active: (params) =>
+    if params
+      @affair_id = params.affair_id if params.affair_id
+
+    if @affair_id and PersonAffair.exists(@affair_id)
+      @affair = PersonAffair.find(@affair_id)
+
+      # Compute balance
+      if @affair.invoices_value >= @affair.receipts_value
+        @overpaid = false
+        @paid = 100 / @affair.invoices_value * @affair.receipts_value
+      else
+        @overpaid = true
+        @paid = 100 / @affair.receipts_value * @affair.invoices_value
+
+    @render()
+
+  render: =>
+    @html @view('people/affairs/balance')(@)
+    Ui.load_ui(@el)
+
 class App.PersonAffairs extends Spine.Controller
   className: 'affairs'
 
@@ -204,4 +234,4 @@ class App.PersonAffairs extends Spine.Controller
     super
     Person.fetch(id: @person_id)
     PersonAffair.fetch()
-    @new.render()
+    @new.active()

@@ -9,6 +9,7 @@ en:
       actions:
         add_receipt: add receipt
         preview_pdf: preview
+        preview_pdf_in_new_tab: preview in new tab
         pdf: PDF
         download_pdf: download
       counterpart_account: counterpart account

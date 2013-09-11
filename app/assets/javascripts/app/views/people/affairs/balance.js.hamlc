@@ -1,0 +1,22 @@
+.row
+  .col-lg-1
+    &nbsp;
+    - if @affair
+      = @affair.invoices_value.to_view()
+
+  .col-lg-10
+    &nbsp;
+    .progress
+      %span{:style => "width: #{@paid}%", :class => 'progress-bar progress-bar-success'}
+      - if @affair
+        - if @overpaid
+          %span{:style => "width: #{100 - @paid}%", :class => 'progress-bar progress-bar-warning'}
+        - else
+          %span{:style => "width: #{100 - @paid}%", :class => 'progress-bar progress-bar-danger'}
+
+  .col-lg-1
+    &nbsp;
+    - if @affair
+      .pull-right
+        = @affair.receipts_value.to_view()
+      &nbsp;

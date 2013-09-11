@@ -31,16 +31,17 @@ class New extends App.ExtendedController
     'submit form': 'submit'
 
   constructor: (params) ->
+    super
     #Person.bind('refresh', @render)
-    # PersonAffair.bind('refresh', @active)
+    #PersonAffair.bind('refresh', @active)
     PersonAffairInvoice.bind('refresh', @active)
     InvoiceTemplate.bind('refresh', @active)
-    super
 
   active: (params) =>
-    @person_id = params.person_id if params.person_id
-    @affair_id = params.affair_id if params.affair_id
-    @can = params.can if params.can
+    if params
+      @person_id = params.person_id if params.person_id
+      @affair_id = params.affair_id if params.affair_id
+      @can = params.can if params.can
     @render()
 
   render: =>
@@ -56,6 +57,9 @@ class New extends App.ExtendedController
     else
       @invoice = new PersonAffairInvoice(value: 0)
 
+    if @affair_id
+      @affair = PersonAffair.find(@affair_id)
+
     @html @view('people/affairs/invoices/form')(@)
     Ui.load_ui(@el)
     if @disabled() then @disable_panel() else @enable_panel()
@@ -66,15 +70,17 @@ class New extends App.ExtendedController
   submit: (e) ->
     e.preventDefault()
     @invoice.fromForm(e.target)
-    @save_with_notifications @invoice, @render
+    @save_with_notifications @invoice, =>
+      PersonAffair.fetch()
+      @render()
 
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
-    'button[]':     'pdf'
-    'invoice-preview': 'preview'
-    'invoice-destroy': 'destroy'
-    'receipt-add':     'add_receipt'
+    'click a[name="invoice-download-pdf"]': 'pdf'
+    'click a[name="invoice-preview-pdf"]': 'preview'
+    'click button[name="invoice-destroy"]': 'destroy'
+    'click button[name="invoice-add-receipt"]': 'add_receipt'
 
   constructor: (params) ->
     super
@@ -91,39 +97,87 @@ class Edit extends App.ExtendedController
       @hide()
       return
     @invoice = PersonAffairInvoice.find(@id)
+
+    @affair = PersonAffair.find(@invoice.affair_id)
+
     @html @view('people/affairs/invoices/form')(@)
     Ui.load_ui(@el)
+    # Disable destroy if invoice have receipts
+    #unless @invoice.receipts_value > 0
+      #destroy = $(@el).find('button[name=invoice-destroy]')
+      #destroy.prop('disabled', true)
+      #destroy.popover(title: 'unable',
+                      #content: "asdf a asdf  fasd s dfkasdlkj a dsf sdfk",
+                      #placement: 'auto bottom',
+                      #trigger: 'click')
+
+  update_callback: =>
+    PersonAffair.fetch()
+    PersonAffairReceipt.fetch()
+    @hide()
 
   submit: (e) ->
     e.preventDefault()
     @invoice.fromForm(e.target)
-    @save_with_notifications @invoice, @hide
+    @save_with_notifications @invoice, @update_callback
+
+  destroy: (e) ->
+    e.preventDefault()
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @invoice, @update_callback
 
   pdf: (e) ->
+    e.preventDefault()
     window.location = "#{PersonAffairInvoice.url()}/#{@invoice.id}.pdf"
 
   preview: (e) ->
-    invoice = $(e.target).invoice()
-    win = Ui.stack_window('preview-invoice', {width: 900, height: $(window).height(), remove_on_close: true})
-    $(win).modal({title: I18n.t('invoice.views.contextmenu.preview_pdf')})
+    e.preventDefault()
+
+    win = $("<div class='modal fade' id='invoice-preview' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Update title
+    win.find('h4').text I18n.t('common.preview') + ": " + @invoice.title
+
+    # Insert iframe to content
     iframe = $("<iframe src='" +
-                "#{PersonAffairInvoice.url()}/#{invoice.id}.html" +
+                "#{PersonAffairInvoice.url()}/#{@invoice.id}.html" +
                 "' width='100%' " + "height='" + ($(window).height() - 60) +
                 "'></iframe>")
-    $(win).html iframe
-    $(win).modal('show')
+    win.find('.modal-body').html iframe
 
-  destroy: (e) ->
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications @invoice
+    # Adapt width to A4
+    win.find('.modal-dialog').css(width: 900)
+
+    # Add preview in new tab button
+    btn = "<button type='button' name='invoice-preview-pdf-new-tab' class='btn btn-default'>"
+    btn += I18n.t('invoice.views.actions.preview_pdf_in_new_tab')
+    btn += "</button>"
+    btn = $(btn)
+    win.find('.modal-footer').append btn
+    btn.on 'click', (e) =>
+      e.preventDefault()
+      window.open "#{PersonAffairInvoice.url()}/#{@invoice.id}.html", "_blank"
+
+    win.modal('show')
 
   add_receipt: (e) ->
-    @trigger 'receipt-add', @invoice
+    e.preventDefault()
+    person_affair_receipts_ctrl = $("#person_affair_receipts").data('controller')
+    person_affair_receipts_ctrl.new.active
+      person_id: @person_id,
+      affair_id: @invoice.affair_id,
+      invoice: @invoice
 
 class Index extends App.ExtendedController
   events:
     'click tr.item':    'edit'
     'datatable_redraw': 'table_redraw'
+    'mouseover tr.item':'item_over'
+    'mouseout tr.item': 'item_out'
 
   constructor: (params) ->
     super
@@ -138,20 +192,52 @@ class Index extends App.ExtendedController
     @invoices = PersonAffairInvoice.all()
     @html @view('people/affairs/invoices/index')(@)
     Ui.load_ui(@el)
+    if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>
     PersonAffairInvoice.url() == undefined
-    if @disabled() then @disable_panel() else @enable_panel()
 
   edit: (e) ->
     @invoice = $(e.target).invoice()
+
+    # display related receipts
+    $("#person_affair_receipts").data('controller').index.render()
+    @toggle_item e, true, 'success'
+
+    # highlight in list
     @activate_in_list(e.target)
+
     @trigger 'edit', @invoice.id
 
-  table_redraw: =>
+  table_redraw: (e) =>
     if @invoice
       target = $(@el).find("tr[data-id=#{@invoice.id}]")
     @activate_in_list(target)
+
+  item_over: (e) =>
+    @toggle_item e, true
+
+  item_out: (e) =>
+    @toggle_item e, false
+
+  toggle_item: (e, status, sclass = 'warning') =>
+    invoice_id = $(e.target).invoice().id
+    receipts = PersonAffairReceipt.findAllByAttribute('invoice_id', invoice_id)
+
+    # If PersonAffairReceipt if fetched and if it matches invoice_id
+    if receipts.length > 0
+      $(receipts).each (index, receipt) =>
+        person_affair_receipts_ctrl = $("#person_affair_receipts").data('controller')
+        receipt_items = person_affair_receipts_ctrl.el.find("tr[data-id=#{receipt.id}]")
+
+        # If there is receipts in active view
+        if receipt_items.length > 0
+          receipt_items.each (index, r) =>
+            if status
+              $(r).addClass(sclass)
+            else
+              $(r).removeClass(sclass)
+
 
 class App.PersonAffairInvoices extends Spine.Controller
   className: 'invoices'

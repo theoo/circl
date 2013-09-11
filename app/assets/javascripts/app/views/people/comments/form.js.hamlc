@@ -31,6 +31,11 @@
       .col-lg-12
         .btn-group
           - unless @comment.isNew?()
+            %button{:name => "comment-destroy",
+                    :class => 'btn btn-danger' }
+              .glyphicon.glyphicon-remove
+              = I18n.t("common.destroy")
+
             - if @comment.is_closed
               %button{:name => "comment-reopen",
                       :class => 'btn btn-default' }
@@ -39,10 +44,6 @@
               %button{:name => "comment-close",
                       :class => 'btn btn-default' }
                 = I18n.t("comment.views.actions.close")
-
-            %button{:name => "comment-destroy",
-                    :class => 'btn btn-danger' }
-              = I18n.t("common.destroy")
 
         .pull-right
           != @partial("submit_button")(@comment)

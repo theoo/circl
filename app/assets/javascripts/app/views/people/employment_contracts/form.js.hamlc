@@ -61,6 +61,7 @@
         - unless @employment_contract.isNew?()
           %button{:name => "employment-contract-destroy",
                   :class => 'btn btn-danger' }
+            .glyphicon.glyphicon-remove
             = I18n.t("common.destroy")
 
 
