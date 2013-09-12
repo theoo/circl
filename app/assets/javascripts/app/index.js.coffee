@@ -57,33 +57,35 @@ class @App extends Spine.Controller
     # console.log "App." + class_name + " does not exist." unless "App." + class_name
     instance = eval "new App." + class_name + "({el: element, person_id: this.person_id})"
     element.data('controller', instance)
-    element.bind 'unload-panel', -> instance.deactivate()
-    element.bind 'load-panel', -> instance.activate()
+    instance.activate()
 
 class @PersonEdit extends App
 
   constructor: (params) ->
     super
 
+    # everything depend on this person
     @person_id = params.id
+    App.Person.fetch {id: @person_id}
 
-    @subapp($('#person'), 'People')
-    @subapp($('#person_communication_languages'), 'PersonCommunicationLanguages')
-    @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
-    @subapp($('#person_private_tags'), 'PersonPrivateTags')
-    @subapp($('#person_public_tags'), 'PersonPublicTags')
-    @subapp($('#person_affairs'), 'PersonAffairs')
-    @subapp($('#person_affair_subscriptions'), 'PersonAffairSubscriptions')
-    # @subapp($('#person_affair_tasks'), 'PersonAffairTasks')
-    # @subapp($('#person_affair_products'), 'PersonAffairProducts')
-    # @subapp($('#person_affair_extras'), 'PersonAffairExtras')
-    @subapp($('#person_affair_invoices'), 'PersonAffairInvoices')
-    @subapp($('#person_affair_receipts'), 'PersonAffairReceipts')
-    @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
-    @subapp($('#person_salaries'), 'PersonSalaries')
-    @subapp($('#person_roles'), 'PersonRoles')
-    @subapp($('#person_comments'), 'PersonComments')
-    @subapp($('#person_activities'), 'PersonActivities')
+    App.Person.one 'refresh', =>
+      @subapp($('#person'), 'People')
+      @subapp($('#person_communication_languages'), 'PersonCommunicationLanguages')
+      @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
+      @subapp($('#person_private_tags'), 'PersonPrivateTags')
+      @subapp($('#person_public_tags'), 'PersonPublicTags')
+      @subapp($('#person_affairs'), 'PersonAffairs')
+      @subapp($('#person_affair_subscriptions'), 'PersonAffairSubscriptions')
+      # @subapp($('#person_affair_tasks'), 'PersonAffairTasks')
+      # @subapp($('#person_affair_products'), 'PersonAffairProducts')
+      # @subapp($('#person_affair_extras'), 'PersonAffairExtras')
+      @subapp($('#person_affair_invoices'), 'PersonAffairInvoices')
+      @subapp($('#person_affair_receipts'), 'PersonAffairReceipts')
+      @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
+      @subapp($('#person_salaries'), 'PersonSalaries')
+      @subapp($('#person_roles'), 'PersonRoles')
+      @subapp($('#person_comments'), 'PersonComments')
+      @subapp($('#person_activities'), 'PersonActivities')
 
 class @Admin extends App
 

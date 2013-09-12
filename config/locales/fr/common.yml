@@ -1,6 +1,7 @@
 ---
 fr:
   common:
+    incomplete: incomplet
     preview: prévisualisation
     close: fermer
     apply: appliquer

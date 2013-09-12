@@ -14,9 +14,9 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class App.SalarySalaryTemplate extends Spine.Model
+class App.SalaryTemplate extends Spine.Model
 
-  @configure 'SalarySalaryTemplate', 'title', 'language_id', 'html', 'thumb_url'
+  @configure 'SalaryTemplate', 'title', 'language_id', 'html', 'thumb_url'
 
   @extend Spine.Model.Ajax
   @url: ->

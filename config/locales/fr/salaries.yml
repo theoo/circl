@@ -39,11 +39,16 @@ fr:
       template_item_category: Revenus
       template_item_title: Revenu brut
       views:
+        montly_salaries_count: nombre des salaires mensuels
+        annual_earning_total: revenu annuel total
+        annual_salary: Salaire annuel
+        accounting: Logiciel de comptabilité
         activity_rate: taux d'occupation
-        brut_account: compte du salaire brut
+        brut_account: salaire brut
         children_count: nombre d'enfants
         civil_status: état civil
-        contextmenu:
+        actions:
+          new_reference: Nouvelle référence
           check_as_paid: marquer comme payé
           copy_reference: copier la référence vers un groupe de personnes
           destroy_salary: détruire le salaire
@@ -53,7 +58,7 @@ fr:
         creation_date: date de création
         details: détails
         edit_salary: modifier le salaire
-        employer_account: compte des retenues employeur
+        employer_account: retenues employeur
         employer_part: part employeur
         export_interval_explanation: L'intervale sélectionnée doit correspondre à l'intervale couverte par les salaires et non à leurs dates de création.
         from: de
@@ -62,7 +67,7 @@ fr:
         items: objets
         married: marrié(e)
         net: NET
-        net_account: compte du salaire net
+        net_account: salaire net
         net_salary_total: Salaire net
         new_salary: nouveau salaire
         reference: référence

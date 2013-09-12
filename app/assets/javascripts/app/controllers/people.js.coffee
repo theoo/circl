@@ -100,7 +100,6 @@ class App.People extends Spine.Controller
     if @person_id
       Person.one 'refresh', =>
         @edit.render()
-      Person.fetch {id: @person_id}
 
     Permissions.get { person_id: @person_id, can: { person: ['destroy', 'restricted_attributes', 'authenticate_using_token'] }},
                       (data) =>
@@ -108,7 +107,3 @@ class App.People extends Spine.Controller
                           @edit.active { can: data }
                         else
                           @new.active { can: data }
-    # if @person_id?
-    #   @new.hide()
-    # else
-    #   @edit.hide()

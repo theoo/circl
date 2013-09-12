@@ -1,0 +1,39 @@
+.panel-body
+  %form
+
+    %input{ :name => 'person_id', :type => 'hidden', :value => @person_id }
+    %input{ :name => 'is_reference', :type => 'hidden', :value => 'false' }
+
+    .row
+      .col-lg-12
+        %h3.section= I18n.t('salaries.salary.views.salaries')
+
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
+
+    .row
+      .col-lg-12
+        = I18n.t('salaries.salary.views.contextmenu.edit_salary')
+        = I18n.t('salaries.salary.views.contextmenu.show_salary_pdf')
+        = I18n.t('salaries.salary.views.contextmenu.salary_preview')
+        = I18n.t('salaries.salary.views.contextmenu.destroy_salary')
+        %table{:name => "person_salaries", :class => "datatable"}
+          %thead
+            %tr
+              %th= I18n.t('salaries.salary.views.table.id')
+              %th= I18n.t('salaries.salary.views.table.reference_title')
+              %th= I18n.t('salaries.salary.views.table.title')
+              %th= I18n.t('salaries.salary.views.gross_pay')
+              %th= I18n.t('salaries.salary.views.table.net_salary')
+              %th= I18n.t('salaries.salary.views.table.paid')
+
+          %tbody
+            - for salary in App.Salary.instances()
+              %tr{:data-id => salary.id, :class => 'item'}
+                %td= salary.id
+                %td= salary.reference_title
+                %td= salary.title
+                %td.number= salary.gross_pay.to_view() if salary.gross_pay
+                %td.number= salary.net_salary.to_view() if salary.net_salary
+                %td= I18n.t("common." + salary.paid)

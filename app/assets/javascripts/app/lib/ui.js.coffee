@@ -14,25 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# This comment was in tasks/form.jst.hamlc
-#
-# Notes on sortable table with context menu
-#
-# Requirements:
-# Command menu must have class as below
-# each command tag requires 'data-label' and 'date-icon' attributes which are
-# used by jQuery Contextmenu plugin to name the entry in the contextmenu, and
-# to set an icon, respectively.
-# The required 'data-event' define which event name is triggered by context-
-# menu's callback. This event should exist in the current Spine Controller.
-#
-# Every single <tr> require a 'data-id' attribute which is used by the .fn.task
-# jQuery extention described on top of Spine controller. This allow every
-# method to retreive the current task id.
-#
-# table's classes should include 'datatable' class to load the datatable
-# plugin and 'with_contextmenu' to load contextmenu plugin.
-
 # TODO: Make it a nice class and extend App with it
 class Ui
   constructor: ->
@@ -44,7 +25,6 @@ class Ui
     @load_wysiwyg(context)
     @load_number_precision(context)
     @load_password_strength(context)
-    @load_panels(context)
     @load_tabs(context)
 
     # FIXME http://getbootstrap.com/javascript/#tooltips the event
@@ -271,10 +251,6 @@ class Ui
               .html(strength.status)
 
 #--- ui tools ---
-  load_panels: (context) =>
-    context.find('.panel').each (index, panel) =>
-      $(panel).trigger('load-panel') # trigger it when loading page
-
   unpin_widget: (widget) ->
 
     hide_on_close = false

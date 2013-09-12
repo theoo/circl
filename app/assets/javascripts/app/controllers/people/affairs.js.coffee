@@ -232,6 +232,5 @@ class App.PersonAffairs extends Spine.Controller
 
   activate: ->
     super
-    Person.fetch(id: @person_id)
     PersonAffair.fetch()
     @new.active()

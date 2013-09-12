@@ -19,7 +19,6 @@ class App.SalaryEditor extends App.ExtendedController
   constructor: (params) ->
     super
 
-    @details = new App.SalaryDetails(salary: @salary)
     @items   = new App.SalaryItems(salary: @salary)
     @taxes   = new App.SalaryTaxDatas(salary: @salary)
     @summary = new App.SalarySummary(salary: @salary)
@@ -33,7 +32,6 @@ class App.SalaryEditor extends App.ExtendedController
 
   activate: ->
     super
-    @details.activate()
     @items.activate()
     @taxes.activate()
     @summary.activate()

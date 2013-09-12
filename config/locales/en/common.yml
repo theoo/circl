@@ -1,6 +1,7 @@
 ---
 en:
   common:
+    incomplete: incomplete
     preview: preview
     close: close
     apply: apply

@@ -33,7 +33,7 @@ class App.Salary extends Spine.Model
     super
 
   @references: ->
-    (t for t in @all() when t.is_reference)
+    (r for r in @all() when r.is_reference)
 
   @instances: ->
     (s for s in @all() when !s.is_reference)

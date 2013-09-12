@@ -168,8 +168,23 @@
               %option{:value => l.id}= l.name
 
     - if @can.person.restricted_attributes
-
-      %h3= I18n.t('person.views.employee_information')
+      .row
+        .col-lg-12
+          - if @person.missing_employee_information
+            - if @person.missing_employee_information.length > 0
+              %h3
+                = I18n.t('person.views.employee_information')
+                .label.label-warning
+                  = I18n.t("common.incomplete")
+              - missing_fields = []
+              - for f in @person.missing_employee_information
+                - missing_fields.push I18n.t("activerecord.attributes.person." + f)
+              - missing_fields = missing_fields.join(", ")
+              .alert.alert-warning
+                = I18n.t('salaries.salary.errors.the_required_information_about_this_person_are_not_satisfied', {required_fields: missing_fields} )
+            - else
+              %h3
+                = I18n.t('person.views.employee_information')
 
       .row
         .col-lg-6.form-group

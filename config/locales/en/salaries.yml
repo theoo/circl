@@ -39,9 +39,14 @@ en:
       template_item_category: Revenues
       template_item_title: Gross pay
       views:
+        montly_salaries_count: monthly salary count
+        annual_earning_total: total annual earning
+        annual_salary: Annual salary
+        accounting: Accounting software
+        new_reference: New reference
         account: account number
         activity_rate: activity rate
-        brut_account: gross pay account
+        brut_account: gross pay
         children_count: number of children
         civil_status: marital status
         contextmenu:
@@ -55,7 +60,7 @@ en:
         creation_date: creation date
         details: details
         edit_salary: edit salary
-        employer_account: employer account
+        employer_account: employer deductions
         employer_part: employer part
         export_interval_explanation: Selected intervale should be related to salaries interval and not salaries creation date.
         from: from
@@ -64,7 +69,7 @@ en:
         items: items
         married: married
         net: NET
-        net_account: net pay account
+        net_account: net pay
         net_salary_total: net salary
         new_salary: new salary
         reference: reference

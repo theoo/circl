@@ -16,72 +16,158 @@
 
 Person = App.Person
 Salary = App.Salary
+SalaryTemplate = App.SalaryTemplate
 
 $.fn.salary = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
   Salary.find(elementID)
 
+class New extends App.ExtendedController
+  events:
+    'submit form': 'submit'
+    'change #person_salary_parent_id': 'reference_selected'
+
+  constructor: (params) ->
+    super
+    @person = Person.find(@person_id)
+    Salary.bind('refresh', @active)
+    SalaryTemplate.bind('refresh', @active)
+
+  get_reference_id:  =>
+    id = $("#person_salary_parent_id").find("option:selected").val()
+    id ||= Salary.findAllByAttribute("is_reference", true)[0].id
+    id
+
+  is_new_reference:  =>
+    @get_reference_id() == 'new'
+
+  reference_selected: (e) =>
+    @new_reference_selected = @is_new_reference()
+    @render()
+
+  active: =>
+    super
+    if Salary.all().length > 0 and SalaryTemplate.all().length > 0
+      @new_reference_selected = SalaryTemplate.all().length == 0
+      @render()
+
+  render: =>
+    @salary = new Salary
+
+    if @is_new_reference() or @new_reference_selected
+      @salary.is_reference        = true
+      @salary.paid                = false
+      @salary.married             = false
+      @salary.children_count      = 0
+      @salary.yearly_salary_count = 12
+    else
+      # copy reference in this new salary
+      reference = Salary.find(@get_reference_id())
+      @salary.salary_template_id = reference.salary_template_id
+      @salary.activity_rate      = reference.activity_rate
+      @salary.children_count     = reference.children_count
+      @salary.married            = reference.married
+      @salary.title              = reference.title
+      @salary.brut_account       = reference.brut_account
+      @salary.net_account        = reference.net_account
+      @salary.employer_account   = reference.employer_account
+      @salary.paid               = reference.paid
+      @salary.parent_id          = reference.id
+
+    # defaults
+    now = new Date
+    year = now.getFullYear()
+    @salary.from                = "01-01-" + year
+    @salary.to                  = "31-12-" + year
+    @html @view('people/salaries/form')(@)
+    Ui.load_ui(@el)
+
+  submit: (e) ->
+    e.preventDefault()
+
+    data = $(e.target).serializeObject()
+    @salary.load(data)
+
+    @salary.married = data.married?
+    @salary.paid = data.paid?
+
+    @save_with_notifications @salary, (id) =>
+      @render()
+
+class Edit extends App.ExtendedController
+  events:
+    'submit form': 'submit'
+    'change #person_salary_parent_id': 'reference_selected'
+
+  constructor: (params) ->
+    super
+    @person = Person.find(@person_id)
+    # Salary.bind('refresh', @active)
+    # SalaryTemplate.bind('refresh', @active)
+
+  get_reference_id:  =>
+    id = $("#person_salary_parent_id").find("option:selected").val()
+    id ||= Salary.findAllByAttribute("is_reference", true)[0].id
+    id
+
+  is_new_reference:  =>
+    @get_reference_id() == 'new'
+
+  reference_selected: (e) =>
+    @new_reference_selected = @is_new_reference()
+    @render()
+
+  active: (params) =>
+    super
+    @id = params.id if params.id
+    @render()
+
+  render: =>
+    @salary = Salary.find(@id)
+    @html @view('people/salaries/form')(@)
+    Ui.load_ui(@el)
+
+  submit: (e) ->
+    e.preventDefault()
+
+    data = $(e.target).serializeObject()
+    @salary.load(data)
+
+    @salary.married = data.married?
+    @salary.paid = data.paid?
+
+    @save_with_notifications @salary, (id) =>
+      @render()
+
 class Index extends App.ExtendedController
   events:
-    'submit form'    : 'new'
-    'salary-edit'    : 'edit'
-    'salary-pdf'     : 'pdf'
-    'salary-preview' : 'preview'
-    'salary-destroy' : 'destroy'
+    'click tr.item'    : 'edit'
+    #'salary-pdf'     : 'pdf'
+    #'salary-preview' : 'preview'
+    #'salary-destroy' : 'destroy'
 
   constructor: (params) ->
     super
     @person_id = params.person_id if params.person_id
-    @view_url = params.view_url if params.view_url
+    @reference = params.reference if params.reference
     Person.bind('refresh', @render)
     Salary.bind('refresh', @render)
 
   render: =>
     if Person.all().length == 1
       @person = Person.first()
-      @html @view(@view_url)(@)
+
+      if @reference
+        @html @view('people/salaries/references_index')(@)
+      else
+        @html @view('people/salaries/index')(@)
+
       Ui.load_ui(@el)
-
-  new: (e) ->
-    e.preventDefault()
-    salary = new Salary
-    salary = salary.fromForm(e.target)
-    salary.is_reference = (salary.is_reference == 'true')
-
-    if salary.parent_id
-      # copy reference in this new salary
-      reference = Salary.find(salary.parent_id)
-      salary.salary_template_id = reference.salary_template_id
-      salary.activity_rate      = reference.activity_rate
-      salary.children_count     = reference.children_count
-      salary.married            = reference.married
-      salary.title              = reference.title
-      salary.brut_account       = reference.brut_account
-      salary.net_account        = reference.net_account
-      salary.employer_account   = reference.employer_account
-      salary.paid               = reference.paid
-
-      salary.from             = '01-01-2013'
-      salary.to             = '31-01-2013'
-    else
-      # defaults
-      now = new Date
-      year = now.getFullYear()
-
-      salary.paid                = false
-      salary.married             = false
-      salary.children_count      = 0
-      salary.activity_rate       = 80
-      salary.yearly_salary_count = 12
-      salary.from                = "01-01-" + year
-      salary.to                  = "31-12-" + year
-
-    @trigger 'new', salary
 
   edit: (e) ->
     salary = $(e.target).salary()
-    @trigger 'edit', salary
+    @trigger 'edit', salary.id
 
   pdf: (e) ->
     salary = $(e.target).salary()
@@ -114,13 +200,19 @@ class App.PersonSalaries extends Spine.Controller
     Salary.url = =>
       "#{Spine.Model.host}/people/#{@person_id}/salaries"
 
-    @salary_index = new Index(person_id: @person_id, view_url: 'people/salaries/salaries/index')
-    @salary_index.bind('new', @new)
-    @salary_index.bind('edit', @edit)
+    @new = new New(person_id: @person_id)
+    @edit = new Edit(person_id: @person_id)
 
-    @reference_index = new Index(person_id: @person_id, view_url: 'people/salaries/references/index')
-    @reference_index.bind('new', @new)
-    @reference_index.bind('edit', @edit)
+    @edit.bind 'show', => @new.hide()
+    @edit.bind 'hide', => @new.show()
+
+    @salary_index = new Index(person_id: @person_id, reference: false )
+    @salary_index.bind 'edit', (id) =>
+      @edit.active(id: id)
+
+    @reference_index = new Index(person_id: @person_id, reference: true )
+    @reference_index.bind 'edit', (id) =>
+      @edit.active(id: id)
 
     # Render errors on index
     @salary_index.bind 'destroyError', (id, errors) =>
@@ -129,28 +221,9 @@ class App.PersonSalaries extends Spine.Controller
     @reference_index.bind 'destroyError', (id, errors) =>
       @reference_index.render_errors errors
 
-    @append(@salary_index, @reference_index)
-
-  new: (salary) ->
-    window = Ui.stack_window('edit-salary-window', {fullscreen: true, people_salaries_salariestion: 'top', remove_on_close: true})
-    controller = new App.SalaryEditor({el: window, salary: salary})
-    $(window).modal({title: I18n.t('salaries.salary.views.new_salary')})
-    $(window).modal('show')
-    controller.activate()
-
-  edit: (salary) ->
-    window = Ui.stack_window('edit-salary-window', {fullscreen: true, position: 'top', remove_on_close: true})
-    controller = new App.SalaryEditor({el: window, salary: salary})
-    $(window).modal({title: I18n.t('salaries.salary.views.edit_salary')})
-    $(window).modal('show')
-    controller.activate()
+    @append(@new, @salary_index, @reference_index)
 
   activate: ->
     super
     Salary.fetch()
-    # Require personnal information to render salaries
-    if App.Person.all().length == 0
-      App.Person.fetch {id: @person_id}
-
-    # @salary_index.render()
-    # @reference_index.render()
+    SalaryTemplate.fetch()

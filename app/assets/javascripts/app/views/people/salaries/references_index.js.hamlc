@@ -1,0 +1,31 @@
+.panel-body
+  %form
+
+    %input{ :name => 'person_id', :type => 'hidden', :value => @person_id }
+    %input{ :name => 'is_reference', :type => 'hidden', :value => 'true' }
+
+    .row
+      .col-lg-12
+        %h3.section= I18n.t('salaries.salary.views.references')
+
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
+
+      %table{:name => "person_salary_references", :class => "datatable"}
+        %thead
+          %tr
+            %th= I18n.t('salaries.salary.views.table.id')
+            %th= I18n.t('salaries.salary.views.table.title')
+            %th= I18n.t('salaries.salary.views.activity_rate')
+            %th= I18n.t('salaries.salary.views.gross_pay')
+            %th= I18n.t('salaries.salary.views.table.net_salary')
+
+        %tbody
+          - for salary in App.Salary.references()
+            %tr{:data-id => salary.id, :class => 'item'}
+              %td= salary.id
+              %td= salary.title
+              %td.number= salary.activity_rate + " %"
+              %td.number= salary.gross_pay.to_view() if salary.gross_pay
+              %td.number= salary.net_salary.to_view() if salary.net_salary
