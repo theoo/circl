@@ -26,36 +26,45 @@ $.fn.salary = ->
 class New extends App.ExtendedController
   events:
     'submit form': 'submit'
-    'change #person_salary_parent_id': 'reference_selected'
+    'change #person_salary_parent_id': 'render'
 
   constructor: (params) ->
     super
-    @person = Person.find(@person_id)
-    Salary.bind('refresh', @active)
-    SalaryTemplate.bind('refresh', @active)
+    Person.bind 'refresh', @active
+    Salary.bind 'refresh', @active
+    # FIXME Ref selection doesn't work if this callback is set (?)
+    # SalaryTemplate.bind 'refresh', @active
 
   get_reference_id:  =>
+    # (Try to) fetch reference_id from DOM
     id = $("#person_salary_parent_id").find("option:selected").val()
-    id ||= Salary.findAllByAttribute("is_reference", true)[0].id
+    unless id
+      # If not found but a salary exists
+      console.log Salary.all()
+      if Salary.all().length >  0
+        # Select its first reference (it may not be possible to have a salary without reference)
+        console.log Salary.findAllByAttribute("is_reference", true)
+        id = Salary.findAllByAttribute("is_reference", true)[0].id
+      else
+        # Absolutely no salary exists, force to create a reference first.
+        id = 'new'
+    console.log id
     id
 
   is_new_reference:  =>
     @get_reference_id() == 'new'
 
-  reference_selected: (e) =>
-    @new_reference_selected = @is_new_reference()
-    @render()
-
   active: =>
     super
-    if Salary.all().length > 0 and SalaryTemplate.all().length > 0
-      @new_reference_selected = SalaryTemplate.all().length == 0
-      @render()
+    @person = Person.find(@person_id)
+    @render()
 
   render: =>
     @salary = new Salary
 
-    if @is_new_reference() or @new_reference_selected
+    @new_reference_selected = @is_new_reference()
+
+    if @new_reference_selected
       @salary.is_reference        = true
       @salary.paid                = false
       @salary.married             = false
@@ -99,16 +108,24 @@ class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
     'change #person_salary_parent_id': 'reference_selected'
+    'click a[name="salary-download-pdf"]': 'pdf'
+    'click a[name="salary-preview-pdf"]': 'preview'
+    'click button[name="salary-destroy"]': 'destroy'
 
   constructor: (params) ->
     super
-    @person = Person.find(@person_id)
-    # Salary.bind('refresh', @active)
-    # SalaryTemplate.bind('refresh', @active)
 
   get_reference_id:  =>
+    # (Try to) fetch reference_id from DOM
     id = $("#person_salary_parent_id").find("option:selected").val()
-    id ||= Salary.findAllByAttribute("is_reference", true)[0].id
+    unless id
+      # If not found but a salary exists
+      if Salary.all().length >  0
+        # Select its first reference (it may not be possible to have a salary without reference)
+        id ||= Salary.findAllByAttribute("is_reference", true)[0].id
+      else
+        # Absolutely no salary exists, force to create a reference first.
+        id = 'new'
     id
 
   is_new_reference:  =>
@@ -120,13 +137,31 @@ class Edit extends App.ExtendedController
 
   active: (params) =>
     super
+    @person = Person.find(@person_id)
     @id = params.id if params.id
     @render()
+    @show()
 
   render: =>
     @salary = Salary.find(@id)
     @html @view('people/salaries/form')(@)
     Ui.load_ui(@el)
+    select = $(@el).find("#person_salary_parent_id")
+    select.prop('disabled', true)
+    if @salary.is_reference
+      select.find('option').filter(-> $(@).val() == 'new').prop('selected', true)
+
+  pdf: (e) ->
+    e.preventDefault()
+    window.location = "#{Salary.url()}/#{@salary.id}.pdf"
+
+  preview: (e) ->
+    e.preventDefault()
+
+  destroy: (e) ->
+    e.preventDefault()
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications(@salary)
 
   submit: (e) ->
     e.preventDefault()
@@ -138,56 +173,28 @@ class Edit extends App.ExtendedController
     @salary.paid = data.paid?
 
     @save_with_notifications @salary, (id) =>
-      @render()
+      @hide()
 
 class Index extends App.ExtendedController
   events:
-    'click tr.item'    : 'edit'
-    #'salary-pdf'     : 'pdf'
-    #'salary-preview' : 'preview'
-    #'salary-destroy' : 'destroy'
+    'click tr.item': 'edit'
 
   constructor: (params) ->
     super
     @person_id = params.person_id if params.person_id
-    @reference = params.reference if params.reference
     Person.bind('refresh', @render)
     Salary.bind('refresh', @render)
 
   render: =>
-    if Person.all().length == 1
-      @person = Person.first()
-
-      if @reference
-        @html @view('people/salaries/references_index')(@)
-      else
-        @html @view('people/salaries/index')(@)
-
-      Ui.load_ui(@el)
+    @person = Person.first()
+    @html @view('people/salaries/index')(@)
+    Ui.load_ui(@el)
+    $("#person_salaries_nav a:first").tab('show')
 
   edit: (e) ->
+    e.preventDefault()
     salary = $(e.target).salary()
     @trigger 'edit', salary.id
-
-  pdf: (e) ->
-    salary = $(e.target).salary()
-    window.location = "#{Salary.url()}/#{salary.id}.pdf"
-
-  preview: (e) ->
-    salary = $(e.target).salary()
-    win = Ui.stack_window('preview-salary', {width: 900, height: $(window).height(), remove_on_close: true})
-    $(win).modal({title: I18n.t('salaries.views.contextmenu.preview_pdf')})
-    iframe = $("<iframe src='" +
-                "#{Salary.url()}/#{salary.id}.html" +
-                "' width='100%' " + "height='" + ($(window).height() - 60) +
-                "'></iframe>")
-    $(win).html iframe
-    $(win).modal('show')
-
-  destroy: (e) ->
-    salary = $(e.target).salary()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications(salary)
 
 class App.PersonSalaries extends Spine.Controller
   className: 'people_salaries_salaries'
@@ -206,22 +213,17 @@ class App.PersonSalaries extends Spine.Controller
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
 
-    @salary_index = new Index(person_id: @person_id, reference: false )
-    @salary_index.bind 'edit', (id) =>
+    # index
+    @index = new Index(person_id: @person_id)
+    @index.bind 'edit', (id) =>
       @edit.active(id: id)
 
-    @reference_index = new Index(person_id: @person_id, reference: true )
-    @reference_index.bind 'edit', (id) =>
+    @index.bind 'edit', (id) =>
       @edit.active(id: id)
-
-    # Render errors on index
-    @salary_index.bind 'destroyError', (id, errors) =>
+    @index.bind 'destroyError', (id, errors) =>
       @salary_index.render_errors errors
 
-    @reference_index.bind 'destroyError', (id, errors) =>
-      @reference_index.render_errors errors
-
-    @append(@new, @salary_index, @reference_index)
+    @append(@new, @edit, @index)
 
   activate: ->
     super

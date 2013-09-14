@@ -49,7 +49,7 @@
           .help-block
             = I18n.t("invoice.views.wipe_content_to_update_address")
             .label.label-info
-              info
+              = I18n.t("common.info")
 
       .col-lg-5
         .form-group
@@ -98,15 +98,15 @@
                       :type => 'button',
                       :class => 'btn btn-default dropdown-toggle' }
                 .glyphicon.glyphicon-paperclip
-                = I18n.t('invoice.views.actions.pdf')
+                = I18n.t('common.pdf')
                 .caret
 
               %ul.dropdown-menu
                 %li
                   %a{:href => '#', :name => 'invoice-preview-pdf'}
-                    = I18n.t('invoice.views.actions.preview_pdf')
+                    = I18n.t('common.preview')
                 %li
                   %a{:href => '#', :name => 'invoice-download-pdf'}
-                    = I18n.t('invoice.views.actions.download_pdf')
+                    = I18n.t('common.download')
 
 

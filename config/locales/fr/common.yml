@@ -1,6 +1,10 @@
 ---
 fr:
   common:
+    preview_in_new_tab: prévisualiser dans un nouvel onglet
+    pdf: PDF
+    download: télécharger
+    info: info
     incomplete: incomplet
     preview: prévisualisation
     close: fermer

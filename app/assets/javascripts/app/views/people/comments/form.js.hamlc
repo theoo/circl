@@ -29,6 +29,9 @@
 
     .row
       .col-lg-12
+        .pull-right
+          != @partial("submit_button")(@comment)
+
         .btn-group
           - unless @comment.isNew?()
             %button{:name => "comment-destroy",
@@ -44,6 +47,3 @@
               %button{:name => "comment-close",
                       :class => 'btn btn-default' }
                 = I18n.t("comment.views.actions.close")
-
-        .pull-right
-          != @partial("submit_button")(@comment)

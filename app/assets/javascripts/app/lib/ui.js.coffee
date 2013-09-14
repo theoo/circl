@@ -315,7 +315,8 @@ class Ui
         hidden_field.attr('value', ui.item.id)
 
       keydown_callback = (event) ->
-        event.preventDefault() if event.keyCode == $.ui.keyCode.TAB and $(@).data('autocomplete').menu.active
+        if $(@).data('autocomplete')
+          event.preventDefault() if event.keyCode == $.ui.keyCode.TAB and $(@).data('autocomplete').menu.active
 
       blur_callback = (event) ->
         if @value.length == 0

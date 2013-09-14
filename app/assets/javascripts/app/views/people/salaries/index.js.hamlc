@@ -1,39 +1,48 @@
-.panel-body
-  %form
+%ul#person_salaries_nav.nav.nav-tabs
+  %li
+    %a{:href => '#person_salaries_index', :data-toggle => 'tab'}
+      = I18n.t('salaries.salary.views.salaries')
+  %li
+    %a{:href => '#person_salary_references_index', :data-toggle => 'tab'}
+      = I18n.t('salaries.salary.views.references')
 
-    %input{ :name => 'person_id', :type => 'hidden', :value => @person_id }
-    %input{ :name => 'is_reference', :type => 'hidden', :value => 'false' }
+.tab-content
+  #person_salaries_index.tab-pane.active
+    %table{:name => "person_salaries", :class => "datatable"}
+      %thead
+        %tr
+          %th= I18n.t('salaries.salary.views.table.id')
+          %th= I18n.t('salaries.salary.views.table.reference_title')
+          %th= I18n.t('salaries.salary.views.table.title')
+          %th= I18n.t('salaries.salary.views.gross_pay')
+          %th= I18n.t('salaries.salary.views.table.net_salary')
+          %th= I18n.t('salaries.salary.views.table.paid')
 
-    .row
-      .col-lg-12
-        %h3.section= I18n.t('salaries.salary.views.salaries')
+      %tbody
+        - for salary in App.Salary.instances()
+          %tr{:data-id => salary.id, :class => 'item'}
+            %td= salary.id
+            %td= salary.reference_title
+            %td= salary.title
+            %td.number= salary.gross_pay.to_view() if salary.gross_pay
+            %td.number= salary.net_salary.to_view() if salary.net_salary
+            %td= I18n.t("common." + salary.paid)
 
-    .row
-      .col-lg-12
-        .validation_errors_placeholder
+  #person_salary_references_index.tab-pane
+    %table{:name => "person_salary_references", :class => "datatable"}
+      %thead
+        %tr
+          %th= I18n.t('salaries.salary.views.table.id')
+          %th= I18n.t('salaries.salary.views.table.title')
+          %th= I18n.t('salaries.salary.views.activity_rate')
+          %th= I18n.t('salaries.salary.views.gross_pay')
+          %th= I18n.t('salaries.salary.views.table.net_salary')
 
-    .row
-      .col-lg-12
-        = I18n.t('salaries.salary.views.contextmenu.edit_salary')
-        = I18n.t('salaries.salary.views.contextmenu.show_salary_pdf')
-        = I18n.t('salaries.salary.views.contextmenu.salary_preview')
-        = I18n.t('salaries.salary.views.contextmenu.destroy_salary')
-        %table{:name => "person_salaries", :class => "datatable"}
-          %thead
-            %tr
-              %th= I18n.t('salaries.salary.views.table.id')
-              %th= I18n.t('salaries.salary.views.table.reference_title')
-              %th= I18n.t('salaries.salary.views.table.title')
-              %th= I18n.t('salaries.salary.views.gross_pay')
-              %th= I18n.t('salaries.salary.views.table.net_salary')
-              %th= I18n.t('salaries.salary.views.table.paid')
-
-          %tbody
-            - for salary in App.Salary.instances()
-              %tr{:data-id => salary.id, :class => 'item'}
-                %td= salary.id
-                %td= salary.reference_title
-                %td= salary.title
-                %td.number= salary.gross_pay.to_view() if salary.gross_pay
-                %td.number= salary.net_salary.to_view() if salary.net_salary
-                %td= I18n.t("common." + salary.paid)
+      %tbody
+        - for salary in App.Salary.references()
+          %tr{:data-id => salary.id, :class => 'item'}
+            %td= salary.id
+            %td= salary.title
+            %td.number= salary.activity_rate + " %"
+            %td.number= salary.gross_pay.to_view() if salary.gross_pay
+            %td.number= salary.net_salary.to_view() if salary.net_salary

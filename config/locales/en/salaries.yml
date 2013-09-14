@@ -73,8 +73,8 @@ en:
         net_salary_total: net salary
         new_salary: new salary
         reference: reference
-        references: references
-        salaries: salaries
+        references: References
+        salaries: Salaries
         salary: salary
         salary_template: document template
         summary: summary
