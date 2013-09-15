@@ -53,6 +53,8 @@ fr:
       report_error_subject: Une erreur critique (500) a eu lieu sur un serveur en production
       subscription_where_updated: l'inscription à été mise à jour
     views:
+      salary_taxes: Deductions
+      salary_items: Objets
       activities: Activités
       address: Adresse
       affairs: Projets / Affaires

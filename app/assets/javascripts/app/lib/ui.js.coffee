@@ -485,12 +485,13 @@ class Ui
   load_number_precision: (context) ->
     context.find('input[type="number"]').each ->
       value = $(@).attr('value')
-      num = parseFloat(value)
-      decimal = value.split(".")[1]
-      if decimal
-        if decimal.length < 2 # FIXME: Could it be a comma on certain localization ?
+      if value
+        num = parseFloat(value)
+        decimal = value.split(".")[1]
+        if decimal
+          if decimal.length < 2 # FIXME: Could it be a comma on certain localization ?
+            $(@).attr('value', num.toFixed(2))
+        else
           $(@).attr('value', num.toFixed(2))
-      else
-        $(@).attr('value', num.toFixed(2))
 
 window.Ui = new Ui

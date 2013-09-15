@@ -1,9 +1,10 @@
-%h3.section= I18n.t('salaries.salary.views.items')
-
-.validation_errors_placeholder
-
 %form
-  %table.category
+  .panel-body
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
+
+  %table.table.table-condensed.table-responsive
     %thead
       %tr
         %th= I18n.t('salaries.item.views.position')
@@ -18,15 +19,20 @@
       - for item, unique_id in @salary.items
         %tr{:data-position => unique_id}
           %td.handle
-            %span.sort_handle.ui-icon.ui-icon-arrowthick-2-n-s
+            .glyphicon.glyphicon-move
           %td
             %input{ :name => "items[#{unique_id}][id]", :type => 'hidden', :value => item.id }
             %input{ :name => "items[#{unique_id}][position]", :type => 'hidden', :value => item.position }
-            %input{ :name => "items[#{unique_id}][title]", :type => 'text', :value => item.title }
+
+            %input{ :name => "items[#{unique_id}][title]",
+                    :type => 'text',
+                    :class = 'form-control',
+                    :value => item.title }
           %td
             %input{ :name => "items[#{unique_id}][value]",
                     :type => 'number',
                     :step => 0.01,
+                    :class => 'form-control',
                     :value => item.value }
           - for tax in App.SalaryTax.all()
             %td.tax
@@ -36,23 +42,34 @@
                       :value => tax.id,
                       :class => 'normal' }
           %td
-            %input{ :name => "items[#{unique_id}][category]", :type => 'text', :value => item.category }
+            %input{ :name => "items[#{unique_id}][category]",
+                    :type => 'text',
+                    :class => 'form-control',
+                    :value => item.category }
           %td
-            %input{ :type => 'button', :value => 'Remove', :class => 'remove' }
-            %input{ :type => 'button', :value => 'Adjust', :class => 'adjust' }
+            %button{:type => 'button',
+                    :class => 'btn btn-danger' }
+              .glyphicon.glyphicon-remove
+              = I18n.t("common.destroy")
+            %button{:type => 'button',
+                    :class => 'btn btn-default' }
+              = I18n.t("common.adjust")
 
       / New item
       - unique_id = @salary.items.length + 1
-      %tr
+      %tr.active
         %td.handle
-          %span.sort_handle.ui-icon.ui-icon-arrowthick-2-n-s
+          .glyphicon.glyphicon-move
         %td
           %input{ :name => "items[#{unique_id}][salary_id]", :type => 'hidden', :value => @salary.id }
           %input{ :name => "items[#{unique_id}][position]", :type => 'hidden', :value => unique_id }
-          %input{ :name => "items[#{unique_id}][title]", :type => 'text' }
+          %input{ :name => "items[#{unique_id}][title]",
+                  :class => 'form-control',
+                  :type => 'text' }
         %td
           %input{ :name => "items[#{unique_id}][value]",
                   :type => 'number',
+                  :class => 'form-control',
                   :step => 0.01 }
         - for tax in App.SalaryTax.all()
           %td.tax
@@ -62,11 +79,13 @@
                     :value => tax.id,
                     :class => 'normal' }
         %td
-          %input{ :name => "items[#{unique_id}][category]", :type => 'text' }
+          %input{ :name => "items[#{unique_id}][category]",
+                  :class => 'form-control',
+                  :type => 'text' }
         %td
 
-  %br
-
-  .block
-  .align_right
-    != @partial('submit_button')(@salary)
+  .panel-body
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')(@salary)

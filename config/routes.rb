@@ -84,13 +84,13 @@ Directory::Application.routes.draw do
         put 'update_items', 'update_tax_data'
       end
 
-      resources :items, :controller => 'people/salaries/items', :only => [] do
+      resources :items, :controller => 'people/salaries/items', :only => [ :index ] do
         member do
           get 'compute_value_for_next_salaries', 'compute_value_for_this_salary'
         end
       end
 
-      resources :tax_data, :controller => 'people/salaries/tax_data', :only => [] do
+      resources :tax_data, :controller => 'people/salaries/tax_data', :only => [ :index ] do
         member do
           put 'reset'
           get 'compute_value_for_next_salaries', 'compute_value_for_this_salary'

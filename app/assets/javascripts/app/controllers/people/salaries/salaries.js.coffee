@@ -15,13 +15,15 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Person = App.Person
-Salary = App.Salary
+PersonSalary = App.PersonSalary
+PersonSalaryItem = App.PersonSalaryItem
+PersonSalaryTaxData = App.PersonSalaryTaxData
 SalaryTemplate = App.SalaryTemplate
 
-$.fn.salary = ->
+$.fn.person_salary = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
-  Salary.find(elementID)
+  PersonSalary.find(elementID)
 
 class New extends App.ExtendedController
   events:
@@ -31,24 +33,21 @@ class New extends App.ExtendedController
   constructor: (params) ->
     super
     Person.bind 'refresh', @active
-    Salary.bind 'refresh', @active
+    PersonSalary.bind 'refresh', @active
     # FIXME Ref selection doesn't work if this callback is set (?)
-    # SalaryTemplate.bind 'refresh', @active
+    # PersonSalaryTemplate.bind 'refresh', @active
 
   get_reference_id:  =>
     # (Try to) fetch reference_id from DOM
     id = $("#person_salary_parent_id").find("option:selected").val()
     unless id
       # If not found but a salary exists
-      console.log Salary.all()
-      if Salary.all().length >  0
+      if PersonSalary.all().length >  0
         # Select its first reference (it may not be possible to have a salary without reference)
-        console.log Salary.findAllByAttribute("is_reference", true)
-        id = Salary.findAllByAttribute("is_reference", true)[0].id
+        id = PersonSalary.findAllByAttribute("is_reference", true)[0].id
       else
         # Absolutely no salary exists, force to create a reference first.
         id = 'new'
-    console.log id
     id
 
   is_new_reference:  =>
@@ -60,7 +59,7 @@ class New extends App.ExtendedController
     @render()
 
   render: =>
-    @salary = new Salary
+    @salary = new PersonSalary
 
     @new_reference_selected = @is_new_reference()
 
@@ -72,7 +71,7 @@ class New extends App.ExtendedController
       @salary.yearly_salary_count = 12
     else
       # copy reference in this new salary
-      reference = Salary.find(@get_reference_id())
+      reference = PersonSalary.find(@get_reference_id())
       @salary.salary_template_id = reference.salary_template_id
       @salary.activity_rate      = reference.activity_rate
       @salary.children_count     = reference.children_count
@@ -101,8 +100,8 @@ class New extends App.ExtendedController
     @salary.married = data.married?
     @salary.paid = data.paid?
 
-    @save_with_notifications @salary, (id) =>
-      @render()
+    @save_with_notifications @salary.fromForm(e.target), (id) =>
+      @trigger('edit', id)
 
 class Edit extends App.ExtendedController
   events:
@@ -120,9 +119,9 @@ class Edit extends App.ExtendedController
     id = $("#person_salary_parent_id").find("option:selected").val()
     unless id
       # If not found but a salary exists
-      if Salary.all().length >  0
+      if PersonSalary.all().length >  0
         # Select its first reference (it may not be possible to have a salary without reference)
-        id ||= Salary.findAllByAttribute("is_reference", true)[0].id
+        id ||= PersonSalary.findAllByAttribute("is_reference", true)[0].id
       else
         # Absolutely no salary exists, force to create a reference first.
         id = 'new'
@@ -139,11 +138,42 @@ class Edit extends App.ExtendedController
     super
     @person = Person.find(@person_id)
     @id = params.id if params.id
+    @load_dependencies()
     @render()
     @show()
 
+  load_dependencies: =>
+    if @id
+      # Required by items and tax_data
+      App.SalaryTax.fetch()
+
+      # Items
+      person_salary_items_ctrl = $("#person_salary_items").data('controller')
+      person_salary_items_ctrl.activate(salary_id: @id)
+      PersonSalaryItem.url = =>
+        "#{Spine.Model.host}/people/#{@person_id}/salaries/#{@id}/items"
+      PersonSalaryItem.refresh([], clear: true)
+      PersonSalaryItem.fetch()
+
+      # TaxData
+      # person_salary_tax_data_ctrl = $("#person_salary_tax_datas").data('controller')
+      # person_salary_tax_data_ctrl.activate(salary_id: @id)
+      # PersonSalaryTaxData.url = =>
+      #   "#{Spine.Model.host}/people/#{@person_id}/salaries/#{@id}/tax_data"
+      # PersonSalaryTaxData.refresh([], clear: true)
+      # PersonSalaryTaxData.fetch()
+
+  unload_dependencies: =>
+    # Items
+    PersonSalaryItem.url = => undefined
+    PersonSalaryItem.refresh([], clear: true)
+
+    # TaxData
+    PersonSalaryTaxData.url = => undefined
+    PersonSalaryTaxData.refresh([], clear: true)
+
   render: =>
-    @salary = Salary.find(@id)
+    @salary = PersonSalary.find(@id)
     @html @view('people/salaries/form')(@)
     Ui.load_ui(@el)
     select = $(@el).find("#person_salary_parent_id")
@@ -153,7 +183,7 @@ class Edit extends App.ExtendedController
 
   pdf: (e) ->
     e.preventDefault()
-    window.location = "#{Salary.url()}/#{@salary.id}.pdf"
+    window.location = "#{PersonSalary.url()}/#{@salary.id}.pdf"
 
   preview: (e) ->
     e.preventDefault()
@@ -161,7 +191,9 @@ class Edit extends App.ExtendedController
   destroy: (e) ->
     e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications(@salary)
+      @destroy_with_notifications @salary, (id) =>
+        @hide()
+        @unload_dependencies()
 
   submit: (e) ->
     e.preventDefault()
@@ -174,27 +206,42 @@ class Edit extends App.ExtendedController
 
     @save_with_notifications @salary, (id) =>
       @hide()
+      @unload_dependencies()
 
 class Index extends App.ExtendedController
   events:
     'click tr.item': 'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
     @person_id = params.person_id if params.person_id
-    Person.bind('refresh', @render)
-    Salary.bind('refresh', @render)
+    Person.bind 'refresh', @render
+    PersonSalary.bind 'refresh', @render
+
+  active: (params) ->
+    if params
+      @salary = PersonSalary.find(params.salary_id)
+
+    @render()
 
   render: =>
-    @person = Person.first()
+    @person = Person.find(@person_id)
     @html @view('people/salaries/index')(@)
     Ui.load_ui(@el)
     $("#person_salaries_nav a:first").tab('show')
 
   edit: (e) ->
     e.preventDefault()
-    salary = $(e.target).salary()
+    salary = $(e.target).person_salary()
+    @activate_in_list(e.target)
     @trigger 'edit', salary.id
+
+  table_redraw: =>
+    if @salary
+      target = $(@el).find("tr[data-id=#{@salary.id}]")
+
+    @activate_in_list(target)
 
 class App.PersonSalaries extends Spine.Controller
   className: 'people_salaries_salaries'
@@ -204,19 +251,19 @@ class App.PersonSalaries extends Spine.Controller
 
     @person_id = params.person_id
 
-    Salary.url = =>
+    PersonSalary.url = =>
       "#{Spine.Model.host}/people/#{@person_id}/salaries"
 
     @new = new New(person_id: @person_id)
     @edit = new Edit(person_id: @person_id)
+    @index = new Index(person_id: @person_id)
+
+    @new.bind 'edit', (id) =>
+      @edit.active(id: id)
+      @index.active(salary_id: id)
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
-
-    # index
-    @index = new Index(person_id: @person_id)
-    @index.bind 'edit', (id) =>
-      @edit.active(id: id)
 
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
@@ -227,5 +274,5 @@ class App.PersonSalaries extends Spine.Controller
 
   activate: ->
     super
-    Salary.fetch()
+    PersonSalary.fetch()
     SalaryTemplate.fetch()

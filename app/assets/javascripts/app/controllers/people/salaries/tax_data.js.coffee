@@ -14,17 +14,17 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Salary = App.Salary
+PersonSalary = App.PersonSalary
 SalaryTax = App.SalaryTax
-SalaryTaxData = App.SalaryTaxData
+PersonSalaryTaxData = App.PersonSalaryTaxData
 
 $.fn.tax_data = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
-  SalaryTaxData.find(elementID)
+  PersonSalaryTaxData.find(elementID)
 
-class App.SalaryTaxDatas extends Spine.Controller
-  className: 'people_salaries_tax_data'
+class App.PersonSalaryTaxDatas extends Spine.Controller
+  className: 'person_salary_tax_data'
 
   events:
     'submit form'     : 'submit'
@@ -34,53 +34,46 @@ class App.SalaryTaxDatas extends Spine.Controller
 
   constructor: (params) ->
     super
-
-    @set_salary(params.salary)
-
-    Salary.bind('refresh', @render)
+    PersonSalary.bind('refresh', @render)
     SalaryTax.bind('refresh', @render)
 
-  activate: ->
+  activate: (params) ->
     super
-    SalaryTax.fetch()
+    if params
+      @salary = PersonSalary.find params.salary_id if params.salary_id
     @render()
 
-  set_salary: (salary) ->
-    @salary = salary
-    SalaryTaxData.url = =>
-      "#{Spine.Model.host}/people/#{@salary.person_id}/salaries/#{@salary.id}/tax_data"
-
   render: =>
-    @salary = @salary.reload()
-    @html @view('people/salaries/common/tax_data')(@)
-    Ui.load_ui(@el)
-    @select_percentage_or_rough_value()
+    if @salary
+      @html @view('people/salaries/tax_data')(@)
+      Ui.load_ui(@el)
+      @select_percentage_or_rough_value()
 
-    sortableTableHelper = (e, ui) ->
-      ui.children().each ->
-        $(@).width($(@).width());
-      return ui
+      sortableTableHelper = (e, ui) ->
+        ui.children().each ->
+          $(@).width($(@).width());
+        return ui
 
-    @el.find('table.category').sortable(
-        items: "tr"
-        handle: '.handle'
-        placeholder: 'placeholder'
-        helper: sortableTableHelper
-        axis: 'y'
-        stop: (event,ui) ->
-          $(event.target).find('tr').each (index,value) ->
-            tr = $(value)
-            pos = tr.data('position')
-            position = tr.find("input[name='tax_data[#{pos}][position]']")
-            position.attr('value', index)
-    )
+      @el.find('table.category').sortable(
+          items: "tr"
+          handle: '.handle'
+          placeholder: 'placeholder'
+          helper: sortableTableHelper
+          axis: 'y'
+          stop: (event,ui) ->
+            $(event.target).find('tr').each (index,value) ->
+              tr = $(value)
+              pos = tr.data('position')
+              position = tr.find("input[name='tax_data[#{pos}][position]']")
+              position.attr('value', index)
+      )
 
-    if @salary.isNew()
-      $(@el).find('input').attr('disabled', true)
-      $(@el).fadeTo('slow', 0.3);
-    else
-      $(@el).find('input').removeAttr('disabled')
-      $(@el).fadeTo('slow', 1.0);
+      if @salary.isNew()
+        $(@el).find('input').attr('disabled', true)
+        $(@el).fadeTo('slow', 0.3);
+      else
+        $(@el).find('input').removeAttr('disabled')
+        $(@el).fadeTo('slow', 1.0);
 
   customRenderErrors: (errors) ->
     @render_errors(errors)
@@ -121,12 +114,12 @@ class App.SalaryTaxDatas extends Spine.Controller
         field = row.find('input').filter(@name_filter(str)).filter("[value=#{value}]")
         field.attr('checked', value)
 
-    url = "#{SalaryTaxData.url()}/#{id}/reset"
+    url = "#{PersonSalaryTaxData.url()}/#{id}/reset"
 
     settings =
       url: url
       type: 'put'
-    SalaryTaxData.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+    PersonSalaryTaxData.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
   adjust: (e) =>
     row   = $(e.target).parents('tr')
@@ -143,9 +136,9 @@ class App.SalaryTaxDatas extends Spine.Controller
         field.attr('value', value)
 
     if @salary.is_reference
-      url = "#{SalaryTaxData.url()}/#{id}/compute_value_for_next_salaries"
+      url = "#{PersonSalaryTaxData.url()}/#{id}/compute_value_for_next_salaries"
     else
-      url = "#{SalaryTaxData.url()}/#{id}/compute_value_for_this_salary"
+      url = "#{PersonSalaryTaxData.url()}/#{id}/compute_value_for_this_salary"
 
     data = []
     for str in ['employer_value', 'employee_value']
@@ -156,7 +149,7 @@ class App.SalaryTaxDatas extends Spine.Controller
       url: url
       type: 'GET'
       data: data.join('&')
-    SalaryTaxData.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+    PersonSalaryTaxData.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
   submit: (e) ->
     e.preventDefault()
@@ -168,13 +161,13 @@ class App.SalaryTaxDatas extends Spine.Controller
 
     ajax_success = (data, textStatus, jqXHR) =>
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
-      Salary.refresh(data)
+      PersonSalary.refresh(data)
 
     settings =
-      url: "#{Salary.url()}/#{@salary.id}/update_tax_data",
+      url: "#{PersonSalary.url()}/#{@salary.id}/update_tax_data",
       type: 'PUT',
       data: JSON.stringify(attr)
-    SalaryTaxData.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+    PersonSalaryTaxData.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
   toggle_percentage: (e) ->
     tr = $(e.target).closest('tr')

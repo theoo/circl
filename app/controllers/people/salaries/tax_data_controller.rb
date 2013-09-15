@@ -27,6 +27,12 @@ class People::Salaries::TaxDataController < ApplicationController
   load_resource :person
   load_resource :salary, :class => Salaries::Salary
 
+  def index
+    respond_to do |format|
+      format.json { render :json => @tax_data }
+    end
+  end
+
   def reset
     @tax_data = Salaries::TaxData.find(params[:id])
 

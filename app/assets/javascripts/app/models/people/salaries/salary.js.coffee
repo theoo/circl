@@ -14,24 +14,26 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class App.SalaryEditor extends App.ExtendedController
+class App.PersonSalary extends Spine.Model
 
-  constructor: (params) ->
+  @configure 'PersonSalary', 'parent_id', 'person_id', 'salary_template_id',
+             'activity_rate', 'from', 'to', 'title', 'is_reference',
+             'married', 'children_count', 'yearly_salary', 'yearly_salary_count',
+             'paid', 'brut_account', 'net_account', 'employer_account', 'created_at'
+
+  @extend Spine.Model.Ajax
+
+  @url: ->
+    undefined
+
+  constructor: ->
+    @items = []
+    @tax_data = []
+    @summary = []
     super
 
-    @items   = new App.SalaryItems(salary: @salary)
-    @taxes   = new App.SalaryTaxDatas(salary: @salary)
-    @summary = new App.SalarySummary(salary: @salary)
+  @references: ->
+    (r for r in @all() when r.is_reference)
 
-    @append(@details, @items, @taxes, @summary)
-
-    @details.bind 'edit', (salary) =>
-      for controller in [@items, @taxes, @summary]
-        controller.set_salary(salary)
-        controller.render()
-
-  activate: ->
-    super
-    @items.activate()
-    @taxes.activate()
-    @summary.activate()
+  @instances: ->
+    (s for s in @all() when !s.is_reference)

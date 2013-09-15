@@ -53,6 +53,8 @@ en:
       report_error_subject: An error (500) occured on a production directory!
       subscription_where_updated: subscription where updated
     views:
+      salary_taxes: Deductions
+      salary_items: Items
       activities: Activities
       address: Address
       affairs: Projects / Affairs

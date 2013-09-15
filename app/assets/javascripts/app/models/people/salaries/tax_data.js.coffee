@@ -14,14 +14,16 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class App.SalaryItem extends Spine.Model
+class App.PersonSalaryTaxData extends Spine.Model
 
-  @configure 'SalaryItem', 'salary_id', 'tax_ids', 'title', 'value', 'category', 'position'
+  @configure 'PersonSalaryTaxData', 'salary_id', 'tax_id', 'position',
+             'employer_value_in_cents', 'employer_percent', 'employer_use_percent',
+             'employee_value_in_cents', 'employee_percent', 'employee_use_percent', 'visible'
 
   @extend Spine.Model.Ajax
 
   @url: ->
-    "#{Spine.Model.host}/salaries/items"
+    undefined
 
   constructor: ->
     super

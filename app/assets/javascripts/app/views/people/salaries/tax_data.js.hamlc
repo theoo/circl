@@ -1,9 +1,10 @@
-%h3.section= I18n.t('salaries.salary.views.tax_data')
-
-.validation_errors_placeholder
-
 %form
-  %table.category
+  .panel-body
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
+
+  %table.table.table-condensed.table-resonsive
     %thead
       %tr
         %th= I18n.t('salaries.tax_data.views.position')
@@ -92,8 +93,8 @@
         %td.number= @salary.employee_value_total.to_view() if @salary.employee_value_total
         %td
 
-  %br
-
-  .block
-  .align_right
-    != @partial('submit_button')(@salary)
+  .panel-body
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')(@salary)

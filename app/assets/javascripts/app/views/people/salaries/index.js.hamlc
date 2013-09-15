@@ -19,7 +19,7 @@
           %th= I18n.t('salaries.salary.views.table.paid')
 
       %tbody
-        - for salary in App.Salary.instances()
+        - for salary in App.PersonSalary.instances()
           %tr{:data-id => salary.id, :class => 'item'}
             %td= salary.id
             %td= salary.reference_title
@@ -39,7 +39,7 @@
           %th= I18n.t('salaries.salary.views.table.net_salary')
 
       %tbody
-        - for salary in App.Salary.references()
+        - for salary in App.PersonSalary.references()
           %tr{:data-id => salary.id, :class => 'item'}
             %td= salary.id
             %td= salary.title

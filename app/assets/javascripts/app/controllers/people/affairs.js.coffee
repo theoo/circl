@@ -131,15 +131,18 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @affair.fromForm(e.target), @hide
-    @unload_dependencies()
+    @save_with_notifications @affair.fromForm(e.target), (id) =>
+      @hide()
+      @unload_dependencies()
 
   show_owner: (e) ->
     window.location = "/people/#{@affair.owner_id}?folding=person_affairs"
 
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications @affair, @hide
+      @destroy_with_notifications @affair, (id) =>
+        @hide()
+        @unload_dependencies()
 
 class Index extends App.ExtendedController
   events:

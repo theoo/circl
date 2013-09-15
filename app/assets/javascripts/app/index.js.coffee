@@ -83,6 +83,8 @@ class @PersonEdit extends App
       @subapp($('#person_affair_receipts'), 'PersonAffairReceipts')
       @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
       @subapp($('#person_salaries'), 'PersonSalaries')
+      @subapp($('#person_salary_items'), 'PersonSalaryItems')
+      # @subapp($('#person_salary_tax_datas'), 'PersonSalaryTaxDatas')
       @subapp($('#person_roles'), 'PersonRoles')
       @subapp($('#person_comments'), 'PersonComments')
       @subapp($('#person_activities'), 'PersonActivities')

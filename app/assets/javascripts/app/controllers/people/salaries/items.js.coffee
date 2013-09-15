@@ -14,13 +14,12 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Salary = App.Salary
 SalaryTax = App.SalaryTax
-SalaryItem = App.SalaryItem
+PersonSalary = App.PersonSalary
+PersonSalaryItem = App.PersonSalaryItem
 
-class App.SalaryItems extends App.ExtendedController
-
-  className: 'people_salaries_items'
+class App.PersonSalaryItems extends App.ExtendedController
+  className: 'person_salary_items'
 
   events:
     'submit form'    : 'submit'
@@ -29,52 +28,45 @@ class App.SalaryItems extends App.ExtendedController
 
   constructor: (params) ->
     super
+    PersonSalary.bind 'refresh', @render
+    SalaryTax.bind 'refresh', @render
 
-    @set_salary(params.salary)
-
-    Salary.bind('refresh', @render)
-    SalaryTax.bind('refresh', @render)
-
-  activate: ->
+  activate: (params) ->
     super
-    SalaryTax.fetch()
+    if params
+      @salary = PersonSalary.find params.salary_id if params.salary_id
     @render()
 
-  set_salary: (salary) ->
-    @salary = salary
-    SalaryItem.url = =>
-      "#{Spine.Model.host}/people/#{@salary.person_id}/salaries/#{@salary.id}/items"
-
   render: =>
-    @salary = @salary.reload()
-    @html @view('people/salaries/common/items')(@)
-    Ui.load_ui(@el)
+    if @salary
+      @html @view('people/salaries/items')(@)
+      Ui.load_ui(@el)
 
-    sortableTableHelper = (e, ui) ->
-      ui.children().each ->
-        $(@).width($(@).width());
-      return ui
+      # sortableTableHelper = (e, ui) ->
+      #   ui.children().each ->
+      #     $(@).width($(@).width());
+      #   return ui
 
-    @el.find('table.category').sortable(
-        items: "tr"
-        handle: '.handle'
-        placeholder: 'placeholder'
-        helper: sortableTableHelper
-        axis: 'y'
-        stop: (event,ui) ->
-          $(@).find('tr').each (index,value) ->
-            tr = $(value)
-            pos = tr.data('position')
-            position = tr.find("input[name='items[#{pos}][position]']")
-            position.attr('value', index)
-    )
+      # @el.find('table.category').sortable(
+      #     items: "tr"
+      #     handle: '.handle'
+      #     placeholder: 'placeholder'
+      #     helper: sortableTableHelper
+      #     axis: 'y'
+      #     stop: (event,ui) ->
+      #       $(@).find('tr').each (index,value) ->
+      #         tr = $(value)
+      #         pos = tr.data('position')
+      #         position = tr.find("input[name='items[#{pos}][position]']")
+      #         position.attr('value', index)
+      # )
 
-    if @salary.isNew()
-      $(@el).find('input').attr('disabled', true)
-      $(@el).fadeTo('slow', 0.3);
-    else
-      $(@el).find('input').removeAttr('disabled')
-      $(@el).fadeTo('slow', 1.0);
+      # if @salary.isNew()
+      #   $(@el).find('input').attr('disabled', true)
+      #   $(@el).fadeTo('slow', 0.3);
+      # else
+      #   $(@el).find('input').removeAttr('disabled')
+      #   $(@el).fadeTo('slow', 1.0);
 
   name_filter: (str) ->
     (index, item) ->
@@ -107,15 +99,15 @@ class App.SalaryItems extends App.ExtendedController
         field.attr('value', value)
 
     if @salary.is_reference
-      url = "#{SalaryItem.url()}/#{id}/compute_value_for_next_salaries"
+      url = "#{PersonSalaryItem.url()}/#{id}/compute_value_for_next_salaries"
     else
-      url = "#{SalaryItem.url()}/#{id}/compute_value_for_this_salary"
+      url = "#{PersonSalaryItem.url()}/#{id}/compute_value_for_this_salary"
 
     settings =
       url: url
       type: 'GET'
       data: "target=#{input.attr('value')}"
-    SalaryItem.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+    PersonSalaryItem.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
   customRenderErrors: (errors) ->
     @render_errors(errors)
@@ -142,10 +134,10 @@ class App.SalaryItems extends App.ExtendedController
 
     ajax_success = (data, textStatus, jqXHR) =>
       Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
-      Salary.refresh(data)
+      PersonSalary.refresh(data)
 
     settings =
-      url: "#{Salary.url()}/#{@salary.id}/update_items",
+      url: "#{PersonSalary.url()}/#{@salary.id}/update_items",
       type: 'PUT',
       data: JSON.stringify(attr)
-    SalaryItem.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+    PersonSalaryItem.ajax().ajax(settings).error(ajax_error).success(ajax_success)

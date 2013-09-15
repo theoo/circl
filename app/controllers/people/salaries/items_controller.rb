@@ -27,6 +27,12 @@ class People::Salaries::ItemsController < ApplicationController
   load_resource :person
   load_resource :salary, :class => ::Salaries::Salary
 
+  def index
+    respond_to do |format|
+      format.json { render :json => @items }
+    end
+  end
+
   def compute_value_for_next_salaries
     # TODO refactor this into a generic lib and use that
 

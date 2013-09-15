@@ -180,18 +180,20 @@
       .row
         .col-lg-12
           - if can? :read, @person => Salaries::Salary
-            #person_salaries_items.panel.panel-default
+            .panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.salary_items')
+              #person_salary_items
 
       .row
         .col-lg-12
           - if can? :read, @person => Salaries::Salary
-            #person_salaries_items.panel.panel-default
+            .panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.salary_taxes')
+              #person_salary_tax_datas
 
     #permissions.tab-pane.fade
       //.row
