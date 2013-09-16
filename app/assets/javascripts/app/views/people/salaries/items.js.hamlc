@@ -13,55 +13,61 @@
         - for tax in App.SalaryTax.all()
           %th= tax.title
         %th= I18n.t('salaries.item.views.category')
-        %th= I18n.t('salaries.item.views.actions')
+        %th{:style => 'min-width: 230px'}= I18n.t('salaries.item.views.actions')
 
     %tbody
-      - for item, unique_id in @salary.items
-        %tr{:data-position => unique_id}
+      - for item, index in @items
+        %tr{:data-position => index}
           %td.handle
-            .glyphicon.glyphicon-move
+            .glyphicon.glyphicon-resize-vertical
           %td
-            %input{ :name => "items[#{unique_id}][id]", :type => 'hidden', :value => item.id }
-            %input{ :name => "items[#{unique_id}][position]", :type => 'hidden', :value => item.position }
+            %input{ :name => "items[#{index}][id]", :type => 'hidden', :value => item.id }
+            %input{ :name => "items[#{index}][position]", :type => 'hidden', :value => item.position }
 
-            %input{ :name => "items[#{unique_id}][title]",
+            %input{ :name => "items[#{index}][title]",
                     :type => 'text',
-                    :class = 'form-control',
+                    :class => 'form-control',
                     :value => item.title }
           %td
-            %input{ :name => "items[#{unique_id}][value]",
+            %input{ :name => "items[#{index}][value]",
                     :type => 'number',
                     :step => 0.01,
                     :class => 'form-control',
                     :value => item.value }
           - for tax in App.SalaryTax.all()
             %td.tax
-              %input{ :name => "items[#{unique_id}][tax_ids][]",
+              %input{ :name => "items[#{index}][tax_ids][]",
                       :type => 'checkbox',
                       :checked => (tax.id in item.tax_ids),
                       :value => tax.id,
                       :class => 'normal' }
           %td
-            %input{ :name => "items[#{unique_id}][category]",
+            %input{ :name => "items[#{index}][category]",
                     :type => 'text',
                     :class => 'form-control',
                     :value => item.category }
-          %td
-            %button{:type => 'button',
-                    :class => 'btn btn-danger' }
-              .glyphicon.glyphicon-remove
-              = I18n.t("common.destroy")
-            %button{:type => 'button',
-                    :class => 'btn btn-default' }
-              = I18n.t("common.adjust")
+          %td.text-right
+            .btn-group
+              %button{:type => 'button',
+                      :name => 'destroy-item',
+                      :class => 'btn btn-danger' }
+                .glyphicon.glyphicon-remove
+                = I18n.t("common.destroy")
+              %button{:type => 'button',
+                      :name => 'adjust-item',
+                      :class => 'btn btn-default' }
+                .glyphicon.glyphicon-cog
+                = I18n.t("common.adjust")
 
       / New item
-      - unique_id = @salary.items.length + 1
+      - unique_id = @items.length + 1
       %tr.active
-        %td.handle
-          .glyphicon.glyphicon-move
+        - if @items.length > 0
+          %td.handle
+            .glyphicon.glyphicon-resize-vertical
+        - else
+          %td
         %td
-          %input{ :name => "items[#{unique_id}][salary_id]", :type => 'hidden', :value => @salary.id }
           %input{ :name => "items[#{unique_id}][position]", :type => 'hidden', :value => unique_id }
           %input{ :name => "items[#{unique_id}][title]",
                   :class => 'form-control',
@@ -88,4 +94,4 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial('submit_button')(@salary)
+          != @partial('submit_button')(@items)

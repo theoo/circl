@@ -89,6 +89,7 @@ class People::Salaries::SalariesController < ApplicationController
       attributes[:tax_ids] ||= [] # make sure this is reset if not sent
       item = attributes.has_key?(:id) ? Salaries::Item.find(attributes[:id]) : Salaries::Item.new
       item.assign_attributes(attributes)
+      item.salary_id = @salary.id # Override given salary
       arr << item
     end
     items.reject!{ |i| i.new_record? && i.empty? }

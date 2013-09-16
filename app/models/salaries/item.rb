@@ -80,6 +80,7 @@ class Salaries::Item < ActiveRecord::Base
   #### SCOPE ####
   ###############
 
+  default_scope order('position ASC')
   scope :with_category, where('length(category) > 0')
 
   ###################

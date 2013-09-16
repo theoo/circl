@@ -11,17 +11,15 @@
         %th= I18n.t('salaries.tax_data.views.title')
         %th= I18n.t('salaries.tax_data.views.reference_value')
         %th= I18n.t('salaries.tax_data.views.taxed_value')
-        %th= I18n.t('salaries.tax_data.views.employer_percent')
         %th= I18n.t('salaries.tax_data.views.employer_value')
-        %th= I18n.t('salaries.tax_data.views.employee_percent')
         %th= I18n.t('salaries.tax_data.views.employee_value')
-        %th= I18n.t('salaries.tax_data.views.actions')
+        %th{:style => 'min-width: 230px'}= I18n.t('salaries.tax_data.views.actions')
 
     %tbody
-      - for data, unique_id in @salary.tax_data
+      - for data, unique_id in @tax_data
         %tr{:data-position => unique_id}
           %td.handle
-            %span.sort_handle.ui-icon.ui-icon-arrowthick-2-n-s
+            .glyphicon.glyphicon-resize-vertical
           %td
             %input{ :name => 'tax_data[#{unique_id}][id]',
                     :type => 'hidden',
@@ -30,67 +28,99 @@
                     :type => 'hidden',
                     :value => unique_id }
             = data.tax_title
-          %td.align_right
+          %td.text-right
             = data.reference_value.to_view() if data.reference_value
-          %td.align_right
+          %td.text-right
             = data.taxed_value.to_view() if data.taxed_value
-          %td.tax
-            %input{ :name => 'tax_data[#{unique_id}][employer_percent]',
-                    :type => 'number',
-                    :data-type => 'percentage',
-                    :step => 0.001,
-                    :min => 0.0,
-                    :value => data.employer_percent }
-            %input{ :name => 'tax_data[#{unique_id}][employer_use_percent]',
-                    :type => 'radio',
-                    :value => 1,
-                    :checked => data.employer_use_percent }
-          %td.tax
-            %input{ :name => 'tax_data[#{unique_id}][employer_value]',
-                    :data-type => 'value',
-                    :type => 'number',
-                    :step => 0.01,
-                    :min => 0.0,
-                    :value => data.employer_value }
-            %input{ :type => 'radio',
-                    :name => 'tax_data[#{unique_id}][employer_use_percent]',
-                    :value => 0,
-                    :checked => !data.employer_use_percent }
-          %td.tax
-            %input{ :name => 'tax_data[#{unique_id}][employee_percent]',
-                    :data-type => 'percentage',
-                    :type => 'number',
-                    :step => 0.001,
-                    :min => 0.0,
-                    :value => data.employee_percent }
-            %input{ :name => 'tax_data[#{unique_id}][employee_use_percent]',
-                    :type => 'radio',
-                    :value => 1,
-                    :checked => data.employee_use_percent }
-          %td.tax
-            %input{ :name => 'tax_data[#{unique_id}][employee_value]',
-                    :data-type => 'value',
-                    :type => 'number',
-                    :step => 0.01,
-                    :min => 0.0,
-                    :value => data.employee_value }
-            %input{ :name => 'tax_data[#{unique_id}][employee_use_percent]',
-                    :type => 'radio',
-                    :value => 0,
-                    :checked => !data.employee_use_percent }
           %td
-            %input{ :type => 'button', :value => 'Reset', :class => 'reset' }
-            %input{ :type => 'button', :value => 'Adjust', :class => 'adjust' }
+            .form-group
+              .input-group
+                .input-group-addon
+                  %input{ :name => 'tax_data[#{unique_id}][employer_use_percent]',
+                          :type => 'radio',
+                          :value => 1,
+                          :checked => data.employer_use_percent }
+                %input{ :name => 'tax_data[#{unique_id}][employer_percent]',
+                        :type => 'number',
+                        :class => 'form-control',
+                        :data-type => 'percentage',
+                        :step => 0.001,
+                        :min => 0.0,
+                        :value => data.employer_percent }
+                .input-group-addon %
 
-      %tr.bold
+              %br
+
+              .input-group
+                .input-group-addon
+                  %input{ :name => 'tax_data[#{unique_id}][employer_use_percent]',
+                          :type => 'radio',
+                          :value => 0,
+                          :checked => !data.employer_use_percent }
+                %input{ :name => 'tax_data[#{unique_id}][employer_value]',
+                        :data-type => 'value',
+                        :type => 'number',
+                        :class => 'form-control',
+                        :step => 0.01,
+                        :min => 0.0,
+                        :value => data.employer_value }
+                .input-group-addon CHF
+          %td
+            .form-group
+              .input-group
+                .input-group-addon
+                  %input{ :name => 'tax_data[#{unique_id}][employee_use_percent]',
+                          :type => 'radio',
+                          :value => 1,
+                          :checked => data.employee_use_percent }
+                %input{ :name => 'tax_data[#{unique_id}][employee_percent]',
+                        :data-type => 'percentage',
+                        :type => 'number',
+                        :class => 'form-control',
+                        :step => 0.001,
+                        :min => 0.0,
+                .input-group-addon %
+
+              %br
+
+              .input-group
+                .input-group-addon
+                  %input{ :name => 'tax_data[#{unique_id}][employee_use_percent]',
+                          :type => 'radio',
+                          :value => 0,
+                          :checked => !data.employee_use_percent }
+                %input{ :name => 'tax_data[#{unique_id}][employee_value]',
+                        :data-type => 'value',
+                        :type => 'number',
+                        :class => 'form-control',
+                        :step => 0.01,
+                        :min => 0.0,
+                        :value => data.employee_value }
+                .input-group-addon CHF
+          %td.text-right
+            .btn-group
+              %button{:type => 'button',
+                      :name => 'reset-tax-data',
+                      :class => 'btn btn-warning' }
+                .glyphicon.glyphicon-refresh
+                = I18n.t("common.reset")
+              %button{:type => 'button',
+                      :name => 'adjust-tax-data',
+                      :class => 'btn btn-default' }
+                .glyphicon.glyphicon-cog
+                = I18n.t("common.adjust")
+
+      %tr
         %td
         %td
         %td
         %td
-        %td
-        %td.number= @salary.employer_value_total.to_view() if @salary.employer_value_total
-        %td
-        %td.number= @salary.employee_value_total.to_view() if @salary.employee_value_total
+        %td.text-right
+          %b
+            = @salary.employer_value_total.to_view() if @salary.employer_value_total
+        %td.text-right
+          %b
+            = @salary.employee_value_total.to_view() if @salary.employee_value_total
         %td
 
   .panel-body

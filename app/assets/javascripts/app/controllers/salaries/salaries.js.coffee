@@ -87,38 +87,36 @@ class Index extends App.ExtendedController
     controller.activate()
 
   stack_export_window: (e) ->
-    e.preventDefault()
-    window = Ui.stack_window('export-salaries', {width: 400, remove_on_close: true})
-    controller = new App.ExportSalaries({el: window})
-    $(window).modal({title: I18n.t('salaries.export')})
-    $(window).modal('show')
-    controller.activate()
+    #e.preventDefault()
+    #window = Ui.stack_window('export-salaries', {width: 400, remove_on_close: true})
+    #controller = new App.ExportSalaries({el: window})
+    #$(window).modal({title: I18n.t('salaries.export')})
+    #$(window).modal('show')
+    #controller.activate()
 
   stack_export_to_accounting_window: (e) ->
-    e.preventDefault()
-    window = Ui.stack_window('export-accounting-salaries', {width: 400, remove_on_close: true})
-    controller = new App.ExportToAccountingSalaries({el: window})
-    $(window).modal({title: I18n.t('salaries.export_to_accounting')})
-    $(window).modal('show')
-    controller.activate()
+    #e.preventDefault()
+    #window = Ui.stack_window('export-accounting-salaries', {width: 400, remove_on_close: true})
+    #controller = new App.ExportToAccountingSalaries({el: window})
+    #$(window).modal({title: I18n.t('salaries.export_to_accounting')})
+    #$(window).modal('show')
+    #controller.activate()
 
   stack_export_to_ocas_window: (e) ->
-    e.preventDefault()
-
-    window = Ui.stack_window('export-ocas-salaries', {width: 400, remove_on_close: true})
-    controller = new App.ExportToOcasSalaries({el: window})
-    $(window).modal({title: I18n.t('salaries.export_to_ocas')})
-    $(window).modal('show')
-    controller.activate()
+    #e.preventDefault()
+    #window = Ui.stack_window('export-ocas-salaries', {width: 400, remove_on_close: true})
+    #controller = new App.ExportToOcasSalaries({el: window})
+    #$(window).modal({title: I18n.t('salaries.export_to_ocas')})
+    #$(window).modal('show')
+    #controller.activate()
 
   stack_export_to_eLohnausweisSSK_window: (e) ->
-    e.preventDefault()
-
-    window = Ui.stack_window('export-elohnausweisssk-salaries', {width: 400, remove_on_close: true})
-    controller = new App.ExportToELohnausweisSSKSalaries({el: window})
-    $(window).modal({title: I18n.t('salaries.export_to_elohnausweisssk')})
-    $(window).modal('show')
-    controller.activate()
+    #e.preventDefault()
+    #window = Ui.stack_window('export-elohnausweisssk-salaries', {width: 400, remove_on_close: true})
+    #controller = new App.ExportToELohnausweisSSKSalaries({el: window})
+    #$(window).modal({title: I18n.t('salaries.export_to_elohnausweisssk')})
+    #$(window).modal('show')
+    #controller.activate()
 
 class App.ExportSalaries extends App.ExtendedController
   events:
@@ -293,7 +291,7 @@ class App.ExportToELohnausweisSSKSalaries extends App.ExtendedController
     super
     @fetch_years()
 
-class App.SalariesSalaries extends Spine.Controller
+class App.Salaries extends Spine.Controller
   className: 'salariesSalaries'
 
   constructor: (params) ->

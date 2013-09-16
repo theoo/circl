@@ -14,13 +14,13 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SalarySalaryTemplate = App.SalarySalaryTemplate
+SalaryTemplate = App.SalaryTemplate
 Language = App.Language
 
 $.fn.salary_template = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
-  SalarySalaryTemplate.find(elementID)
+  SalaryTemplate.find(elementID)
 
 class New extends App.ExtendedController
   events:
@@ -31,14 +31,14 @@ class New extends App.ExtendedController
     super
     get_callback = (data) =>
       @placeholders = data
-    $.get(SalarySalaryTemplate.url() + "/placeholders", get_callback, 'json')
+    $.get(SalaryTemplate.url() + "/placeholders", get_callback, 'json')
 
   active: ->
     @render()
 
   render: =>
     if @placeholders
-      @salary_template = new SalarySalaryTemplate(placeholders: @placeholders)
+      @salary_template = new SalaryTemplate(placeholders: @placeholders)
       @salary_template.html = @view('salaries/salary_templates/template')(@)
       @html @view('salaries/salary_templates/form')(@)
       Ui.load_ui(@el)
@@ -64,9 +64,9 @@ class Edit extends App.ExtendedController
     @render()
 
   render: =>
-    return unless SalarySalaryTemplate.exists(@id)
+    return unless SalaryTemplate.exists(@id)
     @show()
-    @salary_template = SalarySalaryTemplate.find(@id)
+    @salary_template = SalaryTemplate.find(@id)
     @html @view('salaries/salary_templates/form')(@)
     Ui.load_ui(@el)
     @open()
@@ -88,7 +88,7 @@ class Index extends App.ExtendedController
 
   constructor: (params) ->
     super
-    SalarySalaryTemplate.bind('refresh', @render)
+    SalaryTemplate.bind('refresh', @render)
     Language.bind('refresh', @unlock_new)
 
   render: =>
@@ -118,11 +118,11 @@ class App.SalariesTemplates extends Spine.Controller
   constructor: (params) ->
     super
 
-    @edit_template_window = Ui.stack_window('edit-html-template-window', {width: 1000, position: 'top', remove_on_close: false})
-    $(@edit_template_window).modal({title: I18n.t('salaries.salary_template.views.edit_template')})
+    # @edit_template_window = Ui.stack_window('edit-html-template-window', {width: 1000, position: 'top', remove_on_close: false})
+    # $(@edit_template_window).modal({title: I18n.t('salaries.salary_template.views.edit_template')})
 
-    @new_template_window = Ui.stack_window('new-html-template-window', {width: 1000, position: 'top', remove_on_close: false})
-    $(@new_template_window).modal({title: I18n.t('salaries.salary_template.views.new_template')})
+    # @new_template_window = Ui.stack_window('new-html-template-window', {width: 1000, position: 'top', remove_on_close: false})
+    # $(@new_template_window).modal({title: I18n.t('salaries.salary_template.views.new_template')})
 
     @index = new Index
     @edit = new Edit({el: @edit_template_window})
@@ -140,4 +140,4 @@ class App.SalariesTemplates extends Spine.Controller
   activate: ->
     super
     Language.fetch()
-    SalarySalaryTemplate.fetch()
+    SalaryTemplate.fetch()

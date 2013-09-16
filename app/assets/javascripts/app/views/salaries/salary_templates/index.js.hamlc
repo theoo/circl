@@ -23,7 +23,7 @@
       %th= I18n.t('salaries.salary_template.views.table.title')
       %th.desc= I18n.t('salaries.salary_template.views.table.created_at')
   %tbody
-    - for salary_template in App.SalarySalaryTemplate.all()
+    - for salary_template in App.SalaryTemplate.all()
       - actions = [ edit_salary_template_trad, destroy_salary_template_trad ]
       %tr{:data-id => salary_template.id, :data-actions => actions }
         %td

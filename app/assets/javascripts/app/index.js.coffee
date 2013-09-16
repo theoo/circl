@@ -84,7 +84,7 @@ class @PersonEdit extends App
       @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
       @subapp($('#person_salaries'), 'PersonSalaries')
       @subapp($('#person_salary_items'), 'PersonSalaryItems')
-      # @subapp($('#person_salary_tax_datas'), 'PersonSalaryTaxDatas')
+      @subapp($('#person_salary_tax_datas'), 'PersonSalaryTaxDatas')
       @subapp($('#person_roles'), 'PersonRoles')
       @subapp($('#person_comments'), 'PersonComments')
       @subapp($('#person_activities'), 'PersonActivities')
@@ -111,7 +111,7 @@ class @Salaries extends App
 
   constructor: (params) ->
     super
-    @subapp($('#salaries_salaries'), 'SalariesSalaries')
+    @subapp($('#salaries_salaries'), 'Salaries')
     @subapp($('#salaries_taxes'), 'SalariesTaxes')
     @subapp($('#salaries_salary_templates'), 'SalariesTemplates')
 

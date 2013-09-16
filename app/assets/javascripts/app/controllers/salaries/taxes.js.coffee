@@ -86,7 +86,7 @@ class Index extends App.ExtendedController
     'tax-show':      'stack_show_window'
     'tax-edit':      'edit'
     'tax-destroy':   'destroy'
-    'tax-upload':    'stack_upload_window'
+    'click tr':    'stack_upload_window'
 
   constructor: (params) ->
     super
@@ -105,13 +105,37 @@ class Index extends App.ExtendedController
     @trigger 'edit', tax.id
 
   stack_upload_window: (e) ->
-    tax = $(e.target).tax()
+    console.log "coucou"
     e.preventDefault()
-    window = Ui.stack_window('upload-salary-taxes', {width: 500, remove_on_close: true})
-    controller = new App.UploadSalaryTaxes({el: window; id: tax.id})
-    $(window).modal({title: I18n.t('salaries.tax.views.upload_tax')})
-    $(window).modal('show')
+    tax = $(e.target).tax()
+
+    win = $("<div class='modal fade' id='invoice-preview' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Update title
+    win.find('h4').text I18n.t('salaries.tax.views.upload_tax') + ": " + tax.title
+
+
+    # Adapt width to A4
+    # win.find('.modal-dialog').css(width: 900)
+
+    # Add preview in new tab button
+    #btn = "<button type='button' name='invoice-preview-pdf-new-tab' class='btn btn-default'>"
+    #btn += I18n.t('invoice.views.actions.preview_pdf_in_new_tab')
+    #btn += "</button>"
+    #btn = $(btn)
+    #win.find('.modal-footer').append btn
+    #btn.on 'click', (e) =>
+    #  e.preventDefault()
+    #  window.open "#{PersonAffairInvoice.url()}/#{@invoice.id}.html", "_blank"
+
+    controller = new App.UploadSalaryTaxes({el: win.find('.modal-body'); id: tax.id})
     controller.activate()
+
+    win.modal('show')
 
   destroy: (e) ->
     tax = $(e.target).tax()
@@ -145,7 +169,6 @@ class App.SalariesTaxes extends Spine.Controller
 
     ajax_error = (xhr, statusText, error) =>
       text = I18n.t('common.failed_to_update')
-      Ui.notify @el, text, 'error'
       response = JSON.parse(xhr.responseText)
       @render_errors(response.errors)
 
@@ -176,28 +199,23 @@ class App.UploadSalaryTaxes extends App.ExtendedController
   send: (e) ->
     e.preventDefault()
 
-    Ui.spin_on(@el)
 
     # jquery.iframe-transport (and this technique) doesn't allows
     # me to trigger error or success event. No matter which status
     # is sent back, the plugin trig the success event.
     on_complete = (xhr, status) =>
-      Ui.spin_off(@el)
 
       response = JSON.parse(xhr.responseText)
       # error
       if Object.keys(response.errors).length > 0
         text = I18n.t('common.failed_to_update')
-        Ui.notify @el, text, 'error'
         @render_errors(response.errors)
 
       # success
       else
         # if a validation failed, remove it's explanation
         @el.find('.validation_errors_placeholder').css('display', 'none')
-        Ui.unlock_submit(@el)
         text = I18n.t('common.successfully_updated')
-        Ui.notify @el, text, 'notice'
 
         # update tax item on tax widget/list
         SalaryTax.fetch(id: tax.tax_id)

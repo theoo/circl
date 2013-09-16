@@ -14,8 +14,8 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-PersonSalary = App.PersonSalary
 SalaryTax = App.SalaryTax
+PersonSalary = App.PersonSalary
 PersonSalaryTaxData = App.PersonSalaryTaxData
 
 $.fn.tax_data = ->
@@ -28,14 +28,13 @@ class App.PersonSalaryTaxDatas extends Spine.Controller
 
   events:
     'submit form'     : 'submit'
-    'click .reset'    : 'reset'
-    'click .adjust'   : 'adjust'
-    'focus td.tax'    : 'toggle_percentage'
+    'click button[name=reset-tax-data]'    : 'reset'
+    'click button[name=adjust-tax-data]'   : 'adjust'
+    'focus td input[type=number]'    : 'toggle_percentage'
 
   constructor: (params) ->
     super
-    PersonSalary.bind('refresh', @render)
-    SalaryTax.bind('refresh', @render)
+    PersonSalaryTaxData.bind('refresh', @render)
 
   activate: (params) ->
     super
@@ -44,36 +43,35 @@ class App.PersonSalaryTaxDatas extends Spine.Controller
     @render()
 
   render: =>
-    if @salary
-      @html @view('people/salaries/tax_data')(@)
-      Ui.load_ui(@el)
-      @select_percentage_or_rough_value()
+    @tax_data = PersonSalaryTaxData.all()
+    @salary ||= [] # placeholder to prevent failure when rendering 'disabled' view.
+    @html @view('people/salaries/tax_data')(@)
+    Ui.load_ui(@el)
+    @select_percentage_or_rough_value()
 
-      sortableTableHelper = (e, ui) ->
-        ui.children().each ->
-          $(@).width($(@).width());
-        return ui
+    # Keep width
+    sortableTableHelper = (e, ui) ->
+      ui.children().each ->
+        $(@).width($(@).width());
+      return ui
 
-      @el.find('table.category').sortable(
-          items: "tr"
-          handle: '.handle'
-          placeholder: 'placeholder'
-          helper: sortableTableHelper
-          axis: 'y'
-          stop: (event,ui) ->
-            $(event.target).find('tr').each (index,value) ->
-              tr = $(value)
-              pos = tr.data('position')
-              position = tr.find("input[name='tax_data[#{pos}][position]']")
-              position.attr('value', index)
-      )
-
-      if @salary.isNew()
-        $(@el).find('input').attr('disabled', true)
-        $(@el).fadeTo('slow', 0.3);
-      else
-        $(@el).find('input').removeAttr('disabled')
-        $(@el).fadeTo('slow', 1.0);
+    @el.find('table tbody').sortable
+        items: "tr"
+        handle: '.handle'
+        placeholder: 'placeholder'
+        helper: sortableTableHelper
+        axis: 'y'
+        start: (event, ui) ->
+          height = $(@).find('tr:first').height()
+          placeholder = $(@).find('.placeholder')
+          placeholder.css(height: height)
+          placeholder.addClass 'warning'
+        stop: (event,ui) ->
+          $(event.target).find('tr').each (index,value) ->
+            tr = $(value)
+            pos = tr.data('position')
+            position = tr.find("input[name='tax_data[#{pos}][position]']")
+            position.attr('value', index)
 
   customRenderErrors: (errors) ->
     @render_errors(errors)
@@ -100,11 +98,9 @@ class App.PersonSalaryTaxDatas extends Spine.Controller
     id    = row.find('input').filter(@name_filter('id')).attr('value')
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @customRenderErrors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       for key, value of data
         continue if key.match(/use_percent/)
         field = row.find('input').filter(@name_filter(key))
@@ -126,11 +122,9 @@ class App.PersonSalaryTaxDatas extends Spine.Controller
     id    = row.find('input').filter(@name_filter('id')).attr('value')
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @customRenderErrors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.notify
       for key, value of data
         field = row.find('input').filter(@name_filter(key))
         field.attr('value', value)
@@ -156,11 +150,9 @@ class App.PersonSalaryTaxDatas extends Spine.Controller
     attr = $(e.target).serializeObject()
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @customRenderErrors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       PersonSalary.refresh(data)
 
     settings =
@@ -173,14 +165,14 @@ class App.PersonSalaryTaxDatas extends Spine.Controller
     tr = $(e.target).closest('tr')
     pos = tr.data('position')
     td = $(e.target).closest('td')
-    $(e.target).addClass('focused')
+    td.addClass('warning')
 
     if $(e.target).data('type') == 'percentage'
-      tr.find("input[name='tax_data[#{pos}][employee_use_percent]'][value='1']").attr('checked', 'checked')
-      tr.find("input[name='tax_data[#{pos}][employer_use_percent]'][value='1']").attr('checked', 'checked')
+      tr.find("input[name='tax_data[#{pos}][employee_use_percent]'][value='1']").prop('checked', true)
+      tr.find("input[name='tax_data[#{pos}][employer_use_percent]'][value='1']").prop('checked', true)
     else
-      tr.find("input[name='tax_data[#{pos}][employee_use_percent]'][value='0']").attr('checked', 'checked')
-      tr.find("input[name='tax_data[#{pos}][employer_use_percent]'][value='0']").attr('checked', 'checked')
+      tr.find("input[name='tax_data[#{pos}][employee_use_percent]'][value='0']").prop('checked', true)
+      tr.find("input[name='tax_data[#{pos}][employer_use_percent]'][value='0']").prop('checked', true)
 
   select_percentage_or_rough_value: ->
     for ee in ['employee', 'employer']

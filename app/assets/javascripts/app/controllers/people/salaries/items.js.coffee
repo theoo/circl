@@ -17,56 +17,56 @@
 SalaryTax = App.SalaryTax
 PersonSalary = App.PersonSalary
 PersonSalaryItem = App.PersonSalaryItem
+PersonSalaryTaxData = App.PersonSalaryTaxData
 
 class App.PersonSalaryItems extends App.ExtendedController
   className: 'person_salary_items'
 
   events:
     'submit form'    : 'submit'
-    'click .adjust'  : 'adjust'
-    'click .remove'  : 'remove'
+    'click button[name=adjust-item]'  : 'adjust'
+    'click button[name=destroy-item]'  : 'destroy'
 
   constructor: (params) ->
     super
-    PersonSalary.bind 'refresh', @render
-    SalaryTax.bind 'refresh', @render
+    PersonSalaryItem.bind 'refresh', @render
 
   activate: (params) ->
     super
     if params
       @salary = PersonSalary.find params.salary_id if params.salary_id
+
     @render()
 
   render: =>
-    if @salary
-      @html @view('people/salaries/items')(@)
-      Ui.load_ui(@el)
+    @items = PersonSalaryItem.all()
+    @html @view('people/salaries/items')(@)
+    Ui.load_ui(@el)
 
-      # sortableTableHelper = (e, ui) ->
-      #   ui.children().each ->
-      #     $(@).width($(@).width());
-      #   return ui
+    # Keep width
+    sortableTableHelper = (e, ui) ->
+      ui.children().each ->
+        $(@).width($(@).width());
+      return ui
 
-      # @el.find('table.category').sortable(
-      #     items: "tr"
-      #     handle: '.handle'
-      #     placeholder: 'placeholder'
-      #     helper: sortableTableHelper
-      #     axis: 'y'
-      #     stop: (event,ui) ->
-      #       $(@).find('tr').each (index,value) ->
-      #         tr = $(value)
-      #         pos = tr.data('position')
-      #         position = tr.find("input[name='items[#{pos}][position]']")
-      #         position.attr('value', index)
-      # )
-
-      # if @salary.isNew()
-      #   $(@el).find('input').attr('disabled', true)
-      #   $(@el).fadeTo('slow', 0.3);
-      # else
-      #   $(@el).find('input').removeAttr('disabled')
-      #   $(@el).fadeTo('slow', 1.0);
+    # FIXME doesn't keep position
+    @el.find('table tbody').sortable
+        items: "tr"
+        handle: '.handle'
+        helper: sortableTableHelper
+        placeholder: 'placeholder'
+        axis: 'y'
+        start: (event, ui) ->
+          height = $(@).find('tr:first').height()
+          placeholder = $(@).find('.placeholder')
+          placeholder.css(height: height)
+          placeholder.addClass 'warning'
+        stop: (event, ui) ->
+          $(@).find('tr').each (index, value) ->
+            tr = $(value)
+            pos = tr.data('position')
+            position = tr.find("input[name='items[#{pos}][position]']")
+            position.attr('value', index)
 
   name_filter: (str) ->
     (index, item) ->
@@ -74,7 +74,7 @@ class App.PersonSalaryItems extends App.ExtendedController
       return false unless name
       name.match(str)
 
-  remove: (e) =>
+  destroy: (e) =>
     $(e.target).parents('tr').remove()
     @set_correct_positions()
 
@@ -89,11 +89,9 @@ class App.PersonSalaryItems extends App.ExtendedController
     input = row.find('input').filter(@name_filter('value'))
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @customRenderErrors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       for key, value of data
         field = row.find('input').filter(@name_filter(key))
         field.attr('value', value)
@@ -129,12 +127,15 @@ class App.PersonSalaryItems extends App.ExtendedController
     attr = $(e.target).serializeObject()
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @customRenderErrors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
-      PersonSalary.refresh(data)
+      PersonSalary.refresh([], clear: true)
+      PersonSalary.fetch()
+      PersonSalaryItem.refresh([], clear: true)
+      PersonSalaryItem.fetch()
+      PersonSalaryTaxData.refresh([], clear: true)
+      PersonSalaryTaxData.fetch()
 
     settings =
       url: "#{PersonSalary.url()}/#{@salary.id}/update_items",

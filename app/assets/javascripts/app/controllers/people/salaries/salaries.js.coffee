@@ -14,6 +14,12 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# NOTE about triggers
+# I choose to refresh dependencies with fetch() instead of binding 'refresh'
+# trigger for some reasons. Refreshing the view may require to re-fetch
+# data which is more complicated if each controller handle every possible
+# events instead of telling one controller to refresh its dependencies.
+
 Person = App.Person
 PersonSalary = App.PersonSalary
 PersonSalaryItem = App.PersonSalaryItem
@@ -147,21 +153,22 @@ class Edit extends App.ExtendedController
       # Required by items and tax_data
       App.SalaryTax.fetch()
 
-      # Items
-      person_salary_items_ctrl = $("#person_salary_items").data('controller')
-      person_salary_items_ctrl.activate(salary_id: @id)
-      PersonSalaryItem.url = =>
-        "#{Spine.Model.host}/people/#{@person_id}/salaries/#{@id}/items"
-      PersonSalaryItem.refresh([], clear: true)
-      PersonSalaryItem.fetch()
+      App.SalaryTax.one 'refresh', =>
+        # Items
+        PersonSalaryItem.url = =>
+          "#{Spine.Model.host}/people/#{@person_id}/salaries/#{@id}/items"
+        PersonSalaryItem.refresh([], clear: true)
+        PersonSalaryItem.fetch()
+        person_salary_items_ctrl = $("#person_salary_items").data('controller')
+        person_salary_items_ctrl.activate(salary_id: @id)
 
-      # TaxData
-      # person_salary_tax_data_ctrl = $("#person_salary_tax_datas").data('controller')
-      # person_salary_tax_data_ctrl.activate(salary_id: @id)
-      # PersonSalaryTaxData.url = =>
-      #   "#{Spine.Model.host}/people/#{@person_id}/salaries/#{@id}/tax_data"
-      # PersonSalaryTaxData.refresh([], clear: true)
-      # PersonSalaryTaxData.fetch()
+        # TaxData
+        PersonSalaryTaxData.url = =>
+          "#{Spine.Model.host}/people/#{@person_id}/salaries/#{@id}/tax_data"
+        PersonSalaryTaxData.refresh([], clear: true)
+        PersonSalaryTaxData.fetch()
+        person_salary_tax_data_ctrl = $("#person_salary_tax_datas").data('controller')
+        person_salary_tax_data_ctrl.activate(salary_id: @id)
 
   unload_dependencies: =>
     # Items

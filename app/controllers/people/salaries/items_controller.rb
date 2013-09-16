@@ -26,6 +26,7 @@ class People::Salaries::ItemsController < ApplicationController
 
   load_resource :person
   load_resource :salary, :class => ::Salaries::Salary
+  load_resource :class => model, :through => :salary
 
   def index
     respond_to do |format|
