@@ -122,7 +122,7 @@ class Subscription < ActiveRecord::Base
     self.self_and_descendants.map{|s| s.invoices}.flatten.uniq
   end
 
-  # returns an AREL for the list of people from self and its children subscriptions.
+  # returns an AREL for the list of people (owners) from self and its children subscriptions.
   def people_from_self_and_descendants
     Person.select("DISTINCT people.*")
           .joins(:subscriptions)
