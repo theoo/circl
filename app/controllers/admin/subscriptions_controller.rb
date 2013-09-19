@@ -340,7 +340,7 @@ class Admin::SubscriptionsController < ApplicationController
         end
 
         # And extract paying member or extract not paying members
-        people_ids = []
+        # people_ids = []
         if params[:subscription_member] and params[:subscription_paid]
           Person.transaction do
             people_arel.each do |p|
@@ -348,15 +348,28 @@ class Admin::SubscriptionsController < ApplicationController
               # obviously there is always less (or equal) paid_subscription than subscriptions
               if (p.paid_subscriptions & people_subs).size == people_subs.size
                 p.private_tags << tag
-                people_ids << p.id
+                # people_ids << p.id
               end
             end
           end
         else
-          Person.transaction do
-            people_arel.all.each do |p|
-              p.private_tags = [p.private_tags, tag].flatten
-              people_ids << p.id
+          if params[:subscription_member]
+            Person.transaction do
+              people_arel.all.each do |p|
+                people_subs = p.subscriptions.where("? BETWEEN interval_starts_on AND interval_ends_on", date)
+                if (p.unpaid_subscriptions & people_subs).size == people_subs.size
+                  p.private_tags << tag
+                end
+              end
+            end
+          elsif params[:subscription_paid]
+            Person.transaction do
+              people_arel.all.each do |p|
+                people_subs = p.subscriptions.where("? NOT BETWEEN interval_starts_on AND interval_ends_on", date)
+                if (p.paid_subscriptions & people_subs).size == people_subs.size
+                  p.private_tags << tag
+                end
+              end
             end
           end
         end

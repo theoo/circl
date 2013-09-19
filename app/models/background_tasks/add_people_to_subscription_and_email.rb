@@ -50,7 +50,7 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
       options[:people_ids].each do |id|
         p = Person.find(id)
 
-        # Do not add existing people in this subscription
+        # Do not add existing people which already is in this subscription
         if p.subscriptions.include?(subscription)
           existing_people_ids << p.id
           next

@@ -381,8 +381,17 @@
   group: Relations
 
 - model: Person
+  name: paid_subscriptions_or_reminders
+  indexing: paid_subscriptions.map{|s| s.self_and_parents.map(&:as_indexed_json)}
+  mapping:
+    type: object
+    properties: Subscription.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
   name: paid_subscriptions
-  indexing: paid_subscriptions.map(&:as_indexed_json)
+  indexing: paid_subscriptions.map(&:as_indexed_json)}
   mapping:
     type: object
     properties: Subscription.mapping
