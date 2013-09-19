@@ -16,3 +16,5 @@
 /tags
 /tmp/*
 /public/system
+.ruby-version
+.ruby-gemset

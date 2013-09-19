@@ -46,6 +46,8 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
     existing_people_ids = []
     new_people_ids = []
 
+    parent_and_reminders = Subscription.find(options[:parent_subscription_id]).self_and_descendants.map(&:id)
+
     transaction do
       options[:people_ids].each do |id|
         p = Person.find(id)
@@ -61,14 +63,14 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
         if ! options[:status].blank? # 'renewal' or 'reminder'
           ref_affair = p.affairs
                         .joins(:subscriptions)
-                        .where('subscription_id = ?', options[:parent_subscription_id])
+                        .where('subscription_id in (?)', parent_and_reminders)
                         .first
           if ref_affair
             owner    = ref_affair.owner
             buyer    = ref_affair.buyer
             receiver = ref_affair.receiver
           else
-            raise ArgumentError, "reference affair not found for parent subscription #{options[:parent_subscription_id]}" #
+            raise ArgumentError, "reference affair not found for parent subscription #{options[:parent_subscription_id]} and person #{p.id}." #
           end
         end
 
