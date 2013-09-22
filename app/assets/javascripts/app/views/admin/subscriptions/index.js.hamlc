@@ -9,6 +9,7 @@
 - add_members_to_subscription_trad = I18n.t('subscription.views.contextmenu.add_members_to_subscription')
 - remove_members_from_subscription_trad = I18n.t('subscription.views.contextmenu.remove_members_from_subscription')
 - transfer_overpaid_value_trad = I18n.t('subscription.views.contextmenu.transfer_overpaid_value')
+- merge_trad = I18n.t('subscription.views.contextmenu.merge')
 - subscription_reminder_trad = I18n.t('subscription.views.contextmenu.subscription_reminder')
 - subscription_renewal_trad = I18n.t('subscription.views.contextmenu.subscription_renewal')
 
@@ -60,6 +61,10 @@
 
   %command{ :data-label => transfer_overpaid_value_trad,
             :data-event => 'subscription-transfer-overpaid-value',
+            :data-icon => 'copy' }
+
+  %command{ :data-label => merge_trad,
+            :data-event => 'subscription-merge',
             :data-icon => 'copy' }
 
   %command{ :data-label => subscription_reminder_trad,

@@ -4,6 +4,7 @@ fr:
     mail:
       error_report_title: Rapport d'erreur
     tasks:
+      merge_subscriptions: Fusion de l'inscription %{source_subscription_id} dans %{destination_subscription_id}
       add_people_to_subscription_and_email: Ajout de %{people_count} personne(s) à l'inscription %{subscription_id} - %{subscription_title}
       concat_and_email_subscription_pdf: Fusion dans un fichier des factures de %{people_count} personne(s) pour l'inscription %{subscription_id} - %{subscription_title}
       generate_invoice_pdf: Génération du PDF de la facture %{invoice_id} - %{invoice_title}

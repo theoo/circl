@@ -392,4 +392,28 @@ class Admin::SubscriptionsController < ApplicationController
     end
   end
 
+  def merge
+    @errors = {}
+    if params[:id]
+      @errors[:source_subscription_id] = [I18n.t("subscription.views.merge.source_subscription_id_missing")]
+    end
+
+    if params[:transfer_to_subscription_id]
+      @errors[:destination_subscription_id] = [I18n.t("subscription.views.merge.destination_subscription_id_missing")]
+    end
+
+    BackgroundTasks::MergeSubscriptions.schedule(
+      :source_subscription_id => params[:id],
+      :destination_subscription_id => params[:transfer_to_subscription_id],
+      :person => current_person)
+
+    respond_to do |format|
+      if @errors.size > 0
+        format.json { render :json => {} }
+      else
+        format.json { render :json => @errors , :status => :unprocessable_entity }
+      end
+    end
+  end
+
 end

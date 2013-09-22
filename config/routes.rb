@@ -184,7 +184,7 @@ Directory::Application.routes.draw do
 
     resources :subscriptions do
       member do
-        post 'add_members', 'transfer_overpaid_value'
+        post 'add_members', 'transfer_overpaid_value', 'merge'
         delete 'remove_members'
       end
       collection do
