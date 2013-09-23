@@ -27,3 +27,4 @@ end
 
 # Configure mailer, no matter which environment it is.
 Rails.configuration.action_mailer.default_url_options = { :host => Rails.configuration.settings['host'] }
+ActionMailer::Base.default_url_options[:host] = Rails.configuration.settings['host']

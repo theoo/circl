@@ -41,7 +41,7 @@ class ValueItemsController extends App.ExtendedController
     new_row.removeAttr('data-name')
     new_row.removeAttr('style')
     # this class make it selected on submit
-    new_row.addClass('item') 
+    new_row.addClass('item')
 
     value_item_add = @el.find('tr[data-name="value_item_add"]')
     value_item_add.before(new_row)
@@ -235,6 +235,7 @@ class Index extends App.ExtendedController
     'subscription-members-add':                 'add_members'
     'subscription-members-remove':              'remove_members'
     'subscription-transfer-overpaid-value':     'transfer_overpaid_value'
+    'subscription-merge':                       'merge'
     'subscription-reminder':                    'create_reminder'
     'subscription-renewal':                     'renew'
     'submit form':                              'stack_tag_tool_window'
@@ -367,6 +368,19 @@ class Index extends App.ExtendedController
 
     Subscription.fetch(id: id)
 
+  merge: (e) ->
+    id = $(e.target).subscription_id()
+    Subscription.one 'refresh', =>
+      subscription = Subscription.find(id)
+
+      win = Ui.stack_window('subscription-merge-window', {width: 500, remove_on_close: true})
+      controller = new Merge(el: win, subscription_id: subscription.id)
+      $(win).dialog({title: I18n.t('subscription.views.contextmenu.merge')})
+      $(win).dialog('open')
+      controller.render()
+
+    Subscription.fetch(id: id)
+
   create_reminder: (e) ->
     id = $(e.target).subscription_id()
     Subscription.one 'refresh', =>
@@ -409,6 +423,40 @@ class TransferOverpaidValue extends App.ExtendedController
 
     settings =
       url: "#{Subscription.url()}/#{@subscription_id}/transfer_overpaid_value"
+      type: 'POST',
+      data: JSON.stringify(attr)
+
+    ajax_error = (xhr, statusText, error) =>
+      Ui.spin_off @el
+      Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
+      @renderErrors $.parseJSON(xhr.responseText)
+
+    ajax_success = (data, textStatus, jqXHR) =>
+      Ui.spin_off @el
+      Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
+      $(@el).dialog('close')
+      Subscription.fetch()
+
+    Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+
+class Merge extends App.ExtendedController
+  events:
+    'submit form': 'submit'
+
+  constructor: (params) ->
+    super
+
+  render: =>
+    @html @view('admin/subscriptions/transfer_overpaid')(@)
+    Ui.load_ui(@el)
+
+  submit: (e) ->
+    e.preventDefault()
+    attr = $(e.target).serializeObject()
+    Ui.spin_on @el
+
+    settings =
+      url: "#{Subscription.url()}/#{@subscription_id}/merge"
       type: 'POST',
       data: JSON.stringify(attr)
 

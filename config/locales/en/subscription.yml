@@ -30,6 +30,7 @@ en:
       the_following_members_were_updated: The following members were updated
     views:
       contextmenu:
+        merge: merge with another subscription
         add_members_to_subscription: add members to subscription
         destroy_subscription: destroy subscription
         edit_subscription: edit subscription
@@ -67,6 +68,9 @@ en:
         title: title
         to: to
         value: value
+      merge:
+        source_subscription_id_missing: Source subscription ID missing
+        destination_subscription_id_missing: Destination subscription ID missing
       tag_tool:
         date: date
         member: member

@@ -46,7 +46,9 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
     existing_people_ids = []
     new_people_ids = []
 
-    parent_and_reminders = Subscription.find(options[:parent_subscription_id]).self_and_descendants.map(&:id)
+    if options[:parent_subscription_id] # 'renewal' or 'reminder'
+      parent_and_reminders = Subscription.find(options[:parent_subscription_id]).self_and_descendants.map(&:id)
+    end
 
     transaction do
       options[:people_ids].each do |id|

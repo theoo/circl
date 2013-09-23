@@ -30,6 +30,7 @@ fr:
       the_following_members_were_updated: Les membres suivants ont étés mis à jour
     views:
       contextmenu:
+        merge: fusionner avec une autre inscription
         add_members_to_subscription: ajouter des membres à l'inscription
         destroy_subscription: détruire l'inscription
         edit_subscription: modifier l'inscription
@@ -67,6 +68,9 @@ fr:
         title: titre
         to: à
         value: valeur
+      merge:
+        source_subscription_id_missing: ID de l'inscription source manquant
+        destination_subscription_id_missing: ID de l'inscription de destination manquant
       tag_tool:
         date: date
         member: membre

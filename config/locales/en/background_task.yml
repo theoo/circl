@@ -4,7 +4,8 @@ en:
     mail:
       error_report_title: Error report
     tasks:
-      add_people_to_subscription_and_email: Add %{people_count} people to subscription %{subscription_id} - %{subscription_title}
+      merge_subscriptions: Merging subscription %{source_subscription_id} in %{destination_subscription_id}
+      add_people_to_subscription_and_email: Adding %{people_count} people to subscription %{subscription_id} - %{subscription_title}
       concat_and_email_subscription_pdf: Merging in a file invoices from %{people_count} people of subscription %{subscription_id} - %{subscription_title}
       generate_invoice_pdf: Generating PDF for invoice %{invoice_id} - %{invoice_title}
       generate_invoice_template_jpg: Generating JPG for invoice template %{invoice_template_id} - %{invoice_template_title}
