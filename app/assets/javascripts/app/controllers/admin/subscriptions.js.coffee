@@ -294,7 +294,7 @@ class Index extends App.ExtendedController
 
   view_members_who_paid: (e) ->
     id = $(e.target).subscription_id()
-    App.search_query(search_string: "paid_subscriptions.id:#{id}")
+    App.search_query(search_string: "paid_subscriptions_or_reminders.id:#{id}")
 
   view_members_who_didnt_paid: (e) ->
     id = $(e.target).subscription_id()

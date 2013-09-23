@@ -382,7 +382,7 @@
 
 - model: Person
   name: paid_subscriptions_or_reminders
-  indexing: paid_subscriptions.map{|s| s.self_and_parents.map(&:as_indexed_json)}
+  indexing: paid_subscriptions.map{|s| s.self_and_parents.map(&:as_indexed_json) or s.self_and_descendants.map(&:as_indexed_json)}.flatten
   mapping:
     type: object
     properties: Subscription.mapping
