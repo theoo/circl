@@ -55,5 +55,8 @@ module Directory
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # TODO put this in the configuration table
     config.time_zone = 'Bern'
+
+    # Setup Devise custom layout for email
+    config.to_prepare { Devise::Mailer.layout "mail" }
   end
 end
