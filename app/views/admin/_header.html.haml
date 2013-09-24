@@ -1,0 +1,25 @@
+.row
+  .col-lg-12
+    #secondary_navigation.navbar.navbar-default.navbar-static-top
+      .container
+        .collapse.navbar-collapse
+          %ul#sub_nav.nav.navbar-nav
+            - if can? :update, PrivateTag
+              %li
+                %a{:href => '#tags'}
+                  = I18n.t('admin.views.tags')
+
+            - if can? :update, Affair
+              %li
+                %a{:href => '#affairs'}
+                  = I18n.t('admin.views.affairs')
+
+            - if can? :update, Invoice
+              %li
+                %a{:href => '#finances'}
+                  = I18n.t('admin.views.finances')
+
+            - if can? :create, Person
+              %li
+                %a{:href => '#tools'}
+                  = I18n.t('admin.views.tools')

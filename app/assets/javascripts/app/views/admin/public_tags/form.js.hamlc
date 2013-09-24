@@ -32,3 +32,34 @@
       .col-lg-12
         .pull-right
           != @partial('submit_button')(@tag)
+
+        - unless @tag.isNew()
+          .btn-group
+            %button{:name => "tag-destroy",
+                    :class => 'btn btn-danger' }
+              .glyphicon.glyphicon-remove
+              = I18n.t('common.destroy')
+
+            .btn-group
+              %button{:data-toggle => 'dropdown',
+                      :type => 'button',
+                      :class => 'btn btn-default dropdown-toggle' }
+                .glyphicon.glyphicon-user
+                = I18n.t('tag.views.members')
+                .caret
+
+              %ul.dropdown-menu
+                %li
+                  %a{:href => '#', :name => 'tag-view-members'}
+                    .glyphicon.glyphicon-eye-open
+                    = I18n.t('tag.views.actions.view_tag_members')
+                - if @tag.members_count > 0
+                  %li
+                    %a{:href => '#', :name => 'tag-remove-members'}
+                      .glyphicon.glyphicon-minus
+                      = I18n.t('tag.views.actions.remove_all_members')
+                %li
+                  %a{:href => '#', :name => 'tag-add-members'}
+                    .glyphicon.glyphicon-plus
+                    = I18n.t('tag.views.actions.add_members')
+

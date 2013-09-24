@@ -1,31 +1,4 @@
-- edit_tag_trad = I18n.t('tag.views.contextmenu.edit_tag')
-- show_tag_members_trad = I18n.t('tag.views.contextmenu.view_tag_members')
-- remove_all_members_trad = I18n.t('tag.views.contextmenu.remove_all_members')
-- add_members_trad = I18n.t('tag.views.contextmenu.add_members')
-- destroy_tag_trad = I18n.t('tag.views.contextmenu.destroy_tag')
-
-%menu.context_menu_actions
-  %command{ :data-label => edit_tag_trad,
-            :data-event => 'tag-edit',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => show_tag_members_trad,
-            :data-event => 'tag-members',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => add_members_trad,
-            :data-event => 'tag-add-members',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => remove_all_members_trad,
-            :data-event => 'tag-remove-members',
-            :data-icon => 'delete' }
-
-  %command{ :data-label => destroy_tag_trad,
-            :data-event => 'tag-destroy',
-            :data-icon => 'delete' }
-
-%table.with_contextmenu.datatable
+%table.datatable
   %thead
     %tr
       %th= I18n.t('common.id')
@@ -35,15 +8,7 @@
 
   %tbody
     - for tag in App.PrivateTag.all()
-
-      - actions = [ edit_tag_trad, show_tag_members_trad, add_members_trad ]
-      - if tag.members_count > 0
-        - actions.push remove_all_members_trad
-      - else
-        - actions.push destroy_tag_trad
-
-      %tr{:data-id => tag.id,
-          :data-actions => actions }
+      %tr{:data-id => tag.id, :class => 'item'}
         %td= tag.id
         %td= tag.name
         %td= tag.parent_name

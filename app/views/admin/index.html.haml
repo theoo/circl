@@ -1,28 +1,4 @@
-.row
-  .col-lg-12
-    #secondary_navigation.navbar.navbar-default.navbar-static-top
-      .container
-        .collapse.navbar-collapse
-          %ul#sub_nav.nav.navbar-nav
-            - if can? :update, PrivateTag
-              %li
-                %a{:href => '#tags'}
-                  = I18n.t('admin.views.tags')
-
-            - if can? :update, Affair
-              %li
-                %a{:href => '#affairs'}
-                  = I18n.t('admin.views.affairs')
-
-            - if can? :update, Invoice
-              %li
-                %a{:href => '#finances'}
-                  = I18n.t('admin.views.finances')
-
-            - if can? :create, Person
-              %li
-                %a{:href => '#tools'}
-                  = I18n.t('admin.views.tools')
+= render :partial => 'header'
 
 .container
   .row
@@ -55,25 +31,25 @@
         .col-lg-6
 
     #finances.tab-pane.fade
-      .row
-        .col-lg-6
-        .col-lg-6
-          - if can? :update, Receipt
-            #admin_receipts.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('admin.views.receipts')
+      //.row
+      //  .col-lg-6
+      //  .col-lg-6
+      //    - if can? :update, Receipt
+      //      #admin_receipts.panel.panel-default
+      //        .panel-heading
+      //          .panel-title
+      //            = I18n.t('admin.views.receipts')
 
     #tools.tab-pane.fade
-      .row
-        .col-lg-6
-          - if can? :create, Person
-            #admin_import_people.widget
-              .panel-heading
-                .panel-title
-                  %legend= I18n.t('admin.views.import_people')
+      //.row
+      //  .col-lg-6
+      //    - if can? :create, Person
+      //      #admin_import_people.widget
+      //        .panel-heading
+      //          .panel-title
+      //            %legend= I18n.t('admin.views.import_people'//)
 
-        .col-lg-6
+      //  .col-lg-6
 
 
 -#    #affairs.tab-pane.fade
