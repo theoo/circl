@@ -1,51 +1,91 @@
-.submenu
+.row
+  .col-lg-12
+    #secondary_navigation.navbar.navbar-default.navbar-static-top
+      .container
+        .collapse.navbar-collapse
+          %ul#sub_nav.nav.navbar-nav
+            - if can? :update, Language
+              %li
+                %a{:href => '#properties'}
+                  = I18n.t('settings.views.properties')
 
-  .tools
-    %ul
-      %li= link_to I18n.t("common.expand_all_widgets"), '#', :id => 'expand_all_widgets'
-      %li= link_to I18n.t("common.clip_all_widgets"), '#', :id => 'clip_all_widgets'
-      %li= link_to I18n.t("common.rearrange_widgets"), '#', :id => 'rearrange_widgets'
+            - if can? :update, InvoiceTemplate
+              %li
+                %a{:href => '#templates'}
+                  = I18n.t('settings.views.templates')
 
-#content_wrapper
-  #content
-    - flash_messages
+            - if can? :update, ApplicationSetting
+              %li
+                %a{:href => '#advanced'}
+                  = I18n.t('settings.views.advanced')
 
-    - if can? :update, Language
-      #settings_languages.widget.pinable
-        %legend= I18n.t("settings.views.languages")
-        .content
+.container
+  .row
+    .col-lg-3
+    .col-lg-6
+      -# TODO put the right object below
+      -#- error_messages_for(@settings)
+    .col-lg-3
 
-    - if can? :update, Location
-      #settings_locations.widget.pinable
-        %legend= I18n.t("settings.views.locations")
-        .content
+  .tab-content
+    #properties.tab-pane.fade
+      .row
+        .col-lg-6
+          - if can? :update, Location
+            #settings_locations.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.locations')
+        .col-lg-6
+          - if can? :update, Language
+            #settings_languages.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.languages')
+        
+      .row
+        .col-lg-6
+          - if can? :update, Job
+            #settings_jobs.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.jobs')
+        .col-lg-6
 
-    - if can? :update, Job
-      #settings_jobs.widget
-        %legend= I18n.t("settings.views.jobs")
-        .content
+    #templates.tab-pane.fade
+      .row
+        .col-lg-6
+          - if can? :update, InvoiceTemplate
+            #settings_invoice_templates.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.invoice_templates')
+        .col-lg-6
+          - if can? :update, Role
+            #settings_roles.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.roles')
 
-    - if can? :update, InvoiceTemplate
-      #settings_invoice_templates.widget.pinable
-        %legend= I18n.t("settings.views.invoice_templates")
-        .content
-
-    - if can? :update, Role
-      #settings_roles.widget.pinable
-        %legend= I18n.t("settings.views.roles")
-        .content
-
-    - if can? :update, SearchAttribute
-      #settings_search_attributes.widget.pinable
-        %legend= I18n.t("settings.views.search_attributes")
-        .content
-
-    - if can? :update, LdapAttribute
-      #settings_ldap_attributes.widget.pinable
-        %legend= I18n.t("settings.views.ldap_attributes")
-        .content
-
-    - if can? :update, ApplicationSetting
-      #settings_application_settings.widget.pinable
-        %legend= I18n.t("settings.views.application_settings")
-        .content
+    #advanced.tab-pane.fade
+      .row
+        .col-lg-6
+          - if can? :update, SearchAttribute
+            #settings_search_attributes.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.search_attributes')
+        .col-lg-6
+          - if can? :update, LdapAttribute
+            #settings_ldap_attributes.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.ldap_attributes')
+      .row
+        .col-lg-6
+          - if can? :update, ApplicationSetting
+            #settings_application_settings.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.application_settings')
+        .col-lg-6

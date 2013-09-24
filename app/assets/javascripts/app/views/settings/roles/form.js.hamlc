@@ -1,22 +1,33 @@
-%form
-  .validation_errors_placeholder
-  .block
-    .float_right
-      %label.white &nbsp;
-      != @partial('submit_button')(@role)
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-    %label= I18n.t('role.views.name')
-    %input{ :type => 'text',
-            :name => 'name',
-            :value => @role.name,
-            :class => 'required' }
+    .row
+      .col-lg-6
+        .form-group
+          %label{:for => 'settings_role_name'}
+            = I18n.t('role.views.name')
+          %input{ :type => 'text',
+                  :name => 'name',
+                  :id => 'settings_role_name',
+                  :value => @role.name,
+                  :class => 'form-control required' }
+      .col-lg-6
 
-  .block
-    .full_width_textarea
-      %label= I18n.t('role.views.description')
-      %textarea{:name => 'description',
-                :rows => 5,
-                :class => 'like_an_input' }
-        = @role.description
-      
-.block
+    .row
+      .col-lg-12
+        .form-group
+          %label{:for => 'settings_role_description'}
+            = I18n.t('role.views.description')
+          %textarea{:name => 'description',
+                    :id => 'settings_role_description',
+                    :rows => 5,
+                    :class => 'form-control' }
+            = @role.description
+
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')(@role)

@@ -1,22 +1,30 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  .stackable-block
-    %label= I18n.t('ldap_attribute.views.name')
-    %input{ :type => 'text',
-            :name => 'name',
-            :value => @ldap_attribute.name,
-            :class => 'required' }
+    .row
+      .col-lg-6
+        .form-group
+          %label{:for => 'settings_ldap_attribute_name'}
+            = I18n.t('ldap_attribute.views.name')
+          %input{ :type => 'text',
+                  :name => 'name',
+                  :id => 'settings_ldap_attribute_name',
+                  :value => @ldap_attribute.name,
+                  :class => 'form-control required' }
+      .col-lg-6
+        .form-group
+          %label{:for => 'settings_ldap_attribute_mapping'}
+            = I18n.t('ldap_attribute.views.mapping')
+          %input{ :type => 'text',
+                  :name => 'mapping',
+                  :id => 'settings_ldap_attribute_mapping',
+                  :value => @ldap_attribute.mapping,
+                  :class => 'form-control required' }
 
-  .stackable-block
-    %label= I18n.t('ldap_attribute.views.mapping')
-    %input{ :type => 'text',
-            :name => 'mapping',
-            :value => @ldap_attribute.mapping,
-            :class => 'required' }
-
-  .float_right
-    %label.white .
-    != @partial('submit_button')(@ldap_attribute)
-
-.block.clear
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')(@ldap_attribute)

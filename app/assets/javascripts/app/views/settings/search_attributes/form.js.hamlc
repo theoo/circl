@@ -1,41 +1,63 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  .block
-    .float_right
-      != @partial('submit_button')(@search_attribute)
+    .row
+      .col-lg-6
+        .form-group
+          %label{:for => 'settings_search_attribute_name'}
+            = I18n.t('search_attribute.views.name')
+          %input{ :type => 'text',
+                  :name => 'name',
+                  :id => 'settings_search_attribute_name',
+                  :value => @search_attribute.name,
+                  :class => 'form-control required' }
+      .col-lg-6
 
-    %label= I18n.t('search_attribute.views.model')
-    %input{ :type => 'text',
-            :name => 'model',
-            :value => @search_attribute.model,
-            :class => 'required' }
-  .block
-    %label= I18n.t('search_attribute.views.name')
-    %input{ :type => 'text',
-            :name => 'name',
-            :value => @search_attribute.name,
-            :class => 'required' }
+    .row
+      .col-lg-6
+        .form-group
+          %label{:for => 'settings_search_attribute_model'}
+            = I18n.t('search_attribute.views.model')
+          %input{ :type => 'text',
+                  :name => 'model',
+                  :id => 'settings_search_attribute_model',
+                  :value => @search_attribute.model,
+                  :class => 'form-control required' }
+      .col-lg-6
+        .form-group
+          %label{:for => 'settings_search_attribute_group'}
+            = I18n.t('search_attribute.views.group')
+          %input{ :type => 'text',
+                  :name => 'group',
+                  :id => 'settings_search_attribute_group',
+                  :value => @search_attribute.group,
+                  :class => 'form-control' }
 
-  .block
-    %label= I18n.t('search_attribute.views.indexing')
-    .full_width_textarea
-      %textarea{:name => 'indexing',
-                :rows => 5,
-                :class => 'like_an_input required' }
-        = @search_attribute.indexing
-  .block
-    %label= I18n.t('search_attribute.views.mapping')
-    .full_width_textarea
-      %textarea{:name => 'mapping',
-                :rows => 5,
-                :class => 'like_an_input required' }
-        = JSON.stringify(@search_attribute.mapping, null, 4)
+    .row
+      .col-lg-12
+        .form-group
+          %label{:for => 'settings_search_attribute_indexing'}
+            = I18n.t('search_attribute.views.indexing')
+          %textarea{:name => 'indexing',
+                    :id => 'settings_search_attribute_indexing',
+                    :rows => 5,
+                    :class => 'form-control required' }
+            = @search_attribute.indexing
+    .row
+      .col-lg-12
+        .form-group
+          %label{:for => 'settings_search_attribute_mapping'}
+            = I18n.t('search_attribute.views.mapping')
+          %textarea{:name => 'mapping',
+                    :id => 'settings_search_attribute_mapping',
+                    :rows => 5,
+                    :class => 'form-control required' }
+            = JSON.stringify(@search_attribute.mapping, null, 4)
 
-  .block
-    %label= I18n.t('search_attribute.views.group')
-    %input{ :type => 'text',
-            :name => 'group',
-            :value => @search_attribute.group }
-
-.block
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')(@search_attribute)

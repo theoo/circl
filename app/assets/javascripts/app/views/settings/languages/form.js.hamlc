@@ -1,23 +1,30 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  .block
-    .stackable-block
-      %label= I18n.t('language.views.name')
-      %input{ :type => 'text',
-              :name => 'name',
-              :value => @language.name,
-              :class => 'required' }
+    .row
+      .col-lg-6
+        .form-group
+          %label{:for => 'settings_language_name'}
+            = I18n.t('language.views.name')
+          %input{ :type => 'text',
+                  :name => 'name',
+                  :id => 'settings_language_name',
+                  :value => @language.name,
+                  :class => 'form-control required' }
+      .col-lg-6
+        .form-group
+          %label{:for => 'settings_language_code'}
+            = I18n.t('language.views.code')
+          %input{ :type => 'text',
+                  :name => 'code',
+                  :id => 'settings_language_code',
+                  :value => @language.code,
+                  :class => 'form-control' }
 
-    .stackable-block
-      %label= I18n.t('language.views.code')
-      %input{ :type => 'text',
-              :name => 'code',
-              :value => @language.code,
-              :class => 'small' }
-
-    .float_right
-      %label.white &nbsp;
-      != @partial('submit_button')(@language)
-
-.block
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')(@language)
