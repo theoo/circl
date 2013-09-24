@@ -182,9 +182,9 @@
               - missing_fields = missing_fields.join(", ")
               .alert.alert-warning
                 = I18n.t('salaries.salary.errors.the_required_information_about_this_person_are_not_satisfied', {required_fields: missing_fields} )
-            - else
-              %h3
-                = I18n.t('person.views.employee_information')
+          - else
+            %h3
+              = I18n.t('person.views.employee_information')
 
       .row
         .col-lg-6.form-group

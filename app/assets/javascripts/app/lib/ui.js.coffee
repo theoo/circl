@@ -26,6 +26,7 @@ class Ui
     @load_number_precision(context)
     @load_password_strength(context)
     @load_tabs(context)
+    @override_rails(context)
 
     # FIXME http://getbootstrap.com/javascript/#tooltips the event
     # should be trigged without calling this line (?)
@@ -92,6 +93,10 @@ class Ui
         input_group.append $(@)
         input_group.append input_addon
         parent.append input_group
+
+  override_rails: (context) ->
+    $('.field_with_errors').each ->
+      $(@).closest('.form-group').addClass('has-error')
 
   load_datatable: (table) ->
     # ensure datatable isn't already loaded on this table
@@ -238,17 +243,26 @@ class Ui
     # display password strength on .strong_password input[type=password] fields
     if context.find('.strong_password').length > 0
       $.strength '#person_email', '#person_password.strong_password', (email, password, strength) ->
-        div = $(password).next('div.strength')
+        div = $("#password_strength")
 
         if (!div.length)
           $(password).after('<div class="strength">')
           div = $('div.strength')
 
-        $(div).removeClass('weak')
-              .removeClass('good')
-              .removeClass('strong')
-              .addClass(strength.status)
-              .html(strength.status)
+        switch strength.status
+          when 'weak'
+            strength_class = 'label-danger'
+            strength_title = I18n.t("common.weak")
+          when 'good'
+            strength_class = 'label-warning'
+            strength_title = I18n.t("common.good")
+          when 'strong'
+            strength_class = 'label-success'
+            strength_title = I18n.t("common.strong")
+
+        $(div).removeClass('label-danger label-warning label-success')
+              .addClass(strength_class)
+              .html(strength_title)
 
 #--- ui tools ---
   unpin_widget: (widget) ->

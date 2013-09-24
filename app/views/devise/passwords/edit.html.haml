@@ -1,25 +1,32 @@
-%div{:style => 'width: 525px;', :class => 'centered'}
+.container
+  .panel.panel-default
+    .panel-heading
+      .panel-title
+        = I18n.t('devise.views.change_your_password')
 
-  .widget
-    %legend
-      = I18n.t('devise.views.change_your_password')
+    .panel-body
+      = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
+      .row
+        .col-lg-12
+          - devise_error_messages!
+          = f.hidden_field :reset_password_token
 
-    = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
 
-      - devise_error_messages!
-      = f.hidden_field :reset_password_token
+      .row
+        .col-lg-2
+        .col-lg-8
+          .form-group
+            = f.label I18n.t('devise.views.new_password'), :for => 'person_password'
+            .pull-right
+              #password_strength
+            = f.password_field :password, :style => 'width: 80%', :class => "form-control"
 
-      %div{:class => 'half', :style => 'margin: 10px auto;'}
+          .form-group
+            = f.label I18n.t('devise.views.confirm_new_password'), :for => 'person_password_confirmation'
+            = f.password_field :password_confirmation, :class => 'form-control'
 
-        = f.label I18n.t('devise.views.new_password')
-        = f.password_field :password, :style => 'width: 80%', :class => "strong_password"
+          .pull-right
+            = f.submit I18n.t('devise.views.change_my_password'), :class => 'btn btn-default'
 
-        = f.label I18n.t('devise.views.confirm_new_password')
-        = f.password_field :password_confirmation, :style => 'width: 80%'
-
-        = f.submit I18n.t('devise.views.change_my_password'), :style => 'width: 80%'
-
-        %br
-        %br
-
-        = render :partial => 'devise/shared/links'
+          = render :partial => 'devise/shared/links'
+        .col-lg-2

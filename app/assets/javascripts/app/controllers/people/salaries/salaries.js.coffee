@@ -40,8 +40,6 @@ class New extends App.ExtendedController
     super
     Person.bind 'refresh', @active
     PersonSalary.bind 'refresh', @active
-    # FIXME Ref selection doesn't work if this callback is set (?)
-    # PersonSalaryTemplate.bind 'refresh', @active
 
   get_reference_id:  =>
     # (Try to) fetch reference_id from DOM
@@ -69,7 +67,7 @@ class New extends App.ExtendedController
 
     @new_reference_selected = @is_new_reference()
 
-    if @new_reference_selected
+    if @new_reference_selected or PersonSalary.all().length == 0
       @salary.is_reference        = true
       @salary.paid                = false
       @salary.married             = false
@@ -281,5 +279,6 @@ class App.PersonSalaries extends Spine.Controller
 
   activate: ->
     super
-    PersonSalary.fetch()
     SalaryTemplate.fetch()
+    SalaryTemplate.one 'refresh', ->
+      PersonSalary.fetch()

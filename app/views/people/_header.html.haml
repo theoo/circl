@@ -1,0 +1,43 @@
+.row
+  .col-lg-12
+    #secondary_navigation.navbar.navbar-default.navbar-static-top
+      .container
+        .collapse.navbar-collapse
+          %ul#sub_nav.nav.navbar-nav
+            - if can? :read, @person
+              %li
+                %a{:href => '#info'}
+                  = @person.name
+
+            - if can? :read, Affair
+              %li
+                %a{:href => '#affairs'}
+                  = I18n.t('person.views.affairs')
+
+            - if can? :read, Salaries::Salary
+              %li
+                %a{:href => '#salaries'}
+                  = I18n.t('person.views.salaries')
+
+            - if can? :read, Role
+              %li
+                %a{:href => '#permissions'}
+                  = I18n.t('person.views.permissions')
+
+            - if can? :read, Activity
+              %li
+                %a{:href => '#activities'}
+                  = I18n.t('person.views.activities')
+
+          .navbar-right.btn-group
+            - if can? :change_password, @person
+              = link_to I18n.t('person.views.change_password'),
+                  change_password_person_path(@person),
+                  :class => 'btn btn-default navbar-btn'
+
+            - if can? :destroy, @person
+              = link_to I18n.t('person.views.destroy'),
+                  person_path(@person),
+                  :method => :delete,
+                  :confirm => I18n.t('common.are_you_sure'),
+                  :class => 'btn btn-danger navbar-btn'
