@@ -1,6 +1,9 @@
 ---
 fr:
   common:
+    weak: faible
+    good: bon
+    strong: fort
     reset: réinitialiser
     adjust: ajuster
     preview_in_new_tab: prévisualiser dans un nouvel onglet

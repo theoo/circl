@@ -118,8 +118,9 @@ class App.SettingsRolePermissions extends Spine.Controller
       close: (event, ui) ->
         RolePermission.refresh([], clear: true)
 
-    container = Ui.stack_window('edit-permission-window', {width: 700, remove_on_close: false})
-    @edit = new Edit(el: container)
+    #container = Ui.stack_window('edit-permission-window', {width: 700, remove_on_close: false})
+    # @edit = new Edit(el: container)
+    @edit = new Edit
 
     @selected_permissions_index = new SelectedPermissionsIndex
     @available_permissions_index = new AvailablePermissionsIndex

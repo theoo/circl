@@ -94,11 +94,11 @@ class Index extends App.ExtendedController
 
     container_id = 'edit-permissions-window'
 
-    Ui.stack_window(container_id, {width: 1200, remove_on_close: true})
-    @permissions_controller = new App.SettingsRolePermissions({role_id: role.id, el: '#' + container_id})
-    $('#' + container_id).modal({title: "#{I18n.t('role.view.edit_permissions_for_role')} '#{role.name}'"})
-    $('#' + container_id).modal('show')
-    @permissions_controller.activate()
+    # Ui.stack_window(container_id, {width: 1200, remove_on_close: true})
+    # @permissions_controller = new App.SettingsRolePermissions({role_id: role.id, el: '#' + container_id})
+    # $('#' + container_id).modal({title: "#{I18n.t('role.view.edit_permissions_for_role')} '#{role.name}'"})
+    # $('#' + container_id).modal('show')
+    # @permissions_controller.activate()
 
 class App.SettingsRoles extends Spine.Controller
   className: 'roles'
