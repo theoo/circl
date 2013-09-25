@@ -16,24 +16,20 @@
 
 Affair = App.Affair
 
-$.fn.affair = ->
-  elementID   = $(@).data('id')
-  elementID ||= $(@).parents('[data-id]').data('id')
-  Affair.find(elementID)
-
 class Index extends App.ExtendedController
   events:
-    'affair-edit':      'edit'
+    'click tr.item': 'edit'
 
   constructor: (params) ->
     super
+    Affair.bind 'refresh', @render
 
   render: =>
     @html @view('admin/affairs/index')(@)
     Ui.load_ui(@el)
 
   edit: (e) ->
-    id = $(e.target).attr('data-id')
+    id = $(e.target).parents('[data-id]').data('id')
     Affair.one 'refresh', =>
       affair = Affair.find(id)
       window.location = "/people/#{affair.owner_id}?folding=person_affairs"
@@ -50,4 +46,4 @@ class App.AdminAffairs extends Spine.Controller
 
   activate: ->
     super
-    @index.render()
+    Affair.fetch()

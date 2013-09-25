@@ -1,153 +1,259 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  .block
-    .stackable-block
-      %label= I18n.t('subscription.views.title')
-      %input{:type => 'text',
-             :name => 'title',
-             :class => 'required',
-             :value => @subscription.title}
+    .row
+      .col-lg-6
+        .row
+          .col-lg-6
+            .form-group
+              %label{:for => 'admin_subscription_title'}
+                = I18n.t('subscription.views.title')
+              %input{:type => 'text',
+                     :name => 'title',
+                     :id => 'admin_subscription_title',
+                     :class => 'required form-control',
+                     :value => @subscription.title}
 
-    .stackable-block
-      .autocompleted
-        %label= I18n.t('common.parent')
-        %input{ :type => 'search',
-                :name => 'subscription_parent_title',
-                :value => @subscription.parent_title,
-                :action => '/admin/subscriptions/search' }
+          .col-lg-6
+            .form-group.autocompleted
+              %label{:for => 'admin_subscription_parent'}
+                = I18n.t('common.parent')
+              %input{ :type => 'search',
+                      :name => 'subscription_parent_title',
+                      :id => 'admin_subscription_parent',
+                      :class => 'form-control',
+                      :value => @subscription.parent_title,
+                      :action => '/admin/subscriptions/search' }
 
-        %input{ :type => 'hidden',
-                :name => 'parent_id',
-                :value => @subscription.parent_id }
+              %input{ :type => 'hidden',
+                      :name => 'parent_id',
+                      :value => @subscription.parent_id }
 
-        %input{ :type => 'hidden',
-                :name => 'status',
-                :value => @status }
+              %input{ :type => 'hidden',
+                      :name => 'status',
+                      :value => @status }
 
-  .block
-  .full_width_textarea
-    %label= I18n.t('subscription.views.description')
-    %textarea{:name => 'description',
-              :rows => 5,
-              :class => 'like_an_input'}
-      = @subscription.description
+        .row
+          .col-lg-12
+            .form-group
+              %label{:for => 'admin_subscription_description'}
+                = I18n.t('subscription.views.description')
+              %textarea{:name => 'description',
+                        :rows => 5,
+                        :id => 'admin_subscription_description',
+                        :class => 'form-control'}
+                = @subscription.description
 
 
-  .block
-    %h3= I18n.t('subscription.views.interval_title')
-    .stackable-block
-      %label= I18n.t('subscription.views.from')
-      %input{:type => 'text',
-             :name => 'interval_starts_on',
-             :class => 'datepicker',
-             :value => @subscription.interval_starts_on }
+        %h3= I18n.t('subscription.views.interval_title')
+        .row
+          .col-lg-6
+            .form-group
+              %label{:for => 'admin_subscription_interval_starts_on'}
+                = I18n.t('subscription.views.from')
+              %input{:type => 'text',
+                     :name => 'interval_starts_on',
+                     :id => 'admin_subscription_interval_starts_on',
+                     :class => 'datepicker form-control',
+                     :value => @subscription.interval_starts_on }
 
-    .stackable-block
-      %label= I18n.t('subscription.views.to')
-      %input{:type => 'text',
-             :name => 'interval_ends_on',
-             :class => 'datepicker',
-             :value => @subscription.interval_ends_on }
+          .col-lg-6
+            .form-group
+              %label{:for => 'admin_subscription_interval_ends_on'}
+                = I18n.t('subscription.views.to')
+              %input{:type => 'text',
+                     :name => 'interval_ends_on',
+                     :id => 'admin_subscription_interval_ends_on',
+                     :class => 'datepicker form-control',
+                     :value => @subscription.interval_ends_on }
 
-  .block
-    %br
-    %h3= I18n.t('subscription.views.values_title')
+      .col-lg-6
+        %h3= I18n.t('subscription.views.values_title')
 
-    %table{:class => "category", :style => 'width: 484px'}
-      %thead
-        %tr
-          %th
-          %th= I18n.t('subscription.views.values.private_tag')
-          %th= I18n.t('subscription.views.values.value')
-          %th= I18n.t('subscription.views.values.invoice_template')
-          %th
+        %table.table
+          %thead
+            %tr
+              %th
+              %th= I18n.t('subscription.views.values.private_tag')
+              %th= I18n.t('subscription.views.values.value')
+              %th= I18n.t('subscription.views.values.invoice_template')
+              %th
 
-      %tbody
-        - for value, index in @subscription.values
-          %tr{'data-id' => value.id, :class => 'item'}
-            %td.handle
-              %span.sort_handle.ui-icon.ui-icon-arrowthick-2-n-s
+          %tbody
+            - for value, index in @subscription.values
+              %tr{'data-id' => value.id, :class => 'item'}
+                %td.handle
+                  .glyphicon.glyphicon-resize-vertical
 
-            %td
-              .autocompleted
-                %input{ :name => "values[][private_tag_name]",
-                        :type => 'search',
-                        :value => value.private_tag_name,
-                        :class => 'small',
-                        :action => '/admin/private_tags/search' }
+                %td
+                  .autocompleted
+                    %input{ :name => "values[][private_tag_name]",
+                            :type => 'search',
+                            :value => value.private_tag_name,
+                            :class => 'form-control',
+                            :action => '/admin/private_tags/search' }
 
-                %input{ :type => 'hidden',
-                        :name => 'values[][private_tag_id]',
-                        :value => value.private_tag_id }
+                    %input{ :type => 'hidden',
+                            :name => 'values[][private_tag_id]',
+                            :value => value.private_tag_id }
 
-              %input{ :name => "values[][position]", :type => 'hidden', :value => value.position }
-              %input{ :name => "values[][id]", :type => 'hidden', :value => value.id }
+                  %input{ :name => "values[][position]", :type => 'hidden', :value => value.position }
+                  %input{ :name => "values[][id]", :type => 'hidden', :value => value.id }
 
-            %td
-              %input{ :type => 'number',
+                %td
+                  %input{ :type => 'number',
+                          :class => 'form-control',
+                          :step => 0.01,
+                          :min => 0,
+                          :max => 1000000,
+                          :name => 'values[][value]',
+                          :value => value.value }
+
+                %td
+                  %select{:name => 'values[][invoice_template_id]', :class => 'form-control'}
+                    - for l in App.InvoiceTemplate.all()
+                      - if value.invoice_template_id == l.id
+                        %option{:value => l.id, :selected => true}= l.title
+                      - else
+                        %option{:value => l.id}= l.title
+
+                %td
+                  %button{:type => 'button',
+                          :name => 'remove_item',
+                          :class => 'btn btn-danger'}
+                    .glyphicon.glyphicon-remove
+
+            %tr{'data-name' => 'value_item_template', :style => 'display: none;'}
+              %td.handle
+                .glyphicon.glyphicon-resize-vertical
+
+              %td
+                .autocompleted
+                  %input{ :name => "values[][private_tag_name]",
+                          :type => 'search',
+                          :class => 'form-control',
+                          :action => '/admin/private_tags/search' }
+
+                  %input{ :type => 'hidden',
+                          :name => 'values[][private_tag_id]'}
+
+                %input{ :name => "values[][position]", :type => 'hidden' }
+
+              %td
+                %input{ :type => 'number',
+                        :class => 'form-control',
                         :step => 0.01,
                         :min => 0,
                         :max => 1000000,
-                        :name => 'values[][value]',
-                        :value => value.value }
-
-            %td
-              %select{:name => 'values[][invoice_template_id]'}
-                - for l in App.InvoiceTemplate.all()
-                  - if value.invoice_template_id == l.id
-                    %option{:value => l.id, :selected => true}= l.title
-                  - else
+                        :name => 'values[][value]' }
+              %td
+                %select{:name => 'values[][invoice_template_id]', :class => 'form-control'}
+                  %option{:value => ""}
+                  - for l in App.InvoiceTemplate.all()
                     %option{:value => l.id}= l.title
 
-            %td
-              %input{ :type => 'button',
-                      :value => '-',
-                      :name => 'remove_item' }
+              %td
+                %button{:type => 'button',
+                        :name => 'remove_item',
+                        :class => 'btn btn-danger'}
+                  .glyphicon.glyphicon-remove
 
-        %tr{'data-name' => 'value_item_template', :style => 'display: none;'}
-          %td.handle
-            %span.sort_handle.ui-icon.ui-icon-arrowthick-2-n-s
+            %tr{'data-name' => 'value_item_add'}
+              %td
+              %td
+              %td
+              %td
+              %td
+                %button{:type => 'button',
+                        :name => 'add_item',
+                        :class => 'btn btn-default'}
+                  .glyphicon.glyphicon-plus
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')(@subscription)
 
-          %td
-            .autocompleted
-              %input{ :name => "values[][private_tag_name]",
-                      :type => 'search',
-                      :class => 'small',
-                      :action => '/admin/private_tags/search' }
+        - unless @subscription.isNew()
+          .btn-group
+            %button{:name => "subscription-destroy",
+                    :class => 'btn btn-danger' }
+              .glyphicon.glyphicon-remove
+              = I18n.t('common.destroy')
 
-              %input{ :type => 'hidden',
-                      :name => 'values[][private_tag_id]' }
+            .btn-group
+              %button{:data-toggle => 'dropdown',
+                      :type => 'button',
+                      :class => 'btn btn-default dropdown-toggle' }
+                .glyphicon.glyphicon-paperclip
+                = I18n.t('common.pdf')
+                .caret
 
-            %input{ :name => "values[][position]", :type => 'hidden' }
+              %ul.dropdown-menu
+                %li
+                  %a{:href => '#', :name => 'subscription-pdf'}
+                    .glyphicon.glyphicon-download
+                    = I18n.t('subscription.views.actions.view_subscription_pdf')
 
-          %td
-            %input{ :type => 'number',
-                      :step => 0.01,
-                      :min => 0,
-                      :max => 1000000,
-                      :name => 'values[][value]' }
-          %td
-            %select{:name => 'values[][invoice_template_id]'}
-              %option{:value => ""}
-              - for l in App.InvoiceTemplate.all()
-                %option{:value => l.id}= l.title
+            .btn-group
+              %button{:data-toggle => 'dropdown',
+                      :type => 'button',
+                      :class => 'btn btn-default dropdown-toggle' }
+                .glyphicon.glyphicon-user
+                = I18n.t('subscription.views.members')
+                .caret
 
-          %td
-            %input{ :type => 'button',
-                    :value => '-',
-                    :name => 'remove_item' }
+              %ul.dropdown-menu
+                %li
+                  %a{:href => '#', :name => 'subscription-members-add'}
+                    .glyphicon.glyphicon-plus
+                    = I18n.t('subscription.views.actions.add_members_to_subscription')
+                %li
+                  %a{:href => '#', :name => 'subscription-members-remove'}
+                    .glyphicon.glyphicon-minus
+                    = I18n.t('subscription.views.actions.remove_members_from_subscription')
+                %li
+                  %a{:href => '#', :name => 'subscription-members-view'}
+                    .glyphicon.glyphicon-eye-open
+                    = I18n.t('subscription.views.actions.view_subscription_members')
+                %li
+                  %a{:href => '#', :name => 'subscription-buyers-view'}
+                    .glyphicon.glyphicon-eye-open
+                    = I18n.t('subscription.views.actions.view_subscription_buyers')
+                %li
+                  %a{:href => '#', :name => 'subscription-receivers-view'}
+                    .glyphicon.glyphicon-eye-open
+                    = I18n.t('subscription.views.actions.view_subscription_receivers')
+                %li
+                  %a{:href => '#', :name => 'subscription-members-who-paid-view'}
+                    .glyphicon.glyphicon-eye-open
+                    = I18n.t('subscription.views.actions.view_subscription_members_who_paid')
+                %li
+                  %a{:href => '#', :name => 'subscription-members-who-didnt-paid-view'}
+                    .glyphicon.glyphicon-eye-open
+                    = I18n.t('subscription.views.actions.view_subscription_members_who_didnt_paid')
 
-        %tr{'data-name' => 'value_item_add'}
-          %td
-          %td
-          %td
-          %td
-          %td
-            %input{ :type => 'button', :value => '+', :name => 'add_item' }
 
-  .float_right
-    .white &nbsp;
-    != @partial('submit_button')(@subscription)
+            .btn-group
+              %button{:data-toggle => 'dropdown',
+                      :type => 'button',
+                      :class => 'btn btn-default dropdown-toggle' }
+                .glyphicon.glyphicon-user
+                = I18n.t('common.tools')
+                .caret
 
-.block
+              %ul.dropdown-menu
+                %li
+                  %a{:href => '#', :name => 'subscription-transfer-overpaid-value'}
+                    .glyphicon.glyphicon-transfer
+                    = I18n.t('subscription.views.actions.transfer_overpaid_value')
+                %li
+                  %a{:href => '#', :name => 'subscription-reminder'}
+                    .glyphicon.glyphicon-bullhorn
+                    = I18n.t('subscription.views.actions.subscription_reminder')
+                %li
+                  %a{:href => '#', :name => 'subscription-renewal'}
+                    .glyphicon.glyphicon-retweet
+                    = I18n.t('subscription.views.actions.subscription_renewal')

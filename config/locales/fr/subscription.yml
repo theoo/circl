@@ -29,7 +29,8 @@ fr:
       the_following_members_were_already_in_the_subscription: Les membres suivants étaient déjà dans l'inscription
       the_following_members_were_updated: Les membres suivants ont étés mis à jour
     views:
-      contextmenu:
+      members: membres
+      actions:
         add_members_to_subscription: ajouter des membres à l'inscription
         destroy_subscription: détruire l'inscription
         edit_subscription: modifier l'inscription

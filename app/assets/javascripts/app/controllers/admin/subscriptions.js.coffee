@@ -17,12 +17,7 @@
 Subscription = App.Subscription
 InvoiceTemplate = App.InvoiceTemplate
 
-$.fn.subscription_id = ->
-  elementID   = $(@).data('id')
-  elementID ||= $(@).parents('[data-id]').data('id')
-  elementID
-
-$.fn.subscription_value_id = ->
+$.fn.admin_subscription_id = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
   elementID
@@ -40,7 +35,7 @@ class ValueItemsController extends App.ExtendedController
     new_row.removeAttr('data-name')
     new_row.removeAttr('style')
     # this class make it selected on submit
-    new_row.addClass('item') 
+    new_row.addClass('item')
 
     value_item_add = @el.find('tr[data-name="value_item_add"]')
     value_item_add.before(new_row)
@@ -99,8 +94,8 @@ class ValueItemsController extends App.ExtendedController
 class New extends ValueItemsController
   events:
     'submit form':                      'submit'
-    'click input[name="remove_item"]':  'remove_value_item'
-    'click input[name="add_item"]':     'add_value_item'
+    'click button[name="remove_item"]':  'remove_value_item'
+    'click button[name="add_item"]':     'add_value_item'
 
   constructor: (params) ->
     super
@@ -190,8 +185,20 @@ class New extends ValueItemsController
 class Edit extends ValueItemsController
   events:
     'submit form': 'submit'
-    'click input[name="remove_item"]':  'remove_value_item'
-    'click input[name="add_item"]':     'add_value_item'
+    'click button[name="remove_item"]':  'remove_value_item'
+    'click button[name="add_item"]':     'add_value_item'
+    'click button[name=subscription-destroy]':                'destroy'
+    'click a[name=subscription-pdf]':                         'pdf'
+    'click a[name=subscription-members-view]':                'view_members'
+    'click a[name=subscription-buyers-view]':                 'view_buyers'
+    'click a[name=subscription-receivers-view]':              'view_receivers'
+    'click a[name=subscription-members-who-paid-view]':       'view_members_who_paid'
+    'click a[name=subscription-members-who-didnt-paid-view]': 'view_members_who_didnt_paid'
+    'click a[name=subscription-members-add]':                 'add_members'
+    'click a[name=subscription-members-remove]':              'remove_members'
+    'click a[name=subscription-transfer-overpaid-value]':     'transfer_overpaid_value'
+    'click a[name=subscription-reminder]':                    'create_reminder'
+    'click a[name=subscription-renewal]':                     'renew'
 
   constructor: ->
     super
@@ -199,12 +206,12 @@ class Edit extends ValueItemsController
 
   active: (params) ->
     @id = params.id if params.id
+    @subscription = Subscription.find(@id)
     @render()
 
   render: =>
     return unless Subscription.exists(@id)
     @show()
-    @subscription = Subscription.find(@id)
     @html @view('admin/subscriptions/form')(@)
 
     # This should not happen
@@ -221,22 +228,153 @@ class Edit extends ValueItemsController
     attr.values = @fetch_items()
     @save_with_notifications @subscription.load(attr), @hide
 
+  pdf: (e) ->
+    e.preventDefault()
+    win = $("<div class='modal fade' id='invoice-preview' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Update title
+    win.find('h4').text I18n.t('subscription.edit_export_filter') + ": " + @tag.name
+
+    # Adapt width to A4
+    win.find('.modal-dialog')
+
+    # Add preview in new tab button
+    btn = "<button type='button' name='search' class='btn btn-default'>"
+    btn += I18n.t('directory.views.generate_pdf')
+    btn += "</button>"
+    btn = $(btn)
+    win.find('.modal-footer').append btn
+    btn.on 'click', (e) =>
+      e.preventDefault()
+      window.open "#{PersonAffairInvoice.url()}/#{@invoice.id}.html", "_blank"
+
+    controller = new App.DirectoryQueryPresets(el: win.find('.modal-body'))
+    controller.bind 'search', (preset) =>
+
+      settings =
+        url: "#{PrivateTag.url()}/#{@tag.id}/add_members"
+        type: 'POST',
+        data: JSON.stringify(query: preset.query)
+
+      ajax_error = (xhr, statusText, error) =>
+        controller.search.render_errors $.parseJSON(xhr.responseText)
+
+      ajax_success = (data, textStatus, jqXHR) =>
+        $(win).modal('hide')
+        PrivateTag.fetch(id: @tag.id)
+
+      PrivateTag.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+
+    win.modal('show')
+    controller.activate()
+
+    Subscription.one 'refresh', =>
+      # win = Ui.stack_window('filter-subscription-pdf-window', {width: 1200, remove_on_close: true})
+      # controller = new App.DirectoryQueryPresets(el: win, edit: { text:  })
+      # controller.bind 'edit', (preset) =>
+      #   $(win).modal('hide')
+      #   window.location = "#{Subscription.url()}/#{subscription.id}.pdf?#{preset.to_params()}"
+      # $(win).modal({title: })
+      # $(win).modal('show')
+      # controller.activate()
+
+    Subscription.fetch(id: @id)
+
+  destroy: (e) ->
+    e.preventDefault()
+    if confirm(I18n.t('common.are_you_sure'))
+      Subscription.one 'refresh', =>
+        @destroy_with_notifications @subscription
+
+  view_members: (e) ->
+    e.preventDefault()
+    App.search_query(search_string: "subscriptions.id:#{@id}")
+
+  view_buyers: (e) ->
+    e.preventDefault()
+    App.search_query(search_string: "subscriptions_as_buyer.id:#{@id}")
+
+  view_receivers: (e) ->
+    e.preventDefault()
+    App.search_query(search_string: "subscriptions_as_receiver.id:#{@id}")
+
+  view_members_who_paid: (e) ->
+    e.preventDefault()
+    App.search_query(search_string: "paid_subscriptions.id:#{@id}")
+
+  view_members_who_didnt_paid: (e) ->
+    e.preventDefault()
+    App.search_query(search_string: "unpaid_subscriptions.id:#{@id}")
+
+  add_members: (e) ->
+    e.preventDefault()
+    #win = Ui.stack_window('filter-subscription-pdf-window', {width: 1200, remove_on_close: true})
+    #controller = new App.DirectoryQueryPresets(el: win, search: { text: I18n.t('directory.views.add_to_subscription') })
+    #controller.bind 'search', (preset) =>
+    #  Ui.spin_on controller.search.el
+
+    #  settings =
+    #    url: "#{Subscription.url()}/#{subscription.id}/add_members"
+    #    type: 'POST',
+    #    data: JSON.stringify(query: preset.query)
+
+    #  ajax_error = (xhr, statusText, error) =>
+    #    Ui.spin_off controller.search.el
+    #    Ui.notify controller.search.el, I18n.t('common.failed_to_update'), 'error'
+    #    controller.search.render_errors $.parseJSON(xhr.responseText)
+
+    #  ajax_success = (data, textStatus, jqXHR) =>
+    #    Ui.spin_off controller.search.el
+    #    Ui.notify controller.search.el, I18n.t('common.successfully_updated'), 'notice'
+    #    $(win).modal('hide')
+    #    window.location = '/admin'
+
+    #  Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+
+    #$(win).modal({title: I18n.t('subscription.add_members')})
+    #$(win).modal('show')
+    #controller.activate()
+
+
+  remove_members: (e) ->
+    e.preventDefault()
+
+    settings =
+      url: "#{Subscription.url()}/#{@id}/remove_members"
+      type: 'DELETE',
+
+    ajax_error = (xhr, statusText, error) =>
+      @render_errors $.parseJSON(xhr.responseText)
+
+    ajax_success = (data, textStatus, jqXHR) =>
+      Subscription.fetch(id: @id)
+
+    Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+
+  transfer_overpaid_value: (e) ->
+    e.preventDefault()
+    win = Ui.stack_window('subscription-transfer-overpaid-value-window', {width: 500, remove_on_close: true})
+    controller = new TransferOverpaidValue(el: win, subscription_id: subscription.id)
+    $(win).modal({title: I18n.t('subscription.views.contextmenu.transfer_overpaid_value')})
+    $(win).modal('show')
+    controller.render()
+
+  create_reminder: (e) ->
+    e.preventDefault()
+    @trigger 'new', {parent_id: @id, type: 'reminder'}
+
+  renew: (e) ->
+    e.preventDefault()
+    @trigger 'new', {parent_id: @id, type: 'renewal'}
+
 class Index extends App.ExtendedController
   events:
-    'subscription-edit':                        'edit'
-    'subscription-pdf':                         'pdf'
-    'subscription-destroy':                     'destroy'
-    'subscription-members-view':                'view_members'
-    'subscription-buyers-view':                 'view_buyers'
-    'subscription-receivers-view':              'view_receivers'
-    'subscription-members-who-paid-view':       'view_members_who_paid'
-    'subscription-members-who-didnt-paid-view': 'view_members_who_didnt_paid'
-    'subscription-members-add':                 'add_members'
-    'subscription-members-remove':              'remove_members'
-    'subscription-transfer-overpaid-value':     'transfer_overpaid_value'
-    'subscription-reminder':                    'create_reminder'
-    'subscription-renewal':                     'renew'
-    'submit form':                              'stack_tag_tool_window'
+    'click tr.item': 'edit'
+    'click button[name=subscription-tag-tool]':  'tag_tool'
 
   constructor: (params) ->
     super
@@ -247,145 +385,20 @@ class Index extends App.ExtendedController
     Ui.load_ui(@el)
 
   edit: (e) ->
-    id = $(e.target).subscription_id()
+    id = $(e.target).admin_subscription_id()
     Subscription.one 'refresh', =>
       subscription = Subscription.find(id)
       @trigger 'edit', subscription.id
 
     Subscription.fetch(id: id)
 
-  pdf: (e) ->
-    id = $(e.target).subscription_id()
-    Subscription.one 'refresh', =>
-      subscription = Subscription.find(id)
-
-      win = Ui.stack_window('filter-subscription-pdf-window', {width: 1200, remove_on_close: true})
-      controller = new App.DirectoryQueryPresets(el: win, edit: { text: I18n.t('directory.views.generate_pdf') })
-      controller.bind 'edit', (preset) =>
-        $(win).modal('hide')
-        window.location = "#{Subscription.url()}/#{subscription.id}.pdf?#{preset.to_params()}"
-      $(win).modal({title: I18n.t('subscription.edit_export_filter')})
-      $(win).modal('show')
-      controller.activate()
-
-    Subscription.fetch(id: id)
-
-  destroy: (e) ->
-    if confirm(I18n.t('common.are_you_sure'))
-      id = $(e.target).subscription_id()
-      Subscription.one 'refresh', =>
-        subscription = Subscription.find(id)
-        @destroy_with_notifications subscription
-
-      Subscription.fetch(id: id)
-
-  view_members: (e) ->
-    id = $(e.target).subscription_id()
-    App.search_query(search_string: "subscriptions.id:#{id}")
-
-  view_buyers: (e) ->
-    id = $(e.target).subscription_id()
-    App.search_query(search_string: "subscriptions_as_buyer.id:#{id}")
-
-  view_receivers: (e) ->
-    id = $(e.target).subscription_id()
-    App.search_query(search_string: "subscriptions_as_receiver.id:#{id}")
-
-  view_members_who_paid: (e) ->
-    id = $(e.target).subscription_id()
-    App.search_query(search_string: "paid_subscriptions.id:#{id}")
-
-  view_members_who_didnt_paid: (e) ->
-    id = $(e.target).subscription_id()
-    App.search_query(search_string: "unpaid_subscriptions.id:#{id}")
-
-  add_members: (e) ->
-    id = $(e.target).subscription_id()
-    Subscription.one 'refresh', =>
-      subscription = Subscription.find(id)
-
-      win = Ui.stack_window('filter-subscription-pdf-window', {width: 1200, remove_on_close: true})
-      controller = new App.DirectoryQueryPresets(el: win, search: { text: I18n.t('directory.views.add_to_subscription') })
-      controller.bind 'search', (preset) =>
-        Ui.spin_on controller.search.el
-
-        settings =
-          url: "#{Subscription.url()}/#{subscription.id}/add_members"
-          type: 'POST',
-          data: JSON.stringify(query: preset.query)
-
-        ajax_error = (xhr, statusText, error) =>
-          Ui.spin_off controller.search.el
-          Ui.notify controller.search.el, I18n.t('common.failed_to_update'), 'error'
-          controller.search.render_errors $.parseJSON(xhr.responseText)
-
-        ajax_success = (data, textStatus, jqXHR) =>
-          Ui.spin_off controller.search.el
-          Ui.notify controller.search.el, I18n.t('common.successfully_updated'), 'notice'
-          $(win).modal('hide')
-          window.location = '/admin'
-
-        Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
-
-      $(win).modal({title: I18n.t('subscription.add_members')})
-      $(win).modal('show')
-      controller.activate()
-
-    Subscription.fetch(id: id)
-
-  remove_members: (e) ->
-    id = $(e.target).subscription_id()
-    
-    settings =
-      url: "#{Subscription.url()}/#{id}/remove_members"
-      type: 'DELETE',
-
-    ajax_error = (xhr, statusText, error) =>
-      Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
-      @render_errors $.parseJSON(xhr.responseText)
-
-    ajax_success = (data, textStatus, jqXHR) =>
-      Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
-
-    Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
-    Subscription.fetch(id: id)
-
-  transfer_overpaid_value: (e) ->
-    id = $(e.target).subscription_id()
-    Subscription.one 'refresh', =>
-      subscription = Subscription.find(id)
-
-      win = Ui.stack_window('subscription-transfer-overpaid-value-window', {width: 500, remove_on_close: true})
-      controller = new TransferOverpaidValue(el: win, subscription_id: subscription.id)
-      $(win).modal({title: I18n.t('subscription.views.contextmenu.transfer_overpaid_value')})
-      $(win).modal('show')
-      controller.render()
-
-    Subscription.fetch(id: id)
-
-  create_reminder: (e) ->
-    id = $(e.target).subscription_id()
-    Subscription.one 'refresh', =>
-      subscription = Subscription.find(id)
-      @trigger 'new', {parent_id: subscription.id, type: 'reminder'}
-
-    Subscription.fetch(id: id)
-
-  renew: (e) ->
-    id = $(e.target).subscription_id()
-    Subscription.one 'refresh', =>
-      subscription = Subscription.find(id)
-      @trigger 'new', {parent_id: subscription.id, type: 'renewal'}
-
-    Subscription.fetch(id: id)
-
-  stack_tag_tool_window: (e) ->
+  tag_tool: (e) ->
     e.preventDefault()
-    win = Ui.stack_window('subscription-tag-tool-window', {width: 500, remove_on_close: true})
-    controller = new TagTool(el: win)
-    $(win).modal({title: I18n.t('subscription.views.tool_box.tag_tool')})
-    $(win).modal('show')
-    controller.render()
+    # win = Ui.stack_window('subscription-tag-tool-window', {width: 500, remove_on_close: true})
+    # controller = new TagTool(el: win)
+    # $(win).modal({title: I18n.t('subscription.views.tool_box.tag_tool')})
+    # $(win).modal('show')
+    # controller.render()
 
 class TransferOverpaidValue extends App.ExtendedController
   events:
@@ -401,18 +414,16 @@ class TransferOverpaidValue extends App.ExtendedController
   submit: (e) ->
     e.preventDefault()
     attr = $(e.target).serializeObject()
-    
+
     settings =
       url: "#{Subscription.url()}/#{@subscription_id}/transfer_overpaid_value"
       type: 'POST',
       data: JSON.stringify(attr)
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
       @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
       $(@el).modal('hide')
       Subscription.fetch()
 
@@ -432,7 +443,7 @@ class TagTool extends App.ExtendedController
   submit: (e) ->
     e.preventDefault()
     attr = $(e.target).serializeObject()
-    
+
     settings =
       url: "#{Subscription.url()}/tag_tool"
       type: 'POST',
@@ -465,7 +476,7 @@ class App.AdminSubscriptions extends Spine.Controller
       @new.active()
       @new.show()
 
-    @index.bind 'new', (params) =>
+    @edit.bind 'new', (params) =>
       @new.active(params)
       @edit.hide()
 
@@ -480,5 +491,6 @@ class App.AdminSubscriptions extends Spine.Controller
   activate: ->
     super
     InvoiceTemplate.fetch()
-    @new.render()
-    @index.render()
+    InvoiceTemplate.one 'refresh', =>
+      # No need to fetch, datatable is remote and loaded by Ui.js
+      @index.render()

@@ -26,6 +26,7 @@ gem 'password_strength', '0.3.2'
 gem 'json', '1.7.3'
 
 ### Views/UI specific
+gem 'will_paginate', '3.0.3'
 gem 'haml_coffee_assets', '1.1.0'
 
 gem 'tinymce-rails', '3.5.7.1'

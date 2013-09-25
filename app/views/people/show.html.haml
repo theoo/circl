@@ -68,113 +68,113 @@
 
 
     #affairs.tab-pane.fade
-      //.row
-      //  .col-lg-6
-      //    - # TODO Adjust access to every panel
-      //    - if can? :read, @person => Affair
-      //      #person_affairs{:class => 'panel panel-primary', 'data-primary_panel' => "true"}
-      //        .panel-heading
-      //          .panel-title
-      //            = I18n.t('person.views.affairs')
+      .row
+        .col-lg-6
+          - # TODO Adjust access to every panel
+          - if can? :read, @person => Affair
+            #person_affairs{:class => 'panel panel-primary', 'data-primary_panel' => "true"}
+              .panel-heading
+                .panel-title
+                  = I18n.t('person.views.affairs')
 
-      //  .col-lg-6
-      //    - if can? :read, @person => Affair
-      //      #person_affair_subscriptions.panel.panel-default
-      //        .panel-heading
-      //          .panel-title
-      //            = I18n.t('affair.views.subscriptions')
+        .col-lg-6
+          - if can? :read, @person => Affair
+            #person_affair_subscriptions.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('affair.views.subscriptions')
 
-      //    // - if can? :read, @person => Affair
-      //    //   #person_affair_tasks.panel.panel-default
-      //    //     .panel-heading
-      //    //       .panel-title
-      //    //         = I18n.t('affair.views.tasks')
+          // - if can? :read, @person => Affair
+          //   #person_affair_tasks.panel.panel-default
+          //     .panel-heading
+          //       .panel-title
+          //         = I18n.t('affair.views.tasks')
 
-      //    // - if can? :read, @person => Affair
-      //    //   #person_affair_products.panel.panel-default
-      //    //     .panel-heading
-      //    //       .panel-title
-      //    //         = I18n.t('affair.views.products')
+          // - if can? :read, @person => Affair
+          //   #person_affair_products.panel.panel-default
+          //     .panel-heading
+          //       .panel-title
+          //         = I18n.t('affair.views.products')
 
-      //    // - if can? :read, @person => Affair
-      //    //   #person_affair_extras.panel.panel-default
-      //    //     .panel-heading
-      //    //       .panel-title
-      //    //         = I18n.t('affair.views.extras')
+          // - if can? :read, @person => Affair
+          //   #person_affair_extras.panel.panel-default
+          //     .panel-heading
+          //       .panel-title
+          //         = I18n.t('affair.views.extras')
 
-      //.well
-      //  #balance
+      .well
+        #balance
 
-      //.row
-      //  .col-lg-6
-      //    - if can? :read, @person => Invoice
-      //      #person_affair_invoices.panel.panel-default
-      //        .panel-heading
-      //          .panel-title
-      //            = I18n.t('affair.views.invoices')
-      //  .col-lg-6
-      //    - if can? :read, @person => Affair
-      //      #person_affair_receipts.panel.panel-default
-      //        .panel-heading
-      //          .panel-title
-      //            = I18n.t('affair.views.receipts')
+      .row
+        .col-lg-6
+          - if can? :read, @person => Invoice
+            #person_affair_invoices.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('affair.views.invoices')
+        .col-lg-6
+          - if can? :read, @person => Affair
+            #person_affair_receipts.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('affair.views.receipts')
 
     #salaries.tab-pane.fade
-      // .row
-      //   .col-lg-6
-      //     - if can? :read, @person => Salaries::Salary
-      //       #person_salaries.panel.panel-primary
-      //         .panel-heading
-      //           .panel-title
-      //             = I18n.t('person.views.salaries')
+      .row
+        .col-lg-6
+          - if can? :read, @person => Salaries::Salary
+            #person_salaries.panel.panel-primary
+              .panel-heading
+                .panel-title
+                  = I18n.t('person.views.salaries')
 
-      //   .col-lg-6
-      //     - if can? :read, @person => EmploymentContract
-      //       #person_employment_contracts.panel.panel-default
-      //         .panel-heading
-      //           .panel-title
-      //             = I18n.t('person.views.employment_contracts')
-      // .row
-      //   .col-lg-12
-      //     - if can? :read, @person => Salaries::Salary
-      //       .panel.panel-default
-      //         .panel-heading
-      //           .panel-title
-      //             = I18n.t('person.views.salary_items')
-      //         #person_salary_items
+        .col-lg-6
+          - if can? :read, @person => EmploymentContract
+            #person_employment_contracts.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('person.views.employment_contracts')
+      .row
+        .col-lg-12
+          - if can? :read, @person => Salaries::Salary
+            .panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('person.views.salary_items')
+              #person_salary_items
 
-      // .row
-      //   .col-lg-12
-      //     - if can? :read, @person => Salaries::Salary
-      //       .panel.panel-default
-      //         .panel-heading
-      //           .panel-title
-      //             = I18n.t('person.views.salary_taxes')
-      //         #person_salary_tax_datas
+      .row
+        .col-lg-12
+          - if can? :read, @person => Salaries::Salary
+            .panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('person.views.salary_taxes')
+              #person_salary_tax_datas
 
     #permissions.tab-pane.fade
-      //.row
-      //  .col-lg-6
-      //    - if can? :read, @person => PeopleRole
-      //      #person_roles.panel.panel-default
-      //        .panel-heading
-      //          .panel-title
-      //            = I18n.t('person.views.roles')
-      //  .col-lg-6
+      .row
+        .col-lg-6
+          - if can? :read, @person => PeopleRole
+            #person_roles.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('person.views.roles')
+        .col-lg-6
 
     #activities.tab-pane.fade
-      //.row
-      //  .col-lg-6
-      //    - if can? :read, @person => Comment
-      //      #person_comments.panel.panel-default
-      //        .panel-heading
-      //          .panel-title
-      //            = I18n.t('person.views.comments')
+      .row
+        .col-lg-6
+          - if can? :read, @person => Comment
+            #person_comments.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('person.views.comments')
 
-      //  .col-lg-6
-      //    - if can? :read, @person => Activity
-      //      #person_activities.panel.panel-default
-      //        .panel-heading
-      //          .panel-title
-      //            = I18n.t('person.views.activities')
+        .col-lg-6
+          - if can? :read, @person => Activity
+            #person_activities.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('person.views.activities')
 

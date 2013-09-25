@@ -1,13 +1,6 @@
-- edit_affair_trad = I18n.t('affair.views.contextmenu.edit_affair')
-
-%menu.context_menu_actions
-  %command{ :data-label => edit_affair_trad,
-            :data-event => 'affair-edit',
-            :data-icon => 'edit' }
-
-%table.with_contextmenu.datatable{ :action => '/admin/affairs' }
+%table.datatable{ :action => '/admin/affairs' }
   %thead
-    %tr
+    %tr.item
       %th= I18n.t('affair.views.table.id')
       %th= I18n.t('affair.views.table.title')
       %th= I18n.t('affair.views.table.relations')

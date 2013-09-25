@@ -69,8 +69,6 @@ class Edit extends App.ExtendedController
 
   add_members: (e) ->
     e.preventDefault()
-
-
     win = $("<div class='modal fade' id='invoice-preview' tabindex='-1' role='dialog' />")
     # render partial to modal
     modal = JST["app/views/helpers/modal"]()

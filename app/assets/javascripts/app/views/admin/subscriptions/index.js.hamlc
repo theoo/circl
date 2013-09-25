@@ -1,76 +1,4 @@
-- edit_subscription_trad = I18n.t('subscription.views.contextmenu.edit_subscription')
-- view_subscription_pdf_trad = I18n.t('subscription.views.contextmenu.view_subscription_pdf')
-- destroy_subscription_trad = I18n.t('subscription.views.contextmenu.destroy_subscription')
-- view_subscription_members_trad = I18n.t('subscription.views.contextmenu.view_subscription_members')
-- view_subscription_buyers_trad = I18n.t('subscription.views.contextmenu.view_subscription_buyers')
-- view_subscription_receivers_trad = I18n.t('subscription.views.contextmenu.view_subscription_receivers')
-- view_subscription_members_who_paid_trad = I18n.t('subscription.views.contextmenu.view_subscription_members_who_paid')
-- view_subscription_members_who_didnt_paid_trad = I18n.t('subscription.views.contextmenu.view_subscription_members_who_didnt_paid')
-- add_members_to_subscription_trad = I18n.t('subscription.views.contextmenu.add_members_to_subscription')
-- remove_members_from_subscription_trad = I18n.t('subscription.views.contextmenu.remove_members_from_subscription')
-- transfer_overpaid_value_trad = I18n.t('subscription.views.contextmenu.transfer_overpaid_value')
-- subscription_reminder_trad = I18n.t('subscription.views.contextmenu.subscription_reminder')
-- subscription_renewal_trad = I18n.t('subscription.views.contextmenu.subscription_renewal')
-
-%menu.context_menu_actions
-
-  %command{ :data-label => edit_subscription_trad,
-            :data-event => 'subscription-edit',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => view_subscription_pdf_trad,
-            :data-event => 'subscription-pdf',
-            :data-icon => 'pdf' }
-
-  %command{ :data-label => destroy_subscription_trad,
-            :data-event => 'subscription-destroy',
-            :data-icon => 'delete' }
-
-  %command{ :data-label => 'separator' }
-
-  %command{ :data-label => add_members_to_subscription_trad,
-            :data-event => 'subscription-members-add',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => view_subscription_members_trad,
-            :data-event => 'subscription-members-view',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => view_subscription_buyers_trad,
-            :data-event => 'subscription-buyers-view',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => view_subscription_receivers_trad,
-            :data-event => 'subscription-receivers-view',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => view_subscription_members_who_paid_trad,
-            :data-event => 'subscription-members-who-paid-view',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => view_subscription_members_who_didnt_paid_trad,
-            :data-event => 'subscription-members-who-didnt-paid-view',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => remove_members_from_subscription_trad,
-            :data-event => 'subscription-members-remove',
-            :data-icon => 'delete' }
-
-  %command{ :data-label => 'separator' }
-
-  %command{ :data-label => transfer_overpaid_value_trad,
-            :data-event => 'subscription-transfer-overpaid-value',
-            :data-icon => 'copy' }
-
-  %command{ :data-label => subscription_reminder_trad,
-            :data-event => 'subscription-reminder',
-            :data-icon => 'copy' }
-
-  %command{ :data-label => subscription_renewal_trad,
-            :data-event => 'subscription-renewal',
-            :data-icon => 'copy' }
-
-%table.with_contextmenu.datatable{ :action => '/admin/subscriptions' }
+%table.datatable{ :action => '/admin/subscriptions' }
   %thead
     %tr
       %th= I18n.t('common.id')
@@ -84,8 +12,11 @@
       %th= I18n.t('subscription.views.table.overpaid_value')
       %th.desc= I18n.t('subscription.views.table.created_at')
 
-.toolbox{ :id => 'subscriptions_tag' }
-  %legend= I18n.t('common.toolbox')
-
-  %form
-    %input.no_sending{ :type => 'submit', :value => I18n.t('subscription.views.tool_box.tag_tool') }
+.panel-footer
+  .row
+    .col-lg-12
+      %form
+        %button{:type => 'button',
+                :name => 'subscription-tag-tool',
+                :class => 'btn btn-default' }
+          = I18n.t('subscription.views.tool_box.tag_tool')

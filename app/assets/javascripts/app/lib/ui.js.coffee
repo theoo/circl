@@ -160,6 +160,7 @@ class Ui
         fnRowCallback: (row, data, index) =>
           $(row).attr('data-id', data.id)
           $(row).attr('data-actions', data.actions)
+          $(row).addClass('item') # make it nice and clickable
           if data.level # display trees
             $(row).addClass("level" + data.level)
             $(row).addClass("child") if data.level > 0

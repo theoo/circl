@@ -183,13 +183,13 @@ class App.ExtendedController extends Spine.Controller
     ui_error = =>
       # Set panel as 'danger' bootstrap class
       panel = $(@el).closest('.panel')
-      panel.removeClass 'panel-primary panel-default'
+      panel.removeClass 'panel-primary panel-default panel-success'
       panel.addClass 'panel-danger'
 
     ui_success = =>
       # Set panel as 'danger' bootstrap class
       panel = $(@el).closest('.panel')
-      panel.removeClass 'panel-primary panel-default'
+      panel.removeClass 'panel-primary panel-default panel-danger'
       panel.addClass 'panel-success'
 
     # Ajax

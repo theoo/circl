@@ -29,7 +29,8 @@ en:
       the_following_members_were_already_in_the_subscription: The following members were already in the subscription
       the_following_members_were_updated: The following members were updated
     views:
-      contextmenu:
+      members: members
+      actions:
         add_members_to_subscription: add members to subscription
         destroy_subscription: destroy subscription
         edit_subscription: edit subscription
