@@ -6,7 +6,7 @@ fr:
     errors:
       can_not_delete_if_has_children: Impossible de détruire une inscription qui a des enfants
       can_not_delete_if_has_receipts: Impossible de détruire l'inscription dont un reçu dépend. Le reçu concerné doit être supprimé avant.
-      cannot_remove_members_if_there_is_receipts: Impossible de retirer les membres s'il des reçus ont été saisis
+      cannot_remove_members_if_there_is_receipts: Impossible de retirer les membres si ont des reçus ont été associés
       cannot_transfer_overpaid_value_if_subscription_value_is_zero: Impossible de transférer les paiements excédants si l'inscription d'origine à une valeur de zéro
       parent_id_is_set_without_status: Il n'est pas possible de définir parent_id si aucun status n'est donné.
     mail:

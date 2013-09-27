@@ -230,14 +230,14 @@ class Edit extends ValueItemsController
 
   pdf: (e) ->
     e.preventDefault()
-    win = $("<div class='modal fade' id='invoice-preview' tabindex='-1' role='dialog' />")
+    win = $("<div class='modal fade' id='subscription-pdf-modal' tabindex='-1' role='dialog' />")
     # render partial to modal
     modal = JST["app/views/helpers/modal"]()
     win.append modal
     win.modal(keyboard: true, show: false)
 
     # Update title
-    win.find('h4').text I18n.t('subscription.edit_export_filter') + ": " + @tag.name
+    win.find('h4').text I18n.t('subscription.edit_export_filter') + ": " + @subscription.title
 
     # Adapt width to A4
     win.find('.modal-dialog')
@@ -272,18 +272,6 @@ class Edit extends ValueItemsController
     win.modal('show')
     controller.activate()
 
-    Subscription.one 'refresh', =>
-      # win = Ui.stack_window('filter-subscription-pdf-window', {width: 1200, remove_on_close: true})
-      # controller = new App.DirectoryQueryPresets(el: win, edit: { text:  })
-      # controller.bind 'edit', (preset) =>
-      #   $(win).modal('hide')
-      #   window.location = "#{Subscription.url()}/#{subscription.id}.pdf?#{preset.to_params()}"
-      # $(win).modal({title: })
-      # $(win).modal('show')
-      # controller.activate()
-
-    Subscription.fetch(id: @id)
-
   destroy: (e) ->
     e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
@@ -312,56 +300,82 @@ class Edit extends ValueItemsController
 
   add_members: (e) ->
     e.preventDefault()
-    #win = Ui.stack_window('filter-subscription-pdf-window', {width: 1200, remove_on_close: true})
-    #controller = new App.DirectoryQueryPresets(el: win, search: { text: I18n.t('directory.views.add_to_subscription') })
-    #controller.bind 'search', (preset) =>
-    #  Ui.spin_on controller.search.el
 
-    #  settings =
-    #    url: "#{Subscription.url()}/#{subscription.id}/add_members"
-    #    type: 'POST',
-    #    data: JSON.stringify(query: preset.query)
+    win = $("<div class='modal fade' id='subscription-add-members-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
 
-    #  ajax_error = (xhr, statusText, error) =>
-    #    Ui.spin_off controller.search.el
-    #    Ui.notify controller.search.el, I18n.t('common.failed_to_update'), 'error'
-    #    controller.search.render_errors $.parseJSON(xhr.responseText)
+    # Update title
+    win.find('h4').text I18n.t('subscription.views.actions.add_members_to_subscription') + ": " + @subscription.title
 
-    #  ajax_success = (data, textStatus, jqXHR) =>
-    #    Ui.spin_off controller.search.el
-    #    Ui.notify controller.search.el, I18n.t('common.successfully_updated'), 'notice'
-    #    $(win).modal('hide')
-    #    window.location = '/admin'
+    # Adapt width to A4
+    win.find('.modal-dialog')
 
-    #  Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+    # Add preview in new tab button
+    btn = "<input type='submit' class='btn btn-primary' value=\"#{I18n.t('directory.views.add_to_subscription')}\" />"
+    btn = $(btn)
+    win.find('.modal-footer').append btn
 
-    #$(win).modal({title: I18n.t('subscription.add_members')})
-    #$(win).modal('show')
-    #controller.activate()
+    controller = new App.DirectoryQueryPresets(el: win.find('.modal-body'))
+    controller.bind 'search', (preset) =>
+      settings =
+        url: "#{Subscription.url()}/#{subscription.id}/add_members"
+        type: 'POST',
+        data: JSON.stringify(query: preset.query)
+
+      ajax_error = (xhr, statusText, error) =>
+        controller.search.render_errors $.parseJSON(xhr.responseText)
+
+      ajax_success = (data, textStatus, jqXHR) =>
+        $(win).modal('hide')
+        window.location = '/admin'
+
+      Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+
+    win.modal('show')
+    controller.activate()
 
 
   remove_members: (e) ->
     e.preventDefault()
 
-    settings =
-      url: "#{Subscription.url()}/#{@id}/remove_members"
-      type: 'DELETE',
+    if confirm(I18n.t('common.are_you_sure'))
+      settings =
+        url: "#{Subscription.url()}/#{@id}/remove_members"
+        type: 'DELETE',
 
-    ajax_error = (xhr, statusText, error) =>
-      @render_errors $.parseJSON(xhr.responseText)
+      ajax_error = (xhr, statusText, error) =>
+        @render_errors $.parseJSON(xhr.responseText)
 
-    ajax_success = (data, textStatus, jqXHR) =>
-      Subscription.fetch(id: @id)
+      ajax_success = (data, textStatus, jqXHR) =>
+        Subscription.fetch(id: @id)
 
-    Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+      Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
   transfer_overpaid_value: (e) ->
     e.preventDefault()
-    win = Ui.stack_window('subscription-transfer-overpaid-value-window', {width: 500, remove_on_close: true})
-    controller = new TransferOverpaidValue(el: win, subscription_id: subscription.id)
-    $(win).modal({title: I18n.t('subscription.views.contextmenu.transfer_overpaid_value')})
-    $(win).modal('show')
-    controller.render()
+
+    win = $("<div class='modal fade' id='subscription-transfert-overpaid-value-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Update title
+    win.find('h4').text I18n.t('subscription.views.actions.transfer_overpaid_value') + ": " + @subscription.title
+
+    # Adapt width to A4
+    win.find('.modal-dialog')
+
+    # Add preview in new tab button
+    btn = "<input type='submit' class='btn btn-primary' value=\"#{I18n.t('common.update')}\" />"
+    btn = $(btn)
+    win.find('.modal-footer').append btn
+
+    controller = new TransferOverpaidValue(el: win.find('.modal-body'), subscription_id: @subscription.id)
+    win.modal('show')
 
   create_reminder: (e) ->
     e.preventDefault()
@@ -375,6 +389,7 @@ class Index extends App.ExtendedController
   events:
     'click tr.item': 'edit'
     'click button[name=subscription-tag-tool]':  'tag_tool'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -385,10 +400,13 @@ class Index extends App.ExtendedController
     Ui.load_ui(@el)
 
   edit: (e) ->
+    e.preventDefault()
+
     id = $(e.target).admin_subscription_id()
     Subscription.one 'refresh', =>
-      subscription = Subscription.find(id)
-      @trigger 'edit', subscription.id
+      @subscription = Subscription.find(id)
+      @activate_in_list(e.target)
+      @trigger 'edit', @subscription.id
 
     Subscription.fetch(id: id)
 
@@ -400,12 +418,18 @@ class Index extends App.ExtendedController
     # $(win).modal('show')
     # controller.render()
 
+  table_redraw: =>
+    if @subscription
+      target = $(@el).find("tr[data-id=#{@subscription.id}]")
+    @activate_in_list(target)
+
 class TransferOverpaidValue extends App.ExtendedController
   events:
     'submit form': 'submit'
 
   constructor: (params) ->
     super
+    @render()
 
   render: =>
     @html @view('admin/subscriptions/transfer_overpaid')(@)

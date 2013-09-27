@@ -35,37 +35,7 @@ class SubscriptionsDatatable
   private
 
   def data
-    edit_subscription_trad = I18n.t('subscription.views.contextmenu.edit_subscription')
-    view_subscription_members_trad = I18n.t('subscription.views.contextmenu.view_subscription_members')
-    view_subscription_buyers_trad = I18n.t('subscription.views.contextmenu.view_subscription_buyers')
-    view_subscription_receivers_trad = I18n.t('subscription.views.contextmenu.view_subscription_receivers')
-    view_subscription_members_who_paid_trad = I18n.t('subscription.views.contextmenu.view_subscription_members_who_paid')
-    view_subscription_members_who_didnt_paid_trad = I18n.t('subscription.views.contextmenu.view_subscription_members_who_didnt_paid')
-    add_members_to_subscription_trad = I18n.t('subscription.views.contextmenu.add_members_to_subscription')
-    remove_members_from_subscription_trad = I18n.t('subscription.views.contextmenu.remove_members_from_subscription')
-    view_subscription_pdf_trad = I18n.t('subscription.views.contextmenu.view_subscription_pdf')
-    transfer_overpaid_value_trad = I18n.t('subscription.views.contextmenu.transfer_overpaid_value')
-    destroy_subscription_trad = I18n.t('subscription.views.contextmenu.destroy_subscription')
-    subscription_reminder_trad = I18n.t('subscription.views.contextmenu.subscription_reminder')
-    subscription_renewal_trad = I18n.t('subscription.views.contextmenu.subscription_renewal')
-
     subscriptions.map do |subscription|
-      actions = [ edit_subscription_trad,
-                  add_members_to_subscription_trad,
-                  view_subscription_pdf_trad ]
-
-      actions << remove_members_from_subscription_trad if subscription.receipts.count <= 0 and subscription.people.count > 0
-      if subscription.people.count > 0
-        actions << view_subscription_members_trad
-       actions << view_subscription_buyers_trad
-        actions << view_subscription_receivers_trad
-      end
-      actions << view_subscription_members_who_paid_trad if subscription.receipts.count > 0
-      actions << view_subscription_members_who_didnt_paid_trad if subscription.people.count > 0
-      actions << transfer_overpaid_value_trad if subscription.overpaid_value > 0.to_money
-      actions << subscription_renewal_trad if subscription.people.count > 0
-      actions << subscription_reminder_trad if subscription.receipts.count < subscription.invoices.size
-      actions << destroy_subscription_trad if subscription.receipts.count <= 0
 
       values_summary = subscription.values.map do |v|
         if v.private_tag
@@ -87,7 +57,6 @@ class SubscriptionsDatatable
         8 => subscription.overpaid_value.to_money.to_view,
         9 => subscription.created_at,
         'id' => subscription.id,
-        'actions' => actions,
         'level' => subscription.tree_level,
         'number_columns' => [4,5,3,6,7,8]
      }

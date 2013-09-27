@@ -9,7 +9,7 @@ I18n.datatable_translations =
     "sInfoThousands":  ",",
     "sLengthMenu":     "Show _MENU_ entries",
     "sLoadingRecords": "Loading...",
-    "sProcessing":     "Processing...",
+    "sProcessing":     "<span>Processing...<img src='/assets/spinner.gif' /></span>",
     "sSearch":         "Search",
     "sZeroRecords":    "No matching records found",
     "oPaginate": {

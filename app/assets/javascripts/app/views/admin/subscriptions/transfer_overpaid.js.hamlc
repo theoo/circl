@@ -1,17 +1,19 @@
 %form
-  .validation_errors_placeholder
-
-  .stackable-block
-    .left
+  .row
+    .col-lg-12
+      .validation_errors_placeholder
+  .row
+    .col-lg-3
+    .col-lg-6
       .autocompleted
-        %label= I18n.t('receipt.views.subscription_title')
-        %input{:type => 'search',
-               :name => 'transfer_to_subscription_title',
-               :value => '',
-               :action => '/admin/subscriptions/search'}
-        %input{:type => 'hidden',
-               :name => 'transfer_to_subscription_id'}
-
-  .stackable-block
-    .white &nbsp;
-    != @partial('submit_button')(@subscription)
+        %label{:for => 'subscription_transfer_to_subscription_title'}
+          = I18n.t('receipt.views.subscription_title')
+        %input{ :type => 'search',
+                :id => 'subscription_transfer_to_subscription_title',
+                :name => 'transfer_to_subscription_title',
+                :class => 'form-control',
+                :value => '',
+                :action => '/admin/subscriptions/search'}
+        %input{ :type => 'hidden',
+                :name => 'transfer_to_subscription_id'}
+    .col-lg-3

@@ -65,7 +65,7 @@ class Ui
 
 #--- datatables setup ---
   setup_datatable: ->
-    # $.fn.dataTableExt.oStdClasses.sSortable = "glyphicon glyphicon-sort";
+    # $.fn.dataTableExt.oStdClasses.sSortable = "glyphicon glyphicon-sort"
 
 #--- ui ---
   load_jqueryui: (context) ->
@@ -148,6 +148,7 @@ class Ui
       fnStateLoad: local_storage_load
       bJQueryUI: false # We'll use bootstrap only, not the ui-state-default classes mess
       sPaginationType: 'bootstrap'
+      fnInitComplete: (oSettings) -> @trigger('datatable_init_complete'), # Catch this in Spine!
       fnDrawCallback: (oSettings) -> @trigger('datatable_redraw'), # Catch this in Spine!
       sDom: "<'row'<'col-lg-6'T><'col-lg-6'f>r>t<'panel-body'<'row'<'col-lg-12 pagination-footer'pi>>"
 

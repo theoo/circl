@@ -55,11 +55,33 @@ header
 #secondary_navigation
   z-index: 999 // Fixes z-index conflict with user's dropdown
 
+.ui-autocomplete
+  z-index: 1051 // Make it visible in modal windows
+
 // panels
 .panel-disabled
   opacity: 0.5
 
 // datatable
+.dataTables_processing
+  height: 0
+  text-align: center
+  opacity: 0.9
+
+  span
+    padding: 5px
+    border-radius: 5px
+    margin: 60px auto
+    width: 250px
+    font-size: 1.5em
+    background-color: $white
+    display: block
+    text-align: center
+
+    img
+      margin: 10px auto 0 auto
+      display: block
+
 table.datatable
   .sorting_desc, .sorting_asc, .sorting
     cursor: pointer

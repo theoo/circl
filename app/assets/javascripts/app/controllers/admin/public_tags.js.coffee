@@ -139,6 +139,7 @@ class Index extends App.ExtendedController
 
   edit: (e) ->
     tag = $(e.target).public_tag()
+    @activate_in_list(e.target)
     @trigger 'edit', tag.id
 
   table_redraw: =>
