@@ -167,6 +167,7 @@ class Invoice < ActiveRecord::Base
 
     h = {}
     # NOTE don't forget to add translation manualy. rake i18n:import_missing_translations won't parse this code.
+    # NOTE Be careful with name colision, INVOICE_TITLE and INVOICE_TITLE_AND_SOMETHING won't work correctly.
     h[:simples] =   {
                       'LOCALE'                               => I18n.locale.to_s,
                       'INVOICE_ADDRESS'                      => simple_format(printed_address),
@@ -190,7 +191,6 @@ class Invoice < ActiveRecord::Base
                       'INVOICE_OWNER_FIRST_NAME'             => owner.first_name,
                       'INVOICE_OWNER_LAST_NAME'              => owner.last_name,
                       'INVOICE_OWNER_FULL_NAME'              => owner.full_name,
-                      'INVOICE_OWNER_TITLE_AND_FULL_NAME'    => [owner.title,owner.full_name].join(" ").strip,
                       'INVOICE_BUYER_ID'                     => buyer.id.to_s,
                       'INVOICE_BUYER_TITLE'                  => buyer.title.to_s,
                       'INVOICE_BUYER_NAME'                   => buyer.name,
@@ -198,7 +198,6 @@ class Invoice < ActiveRecord::Base
                       'INVOICE_BUYER_FIRST_NAME'             => buyer.first_name,
                       'INVOICE_BUYER_LAST_NAME'              => buyer.last_name,
                       'INVOICE_BUYER_FULL_NAME'              => buyer.full_name,
-                      'INVOICE_BUYER_TITLE_AND_FULL_NAME'    => [buyer.title,buyer.full_name].join(" ").strip,
                       'INVOICE_RECEIVER_ID'                  => receiver.id.to_s,
                       'INVOICE_RECEIVER_TITLE'               => receiver.title.to_s,
                       'INVOICE_RECEIVER_NAME'                => receiver.name,
@@ -206,7 +205,6 @@ class Invoice < ActiveRecord::Base
                       'INVOICE_RECEIVER_FIRST_NAME'          => receiver.first_name,
                       'INVOICE_RECEIVER_LAST_NAME'           => receiver.last_name,
                       'INVOICE_RECEIVER_FULL_NAME'           => receiver.full_name,
-                      'INVOICE_RECEIVER_TITLE_AND_FULL_NAME' => [receiver.title,receiver.full_name].join(" ").strip
                     }
 
     h[:iterators] = {
