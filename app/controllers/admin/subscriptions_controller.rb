@@ -240,6 +240,8 @@ class Admin::SubscriptionsController < ApplicationController
 
     # Update the subscription
     Subscription.transaction do
+      # remove parent if not sent
+      params[:subscription][:parent_id] = nil unless params[:subscription][:parent_id]
       # raise the error and rollback transaction if validation fails
       raise ActiveRecord::Rollback unless @subscription.update_attributes(params[:subscription])
 

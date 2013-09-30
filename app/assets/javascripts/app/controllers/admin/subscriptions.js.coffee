@@ -78,14 +78,14 @@ class ValueItemsController extends App.ExtendedController
     @apply_positions()
 
     values = []
-    @el.find('table.category tr.item').each (i, tr) ->
+    @el.find('table.table tr.item').each (i, tr) ->
       tr = $(tr)
       val =
-        id: tr.find("input[name='values[][id]']").attr('value')
-        value: tr.find("input[name='values[][value]']").attr('value')
-        position: tr.find("input[name='values[][position]']").attr('value')
-        private_tag_id: tr.find("input[name='values[][private_tag_id]']").attr('value')
-        invoice_template_id: tr.find("select[name='values[][invoice_template_id]'] option:selected").attr('value')
+        id: tr.find("input[name='values[][id]']").prop('value')
+        value: tr.find("input[name='values[][value]']").prop('value')
+        position: tr.find("input[name='values[][position]']").prop('value')
+        private_tag_id: tr.find("input[name='values[][private_tag_id]']").prop('value')
+        invoice_template_id: tr.find("select[name='values[][invoice_template_id]'] option:selected").prop('value')
 
       values.push val
 
@@ -226,6 +226,10 @@ class Edit extends ValueItemsController
     e.preventDefault()
     attr = $(e.target).serializeObject()
     attr.values = @fetch_items()
+
+    # Allow to remove parent
+    attr.parent_id = undefined if attr.subscription_parent_title == ""
+
     @save_with_notifications @subscription.load(attr), @hide
 
   pdf: (e) ->

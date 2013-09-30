@@ -87,6 +87,8 @@
               %tr{'data-id' => value.id, :class => 'item'}
                 %td.handle
                   .glyphicon.glyphicon-resize-vertical
+                  %input{ :name => "values[][position]", :type => 'hidden', :value => value.position }
+                  %input{ :name => "values[][id]", :type => 'hidden', :value => value.id }
 
                 %td
                   .autocompleted
@@ -97,11 +99,9 @@
                             :action => '/admin/private_tags/search' }
 
                     %input{ :type => 'hidden',
-                            :name => 'values[][private_tag_id]',
+                            :name => "values[][private_tag_id]",
                             :value => value.private_tag_id }
 
-                  %input{ :name => "values[][position]", :type => 'hidden', :value => value.position }
-                  %input{ :name => "values[][id]", :type => 'hidden', :value => value.id }
 
                 %td
                   %input{ :type => 'number',
@@ -109,7 +109,7 @@
                           :step => 0.01,
                           :min => 0,
                           :max => 1000000,
-                          :name => 'values[][value]',
+                          :name => "values[][value]",
                           :value => value.value }
 
                 %td
@@ -129,6 +129,7 @@
             %tr{'data-name' => 'value_item_template', :style => 'display: none;'}
               %td.handle
                 .glyphicon.glyphicon-resize-vertical
+                %input{ :name => "values[][position]", :type => 'hidden' }
 
               %td
                 .autocompleted
@@ -138,9 +139,8 @@
                           :action => '/admin/private_tags/search' }
 
                   %input{ :type => 'hidden',
-                          :name => 'values[][private_tag_id]'}
+                          :name => "values[][private_tag_id]"}
 
-                %input{ :name => "values[][position]", :type => 'hidden' }
 
               %td
                 %input{ :type => 'number',
@@ -148,7 +148,7 @@
                         :step => 0.01,
                         :min => 0,
                         :max => 1000000,
-                        :name => 'values[][value]' }
+                        :name => "values[][value]" }
               %td
                 %select{:name => 'values[][invoice_template_id]', :class => 'form-control'}
                   %option{:value => ""}

@@ -34,23 +34,23 @@
       //           .panel-title
       //             = I18n.t('admin.views.affairs')
 
-      .row
-        .col-lg-12
-          - if can? :update, Subscription
-            #admin_subscriptions.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('admin.views.subscriptions')
+      // .row
+      //   .col-lg-12
+      //     - if can? :update, Subscription
+      //       #admin_subscriptions.panel.panel-default
+      //         .panel-heading
+      //           .panel-title
+      //             = I18n.t('admin.views.subscriptions')
 
     #finances.tab-pane.fade
-      //.row
-      //  .col-lg-6
-      //  .col-lg-6
-      //    - if can? :update, Receipt
-      //      #admin_receipts.panel.panel-default
-      //        .panel-heading
-      //          .panel-title
-      //            = I18n.t('admin.views.receipts')
+      .row
+        .col-lg-6
+        .col-lg-6
+          - if can? :update, Receipt
+            #admin_receipts.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('admin.views.receipts')
 
     #tools.tab-pane.fade
       //.row
