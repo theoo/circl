@@ -1,11 +1,13 @@
 .panel-body
   %form
     .row
-      .col-lg-12
+      .col-lg-3
+      .col-lg-6
         .validation_errors_placeholder
+      .col-lg-3
 
     .row
-      .col-lg-6
+      .col-lg-3
         .form-group.autocompleted
           %label{:for => 'admin_receipts_owner_name'}
             = I18n.t('receipt.views.owner')
@@ -19,7 +21,37 @@
           %input{ :type => 'hidden',
                   :name => 'owner_id',
                   :value => @receipt.owner_id}
-      .col-lg-6
+      .col-lg-2
+        .form-group
+          %label{:for => 'admin_receipts_value_date'}
+            = I18n.t('receipt.views.value_date')
+            %input{:type => 'text',
+                   :name => 'value_date',
+                   :id => 'admin_receipts_value_date',
+                   :class => 'form-control datepicker required',
+                   :value => @receipt.value_date }
+      .col-lg-2
+        .form-group
+          %label{:for => 'admin_receipts_value'}
+            = I18n.t('receipt.views.value')
+          %input{ :type => 'number',
+                  :step => 0.01,
+                  :min => 0,
+                  :max => 99999999.99,
+                  :name => 'value',
+                  :id => 'admin_receipts_value',
+                  :value => @receipt.value,
+                  :class => 'form-control required'}
+      .col-lg-2
+        .form-group
+          %label{:for => 'admin_receipts_means_of_payment'}
+            = I18n.t('receipt.views.means_of_payment')
+          %input{:type => 'text',
+                 :name => 'means_of_payment',
+                 :id => 'admin_receipts_means_of_payment',
+                 :class => 'form-control',
+                 :value => @receipt.means_of_payment }
+      .col-lg-3
         .form-group
           %label{:for => 'admin_invoices_template_id'}
             = I18n.t('receipt.views.invoice_template')
@@ -30,23 +62,20 @@
               %option{:value => invoice_template.id}= invoice_template.title
 
     .row
-      .col-lg-6
+      .col-lg-3
         .form-group.autocompleted
-        %label{:for => 'admin_receipts_subscription_title'}
-          = I18n.t('receipt.views.subscription_title')
-        %input{:type => 'search',
-               :name => 'subscription_title',
-               :id => 'admin_receipts_subscription_title',
-               :value => '',
-               :action => '/admin/subscriptions/search',
-               :class => 'form-control required'}
-        %input{:type => 'hidden',
-               :name => 'subscription_id',
-               :value => @receipt.subscription_id}
-      .col-lg-6
-
-    .row
-      .col-lg-6
+          %label{:for => 'admin_receipts_subscription_title'}
+            = I18n.t('receipt.views.subscription_title')
+          %input{:type => 'search',
+                 :name => 'subscription_title',
+                 :id => 'admin_receipts_subscription_title',
+                 :value => '',
+                 :action => '/admin/subscriptions/search',
+                 :class => 'form-control required'}
+          %input{:type => 'hidden',
+                 :name => 'subscription_id',
+                 :value => @receipt.subscription_id}
+      .col-lg-3
         .form-group.autocompleted
           %label{:for => 'admin_receipts_affair_title'}
             = I18n.t('receipt.views.affair_title')
@@ -55,12 +84,12 @@
                  :id => 'admin_receipts_affair_title',
                  :value => @receipt.affair_title,
                  :disabled => 'disabled',
-                 :class => 'form-control disabled',
+                 :class => 'form-control',
                  :action => '/people/x/affairs/search'}
           %input{:type => 'hidden',
                  :name => 'affair_id',
                  :value => @receipt.affair_id}
-      .col-lg-6
+      .col-lg-3
         .form-group.autocompleted
           %label{:for => 'admin_receipts_invoice_title'}
             = I18n.t('receipt.views.invoice_title')
@@ -74,40 +103,9 @@
           %input{:type => 'hidden',
                  :name => 'invoice_id',
                  :value => @receipt.invoice_id}
+      .col-lg-3
 
     .row
-      .col-lg-4
-        .form-group
-          %label{:for => 'admin_receipts_value_date'}
-            = I18n.t('receipt.views.value_date')
-            %input{:type => 'text',
-                   :name => 'value_date',
-                   :id => 'admin_receipts_value_date',
-                   :class => 'form-control datepicker required',
-                   :value => @receipt.value_date }
-      .col-lg-4
-        .form-group
-          %label{:for => 'admin_receipts_value'}
-            = I18n.t('receipt.views.value')
-          %input{ :type => 'number',
-                  :step => 0.01,  
-                  :min => 0,
-                  :max => 99999999.99,
-                  :name => 'value',
-                  :id => 'admin_receipts_value',
-                  :value => @receipt.value,
-                  :class => 'form-control required'}
-      .col-lg-4
-        .form-group
-          %label{:for => 'admin_receipts_means_of_payment'}
-            = I18n.t('receipt.views.means_of_payment')
-          %input{:type => 'text',
-                 :name => 'means_of_payment',
-                 :id => 'admin_receipts_means_of_payment',
-                 :class => 'form-control',
-                 :value => @receipt.means_of_payment }
-
-      .row
-        .col-lg-12
-          .pull-right
-            != @partial('submit_button')(@receipt)
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')(@receipt)

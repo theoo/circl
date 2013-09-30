@@ -308,4 +308,3 @@ class App.Salaries extends Spine.Controller
   activate: ->
     super
     Salary.fetch()
-    @index.render()

@@ -123,7 +123,7 @@
             = @salary.employee_value_total.to_view() if @salary.employee_value_total
         %td
 
-  .panel-body
+  .panel-footer
     .row
       .col-lg-12
         .pull-right

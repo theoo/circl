@@ -9,7 +9,7 @@
       %th.desc= I18n.t('invoice.views.table.creation_date')
 
 
-.panel-body
-  .well
-    %button{ :type => 'button', :name => 'admin-invoices-export', :class => 'btn btn-default'}
-      = I18n.t('common.toolbox_export')
+.panel-footer
+  %button{ :type => 'button', :name => 'admin-invoices-export', :class => 'btn btn-default'}
+    .glyphicon.glyphicon-export
+    = I18n.t('common.toolbox_export')

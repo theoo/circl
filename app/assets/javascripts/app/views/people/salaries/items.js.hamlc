@@ -90,7 +90,7 @@
                   :type => 'text' }
         %td
 
-  .panel-body
+  .panel-footer
     .row
       .col-lg-12
         .pull-right

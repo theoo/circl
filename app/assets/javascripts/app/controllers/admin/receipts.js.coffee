@@ -129,9 +129,9 @@ class New extends App.ExtendedController
 
 class Index extends App.ExtendedController
   events:
-    'receipt-edit': 'edit'
-    'click input[name="receipts_export"]':  'stack_export_window'
-    'click input[name="receipts_import"]':  'stack_import_window'
+    'click tr.item': 'edit'
+    'click button[name="admin-receipts-export"]':  'stack_export_window'
+    'click button[name="admin-receipts-import"]':  'stack_import_window'
 
   constructor: (params) ->
     super
@@ -142,7 +142,10 @@ class Index extends App.ExtendedController
     Ui.load_ui(@el)
 
   edit: (e) ->
-    id = $(e.target).attr('data-id')
+    id = $(e.target).closest('tr.item').attr('data-id')
+
+    # Prevent default behavior (do not reload table)
+    Receipt.unbind 'refresh'
     Receipt.one 'refresh', =>
       receipt = Receipt.find(id)
       window.location = "/people/#{receipt.owner_id}?folding=person_affairs"
@@ -150,18 +153,38 @@ class Index extends App.ExtendedController
 
   stack_export_window: (e) ->
     e.preventDefault()
-    window = Ui.stack_window('export-receipts', {width: 400, remove_on_close: true})
-    controller = new App.ExportReceipts({el: window})
-    $(window).modal({title: I18n.t('receipt.views.export')})
-    $(window).modal('show')
+
+    win = $("<div class='modal fade' id='admin-invoices-export-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Modal alternative
+    win.find('.modal-body').remove()
+    win.find('.modal-footer').remove()
+
+    controller = new App.ExportReceipts({el: win.find('.modal-content')})
+    win.modal('show')
     controller.activate()
 
   stack_import_window: (e) ->
     e.preventDefault()
-    window = Ui.stack_window('import-receipts', {width: 800, remove_on_close: true})
-    controller = new App.ImportReceipts({el: window})
-    $(window).modal({title: I18n.t('receipt.views.import_bank_file')})
-    $(window).modal('show')
+
+    win = $("<div class='modal fade' id='admin-invoices-import-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Modal alternative
+    win.find('.modal-body').remove()
+    win.find('.modal-footer').remove()
+    win.find('h4').text I18n.t('receipt.views.import_bank_file')
+    win.find('.modal-dialog').css(width: 900)
+
+    controller = new App.ImportReceipts({el: win.find('.modal-content')})
+    win.modal('show')
     controller.activate()
 
 class App.ExportReceipts extends App.ExtendedController
@@ -183,22 +206,22 @@ class App.ExportReceipts extends App.ExtendedController
     counterpart = form.find('input[name=counterpart_account]').val()
 
     if from.length == 0
-      errors.add [I18n.t("common.from"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['from', I18n.t("activerecord.errors.messages.blank")].to_property()
     else
       unless @validate_date_format(from)
-        errors.add [I18n.t("common.from"), I18n.t('common.errors.date_must_match_format')].to_property()
+        errors.add ['from', I18n.t('common.errors.date_must_match_format')].to_property()
 
     if to.length == 0
-      errors.add [I18n.t("common.to"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['to', I18n.t("activerecord.errors.messages.blank")].to_property()
     else
       unless @validate_date_format(to)
-        errors.add [I18n.t("common.to"), I18n.t('common.errors.date_must_match_format')].to_property()
+        errors.add ['to', I18n.t('common.errors.date_must_match_format')].to_property()
 
     if account.length == 0
-      errors.add [I18n.t("receipt.views.account"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['account', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     if counterpart.length == 0
-      errors.add [I18n.t("receipt.views.counterpart_account"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['counterpart_account', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     unless errors.is_empty()
       e.preventDefault()
@@ -224,5 +247,6 @@ class App.AdminReceipts extends Spine.Controller
 
   activate: ->
     super
+    InvoiceTemplate.one 'refresh', ->
+      Receipt.fetch()
     InvoiceTemplate.fetch()
-    @index.render()

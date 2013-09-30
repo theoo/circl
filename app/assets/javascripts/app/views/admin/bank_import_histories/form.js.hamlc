@@ -1,15 +1,30 @@
-
-%h3= I18n.t("bank_import_history.views.upload_a_new_file_title")
-
-.validation_errors_placeholder
-
 %form{:action => '/admin/bank_import_histories/confirm',
       :method => 'POST',
       :enctype => "multipart/form-data" }
-  %label
-    = I18n.t('admin.views.select_file')
-  %input{:type => 'hidden', :name => 'authenticity_token', :value => @authenticity_token}
-  %input{:type => 'file', :name => 'receipts_file'}
-  %input{ :type => 'submit',
-          :value => I18n.t('admin.views.upload'),
-          :name => 'import_bank_import_history' }
+  .modal-body
+    %h3= I18n.t("bank_import_history.views.upload_a_new_file_title")
+
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
+
+    .row
+      .col-lg-2
+      .col-lg-4
+        .form-group
+          %label{:for => 'admin_bankfile_import_file'}
+            = I18n.t('admin.views.select_file')
+          %input{:type => 'hidden', :name => 'authenticity_token', :value => @authenticity_token}
+          %input{ :type => 'file',
+                  :id => 'admin_bankfile_import_file',
+                  :name => 'admin_receipts_file'}
+
+      .col-lg-4
+        .pull-right
+          %br
+          %button{ :type => 'submit',
+                  :class => 'btn btn-primary' }
+            .glyphicon.glyphicon-cloud-upload
+            = I18n.t('admin.views.upload')
+
+      .col-lg-2

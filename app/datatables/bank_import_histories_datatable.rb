@@ -46,7 +46,7 @@ class BankImportHistoriesDatatable
         I18n.t("bank_import_history.views.datatable.date_entry")    + ": " + dl[:date_entry].to_s,
         I18n.t("bank_import_history.views.datatable.date_write")    + ": " + dl[:date_write].to_s,
         I18n.t("bank_import_history.views.datatable.date_value")    + ": " + dl[:date_value].to_s
-      ].join("\n")
+      ].join("<br />")
 
       {
         0 => bank_import_history.file_name,

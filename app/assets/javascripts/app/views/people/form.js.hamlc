@@ -1,5 +1,5 @@
-.panel-body
-  %form{:role => 'form'}
+%form{:role => 'form'}
+  .panel-body
     - unless @person.isNew()
       .row
         .col-lg-12
@@ -250,7 +250,8 @@
                         :checked => false }
                 = I18n.t('person.views.generate_authentication_token')
 
-      .row
-        .col-lg-12
-          .pull-right
-            != @partial("submit_button")(@person)
+  .panel-footer
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial("submit_button")(@person)

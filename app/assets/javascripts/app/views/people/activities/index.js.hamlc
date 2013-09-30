@@ -14,7 +14,8 @@
           :data-title => activity.action + " " + activity.resource_type.toLowerCase() + " " + activity.resource_id,
           :data-content => activity.formatted_data,
           :data-placement => 'auto bottom',
-          :data-trigger => 'hover'}
+          :data-trigger => 'click',
+          :class => 'item'}
         %td= activity.created_at
         %td= activity.person_name
         %td= activity.action

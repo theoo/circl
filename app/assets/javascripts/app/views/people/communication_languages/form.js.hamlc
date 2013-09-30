@@ -1,5 +1,5 @@
-.panel-body
-  %form
+%form
+  .panel-body
     .row
       .col-lg-12
         .validation_errors_placeholder
@@ -16,6 +16,8 @@
               :value => lang.id }
             %label{:for => id}= lang.name
 
+  .panel-footer
     .row
       .col-lg-12
-        != @partial('submit_button')(@job)
+        .pull-right
+          != @partial('submit_button')(@job)

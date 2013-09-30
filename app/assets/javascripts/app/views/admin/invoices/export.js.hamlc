@@ -83,6 +83,10 @@
     .row
       .col-lg-12
         %button{:type => 'button', :class => 'btn btn-default', :data-dismiss => 'modal'}
+          .glyphicon.glyphicon-chevron-left
           = I18n.t("common.close")
 
-        %input{:type => 'submit', :class => 'btn btn-primary', :name => 'admin-invoices-export', :value => I18n.t('common.export')}
+        %button{:type => 'submit',
+                :class => 'btn btn-primary'}
+          .glyphicon.glyphicon-export
+          = I18n.t('common.export')

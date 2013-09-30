@@ -1,5 +1,5 @@
-.panel-body
-  %form
+%form
+  .panel-body
     .row
       .col-lg-12
         .validation_errors_placeholder
@@ -17,6 +17,7 @@
                     :value => role.id }
             %label{:for => id}= role.name
 
+  .panel-footer
     .row
       .col-lg-12
         .pull-right

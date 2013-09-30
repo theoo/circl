@@ -18,7 +18,7 @@ BankImportHistory = App.BankImportHistory
 
 class Form extends App.ExtendedController
   events:
-    'click input[name="import_bank_import_history"]': 'validate'
+    'submit form': 'validate'
 
   constructor: (params) ->
     super
@@ -29,7 +29,7 @@ class Form extends App.ExtendedController
     file = @el.find('input[type="file"]').val()
 
     if file.length == 0
-      errors.add [I18n.t("common.file"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['admin_receipts_file', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     unless errors.is_empty()
       e.preventDefault()
@@ -44,6 +44,8 @@ class Form extends App.ExtendedController
     @render()
 
 class Index extends App.ExtendedController
+  events:
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -53,13 +55,24 @@ class Index extends App.ExtendedController
     @html @view('admin/bank_import_histories/index')(@)
     Ui.load_ui(@el)
 
+  table_redraw: ->
+    @el.find('tr.item').each ->
+      original_title = $(@).attr('title')
+      $(@).removeAttr('title')
+      $(@).popover
+        placement:  'auto bottom'
+        content:    original_title
+        title:      $(@).data('id')
+        html:       true
+        trigger:    'click'
+
   activate: ->
     super
     @render()
 
 class Export extends App.ExtendedController
   events:
-    'click input[name="export_bank_import_history"]': 'validate'
+    'submit form': 'validate'
 
   constructor: (params) ->
     super
@@ -71,16 +84,16 @@ class Export extends App.ExtendedController
     to = @el.find('input[name=to]').val()
 
     if from.length == 0
-      errors.add [I18n.t("common.from"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['from', I18n.t("activerecord.errors.messages.blank")].to_property()
     else
       unless @validate_date_format(from)
-        errors.add [I18n.t("common.from"), I18n.t('common.errors.date_must_match_format')].to_property()
+        errors.add ['from', I18n.t('common.errors.date_must_match_format')].to_property()
 
     if to.length == 0
-      errors.add [I18n.t("common.to"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['to', I18n.t("activerecord.errors.messages.blank")].to_property()
     else
       unless @validate_date_format(to)
-        errors.add [I18n.t("common.to"), I18n.t('common.errors.date_must_match_format')].to_property()
+        errors.add ['to', I18n.t('common.errors.date_must_match_format')].to_property()
 
     unless errors.is_empty()
       e.preventDefault()

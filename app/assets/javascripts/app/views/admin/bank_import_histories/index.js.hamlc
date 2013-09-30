@@ -1,5 +1,6 @@
 
-%h3= I18n.t("bank_import_history.views.previously_uploaded_lines_title")
+.modal-body
+  %h3= I18n.t("bank_import_history.views.previously_uploaded_lines_title")
 
 %table.datatable{ :action => '/admin/bank_import_histories' }
   %thead

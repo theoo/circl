@@ -33,7 +33,7 @@
     .col-lg-3
 
   .tab-content
-    #info.tab-pane.fade
+    #info.tab-pane
       .row
         .col-lg-6
           - if can? :read, @person
@@ -50,16 +50,18 @@
 
         .col-lg-6
           - if can? :read, @person => PeoplePrivateTag
-            #person_private_tags.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('person.views.private_tags')
+            - if PrivateTag.count > 0
+              #person_private_tags.panel.panel-default
+                .panel-heading
+                  .panel-title
+                    = I18n.t('person.views.private_tags')
 
           - if can? :read, @person => PeoplePublicTag
-            #person_public_tags.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('person.views.public_tags')
+            - if PublicTag.count > 0
+              #person_public_tags.panel.panel-default
+                .panel-heading
+                  .panel-title
+                    = I18n.t('person.views.public_tags')
 
           //- if can? :read, @person => TranslationAptitude
           //  #person_translation_aptitudes.widget
@@ -67,7 +69,7 @@
           //    .content
 
 
-    #affairs.tab-pane.fade
+    #affairs.tab-pane
       .row
         .col-lg-6
           - # TODO Adjust access to every panel
@@ -119,7 +121,7 @@
                 .panel-title
                   = I18n.t('affair.views.receipts')
 
-    #salaries.tab-pane.fade
+    #salaries.tab-pane
       .row
         .col-lg-6
           - if can? :read, @person => Salaries::Salary
@@ -152,7 +154,7 @@
                   = I18n.t('person.views.salary_taxes')
               #person_salary_tax_datas
 
-    #permissions.tab-pane.fade
+    #permissions.tab-pane
       .row
         .col-lg-6
           - if can? :read, @person => PeopleRole
@@ -162,7 +164,7 @@
                   = I18n.t('person.views.roles')
         .col-lg-6
 
-    #activities.tab-pane.fade
+    #activities.tab-pane
       .row
         .col-lg-6
           - if can? :read, @person => Comment

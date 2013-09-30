@@ -104,7 +104,7 @@ class @Admin extends App
     @subapp($('#admin_subscriptions'), 'AdminSubscriptions')
 
     @subapp($('#admin_invoices'), 'AdminInvoices')
-    # @subapp($('#admin_receipts'), 'AdminReceipts')
+    @subapp($('#admin_receipts'), 'AdminReceipts')
 
 
 class @Salaries extends App
@@ -112,8 +112,8 @@ class @Salaries extends App
   constructor: (params) ->
     super
     @subapp($('#salaries_salaries'), 'Salaries')
-    @subapp($('#salaries_taxes'), 'SalariesTaxes')
-    @subapp($('#salaries_salary_templates'), 'SalariesTemplates')
+    #@subapp($('#salaries_taxes'), 'SalariesTaxes')
+    #@subapp($('#salaries_salary_templates'), 'SalariesTemplates')
 
 class @Settings extends App
 
