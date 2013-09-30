@@ -33,7 +33,14 @@ module Exporter
     end
 
     def desc_for(i)
-      [ @options[:invoice_prefix], "Client " + i.owner.id.to_s, "#{i.title} - #{i.id}" ].join("/")
+      client_str = "Client "
+      if i.owner
+        client_str += i.owner.try(:id).try(:to_s)
+      else
+        client_str += "missing!"
+      end
+      invoice_str = "#{i.title} - #{i.id}"
+      [ @options[:invoice_prefix], client_str, invoice_str ].join("/")
     end
 
     def convert(invoice)
@@ -49,8 +56,8 @@ module Exporter
         :counterpart_account        => @options[:counterpart_account],
         :vat_code                   => @options[:invoice_vat_code],
         :vat_rate                   => @options[:invoice_vat_rate],
-        :person_id                  => invoice.owner.id,
-        :person_name                => invoice.owner.name,
+        :person_id                  => invoice.owner.try(:id),
+        :person_name                => invoice.owner.try(:name),
         :document_type              => :invoice
       }
 
