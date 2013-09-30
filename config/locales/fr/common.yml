@@ -1,6 +1,7 @@
 ---
 fr:
   common:
+    export: exporter
     weak: faible
     good: bon
     strong: fort

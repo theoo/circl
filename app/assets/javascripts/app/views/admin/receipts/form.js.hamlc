@@ -55,7 +55,7 @@
                  :id => 'admin_receipts_affair_title',
                  :value => @receipt.affair_title,
                  :disabled => 'disabled',
-                 :class => 'form-control',
+                 :class => 'form-control disabled',
                  :action => '/people/x/affairs/search'}
           %input{:type => 'hidden',
                  :name => 'affair_id',

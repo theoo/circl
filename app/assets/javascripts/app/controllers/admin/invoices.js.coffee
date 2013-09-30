@@ -23,8 +23,8 @@ $.fn.invoice = ->
 
 class Index extends App.ExtendedController
   events:
-    'person-edit':  'edit'
-    'submit form':  'stack_export_window'
+    'click tr.item': 'edit'
+    'click button[name=admin-invoices-export]':  'stack_export_window'
 
   constructor: (params) ->
     super
@@ -35,7 +35,12 @@ class Index extends App.ExtendedController
     Ui.load_ui(@el)
 
   edit: (e) ->
-    id = $(e.target).attr('data-id')
+    e.preventDefault()
+    id = $(e.target).closest("tr.item").attr('data-id')
+
+    # Do not refresh index, the default behavior
+    Invoice.unbind 'refresh'
+
     Invoice.one 'refresh', =>
       invoice = Invoice.find(id)
       window.location = "/people/#{invoice.buyer_id}?folding=person_affairs"
@@ -43,15 +48,25 @@ class Index extends App.ExtendedController
 
   stack_export_window: (e) ->
     e.preventDefault()
-    window = Ui.stack_window('export-invoices', {width: 400, remove_on_close: true})
-    controller = new App.ExportInvoices({el: window})
-    $(window).modal({title: I18n.t('invoice.views.export')})
-    $(window).modal('show')
+
+    win = $("<div class='modal fade' id='admin-invoices-export-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Modal alternative
+    win.find('.modal-body').remove()
+    win.find('.modal-footer').remove()
+
+    controller = new App.ExportInvoices({el: win.find('.modal-content')})
+    win.modal('show')
     controller.activate()
 
 class App.ExportInvoices extends App.ExtendedController
   events:
     'submit form': 'validate'
+    # 'click input[name=admin-invoices-export]': 'validate'
 
   constructor: (params) ->
     super
@@ -62,6 +77,9 @@ class App.ExportInvoices extends App.ExtendedController
   validate: (e) ->
     errors = new App.ErrorsList
 
+    # Clear errors
+    @reset_notifications()
+
     form = $(e.target)
     from = form.find('input[name=from]').val()
     to = form.find('input[name=to]').val()
@@ -69,22 +87,22 @@ class App.ExportInvoices extends App.ExtendedController
     counterpart = form.find('input[name=counterpart_account]').val()
 
     if from.length == 0
-      errors.add [I18n.t("common.from"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['from', I18n.t("activerecord.errors.messages.blank")].to_property()
     else
       unless @validate_date_format(from)
-        errors.add [I18n.t("common.from"), I18n.t('common.errors.date_must_match_format')].to_property()
+        errors.add ['to', I18n.t('common.errors.date_must_match_format')].to_property()
 
     if to.length == 0
-      errors.add [I18n.t("common.to"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['to', I18n.t("activerecord.errors.messages.blank")].to_property()
     else
       unless @validate_date_format(to)
-        errors.add [I18n.t("common.to"), I18n.t('common.errors.date_must_match_format')].to_property()
+        errors.add ['to', I18n.t('common.errors.date_must_match_format')].to_property()
 
     if account.length == 0
-      errors.add [I18n.t("invoice.views.account"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['account', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     if counterpart.length == 0
-      errors.add [I18n.t("invoice.views.counterpart_account"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['counterpart_account', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     unless errors.is_empty()
       e.preventDefault()
@@ -109,4 +127,4 @@ class App.AdminInvoices extends Spine.Controller
 
   activate: ->
     super
-    @index.render()
+    Invoice.fetch()

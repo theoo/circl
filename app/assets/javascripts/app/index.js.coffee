@@ -103,7 +103,7 @@ class @Admin extends App
     @subapp($('#admin_affairs'), 'AdminAffairs')
     @subapp($('#admin_subscriptions'), 'AdminSubscriptions')
 
-    # @subapp($('#admin_invoices'), 'AdminInvoices')
+    @subapp($('#admin_invoices'), 'AdminInvoices')
     # @subapp($('#admin_receipts'), 'AdminReceipts')
 
 

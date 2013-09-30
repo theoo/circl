@@ -45,7 +45,6 @@ class InvoicesDatatable
         4 => invoice.get_statuses.map{|s| I18n.t("invoice.views.statuses." + s.to_s)}.join(", "),
         5 => invoice.created_at,
         'id' => invoice.id,
-        'actions' => [ I18n.t('directory.views.contextmenu.show_person') ],
         'number_columns' => [3]
       }
     end

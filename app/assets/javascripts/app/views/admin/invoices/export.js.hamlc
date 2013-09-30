@@ -1,63 +1,88 @@
-%br
-#receipts_export
-  .validation_errors_placeholder
+%form{ :method =>'get', :action => '/admin/invoices/export' }
+  .modal-header
+    %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+      &times;
+    %h4.modal-title
+      = I18n.t('invoice.views.export')
 
-  %form{ :method =>'get', :action => '/admin/invoices/export' }
+  .modal-body
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-    .block
-      .stackable-block
-        .autocompleted
-          %label= I18n.t('invoice.views.subscription_title')
+    .row
+      .col-lg-6
+        .autocompleted.form-group
+          %label{:for => 'admin_invoices_subscription_title'}
+            = I18n.t('invoice.views.subscription_title')
           %input{:type => 'search',
                  :name => 'subscription_title',
                  :value => '',
+                 :id => 'admin_invoices_subscription_title',
+                 :class => 'form-control',
                  :action => '/admin/subscriptions/search'}
           %input{:type => 'hidden',
                  :name => 'subscription_id',
                  :value => ''}
 
-    .block
-      .stackable-block
-        %label= I18n.t('common.toolbox_template')
-        %select{:name => 'type'}
-          - for l in ['banana', 'git', 'office_maker', 'csv']
-            %option{:value => l}= l
+      .col-lg-6
+        .form-group
+          %label{:for => 'admin_invoices_type'}
+            = I18n.t('common.toolbox_template')
+          %select{:name => 'type',
+                  :id => 'admin_invoices_type',
+                  :class => 'form-control'}
+            - for l in ['banana', 'git', 'office_maker', 'csv']
+              %option{:value => l}= l
 
-      .stackable-block
-        %label= I18n.t('invoice.views.account')
-        %input{:type => 'text',
-               :step => '1',
-               :class => 'small required',
-               :name => 'account',
-               :value => @account }
+    .row
+      .col-lg-6
+        .form-group
+          %label{:for => 'admin_invoices_account'}
+            = I18n.t('invoice.views.account')
+          %input{ :type => 'text',
+                  :id => 'admin_invoices_account',
+                  :step => '1',
+                  :class => 'form-control required',
+                  :name => 'account',
+                  :value => @account }
 
-      .stackable-block
-        %label= I18n.t('invoice.views.counterpart_account')
-        %input{:type => 'text',
-               :step => '1',
-               :class => 'small required',
-               :name => 'counterpart_account',
-               :value => @counterpart_account }
+      .col-lg-6
+        .form-group
+          %label{:for => 'admin_invoices_counterpart_account'}
+            = I18n.t('invoice.views.counterpart_account')
+          %input{ :type => 'text',
+                  :step => '1',
+                  :id => 'admin_invoices_counterpart_account',
+                  :class => 'form-control required',
+                  :name => 'counterpart_account',
+                  :value => @counterpart_account }
 
-    .block
-      .stackable-block
-        %label= I18n.t('common.from')
-        %input{:type => 'text',
-               :name => 'from',
-               :class => 'datepicker required',
-               :value => '' }
+    .row
+      .col-lg-6
+        .form-group
+          %label{:for => 'admin_invoices_from'}
+            = I18n.t('common.from')
+          %input{ :type => 'text',
+                  :name => 'from',
+                  :id => 'admin_invoices_from',
+                  :class => 'datepicker required form-control',
+                  :value => '' }
 
-      .stackable-block
-        %label= I18n.t('common.to')
-        %input{:type => 'text',
-               :name => 'to',
-               :class => 'datepicker required',
-               :value => '' }
+      .col-lg-6
+        .form-group
+          %label{:for => 'admin_invoices_to'}
+            = I18n.t('common.to')
+          %input{ :type => 'text',
+                  :name => 'to',
+                  :id => 'admin_invoices_to',
+                  :class => 'datepicker required form-control',
+                  :value => '' }
 
-      .stackable-block
-        %form
-          %br
-          %input.no_sending{ :type => 'submit', :value => I18n.t('common.toolbox_export') }
+  .modal-footer
+    .row
+      .col-lg-12
+        %button{:type => 'button', :class => 'btn btn-default', :data-dismiss => 'modal'}
+          = I18n.t("common.close")
 
-      .block
-        %br
+        %input{:type => 'submit', :class => 'btn btn-primary', :name => 'admin-invoices-export', :value => I18n.t('common.export')}

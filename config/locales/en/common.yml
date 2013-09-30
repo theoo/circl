@@ -1,6 +1,7 @@
 ---
 en:
   common:
+    export: export
     weak: weak
     good: good
     strong: strong
