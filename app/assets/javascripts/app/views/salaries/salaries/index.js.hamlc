@@ -58,11 +58,28 @@
                   :title => I18n.t('common.destroy') }
             .glyphicon.glyphicon-remove
 
-.toolbox{ :id => 'invoices_export' }
-  %legend= I18n.t('common.toolbox')
+.panel-footer
+  .btn-group
+    %button{:type => 'button',
+            :name => 'salaries-export',
+            :class => 'btn btn-default' }
+      .glyphicon.glyphicon-export
+      = I18n.t('salaries.export')
 
-  %form
-    %input.no_sending{ :type => 'submit', :id => 'export', :value => I18n.t('salaries.export') }
-    %input.no_sending{ :type => 'submit', :id => 'export_to_accounting', :value => I18n.t('salaries.export_to_accounting') }
-    %input.no_sending{ :type => 'submit', :id => 'export_to_ocas', :value => I18n.t('salaries.export_to_ocas') }
-    %input.no_sending{ :type => 'submit', :id => 'export_to_eLohnausweisSSK', :value => I18n.t('salaries.export_salary_certificates') }
+    %button{:type => 'button',
+            :name => 'salaries-export-to-accounting',
+            :class => 'btn btn-default' }
+      .glyphicon.glyphicon-export
+      = I18n.t('salaries.export_to_accounting')
+
+    %button{:type => 'button',
+            :name => 'salaries-export-to-ocas',
+            :class => 'btn btn-default' }
+      .glyphicon.glyphicon-export
+      = I18n.t('salaries.export_to_ocas')
+
+    %button{:type => 'button',
+            :name => 'salaries-export-to-eLohnausweisSSK',
+            :class => 'btn btn-default' }
+      .glyphicon.glyphicon-export
+      = I18n.t('salaries.export_salary_certificates')

@@ -2,10 +2,10 @@
 fr:
   salaries:
     copy_reference: copier la référence vers un groupe de personnes
-    export: Exporter les salaires
-    export_salary_certificates: ! "Exporter vers le logiciel de génération \n des certificats de salaire"
+    export: Export générique
+    export_salary_certificates: ! "Export pour la génération des certificats de salaire"
     export_to_accounting: Exporter vers la comptabilité
-    export_to_avs: Exporter vers l'attestation de salaires OCAS
+    export_to_avs: Export pour les attestations de salaires OCAS
     export_to_elohnausweisssk: Exporter vers elohnausweisssk
     export_to_ocas: Exporter vers l'attestation de salaires OCAS
     item:

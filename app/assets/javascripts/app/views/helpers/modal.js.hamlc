@@ -8,4 +8,5 @@
     .modal-body
     .modal-footer
       %button{:type => 'button', :class => 'btn btn-default', :data-dismiss => 'modal'}
+        .glyphicon.glyphicon-chevron-left
         = I18n.t("common.close")

@@ -33,8 +33,10 @@
       .row
         .col-lg-12
           - if can? :read, Salaries::Salary
-            #salaries_salaries.widget.pinable
-              %legend= I18n.t('common.salaries')
+            #salaries_salaries.panel.panel-primary
+              .panel-heading
+                .panel-title
+                  = I18n.t('common.salaries')
 
     #templates.tab-pane.fade
       .row

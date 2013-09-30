@@ -16,21 +16,21 @@
 
 Salary = App.Salary
 
-$.fn.salary = ->
+$.fn.salaries_salary = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
   Salary.find(elementID)
 
 class Index extends App.ExtendedController
   events:
-    'salary-edit'    : 'edit'
-    'salary-paid'    : 'check_as_paid'
-    'salary-copy'    : 'copy_reference'
-    'salary-destroy' : 'destroy'
-    'click #export'                    : 'stack_export_window'
-    'click #export_to_accounting'      : 'stack_export_to_accounting_window'
-    'click #export_to_ocas'            : 'stack_export_to_ocas_window'
-    'click #export_to_eLohnausweisSSK' : 'stack_export_to_eLohnausweisSSK_window'
+    'click tr.item'                                         : 'edit'
+    'click button[name=salaries-salary-paid]'               : 'check_as_paid'
+    'click button[name=salaries-salary-copy]'               : 'copy_reference'
+    'click button[name=salaries-salary-destroy]'            : 'destroy'
+    'click button[name=salaries-export]'                    : 'stack_export_window'
+    'click button[name=salaries-export-to-accounting]'      : 'stack_export_to_accounting_window'
+    'click button[name=salaries-export-to-ocas]'            : 'stack_export_to_ocas_window'
+    'click button[name=salaries-export-to-eLohnausweisSSK]' : 'stack_export_to_eLohnausweisSSK_window'
 
   constructor: (params) ->
     Salary.bind('refresh', @render)
@@ -41,25 +41,35 @@ class Index extends App.ExtendedController
     Ui.load_ui(@el)
 
   edit: (e) ->
-    salary = $(e.target).salary()
+    e.preventDefault()
+    salary = $(e.target).salaries_salary()
     window.location = "/people/#{salary.person_id}?folding=person_salaries"
 
   destroy: (e) ->
-    salary = $(e.target).salary()
+    e.preventDefault()
+    salary = $(e.target).salaries_salary()
     if confirm(I18n.t('common.are_you_sure'))
       @destroy_with_notifications(salary)
 
   check_as_paid: (e) ->
-    salary = $(e.target).salary()
+    e.preventDefault()
+    salary = $(e.target).salaries_salary()
     if confirm(I18n.t('common.are_you_sure'))
       salary.updateAttributes(paid: true)
       Salary.fetch()
 
   copy_reference: (e) ->
-    salary = $(e.target).salary()
+    e.preventDefault()
+    salary = $(e.target).salaries_salary()
 
-    win = Ui.stack_window('salary-copy-reference', {width: 1200, remove_on_close: true})
-    controller = new App.DirectoryQueryPresets(el: win, search: { text: I18n.t('salaries.copy_reference') })
+    win = $("<div class='modal fade' id='salaries-salary-copy-reference-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    controller = new App.DirectoryQueryPresets({el: win.find('.modal-content')})
+
     controller.bind 'search', (preset) =>
       Ui.spin_on controller.search.el
 
@@ -69,33 +79,42 @@ class Index extends App.ExtendedController
         data: JSON.stringify(query: preset.query)
 
       ajax_error = (xhr, statusText, error) =>
-        Ui.spin_off controller.search.el
-        Ui.notify controller.search.el, I18n.t('common.failed_to_update'), 'error'
         controller.search.render_errors $.parseJSON(xhr.responseText)
 
       ajax_success = (data, textStatus, jqXHR) =>
-        Ui.spin_off controller.search.el
-        Ui.notify controller.search.el, I18n.t('common.successfully_updated'), 'notice'
         $(win).modal('hide')
         Salary.refresh([], clear: true)
         Salary.fetch()
 
       Salary.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
-    $(win).modal({title: I18n.t('salaries.copy_reference')})
-    $(win).modal('show')
+    win.modal('show')
     controller.activate()
 
   stack_export_window: (e) ->
-    #e.preventDefault()
-    #window = Ui.stack_window('export-salaries', {width: 400, remove_on_close: true})
-    #controller = new App.ExportSalaries({el: window})
-    #$(window).modal({title: I18n.t('salaries.export')})
-    #$(window).modal('show')
-    #controller.activate()
+    e.preventDefault()
+
+    win = $("<div class='modal fade' id='salaries-salary-copy-reference-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    win.find('h4').text I18n.t('salaries.export')
+
+    btn = "<button type='submit' name='export' class='btn btn-primary'>"
+    btn += "<div class='glyphicon glyphicon-export'></div>"
+    btn += I18n.t('common.export')
+    btn += "</button>"
+    btn = $(btn)
+    win.find('.modal-footer').append btn
+
+    controller = new App.ExportSalaries({el: win.find('.modal-body')})
+    win.modal('show')
+    controller.activate()
 
   stack_export_to_accounting_window: (e) ->
-    #e.preventDefault()
+    e.preventDefault()
     #window = Ui.stack_window('export-accounting-salaries', {width: 400, remove_on_close: true})
     #controller = new App.ExportToAccountingSalaries({el: window})
     #$(window).modal({title: I18n.t('salaries.export_to_accounting')})
@@ -103,7 +122,7 @@ class Index extends App.ExtendedController
     #controller.activate()
 
   stack_export_to_ocas_window: (e) ->
-    #e.preventDefault()
+    e.preventDefault()
     #window = Ui.stack_window('export-ocas-salaries', {width: 400, remove_on_close: true})
     #controller = new App.ExportToOcasSalaries({el: window})
     #$(window).modal({title: I18n.t('salaries.export_to_ocas')})
@@ -111,7 +130,7 @@ class Index extends App.ExtendedController
     #controller.activate()
 
   stack_export_to_eLohnausweisSSK_window: (e) ->
-    #e.preventDefault()
+    e.preventDefault()
     #window = Ui.stack_window('export-elohnausweisssk-salaries', {width: 400, remove_on_close: true})
     #controller = new App.ExportToELohnausweisSSKSalaries({el: window})
     #$(window).modal({title: I18n.t('salaries.export_to_elohnausweisssk')})
