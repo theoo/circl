@@ -112,8 +112,8 @@ class @Salaries extends App
   constructor: (params) ->
     super
     @subapp($('#salaries_salaries'), 'Salaries')
-    #@subapp($('#salaries_taxes'), 'SalariesTaxes')
-    #@subapp($('#salaries_salary_templates'), 'SalariesTemplates')
+    @subapp($('#salaries_taxes'), 'SalariesTaxes')
+    @subapp($('#salaries_salary_templates'), 'SalariesTemplates')
 
 class @Settings extends App
 

@@ -16,7 +16,7 @@
 
 SalaryTax = App.SalaryTax
 
-$.fn.tax = ->
+$.fn.salaries_tax = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
   SalaryTax.find(elementID)
@@ -51,6 +51,8 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name=tax-upload]':  'stack_upload_window'
+    'click button[name=tax-destroy]': 'destroy'
 
   constructor: ->
     super
@@ -81,12 +83,30 @@ class Edit extends App.ExtendedController
 
     @save_with_notifications form, @hide
 
+  stack_upload_window: (e) ->
+    e.preventDefault()
+
+    win = $("<div class='modal fade' id='salaries-taxes-upload-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    controller = new App.UploadSalaryTaxes({el: win.find('.modal-content'); id: @tax.id})
+
+    controller.activate()
+    win.modal('show')
+
+  destroy: (e) ->
+    e.preventDefault()
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @tax, =>
+        @hide()
+
 class Index extends App.ExtendedController
   events:
-    'tax-show':      'stack_show_window'
-    'tax-edit':      'edit'
-    'tax-destroy':   'destroy'
-    'click tr':    'stack_upload_window'
+    'click tr':      'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -96,51 +116,16 @@ class Index extends App.ExtendedController
     @html @view('salaries/taxes/index')(@)
     Ui.load_ui(@el)
 
-  stack_show_window: (e) ->
-    tax = $(e.target).tax()
-    @trigger 'edit', tax.id
-
   edit: (e) ->
-    tax = $(e.target).tax()
+    tax = $(e.target).salaries_tax()
+    @activate_in_list(e.target)
     @trigger 'edit', tax.id
 
-  stack_upload_window: (e) ->
-    console.log "coucou"
-    e.preventDefault()
-    tax = $(e.target).tax()
+  table_redraw: =>
+    if @tag
+      target = $(@el).find("tr[data-id=#{@tag.id}]")
 
-    win = $("<div class='modal fade' id='invoice-preview' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
-
-    # Update title
-    win.find('h4').text I18n.t('salaries.tax.views.upload_tax') + ": " + tax.title
-
-
-    # Adapt width to A4
-    # win.find('.modal-dialog').css(width: 900)
-
-    # Add preview in new tab button
-    #btn = "<button type='button' name='invoice-preview-pdf-new-tab' class='btn btn-default'>"
-    #btn += I18n.t('invoice.views.actions.preview_pdf_in_new_tab')
-    #btn += "</button>"
-    #btn = $(btn)
-    #win.find('.modal-footer').append btn
-    #btn.on 'click', (e) =>
-    #  e.preventDefault()
-    #  window.open "#{PersonAffairInvoice.url()}/#{@invoice.id}.html", "_blank"
-
-    controller = new App.UploadSalaryTaxes({el: win.find('.modal-body'); id: tax.id})
-    controller.activate()
-
-    win.modal('show')
-
-  destroy: (e) ->
-    tax = $(e.target).tax()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications tax
+    @activate_in_list(target)
 
 class App.SalariesTaxes extends Spine.Controller
   className: 'salaries_taxes'
@@ -153,13 +138,15 @@ class App.SalariesTaxes extends Spine.Controller
     @new = new New
     @append(@new, @edit, @index)
 
+    @new.bind 'edit', (id) =>
+      @edit.active(id: id)
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
 
-    @index.bind 'destroyError', (id, errors) =>
+    @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 
@@ -219,7 +206,7 @@ class App.UploadSalaryTaxes extends App.ExtendedController
 
         # update tax item on tax widget/list
         SalaryTax.fetch(id: tax.tax_id)
-
+        @el.closest(".modal").modal('hide')
 
     tax = $(e.target).serializeObject()
 

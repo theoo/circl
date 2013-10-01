@@ -1,26 +1,4 @@
-- show_tax_trad = I18n.t('salaries.tax.views.contextmenu.show_tax_data')
-- edit_tax_trad = I18n.t('salaries.tax.views.contextmenu.edit_tax')
-- upload_tax_trad = I18n.t('salaries.tax.views.contextmenu.upload_tax_data')
-- destroy_tax_trad = I18n.t('salaries.tax.views.contextmenu.destroy_tax')
-
-%menu.context_menu_actions
-  / %command{ :data-label => show_tax_trad,
-  /          :data-event => 'tax-show',
-  /          :data-icon => 'show' }
-
-  %command{ :data-label => edit_tax_trad,
-            :data-event => 'tax-edit',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => upload_tax_trad,
-            :data-event => 'tax-upload',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => destroy_tax_trad,
-            :data-event => 'tax-destroy',
-            :data-icon => 'delete' }
-
-%table.with_contextmenu.datatable
+%table.datatable
   %thead
     %tr
       %th= I18n.t('salaries.tax.views.title')
@@ -32,9 +10,7 @@
 
   %tbody
     - for tax in App.SalaryTax.all()
-      - actions = [ edit_tax_trad, upload_tax_trad, destroy_tax_trad ]
-      %tr{:data-id => tax.id,
-          :data-actions => actions }
+      %tr{:data-id => tax.id, :class => 'item'}
         %td= tax.title
         %td= tax.model
         %td.number= tax.employee_account

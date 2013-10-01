@@ -1,69 +1,96 @@
-%br
-#salaries_export
-  .validation_errors_placeholder
+.modal-header
+  %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+    &times;
+  %h4.modal-title
+    = I18n.t('salaries.export')
 
-  %form{ :method =>'get', :action => '/salaries/salaries/export_accounting' }
+%form{ :method =>'get', :action => '/salaries/salaries/export_accounting' }
+  .modal-body
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-    .block
-      .stackable-block
-        %label{ :for => 'salary_employer_part', :class => 'inline'}= I18n.t('salaries.salary.views.employer_part')
-        .small
-          %input{ :name => 'employer_part',
-                  :id => 'salary_employer_part',
-                  :type => 'checkbox',
-                  :checked => true,
-                  :value => 1 }
+    .row
+      .col-lg-4
+        .checkbox
+          %label
+            %input{ :name => 'paid',
+                    :type => 'checkbox',
+                    :checked => true,
+                    :value => 1 }
+            = I18n.t('salaries.salary.views.table.paid')
 
-    .block
-      .stackable-block
-        %label{ :for => 'salary_is_paid', :class => 'inline'}= I18n.t('salaries.salary.views.table.paid')
-        .small
-          %input{ :name => 'paid',
-                  :id => 'salary_is_paid',
-                  :type => 'checkbox',
-                  :checked => true,
-                  :value => 1 }
+      .col-lg-4
+        .checkbox
+          %label
+            %input{ :name => 'unpaid',
+                    :type => 'checkbox',
+                    :checked => true,
+                    :value => 1 }
+            = I18n.t('salaries.salary.views.table.unpaid')
 
-      .stackable-block
-        %label{ :for => 'salary_is_unpaid', :class => 'inline'}= I18n.t('salaries.salary.views.table.unpaid')
-        .small
-          %input{ :name => 'unpaid',
-                  :id => 'salary_is_unpaid',
-                  :type => 'checkbox',
-                  :checked => true,
-                  :value => 1 }
+      .col-lg-4
+        .checkbox
+          %label
+            %input{ :name => 'employer_part',
+                    :type => 'checkbox',
+                    :checked => true,
+                    :value => 1 }
+            = I18n.t('salaries.salary.views.employer_part')
 
-    .block
-      = I18n.t("salaries.salary.views.export_interval_explanation")
+    .row
+      .col-lg-12
+        .alert.alert-info
+          = I18n.t("salaries.salary.views.export_interval_explanation")
 
-    .block
-      .stackable-block
-        %label{:for => 'salary_from'}= I18n.t('common.from')
-        %input{:type => 'text',
-               :name => 'from',
-               :id => 'salary_from',
-               :class => 'datepicker required',
-               :value => @export.from }
+    .row
+      .col-lg-6
+        .form-group
+          %label{:for => 'salaries_export_to_accounting_from'}
+            = I18n.t('common.from')
+          %input{:type => 'text',
+                 :name => 'from',
+                 :id => 'salaries_export_to_accounting_from',
+                 :class => 'datepicker required form-control',
+                 :value => @export.from }
 
-      .stackable-block
-        %label{:for => 'salary_to'}= I18n.t('common.to')
-        %input{:type => 'text',
-               :name => 'to',
-               :id => 'salary_to',
-               :class => 'datepicker required',
-               :value => @export.to }
+      .col-lg-6
+        .form-group
+          %label{:for => 'salaries_export_to_accounting_to'}
+            = I18n.t('common.to')
+          %input{:type => 'text',
+                 :name => 'to',
+                 :id => 'salaries_export_to_accounting_to',
+                 :class => 'datepicker required form-control',
+                 :value => @export.to }
 
-    .block
-      .stackable-block
-        %label= I18n.t('common.toolbox_template')
-        %select{:name => 'type'}
-          - for l in ['banana', 'git', 'office_maker', 'csv']
-            %option{:value => l}= l
+    .row
+      .col-lg-3
+      .col-lg-6
+        .form-group
+          %label{:for => 'salaries_export_to_accounting_type'}
+            = I18n.t('common.toolbox_template')
+          %select{:name => 'type',
+                  :id => 'salaries_export_to_accounting_type',
+                  :class => 'form-control'}
+            - for l in ['banana', 'git', 'office_maker', 'csv']
+              %option{:value => l}= l
+      .col-lg-3
 
-      .stackable-block
-        %form
-          %br
-          %input.no_sending{ :type => 'submit', :value => I18n.t('common.toolbox_export') }
+  .modal-footer
+    %button{:type => 'button',
+            :class => 'btn btn-default',
+            :data-dismiss => 'modal'}
+      .glyphicon.glyphicon-chevron-left
+      = I18n.t("common.close")
 
-      .block
-        %br
+    %button{:type => 'submit',
+            :name => 'export',
+            :class => 'btn btn-primary'}
+      .glyphicon.glyphicon-export
+      = I18n.t('common.export')
+
+
+
+
+

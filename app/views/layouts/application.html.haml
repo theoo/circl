@@ -15,9 +15,6 @@
     = javascript_include_tag "i18n/datatables/#{I18n.locale}.js"
     = javascript_include_tag 'application'
 
-    - # FIXME tinymce is in a gem, cannot be loaded through application
-    = javascript_include_tag 'tinymce-jquery'
-
     - # optional controller's javascript file (not common)
     - if File.exists? [ Rails.root,
                         'app/assets/javascripts/controllers',

@@ -1,49 +1,71 @@
+.modal-header
+  %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+    &times;
+  %h4.modal-title
+    = I18n.t('salaries.export')
+
 %form{ :method =>'get', :action => '/salaries/salaries/export' }
-  .row
-    .col-lg-12
-      .validation_errors_placeholder
+  .modal-body
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  .row
-    .col-lg-6
-      .checkbox
-        %label
-          %input{ :name => 'paid',
-                  :type => 'checkbox',
-                  :checked => true,
-                  :value => 1 }
-          = I18n.t('salaries.salary.views.table.paid')
+    .row
+      .col-lg-4
+        .checkbox
+          %label
+            %input{ :name => 'paid',
+                    :type => 'checkbox',
+                    :checked => true,
+                    :value => 1 }
+            = I18n.t('salaries.salary.views.table.paid')
 
-    .col-lg-6
-      .checkbox
-        %label
-          %input{ :name => 'unpaid',
-                  :type => 'checkbox',
-                  :checked => true,
-                  :value => 1 }
-          = I18n.t('salaries.salary.views.table.unpaid')
+      .col-lg-4
+        .checkbox
+          %label
+            %input{ :name => 'unpaid',
+                    :type => 'checkbox',
+                    :checked => true,
+                    :value => 1 }
+            = I18n.t('salaries.salary.views.table.unpaid')
 
-  .row
-    .col-lg-12
-      = I18n.t("salaries.salary.views.export_interval_explanation")
+      .col-lg-4
 
-  .row
-    .col-lg-6
-      .form-group
-        %label{:for => 'salaries_export_from'}
-          = I18n.t('common.from')
-        %input{:type => 'text',
-               :name => 'from',
-               :id => 'salaries_export_from',
-               :class => 'datepicker required form-control',
-               :value => @export.from }
+    .row
+      .col-lg-12
+        .alert.alert-info
+          = I18n.t("salaries.salary.views.export_interval_explanation")
 
-    .col-lg-6
-      .form-group
-        %label{:for => 'salaries_export_to'}
-          = I18n.t('common.to')
-        %input{:type => 'text',
-               :name => 'to',
-               :id => 'salaries_export_to',
-               :class => 'datepicker required form-control',
-               :value => @export.to }
+    .row
+      .col-lg-6
+        .form-group
+          %label{:for => 'salaries_export_from'}
+            = I18n.t('common.from')
+          %input{:type => 'text',
+                 :name => 'from',
+                 :id => 'salaries_export_from',
+                 :class => 'datepicker required form-control',
+                 :value => @export.from }
 
+      .col-lg-6
+        .form-group
+          %label{:for => 'salaries_export_to'}
+            = I18n.t('common.to')
+          %input{:type => 'text',
+                 :name => 'to',
+                 :id => 'salaries_export_to',
+                 :class => 'datepicker required form-control',
+                 :value => @export.to }
+
+  .modal-footer
+    %button{:type => 'button',
+            :class => 'btn btn-default',
+            :data-dismiss => 'modal'}
+      .glyphicon.glyphicon-chevron-left
+      = I18n.t("common.close")
+
+    %button{:type => 'submit',
+            :name => 'export',
+            :class => 'btn btn-primary'}
+      .glyphicon.glyphicon-export
+      = I18n.t('common.export')

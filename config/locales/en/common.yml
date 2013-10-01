@@ -1,6 +1,8 @@
 ---
 en:
   common:
+    download: download
+    upload: upload
     export: export
     weak: weak
     good: good

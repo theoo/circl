@@ -1,6 +1,8 @@
 ---
 fr:
   common:
+    download: télécharger
+    upload: téléverser
     export: exporter
     weak: faible
     good: bon

@@ -29,9 +29,6 @@ gem 'json', '1.7.3'
 gem 'will_paginate', '3.0.3'
 gem 'haml_coffee_assets', '1.1.0'
 
-gem 'tinymce-rails', '3.5.7.1'
-gem 'tinymce-rails-langs', '0.1'
-
 gem 'sass-rails', '3.1.0'
 gem 'haml-rails', '0.3.4'
 # gem 'jquery-rails', '1.0.19'

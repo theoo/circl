@@ -1,0 +1,22 @@
+// = I18n.t("salary_template.views.display_placeholders")
+
+// - if @salary_template.placeholders
+//   #salary_template_placeholders_list
+//     %label
+//       = I18n.t('salary_template.views.placeholders')
+//     %dl.placeholders
+//       - @salary_template.placeholders["simples"].each do |p,v|
+//         %dt= "#" + p
+//         %dd= I18n.t('salary_template.views.' + p.downcase)
+
+//     %dl.placeholders
+//       - @salary_template.placeholders["iterators"].each do |p,v|
+//         %dt= "#" + p + "{}"
+//         %dd= I18n.t('salary_template.views.' + p.downcase)
+
+.container
+  %textarea{:id => 'wysiwyg',
+            :name => 'html',
+            :rows => 25,
+            :class => 'wysiwyg' }
+    = @salary_template.html

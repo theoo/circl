@@ -2,6 +2,8 @@
 en:
   salary_template:
     views:
+      actions:
+        edit_template: edit template
       display_placeholders: show/hide available placeholders
       employee_percent_total: employee percent total
       employee_value_total: employee value total

@@ -22,7 +22,6 @@ class Ui
     @load_jqueryui(context)
     @load_autocompleters(context)
     @load_multi_autocompleters(context)
-    @load_wysiwyg(context)
     @load_number_precision(context)
     @load_password_strength(context)
     @load_tabs(context)
@@ -148,7 +147,6 @@ class Ui
       fnStateLoad: local_storage_load
       bJQueryUI: false # We'll use bootstrap only, not the ui-state-default classes mess
       sPaginationType: 'bootstrap'
-      fnInitComplete: (oSettings) -> @trigger('datatable_init_complete'), # Catch this in Spine!
       fnDrawCallback: (oSettings) -> @trigger('datatable_redraw'), # Catch this in Spine!
       sDom: "<'row'<'col-lg-6'T><'col-lg-6'f>r>t<'panel-body'<'row'<'col-lg-12 pagination-footer'pi>>"
 
@@ -191,29 +189,29 @@ class Ui
     search_input.addClass('form-control input-sm')
 
     # SORTING
-    table.find('th.sorting').prepend("<span class='glyphicon glyphicon-sort'/>&nbsp;")
-    table.find('th.sorting_asc').prepend("<span class='glyphicon glyphicon-sort-by-attributes'/>&nbsp;")
-    table.find('th.sorting_desc').prepend("<span class='glyphicon glyphicon-sort-by-attributes-alt'/>&nbsp;")
+    table.find('th.sorting:not(.ignore-sort)').prepend("<span class='icon-sort'/>&nbsp;")
+    table.find('th.sorting_asc').prepend("<span class='icon-sort-up'/>&nbsp;")
+    table.find('th.sorting_desc').prepend("<span class='icon-sort-down'/>&nbsp;")
 
-    table.find('th.sorting, th.sorting_desc, th.sorting_asc').on 'click', (e) ->
+    table.find('th.sorting:not(.ignore-sort), th.sorting_desc, th.sorting_asc').on 'click', (e) ->
 
       # reset all columns
-      table.find('th.sorting, th.sorting_desc, th.sorting_asc').each (index, i) ->
+      table.find('th.sorting:not(.ignore-sort), th.sorting_desc, th.sorting_asc').each (index, i) ->
         th = $(i)
-        th.find('span.glyphicon').remove()
-        icon = $("<span class='glyphicon glyphicon-sort'/>")
+        th.find('span.icon-sort, span.icon-sort-up, span.icon-sort-down').remove()
+        icon = $("<span class='icon-sort'/>")
         th.prepend icon
 
       th = $(e.target)
-      th.find('span.glyphicon').remove()
-      icon = $("<span class='glyphicon'/>")
+      th.find('span.icon-sort').remove()
+      icon = $("<span class='icon-sort'/>")
       th.prepend icon
       if th.hasClass('sorting_asc')
-        icon.removeClass('glyphicon-sort-by-attributes-alt')
-        icon.addClass('glyphicon-sort-by-attributes')
+        icon.removeClass('icon-sort-down')
+        icon.addClass('icon-sort-up')
       else
-        icon.removeClass('glyphicon-sort-by-attributes')
-        icon.addClass('glyphicon-sort-by-attributes-alt')
+        icon.removeClass('icon-sort')
+        icon.addClass('icon-sort-down')
 
 
   load_tabs: (context) ->
@@ -477,21 +475,24 @@ class Ui
 #--- wysiwyg ---
   load_wysiwyg: (context) ->
     return if context.find('textarea.wysiwyg').size() <= 0
+    tinyMCE.baseURL = "/assets/tinymce"
     tinyMCE.init
       mode: 'specific_textareas',
       editor_selector: 'wysiwyg',
+      skin_url: '/assets/tinymce/skins/lightgray/skin.min.css'
+      theme_url: '/assets/tinymce/themes/modern/theme.min.js'
       width: '100%',
       height: '1250px',
       valid_children : '+body[style]',
       language: I18n.locale,
       body_class: 'a4_page',
       content_css: ['/assets/custom_fonts.css', '/assets/pdf_common.css', '/assets/pdf_preview.css'],
-      plugins: 'autoresize,fullscreen,table,autolink,lists,spellchecker,pagebreak,style,layer,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,noneditable,visualchars,nonbreaking,xhtmlxtras,template',
+      plugins: 'autoresize,fullscreen,table,autolink,lists,spellchecker,pagebreak,layer,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,noneditable,visualchars,nonbreaking,template',
       theme: 'advanced',
-      theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
-      theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
-      theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
-      theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
+      theme_advanced_buttons1 : "save,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+      theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,image,code,|,insertdate,inserttime,|,forecolor,backcolor",
+      theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,advhr,|,print,|,ltr,rtl",
+      theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak",
       theme_advanced_toolbar_location : "top",
       theme_advanced_toolbar_align : "left",
       theme_advanced_statusbar_location : "bottom",

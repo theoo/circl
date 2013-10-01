@@ -2,6 +2,7 @@
 @import "bootstrap.css"
 @import "jquery-ui-bootstrap/jquery-ui-custom.css"
 @import "jquery-ui-bootstrap/jquery-ui-ie.css"
+@import "font-awesome/font-awesome.css"
 
 // COLORS
 // please do not use HEX color format, always
@@ -90,7 +91,8 @@ table.datatable
 
   tbody
     tr.item
-      cursor: pointer
+      td:not(.ignore-click)
+        cursor: pointer
 
   thead
     .sorting:before

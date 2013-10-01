@@ -2,6 +2,8 @@
 fr:
   salary_template:
     views:
+      actions:
+        edit_template: édition du modèle
       display_placeholders: afficher les substituants
       employee_percent_total: total des pourcentages déduits de l'employé
       employee_value_total: total des valeurs déduites de l'employé

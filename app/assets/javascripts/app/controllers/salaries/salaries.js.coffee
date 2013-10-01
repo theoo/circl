@@ -23,8 +23,8 @@ $.fn.salaries_salary = ->
 
 class Index extends App.ExtendedController
   events:
-    'click tr.item'                                         : 'edit'
-    'click button[name=salaries-salary-paid]'               : 'check_as_paid'
+    'click tr.item td:not(.ignore-click)'                   : 'edit'
+    'click button[name=salaries-salary-check-as-paid]'      : 'check_as_paid'
     'click button[name=salaries-salary-copy]'               : 'copy_reference'
     'click button[name=salaries-salary-destroy]'            : 'destroy'
     'click button[name=salaries-export]'                    : 'stack_export_window'
@@ -43,7 +43,7 @@ class Index extends App.ExtendedController
   edit: (e) ->
     e.preventDefault()
     salary = $(e.target).salaries_salary()
-    window.location = "/people/#{salary.person_id}?folding=person_salaries"
+    window.location = "/people/#{salary.person_id}#salaries"
 
   destroy: (e) ->
     e.preventDefault()
@@ -56,6 +56,7 @@ class Index extends App.ExtendedController
     salary = $(e.target).salaries_salary()
     if confirm(I18n.t('common.are_you_sure'))
       salary.updateAttributes(paid: true)
+      Salary.refresh([], clear: true)
       Salary.fetch()
 
   copy_reference: (e) ->
@@ -94,48 +95,54 @@ class Index extends App.ExtendedController
   stack_export_window: (e) ->
     e.preventDefault()
 
-    win = $("<div class='modal fade' id='salaries-salary-copy-reference-modal' tabindex='-1' role='dialog' />")
+    win = $("<div class='modal fade' id='salaries-export-modal' tabindex='-1' role='dialog' />")
     # render partial to modal
     modal = JST["app/views/helpers/modal"]()
     win.append modal
     win.modal(keyboard: true, show: false)
 
-    win.find('h4').text I18n.t('salaries.export')
-
-    btn = "<button type='submit' name='export' class='btn btn-primary'>"
-    btn += "<div class='glyphicon glyphicon-export'></div>"
-    btn += I18n.t('common.export')
-    btn += "</button>"
-    btn = $(btn)
-    win.find('.modal-footer').append btn
-
-    controller = new App.ExportSalaries({el: win.find('.modal-body')})
+    controller = new App.ExportSalaries({el: win.find('.modal-content')})
     win.modal('show')
     controller.activate()
 
   stack_export_to_accounting_window: (e) ->
     e.preventDefault()
-    #window = Ui.stack_window('export-accounting-salaries', {width: 400, remove_on_close: true})
-    #controller = new App.ExportToAccountingSalaries({el: window})
-    #$(window).modal({title: I18n.t('salaries.export_to_accounting')})
-    #$(window).modal('show')
-    #controller.activate()
+
+    win = $("<div class='modal fade' id='salaries-export-to-accounting-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    controller = new App.ExportToAccountingSalaries({el: win.find('.modal-content')})
+    win.modal('show')
+    controller.activate()
 
   stack_export_to_ocas_window: (e) ->
     e.preventDefault()
-    #window = Ui.stack_window('export-ocas-salaries', {width: 400, remove_on_close: true})
-    #controller = new App.ExportToOcasSalaries({el: window})
-    #$(window).modal({title: I18n.t('salaries.export_to_ocas')})
-    #$(window).modal('show')
-    #controller.activate()
+
+    win = $("<div class='modal fade' id='salaries-export-to-ocas-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    controller = new App.ExportToOcasSalaries({el: win.find('.modal-content')})
+    win.modal('show')
+    controller.activate()
 
   stack_export_to_eLohnausweisSSK_window: (e) ->
     e.preventDefault()
-    #window = Ui.stack_window('export-elohnausweisssk-salaries', {width: 400, remove_on_close: true})
-    #controller = new App.ExportToELohnausweisSSKSalaries({el: window})
-    #$(window).modal({title: I18n.t('salaries.export_to_elohnausweisssk')})
-    #$(window).modal('show')
-    #controller.activate()
+
+    win = $("<div class='modal fade' id='salaries-export-to-elohnausweisssk-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    controller = new App.ExportToELohnausweisSSKSalaries({el: win.find('.modal-content')})
+    win.modal('show')
+    controller.activate()
 
 class App.ExportSalaries extends App.ExtendedController
   events:
@@ -156,16 +163,16 @@ class App.ExportSalaries extends App.ExtendedController
     to = form.find('input[name=to]').val()
 
     if from.length == 0
-      errors.add [I18n.t("common.from"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['from', I18n.t("activerecord.errors.messages.blank")].to_property()
     else
       unless @validate_date_format(from)
-        errors.add [I18n.t("common.from"), I18n.t('common.errors.date_must_match_format')].to_property()
+        errors.add ['from', I18n.t('common.errors.date_must_match_format')].to_property()
 
     if to.length == 0
-      errors.add [I18n.t("common.to"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['to', I18n.t("activerecord.errors.messages.blank")].to_property()
     else
       unless @validate_date_format(to)
-        errors.add [I18n.t("common.to"), I18n.t('common.errors.date_must_match_format')].to_property()
+        errors.add ['to', I18n.t('common.errors.date_must_match_format')].to_property()
 
     unless errors.is_empty()
       e.preventDefault()
@@ -199,16 +206,16 @@ class App.ExportToAccountingSalaries extends App.ExtendedController
     to = form.find('input[name=to]').val()
 
     if from.length == 0
-      errors.add [I18n.t("common.from"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['from', I18n.t("activerecord.errors.messages.blank")].to_property()
     else
       unless @validate_date_format(from)
-        errors.add [I18n.t("common.from"), I18n.t('common.errors.date_must_match_format')].to_property()
+        errors.add ['from', I18n.t('common.errors.date_must_match_format')].to_property()
 
     if to.length == 0
-      errors.add [I18n.t("common.to"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['to', I18n.t("activerecord.errors.messages.blank")].to_property()
     else
       unless @validate_date_format(to)
-        errors.add [I18n.t("common.to"), I18n.t('common.errors.date_must_match_format')].to_property()
+        errors.add ['to', I18n.t('common.errors.date_must_match_format')].to_property()
 
     unless errors.is_empty()
       e.preventDefault()
@@ -233,10 +240,10 @@ class App.ExportToOcasSalaries extends App.ExtendedController
     errors = new App.ErrorsList
 
     form = $(e.target)
-    year = form.find('#salaries_year').val()
+    year = form.find('#salaries_export_ocas_year').val()
 
     if year.length == 0
-      errors.add [I18n.t("common.year"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['year', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     unless errors.is_empty()
       e.preventDefault()
@@ -277,10 +284,10 @@ class App.ExportToELohnausweisSSKSalaries extends App.ExtendedController
     errors = new App.ErrorsList
 
     form = $(e.target)
-    year = form.find('#salaries_year').val()
+    year = form.find('#salaries_export_certificates_year').val()
 
     if year.length == 0
-      errors.add [I18n.t("common.year"), I18n.t("activerecord.errors.messages.blank")].to_property()
+      errors.add ['year', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     unless errors.is_empty()
       e.preventDefault()

@@ -1,17 +1,37 @@
-%br
-#salaries_export
-  .validation_errors_placeholder
+.modal-header
+  %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+    &times;
+  %h4.modal-title
+    = I18n.t('salaries.export')
 
-  %form{ :method =>'get', :action => '/salaries/salaries/export_ocas' }
+%form{ :method =>'get', :action => '/salaries/salaries/export_ocas' }
+  .modal-body
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-    .block
-      .stackable-block
-        %label{:for => 'salaries_year'}= I18n.t('common.year')
-        %select{:name => 'year', :id => 'salaries_year'}
+    .row
+      .col-lg-3
+      .col-lg-6
+        %label{:for => 'salaries_export_ocas_year'}
+          = I18n.t('common.year')
+        %select{:name => 'year',
+                :id => 'salaries_export_ocas_year',
+                :class => 'form-control'}
           - for y in [@from...@to]
             %option{:value => y}= y
           %option{:value => @to, :selected => true}= y
+      .col-lg-3
 
-      .stackable-block
-        .white &nbsp;
-        %input.no_sending{ :type => 'submit', :value => I18n.t('common.toolbox_export') }
+  .modal-footer
+    %button{:type => 'button',
+            :class => 'btn btn-default',
+            :data-dismiss => 'modal'}
+      .glyphicon.glyphicon-chevron-left
+      = I18n.t("common.close")
+
+    %button{:type => 'submit',
+            :name => 'export',
+            :class => 'btn btn-primary'}
+      .glyphicon.glyphicon-export
+      = I18n.t('common.export')

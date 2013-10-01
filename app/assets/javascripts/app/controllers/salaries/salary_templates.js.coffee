@@ -25,24 +25,18 @@ $.fn.salary_template = ->
 class New extends App.ExtendedController
   events:
     'submit form' : 'submit'
-    'click #salary_template_placeholder_button':   "toggle_placeholders"
 
   constructor: ->
     super
-    get_callback = (data) =>
-      @placeholders = data
-    $.get(SalaryTemplate.url() + "/placeholders", get_callback, 'json')
 
   active: ->
     @render()
 
   render: =>
-    if @placeholders
-      @salary_template = new SalaryTemplate(placeholders: @placeholders)
-      @salary_template.html = @view('salaries/salary_templates/template')(@)
-      @html @view('salaries/salary_templates/form')(@)
-      Ui.load_ui(@el)
-      $(@el).modal('show')
+    @salary_template = new SalaryTemplate
+    @salary_template.html = @view('salaries/salary_templates/template')(@)
+    @html @view('salaries/salary_templates/form')(@)
+    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -50,14 +44,11 @@ class New extends App.ExtendedController
     @salary_template.load(data)
     @save_with_notifications @salary_template, @close
 
-  toggle_placeholders: ->
-    $("#salary_template_placeholders_list").toggle('fold')
-
-
 class Edit extends App.ExtendedController
   events:
     'submit form' : 'submit'
-    'click #salary_template_placeholder_button':   "toggle_placeholders"
+    'click button[name=salaries-salary-template-destroy]': 'destroy'
+    'click button[name=salaries-salary-template-edit]': 'edit_template'
 
   active: (params) ->
     @id = params.id if params.id
@@ -69,7 +60,6 @@ class Edit extends App.ExtendedController
     @salary_template = SalaryTemplate.find(@id)
     @html @view('salaries/salary_templates/form')(@)
     Ui.load_ui(@el)
-    @open()
 
   submit: (e) =>
     e.preventDefault()
@@ -77,19 +67,22 @@ class Edit extends App.ExtendedController
     @salary_template.load(data)
     @save_with_notifications @salary_template, @close
 
-  toggle_placeholders: ->
-    $("#salary_template_placeholders_list").toggle('fold')
+  edit_template: (e) ->
+    e.preventDefault()
+    window.open "#{SalaryTemplate.url()}/#{@salary_template.id}/edit.html", "_blank"
+
+  destroy: (e) ->
+    e.preventDefault()
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @salary_template
 
 class Index extends App.ExtendedController
   events:
-    'salary_template-edit':      'edit'
-    'salary_template-destroy':   'destroy'
-    'click input[type="submit"]': 'new'
+    'click tr.item': 'edit'
 
   constructor: (params) ->
     super
     SalaryTemplate.bind('refresh', @render)
-    Language.bind('refresh', @unlock_new)
 
   render: =>
     @html @view('salaries/salary_templates/index')(@)
@@ -103,41 +96,33 @@ class Index extends App.ExtendedController
     salary_template = $(e.target).salary_template()
     @trigger 'edit', salary_template.id
 
-  destroy: (e) ->
-    salary_template = $(e.target).salary_template()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications salary_template
-
-  unlock_new: (e) =>
-    @el.find('input[type="submit"]').button('enable')
-    @new_unlocked = true
-
 class App.SalariesTemplates extends Spine.Controller
   className: 'salaries_salary_templates'
 
   constructor: (params) ->
     super
 
-    # @edit_template_window = Ui.stack_window('edit-html-template-window', {width: 1000, position: 'top', remove_on_close: false})
-    # $(@edit_template_window).modal({title: I18n.t('salaries.salary_template.views.edit_template')})
-
-    # @new_template_window = Ui.stack_window('new-html-template-window', {width: 1000, position: 'top', remove_on_close: false})
-    # $(@new_template_window).modal({title: I18n.t('salaries.salary_template.views.new_template')})
-
+    @new = new New
+    @edit = new Edit
     @index = new Index
-    @edit = new Edit({el: @edit_template_window})
-    @new = new New({el: @new_template_window})
 
-    @append(@index)
+    @append(@new, @edit, @index)
 
-    @index.bind 'edit', (id) => @edit.active(id: id)
-    @index.bind 'new', => @new.active()
+    @new.bind 'edit', (id) =>
+      @edit.active(id: id)
+    @index.bind 'edit', (id) =>
+      @edit.active(id: id)
 
-    @index.bind 'destroyError', (id, errors) =>
+    @edit.bind 'show', => @new.hide()
+    @edit.bind 'hide', => @new.show()
+
+    @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 
   activate: ->
     super
+    Language.one "refresh", =>
+      SalaryTemplate.fetch()
+      @new.render()
     Language.fetch()
-    SalaryTemplate.fetch()

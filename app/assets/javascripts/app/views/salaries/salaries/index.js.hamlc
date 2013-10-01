@@ -17,16 +17,16 @@
       %th= I18n.t('salaries.salary.views.table.net_salary')
       %th= I18n.t('salaries.salary.views.table.paid')
       %th= I18n.t('salaries.salary.views.table.created_at')
-      %th
+      %th.ignore-sort
         -# copy reference
-      %th
+      %th.ignore-sort
         -# check as paid
-      %th
+      %th.ignore-sort
         -# destroy
 
   %tbody
     - for salary in App.Salary.all()
-      %tr{:data-id => salary.id}
+      %tr{:data-id => salary.id, :class => 'item'}
         %td= salary.id
         %td= salary.person_name
         %td= salary.title
@@ -37,26 +37,26 @@
         %td.number= salary.net_salary.to_view() if salary.net_salary
         %td= I18n.t('common.' + salary.paid)
         %td= salary.created_at
-        %td
+        %td.ignore-click
           - if salary.is_reference
             %button{:type => 'button',
                     :class => 'btn btn-default',
-                    :name => 'salaries-copy',
+                    :name => 'salaries-salary-copy',
                     :title => I18n.t('salaries.salary.views.actions.copy_reference') }
-              .glyphicon.glyphicon-save
-        %td
+              .icon-copy
+        %td.ignore-click
           - if ! salary.is_reference and ! salary.paid
             %button{:type => 'button',
                     :class => 'btn btn-default',
-                    :name => 'salaries-check-as-paid',
+                    :name => 'salaries-salary-check-as-paid',
                     :title => I18n.t('salaries.salary.views.actions.check_as_paid') }
-              .glyphicon.glyphicon-ok
-        %td
+              .icon-ok
+        %td.ignore-click
           %button{:type => 'button',
                   :class => 'btn btn-danger',
-                  :name => 'salaries-destroy',
+                  :name => 'salaries-salary-destroy',
                   :title => I18n.t('common.destroy') }
-            .glyphicon.glyphicon-remove
+            .icon-remove
 
 .panel-footer
   .btn-group
