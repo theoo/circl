@@ -15,8 +15,18 @@
 //         %dd= I18n.t('salary_template.views.' + p.downcase)
 
 .container
-  %textarea{:id => 'wysiwyg',
-            :name => 'html',
-            :rows => 25,
-            :class => 'wysiwyg' }
-    = @salary_template.html
+  .row
+    .col-lg-3
+    .col-lg-6
+      - flash_messages
+      - error_messages_for(@salary_template)
+    .col-lg-3
+
+  .row
+    .col-lg-12
+      // Override salaries_salary_template default params scope with salary_template
+      = form_for @salary_template, :as => 'salary_template' do |f|
+        = f.hidden_field :id
+
+        = f.text_area :html, :rows => 25, :id => "wysiwyg", :class => 'wysiwyg'
+        // @salary_template.html

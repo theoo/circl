@@ -69,7 +69,7 @@ class Edit extends App.ExtendedController
 
   edit_template: (e) ->
     e.preventDefault()
-    window.open "#{SalaryTemplate.url()}/#{@salary_template.id}/edit.html", "_blank"
+    window.open "#{SalaryTemplate.url()}/#{@salary_template.id}/edit.html", "salary_template"
 
   destroy: (e) ->
     e.preventDefault()

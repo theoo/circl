@@ -61,8 +61,16 @@ class Salaries::SalaryTemplatesController < ApplicationController
       if @salary_template.update_attributes(params[:salary_template])
         BackgroundTasks::GenerateSalaryTemplateJpg.process!(:salary_template_id => @salary_template.id)
         format.json { render :json => @salary_template }
+        format.html do
+          flash[:notice] = I18n.t("common.successfully_updated")
+          redirect_to edit_salaries_salary_template_path(@salary_template)
+        end
       else
         format.json { render :json => @salary_template.errors, :status => :unprocessable_entity }
+        format.html do
+          flash[:error] = I18n.t("common.failed_to_update")
+          render 'edit'
+        end
       end
     end
   end
