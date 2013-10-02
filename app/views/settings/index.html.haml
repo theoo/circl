@@ -7,12 +7,17 @@
             - if can? :update, Language
               %li
                 %a{:href => '#properties'}
-                  = I18n.t('settings.views.properties')
+                  = I18n.t('settings.views.attributes')
 
             - if can? :update, InvoiceTemplate
               %li
                 %a{:href => '#templates'}
                   = I18n.t('settings.views.templates')
+
+            - if can? :update, SearchAttribute
+              %li
+                %a{:href => '#search_engine'}
+                  = I18n.t('settings.views.search_engine')
 
             - if can? :update, ApplicationSetting
               %li
@@ -42,7 +47,7 @@
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.languages')
-        
+
       .row
         .col-lg-6
           - if can? :update, Job
@@ -54,20 +59,14 @@
 
     #templates.tab-pane.fade
       .row
-        .col-lg-6
+        .col-lg-12
           - if can? :update, InvoiceTemplate
             #settings_invoice_templates.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.invoice_templates')
-        .col-lg-6
-          - if can? :update, Role
-            #settings_roles.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('settings.views.roles')
 
-    #advanced.tab-pane.fade
+    #search_engine.tab-pane.fade
       .row
         .col-lg-6
           - if can? :update, SearchAttribute
@@ -81,6 +80,8 @@
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.ldap_attributes')
+
+    #advanced.tab-pane.fade
       .row
         .col-lg-6
           - if can? :update, ApplicationSetting
@@ -89,3 +90,8 @@
                 .panel-title
                   = I18n.t('settings.views.application_settings')
         .col-lg-6
+          - if can? :update, Role
+            #settings_roles.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.roles')

@@ -5,7 +5,7 @@
         .validation_errors_placeholder
 
     .row
-      .col-lg-6
+      .col-lg-12
         .form-group
           %label{:for => 'settings_application_setting_key'}
             = I18n.t('application_setting.views.key')
@@ -13,8 +13,8 @@
                   :name => 'key',
                   :id => 'settings_application_setting_key',
                   :value => @application_setting.key,
+                  :disabled => true,
                   :class => 'form-control required' }
-      .col-lg-6
 
     .row
       .col-lg-12
@@ -30,4 +30,5 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial('submit_button')(@application_setting)
+          - unless @application_setting.isNew()
+            != @partial('submit_button')(@application_setting)

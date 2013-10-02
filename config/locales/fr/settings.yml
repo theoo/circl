@@ -10,6 +10,7 @@ fr:
       locations: Localités
       roles: Rôles
       search_attributes: Attributs de recherche
-      properties: Propriétés
+      attributes: Attributs
       templates: Modèles
+      search_engine: Moteur de recherche
       advanced: Avancé

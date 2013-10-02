@@ -21,44 +21,15 @@ $.fn.application_setting = ->
   elementID ||= $(@).parents('[data-id]').data('id')
   ApplicationSetting.find(elementID)
 
-class ValidatingController extends App.ExtendedController
-  elements:
-    '#char_counter': 'char_counter'
-    'textarea[name="value"]': 'textarea'
-    'input[type=submit]': 'submit'
-
-  check_length: (e) ->
-    # content_length = $(e.target).val().length
-    content_length = @textarea.val().length
-    @char_counter.text content_length
-
-    if content_length > 255
-      @char_counter.css "font-weight", "bolder"
-      @char_counter.css "color", "error"
-      @submit.button('disable')
-    else
-      @char_counter.css "font-weight", "lighter"
-      @char_counter.css "color", "rgb(#{content_length},0,0)"
-      @submit.button('enable')
-
-class New extends ValidatingController
-  events:
-    'submit form': 'submit'
-    'keyup textarea[name="value"]': 'check_length'
-
+class New extends App.ExtendedController
   render: =>
     @application_setting = new ApplicationSetting()
     @html @view('settings/application_settings/form')(@)
     Ui.load_ui(@el)
 
-  submit: (e) ->
-    e.preventDefault()
-    @save_with_notifications @application_setting.fromForm(e.target), @render
-
-class Edit extends ValidatingController
+class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
-    'keyup textarea[name="value"]': 'check_length'
 
   active: (params) ->
     @id = params.id if params.id
@@ -69,7 +40,6 @@ class Edit extends ValidatingController
     @show()
     @application_setting = ApplicationSetting.find(@id)
     @html @view('settings/application_settings/form')(@)
-    $('input[name="key"]').attr('disabled', 'disabled')
     Ui.load_ui(@el)
 
   submit: (e) ->
@@ -78,7 +48,8 @@ class Edit extends ValidatingController
 
 class Index extends App.ExtendedController
   events:
-    'application_setting-edit':      'edit'
+    'click tr.item': 'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -89,8 +60,15 @@ class Index extends App.ExtendedController
     Ui.load_ui(@el)
 
   edit: (e) ->
-    application_setting = $(e.target).application_setting()
-    @trigger 'edit', application_setting.id
+    @application_setting = $(e.target).application_setting()
+    @activate_in_list(e.target)
+    @trigger 'edit', @application_setting.id
+
+  table_redraw: =>
+    if @application_setting
+      target = $(@el).find("tr[data-id=#{@application_setting.id}]")
+
+    @activate_in_list(target) 
 
 class App.SettingsApplicationSettings extends Spine.Controller
   className: 'application_settings'

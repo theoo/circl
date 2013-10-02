@@ -10,6 +10,7 @@ en:
       locations: Locations
       roles: Roles
       search_attributes: Search attributes
-      properties: Properties
+      attributes: Attributes
       templates: Templates
+      search_engine: Search engine
       advanced: Advanced
