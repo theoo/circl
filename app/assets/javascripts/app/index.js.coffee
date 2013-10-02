@@ -120,13 +120,15 @@ class @Settings extends App
   constructor: (params) ->
     super
 
-    #@subapp($('#settings_application_settings'), 'SettingsApplicationSettings')
+    @subapp($('#settings_locations'), 'SettingsLocations')
+    # @subapp($('#settings_languages'), 'SettingsLanguages')
+    # @subapp($('#settings_jobs'), 'SettingsJobs')
 
     # @subapp($('#settings_invoice_templates'), 'SettingsInvoiceTemplates')
-    # @subapp($('#settings_jobs'), 'SettingsJobs')
-    # @subapp($('#settings_languages'), 'SettingsLanguages')
-    # @subapp($('#settings_ldap_attributes'), 'SettingsLdapAttributes')
-    # @subapp($('#settings_locations'), 'SettingsLocations')
+
+    @subapp($('#settings_search_attributes'), 'SettingsSearchAttributes')
+    @subapp($('#settings_ldap_attributes'), 'SettingsLdapAttributes')
     @subapp($('#settings_roles'), 'SettingsRoles')
     @subapp($('#settings_role_permissions'), 'SettingsRolePermissions')
-    # @subapp($('#settings_search_attributes'), 'SettingsSearchAttributes')
+
+    @subapp($('#settings_application_settings'), 'SettingsApplicationSettings')

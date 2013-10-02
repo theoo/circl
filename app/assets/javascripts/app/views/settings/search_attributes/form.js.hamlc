@@ -61,3 +61,9 @@
       .col-lg-12
         .pull-right
           != @partial('submit_button')(@search_attribute)
+
+        %button{:type => 'button',
+                :class => 'btn btn-danger',
+                :name => 'settings-search-attribute-destroy'}
+          .icon-remove
+          = I18n.t("common.destroy")

@@ -16,7 +16,7 @@
 
             - if can? :update, SearchAttribute
               %li
-                %a{:href => '#search_engine'}
+                %a{:href => '#searchengine'}
                   = I18n.t('settings.views.search_engine')
 
             - if can? :update, Role
@@ -71,7 +71,7 @@
                 .panel-title
                   = I18n.t('settings.views.invoice_templates')
 
-    #search_engine.tab-pane.fade
+    #searchengine.tab-pane.fade
       .row
         .col-lg-6
           - if can? :update, SearchAttribute

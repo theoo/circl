@@ -40,18 +40,18 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name=settings-search-attribute-destroy]':   'destroy'
 
   constructor: ->
     super
 
   active: (params) ->
     @id = params.id if params.id
+    @search_attribute = SearchAttribute.find(@id)
     @render()
 
   render: =>
-    return unless SearchAttribute.exists(@id)
     @show()
-    @search_attribute = SearchAttribute.find(@id)
     @html @view('settings/search_attributes/form')(@)
     Ui.load_ui(@el)
 
@@ -59,10 +59,14 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @search_attribute.fromForm(e.target), @hide
 
+  destroy: (e) ->
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @search_attribute, @hide
+
 class Index extends App.ExtendedController
   events:
-    'search_attribute-edit':      'edit'
-    'search_attribute-destroy':   'destroy'
+    'click tr.item':      'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -74,12 +78,14 @@ class Index extends App.ExtendedController
 
   edit: (e) ->
     search_attribute = $(e.target).search_attribute()
+    @activate_in_list(e.target)
     @trigger 'edit', search_attribute.id
 
-  destroy: (e) ->
-    search_attribute = $(e.target).search_attribute()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications search_attribute
+  table_redraw: =>
+    if @search_attribute
+      target = $(@el).find("tr[data-id=#{@search_attribute.id}]")
+
+    @activate_in_list(target)
 
 class App.SettingsSearchAttributes extends Spine.Controller
   className: 'search_attributes'
@@ -98,7 +104,7 @@ class App.SettingsSearchAttributes extends Spine.Controller
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
 
-    @index.bind 'destroyError', (id, errors) =>
+    @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 

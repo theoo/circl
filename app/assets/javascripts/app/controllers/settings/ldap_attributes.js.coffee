@@ -40,29 +40,33 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name=settings-ldap-attribute-destroy]': 'destroy'
 
   constructor: ->
     super
 
   active: (params) ->
     @id = params.id if params.id
+    @ldap_attribute = LdapAttribute.find(@id)
     @render()
 
   render: =>
-    return unless LdapAttribute.exists(@id)
-    @show()
-    @ldap_attribute = LdapAttribute.find(@id)
     @html @view('settings/ldap_attributes/form')(@)
     Ui.load_ui(@el)
+    @show()
 
   submit: (e) ->
     e.preventDefault()
     @save_with_notifications @ldap_attribute.fromForm(e.target), @hide
 
+  destroy: (e) ->
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @ldap_attribute, @hide
+
 class Index extends App.ExtendedController
   events:
-    'ldap_attribute-edit':      'edit'
-    'ldap_attribute-destroy':   'destroy'
+    'click tr.item':      'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -74,12 +78,14 @@ class Index extends App.ExtendedController
 
   edit: (e) ->
     ldap_attribute = $(e.target).ldap_attribute()
+    @activate_in_list(e.target)
     @trigger 'edit', ldap_attribute.id
 
-  destroy: (e) ->
-    ldap_attribute = $(e.target).ldap_attribute()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications ldap_attribute
+  table_redraw: =>
+    if @ldap_attribute
+      target = $(@el).find("tr[data-id=#{@ldap_attribute.id}]")
+
+    @activate_in_list(target)
 
 class App.SettingsLdapAttributes extends Spine.Controller
   className: 'ldap_attributes'
@@ -98,7 +104,7 @@ class App.SettingsLdapAttributes extends Spine.Controller
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
 
-    @index.bind 'destroyError', (id, errors) =>
+    @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 
