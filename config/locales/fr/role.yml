@@ -3,13 +3,11 @@ fr:
   role:
     errors:
       cant_delete_if_in_use: Impossible de supprimer un rôle employé.
-    view:
-      edit_permissions: édition de la permission
-      edit_permissions_for_role: modifier les permissions d'un rôle
     views:
-      contextmenu:
+      permissions: Permissions
+      actions:
         destroy_role: détruire le rôle
-        edit_permissions: modifier les permissions
+        edit_permissions: permissions
         edit_role: modifier le rôle
         view_role_members: voir les membres
       description: description

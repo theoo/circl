@@ -1,25 +1,46 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        %h3= I18n.t("permission.views.selected_permissions")
 
-  .block
-    .half.left
-      %label= I18n.t('permission.views.action')
-      %input{ :type => 'text',
-              :name => 'action',
-              :value => @permission.action,
-              :size => 35 }
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-      %label= I18n.t('permission.views.subject')
-      %input{ :type => 'text',
-              :name => 'subject',
-              :value => @permission.subject,
-              :size => 35 }
+    .row
+      .col-lg-6
+        .form-group
+          %label{:for => 'settings_role_permission_action'}
+            = I18n.t('permission.views.action')
+          %input{ :type => 'text',
+                  :name => 'action',
+                  :id => 'settings_role_permission_action',
+                  :class => 'form-control',
+                  :value => @permission.action }
 
-    .half.right
-      .full_width_textarea
-        %label= I18n.t('permission.views.hash_conditions')
-        %textarea{:name => 'hash_conditions', :rows => 4, :class => 'like_an_input'}
-          = @permission.hash_conditions
+      .col-lg-6
+        .form-group
+          %label{:for => 'settings_role_permission_subject'}
+            = I18n.t('permission.views.subject')
+          %input{ :type => 'text',
+                  :id => 'settings_role_permission_subject',
+                  :class => 'form-control',
+                  :name => 'subject',
+                  :value => @permission.subject }
+    .row
+      .col-lg-12
+        .form-group
+          %label{:for => 'settings_role_permission_hash_conditions'}
+            = I18n.t('permission.views.hash_conditions')
+          %textarea{:name => 'hash_conditions',
+                    :id => 'settings_role_permission_hash_conditions',
+                    :rows => 4,
+                    :class => 'form-control'}
+            = @permission.hash_conditions
 
-    .float_right
-      != @partial('submit_button')(@permission)
+    .row
+      .col-lg-12
+        - unless @permission.isNew()
+          .pull-right
+            != @partial('submit_button')(@permission)

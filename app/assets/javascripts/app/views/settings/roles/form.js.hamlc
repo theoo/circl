@@ -31,3 +31,17 @@
       .col-lg-12
         .pull-right
           != @partial('submit_button')(@role)
+
+        .btn-group
+          - unless @role.isNew?()
+            %button{:type => 'button',
+                    :name => "settings-role-destroy",
+                    :class => 'btn btn-danger' }
+              .icon-remove
+              = I18n.t("common.destroy")
+
+            %button{:type => 'button',
+                    :name => "settings-role-view-members",
+                    :class => 'btn btn-default' }
+              .icon-group
+              = I18n.t('role.views.actions.view_role_members')

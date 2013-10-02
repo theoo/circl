@@ -20,5 +20,7 @@ class App.RolePermission extends Spine.Model
 
   @extend Spine.Model.Ajax
 
+  @url: -> undefined
+
   constructor: ->
     super

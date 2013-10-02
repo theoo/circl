@@ -33,12 +33,12 @@ class Edit extends App.ExtendedController
 
   active: (params) ->
     @id = params.id if params.id
+    @application_setting = ApplicationSetting.find(@id)
     @render()
 
   render: =>
     return unless ApplicationSetting.exists(@id)
     @show()
-    @application_setting = ApplicationSetting.find(@id)
     @html @view('settings/application_settings/form')(@)
     Ui.load_ui(@el)
 

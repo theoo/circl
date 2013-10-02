@@ -29,7 +29,7 @@ $.fn.selected_permission = ->
 
 class AvailablePermissionsIndex extends App.ExtendedController
   events:
-    'available-permission-add': 'add'
+    'click tr.item': 'add'
 
   constructor: (params) ->
     super
@@ -46,6 +46,11 @@ class AvailablePermissionsIndex extends App.ExtendedController
     @html @view('settings/roles/permissions/available_permissions')(@)
     Ui.load_ui(@el)
 
+    if @disabled() then @disable_panel() else @enable_panel()
+
+  disabled: =>
+    RolePermission.url() == undefined
+
   add: (e) ->
     available_permission = $(e.target).available_permission()
     attributes = available_permission.attributes()
@@ -56,8 +61,8 @@ class AvailablePermissionsIndex extends App.ExtendedController
 
 class SelectedPermissionsIndex extends App.ExtendedController
   events:
-    'role-permission-edit': 'edit'
-    'role-permission-destroy': 'destroy'
+    'click tr.item': 'edit'
+    'click button[name=role-permission-destroy]': 'destroy'
 
   constructor: (params) ->
     super
@@ -67,18 +72,22 @@ class SelectedPermissionsIndex extends App.ExtendedController
     @html @view('settings/roles/permissions/selected_permissions')(@)
     Ui.load_ui(@el)
 
+    if @disabled() then @disable_panel() else @enable_panel()
+
+  disabled: =>
+    RolePermission.url() == undefined
+
   edit: (e) ->
     permission = $(e.target).selected_permission()
 
     RolePermission.one 'refresh', =>
-      @trigger('edit', {role_id: permission.role_id, id: permission.id})
+      @trigger 'edit', permission.id
 
     RolePermission.fetch(id: permission.id)
 
   destroy: (e) ->
     permission = $(e.target).selected_permission()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications permission
+    @destroy_with_notifications permission
 
 class Edit extends App.ExtendedController
   events:
@@ -86,48 +95,48 @@ class Edit extends App.ExtendedController
 
   constructor: ->
     super
+    RolePermission.bind 'refresh', @render
 
   active: (params) ->
-    @id = params.id if params.id
-    @el.modal(title: I18n.t('role.view.edit_permissions'))
-    @el.modal('show')
+    @id = params.id if params
     @render()
 
   render: =>
-    return unless RolePermission.exists(@id)
-    @permission = RolePermission.find(@id)
+    if RolePermission.exists(@id)
+      @permission = RolePermission.find(@id)
+    else
+      @permission = new RolePermission
+
     @html @view('settings/roles/permissions/form')(@)
     Ui.load_ui(@el)
+    if @permission.isNew()
+      $("#settings_role_permission_action").prop("disabled", true)
+      $("#settings_role_permission_subject").prop("disabled", true)
+      $("#settings_role_permission_hash_conditions").prop("disabled", true)
+
+    if @disabled() then @disable_panel() else @enable_panel()
+
+  disabled: =>
+    RolePermission.url() == undefined
 
   submit: (e) ->
     e.preventDefault()
     @save_with_notifications @permission.fromForm(e.target), =>
-      @el.modal('hide')
+      @active(id: undefined)
 
 class App.SettingsRolePermissions extends Spine.Controller
   className: 'role_permissions'
 
   constructor: (params) ->
     super
-
-    RolePermission.url = =>
-      "#{Spine.Model.host}/settings/roles/#{params.role_id}/permissions"
-
-    # flush data and remove container when closing window
-    @el.modal
-      close: (event, ui) ->
-        RolePermission.refresh([], clear: true)
-
-    #container = Ui.stack_window('edit-permission-window', {width: 700, remove_on_close: false})
-    # @edit = new Edit(el: container)
     @edit = new Edit
-
-    @selected_permissions_index = new SelectedPermissionsIndex
     @available_permissions_index = new AvailablePermissionsIndex
-    @append(@available_permissions_index, @selected_permissions_index)
+    @selected_permissions_index = new SelectedPermissionsIndex
 
-    @selected_permissions_index.bind 'edit', (params) =>
-      @edit.active(params)
+    @append @available_permissions_index, $("<hr />"), @edit, @selected_permissions_index
+
+    @selected_permissions_index.bind 'edit', (id) =>
+      @edit.active(id: id)
 
   activate: (params) ->
-    RolePermission.fetch()
+    @edit.active()

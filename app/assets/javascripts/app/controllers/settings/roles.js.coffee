@@ -16,6 +16,7 @@
 
 Role = App.Role
 Permission = App.Permission
+RolePermission = App.RolePermission
 
 # .role method is used by jQuery Ui and may conflict
 $.fn.get_role = ->
@@ -42,31 +43,56 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name=settings-role-destroy]': 'destroy'
+    'click button[name=settings-role-view-members]': 'view_members'
 
   constructor: ->
     super
 
   active: (params) ->
     @id = params.id if params.id
+    @role = Role.find(@id)
+    @load_dependencies()
     @render()
 
   render: =>
-    return unless Role.exists(@id)
-    @show()
-    @role = Role.find(@id)
     @html @view('settings/roles/form')(@)
     Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @role.fromForm(e.target), @hide
+    @save_with_notifications @role.fromForm(e.target), =>
+      @unload_dependencies()
+      @hide()
+
+  destroy: (e) ->
+    e.preventDefault()
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @role, @hide
+
+  view_members: (e) ->
+    e.preventDefault()
+    App.search_query(search_string: "roles.id:#{@role.id}")
+
+  load_dependencies: ->
+    if @id
+      RolePermission.url = =>
+       "#{Spine.Model.host}/settings/roles/#{@id}/permissions"
+
+      RolePermission.refresh([], clear: true)
+      RolePermission.fetch()
+      Permission.refresh([], clear: true)
+      Permission.fetch()
+
+  unload_dependencies: ->
+    RolePermission.url = => undefined
+    RolePermission.refresh([], clear: true)
+    Permission.refresh([], clear: true)
 
 class Index extends App.ExtendedController
   events:
-    'role-edit':      'edit'
-    'role-destroy':   'destroy'
-    'role-members':   'view_members'
-    'permissions-edit': 'edit_permissions'
+    'click tr.item':      'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -77,28 +103,16 @@ class Index extends App.ExtendedController
     Ui.load_ui(@el)
 
   edit: (e) ->
-    role = $(e.target).get_role()
-    @trigger 'edit', role.id
+    e.preventDefault()
+    @role = $(e.target).get_role()
+    @activate_in_list(e.target)
+    @trigger 'edit', @role.id
 
-  destroy: (e) ->
-    role = $(e.target).get_role()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications role
+  table_redraw: =>
+    if @role
+      target = $(@el).find("tr[data-id=#{@role.id}]")
 
-  view_members: (e) ->
-    role = $(e.target).get_role()
-    App.search_query(search_string: "roles.id:#{role.id}")
-
-  edit_permissions: (e) ->
-    role = $(e.target).get_role()
-
-    container_id = 'edit-permissions-window'
-
-    # Ui.stack_window(container_id, {width: 1200, remove_on_close: true})
-    # @permissions_controller = new App.SettingsRolePermissions({role_id: role.id, el: '#' + container_id})
-    # $('#' + container_id).modal({title: "#{I18n.t('role.view.edit_permissions_for_role')} '#{role.name}'"})
-    # $('#' + container_id).modal('show')
-    # @permissions_controller.activate()
+    @activate_in_list(target)
 
 class App.SettingsRoles extends Spine.Controller
   className: 'roles'
@@ -124,6 +138,5 @@ class App.SettingsRoles extends Spine.Controller
   activate: ->
     super
     Role.fetch()
-    Permission.refresh([], clear: true) # needed because we don't return ids for all permissions
-    Permission.fetch() # required when loading role's permissions
     @new.render()
+

@@ -1,27 +1,19 @@
-%menu.context_menu_actions
-  %command{ :data-label => I18n.t('permission.views.contextmenu.edit_permission'),
-            :data-event => 'role-permission-edit',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => I18n.t('permission.views.contextmenu.remove_permission'),
-            :data-event => 'role-permission-destroy',
-            :data-icon => 'delete' }
-
-%table{:name => 'settings_selected_permissions', :class => 'with_contextmenu datatable'}
+%table{:name => 'settings_role_selected_permissions', :class => 'datatable'}
   %thead
     %tr
       %th= I18n.t('permission.views.table.action')
       %th= I18n.t('permission.views.table.subject')
       %th= I18n.t('permission.views.table.hash_conditions')
+      %th.ignore-sort
 
   %tbody
     - for permission in App.RolePermission.all()
-
-      - actions = [ I18n.t('permission.views.contextmenu.edit_permission') ]
-      - actions.push I18n.t('permission.views.contextmenu.remove_permission')
-
-      %tr{:data-id => permission.id,
-          :data-actions => actions }
+      %tr{:data-id => permission.id, :class => 'item'}
         %td= permission.action
         %td= permission.subject
         %td= permission.hash_conditions
+        %td.ignore-click
+          %button{:type => 'button',
+                  :class => 'btn btn-danger btn-xs',
+                  :name => 'role-permission-destroy'}
+            .icon-remove

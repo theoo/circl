@@ -20,6 +20,8 @@ fr:
       service_unavailable_explanation: Le service est temporairement indisponible
       subject_must_point_to_model_if_condition_present: Le sujet doit pointer vers un modèle si une condition est présente.
     views:
+      available_permissions: Permissions disponibles
+      selected_permissions: Permissions sélectionnées
       action: action
       cannot_fetch_permissions: Impossible de récupérer les permissions
       contextmenu:

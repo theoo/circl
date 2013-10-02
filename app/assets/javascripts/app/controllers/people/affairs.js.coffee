@@ -60,8 +60,6 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
-    'click button[name="affair-edit-prestations"]': 'edit_prestations'
-    'click button[name="affair-edit-invoices-and-receipts"]': 'edit_invoices_and_receipts'
     'click button[name="affair-show-owner"]': 'show_owner'
     'click button[name="affair-destroy"]': 'destroy'
 
@@ -107,7 +105,6 @@ class Edit extends App.ExtendedController
         "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/receipts"
       PersonAffairReceipt.refresh([], clear: true)
       PersonAffairReceipt.fetch()
-
 
   unload_dependencies: ->
     # Subscriptions

@@ -20,6 +20,8 @@ en:
       service_unavailable_explanation: Please wait a minute and reload the page.
       subject_must_point_to_model_if_condition_present: The subject must point to a model if condition is present.
     views:
+      available_permissions: Available_permissions
+      selected_permissions: Selected Permissions
       action: action
       cannot_fetch_permissions: Cannot fetch permissions
       contextmenu:
