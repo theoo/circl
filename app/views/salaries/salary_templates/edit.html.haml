@@ -14,13 +14,23 @@
 //         %dt= "#" + p + "{}"
 //         %dd= I18n.t('salary_template.views.' + p.downcase)
 
+// small header
+%nav.navbar.navbar-default.navbar-static-top.navbar-inverse{:role => "navigation"}
+  .row
+    .navbar-header.col-lg-1
+      %span{:class => 'navbar-brand', :style => 'padding: 0 0 0 15px'}
+        = image_tag 'logo_mini_white.png'
+
+    .navbar-brand.col-lg-2
+      = I18n.t("salary_template.views.actions.edit_template") + ": "
+      %i= @salary_template.title
+
 .container
   .row
-    .col-lg-3
-    .col-lg-6
+    .col-lg-12
+      %br
       - flash_messages
       - error_messages_for(@salary_template)
-    .col-lg-3
 
   .row
     .col-lg-12
@@ -29,4 +39,3 @@
         = f.hidden_field :id
 
         = f.text_area :html, :rows => 25, :id => "wysiwyg", :class => 'wysiwyg'
-        // @salary_template.html

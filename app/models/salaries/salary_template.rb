@@ -60,7 +60,7 @@ class Salaries::SalaryTemplate < ActiveRecord::Base
            :class_name => 'Salaries::Salary'
 
   has_attached_file :snapshot,
-                    :default_url => '/images/missing_salary_template.jpg',
+                    :default_url => '/images/missing_thumbnail.png',
                     :default_style => :thumb,
                     :use_timestamp => true,
                     :styles => {:medium => "420x594>",:thumb => "105x147>"}

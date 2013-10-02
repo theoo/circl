@@ -26,18 +26,6 @@
   %body
   %header
 
-    // small header
-    %nav.navbar.navbar-default.navbar-static-top.navbar-inverse{:role => "navigation"}
-      .row
-        .navbar-header.col-lg-1
-          %span{:class => 'navbar-brand', :style => 'padding: 0 0 0 15px'}
-            = image_tag 'logo_mini_white.png'
-
-        .navbar-brand.col-lg-2
-          = I18n.t("salary_template.views.actions.edit_template")
-
-    %br
-
     ~ yield
 
     = render :partial => 'layouts/footer'

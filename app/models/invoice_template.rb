@@ -78,7 +78,7 @@ class InvoiceTemplate < ActiveRecord::Base
   has_many :subscriptions, :through => :subscription_values
   has_many :subscription_values
   has_attached_file :snapshot,
-    :default_url => '/images/missing_invoice_template.jpg',
+    :default_url => '/images/missing_thumbnail.png',
     :default_style => :thumb,
     :use_timestamp => true,
     :styles => {:medium => "420x594>",:thumb => "105x147>"}

@@ -34,9 +34,7 @@
     padding: 1cm 0;
   }
   #footer {
-    position: absolute;
-    bottom: 1cm;
-    left: 2cm;
+    margin-top: 2cm;
     text-align: center;
   }
 

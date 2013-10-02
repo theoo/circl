@@ -34,7 +34,10 @@
           %button{:type => 'submit',
                   :class => 'btn btn-primary'}
             .icon-save
-            = I18n.t("common.update")
+            - if @salary_template.isNew()
+              = I18n.t("common.create")
+            - else
+              = I18n.t("common.update")
 
         - unless @salary_template.isNew()
           .btn-group

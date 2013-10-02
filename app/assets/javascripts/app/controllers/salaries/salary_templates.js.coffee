@@ -32,9 +32,9 @@ class New extends App.ExtendedController
   active: ->
     @render()
 
-  render: =>
+  render: ->
     @salary_template = new SalaryTemplate
-    @salary_template.html = @view('salaries/salary_templates/template')(@)
+    @salary_template.html = @view('salaries/salary_templates/template')
     @html @view('salaries/salary_templates/form')(@)
     Ui.load_ui(@el)
 
@@ -42,7 +42,8 @@ class New extends App.ExtendedController
     e.preventDefault()
     data = $(e.target).serializeObject()
     @salary_template.load(data)
-    @save_with_notifications @salary_template, @close
+    @save_with_notifications @salary_template, (id) =>
+      @trigger 'edit', id
 
 class Edit extends App.ExtendedController
   events:
@@ -65,7 +66,7 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     data = $(e.target).serializeObject()
     @salary_template.load(data)
-    @save_with_notifications @salary_template, @close
+    @save_with_notifications @salary_template, @hide
 
   edit_template: (e) ->
     e.preventDefault()
@@ -74,7 +75,7 @@ class Edit extends App.ExtendedController
   destroy: (e) ->
     e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications @salary_template
+      @destroy_with_notifications @salary_template, @hide
 
 class Index extends App.ExtendedController
   events:

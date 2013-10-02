@@ -478,14 +478,14 @@ class Ui
     tinyMCE.baseURL = "/assets/tinymce"
     tinyMCE.init
       mode: 'specific_textareas'
+      schema: 'html5'
       editor_selector: 'wysiwyg'
-      width: '100%'
-      height: '1250px'
       valid_children : '+body[style]'
+      height: $(window).height() - 280 # 280 is guessed
       language: I18n.locale
       body_class: 'a4_page'
       content_css: ['/assets/custom_fonts.css', '/assets/pdf_common.css', '/assets/pdf_preview.css']
-      plugins: 'autoresize,fullscreen,table,autolink,lists,spellchecker,pagebreak,layer,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,noneditable,visualblocks,visualchars,nonbreaking,template,anchor,charmap,hr,image,link,emoticons,code,textcolor'
+      plugins: 'fullscreen,table,autolink,lists,spellchecker,pagebreak,layer,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,noneditable,visualblocks,visualchars,nonbreaking,template,anchor,charmap,hr,image,link,emoticons,code,textcolor'
       theme: 'modern'
       browser_spellcheck : true
       object_resizing : true
