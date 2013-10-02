@@ -39,7 +39,7 @@ class BackgroundTasks::GenerateSalaryTemplateJpg < BackgroundTask
   def process!
     salary_template = Salaries::SalaryTemplate.find(options[:salary_template_id])
 
-    controller = Salaries::SalaryTemplatesController.new
+    controller = Settings::SalaryTemplatesController.new
     html = controller.render_to_string :inline => salary_template.html,
       :layout => 'preview.html.haml',
       :formats => [:jpg]

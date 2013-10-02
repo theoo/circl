@@ -20,7 +20,7 @@ class App.SalaryTemplate extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/salaries/salary_templates"
+    "#{Spine.Model.host}/settings/salary_templates"
 
   constructor: ->
     super

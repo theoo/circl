@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Salaries::SalaryTemplatesController < ApplicationController
+class Settings::SalaryTemplatesController < ApplicationController
 
   layout false
 
@@ -63,7 +63,7 @@ class Salaries::SalaryTemplatesController < ApplicationController
         format.json { render :json => @salary_template }
         format.html do
           flash[:notice] = I18n.t("common.successfully_updated")
-          redirect_to edit_salaries_salary_template_path(@salary_template)
+          redirect_to edit_settings_salary_template_path(@salary_template)
         end
       else
         format.json { render :json => @salary_template.errors, :status => :unprocessable_entity }

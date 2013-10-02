@@ -49,8 +49,8 @@ class @App extends Spine.Controller
     Spine.Route.setup(shim: true)
 
     # Start background tasks on every pages
-    App.BackgroundTaskRefreshInterval = 5000
-    background_tasks = new App.BackgroundTasks(el: "#background_tasks_counter", person_id: @person_id)
+    # App.BackgroundTaskRefreshInterval = 5000
+    # background_tasks = new App.BackgroundTasks(el: "#background_tasks_counter", person_id: @person_id)
 
   subapp: (element, class_name) ->
     # TODO Raise a message if application controller cannot be found.
@@ -113,7 +113,6 @@ class @Salaries extends App
     super
     @subapp($('#salaries_salaries'), 'Salaries')
     @subapp($('#salaries_taxes'), 'SalariesTaxes')
-    @subapp($('#salaries_salary_templates'), 'SalariesTemplates')
 
 class @Settings extends App
 
@@ -125,6 +124,7 @@ class @Settings extends App
     @subapp($('#settings_jobs'), 'SettingsJobs')
 
     # @subapp($('#settings_invoice_templates'), 'SettingsInvoiceTemplates')
+    @subapp($('#settings_salary_templates'), 'SalariesTemplates')
 
     @subapp($('#settings_search_attributes'), 'SettingsSearchAttributes')
     @subapp($('#settings_ldap_attributes'), 'SettingsLdapAttributes')

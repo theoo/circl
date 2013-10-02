@@ -9,11 +9,6 @@
                 %a{:href => '#payroll'}
                   = I18n.t('common.salaries')
 
-            - if can? :create, Salaries::SalaryTemplate
-              %li
-                %a{:href => '#templates'}
-                  = I18n.t('salaries.views.salary_templates')
-
             - if can? :create, Salaries::Tax
               %li
                 %a{:href => '#deductions'}
@@ -36,16 +31,6 @@
               .panel-heading
                 .panel-title
                   = I18n.t('common.salaries')
-
-    #templates.tab-pane.fade
-      .row
-        .col-lg-12
-          - if can? :create, Salaries::SalaryTemplate
-            #salaries_salary_templates.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('salaries.views.salary_templates')
-
 
     #deductions.tab-pane.fade
       .row

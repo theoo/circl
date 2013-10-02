@@ -64,12 +64,19 @@
 
     #templates.tab-pane.fade
       .row
-        .col-lg-12
+        .col-lg-6
           - if can? :update, InvoiceTemplate
             #settings_invoice_templates.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.invoice_templates')
+
+        .col-lg-6
+          - if can? :create, Salaries::SalaryTemplate
+            #settings_salary_templates.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('salaries.views.salary_templates')
 
     #searchengine.tab-pane.fade
       .row

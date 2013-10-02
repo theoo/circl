@@ -98,7 +98,7 @@ class Index extends App.ExtendedController
     @trigger 'edit', salary_template.id
 
 class App.SalariesTemplates extends Spine.Controller
-  className: 'salaries_salary_templates'
+  className: 'settings_salary_templates'
 
   constructor: (params) ->
     super

@@ -104,12 +104,6 @@ Directory::Application.routes.draw do
 
   match 'salaries' => 'salaries#index'
   namespace :salaries do
-    resources :salary_templates do
-      collection do
-        get 'placeholders'
-      end
-    end
-
     resources :salaries, :only => [:index, :update, :destroy] do
       member do
         post 'copy_reference'
@@ -205,9 +199,12 @@ Directory::Application.routes.draw do
     resources :application_settings
 
     resources :invoice_templates do
-      member do
-        get 'sandbox'
+      collection do
+        get 'placeholders'
       end
+    end
+
+    resources :salary_templates do
       collection do
         get 'placeholders'
       end

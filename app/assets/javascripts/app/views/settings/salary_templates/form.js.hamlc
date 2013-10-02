@@ -7,20 +7,20 @@
     .row
       .col-lg-3
         .form-group
-          %label{:for => 'salaries_salary_template_title'}
+          %label{:for => 'settings_salary_template_title'}
             = I18n.t('salaries.salary_template.views.title')
           %input{ :type => 'text',
                   :name => 'title',
-                  :id => 'salaries_salary_template_title',
+                  :id => 'settings_salary_template_title',
                   :class => 'form-control',
                   :value => @salary_template.title }
 
       .col-lg-3
         .form-group
-          %label{:for => 'salaries_salary_template_language'}
+          %label{:for => 'settings_salary_template_language'}
             = I18n.t('salary_template.views.language')
           %select{:name => 'language_id',
-                  :id => 'salaries_salary_template_language',
+                  :id => 'settings_salary_template_language',
                   :class => 'required form-control'}
             - for l in App.Language.all()
               - if @salary_template.language_id == l.id
