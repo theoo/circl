@@ -4,10 +4,10 @@ fr:
     errors:
       cannot_contain_comma: Le nom ne peut pas contenir de virgules.
     views:
-      contextmenu:
+      actions:
         destroy_job: détruire le métier
         edit_job: modifier le métier
-        view_job_members: voir les membres
+        view_members: voir les membres
       description: description
       name: nom
       table:

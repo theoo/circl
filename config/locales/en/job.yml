@@ -4,10 +4,10 @@ en:
     errors:
       cannot_contain_comma: The name cannot contain a comma.
     views:
-      contextmenu:
+      actions:
         destroy_job: destroy job
         edit_job: edit job
-        view_job_members: view job members
+        view_members: view job members
       description: description
       name: name
       table:

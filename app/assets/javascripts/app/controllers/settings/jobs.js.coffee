@@ -40,18 +40,19 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name=settings-job-destroy]': 'destroy'
+    'click button[name=settings-job-view-members]': 'view_members'
 
   constructor: ->
     super
 
   active: (params) ->
     @id = params.id if params.id
+    @job = Job.find(@id)
     @render()
 
   render: =>
-    return unless Job.exists(@id)
     @show()
-    @job = Job.find(@id)
     @html @view('settings/jobs/form')(@)
     Ui.load_ui(@el)
 
@@ -59,11 +60,17 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @job.fromForm(e.target), @hide
 
+  view_members: (e) ->
+    App.search_query(search_string: "job.id:#{@job.id}")
+
+  destroy: (e) ->
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @job, @hide
+
 class Index extends App.ExtendedController
   events:
-    'job-edit':      'edit'
-    'job-destroy':   'destroy'
-    'job-members':   'view_members'
+    'click tr.item': 'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -74,17 +81,15 @@ class Index extends App.ExtendedController
     Ui.load_ui(@el)
 
   edit: (e) ->
-    job = $(e.target).job()
-    @trigger 'edit', job.id
+    @job = $(e.target).job()
+    @activate_in_list e.target
+    @trigger 'edit', @job.id
 
-  view_members: (e) ->
-    job = $(e.target).job()
-    App.search_query(search_string: "job.id:#{job.id}")
+  table_redraw: =>
+    if @job
+      target = $(@el).find("tr[data-id=#{@job.id}]")
 
-  destroy: (e) ->
-    job = $(e.target).job()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications job
+    @activate_in_list(target)
 
 class App.SettingsJobs extends Spine.Controller
   className: 'jobs'
@@ -103,7 +108,7 @@ class App.SettingsJobs extends Spine.Controller
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
 
-    @index.bind 'destroyError', (id, errors) =>
+    @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 

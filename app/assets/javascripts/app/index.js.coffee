@@ -121,8 +121,8 @@ class @Settings extends App
     super
 
     @subapp($('#settings_locations'), 'SettingsLocations')
-    # @subapp($('#settings_languages'), 'SettingsLanguages')
-    # @subapp($('#settings_jobs'), 'SettingsJobs')
+    @subapp($('#settings_languages'), 'SettingsLanguages')
+    @subapp($('#settings_jobs'), 'SettingsJobs')
 
     # @subapp($('#settings_invoice_templates'), 'SettingsInvoiceTemplates')
 

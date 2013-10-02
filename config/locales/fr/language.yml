@@ -4,7 +4,7 @@ fr:
     views:
       code: code
       communication_language: langue de communication
-      contextmenu:
+      actions:
         destroy_language: détruire la langue
         edit_language: modifier la langue
         view_members: voir les membres

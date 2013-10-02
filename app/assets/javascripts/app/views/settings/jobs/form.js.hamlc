@@ -30,3 +30,17 @@
       .col-lg-12
         .pull-right
           != @partial('submit_button')(@job)
+
+        - unless @job.isNew()
+          .btn-group
+            %button{:type => 'button',
+                    :class => 'btn btn-danger',
+                    :name => 'settings-job-destroy'}
+              .icon-remove
+              = I18n.t("common.destroy")
+
+            %button{:type => 'button',
+                    :class => 'btn btn-default',
+                    :name => 'settings-job-view-members'}
+              .icon-group
+              = I18n.t('job.views.actions.view_members')

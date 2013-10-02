@@ -29,8 +29,9 @@
         .pull-right
           != @partial('submit_button')(@ldap_attribute)
 
-        %button{:type => 'button',
-                :class => 'btn btn-danger',
-                :name => 'settings-ldap-attribute-destroy'}
-          .icon-remove
-          = I18n.t("common.destroy")
+        - unless @ldap_attribute.isNew()
+          %button{:type => 'button',
+                  :class => 'btn btn-danger',
+                  :name => 'settings-ldap-attribute-destroy'}
+            .icon-remove
+            = I18n.t("common.destroy")

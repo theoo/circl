@@ -4,7 +4,7 @@ en:
     views:
       code: code
       communication_language: communication language
-      contextmenu:
+      actions:
         destroy_language: destroy language
         edit_language: edit language
         view_members: view members

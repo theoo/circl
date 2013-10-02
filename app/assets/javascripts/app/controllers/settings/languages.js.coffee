@@ -25,7 +25,6 @@ class New extends App.ExtendedController
   events:
     'submit form': 'submit'
 
-
   render: =>
     @language = new Language()
     @html @view('settings/languages/form')(@)
@@ -38,16 +37,16 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
-
+    'click button[name=settings-language-destroy]': 'destroy'
+    'click button[name=settings-language-view-members]': 'view_members'
 
   active: (params) ->
     @id = params.id if params.id
+    @language = Language.find(@id)
     @render()
 
   render: =>
-    return unless Language.exists(@id)
     @show()
-    @language = Language.find(@id)
     @html @view('settings/languages/form')(@)
     Ui.load_ui(@el)
 
@@ -55,11 +54,19 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @language.fromForm(e.target), @hide
 
+  view_members: (e) ->
+    e.preventDefault()
+    App.search_query(search_string: "main_communication_language.id:#{@language.id}")
+
+  destroy: (e) ->
+    e.preventDefault()
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @language, @hide
+
 class Index extends App.ExtendedController
   events:
-    'language-edit':      'edit'
-    'language-members':   'view_members'
-    'language-destroy':   'destroy'
+    'click tr.item': 'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -70,17 +77,15 @@ class Index extends App.ExtendedController
     Ui.load_ui(@el)
 
   edit: (e) ->
-    language = $(e.target).language()
-    @trigger 'edit', language.id
+    @language = $(e.target).language()
+    @activate_in_list e.target
+    @trigger 'edit', @language.id
 
-  view_members: (e) ->
-    language = $(e.target).language()
-    App.search_query(search_string: "main_communication_language.id:#{language.id}")
+  table_redraw: =>
+    if @language
+      target = $(@el).find("tr[data-id=#{@language.id}]")
 
-  destroy: (e) ->
-    language = $(e.target).language()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications language
+    @activate_in_list(target)
 
 class App.SettingsLanguages extends Spine.Controller
   className: 'languages'
@@ -99,7 +104,7 @@ class App.SettingsLanguages extends Spine.Controller
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
 
-    @index.bind 'destroyError', (id, errors) =>
+    @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 

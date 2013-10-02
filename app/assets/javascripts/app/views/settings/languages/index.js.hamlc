@@ -1,21 +1,4 @@
-- edit_lang_trad = I18n.t('language.views.contextmenu.edit_language')
-- view_members_trad = I18n.t('language.views.contextmenu.view_members')
-- destroy_lang_trad = I18n.t('language.views.contextmenu.destroy_language')
-
-%menu.context_menu_actions
-  %command{ :data-label => edit_lang_trad,
-            :data-event => 'language-edit',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => view_members_trad,
-            :data-event => 'language-members',
-            :data-icon => 'edit' }
-
-  %command{ :data-label => destroy_lang_trad,
-            :data-event => 'language-destroy',
-            :data-icon => 'delete' }
-
-%table.with_contextmenu.datatable
+%table.datatable
   %thead
     %tr
       %th= I18n.t('common.id')
@@ -24,11 +7,7 @@
 
   %tbody
     - for lang in App.Language.all()
-
-      - actions = [ edit_lang_trad, view_members_trad, destroy_lang_trad ]
-
-      %tr{:data-id => lang.id,
-          :data-actions => actions }
+      %tr{:data-id => lang.id, :class => 'item'}
         %td= lang.id
         %td= lang.name
         %td= lang.code

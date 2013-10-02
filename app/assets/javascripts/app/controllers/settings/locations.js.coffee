@@ -40,18 +40,20 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name=settings-location-destroy]': 'destroy'
 
   constructor: ->
     super
 
   active: (params) ->
     @id = params.id if params.id
-    @render()
+    Location.one 'refresh', =>
+      @location = Location.find(@id)
+      @render()
+    Location.fetch id: @id
 
   render: =>
-    return unless Location.exists(@id)
     @show()
-    @location = Location.find(@id)
     @html @view('settings/locations/form')(@)
     Ui.load_ui(@el)
 
@@ -59,10 +61,14 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @location.fromForm(e.target), @hide
 
+  destroy: (e) ->
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @location, @hide
+
 class Index extends App.ExtendedController
   events:
-    'location-edit':      'edit'
-    'location-destroy':   'destroy'
+    'click tr.item':      'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -73,17 +79,15 @@ class Index extends App.ExtendedController
     Ui.load_ui(@el)
 
   edit: (e) ->
-    id = $(e.target).location()
-    @trigger 'edit', id
+    @id = $(e.target).location()
+    @activate_in_list e.target
+    @trigger 'edit', @id
 
-  destroy: (e) ->
-    if confirm(I18n.t('common.are_you_sure'))
-      id = $(e.target).location()
-      Location.one 'refresh', =>
-        location = Location.find(id)
-        @destroy_with_notifications location
+  table_redraw: =>
+    if @id
+      target = $(@el).find("tr[data-id=#{@id}]")
 
-      Location.fetch(id: id)
+    @activate_in_list(target)
 
 class App.SettingsLocations extends Spine.Controller
   className: 'locations'
@@ -97,14 +101,12 @@ class App.SettingsLocations extends Spine.Controller
     @append(@new, @edit, @index)
 
     @index.bind 'edit', (id) =>
-      Location.one 'refresh', =>
-        @edit.active(id: id)
-      Location.fetch(id: id)
+      @edit.active(id: id)
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
 
-    @index.bind 'destroyError', (id, errors) =>
+    @edit.bind 'destroyError', (id, errors) =>
       Location.one 'refresh', =>
         @edit.active id: id
         @edit.render_errors errors
@@ -112,5 +114,5 @@ class App.SettingsLocations extends Spine.Controller
 
   activate: ->
     super
+    Location.fetch()
     @new.render()
-    @index.render()

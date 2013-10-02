@@ -40,7 +40,7 @@
                   :value => @location.postal_code_prefix,
                   :class => 'form-control' }
       .col-lg-6
-        .form-group            
+        .form-group
           %label{:for => 'settings_location_phone_prefix'}
             = I18n.t('location.views.phone_prefix')
           %input{ :type => 'text',
@@ -83,3 +83,10 @@
       .col-lg-12
         .pull-right
           != @partial('submit_button')(@location)
+
+        - unless @location.isNew()
+          %button{:type => 'button',
+                  :class => 'btn btn-danger',
+                  :name => 'settings-location-destroy'}
+            .icon-remove
+            = I18n.t("common.destroy")
