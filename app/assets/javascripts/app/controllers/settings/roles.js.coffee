@@ -131,7 +131,7 @@ class App.SettingsRoles extends Spine.Controller
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
 
-    @index.bind 'destroyError', (id, errors) =>
+    @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 
