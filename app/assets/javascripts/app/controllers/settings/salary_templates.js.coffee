@@ -34,8 +34,8 @@ class New extends App.ExtendedController
 
   render: ->
     @salary_template = new SalaryTemplate
-    @salary_template.html = @view('salaries/salary_templates/template')
-    @html @view('salaries/salary_templates/form')(@)
+    @salary_template.html = @view('settings/salary_templates/template')
+    @html @view('settings/salary_templates/form')(@)
     Ui.load_ui(@el)
 
   submit: (e) ->
@@ -59,7 +59,7 @@ class Edit extends App.ExtendedController
     return unless SalaryTemplate.exists(@id)
     @show()
     @salary_template = SalaryTemplate.find(@id)
-    @html @view('salaries/salary_templates/form')(@)
+    @html @view('settings/salary_templates/form')(@)
     Ui.load_ui(@el)
 
   submit: (e) =>
@@ -80,13 +80,14 @@ class Edit extends App.ExtendedController
 class Index extends App.ExtendedController
   events:
     'click tr.item': 'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
     SalaryTemplate.bind('refresh', @render)
 
   render: =>
-    @html @view('salaries/salary_templates/index')(@)
+    @html @view('settings/salary_templates/index')(@)
     Ui.load_ui(@el)
     @unlock_new() if @new_unlocked
 
@@ -95,7 +96,14 @@ class Index extends App.ExtendedController
 
   edit: (e) ->
     salary_template = $(e.target).salary_template()
+    @activate_in_list(e.target)
     @trigger 'edit', salary_template.id
+
+  table_redraw: =>
+    if @salary_template
+      target = $(@el).find("tr[data-id=#{@salary_template.id}]")
+
+    @activate_in_list(target)
 
 class App.SalariesTemplates extends Spine.Controller
   className: 'settings_salary_templates'

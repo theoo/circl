@@ -24,7 +24,7 @@ class Settings::SalaryTemplatesController < ApplicationController
     Salaries::SalaryTemplate
   end
 
-  load_and_authorize_resource
+  load_and_authorize_resource :class => 'Salaries::SalaryTemplate'
 
   monitor_changes :@salary_template
 

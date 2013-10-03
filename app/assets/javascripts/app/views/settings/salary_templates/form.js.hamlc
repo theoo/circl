@@ -5,7 +5,7 @@
         .validation_errors_placeholder
 
     .row
-      .col-lg-3
+      .col-lg-8
         .form-group
           %label{:for => 'settings_salary_template_title'}
             = I18n.t('salaries.salary_template.views.title')
@@ -15,7 +15,7 @@
                   :class => 'form-control',
                   :value => @salary_template.title }
 
-      .col-lg-3
+      .col-lg-4
         .form-group
           %label{:for => 'settings_salary_template_language'}
             = I18n.t('salary_template.views.language')
