@@ -1,74 +1,94 @@
-%form
-  .validation_errors_placeholder
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  %div{:class => 'float_left', :style => 'width: 250px;'}
-    .block
-      .block
-        %label= I18n.t('invoice_template.views.title')
-        %input{ :type => 'text',
-                :name => 'title',
-                :value => @invoice_template.title,
-                :class => 'required' }
+    .row
+      .col-lg-8
+        .form-group
+          %label{:for => 'settings_invoice_template_title'}
+            = I18n.t('invoice_template.views.title')
+          %input{ :type => 'text',
+                  :name => 'title',
+                  :id => 'settings_invoice_template_title',
+                  :value => @invoice_template.title,
+                  :class => 'required form-control' }
 
-      .block
-        %label= I18n.t('invoice_template.views.language')
-        %select{:name => 'language_id',
-                :class => 'required'}
-          - for l in App.Language.all()
-            - if @invoice_template.language_id == l.id
-              %option{:value => l.id, :selected => true}= l.name
+      .col-lg-4
+        .form-group
+          %label{:for => 'settings_invoice_template_language'}
+            = I18n.t('invoice_template.views.language')
+          %select{:name => 'language_id',
+                  :id => 'settings_invoice_template_language',
+                  :class => 'required form-control'}
+            - for l in App.Language.all()
+              - if @invoice_template.language_id == l.id
+                %option{:value => l.id, :selected => true}= l.name
+              - else
+                %option{:value => l.id}= l.name
+          .help-block
+            = I18n.t("invoice_template.views.language_notice")
+
+    .row
+      .col-lg-6
+        .form-group
+          %label{:for => 'settings_invoice_template_bvr_account'}
+            = I18n.t('invoice_template.views.bvr_account_number')
+          %input{ :type => 'text',
+                  :id => 'settings_invoice_template_bvr_account',
+                  :class => 'form-control',
+                  :name => 'bvr_account',
+                  :value => @invoice_template.bvr_account }
+
+        .form-group
+          %label{:for => 'settings_invoice_template_bvr_address'}
+            = I18n.t('invoice_template.views.bvr_address')
+          %textarea{:name => 'bvr_address',
+                    :id => 'settings_invoice_template_bvr_address',
+                    :rows => 4,
+                    :class => 'form-control'}
+            = @invoice_template.bvr_address
+
+      .col-lg-6
+        .checkbox
+          %label{:for => 'settings_invoice_template_with_bvr'}
+            %input{ :type => 'checkbox',
+              :id => 'settings_invoice_template_with_bvr',
+              :name => 'with_bvr',
+              :checked => @invoice_template.with_bvr,
+              :value => 1 }
+            = I18n.t('invoice_template.views.with_bvr')
+
+        .checkbox
+          %label{:for => 'settings_invoice_template_show_invoice_value'}
+            = I18n.t('invoice_template.views.show_invoice_value')
+            %input{ :type => 'checkbox',
+              :id => 'settings_invoice_template_show_invoice_value',
+              :name => 'show_invoice_value',
+              :checked => @invoice_template.show_invoice_value,
+              :value => 1 }
+
+    .row
+      .col-lg-12
+        .pull-right
+          %button{:type => 'submit',
+                  :class => 'btn btn-primary'}
+            .icon-save
+            - if @invoice_template.isNew()
+              = I18n.t("common.create")
             - else
-              %option{:value => l.id}= l.name
+              = I18n.t("common.update")
 
-      %label{:for => 'invoice_template_with_bvr', :class => 'inline'}= I18n.t('invoice_template.views.with_bvr')
-      %input{ :type => 'checkbox',
-        :id => 'invoice_template_with_bvr',
-        :name => 'with_bvr',
-        :checked => @invoice_template.with_bvr,
-        :value => 1 }
-
-      %label{:for => 'invoice_template_show_invoice_value', :class => 'inline'}= I18n.t('invoice_template.views.show_invoice_value')
-      %input{ :type => 'checkbox',
-        :id => 'invoice_template_show_invoice_value',
-        :name => 'show_invoice_value',
-        :checked => @invoice_template.show_invoice_value,
-        :value => 1 }
-
-      != @partial('submit_button')(@invoice_template)
-
-      %label= I18n.t('invoice_template.views.bvr_address')
-      %textarea{:name => 'bvr_address',
-                :rows => 4,
-                :class => 'like_an_input'}
-        = @invoice_template.bvr_address
-
-      %label= I18n.t('invoice_template.views.bvr_account_number')
-      %input{ :type => 'text',
-              :name => 'bvr_account',
-              :value => @invoice_template.bvr_account }
-
-  %span#invoice_template_placeholder_button.button
-    = I18n.t("invoice_template.views.placeholders.display_placeholders")
-
-  %div{:class => 'float_right', :style => 'width: 720px; display: none;', :id => 'invoice_template_placeholders_list'}
-    %label= I18n.t('invoice_template.views.placeholders.placeholders')
-    %dl.placeholders
-      - for p,v in @invoice_template.placeholders.simples
-        %dt= "#" + p
-        %dd= I18n.t('invoice_template.views.placeholders.' + p.toLowerCase())
-
-    %dl.placeholders
-      - for p,v in @invoice_template.placeholders.iterators
-        %dt= "#" + p + "{}"
-        %dd= I18n.t('invoice_template.views.placeholders.' + p.toLowerCase())
-
-  .block
-    .white &nbsp;
-    .full_width_textarea
-      %textarea{:id => 'wysiwyg',
-                :name => 'html',
-                :rows => 25,
-                :class => 'wysiwyg' }
-        = @invoice_template.html
-
-.block
+        - unless @invoice_template.isNew()
+          .btn-group
+            %button{:type => 'button',
+                    :name => 'salaries-invoice-template-destroy',
+                    :class => 'btn btn-danger'}
+              .icon-remove
+              = I18n.t("common.destroy")
+            %button{:type => 'button',
+                    :name => 'salaries-invoice-template-edit',
+                    :class => 'btn btn-default'}
+              .icon-file
+              = I18n.t("invoice_template.views.actions.edit_template")

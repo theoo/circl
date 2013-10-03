@@ -22,62 +22,23 @@ $.fn.invoice_template = ->
   elementID ||= $(@).parents('[data-id]').data('id')
   InvoiceTemplate.find(elementID)
 
-class InvoiceTemplateController extends App.ExtendedController
-  toggle_bvr: (e) ->
-
-    elems = [ $(@el).find("textarea[name='bvr_address']"),
-              $(@el).find("input[name='bvr_account']") ]
-
-    if $(e.target).attr('checked')
-      # enable bvr
-      for el in elems
-        el.attr('disabled', false)
-      @add_bvr_if_needed()
-
-    else
-      # disable bvr
-      for el in elems
-        el.attr('disabled', true)
-      @remove_bvr()
-
-  add_bvr_if_needed: ->
-    page = $(@el).find('iframe')
-                 .contents()
-                 .find('.a4_page')
-    page.append(@partial('bvr')(@)) if page.find('.bvr').length == 0
-
-  remove_bvr: ->
-    $(@el).find('iframe')
-          .contents()
-          .find('.bvr').remove()
-
-  toggle_placeholders: ->
-    $("#invoice_template_placeholders_list").toggle('fold')
-
-class New extends InvoiceTemplateController
+class New extends App.ExtendedController
   events:
     'submit form':                        'submit'
-    'click #invoice_template_with_bvr':   "toggle_bvr"
-    'click #invoice_template_placeholder_button':   "toggle_placeholders"
 
   constructor: ->
     super
-    get_callback = (data) =>
-      @placeholders = data
-    $.get(InvoiceTemplate.url() + "/placeholders", get_callback, 'json')
 
   active: ->
     @render()
 
   render: =>
-    if @placeholders
-      @invoice_template = new InvoiceTemplate(placeholders: @placeholders)
-      @invoice_template.html = @view('settings/invoice_templates/template')(@)
-      @invoice_template.with_bvr = true
-      @invoice_template.show_invoice_value = true
-      @html @view('settings/invoice_templates/form')(@)
-      Ui.load_ui(@el)
-      $(@el).modal('show')
+    @invoice_template = new InvoiceTemplate
+    @invoice_template.html = @view('settings/invoice_templates/template')(@)
+    @invoice_template.with_bvr = true
+    @invoice_template.show_invoice_value = true
+    @html @view('settings/invoice_templates/form')(@)
+    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -87,32 +48,23 @@ class New extends InvoiceTemplateController
     @invoice_template.show_invoice_value = data.show_invoice_value?
     @save_with_notifications @invoice_template, @close
 
-class Edit extends InvoiceTemplateController
+class Edit extends App.ExtendedController
   events:
     'submit form':                        'submit'
-    'click #invoice_template_with_bvr':   "toggle_bvr"
-    'keyup textarea[name="bvr_address"]': "update_bvr"
-    'keyup input[name="bvr_account"]':    "update_bvr"
-    'click #invoice_template_placeholder_button':   "toggle_placeholders"
+    'click button[name=settings-invoice-template-destroy]':   'destroy'
 
   constructor: ->
     super
-    Language.bind 'refresh', @render
 
   active: (params) ->
     @id = params.id if params.id
+    @invoice_template = InvoiceTemplate.find(@id)
     @render()
 
   render: =>
-    return unless InvoiceTemplate.exists(@id)
     @show()
-    @invoice_template = InvoiceTemplate.find(@id)
     @html @view('settings/invoice_templates/form')(@)
     Ui.load_ui(@el)
-    fake_e = new $.Event("click")
-    fake_e.target = $("#invoice_template_with_bvr")
-    @toggle_bvr(fake_e)
-    @open()
 
   submit: (e) =>
     e.preventDefault()
@@ -122,65 +74,69 @@ class Edit extends InvoiceTemplateController
     @invoice_template.show_invoice_value = data.show_invoice_value?
     @save_with_notifications @invoice_template, @close
 
+  edit_template: (e) ->
+    e.preventDefault()
+    window.open "#{InvoiceTemplate.url()}/#{@invoice_template.id}/edit.html", "invoice_template"
+
+  destroy: (e) ->
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @invoice_template, @hide
+
 class Index extends App.ExtendedController
   events:
-    'invoice_template-edit':      'edit'
-    'invoice_template-destroy':   'destroy'
-    'click input[type="submit"]': 'new'
+    'click tr.item': 'edit'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
     InvoiceTemplate.bind('refresh', @render)
-    Language.bind('refresh', @unlock_new)
+    Language.bind('refresh', @render)
 
   render: =>
     @html @view('settings/invoice_templates/index')(@)
     Ui.load_ui(@el)
-    @unlock_new() if @new_unlocked
 
   new: (e) ->
     @trigger 'new'
 
-  unlock_new: (e) =>
-    @el.find('input[type="submit"]').button('enable')
-    @new_unlocked = true
-
   edit: (e) ->
     invoice_template = $(e.target).invoice_template()
+    @activate_in_list(e.target)
     @trigger 'edit', invoice_template.id
 
-  destroy: (e) ->
-    invoice_template = $(e.target).invoice_template()
-    if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications invoice_template
+  table_redraw: =>
+    if @invoice_template
+      target = $(@el).find("tr[data-id=#{@invoice_template.id}]")
+
+    @activate_in_list(target)
 
 class App.SettingsInvoiceTemplates extends Spine.Controller
-  className: 'invoice_templates'
+  className: 'settings_invoice_templates'
 
   constructor: (params) ->
     super
 
-    # @edit_template_window = Ui.stack_window('edit-invoice-template-window', {width: 1000, position: 'top', remove_on_close: false})
-    # $(@edit_template_window).modal({title: I18n.t('invoice_template.views.edit_template')})
-
-    # @new_template_window = Ui.stack_window('new-invoice-template-window', {width: 1000, position: 'top', remove_on_close: false})
-    # $(@new_template_window).modal({title: I18n.t('invoice_template.views.new_template')})
-
-    @index = new Index
-    #@edit = new Edit({el: @edit_template_window})
-    #@new = new New({el: @new_template_window})
-    @edit = new Edit
     @new = new New
+    @edit = new Edit
+    @index = new Index
 
-    @append(@index)
+    @append(@new, @edit, @index)
 
-    @index.bind 'edit', (id) => @edit.active(id: id)
-    @index.bind 'new', => @new.active()
+    @new.bind 'edit', (id) =>
+      @edit.active(id: id)
+    @index.bind 'edit', (id) =>
+      @edit.active(id: id)
 
-    @index.bind 'destroyError', (id, errors) =>
-      @index.render_errors errors
+    @edit.bind 'show', => @new.hide()
+    @edit.bind 'hide', => @new.show()
+
+    @edit.bind 'destroyError', (id, errors) =>
+      @edit.active id: id
+      @edit.render_errors errors
 
   activate: ->
     super
+    Language.one "refresh", =>
+      InvoiceTemplate.fetch()
+      @new.render()
     Language.fetch()
-    InvoiceTemplate.fetch()

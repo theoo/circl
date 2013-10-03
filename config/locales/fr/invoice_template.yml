@@ -11,10 +11,11 @@ fr:
       new_template: nouveau modèle de facture
       bvr_account_number: numéro de compte BVR
       bvr_address: adresse figurant sur le BVR
-      contextmenu:
+      actions:
         destroy_invoice_template: détruire le modèle
         edit_invoice_template: modifier le modèle
-      language: langue du modèle (localisation des attributs)
+      language: langue du modèle
+      language_notice: localisation des attributs
       placeholders:
         bvr_account: Compte BVR
         bvr_address: Adresse de l'émetteur affichée sur le BVR

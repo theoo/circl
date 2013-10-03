@@ -11,10 +11,11 @@ en:
       new_template: new invoice template
       bvr_account_number: BVR account number
       bvr_address: BVR address
-      contextmenu:
+      actions:
         destroy_invoice_template: destroy invoice template
         edit_invoice_template: edit invoice template
-      language: template language (attributes localization)
+      language: template language
+      language_notice: attributes localization
       placeholders:
         bvr_account: BVR account
         bvr_address: BVR address

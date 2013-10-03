@@ -89,7 +89,6 @@ class Index extends App.ExtendedController
   render: =>
     @html @view('settings/salary_templates/index')(@)
     Ui.load_ui(@el)
-    @unlock_new() if @new_unlocked
 
   new: (e) ->
     @trigger 'new'
@@ -105,7 +104,7 @@ class Index extends App.ExtendedController
 
     @activate_in_list(target)
 
-class App.SalariesTemplates extends Spine.Controller
+class App.SettingsSalariesTemplates extends Spine.Controller
   className: 'settings_salary_templates'
 
   constructor: (params) ->
