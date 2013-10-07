@@ -28,7 +28,7 @@ class App.Language extends Spine.Model
   validate: ->
     e = new App.ErrorsList
 
-    unless @name
-      e.add name: I18n.t("activerecord.errors.messages.blank")
+#    unless @name
+#      e.add name: I18n.t("activerecord.errors.messages.blank")
 
     return e unless e.is_empty()

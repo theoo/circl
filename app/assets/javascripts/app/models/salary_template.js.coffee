@@ -28,10 +28,10 @@ class App.SalaryTemplate extends Spine.Model
   validate: ->
     e = new App.ErrorsList
 
-    unless @title
-      e.add title: I18n.t("activerecord.errors.messages.blank")
+#    unless @title
+#      e.add title: I18n.t("activerecord.errors.messages.blank")
 
-    unless @html
-      e.add html: I18n.t("activerecord.errors.messages.blank")
+#    unless @html
+#      e.add html: I18n.t("activerecord.errors.messages.blank")
 
     return e unless e.is_empty()

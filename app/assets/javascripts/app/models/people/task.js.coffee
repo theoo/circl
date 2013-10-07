@@ -26,13 +26,13 @@ class App.PersonTask extends Spine.Model
   validate: ->
     e = new App.ErrorsList
 
-    unless @date
-      e.add date: I18n.t("activerecord.errors.messages.blank")
+#    unless @date
+#      e.add date: I18n.t("activerecord.errors.messages.blank")
 
-    unless @duration
-      e.add duration: I18n.t("activerecord.errors.messages.blank")
+#    unless @duration
+#      e.add duration: I18n.t("activerecord.errors.messages.blank")
 
-    unless @description
-      e.add description: I18n.t("activerecord.errors.messages.blank")
+#    unless @description
+#      e.add description: I18n.t("activerecord.errors.messages.blank")
 
     return e unless e.is_empty()

@@ -28,11 +28,11 @@ class App.ApplicationSetting extends Spine.Model
   validate: ->
     e = new App.ErrorsList
 
-    unless @key
-      e.add key: I18n.t("activerecord.errors.messages.blank")
+#    unless @key
+#      e.add key: I18n.t("activerecord.errors.messages.blank")
 
-    unless @value
-      e.add value: I18n.t("activerecord.errors.messages.blank")
+#    unless @value
+#      e.add value: I18n.t("activerecord.errors.messages.blank")
 
     return e unless e.is_empty()
 

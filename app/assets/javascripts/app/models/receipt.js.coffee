@@ -30,18 +30,18 @@ class App.Receipt extends Spine.Model
     super
 
   validate: ->
-    e = new App.ErrorsList
+#    e = new App.ErrorsList
 
-    unless @owner_id
-      e.add owner_name: I18n.t("receipt.validations.owner_required")
+#    unless @owner_id
+#      e.add owner_name: I18n.t("receipt.validations.owner_required")
 
-    if ! @subscription_id and ! @affair_id
-      e.add subscription_title: I18n.t("activerecord.errors.messages.blank")
+#    if ! @subscription_id and ! @affair_id
+#      e.add subscription_title: I18n.t("activerecord.errors.messages.blank")
 
-    unless @value_date
-      e.add value_date: I18n.t("activerecord.errors.messages.blank")
+#    unless @value_date
+#      e.add value_date: I18n.t("activerecord.errors.messages.blank")
 
-    unless @value
-      e.add value: I18n.t("activerecord.errors.messages.blank")
+#    unless @value
+#      e.add value: I18n.t("activerecord.errors.messages.blank")
 
     return e unless e.is_empty()
