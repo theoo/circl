@@ -46,21 +46,19 @@
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.locations')
+
+          - if can? :update, Job
+            #settings_jobs.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.jobs')
+
         .col-lg-6
           - if can? :update, Language
             #settings_languages.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.languages')
-
-      .row
-        .col-lg-6
-          - if can? :update, Job
-            #settings_jobs.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('settings.views.jobs')
-        .col-lg-6
 
     #templates.tab-pane.fade
       .row
