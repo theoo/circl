@@ -47,7 +47,6 @@ class New extends App.ExtendedController
     @affair.owner_id = @affair.buyer_id = @affair.receiver_id = @person.id
     @affair.owner_name = @affair.buyer_name = @affair.receiver_name = @person.name
     @html @view('people/affairs/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) =>
     e.preventDefault()
@@ -124,7 +123,6 @@ class Edit extends App.ExtendedController
     @show()
     @affair = PersonAffair.find(@id)
     @html @view('people/affairs/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -159,7 +157,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('people/affairs/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     affair = $(e.target).affair()
@@ -197,7 +194,6 @@ class Balance extends App.ExtendedController
 
   render: =>
     @html @view('people/affairs/balance')(@)
-    Ui.load_ui(@el)
 
 class App.PersonAffairs extends Spine.Controller
   className: 'affairs'

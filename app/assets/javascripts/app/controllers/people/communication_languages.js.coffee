@@ -40,7 +40,6 @@ class Edit extends App.ExtendedController
 
   render: =>
     @html @view('people/communication_languages/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()

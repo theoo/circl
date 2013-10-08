@@ -31,7 +31,6 @@ class New extends App.ExtendedController
   render: =>
     @ldap_attribute = new LdapAttribute()
     @html @view('settings/ldap_attributes/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -52,7 +51,6 @@ class Edit extends App.ExtendedController
 
   render: =>
     @html @view('settings/ldap_attributes/form')(@)
-    Ui.load_ui(@el)
     @show()
 
   submit: (e) ->
@@ -74,7 +72,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('settings/ldap_attributes/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     ldap_attribute = $(e.target).ldap_attribute()

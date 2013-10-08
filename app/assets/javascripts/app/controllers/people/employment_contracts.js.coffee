@@ -31,7 +31,6 @@ class New extends App.ExtendedController
   render: =>
     @employment_contract = new PersonEmploymentContract
     @html @view('people/employment_contracts/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -54,7 +53,6 @@ class Edit extends App.ExtendedController
     @employment_contract = PersonEmploymentContract.find(@id)
     @show()
     @html @view('people/employment_contracts/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -77,7 +75,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('people/employment_contracts/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     employment_contract = $(e.target).employment_contract()

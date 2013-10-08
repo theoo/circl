@@ -31,7 +31,6 @@ class New extends App.ExtendedController
   render: =>
     @task = new PersonTask
     @html @view('people/tasks/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -53,7 +52,6 @@ class Edit extends App.ExtendedController
     @show()
     @task = PersonTask.find(@id)
     @html @view('people/tasks/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -70,7 +68,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('people/tasks/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     task = $(e.target).task()

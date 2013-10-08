@@ -46,7 +46,6 @@ class App.PersonSalaryTaxDatas extends Spine.Controller
     @tax_data = PersonSalaryTaxData.all()
     @salary ||= [] # placeholder to prevent failure when rendering 'disabled' view.
     @html @view('people/salaries/tax_data')(@)
-    Ui.load_ui(@el)
     @select_percentage_or_rough_value()
 
     # Keep width

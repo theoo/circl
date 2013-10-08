@@ -230,7 +230,6 @@ class Edit extends SearchEngineController
   render: =>
     @search_attributes = @load_search_attributes()
     @html @view('directory/query_presets/form')(@)
-    Ui.load_ui(@el)
     @load_ui(@el)
 
   load_search_attributes: ->
@@ -285,7 +284,6 @@ class Search extends SearchEngineController
 
   render: =>
     @html @view('directory/query_presets/search')(@)
-    Ui.load_ui(@el)
     @load_ui(@el)
     @el.find('#search_string').keypress (e) =>
       if (e.which == 13)
@@ -301,7 +299,6 @@ class Index extends SearchEngineController
 
   render: =>
     @html @view('directory/query_presets/index')(@)
-    Ui.load_ui(@el)
     @load_ui(@el)
 
   edit: (e) ->

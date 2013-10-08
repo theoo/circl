@@ -35,7 +35,6 @@ class New extends App.ExtendedController
     @receipt.means_of_payment = 'CCP'
 
     @html @view('admin/receipts/form')(@)
-    Ui.load_ui(@el)
 
     owner_name_field = @el.find 'input[name="owner_name"]'
     owner_id_field = @el.find 'input[name="owner_id"]'
@@ -139,7 +138,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('admin/receipts/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     id = $(e.target).closest('tr.item').attr('data-id')
@@ -229,7 +227,6 @@ class App.ExportReceipts extends App.ExtendedController
 
   render: ->
     @html @view('admin/receipts/export')(@)
-    Ui.load_ui(@el)
 
   activate: ->
     super

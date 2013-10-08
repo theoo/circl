@@ -26,7 +26,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('admin/affairs/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     id = $(e.target).parents('[data-id]').data('id')

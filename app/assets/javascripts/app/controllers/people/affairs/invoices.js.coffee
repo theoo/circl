@@ -61,7 +61,6 @@ class New extends App.ExtendedController
       @affair = PersonAffair.find(@affair_id)
 
     @html @view('people/affairs/invoices/form')(@)
-    Ui.load_ui(@el)
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>
@@ -101,7 +100,6 @@ class Edit extends App.ExtendedController
     @affair = PersonAffair.find(@invoice.affair_id)
 
     @html @view('people/affairs/invoices/form')(@)
-    Ui.load_ui(@el)
     # Disable destroy if invoice have receipts
     #unless @invoice.receipts_value > 0
       #destroy = $(@el).find('button[name=invoice-destroy]')
@@ -191,7 +189,6 @@ class Index extends App.ExtendedController
   render: =>
     @invoices = PersonAffairInvoice.all()
     @html @view('people/affairs/invoices/index')(@)
-    Ui.load_ui(@el)
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>

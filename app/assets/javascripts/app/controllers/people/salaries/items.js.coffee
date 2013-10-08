@@ -41,7 +41,6 @@ class App.PersonSalaryItems extends App.ExtendedController
   render: =>
     @items = PersonSalaryItem.all()
     @html @view('people/salaries/items')(@)
-    Ui.load_ui(@el)
 
     # Keep width
     sortableTableHelper = (e, ui) ->

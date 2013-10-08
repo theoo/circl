@@ -36,7 +36,6 @@ class New extends App.ExtendedController
     @salary_template = new SalaryTemplate
     @salary_template.html = @view('settings/salary_templates/template')
     @html @view('settings/salary_templates/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -60,7 +59,6 @@ class Edit extends App.ExtendedController
     @show()
     @salary_template = SalaryTemplate.find(@id)
     @html @view('settings/salary_templates/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) =>
     e.preventDefault()
@@ -88,7 +86,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('settings/salary_templates/index')(@)
-    Ui.load_ui(@el)
 
   new: (e) ->
     @trigger 'new'

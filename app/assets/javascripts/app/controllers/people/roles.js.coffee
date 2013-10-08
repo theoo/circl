@@ -29,7 +29,6 @@ class Index extends App.ExtendedController
   render: =>
     @show()
     @html @view('people/roles/index')(@)
-    Ui.load_ui(@el)
 
   update: (e) =>
     e.preventDefault()

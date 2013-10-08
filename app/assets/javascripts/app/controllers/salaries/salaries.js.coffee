@@ -38,7 +38,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('salaries/salaries/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     e.preventDefault()
@@ -180,7 +179,6 @@ class App.ExportSalaries extends App.ExtendedController
 
   render: ->
     @html @view('salaries/salaries/export')(@)
-    Ui.load_ui(@el)
 
   activate: ->
     super
@@ -223,7 +221,6 @@ class App.ExportToAccountingSalaries extends App.ExtendedController
 
   render: ->
     @html @view('salaries/salaries/export_to_accounting')(@)
-    Ui.load_ui(@el)
 
   activate: ->
     super
@@ -251,7 +248,6 @@ class App.ExportToOcasSalaries extends App.ExtendedController
 
   render: ->
     @html @view('salaries/salaries/export_to_ocas')(@)
-    Ui.load_ui(@el)
 
   fetch_years: ->
     ajax_error = (xhr, statusText, error) =>
@@ -295,7 +291,6 @@ class App.ExportToELohnausweisSSKSalaries extends App.ExtendedController
 
   render: ->
     @html @view('salaries/salaries/export_to_elohnausweisssk')(@)
-    Ui.load_ui(@el)
 
   fetch_years: ->
     ajax_error = (xhr, statusText, error) =>

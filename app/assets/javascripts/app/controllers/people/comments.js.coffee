@@ -31,7 +31,6 @@ class New extends App.ExtendedController
   render: =>
     @comment = new PersonComment(person_id: @person_id)
     @html @view('people/comments/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -56,7 +55,6 @@ class Edit extends App.ExtendedController
     @show()
     @comment = PersonComment.find(@id)
     @html @view('people/comments/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -86,7 +84,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('people/comments/index')(@)
-    Ui.load_ui(@el)
 
   table_redraw: =>
     if @comment

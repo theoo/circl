@@ -306,7 +306,6 @@ class Ui
 
     fullscreen_widget.modal('show')
 
-
   cookie_name: 'folding'
 
   retrieve_cookie: ->
@@ -323,9 +322,10 @@ class Ui
       hidden_field = div.find("input[type='hidden']")
 
       # Some style
-      label = div.find("label")
-      icon = $('<span class="icon icon-search autocomplete-icon"></span>')
-      label.prepend icon
+      unless div.find('.autocomplete-icon').length > 0
+        label = div.find("label")
+        icon = $('<span class="icon icon-search autocomplete-icon"></span>')
+        label.prepend icon
 
       unless text_field.attr('action')
         console.error "'action=url' attribute missing."

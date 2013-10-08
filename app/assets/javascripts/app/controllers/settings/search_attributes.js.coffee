@@ -31,7 +31,6 @@ class New extends App.ExtendedController
   render: =>
     @search_attribute = new SearchAttribute()
     @html @view('settings/search_attributes/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -53,7 +52,6 @@ class Edit extends App.ExtendedController
   render: =>
     @show()
     @html @view('settings/search_attributes/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -74,7 +72,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('settings/search_attributes/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     search_attribute = $(e.target).search_attribute()

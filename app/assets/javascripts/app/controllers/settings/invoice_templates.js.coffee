@@ -38,7 +38,6 @@ class New extends App.ExtendedController
     @invoice_template.with_bvr = true
     @invoice_template.show_invoice_value = true
     @html @view('settings/invoice_templates/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -65,7 +64,6 @@ class Edit extends App.ExtendedController
   render: =>
     @show()
     @html @view('settings/invoice_templates/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) =>
     e.preventDefault()
@@ -95,7 +93,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('settings/invoice_templates/index')(@)
-    Ui.load_ui(@el)
 
   new: (e) ->
     @trigger 'new'

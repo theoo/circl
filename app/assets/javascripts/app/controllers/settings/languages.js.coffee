@@ -28,7 +28,6 @@ class New extends App.ExtendedController
   render: =>
     @language = new Language()
     @html @view('settings/languages/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -48,7 +47,6 @@ class Edit extends App.ExtendedController
   render: =>
     @show()
     @html @view('settings/languages/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -74,7 +72,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('settings/languages/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     @language = $(e.target).language()

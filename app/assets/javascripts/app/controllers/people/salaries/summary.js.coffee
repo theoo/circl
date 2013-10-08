@@ -30,7 +30,6 @@ class App.SalarySummary extends Spine.Controller
   render: =>
     @salary = @salary.reload()
     @html @view('people/salaries/common/summary')(@)
-    Ui.load_ui(@el)
     if @salary.isNew()
       $(@el).find('input').attr('disabled', true)
       $(@el).fadeTo('slow', 0.3);

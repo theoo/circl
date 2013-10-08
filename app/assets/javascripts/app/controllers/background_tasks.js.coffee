@@ -53,14 +53,13 @@ class Counter extends App.ExtendedController
     button = $("<a href='#' class='button' data-count='#{count}'>&nbsp;#{title}&nbsp;</a>")
     @el.html(button)
 
-    Ui.load_ui(@el)
-
     if count == 0
       button.button( "option", "disabled", true );
     else
       button.button( "option", "disabled", false );
 
     # button.effect('highlight', {color: "#E2E4FF"})
+    Ui.load_ui(@el)
 
   list: (e) ->
     e.preventDefault()
@@ -100,7 +99,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('background_tasks/index')(@)
-    Ui.load_ui(@el)
 
   destroy: (e) ->
     background_task = $(e.target).background_task()
