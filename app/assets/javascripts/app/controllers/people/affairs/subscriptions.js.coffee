@@ -38,7 +38,6 @@ class New extends App.ExtendedController
   render: =>
     @show()
     @html @view('people/affairs/subscriptions/form')(@)
-    Ui.load_ui(@el)
     if @disabled() then @disable_panel() else @enable_panel()
 
   submit: (e) ->
@@ -69,7 +68,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('people/affairs/subscriptions/index')(@)
-    Ui.load_ui(@el)
     if @disabled() then @disable_panel() else @enable_panel()
 
   destroy: (e) ->

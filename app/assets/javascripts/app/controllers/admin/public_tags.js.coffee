@@ -31,7 +31,6 @@ class New extends App.ExtendedController
   render: =>
     @tag = new PublicTag()
     @html @view('admin/public_tags/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -57,7 +56,6 @@ class Edit extends App.ExtendedController
     return unless PublicTag.exists(@id)
     @show()
     @html @view('admin/public_tags/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -135,7 +133,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('admin/public_tags/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     tag = $(e.target).public_tag()
@@ -165,10 +162,6 @@ class App.AdminPublicTags extends Spine.Controller
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
-
-    @index.bind 'destroyError', (id, errors) =>
-      @edit.active id: id
-      @edit.render_errors errors
 
   activate: ->
     super

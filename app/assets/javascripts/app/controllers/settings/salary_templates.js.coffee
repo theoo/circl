@@ -36,7 +36,6 @@ class New extends App.ExtendedController
     @salary_template = new SalaryTemplate
     @salary_template.html = @view('settings/salary_templates/template')
     @html @view('settings/salary_templates/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -48,8 +47,8 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form' : 'submit'
-    'click button[name=salaries-salary-template-destroy]': 'destroy'
-    'click button[name=salaries-salary-template-edit]': 'edit_template'
+    'click button[name=settings-salary-template-destroy]': 'destroy'
+    'click button[name=settings-salary-template-edit]': 'edit_template'
 
   active: (params) ->
     @id = params.id if params.id
@@ -60,7 +59,6 @@ class Edit extends App.ExtendedController
     @show()
     @salary_template = SalaryTemplate.find(@id)
     @html @view('settings/salary_templates/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) =>
     e.preventDefault()
@@ -88,7 +86,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('settings/salary_templates/index')(@)
-    Ui.load_ui(@el)
 
   new: (e) ->
     @trigger 'new'

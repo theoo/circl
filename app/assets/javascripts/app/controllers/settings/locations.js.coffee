@@ -31,7 +31,6 @@ class New extends App.ExtendedController
     @show()
     @location = new Location()
     @html @view('settings/locations/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -55,7 +54,6 @@ class Edit extends App.ExtendedController
   render: =>
     @show()
     @html @view('settings/locations/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -76,7 +74,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('settings/locations/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     @id = $(e.target).location()

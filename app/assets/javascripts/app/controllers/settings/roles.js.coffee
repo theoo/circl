@@ -34,7 +34,6 @@ class New extends App.ExtendedController
   render: =>
     @role = new Role()
     @html @view('settings/roles/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -57,7 +56,6 @@ class Edit extends App.ExtendedController
 
   render: =>
     @html @view('settings/roles/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -100,7 +98,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('settings/roles/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     e.preventDefault()

@@ -44,7 +44,6 @@ class AvailablePermissionsIndex extends App.ExtendedController
     @available_permissions = _.reject(Permission.all(), has_permission)
 
     @html @view('settings/roles/permissions/available_permissions')(@)
-    Ui.load_ui(@el)
 
     if @disabled() then @disable_panel() else @enable_panel()
 
@@ -70,7 +69,6 @@ class SelectedPermissionsIndex extends App.ExtendedController
 
   render: =>
     @html @view('settings/roles/permissions/selected_permissions')(@)
-    Ui.load_ui(@el)
 
     if @disabled() then @disable_panel() else @enable_panel()
 
@@ -108,7 +106,6 @@ class Edit extends App.ExtendedController
       @permission = new RolePermission
 
     @html @view('settings/roles/permissions/form')(@)
-    Ui.load_ui(@el)
     if @permission.isNew()
       $("#settings_role_permission_action").prop("disabled", true)
       $("#settings_role_permission_subject").prop("disabled", true)

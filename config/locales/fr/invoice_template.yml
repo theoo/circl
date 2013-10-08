@@ -12,8 +12,7 @@ fr:
       bvr_account_number: numéro de compte BVR
       bvr_address: adresse figurant sur le BVR
       actions:
-        destroy_invoice_template: détruire le modèle
-        edit_invoice_template: modifier le modèle
+        edit_template: modifier le modèle
       language: langue du modèle
       language_notice: localisation des attributs
       placeholders:

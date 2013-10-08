@@ -35,7 +35,6 @@ class Edit extends App.ExtendedController
     # Get root tags
     @root_tags = _(tag for tag in PrivateTag.all() when !tag.parent_id?).sortBy (a) -> a.name
     @html @view('people/private_tags/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()

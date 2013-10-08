@@ -37,7 +37,6 @@ class Form extends App.ExtendedController
 
   render: ->
     @html @view('admin/bank_import_histories/form')(@)
-    Ui.load_ui(@el)
 
   activate: ->
     super
@@ -53,7 +52,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('admin/bank_import_histories/index')(@)
-    Ui.load_ui(@el)
 
   table_redraw: ->
     @el.find('tr.item').each ->
@@ -101,7 +99,6 @@ class Export extends App.ExtendedController
 
   render: =>
     @html @view('admin/bank_import_histories/export')(@)
-    Ui.load_ui(@el)
 
   activate: ->
     super

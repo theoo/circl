@@ -172,7 +172,6 @@ class New extends ValueItemsController
     # allow user to sort and redefine position
     @make_table_sortable()
 
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -220,7 +219,6 @@ class Edit extends ValueItemsController
     # allow user to sort and redefine position
     @make_table_sortable()
 
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -401,7 +399,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('admin/subscriptions/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     e.preventDefault()
@@ -437,7 +434,6 @@ class TransferOverpaidValue extends App.ExtendedController
 
   render: =>
     @html @view('admin/subscriptions/transfer_overpaid')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -466,7 +462,6 @@ class TagTool extends App.ExtendedController
 
   render: =>
     @html @view('admin/subscriptions/tag')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()

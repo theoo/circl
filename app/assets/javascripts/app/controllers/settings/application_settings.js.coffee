@@ -25,7 +25,6 @@ class New extends App.ExtendedController
   render: =>
     @application_setting = new ApplicationSetting()
     @html @view('settings/application_settings/form')(@)
-    Ui.load_ui(@el)
 
 class Edit extends App.ExtendedController
   events:
@@ -40,7 +39,6 @@ class Edit extends App.ExtendedController
     return unless ApplicationSetting.exists(@id)
     @show()
     @html @view('settings/application_settings/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -57,7 +55,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('settings/application_settings/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     @application_setting = $(e.target).application_setting()

@@ -31,7 +31,6 @@ class New extends App.ExtendedController
   render: =>
     @job = new Job()
     @html @view('settings/jobs/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -54,7 +53,6 @@ class Edit extends App.ExtendedController
   render: =>
     @show()
     @html @view('settings/jobs/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -78,7 +76,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('settings/jobs/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     @job = $(e.target).job()

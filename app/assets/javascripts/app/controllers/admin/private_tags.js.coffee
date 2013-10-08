@@ -31,7 +31,6 @@ class New extends App.ExtendedController
   render: =>
     @tag = new PrivateTag()
     @html @view('admin/private_tags/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -57,7 +56,6 @@ class Edit extends App.ExtendedController
     return unless PrivateTag.exists(@id)
     @show()
     @html @view('admin/private_tags/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -153,7 +151,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('admin/private_tags/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     tag = $(e.target).private_tag()
@@ -183,9 +180,6 @@ class App.AdminPrivateTags extends Spine.Controller
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
       @index.active(id: id)
-
-    @edit.bind 'destroyError', (id, errors) =>
-      @edit.render_errors errors
 
   activate: ->
     super

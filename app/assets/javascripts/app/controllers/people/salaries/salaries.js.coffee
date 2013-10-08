@@ -93,7 +93,6 @@ class New extends App.ExtendedController
     @salary.from                = "01-01-" + year
     @salary.to                  = "31-12-" + year
     @html @view('people/salaries/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -180,7 +179,6 @@ class Edit extends App.ExtendedController
   render: =>
     @salary = PersonSalary.find(@id)
     @html @view('people/salaries/form')(@)
-    Ui.load_ui(@el)
     select = $(@el).find("#person_salary_parent_id")
     select.prop('disabled', true)
     if @salary.is_reference
@@ -233,7 +231,6 @@ class Index extends App.ExtendedController
   render: =>
     @person = Person.find(@person_id)
     @html @view('people/salaries/index')(@)
-    Ui.load_ui(@el)
     $("#person_salaries_nav a:first").tab('show')
 
   edit: (e) ->

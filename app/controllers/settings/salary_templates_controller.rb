@@ -35,7 +35,19 @@ class Settings::SalaryTemplatesController < ApplicationController
   end
 
   def show
-    edit
+    respond_to do |format|
+      format.json { render :json => @salary_template }
+      format.html do
+        render :inline => @salary_template.html, :layout => 'preview.html.haml'
+      end
+      format.jpg do
+        unless @salary_template.snapshot.path and File.exists? @salary_template.snapshot.path
+          BackgroundTasks::GenerateSalaryTemplateJpg.process!(:salary_template_id => @salary_template.id)
+          @salary_template.reload
+        end
+        redirect_to @salary_template.snapshot.url
+      end
+    end
   end
 
   def create

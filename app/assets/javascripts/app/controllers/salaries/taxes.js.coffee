@@ -36,7 +36,6 @@ class New extends App.ExtendedController
   render: =>
     @tax = new SalaryTax()
     @html @view('salaries/taxes/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -71,7 +70,6 @@ class Edit extends App.ExtendedController
     @show()
     @tax = SalaryTax.find(@id)
     @html @view('salaries/taxes/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -114,7 +112,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('salaries/taxes/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     tax = $(e.target).salaries_tax()
@@ -181,7 +178,6 @@ class App.UploadSalaryTaxes extends App.ExtendedController
 
   render: ->
     @html @view('salaries/taxes/upload')(@)
-    Ui.load_ui(@el)
 
   send: (e) ->
     e.preventDefault()

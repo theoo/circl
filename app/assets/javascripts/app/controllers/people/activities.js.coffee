@@ -27,7 +27,6 @@ class Index extends App.ExtendedController
   render: =>
     @activities = PersonActivity.all()
     @html @view('people/activities/index')(@)
-    Ui.load_ui(@el)
 
   table_redraw: =>
     $(@el).find('tr').each (index, tr) ->

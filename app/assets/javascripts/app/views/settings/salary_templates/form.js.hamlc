@@ -42,12 +42,12 @@
         - unless @salary_template.isNew()
           .btn-group
             %button{:type => 'button',
-                    :name => 'salaries-salary-template-destroy',
+                    :name => 'settings-salary-template-destroy',
                     :class => 'btn btn-danger'}
               .icon-remove
               = I18n.t("common.destroy")
             %button{:type => 'button',
-                    :name => 'salaries-salary-template-edit',
+                    :name => 'settings-salary-template-edit',
                     :class => 'btn btn-default'}
               .icon-file
               = I18n.t("salary_template.views.actions.edit_template")

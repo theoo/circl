@@ -39,7 +39,7 @@
   }
 
 #intro
-  %img{ :id => "logo", :src => "assets/circl_letter.png", :title => "CIRCL", :alt => "CIRCL" }
+  %img{ :id => "logo", :src => "/assets/circl_letter.png", :title => "CIRCL", :alt => "CIRCL" }
 
   #salary_title
     %b= "#SALARY_TITLE"

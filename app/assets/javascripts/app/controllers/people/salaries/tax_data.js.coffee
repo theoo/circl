@@ -23,7 +23,7 @@ $.fn.tax_data = ->
   elementID ||= $(@).parents('[data-id]').data('id')
   PersonSalaryTaxData.find(elementID)
 
-class App.PersonSalaryTaxDatas extends Spine.Controller
+class App.PersonSalaryTaxDatas extends App.ExtendedController
   className: 'person_salary_tax_data'
 
   events:
@@ -46,7 +46,6 @@ class App.PersonSalaryTaxDatas extends Spine.Controller
     @tax_data = PersonSalaryTaxData.all()
     @salary ||= [] # placeholder to prevent failure when rendering 'disabled' view.
     @html @view('people/salaries/tax_data')(@)
-    Ui.load_ui(@el)
     @select_percentage_or_rough_value()
 
     # Keep width
@@ -72,6 +71,11 @@ class App.PersonSalaryTaxDatas extends Spine.Controller
             pos = tr.data('position')
             position = tr.find("input[name='tax_data[#{pos}][position]']")
             position.attr('value', index)
+
+    if @disabled() then @disable_panel() else @enable_panel()
+
+  disabled: =>
+    PersonSalaryTaxData.url() == undefined
 
   customRenderErrors: (errors) ->
     @render_errors(errors)

@@ -39,7 +39,6 @@ class New extends App.ExtendedController
     @show()
     @person = new Person()
     @html @view('people/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -68,7 +67,6 @@ class Edit extends App.ExtendedController
     @show()
     @person = Person.find(@id)
     @html @view('people/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()

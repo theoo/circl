@@ -58,7 +58,6 @@ class New extends App.ExtendedController
         @receipt.value = @affair.invoices_value - @affair.receipts_value
 
     @html @view('people/affairs/receipts/form')(@)
-    Ui.load_ui(@el)
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>
@@ -95,7 +94,6 @@ class Edit extends App.ExtendedController
     @affair = PersonAffair.find(@receipt.affair_id)
 
     @html @view('people/affairs/receipts/form')(@)
-    Ui.load_ui(@el)
 
   update_callback: =>
     PersonAffair.fetch()
@@ -129,7 +127,6 @@ class Index extends App.ExtendedController
   render: =>
     @receipts = PersonAffairReceipt.all()
     @html @view('people/affairs/receipts/index')(@)
-    Ui.load_ui(@el)
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>

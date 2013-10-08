@@ -41,7 +41,6 @@ class App.PersonSalaryItems extends App.ExtendedController
   render: =>
     @items = PersonSalaryItem.all()
     @html @view('people/salaries/items')(@)
-    Ui.load_ui(@el)
 
     # Keep width
     sortableTableHelper = (e, ui) ->
@@ -67,6 +66,11 @@ class App.PersonSalaryItems extends App.ExtendedController
             pos = tr.data('position')
             position = tr.find("input[name='items[#{pos}][position]']")
             position.attr('value', index)
+
+    if @disabled() then @disable_panel() else @enable_panel()
+
+  disabled: =>
+    PersonSalaryItem.url() == undefined
 
   name_filter: (str) ->
     (index, item) ->

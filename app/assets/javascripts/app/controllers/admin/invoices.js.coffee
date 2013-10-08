@@ -32,7 +32,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('admin/invoices/index')(@)
-    Ui.load_ui(@el)
 
   edit: (e) ->
     e.preventDefault()
@@ -110,7 +109,6 @@ class App.ExportInvoices extends App.ExtendedController
 
   render: ->
     @html @view('admin/invoices/export')(@)
-    Ui.load_ui(@el)
 
   activate: ->
     super

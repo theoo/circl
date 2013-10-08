@@ -35,7 +35,6 @@ class New extends App.ExtendedController
     @show()
     @translation = new PersonTranslationAptitude
     @html @view('people/translation_aptitudes/form')(@)
-    Ui.load_ui(@el)
 
   submit: (e) ->
     e.preventDefault()
@@ -55,7 +54,6 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('people/translation_aptitudes/index')(@)
-    Ui.load_ui(@el)
 
   destroy: (e) ->
     translation = $(e.target).translation()

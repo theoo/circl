@@ -24,7 +24,6 @@ class Ui
     @load_multi_autocompleters(context)
     @load_number_precision(context)
     @load_password_strength(context)
-    @load_tabs(context)
     @override_rails(context)
 
     # FIXME http://getbootstrap.com/javascript/#tooltips the event
@@ -136,7 +135,7 @@ class Ui
     local_storage_load = (oSettings) ->
       return JSON.parse(localStorage.getItem(widget_name))
 
-    datatable_translations = I18n.datatable_translations
+    datatable_translations = $.extend {}, I18n.datatable_translations # clone object
     datatable_translations.sSearch = '' # Temporarly disable search label, applied to placeholder afterward.
 
     params =
@@ -185,13 +184,13 @@ class Ui
 
     parent = label.parent()
     parent.addClass('panel-body')
-    search_input.attr('placeholder', "Rechercher")
+    search_input.attr('placeholder', I18n.datatable_translations.sSearch)
     search_input.addClass('form-control input-sm')
 
     # SORTING
-    table.find('th.sorting:not(.ignore-sort)').prepend("<span class='icon-sort'/>&nbsp;")
-    table.find('th.sorting_asc').prepend("<span class='icon-sort-up'/>&nbsp;")
-    table.find('th.sorting_desc').prepend("<span class='icon-sort-down'/>&nbsp;")
+    table.find('th.sorting:not(.ignore-sort)').append("&nbsp;<span class='icon-sort'/>")
+    table.find('th.sorting_asc').append("&nbsp;<span class='icon-sort-up'/>")
+    table.find('th.sorting_desc').append("&nbsp;<span class='icon-sort-down'/>")
 
     table.find('th.sorting:not(.ignore-sort), th.sorting_desc, th.sorting_asc').on 'click', (e) ->
 
@@ -200,12 +199,12 @@ class Ui
         th = $(i)
         th.find('span.icon-sort, span.icon-sort-up, span.icon-sort-down').remove()
         icon = $("<span class='icon-sort'/>")
-        th.prepend icon
+        th.append icon
 
       th = $(e.target)
       th.find('span.icon-sort').remove()
       icon = $("<span class='icon-sort'/>")
-      th.prepend icon
+      th.append icon
       if th.hasClass('sorting_asc')
         icon.removeClass('icon-sort-down')
         icon.addClass('icon-sort-up')
@@ -216,13 +215,9 @@ class Ui
 
   load_tabs: (context) ->
     rewrite_url_anchor = (anchor_name) ->
-      url = window.location.hash
-      params = url.match(/(\?.*)$/)
-      params = if params then params[0] else ""
-      window.location.hash = anchor_name + params
-      # window.location.hash = anchor_name + params
-      # TODO prevent browser from scrolling to anchor, it may exist a better solution.
-      @.scrollTo(0,0)
+      hash = anchor_name.split('#')
+      location.hash = hash[1] if hash.length > 1
+      setTimeout((-> window.scrollTo(0,0)), 0) # :-(
 
     nav = context.find("#sub_nav")
     nav.find("a").click (e) ->
@@ -232,10 +227,10 @@ class Ui
     nav.find("a").on 'shown.bs.tab', (e) ->
       rewrite_url_anchor $(e.target).attr('href')
 
-    anchor = window.location.hash.match(/^(#[a-z]+)\??/)
+    anchor = location.hash.split('#')
     anchor = anchor[1] if anchor
 
-    tab_link = nav.find("a[href=" + anchor + "]")
+    tab_link = nav.find("a[href=#" + anchor + "]")
     tab_link = nav.find("a:first") if tab_link.length == 0
     tab_link.tab('show')
 
@@ -306,7 +301,6 @@ class Ui
 
     fullscreen_widget.modal('show')
 
-
   cookie_name: 'folding'
 
   retrieve_cookie: ->
@@ -321,6 +315,12 @@ class Ui
       div = $(div)
       text_field = div.find("input[type='search']")
       hidden_field = div.find("input[type='hidden']")
+
+      # Some style
+      unless div.find('.autocomplete-icon').length > 0
+        label = div.find("label")
+        icon = $('<span class="icon icon-search autocomplete-icon"></span>')
+        label.prepend icon
 
       unless text_field.attr('action')
         console.error "'action=url' attribute missing."

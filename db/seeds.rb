@@ -8,6 +8,7 @@ tasks = %w{languages
            locations
            ldap_attributes
            search_attributes
+           salary_templates
            invoice_templates}
 
 tasks.each do |task|
