@@ -97,11 +97,9 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    if params[:locale]
-      cookies[:locale] = params[:locale]
-    end
-    cookies[:locale] = default_locale unless cookies[:locale]
-    I18n.locale = cookies[:locale]
+    locale = params[:locale] if params[:locale]
+    locale ||= default_locale
+    I18n.locale = locale
   end
 
   def route_browser
