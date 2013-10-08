@@ -67,6 +67,11 @@ class App.PersonSalaryItems extends App.ExtendedController
             position = tr.find("input[name='items[#{pos}][position]']")
             position.attr('value', index)
 
+    if @disabled() then @disable_panel() else @enable_panel()
+
+  disabled: =>
+    PersonSalaryItem.url() == undefined
+
   name_filter: (str) ->
     (index, item) ->
       name = $(item).attr('name')

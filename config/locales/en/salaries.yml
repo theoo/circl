@@ -49,7 +49,8 @@ en:
         brut_account: gross pay
         children_count: number of children
         civil_status: marital status
-        contextmenu:
+        actions:
+          new_reference: New reference
           check_as_paid: check as paid
           copy_reference: copy reference to a group of people
           destroy_salary: destroy salary
