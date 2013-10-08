@@ -136,7 +136,7 @@ class Ui
     local_storage_load = (oSettings) ->
       return JSON.parse(localStorage.getItem(widget_name))
 
-    datatable_translations = I18n.datatable_translations
+    datatable_translations = $.extend {}, I18n.datatable_translations # clone object
     datatable_translations.sSearch = '' # Temporarly disable search label, applied to placeholder afterward.
 
     params =
@@ -185,7 +185,7 @@ class Ui
 
     parent = label.parent()
     parent.addClass('panel-body')
-    search_input.attr('placeholder', "Rechercher")
+    search_input.attr('placeholder', I18n.datatable_translations.sSearch)
     search_input.addClass('form-control input-sm')
 
     # SORTING
@@ -321,6 +321,11 @@ class Ui
       div = $(div)
       text_field = div.find("input[type='search']")
       hidden_field = div.find("input[type='hidden']")
+
+      # Some style
+      label = div.find("label")
+      icon = $('<span class="icon icon-search autocomplete-icon"></span>')
+      label.prepend icon
 
       unless text_field.attr('action')
         console.error "'action=url' attribute missing."
