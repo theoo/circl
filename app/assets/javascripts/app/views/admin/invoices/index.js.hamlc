@@ -11,5 +11,5 @@
 
 .panel-footer
   %button{ :type => 'button', :name => 'admin-invoices-export', :class => 'btn btn-default'}
-    .glyphicon.glyphicon-export
+    .icon-cloud-upload
     = I18n.t('common.toolbox_export')

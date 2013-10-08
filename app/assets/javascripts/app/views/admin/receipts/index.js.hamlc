@@ -14,10 +14,10 @@
     %button{:type => 'button',
             :name => 'admin-receipts-export',
             :class => 'btn btn-default'}
-      .glyphicon.glyphicon-export
+      .icon-cloud-upload
       = I18n.t('common.toolbox_export')
     %button{:type => 'button',
             :name => 'admin-receipts-import',
             :class => 'btn btn-default'}
-      .glyphicon.glyphicon-import
+      .icon-cloud-download
       = I18n.t('common.toolbox_import_bank_file')

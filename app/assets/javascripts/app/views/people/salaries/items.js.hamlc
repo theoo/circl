@@ -19,7 +19,7 @@
       - for item, index in @items
         %tr{:data-position => index}
           %td.handle
-            .glyphicon.glyphicon-resize-vertical
+            .icon-resize-vertical
           %td
             %input{ :name => "items[#{index}][id]", :type => 'hidden', :value => item.id }
             %input{ :name => "items[#{index}][position]", :type => 'hidden', :value => item.position }
@@ -51,12 +51,13 @@
               %button{:type => 'button',
                       :name => 'destroy-item',
                       :class => 'btn btn-danger' }
-                .glyphicon.glyphicon-remove
+                .icon-remove
+
                 = I18n.t("common.destroy")
               %button{:type => 'button',
                       :name => 'adjust-item',
                       :class => 'btn btn-default' }
-                .glyphicon.glyphicon-cog
+                .icon-cog
                 = I18n.t("common.adjust")
 
       / New item
@@ -64,7 +65,7 @@
       %tr.active
         - if @items.length > 0
           %td.handle
-            .glyphicon.glyphicon-resize-vertical
+            .icon-resize-vertical
         - else
           %td
         %td

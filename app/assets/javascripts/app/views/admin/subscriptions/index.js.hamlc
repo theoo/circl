@@ -19,6 +19,6 @@
         %button{:type => 'button',
                 :name => 'subscription-tag-tool',
                 :class => 'btn btn-default' }
-          .glyphicon.glyphicon-tags
+          .icon-tags
           &nbsp;
           = I18n.t('subscription.views.tool_box.tag_tool')

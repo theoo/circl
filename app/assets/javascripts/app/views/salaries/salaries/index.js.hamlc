@@ -63,23 +63,23 @@
     %button{:type => 'button',
             :name => 'salaries-export',
             :class => 'btn btn-default' }
-      .glyphicon.glyphicon-export
+      .icon-cloud-upload
       = I18n.t('salaries.export')
 
     %button{:type => 'button',
             :name => 'salaries-export-to-accounting',
             :class => 'btn btn-default' }
-      .glyphicon.glyphicon-export
+      .icon-cloud-upload
       = I18n.t('salaries.export_to_accounting')
 
     %button{:type => 'button',
             :name => 'salaries-export-to-ocas',
             :class => 'btn btn-default' }
-      .glyphicon.glyphicon-export
+      .icon-cloud-upload
       = I18n.t('salaries.export_to_ocas')
 
     %button{:type => 'button',
             :name => 'salaries-export-to-eLohnausweisSSK',
             :class => 'btn btn-default' }
-      .glyphicon.glyphicon-export
+      .icon-cloud-upload
       = I18n.t('salaries.export_salary_certificates')

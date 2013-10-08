@@ -20,4 +20,4 @@
         %td= s.created_at
         %td
           %button{:name => 'subscription-destroy', :class => 'btn btn-danger btl-xs'}
-            .glyphicon.glyphicon-remove
+            .icon-remove

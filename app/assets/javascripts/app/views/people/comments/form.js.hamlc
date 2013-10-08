@@ -36,7 +36,7 @@
           - unless @comment.isNew?()
             %button{:name => "comment-destroy",
                     :class => 'btn btn-danger' }
-              .glyphicon.glyphicon-remove
+              .icon-remove
               = I18n.t("common.destroy")
 
             - if @comment.is_closed

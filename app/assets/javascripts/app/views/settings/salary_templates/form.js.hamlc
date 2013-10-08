@@ -33,7 +33,7 @@
         .pull-right
           %button{:type => 'submit',
                   :class => 'btn btn-primary'}
-            .icon-save
+            .icon-download-atl
             - if @salary_template.isNew()
               = I18n.t("common.create")
             - else

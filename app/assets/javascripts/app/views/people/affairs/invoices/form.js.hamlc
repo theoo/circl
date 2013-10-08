@@ -85,19 +85,19 @@
           .btn-group
             %button{:name => "invoice-destroy",
                     :class => 'btn btn-danger' }
-              .glyphicon.glyphicon-remove
+              .icon-remove
               = I18n.t('common.destroy')
 
             %button{:name => "invoice-add-receipt",
                     :class => 'btn btn-default' }
-              .glyphicon.glyphicon-plus
+              .icon-plus
               = I18n.t('invoice.views.actions.add_receipt')
 
             .btn-group
               %button{:data-toggle => 'dropdown',
                       :type => 'button',
                       :class => 'btn btn-default dropdown-toggle' }
-                .glyphicon.glyphicon-paperclip
+                .icon-paper-clip
                 = I18n.t('common.pdf')
                 .caret
 

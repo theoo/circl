@@ -3,5 +3,5 @@
 - else
   - title = I18n.t('common.update')
 %button{:type => 'submit', :class => 'btn btn-primary'}
-  .glyphicon.glyphicon-save
+  .icon-download-alt
   = title

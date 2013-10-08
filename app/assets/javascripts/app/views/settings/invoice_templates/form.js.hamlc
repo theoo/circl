@@ -74,7 +74,7 @@
         .pull-right
           %button{:type => 'submit',
                   :class => 'btn btn-primary'}
-            .icon-save
+            .icon-download-alt
             - if @invoice_template.isNew()
               = I18n.t("common.create")
             - else

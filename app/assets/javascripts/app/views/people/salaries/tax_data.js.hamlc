@@ -19,7 +19,7 @@
       - for data, unique_id in @tax_data
         %tr{:data-position => unique_id}
           %td.handle
-            .glyphicon.glyphicon-resize-vertical
+          .icon-resize-vertical
           %td
             %input{ :name => 'tax_data[#{unique_id}][id]',
                     :type => 'hidden',
@@ -102,12 +102,12 @@
               %button{:type => 'button',
                       :name => 'reset-tax-data',
                       :class => 'btn btn-warning' }
-                .glyphicon.glyphicon-refresh
+                .icon-refresh
                 = I18n.t("common.reset")
               %button{:type => 'button',
                       :name => 'adjust-tax-data',
                       :class => 'btn btn-default' }
-                .glyphicon.glyphicon-cog
+                .icon-cog
                 = I18n.t("common.adjust")
 
       %tr

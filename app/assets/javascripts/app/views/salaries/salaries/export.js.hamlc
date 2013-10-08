@@ -61,11 +61,11 @@
     %button{:type => 'button',
             :class => 'btn btn-default',
             :data-dismiss => 'modal'}
-      .glyphicon.glyphicon-chevron-left
+      .icon-chevron-left
       = I18n.t("common.close")
 
     %button{:type => 'submit',
             :name => 'export',
             :class => 'btn btn-primary'}
-      .glyphicon.glyphicon-export
+      .icon-cloud-upload
       = I18n.t('common.export')

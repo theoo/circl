@@ -86,7 +86,7 @@
             - for value, index in @subscription.values
               %tr{'data-id' => value.id, :class => 'item'}
                 %td.handle
-                  .glyphicon.glyphicon-resize-vertical
+                .icon-resize-vertical
                   %input{ :name => "values[][position]", :type => 'hidden', :value => value.position }
                   %input{ :name => "values[][id]", :type => 'hidden', :value => value.id }
 
@@ -124,11 +124,11 @@
                   %button{:type => 'button',
                           :name => 'remove_item',
                           :class => 'btn btn-danger'}
-                    .glyphicon.glyphicon-remove
+                    .icon-remove
 
             %tr{'data-name' => 'value_item_template', :style => 'display: none;'}
               %td.handle
-                .glyphicon.glyphicon-resize-vertical
+                .icon-resize-vertical
                 %input{ :name => "values[][position]", :type => 'hidden' }
 
               %td
@@ -159,7 +159,7 @@
                 %button{:type => 'button',
                         :name => 'remove_item',
                         :class => 'btn btn-danger'}
-                  .glyphicon.glyphicon-remove
+                  .icon-remove
 
             %tr{'data-name' => 'value_item_add'}
               %td
@@ -170,7 +170,7 @@
                 %button{:type => 'button',
                         :name => 'add_item',
                         :class => 'btn btn-default'}
-                  .glyphicon.glyphicon-plus
+                  .icon-plus
     .row
       .col-lg-12
         .pull-right
@@ -180,59 +180,59 @@
           .btn-group
             %button{:name => "subscription-destroy",
                     :class => 'btn btn-danger' }
-              .glyphicon.glyphicon-remove
+              .icon-remove
               = I18n.t('common.destroy')
 
             .btn-group
               %button{:data-toggle => 'dropdown',
                       :type => 'button',
                       :class => 'btn btn-default dropdown-toggle' }
-                .glyphicon.glyphicon-paperclip
+                .icon-paper-clip
                 = I18n.t('common.pdf')
                 .caret
 
               %ul.dropdown-menu
                 %li
                   %a{:href => '#', :name => 'subscription-pdf'}
-                    .glyphicon.glyphicon-download
+                    .icon-cloud-download
                     = I18n.t('subscription.views.actions.view_subscription_pdf')
 
             .btn-group
               %button{:data-toggle => 'dropdown',
                       :type => 'button',
                       :class => 'btn btn-default dropdown-toggle' }
-                .glyphicon.glyphicon-user
+                .icon-user
                 = I18n.t('subscription.views.members')
                 .caret
 
               %ul.dropdown-menu
                 %li
                   %a{:href => '#', :name => 'subscription-members-add'}
-                    .glyphicon.glyphicon-plus
+                    .icon-plus
                     = I18n.t('subscription.views.actions.add_members_to_subscription')
                 %li
                   %a{:href => '#', :name => 'subscription-members-remove'}
-                    .glyphicon.glyphicon-minus
+                    .icon-minus
                     = I18n.t('subscription.views.actions.remove_members_from_subscription')
                 %li
                   %a{:href => '#', :name => 'subscription-members-view'}
-                    .glyphicon.glyphicon-eye-open
+                    .icon-eye-open
                     = I18n.t('subscription.views.actions.view_subscription_members')
                 %li
                   %a{:href => '#', :name => 'subscription-buyers-view'}
-                    .glyphicon.glyphicon-eye-open
+                    .icon-eye-open
                     = I18n.t('subscription.views.actions.view_subscription_buyers')
                 %li
                   %a{:href => '#', :name => 'subscription-receivers-view'}
-                    .glyphicon.glyphicon-eye-open
+                    .icon-eye-open
                     = I18n.t('subscription.views.actions.view_subscription_receivers')
                 %li
                   %a{:href => '#', :name => 'subscription-members-who-paid-view'}
-                    .glyphicon.glyphicon-eye-open
+                    .icon-eye-open
                     = I18n.t('subscription.views.actions.view_subscription_members_who_paid')
                 %li
                   %a{:href => '#', :name => 'subscription-members-who-didnt-paid-view'}
-                    .glyphicon.glyphicon-eye-open
+                    .icon-eye-open
                     = I18n.t('subscription.views.actions.view_subscription_members_who_didnt_paid')
 
 
@@ -240,20 +240,20 @@
               %button{:data-toggle => 'dropdown',
                       :type => 'button',
                       :class => 'btn btn-default dropdown-toggle' }
-                .glyphicon.glyphicon-user
+                .icon-user
                 = I18n.t('common.tools')
                 .caret
 
               %ul.dropdown-menu
                 %li
                   %a{:href => '#', :name => 'subscription-transfer-overpaid-value'}
-                    .glyphicon.glyphicon-transfer
+                    .icon-transfer
                     = I18n.t('subscription.views.actions.transfer_overpaid_value')
                 %li
                   %a{:href => '#', :name => 'subscription-reminder'}
-                    .glyphicon.glyphicon-bullhorn
+                    .icon-bullhorn
                     = I18n.t('subscription.views.actions.subscription_reminder')
                 %li
                   %a{:href => '#', :name => 'subscription-renewal'}
-                    .glyphicon.glyphicon-retweet
+                    .icon-retweet
                     = I18n.t('subscription.views.actions.subscription_renewal')

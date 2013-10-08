@@ -64,7 +64,7 @@ class Ui
 
 #--- datatables setup ---
   setup_datatable: ->
-    # $.fn.dataTableExt.oStdClasses.sSortable = "glyphicon glyphicon-sort"
+    # $.fn.dataTableExt.oStdClasses.sSortable = "icon-sort"
 
 #--- ui ---
   load_jqueryui: (context) ->
@@ -87,7 +87,7 @@ class Ui
         # label = parent.find('label')
         input_group = $("<span class='input-group'>")
         input_addon = $("<span class='input-group-addon'>")
-        icon = $("<span class='glyphicon glyphicon-calendar'>")
+        icon = $("<span class='icon-calendar'>")
         input_addon.append icon
         input_group.append $(@)
         input_group.append input_addon

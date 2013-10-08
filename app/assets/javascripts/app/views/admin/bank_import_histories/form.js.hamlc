@@ -24,7 +24,7 @@
           %br
           %button{ :type => 'submit',
                   :class => 'btn btn-primary' }
-            .glyphicon.glyphicon-cloud-upload
+            .icon-cloud-upload
             = I18n.t('admin.views.upload')
 
       .col-lg-2

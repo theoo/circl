@@ -61,5 +61,5 @@
           - unless @receipt.isNew()
             %button{:name => "receipt-destroy",
                     :class => 'btn btn-danger' }
-              .glyphicon.glyphicon-remove
+              .icon-remove
               = I18n.t('common.destroy')
