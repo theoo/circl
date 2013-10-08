@@ -1,9 +1,20 @@
-.validation_errors_placeholder
+.panel-body
+  .row
+    .col-lg-12
+      .validation_errors_placeholder
 
-#search
-  %center
-    %h1= I18n.t('directory.views.search_the_directory')
+  .row
+    .col-lg-12
+      %h1= I18n.t('directory.views.search_the_directory')
 
-    %input{:type => 'search', :name => 'search_string', :id => 'search_string', :value => @query_preset.query?.search_string }
-    %br
-    %input{:type => 'submit', :data-action => 'search', :data-title => @text }
+      .input-group
+        %input{ :type => 'search',
+                :name => 'search_string',
+                :id => 'search_string',
+                :class => 'form-control input-lg',
+                :value => @query_preset.query?.search_string }
+        .input-group-btn
+          %button{:type => 'submit',
+                  :class => 'btn btn-default input-lg'}
+            .icon-search
+            = @title
