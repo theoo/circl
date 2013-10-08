@@ -1,11 +1,10 @@
-=begin
 namespace :db do
   namespace :seed do
     namespace :salary_templates do |ns|
       task :create => :environment do
         print "Creating salary_templates:... "
-        h = YAML.load_file([Rails.root, 'db/seeds/salaries/salary_templates.yml'].join("/"))
-        file = File.read([Rails.root, "app/assets/javascripts/app/views/salaries/salary_templates/template.js.hamlc"].join("/"))
+        h = YAML.load_file([Rails.root, 'db/seeds/salaries/salary_templates.yml'].join("/")).first
+        file = File.read([Rails.root, "app/assets/javascripts/app/views/settings/salary_templates/template.js.hamlc"].join("/"))
         h['html'] = Haml::Engine.new(file).render
         Salaries::SalaryTemplate.create!(h)
         puts 'done!'
@@ -13,7 +12,7 @@ namespace :db do
 
       task :destroy => :environment do
         print "Destroying salary_templates:... "
-        h = YAML.load_file(file)
+        h = YAML.load_file([Rails.root, 'db/seeds/salaries/salary_templates.yml'].join("/")).first
         Salaries::SalaryTemplate.where(:title => h['title']).destroy_all
         puts 'done!'
       end
@@ -34,4 +33,3 @@ namespace :db do
     end
   end
 end
-=end

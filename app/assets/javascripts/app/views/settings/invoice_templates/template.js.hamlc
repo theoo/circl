@@ -1,5 +1,5 @@
 .header{:style => "width: 190mm; height: 27mm; position: absolute; z-index: 2; top: 0px; left: 0px; padding: 5mm 5mm 5mm 15mm;"}
-  %img{:alt => "CIRCL", :height => "155", :src => "assets/logo.png", :style => "float: right;", :title => "CIRCL", :width => "180"}/
+  %img{:alt => "CIRCL", :height => "155", :src => "/assets/logo.png", :style => "float: right;", :title => "CIRCL", :width => "180"}/
   %table{:border => "0", :style => "width: 90mm;"}
     %tbody
       %tr
