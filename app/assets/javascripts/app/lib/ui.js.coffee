@@ -189,9 +189,9 @@ class Ui
     search_input.addClass('form-control input-sm')
 
     # SORTING
-    table.find('th.sorting:not(.ignore-sort)').prepend("<span class='icon-sort'/>&nbsp;")
-    table.find('th.sorting_asc').prepend("<span class='icon-sort-up'/>&nbsp;")
-    table.find('th.sorting_desc').prepend("<span class='icon-sort-down'/>&nbsp;")
+    table.find('th.sorting:not(.ignore-sort)').append("&nbsp;<span class='icon-sort'/>")
+    table.find('th.sorting_asc').append("&nbsp;<span class='icon-sort-up'/>")
+    table.find('th.sorting_desc').append("&nbsp;<span class='icon-sort-down'/>")
 
     table.find('th.sorting:not(.ignore-sort), th.sorting_desc, th.sorting_asc').on 'click', (e) ->
 
@@ -200,12 +200,12 @@ class Ui
         th = $(i)
         th.find('span.icon-sort, span.icon-sort-up, span.icon-sort-down').remove()
         icon = $("<span class='icon-sort'/>")
-        th.prepend icon
+        th.append icon
 
       th = $(e.target)
       th.find('span.icon-sort').remove()
       icon = $("<span class='icon-sort'/>")
-      th.prepend icon
+      th.append icon
       if th.hasClass('sorting_asc')
         icon.removeClass('icon-sort-down')
         icon.addClass('icon-sort-up')
