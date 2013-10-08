@@ -83,12 +83,12 @@
         - unless @invoice_template.isNew()
           .btn-group
             %button{:type => 'button',
-                    :name => 'salaries-invoice-template-destroy',
+                    :name => 'settings-invoice-template-destroy',
                     :class => 'btn btn-danger'}
               .icon-remove
               = I18n.t("common.destroy")
             %button{:type => 'button',
-                    :name => 'salaries-invoice-template-edit',
+                    :name => 'settings-invoice-template-edit',
                     :class => 'btn btn-default'}
               .icon-file
               = I18n.t("invoice_template.views.actions.edit_template")

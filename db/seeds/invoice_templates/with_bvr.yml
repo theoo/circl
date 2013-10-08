@@ -5,3 +5,4 @@ bvr_address: 7 ch du Paradis
 bvr_account: 01-123456-1
 show_invoice_value: false
 language_id: 1
+html: "edit this template"

@@ -50,8 +50,9 @@ class New extends App.ExtendedController
 
 class Edit extends App.ExtendedController
   events:
-    'submit form':                        'submit'
-    'click button[name=settings-invoice-template-destroy]':   'destroy'
+    'submit form': 'submit'
+    'click button[name=settings-invoice-template-destroy]': 'destroy'
+    'click button[name=settings-invoice-template-edit]': 'edit_template'
 
   constructor: ->
     super

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130811143438) do
+ActiveRecord::Schema.define(:version => 20130909123924) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20130811143438) do
 
   create_table "employment_contracts", :force => true do |t|
     t.integer  "person_id"
-    t.integer  "percentage"
+    t.float    "percentage"
     t.date     "interval_starts_on"
     t.date     "interval_ends_on"
     t.text     "description",        :default => ""

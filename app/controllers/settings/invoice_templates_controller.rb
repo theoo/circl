@@ -37,8 +37,11 @@ class Settings::InvoiceTemplatesController < ApplicationController
         render :inline => @invoice_template.html, :layout => 'preview.html.haml'
       end
       format.jpg do
-        file = File.open(@invoice_template.snapshot.url.match(/(.*)\?[0-9]+$/)[0])
-        send_data(file, :type => "image/jpeg", :disposition => 'inline')
+        unless @invoice_template.snapshot.path and File.exists? @invoice_template.snapshot.path
+          BackgroundTasks::GenerateInvoiceTemplateJpg.process!(:invoice_template_id => @invoice_template.id)
+          @invoice_template.reload
+        end
+        redirect_to @invoice_template.snapshot.url
       end
     end
   end
@@ -58,6 +61,7 @@ class Settings::InvoiceTemplatesController < ApplicationController
   def edit
     respond_to do |format|
       format.json { render :json => @invoice_template }
+      format.html { render :layout => 'template_editor' }
     end
   end
 

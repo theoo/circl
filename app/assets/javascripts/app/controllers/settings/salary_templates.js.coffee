@@ -48,8 +48,8 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form' : 'submit'
-    'click button[name=salaries-salary-template-destroy]': 'destroy'
-    'click button[name=salaries-salary-template-edit]': 'edit_template'
+    'click button[name=settings-salary-template-destroy]': 'destroy'
+    'click button[name=settings-salary-template-edit]': 'edit_template'
 
   active: (params) ->
     @id = params.id if params.id
