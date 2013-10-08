@@ -121,7 +121,6 @@ class Salaries::Salary < ActiveRecord::Base
   include ElasticSearch::Indexing
   extend  MoneyComposer
 
-
   #################
   ### RELATIONS ###
   #################
@@ -207,7 +206,10 @@ class Salaries::Salary < ActiveRecord::Base
   validate :ensure_person_have_required_fields, :if => :person
   validate :ensure_interval_dates_are_for_the_same_year, :if => [:from, :to]
   validate :ensure_from_date_is_before_to_date, :if => [:from, :to]
-
+  validates_numericality_of :activity_rate,
+                            :greater_than_or_equal_to => 0,
+                            :less_than_or_equal_to => 100,
+                            :only_integer => false
 
   ########################
   ### INSTANCE METHODS ###
