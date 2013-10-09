@@ -47,7 +47,7 @@ class People::Salaries::SalariesController < ApplicationController
       end
 
       format.pdf do
-        unless @salary.pdf_up_to_date?
+        if ! @salary.pdf_up_to_date? or ! File.exists?(@salary.pdf.path)
           BackgroundTasks::GenerateSalaryPdf.process!(:salary_id => @salary.id)
           @salary.reload
         end
@@ -268,7 +268,7 @@ class People::Salaries::SalariesController < ApplicationController
                                 :locals => {:salary => salary,
                                             :options => options})
     else
-      salary.tax_data.order(options[:order]).each do |s|
+      salary.selected_tax_data.order(options[:order]).each do |s|
         fields = options[:fields].map do |f|
           field = s.send(f)
           field = field.to_date if field.is_a? Time
