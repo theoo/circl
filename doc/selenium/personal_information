@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="https://staging.circl.ch/" />
+<link rel="selenium.base" href="http://localhost:3000/" />
 <title>Personal information</title>
 </head>
 <body>
@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/people/2</td>
+	<td>/people/1</td>
 	<td></td>
 </tr>
 <tr>
