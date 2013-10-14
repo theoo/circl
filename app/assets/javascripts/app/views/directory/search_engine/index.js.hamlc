@@ -9,7 +9,9 @@
   %thead
     %tr
       - for field in @query.selected_attributes
-        %th= field
+        %th
+          - missing_translation = "<i class='text-danger'>" + field.humanize() + "</i>"
+          != I18n.t("activerecord.attributes.person." + field, defaultValue: missing_translation )
       %th= I18n.t("directory.views.score")
       %th.ignore-sort
       %th.ignore-sort

@@ -41,7 +41,7 @@ Ui.initialize_ui()
 # very simple humanize method...
 String.prototype.humanize = ->
   string = @
-  string = string.replace("_", " ")
+  string = string.replace(/_/g, " ")
   string = string.substring(0, 1).toUpperCase() + string.substring(1)
   string
 

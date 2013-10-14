@@ -1,63 +1,91 @@
-.filter
-  %input{:type => 'hidden', :name => 'preset_id', :value => @query_preset.id }
+#presets.panel-body.collapse
+  .row
+    .col-lg-12
+      .filter
+        %input{:type => 'hidden', :name => 'preset_id', :value => @query_preset.id }
 
-  .validation_errors_placeholder
+        .validation_errors_placeholder
 
-  .preset_actions.centered
-    %label{:for => 'name'}= I18n.t('query_preset.views.name')
-    %input{:type => 'text',
-           :name => 'name',
-           :style => 'width: 100%;',
-           :class => 'required',
-           :value => @query_preset.name}
+  .row
+    .col-lg-4
+      .form-group
+        %label{:for => 'directory_preset_name'}
+          = I18n.t('query_preset.views.name')
+        %input{ :type => 'text',
+                :directory_preset_name => 'directory_preset_name',
+                :name => 'name',
+                :class => 'form-control required',
+                :value => @query_preset.name}
 
-    .centered_text
-      - unless @query_preset.isNew()
-        %input{:type => 'submit', :data-action => 'update', :data-title => I18n.t('common.update')}
+    .col-lg-4
+      .btn-group.form-group
+        %label &nbsp;
+        %button{:type => 'button',
+                :name => 'directory-preset-add',
+                :class => 'btn btn-primary'}
+          = I18n.t('common.add')
 
-      %input{:type => 'submit', :data-action => 'add', :data-title => I18n.t('common.add')}
+        - unless @query_preset.isNew()
+          %button{:type => 'button',
+                  :name => 'directory-preset-update',
+                  :class => 'btn btn-default'}
+            = I18n.t('common.update')
 
-      - unless @query_preset.isNew()
-        %input{:type => 'submit', :data-action => 'destroy', :data-title => I18n.t('common.destroy')}
+          %button{:type => 'button',
+                  :name => 'directory-preset-destroy',
+                  :class => 'btn btn-danger'}
+            = I18n.t('common.destroy')
 
-  .selected_attributes
-    %h3= I18n.t('directory.views.fields.selected_attributes')
-    .sortable.droppable
-      %ul
-      - if @query_preset.query?.selected_attributes
-        - for field in @query_preset.query.selected_attributes
-          %li{'data-name' => field}
-            = field.humanize()
-      - else
-        %li{:class => 'placeholder'}= I18n.t('directory.views.fields.drag_and_drop_me')
+    .col-lg-4
 
-  .all_attributes
-    %h3= I18n.t('directory.views.fields.available_attributes')
+  .row
+    .col-lg-3
+      .selected_attributes
+        %h3= I18n.t('directory.views.fields.selected_attributes')
+        .sortable.droppable
+          %dl
+          - if @query_preset.query?.selected_attributes
+            - for field in @query_preset.query.selected_attributes
+              %dt{'data-name' => field}= field
+              %dd
+                - missing_translation = "<i class='text-danger'>" + field.humanize() + "</i>"
+                != I18n.t("activerecord.attributes.person." + field, defaultValue: missing_translation )
+          - else
+            %li{:class => 'placeholder'}= I18n.t('directory.views.fields.drag_and_drop_me')
 
-    - for group, fields of @search_attributes
-      %legend= group
-      .draggable
-        %ul
-        - for field in fields
-          %li{'data-name' => field}
-            = field.humanize()
+    .col-lg-6
+      .all_attributes
+        %h3= I18n.t('directory.views.fields.available_attributes')
 
-  .attributes_order
-    %h3= I18n.t('directory.views.fields.sorting_order')
-    .sortable.droppable
-      %ul
-      - if @query_preset.query?.attributes_order
-        - for pair in @query_preset.query.attributes_order
-          - key = Object.keys(pair)[0]
-          - value = pair[key]
-          %li{'data-name' => key, 'data-order' => value}
-            = key.humanize()
-      - else
-        %li{:class => 'placeholder'}= I18n.t('directory.views.fields.drag_and_drop_me')
+        - for group, fields of @search_attributes
+          %h4
+            - missing_translation = "<i class='text-danger'>" + group.humanize() + "</i>"
+            != I18n.t("activerecord.models." + group.toLowerCase(), defaultValue: missing_translation )
+          .draggable
+            %dl.dl-horizontal
+              - for field in fields
+                %dt{'data-name' => field}= field
+                %dd
+                  - missing_translation = "<i class='text-danger'>" + field.humanize() + "</i>"
+                  != I18n.t("activerecord.attributes.person." + field, defaultValue: missing_translation )
 
+    .col-lg-3
+      .attributes_order
+        %h3= I18n.t('directory.views.fields.sorting_order')
+        .sortable.droppable
+          %dl
+          - if @query_preset.query?.attributes_order
+            - for pair in @query_preset.query.attributes_order
+              - key = Object.keys(pair)[0]
+              - value = pair[key]
+              %dt{'data-name' => key, 'data-order' => value}= key
+              %dd
+                - missing_translation = "<i class='text-danger'>" + field.humanize() + "</i>"
+                != I18n.t("activerecord.attributes.person." + field, defaultValue: missing_translation )
+          - else
+            %li{:class => 'placeholder'}= I18n.t('directory.views.fields.drag_and_drop_me')
 
-  .block
-
-- if @text?
-  .block.align_right
-    %input{:type => 'submit', :data-action => 'next', :data-title => @text}
+  - if @title?
+    .row
+      .col-lg-12
+        %input{:type => 'submit', :data-action => 'next', :data-title => @title}

@@ -101,8 +101,6 @@ class Index extends App.ExtendedController
     window.location = '/people/' + id + '/change_password'
 
 class App.DirectorySearchEngine extends App.ExtendedController
-  className: 'search_engine'
-
   constructor: (params) ->
     super
     @index = new Index

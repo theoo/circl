@@ -22,9 +22,15 @@ $.fn.query_preset = ->
   elementID ||= $(@).parents('[data-id]').data('id')
   QueryPreset.find(elementID)
 
-class QueryPresetController extends App.ExtendedController
+
+class FiltersController extends App.ExtendedController
   load_ui: (context) ->
     @context = context.closest(".query_presets")
+
+    # TODO: can I remove this dead code ?
+    #form = @context.find("form#search_engine")
+    #if form.size() > 0
+    #  @override_submit_action(form)
 
     filter = @context.find('.filter')
     if filter.size() > 0
@@ -205,7 +211,7 @@ class QueryPresetController extends App.ExtendedController
     #button.removeClass("ui-state-highlight")
     #button.addClass("ui-state-active")
 
-class Edit extends QueryPresetController
+class Edit extends FiltersController
   events:
     'click input[data-action="next"]':    'edit'
     'click input[data-action="update"]':  'update'
@@ -214,10 +220,11 @@ class Edit extends QueryPresetController
 
   constructor: (params) ->
     super
+    @title = params.title if params and params.title
     @query_preset = new QueryPreset()
     SearchAttribute.bind('refresh', @render)
 
-  set_preset: (preset) =>
+  active: (preset) =>
     @query_preset = preset
     @render()
 
@@ -252,7 +259,7 @@ class Edit extends QueryPresetController
     query_preset = new QueryPreset()
     @fill_from_form(query_preset)
     @save_with_notifications query_preset, (id) =>
-      @set_preset(QueryPreset.find(id))
+      @active(QueryPreset.find(id))
 
   destroy: (e) =>
     if confirm(I18n.t('common.are_you_sure'))
@@ -260,15 +267,16 @@ class Edit extends QueryPresetController
         @preset = new QueryPreset()
         @render()
 
-class Search extends QueryPresetController
+class Search extends FiltersController
   events:
-    'click input[data-action="search"]': 'search'
+    'click button[name=directory-search]': 'search'
 
   constructor: (params) ->
-    @query_preset = new QueryPreset()
     super
+    @title = params.title if params and params.title
+    @query_preset = new QueryPreset()
 
-  set_preset: (preset) =>
+  active: (preset) =>
     @query_preset = preset
     @render()
 
@@ -283,9 +291,9 @@ class Search extends QueryPresetController
       if (e.which == 13)
         @el.find('input[type=submit]').click()
 
-class Index extends QueryPresetController
+class Index extends FiltersController
   events:
-    'click select option': 'edit'
+    'click ul li.preset': 'edit'
 
   constructor: (params) ->
     super
@@ -293,50 +301,44 @@ class Index extends QueryPresetController
 
   render: =>
     @html @view('directory/query_presets/index')(@)
+    Ui.load_ui(@el)
     @load_ui(@el)
 
   edit: (e) ->
-    e.preventDefault()
     query_preset = $(e.target).query_preset()
     @trigger 'edit', query_preset
 
 class App.DirectoryQueryPresets extends App.ExtendedController
-  className: 'query_presets'
 
   constructor: (params) ->
     super
 
     @has_search = params.search?
-    if @has_search
-      @search_text = params.search.text
-
     @has_edit = params.edit?
-    if @has_edit
-      @edit_text = params.edit.text
 
     @index = new Index
-    @edit = new Edit(has_next: !@has_search)
+    @edit = new Edit
 
     if @has_search
-      @search = new Search(text: @search_text)
-      @index.bind 'edit', @search.set_preset
+      @search = new Search(title: params.search.title)
+      @index.bind 'edit', @search.active
       @search.bind 'search', =>
         query_preset = new QueryPreset()
         @edit.fill_from_form(query_preset)
+
+        # call 'search' from the context where this controller were initialized
         @trigger 'search', query_preset
-        @trigger 'search_query', query_preset.query
       @append(@search)
 
     @append(@index)
 
     if @has_edit
-      @edit = new Edit(text: @edit_text)
-      @index.bind 'edit', @edit.set_preset
+      @edit = new Edit(title: params.edit.title)
+      @index.bind 'edit', @edit.active
       @edit.bind 'edit', =>
         query_preset = new QueryPreset()
         @edit.fill_from_form(query_preset)
         @trigger 'edit', query_preset
-        @trigger 'edit_query', query_preset.query
       @append(@edit)
 
     QueryPreset.bind 'refresh destroy', =>
@@ -354,9 +356,9 @@ class App.DirectoryQueryPresets extends App.ExtendedController
         query_preset.query = $.extend(query_preset.query, JSON.parse(query))
 
       if @has_edit && !QueryPreset.exists(@edit.query_preset.id)
-        @edit.set_preset(query_preset)
+        @edit.active(query_preset)
       if @has_search && !QueryPreset.exists(@search.query_preset.id)
-        @search.set_preset(query_preset)
+        @search.active(query_preset)
 
     @index.bind 'destroyError', (id, errors) =>
       if @has_edit

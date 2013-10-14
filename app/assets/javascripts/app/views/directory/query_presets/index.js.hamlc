@@ -1,6 +1,6 @@
 .panel-body
   .row
-    .col-lg-3
+    .col-lg-4
       .form-group
         %label{:for => 'directory_filters_selector'}
           = I18n.t('directory.views.fields.presets')
@@ -9,3 +9,11 @@
           - for query_preset in App.QueryPreset.all()
             %option{:data-id => query_preset.id}
               = query_preset.name
+    .col-lg-3
+      .form-group
+        %label &nbsp
+        %a{ :data-toggle => 'collapse',
+            :href => '#presets',
+            :class => 'btn btn-primary'}
+          = I18n.t("common.toggle")
+    .col-lg-5

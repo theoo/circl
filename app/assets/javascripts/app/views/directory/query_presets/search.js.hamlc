@@ -15,6 +15,7 @@
                 :value => @query_preset.query?.search_string }
         .input-group-btn
           %button{:type => 'submit',
+                  :name => 'directory-search',
                   :class => 'btn btn-default input-lg'}
             .icon-search
             = @title

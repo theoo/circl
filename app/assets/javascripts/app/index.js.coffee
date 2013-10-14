@@ -89,7 +89,7 @@ class @Directory extends App
     super
     @subapp $('#directory_filters'),
             'DirectoryQueryPresets',
-            {search: {text: I18n.t("directory.views.search")}, edit: null}
+            {search: {title: I18n.t("directory.views.search")}, edit: true}
 
     @subapp($('#directory_search_engine'), 'DirectorySearchEngine')
 
