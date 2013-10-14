@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>do_not_remove_admin_role_for_first_admin</title>
+<title>do_not_destroy_if_first_admin_co</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">do_not_remove_admin_role_for_first_admin</td></tr>
+<tr><td rowspan="1" colspan="3">do_not_destroy_if_first_admin_co</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -17,40 +17,31 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='person_roles']</td>
+	<td>chooseOkOnNextConfirmation</td>
 	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person_roles').trigger('unfolded')</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='person_roles']/div/div/form/label[2]/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='person_roles']/div/div/form/label[2]/span</td>
+	<td>css= #secondary_navigation a[href='/people/1']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//div[@id='person_roles']/div/div/form/div/input[@value='update']</td>
+	<td>getConfirmation</td>
+	<td>confirmation</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_roles']/div/div/form/div/div/ul/li</td>
+	<td>css= #person_id .alert.alert-danger:contains('enregistrement')</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyElementPresent</td>
-	<td>//div[@id='person_roles']/div/div/form/div/div/ul/li</td>
+	<td>verifyVisible</td>
+	<td>css= #person_id div[class=alert]</td>
 	<td></td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

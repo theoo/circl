@@ -4,62 +4,62 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>email_exists_if_it_has_a_second_email</title>
+<title>New Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">email_exists_if_it_has_a_second_email</td></tr>
+<tr><td rowspan="1" colspan="3">New Test</td></tr>
 </thead><tbody>
 <tr>
+	<td>setSpeed</td>
+	<td>300</td>
+	<td></td>
+</tr>
+<tr>
 	<td>open</td>
-	<td>/people/3</td>
+	<td>/people/1</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person').trigger('unfolded')</td>
+	<td>css= #person</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//input[@name='email']</td>
+	<td>css= #person_email</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//input[@name='second_email']</td>
+	<td>css= #person_second_email</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='email']</td>
+	<td>css= #person_email</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='second_email']</td>
+	<td>css= #person_second_email</td>
 	<td>blah@test.com</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='update']</td>
+	<td>css= #person .btn[ type=submit]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person']/div/div/form/div/div/ul/li/b</td>
+	<td>css=#person .has-error #person_second_email</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>//div[@id='person']/div/div/form/div/div/ul/li/b</td>
-	<td>exact:second_email:</td>
+	<td>verifyVisible</td>
+	<td>css=#person .has-error .popover</td>
+	<td>not sure which of the popups is identified with this syntax</td>
 </tr>
 </tbody></table>
 </body>

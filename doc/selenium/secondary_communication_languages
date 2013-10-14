@@ -4,13 +4,18 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>secondary_communication_languages</title>
+<title>secondary_communication_languages_co</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">secondary_communication_languages</td></tr>
+<tr><td rowspan="1" colspan="3">secondary_communication_languages_co</td></tr>
 </thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>50</td>
+	<td></td>
+</tr>
 <tr>
 	<td>open</td>
 	<td>/people/2</td>
@@ -18,122 +23,77 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_communication_languages']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person_communication_languages').trigger('unfolded')</td>
+	<td>css=#person_communication_languages</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/input</td>
+	<td>css= #person_communication_languages input[type=checkbox]:last</td>
 	<td></td>
 </tr>
 <tr>
 	<td>check</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/input</td>
+	<td>css= #person_communication_languages input[type=checkbox]:last</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/div[@class='float_right']/input[@value='update']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@id='person_communication_languages']/legend/span[2]/span[2]</td>
-	<td>successfully updated</td>
-</tr>
-<tr>
-	<td>verifyChecked</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>refreshAndWait</td>
-	<td></td>
+	<td>css=&nbsp;&nbsp;#person .btn[type=submit]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_communication_languages']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person_communication_languages').trigger('unfolded')</td>
+	<td>css= #person_communication_languages</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForChecked</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/input</td>
+	<td>css= #person_communication_languages input[type=checkbox]:last</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyChecked</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/input</td>
+	<td>css= #person_communication_languages input[type=checkbox]:last</td>
 	<td></td>
 </tr>
 <tr>
 	<td>uncheck</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/input</td>
+	<td>css= #person_communication_languages input[type=checkbox]:last</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/div[@class='float_right']/input[@value='update']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@id='person_communication_languages']/legend/span[2]/span[2]</td>
-	<td>successfully updated</td>
-</tr>
-<tr>
-	<td>waitForNotChecked</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyNotChecked</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>refreshAndWait</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='person_communication_languages']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person_communication_languages').trigger('unfolded')</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/input</td>
+	<td>css=&nbsp;&nbsp;#person .btn[type=submit]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForNotChecked</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/input</td>
+	<td>css= #person_communication_languages input[type=checkbox]:last</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyNotChecked</td>
-	<td>//div[@id='person_communication_languages']/div/div/form/input</td>
+	<td>css= #person_communication_languages input[type=checkbox]:last</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_communication_languages</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_communication_languages input[type=checkbox]:last</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForNotChecked</td>
+	<td>css= #person_communication_languages input[type=checkbox]:last</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyNotChecked</td>
+	<td>css= #person_communication_languages input[type=checkbox]:last</td>
 	<td></td>
 </tr>
 </tbody></table>

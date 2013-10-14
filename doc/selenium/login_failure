@@ -4,36 +4,46 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>Login Failure</title>
+<title>Login Failure co</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Login Failure</td></tr>
+<tr><td rowspan="1" colspan="3">Login Failure co</td></tr>
 </thead><tbody>
 <tr>
+	<td>setSpeed</td>
+	<td>0</td>
+	<td></td>
+</tr>
+<tr>
 	<td>open</td>
 	<td>/</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='person_email']</td>
-	<td>test@false.com</td>
+	<td>css=form input[id=login_email]</td>
+	<td>sadf@dsaf.cd</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='person_password']</td>
-	<td>abcdef</td>
+	<td>css= form input[id=login_password]</td>
+	<td>sdalfkj</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='commit']</td>
+	<td>css= form input[name=commit]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyElementPresent</td>
-	<td>//div[@id='content_container']/div[2]/div</td>
+	<td>waitForElementPresent</td>
+	<td>css= .alert-danger:contains('Invalid email or password.')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .alert-danger:contains('Invalid email or password.') </td>
 	<td></td>
 </tr>
 <tr>
@@ -43,17 +53,27 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='person_email']</td>
-	<td>admin@complex.ch</td>
+	<td>css= #login_email</td>
+	<td>orphee@complex.ch</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #login_password</td>
+	<td>sdalfkj</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='commit']</td>
+	<td>css= form input[name=commit]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyElementPresent</td>
-	<td>//div[@id='content_container']/div[2]/div</td>
+	<td>waitForElementPresent</td>
+	<td>css= .alert:contains('Invalid email or password.')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .alert:contains('Invalid email or password.') </td>
 	<td></td>
 </tr>
 <tr>
@@ -63,17 +83,27 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='person_password']</td>
+	<td>css=#login_email</td>
+	<td>dsfdsae@comple.ch</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #login_password</td>
 	<td>asd135</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='commit']</td>
+	<td>css= form input[name=commit]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyElementPresent</td>
-	<td>//div[@id='content_container']/div[2]/div</td>
+	<td>waitForElementPresent</td>
+	<td>css= .alert:contains('Invalid email or password.')</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .alert:contains('Invalid email or password.') </td>
 	<td></td>
 </tr>
 </tbody></table>

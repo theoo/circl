@@ -4,36 +4,36 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>Login</title>
+<title>login co</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Login</td></tr>
+<tr><td rowspan="1" colspan="3">login co</td></tr>
 </thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>0</td>
+	<td></td>
+</tr>
 <tr>
 	<td>open</td>
 	<td>/</td>
 	<td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>/people/1#info</td>
-	<td></td>
+	<td>type</td>
+	<td>css= #person_new&nbsp;&nbsp;input[id=login_email]</td>
+	<td>orphee@complex.ch</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@id='login_email']</td>
-	<td>admin@complex.ch</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@id='login_password']</td>
+	<td>css=#login_password</td>
 	<td>asd135</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>//input[@name='commit']</td>
+	<td>css= form input[name=commit]</td>
 	<td></td>
 </tr>
 <tr>

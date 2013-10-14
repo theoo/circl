@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>do_not_destroy_if_first_admin</title>
+<title>do_not_destroy_if_first_admin_co</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">do_not_destroy_if_first_admin</td></tr>
+<tr><td rowspan="1" colspan="3">do_not_destroy_if_first_admin_co</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='content_container']/div/ul/li[2]/a</td>
+	<td>css= #secondary_navigation a[href='/people/1']</td>
 	<td></td>
 </tr>
 <tr>
@@ -33,14 +33,15 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='content']/div/legend</td>
+	<td>css= .alert-danger:contains('erreur')</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyElementPresent</td>
-	<td>//div[@id='content']/div/legend</td>
+	<td>css=&nbsp;&nbsp;.alert-danger:contains('erreur')</td>
 	<td></td>
 </tr>
+
 </tbody></table>
 </body>
 </html>

@@ -4,77 +4,77 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>is_an_organization_is_ticked_if_has_name_and_no_person_info</title>
+<title>New Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">is_an_organization_is_ticked_if_has_name_and_no_person_info</td></tr>
+<tr><td rowspan="1" colspan="3">New Test</td></tr>
 </thead><tbody>
 <tr>
+	<td>setSpeed</td>
+	<td>50</td>
+	<td></td>
+</tr>
+<tr>
 	<td>open</td>
-	<td>/people/2</td>
+	<td>/people/5</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person').trigger('unfolded')</td>
+	<td>css= #person</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//input[@name='is_an_organization']</td>
+	<td>css= #person_is_an_org</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//input[@name='first_name']</td>
+	<td>css= #person_first_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//input[@name='last_name']</td>
+	<td>css= #person_last_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='organization_name']</td>
+	<td>css= #person_organization_name</td>
 	<td>Complex IT Sàrl</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='first_name']</td>
+	<td>css= #person_first_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='last_name']</td>
+	<td>css= #person_last_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>uncheck</td>
-	<td>//input[@name='is_an_organization']</td>
+	<td>css= #person_is_an_org</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='update']</td>
+	<td>css= #person .btn[type=submit]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person']/div/div/form/div/div/ul/li/b</td>
+	<td>css= #person</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>//div[@id='person']/div/div/form/div/div/ul/li/b</td>
-	<td>exact:is_an_organization:</td>
+	<td>verifyVisible</td>
+	<td>css= #person</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

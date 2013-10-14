@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>Comments</title>
+<title>comments co</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Comments</td></tr>
+<tr><td rowspan="1" colspan="3">comments co</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -17,175 +17,116 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='person_comments']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person_comments').trigger('unfolded')</td>
+	<td>click</td>
+	<td>css= #sub_nav a[href='#activities']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_comments']/div/div/form/div[3]/input[@name=&quot;title&quot;]</td>
+	<td>css= #person_comments</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_comments']/div/div/form/div[4]/textarea[@name=&quot;description&quot;]</td>
+	<td>css= #person_comments input[id=comment_title]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_comments textarea[id=comment_description]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//div[@id='person_comments']/div/div/form/div[3]/input[@name=&quot;title&quot;]</td>
+	<td>css= #person_comments textarea[id=comment_description]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//div[@id='person_comments']/div/div/form/div[4]/textarea[@name=&quot;description&quot;]</td>
+	<td>css= #person_comments textarea[id=comment_description]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='create']</td>
+	<td>css= #person_comments .btn:contains(créer)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_comments']/div/div/form/div/div/ul/li/b</td>
+	<td>css= #person_comments div[class='form-group has-error']:first .popover-content</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_comments']/div/div/form/div/div/ul/li[2]/b</td>
+	<td>css= #person_comments div[class='form-group has-error']:last .popover-content</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>//div[@id='person_comments']/div/div/form/div/div/ul/li/b</td>
-	<td>exact:title:</td>
+	<td>verifyVisible</td>
+	<td>css= #person_comments div[class='form-group has-error']:first .popover-content</td>
+	<td></td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>//div[@id='person_comments']/div/div/form/div/div/ul/li[2]/b</td>
+	<td>verifyVisible</td>
+	<td>css= #person_comments div[class='form-group has-error']:last .popover-content</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_comments input[id=comment_title]</td>
+	<td>Title test comment</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_comments .btn:contains(créer)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_comments div[class='form-group has-error']:last .popover-content</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_comments div[class='form-group has-error']:last .popover-content</td>
 	<td>exact:description:</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='person_comments']/div/div/form/div[3]/input[@name=&quot;title&quot;]</td>
-	<td>Test comment</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//input[@value='create']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='person_comments']/div/div/form/div/div/ul/li/b</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyText</td>
-	<td>//div[@id='person_comments']/div/div/form/div/div/ul/li/b</td>
-	<td>exact:description:</td>
-</tr>
-<tr>
-	<td>refreshAndWait</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='person_comments']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person_comments').trigger('unfolded')</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='person_comments']/div/div/form/div[3]/input[@name=&quot;title&quot;]</td>
+	<td>css= #person_comments input[id=comment_title]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='person_comments']/div/div/form/div[4]/textarea[@name=&quot;description&quot;]</td>
-	<td>Lorem ipsum dolor sit amet</td>
+	<td>css= #person_comments textarea[id=comment_description]</td>
+	<td>Description test comment</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='person_comments']/div/div/form/div[2]/input[@value='create']</td>
+	<td>css= #person_comments .btn:contains(créer)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_comments']/div/div/form/div/div/ul/li/b</td>
+	<td>css= #person_comments div[class='form-group has-error']:first .popover-content</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>//div[@id='person_comments']/div/div/form/div/div/ul/li/b</td>
-	<td>exact:title:</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>javascript{Math.floor((Math.random()*999999999999999)+1);}</td>
-	<td>rand</td>
+	<td>verifyVisible</td>
+	<td>css= #person_comments div[class='form-group has-error']:first .popover-content</td>
+	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//div[@id='person_comments']/div/div/form/div[3]/input[@name=&quot;title&quot;]</td>
-	<td>Test comment ${rand}</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//div[@id='person_comments']/div/div/form/div[4]/textarea[@name=&quot;description&quot;]</td>
-	<td>Lorem ipsum dolor sit amet</td>
+	<td>css= #person_comments input[id=comment_title]</td>
+	<td>Title test comment 2</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='create']</td>
+	<td>css= #person_comments .btn:contains(créer)</td>
 	<td></td>
 </tr>
-<tr>
-	<td>waitForText</td>
-	<td>//div[@id='person_comments']/legend/span[2]/span[2]</td>
-	<td>successfully created</td>
-</tr>
-<tr>
-	<td>refreshAndWait</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='person_comments']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person_comments').trigger('unfolded')</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='person_comments']/div/div[3]/div/div[2]/div[2]/table/tbody/tr/td[3]/b</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='person_comments']/div/div[3]/div/div[3]/div[@id='DataTables_Table_0_info']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyText</td>
-	<td>//div[@id='person_comments']/div/div[3]/div/div[2]/div[2]/table/tbody/tr/td[3]/b</td>
-	<td>Test comment ${rand}</td>
-</tr>
+
 </tbody></table>
 </body>
 </html>

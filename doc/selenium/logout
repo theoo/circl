@@ -4,21 +4,32 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>Logout</title>
+<title>logout_co</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Logout</td></tr>
+<tr><td rowspan="1" colspan="3">logout_co</td></tr>
 </thead><tbody>
 <tr>
-	<td>clickAndWait</td>
-	<td>//div[@id='wrap']/header/div/small/a/span</td>
+	<td>setSpeed</td>
+	<td>300</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyElementPresent</td>
-	<td>//div[@id='content_container']/div[2]/div</td>
+	<td>click</td>
+	<td>css= #person_session_navigation&nbsp;&nbsp;a[class=dropdown-toggle]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>css= #person_session_navigation ul[class=dropdown-menu] a:last</td>
+	<td></td>
+</tr>
+<!--Selector should be on a ID instead of a:last... !-->
+<tr>
+	<td>click</td>
+	<td>css= #person_session_navigation ul[class=dropdown-menu] a:last</td>
 	<td></td>
 </tr>
 </tbody></table>

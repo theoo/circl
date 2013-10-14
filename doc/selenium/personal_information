@@ -4,126 +4,131 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>Personal information</title>
+<title>Personal information co</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Personal information</td></tr>
+<tr><td rowspan="1" colspan="3">Personal information co</td></tr>
 </thead><tbody>
 <tr>
+	<td>setSpeed</td>
+	<td>50</td>
+	<td></td>
+</tr>
+<tr>
 	<td>open</td>
-	<td>/people/1</td>
+	<td>/people/3</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person').trigger('unfolded')</td>
+	<td>css=#person</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//input[@name='organization_name']</td>
+	<td>css= #person_organization_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='organization_name']</td>
+	<td>css= #person_organization_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@id='person_is_an_org']</td>
+	<td>css= #person_is_an_org</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='title']</td>
+	<td>css= #person_title</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@id='person_is_hidden']</td>
+	<td>css= #person_is_hidden</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='first_name']</td>
+	<td>css= #person_first_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='last_name']</td>
+	<td>css= #person_last_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='email']</td>
+	<td>css= #person_email</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='second_email']</td>
+	<td>css= #person_second_email</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//textarea[@name='address']</td>
+	<td>css= #person_address</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='location_name']</td>
+	<td>css= #person_location</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='job_name']</td>
+	<td>css= #person_job</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='phone']</td>
+	<td>css= #person_phone</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='mobile']</td>
+	<td>css= #person_second_phone</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//select[@name='main_communication_language_id']</td>
+	<td>css= #person_mobile</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='birth_date']</td>
+	<td>css= select[name='main_communication_language_id']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='nationality']</td>
+	<td>css= #person_birth_date</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//input[@name='avs_number']</td>
+	<td>css= #person_nationality</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyEditable</td>
-	<td>//textarea[@name='bank_informations']</td>
+	<td>css= #person_avs_number</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyEditable</td>
+	<td>css= textarea[name='bank_informations']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyNotEditable</td>
-	<td>//input[@name='authentication_token']</td>
+	<td>css= #person_api</td>
 	<td></td>
 </tr>
 </tbody></table>

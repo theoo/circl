@@ -4,13 +4,18 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>full_name_validator</title>
+<title>New Test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">full_name_validator</td></tr>
+<tr><td rowspan="1" colspan="3">New Test</td></tr>
 </thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>300</td>
+	<td></td>
+</tr>
 <tr>
 	<td>open</td>
 	<td>/people/2</td>
@@ -18,48 +23,43 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person').trigger('unfolded')</td>
+	<td>css= #person</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//input[@name='first_name']</td>
+	<td>css= #person_first_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//input[@name='last_name']</td>
+	<td>css= #person_last_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='first_name']</td>
+	<td>css= #person_first_name</td>
 	<td>Théo</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='last_name']</td>
+	<td>css= #person_last_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='update']</td>
+	<td>css= #person .btn[type = submit]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person']/div/div/form/div/div/ul/li/b</td>
-	<td></td>
+	<td>css= #person .has-error #person_last_name</td>
+	<td>css= .popover-content:contains('doit y avoir un nom de famille')</td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>//div[@id='person']/div/div/form/div/div/ul/li/b</td>
-	<td>exact:last_name:</td>
+	<td>verifyVisible</td>
+	<td>css= #person .has-error .popover</td>
+	<td></td>
 </tr>
 <tr>
 	<td>refreshAndWait</td>
@@ -68,52 +68,67 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person').trigger('unfolded')</td>
+	<td>css= #person</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//input[@name='last_name']</td>
+	<td>css= #person_last_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='first_name']</td>
+	<td>css= #person_first_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>//input[@name='last_name']</td>
+	<td>css= #person_last_name</td>
 	<td>Reichel</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//input[@value='update']</td>
+	<td>css= #person .btn[type = submit]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person']/div/div/form/div/div/ul/li/b</td>
+	<td>css= #person .has-error #person_first_name</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyText</td>
-	<td>//div[@id='person']/div/div/form/div/div/ul/li/b</td>
-	<td>exact:first_name:</td>
+	<td>verifyVisible</td>
+	<td>css= #person .has-error .popover</td>
+	<td></td>
+</tr>
+<tr>
+	<td>refreshAndWait</td>
+	<td></td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_communication_languages']</td>
+	<td>css= #person</td>
 	<td></td>
 </tr>
 <tr>
-	<td>getEval</td>
-	<td>window.$('#person_communication_languages').trigger('unfolded')</td>
+	<td>waitForElementPresent</td>
+	<td>css= #person_first_name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_first_name</td>
+	<td>firstNameEx</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_last_name</td>
+	<td>lastNameEx</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person .btn[type = submit]</td>
 	<td></td>
 </tr>
 </tbody></table>
