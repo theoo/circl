@@ -17,7 +17,7 @@
 
         .col-lg-6
           .collapse.navbar-collapse.navbar-ex1-collapse
-            %ul.nav.navbar-nav
+            %ul#main_navigation.nav.navbar-nav
               - if can? :index, Directory
                 %li
                   = link_to I18n.t('common.directory'),
@@ -60,7 +60,7 @@
                       .icon-search
 
         .col-lg-2
-          %ul.nav.navbar-nav.navbar-right
+          %ul#person_session_navigation.nav.navbar-nav.navbar-right
             //- if person_signed_in?
             //  - if can? :read, BackgroundTask
             //    #background_tasks_counter.background_tasks
