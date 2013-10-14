@@ -282,23 +282,23 @@ class Edit extends ValueItemsController
 
   view_members: (e) ->
     e.preventDefault()
-    App.search_query(search_string: "subscriptions.id:#{@id}")
+    Directory.search(search_string: "subscriptions.id:#{@id}")
 
   view_buyers: (e) ->
     e.preventDefault()
-    App.search_query(search_string: "subscriptions_as_buyer.id:#{@id}")
+    Directory.search(search_string: "subscriptions_as_buyer.id:#{@id}")
 
   view_receivers: (e) ->
     e.preventDefault()
-    App.search_query(search_string: "subscriptions_as_receiver.id:#{@id}")
+    Directory.search(search_string: "subscriptions_as_receiver.id:#{@id}")
 
   view_members_who_paid: (e) ->
     e.preventDefault()
-    App.search_query(search_string: "paid_subscriptions.id:#{@id}")
+    Directory.search(search_string: "paid_subscriptions.id:#{@id}")
 
   view_members_who_didnt_paid: (e) ->
     e.preventDefault()
-    App.search_query(search_string: "unpaid_subscriptions.id:#{@id}")
+    Directory.search(search_string: "unpaid_subscriptions.id:#{@id}")
 
   add_members: (e) ->
     e.preventDefault()

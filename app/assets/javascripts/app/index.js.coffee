@@ -31,15 +31,6 @@
 
 class @App extends Spine.Controller
 
-  @search_query: (query) =>
-    window.location = @directory_url(query)
-
-  @directory_url: (query) =>
-    "/directory?query=#{@escape_query(query)}"
-
-  @escape_query: (query) =>
-    encodeURIComponent(JSON.stringify(query))
-
   constructor: (params) ->
     super
 
@@ -52,10 +43,13 @@ class @App extends Spine.Controller
     # App.BackgroundTaskRefreshInterval = 5000
     # background_tasks = new App.BackgroundTasks(el: "#background_tasks_counter", person_id: @person_id)
 
-  subapp: (element, class_name) ->
+  subapp: (element, class_name, extra_params = {}) ->
     # TODO Raise a message if application controller cannot be found.
     # console.log "App." + class_name + " does not exist." unless "App." + class_name
-    instance = eval "new App." + class_name + "({el: element, person_id: this.person_id})"
+    params = { el: element, person_id: @person_id }
+    $.extend params, extra_params
+
+    instance = eval "new App." + class_name + "(params)"
     element.data('controller', instance)
     instance.activate()
 
@@ -88,6 +82,26 @@ class @PersonEdit extends App
       @subapp($('#person_roles'), 'PersonRoles')
       @subapp($('#person_comments'), 'PersonComments')
       @subapp($('#person_activities'), 'PersonActivities')
+
+
+class @Directory extends App
+  constructor: (params) ->
+    super
+    @subapp $('#directory_filters'),
+            'DirectoryQueryPresets',
+            {search: {text: I18n.t("directory.views.search")}, edit: null}
+
+    @subapp($('#directory_search_engine'), 'DirectorySearchEngine')
+
+  # NOTE Use Directory.search(search_string: "somthing") to run a query in the directory
+  @search: (query) =>
+    window.location = @search_url(query)
+
+  @search_url: (query) =>
+    "/directory?query=#{@escape_query(query)}"
+
+  @escape_query: (query) =>
+    encodeURIComponent(JSON.stringify(query))
 
 class @Admin extends App
 

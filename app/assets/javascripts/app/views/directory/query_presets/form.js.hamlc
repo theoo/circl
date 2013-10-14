@@ -1,6 +1,6 @@
 .filter
   %input{:type => 'hidden', :name => 'preset_id', :value => @query_preset.id }
-  
+
   .validation_errors_placeholder
 
   .preset_actions.centered

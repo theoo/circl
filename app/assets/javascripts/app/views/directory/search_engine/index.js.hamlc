@@ -1,0 +1,22 @@
+.panel-body
+  .row
+    .col-lg-12
+      %h2= I18n.t('directory.views.results')
+
+// fake_action is overloaded in DirectorySearchEngine#Index.render() method.
+// It's used to load the remote callback (from Ui.datatable_params) and format rows nicely.
+%table{:id => 'results', :action => 'fake_action'}
+  %thead
+    %tr
+      - for field in @query.selected_attributes
+        %th= field
+      %th= I18n.t("directory.views.score")
+      %th.ignore-sort
+      %th.ignore-sort
+
+.panel-footer
+  %button{:type => 'button',
+          :class => 'btn btn-default',
+          :name => 'directory-export-to-csv'}
+    .icon-cloud-download
+    = I18n.t('common.export_to') + " CSV"

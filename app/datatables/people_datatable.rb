@@ -20,6 +20,7 @@ class PeopleDatatable
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
 
   include ApplicationHelper
+  include Haml::Helpers
 
   def initialize(view, query, current_person)
     @view = view
@@ -36,20 +37,42 @@ class PeopleDatatable
     }
   end
 
-
   private
 
   def data
     people.map do |person|
       h = {}
+
       @query[:selected_attributes].each_with_index do |attr, index|
         h[index] = highlight(person, attr)
       end
+
+      init_haml_helpers
+      index = @query[:selected_attributes].size
+
+      h[index + 1] = capture_haml do
+        # TODO if can? :change_password, person
+        haml_tag  :button,
+                  :class => 'btn btn-default',
+                  :name => 'directory-person-change-password',
+                  :title => I18n.t("directory.views.contextmenu.change_person_password") do
+          haml_tag :i, :class => 'icon-key'
+        end
+      end
+
+      h[index + 2] = capture_haml do
+        # TODO if can? :destroy, person
+        haml_tag  :button,
+                  :class => 'btn btn-danger',
+                  :name => 'directory-person-destroy',
+                  :title => I18n.t("common.destroy") do
+          haml_tag :i, :class => 'icon-remove'
+        end
+      end
+
       h[@query[:selected_attributes].size] = person._score
       h['id'] = person.id
-      h['actions'] = [ I18n.t('directory.views.contextmenu.show_person') ]
-      h['actions'] << I18n.t("directory.views.contextmenu.destroy_person") # FIXME if can? :destroy, person
-      h['actions'] << I18n.t("directory.views.contextmenu.change_person_password") # FIXME if can? :destroy, person
+      h['action_columns'] = ((index+1)..(index+2))
       h
     end
   end

@@ -29,6 +29,8 @@
   .row
     .col-lg-3
     .col-lg-6
+      - if flash[:error] or flash[:alert] or flash[:notice]
+        - flash_messages
       - error_messages_for(@person)
     .col-lg-3
 

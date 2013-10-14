@@ -22,15 +22,9 @@ $.fn.query_preset = ->
   elementID ||= $(@).parents('[data-id]').data('id')
   QueryPreset.find(elementID)
 
-
-class SearchEngineController extends App.ExtendedController
+class QueryPresetController extends App.ExtendedController
   load_ui: (context) ->
     @context = context.closest(".query_presets")
-
-    # TODO: can I remove this dead code ?
-    #form = @context.find("form#search_engine")
-    #if form.size() > 0
-    #  @override_submit_action(form)
 
     filter = @context.find('.filter')
     if filter.size() > 0
@@ -211,7 +205,7 @@ class SearchEngineController extends App.ExtendedController
     #button.removeClass("ui-state-highlight")
     #button.addClass("ui-state-active")
 
-class Edit extends SearchEngineController
+class Edit extends QueryPresetController
   events:
     'click input[data-action="next"]':    'edit'
     'click input[data-action="update"]':  'update'
@@ -266,7 +260,7 @@ class Edit extends SearchEngineController
         @preset = new QueryPreset()
         @render()
 
-class Search extends SearchEngineController
+class Search extends QueryPresetController
   events:
     'click input[data-action="search"]': 'search'
 
@@ -289,9 +283,9 @@ class Search extends SearchEngineController
       if (e.which == 13)
         @el.find('input[type=submit]').click()
 
-class Index extends SearchEngineController
+class Index extends QueryPresetController
   events:
-    'click ul li.preset': 'edit'
+    'click select option': 'edit'
 
   constructor: (params) ->
     super
@@ -302,6 +296,7 @@ class Index extends SearchEngineController
     @load_ui(@el)
 
   edit: (e) ->
+    e.preventDefault()
     query_preset = $(e.target).query_preset()
     @trigger 'edit', query_preset
 

@@ -70,7 +70,7 @@ class Edit extends App.ExtendedController
 
   view_members: (e) ->
     e.preventDefault()
-    App.search_query(search_string: "roles.id:#{@role.id}")
+    Directory.search(search_string: "roles.id:#{@role.id}")
 
   load_dependencies: ->
     if @id

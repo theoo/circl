@@ -64,7 +64,8 @@ fr:
       bank_informations: Informations bancaires
       birth_date: date de naissance
       cancel: annuler
-      change_password: changer de mot de passe
+      change_password: Changer de mot de passe
+      change_password_for: Changer le mot de pass de <b>%{person}</b>
       comments: Commentaires
       communication_languages: Langues de communications secondaires
       current_password: mot de passe actuel

@@ -54,7 +54,7 @@ class Edit extends App.ExtendedController
 
   view_members: (e) ->
     e.preventDefault()
-    App.search_query(search_string: "main_communication_language.id:#{@language.id}")
+    Directory.search(search_string: "main_communication_language.id:#{@language.id}")
 
   destroy: (e) ->
     e.preventDefault()

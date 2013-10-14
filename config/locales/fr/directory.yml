@@ -8,6 +8,7 @@ fr:
     notices:
       result_return_only_one_person: Le résultat ne retournant qu'une personne votre requête à été redirigée vers l'édition.
     views:
+      score: score
       add_person: ajouter une personne
       add_to_subscription: ajouter à l'inscription
       add_to_tag: ajouter ce tag

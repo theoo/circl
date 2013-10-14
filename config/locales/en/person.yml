@@ -64,7 +64,8 @@ en:
       bank_informations: bank information
       birth_date: birth date
       cancel: cancel
-      change_password: change password
+      change_password: Change password
+      change_password_for: Change <b>%{person}</b>'s password
       comments: Comments
       communication_languages: Secondary communication languages
       current_password: current password

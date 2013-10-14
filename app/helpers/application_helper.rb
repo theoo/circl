@@ -89,4 +89,9 @@ module ApplicationHelper
     end
   end
 
+  # build an action button for datatable helpers
+  def action_buton_for(name)
+    
+  end
+
 end

@@ -96,25 +96,11 @@ class Ui
     $('.field_with_errors').each ->
       $(@).closest('.form-group').addClass('has-error')
 
-  load_datatable: (table) ->
-    # ensure datatable isn't already loaded on this table
-    if table.closest(".dataTables_wrapper").length == 0
-      # Extend table with bootstrap classes
-      table.addClass("table table-hover table-condensed table-responsive")
+  datatable_bootstrap_classes: (table) ->
+    # Extend table with bootstrap classes
+    table.addClass("table table-hover table-condensed table-responsive")
 
-      # TODO Use something like this plus bSortable to disable sorting on specific columns
-      # default sorting option (class .desc or .asc on <th>)
-      # will apply only if previous state isn't saved in localstorage
-      sort_parameter = [0, 'asc'] # desfault if no .desc or .asc class is set
-      table.find('th').each (index, th) ->
-        th = $(th)
-        sort_parameter = if th.hasClass('desc')
-          [index, 'desc']
-        else if th.hasClass('asc')
-          [index, 'asc']
-        else
-          sort_parameter
-
+  datatable_localstorage: (table) ->
     # get widget name to scope localstorage entry (datatable state)
     # it is required to set a "name" attribute when two tables are
     # displayed in the same widget.
@@ -130,10 +116,25 @@ class Ui
       widget_name = 'widget_datatable_' + table_name
 
     # callbacks to save and load in localstorage
-    local_storage_save = (oSettings, oData) ->
+    @datatable_local_storage_save_callback = (oSettings, oData) ->
       localStorage.setItem(widget_name, JSON.stringify(oData))
-    local_storage_load = (oSettings) ->
+    @datatable_local_storage_load_callback = (oSettings) ->
       return JSON.parse(localStorage.getItem(widget_name))
+
+
+  datatable_params: (table, overloaded_params = {}) ->
+    # TODO Use something like this plus bSortable to disable sorting on specific columns
+    # default sorting option (class .desc or .asc on <th>)
+    # will apply only if previous state isn't saved in localstorage
+    sort_parameter = [0, 'asc'] # desfault if no .desc or .asc class is set
+    table.find('th').each (index, th) ->
+      th = $(th)
+      sort_parameter = if th.hasClass('desc')
+        [index, 'desc']
+      else if th.hasClass('asc')
+        [index, 'asc']
+      else
+        sort_parameter
 
     datatable_translations = $.extend {}, I18n.datatable_translations # clone object
     datatable_translations.sSearch = '' # Temporarly disable search label, applied to placeholder afterward.
@@ -142,8 +143,8 @@ class Ui
       oLanguage: datatable_translations # TODO scope like I18n.datatable_translations[I18n.locale]
       aaSorting: [sort_parameter]
       bStateSave: true
-      fnStateSave: local_storage_save
-      fnStateLoad: local_storage_load
+      fnStateSave: @datatable_local_storage_save_callback
+      fnStateLoad: @datatable_local_storage_load_callback
       bJQueryUI: false # We'll use bootstrap only, not the ui-state-default classes mess
       sPaginationType: 'bootstrap'
       fnDrawCallback: (oSettings) -> @trigger('datatable_redraw'), # Catch this in Spine!
@@ -157,20 +158,36 @@ class Ui
         sAjaxSource: action
         fnRowCallback: (row, data, index) =>
           $(row).attr('data-id', data.id)
-          $(row).attr('data-actions', data.actions)
-          $(row).addClass('item') # make it nice and clickable
-          if data.level # display trees
+
+          # make it nice and clickable
+          $(row).addClass('item')
+
+          # display trees
+          if data.level
             $(row).addClass("level" + data.level)
             $(row).addClass("child") if data.level > 0
-          if data.number_columns # apply special style to number_columns
+
+          # apply special style to number columns
+          if data.number_columns
             tds = $(row).find('td')
             for i in data.number_columns
               $(tds[i]).addClass('number')
 
+          # apply special style to action columns
+          if data.action_columns
+            tds = $(row).find('td')
+            for i in data.action_columns
+              $(tds[i]).addClass('ignore-click')
+
           $(row).attr("title", data.title) if data.title
 
-    table.dataTable params
+    if overloaded_params
+      $.extend params, overloaded_params
 
+    # return params
+    params
+
+  datatable_appareance: (table) ->
     # Customize appearance
 
     # SEARCH - Add the placeholder for Search and Turn this into in-line formcontrol
@@ -211,6 +228,15 @@ class Ui
       else
         icon.removeClass('icon-sort')
         icon.addClass('icon-sort-down')
+
+  load_datatable: (table) ->
+    # ensure datatable isn't already loaded on this table
+    if table.closest(".dataTables_wrapper").length == 0
+
+      @datatable_bootstrap_classes(table)
+      @datatable_localstorage(table)
+      table.dataTable @datatable_params(table)
+      @datatable_appareance(table)
 
 
   load_tabs: (context) ->

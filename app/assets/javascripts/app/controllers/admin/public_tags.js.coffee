@@ -63,7 +63,7 @@ class Edit extends App.ExtendedController
 
   view_members: (e) ->
     e.preventDefault()
-    App.search_query(search_string: "public_tags.id:#{@tag.id}")
+    Directory.search(search_string: "public_tags.id:#{@tag.id}")
 
   add_members: (e) ->
     e.preventDefault()

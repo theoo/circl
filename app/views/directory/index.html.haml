@@ -21,34 +21,20 @@
                 = I18n.t('directory.views.sync_mailchimp')
 
 .container
+
+  .row
+    .col-lg-3
+    .col-lg-6
+      - if flash[:error] or flash[:alert] or flash[:notice]
+        - flash_messages
+
+      %input{ :id => "directory_json_query",
+        :name => "directory_json_query",
+        :type => "hidden",
+        :value => @query.to_json.html_safe } 
+    .col-lg-3
+
   .panel.panel-default
-    - if flash[:error] or flash[:alert] or flash[:notice]
-      .panel-body
-        .row
-          .col-lg-12
-            - flash_messages
+    #directory_filters
+    #directory_search_engine
 
-    #search_form
-
-    .panel-body
-      .row
-        .col-lg-12
-          %h2= I18n.t('directory.views.results')
-          %input{ :id => "json_query",
-                  :name => "json_query",
-                  :type => "hidden",
-                  :value => @query.to_json.html_safe }
-
-    %table#results.table
-      %thead
-        %tr
-          - @query[:selected_attributes].each do |field|
-            %th= field
-          %th score
-
-    .panel-footer
-      %button{:type => 'button',
-              :class => 'btn btn-default',
-              :name => 'directory-export-csv'}
-        .icon-cloud-download
-        = I18n.t('common.export_to') + " CSV"

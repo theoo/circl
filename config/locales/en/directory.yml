@@ -8,6 +8,7 @@ en:
     notices:
       result_return_only_one_person: The query returning only one person it has been redirected to editing.
     views:
+      score: score
       add_person: add person
       add_to_subscription: add to subscription
       add_to_tag: add this tag

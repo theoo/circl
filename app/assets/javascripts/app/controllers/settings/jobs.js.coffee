@@ -59,7 +59,7 @@ class Edit extends App.ExtendedController
     @save_with_notifications @job.fromForm(e.target), @hide
 
   view_members: (e) ->
-    App.search_query(search_string: "job.id:#{@job.id}")
+    Directory.search(search_string: "job.id:#{@job.id}")
 
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))

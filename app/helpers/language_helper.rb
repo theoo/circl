@@ -21,15 +21,16 @@ module LanguageHelper
     I18n.backend.send(:translations)
   end
 
-  def select_languages
-    links = []
-    I18n.available_locales.each do |loc|
-      if loc == I18n.locale
-        links << "<span class='active'>" + translations[loc][:common][:language_name] + "</span>"
-      else
-        links << link_to( translations[loc][:common][:language_name], url_for(params.merge(:locale => loc)) )
-      end
-    end
-    links.join( " / " )
-  end
+  # DEAD CODE
+  # def select_languages
+  #   links = []
+  #   I18n.available_locales.each do |loc|
+  #     if loc == I18n.locale
+  #       links << "<span class='active'>" + translations[loc][:common][:language_name] + "</span>"
+  #     else
+  #       links << link_to( translations[loc][:common][:language_name], url_for(params.merge(:locale => loc)) )
+  #     end
+  #   end
+  #   links.join( " / " )
+  # end
 end
