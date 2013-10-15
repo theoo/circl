@@ -10,12 +10,12 @@
 <tr><td><b>Test Suite</b></td></tr>
 <tr><td><a href="login_failure">Login Failure</a></td></tr>
 <tr><td><a href="login">Login</a></td></tr>
-<tr><td><a href="private_tags">Public tags</a></td></tr>
+<tr><td><a href="public_tags">Public tags</a></td></tr>
+<tr><td><a href="private_tags">Private tags</a></td></tr>
 <tr><td><a href="secondary_communication_languages">Secondary communication languages</a></td></tr>
 <tr><td><a href="personal_information">Personal information</a></td></tr>
 <tr><td><a href="full_name_validator">Full name validator</a></td></tr>
 <tr><td><a href="second_email_is_different">Second email is different</a></td></tr>
-<tr><td><a href="private_tags">Private tags</a></td></tr>
 <tr><td><a href="email_exists_if_it_has_a_second_email">Email exists if it has a second email</a></td></tr>
 <tr><td><a href="identifier_validator">Identifier validator</a></td></tr>
 <tr><td><a href="logout">Logout</a></td></tr>

@@ -12,48 +12,38 @@
 <tr><td rowspan="1" colspan="3">public_tags</td></tr>
 </thead><tbody>
 <tr>
+	<td>setSpeed</td>
+	<td>300</td>
+	<td></td>
+</tr>
+<tr>
 	<td>open</td>
 	<td>/people/2</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_public_tags']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person_public_tags').trigger('unfolded')</td>
+	<td>css= #person_public_tags</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[2]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[2]/div/div/label/span</td>
+	<td>css= #person_public_tags input[type=checkbox]:first</td>
 	<td></td>
 </tr>
 <tr>
 	<td>check</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[2]/input</td>
+	<td>css= #person_public_tags input[type=checkbox]:first</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[@class='float_right']/input[@value='update']</td>
+	<td>css= #person_public_tags .btn[type=submit]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@id='person_public_tags']/legend/span[2]/span[2]</td>
-	<td>successfully updated</td>
-</tr>
-<tr>
-	<td>verifyChecked</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[2]/input</td>
+	<td>waitForElementPresent</td>
+	<td>css= #person_public_tags.panel-success</td>
 	<td></td>
 </tr>
 <tr>
@@ -63,47 +53,37 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_public_tags']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person_public_tags').trigger('unfolded')</td>
+	<td>css= #person_public_tags</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[2]/input</td>
+	<td>css= #person_public_tags input[type=checkbox]:first</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForChecked</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[2]/input</td>
+	<td>css= #person_public_tags input[type=checkbox]:first</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyChecked</td>
+	<td>css= #person_public_tags input[type=checkbox]:first</td>
 	<td></td>
 </tr>
 <tr>
 	<td>uncheck</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[2]/input</td>
+	<td>css= #person_public_tags input[type=checkbox]:first</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[@class='float_right']/input[@value='update']</td>
+	<td>css= #person_public_tags .btn:contains(mettre à jour)</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForText</td>
-	<td>//div[@id='person_public_tags']/legend/span[2]/span[2]</td>
-	<td>successfully updated</td>
-</tr>
-<tr>
-	<td>waitForNotChecked</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[2]/input</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyNotChecked</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[2]/input</td>
+	<td>waitForElementPresent</td>
+	<td>css= #person_public_tags.panel-success</td>
 	<td></td>
 </tr>
 <tr>
@@ -113,27 +93,27 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_public_tags']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>getEval</td>
-	<td>window.$('#person_public_tags').trigger('unfolded')</td>
+	<td>css= #person_public_tags</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[2]/input</td>
+	<td>css= #person_public_tags input[type=checkbox]:first</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForNotChecked</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[2]/input</td>
+	<td>css= #person_public_tags input[type=checkbox]:first</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyNotChecked</td>
-	<td>//div[@id='person_public_tags']/div/div/div/form/div[2]/input</td>
+	<td>css= #person_public_tags input[type=checkbox]:first</td>
+	<td></td>
+</tr>
+<tr>
+	<td>refreshAndWait</td>
+	<td></td>
 	<td></td>
 </tr>
 </tbody></table>

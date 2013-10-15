@@ -53,6 +53,11 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
+	<td>css= #person.panel-danger</td>
+	<td>css= .popover-content:contains('doit y avoir un nom de famille')</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
 	<td>css= #person .has-error #person_last_name</td>
 	<td>css= .popover-content:contains('doit y avoir un nom de famille')</td>
 </tr>
@@ -93,6 +98,11 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
+	<td>css= #person.panel-danger</td>
+	<td>css= .popover-content:contains('doit y avoir un nom de famille')</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
 	<td>css= #person .has-error #person_first_name</td>
 	<td></td>
 </tr>
@@ -130,6 +140,11 @@
 	<td>click</td>
 	<td>css= #person .btn[type = submit]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person.panel-success</td>
+	<td>css= .popover-content:contains('doit y avoir un nom de famille')</td>
 </tr>
 </tbody></table>
 </body>

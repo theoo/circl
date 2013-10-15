@@ -53,6 +53,11 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
+	<td>css= #person.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
 	<td>css= #person .has-error .popover</td>
 	<td></td>
 </tr>

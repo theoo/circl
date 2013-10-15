@@ -32,6 +32,11 @@
 	<td>css= #person_session_navigation ul[class=dropdown-menu] a:last</td>
 	<td></td>
 </tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #login</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

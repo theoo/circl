@@ -23,7 +23,7 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>css= #person_public_tags</td>
+	<td>css= #person_private_tags</td>
 	<td></td>
 </tr>
 <tr>
@@ -39,6 +39,11 @@
 <tr>
 	<td>click</td>
 	<td>css= #person_private_tags .btn[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_private_tags.panel-success</td>
 	<td></td>
 </tr>
 <tr>
@@ -63,17 +68,22 @@
 </tr>
 <tr>
 	<td>verifyChecked</td>
-	<td>css= #person_private_tags&nbsp;&nbsp;input[type=checkbox]:first</td>
+	<td>css= #person_private_tags input[type=checkbox]:first</td>
 	<td></td>
 </tr>
 <tr>
 	<td>uncheck</td>
-	<td>css= #person_private_tags&nbsp;&nbsp;input[type=checkbox]:first</td>
+	<td>css= #person_private_tags input[type=checkbox]:first</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
 	<td>css= #person_private_tags .btn:contains(mettre à jour)</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_private_tags.panel-success</td>
 	<td></td>
 </tr>
 <tr>

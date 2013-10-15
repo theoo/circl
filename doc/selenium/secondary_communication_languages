@@ -38,7 +38,12 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=&nbsp;&nbsp;#person .btn[type=submit]</td>
+	<td>css=&nbsp;&nbsp;#person_communication_languages .btn[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_communication_languages.panel-success</td>
 	<td></td>
 </tr>
 <tr>
@@ -63,7 +68,12 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=&nbsp;&nbsp;#person .btn[type=submit]</td>
+	<td>css=&nbsp;&nbsp;#person_communication_languages .btn[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_communication_languages.panel-success</td>
 	<td></td>
 </tr>
 <tr>

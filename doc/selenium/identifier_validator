@@ -68,7 +68,7 @@
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>css= #person</td>
+	<td>css= #person.panel-danger</td>
 	<td></td>
 </tr>
 <tr>
