@@ -291,23 +291,6 @@ class Search extends FiltersController
       if (e.which == 13)
         @el.find('input[type=submit]').click()
 
-class Index extends FiltersController
-  events:
-    'click ul li.preset': 'edit'
-
-  constructor: (params) ->
-    super
-    QueryPreset.bind('refresh change', @render)
-
-  render: =>
-    @html @view('directory/query_presets/index')(@)
-    Ui.load_ui(@el)
-    @load_ui(@el)
-
-  edit: (e) ->
-    query_preset = $(e.target).query_preset()
-    @trigger 'edit', query_preset
-
 class App.DirectoryQueryPresets extends App.ExtendedController
 
   constructor: (params) ->
@@ -316,12 +299,10 @@ class App.DirectoryQueryPresets extends App.ExtendedController
     @has_search = params.search?
     @has_edit = params.edit?
 
-    @index = new Index
     @edit = new Edit
 
     if @has_search
       @search = new Search(title: params.search.title)
-      @index.bind 'edit', @search.active
       @search.bind 'search', =>
         query_preset = new QueryPreset()
         @edit.fill_from_form(query_preset)
@@ -330,11 +311,8 @@ class App.DirectoryQueryPresets extends App.ExtendedController
         @trigger 'search', query_preset
       @append(@search)
 
-    @append(@index)
-
     if @has_edit
       @edit = new Edit(title: params.edit.title)
-      @index.bind 'edit', @edit.active
       @edit.bind 'edit', =>
         query_preset = new QueryPreset()
         @edit.fill_from_form(query_preset)
@@ -359,15 +337,6 @@ class App.DirectoryQueryPresets extends App.ExtendedController
         @edit.active(query_preset)
       if @has_search && !QueryPreset.exists(@search.query_preset.id)
         @search.active(query_preset)
-
-    @index.bind 'destroyError', (id, errors) =>
-      if @has_edit
-        @edit.active id: id
-        unless @has_search
-          @edit.render_errors errors
-      if @has_search
-        @search.active(id: id)
-        @search.render_errors errors
 
   activate: ->
     super

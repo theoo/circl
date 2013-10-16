@@ -4,18 +4,42 @@
       .validation_errors_placeholder
 
   .row
-    .col-lg-12
-      %h1= I18n.t('directory.views.search_the_directory')
+    .col-lg-8.col-md-8
+      %label{:for => 'search_string'}
+        %h1= I18n.t('directory.views.search_the_directory')
 
-      .input-group
-        %input{ :type => 'search',
-                :name => 'search_string',
-                :id => 'search_string',
-                :class => 'form-control input-lg',
-                :value => @query_preset.query?.search_string }
-        .input-group-btn
-          %button{:type => 'submit',
-                  :name => 'directory-search',
-                  :class => 'btn btn-default input-lg'}
-            .icon-search
-            = @title
+    .col-lg-4.col-md-4
+      .form-group
+        %label{:for => 'directory_filters_selector'}
+          %small
+            = I18n.t('directory.views.fields.presets')
+        .input-group
+          %select{:id => 'directory_filters_selector',
+                  :class => 'form-control input-sm'}
+            - for query_preset in App.QueryPreset.all()
+              %option{:data-id => query_preset.id}
+                = query_preset.name
+          .input-group-btn
+            %button{:type => 'button',
+                    :name => 'directory-preset-edit',
+                    :class => 'btn btn-default btn-sm' }
+              .icon-pencil
+
+  .row
+    .col-lg-12
+      .form-group
+        .input-group
+          %input{ :type => 'search',
+                  :name => 'search_string',
+                  :id => 'search_string',
+                  :class => 'form-control input-lg',
+                  :value => @query_preset.query?.search_string }
+          .input-group-btn
+            %button{:type => 'submit',
+                    :name => 'directory-search',
+                    :class => 'btn btn-default btn-lg'}
+              .icon-search
+  .row
+    .col-lg-6
+
+    .col-lg-6
