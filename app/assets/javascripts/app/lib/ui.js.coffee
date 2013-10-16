@@ -143,12 +143,13 @@ class Ui
       oLanguage: datatable_translations # TODO scope like I18n.datatable_translations[I18n.locale]
       aaSorting: [sort_parameter]
       bStateSave: true
+      # bPaginate: true
       fnStateSave: @datatable_local_storage_save_callback
       fnStateLoad: @datatable_local_storage_load_callback
       bJQueryUI: false # We'll use bootstrap only, not the ui-state-default classes mess
       sPaginationType: 'bootstrap'
       fnDrawCallback: (oSettings) -> @trigger('datatable_redraw'), # Catch this in Spine!
-      sDom: "<'row'<'col-lg-6'T><'col-lg-6'f>r>t<'panel-body'<'row'<'col-lg-12 pagination-footer'pi>>"
+      sDom: "<'row'<'col-lg-6 form-inline'lr><'col-lg-6'f>>t<'panel-body'<'row'<'col-lg-12 pagination-footer'pi>>"
 
     action = table.attr('action')
     if action
@@ -203,6 +204,11 @@ class Ui
     parent.addClass('panel-body')
     search_input.attr('placeholder', I18n.datatable_translations.sSearch)
     search_input.addClass('form-control input-sm')
+
+    length_select = table.closest('.dataTables_wrapper').find('div[id$=_length] select')
+    length_select.addClass('form-control input-sm')
+    parent = length_select.parent().parent()
+    parent.addClass('panel-body form-group')
 
     # SORTING
     table.find('th.sorting:not(.ignore-sort)').append("&nbsp;<span class='icon-sort'/>")

@@ -7,9 +7,9 @@ I18n.datatable_translations =
     "sInfoFiltered":   "(filtered from _MAX_ total entries)",
     "sInfoPostFix":    "",
     "sInfoThousands":  ",",
-    "sLengthMenu":     "Show _MENU_ entries",
+    "sLengthMenu":     "_MENU_",
     "sLoadingRecords": "Loading...",
-    "sProcessing":     "<span>Processing...<img src='/assets/spinner.gif' /></span>",
+    "sProcessing":     "Processing...",
     "sSearch":         "Search",
     "sZeroRecords":    "No matching records found",
     "oPaginate": {

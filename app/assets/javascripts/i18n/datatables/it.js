@@ -2,7 +2,7 @@ var I18n = I18n || {};
 I18n.datatable_translations =
 {
     "sProcessing":   "Caricamento...",
-    "sLengthMenu":   "Visualizza _MENU_ elementi",
+    "sLengthMenu":   "_MENU_",
     "sZeroRecords":  "La ricerca non ha portato alcun risultato.",
     "sInfo":         "Vista da _START_ a _END_ di _TOTAL_ elementi",
     "sInfoEmpty":    "Vista da 0 a 0 di 0 elementi",

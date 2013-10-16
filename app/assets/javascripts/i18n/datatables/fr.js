@@ -1,9 +1,9 @@
 var I18n = I18n || {};
 I18n.datatable_translations =
 {
-    "sProcessing":     "<span>Traitement en cours...<img src='/assets/spinner.gif' /></span>",
+    "sProcessing":     "Traitement en cours...",
     "sSearch":         "Rechercher",
-    "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+    "sLengthMenu":     "_MENU_",
     "sInfo":           "Affichage de _START_ &agrave; _END_ sur _TOTAL_",
     "sInfoEmpty":      "Affichage de 0 &agrave; 0 sur 0",
     "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",

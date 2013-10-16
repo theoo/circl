@@ -39,6 +39,7 @@
                     :name => 'directory-search',
                     :class => 'btn btn-default btn-lg'}
               .icon-search
+              = @title
   .row
     .col-lg-6
 
