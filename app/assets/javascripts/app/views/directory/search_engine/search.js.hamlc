@@ -33,14 +33,36 @@
                   :name => 'search_string',
                   :id => 'search_string',
                   :class => 'form-control input-lg',
-                  :value => @query_preset.query?.search_string }
+                  :value => @query_preset.query.search_string }
           .input-group-btn
             %button{:type => 'submit',
                     :name => 'directory-search',
                     :class => 'btn btn-default btn-lg'}
               .icon-search
-              = @title
+              -# @title
   .row
     .col-lg-6
+      %small
+        %b
+          = I18n.t('directory.views.fields.selected_attributes') + ": "
+        - translation = []
+        - for s in @query_preset.query.selected_attributes
+          - missing_translation = "<i class='text-danger'>" + s.humanize() + "</i>"
+          - translation.push I18n.t("activerecord.attributes.person." + s, defaultValue: missing_translation )
+        - if translation.length > 0
+          != translation.join(", ")
+        - else
+          = I18n.t("common.none")
 
     .col-lg-6
+      %small
+        %b
+          = I18n.t('directory.views.fields.sorting_order') + ": "
+        - translation = []
+        - for s in @query_preset.query.attributes_order
+          - missing_translation = "<i class='text-danger'>" + s.humanize() + "</i>"
+          - translation.push I18n.t("activerecord.attributes.person." + s, defaultValue: missing_translation )
+        - if translation.length > 0
+          != translation.join(", ")
+        - else
+          = I18n.t("common.none")

@@ -25,6 +25,27 @@ class App.SearchAttribute extends Spine.Model
   constructor: ->
     super
 
+  @orderable: =>
+    sa = []
+    for attr in @all()
+      sa.push(attr) if attr.orderable
+    sa
+
+  @searchable: ->
+    sa = []
+    for attr in @all()
+      sa.push(attr) if attr.searchable
+    sa
+
+  @attributes_for: (group) ->
+    sa = []
+    for attr in @all()
+      sa.push(attr.name) if attr.group == group
+    sa
+
+  @groups: ->
+    _.uniq(@all().map((sa) -> sa.group))
+
   validate: ->
     e = new App.ErrorsList
 

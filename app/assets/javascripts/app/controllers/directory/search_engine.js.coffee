@@ -22,18 +22,86 @@ $.fn.directory_person_id = ->
   elementID ||= $(@).parents('[data-id]').data('id')
   elementID
 
-class Index extends App.ExtendedController
+class Search extends App.ExtendedController
   events:
-    'click tr.item td:not(.ignore-click)': 'edit'
-    'click button[name=directory-person-destroy]': 'destroy'
-    'click button[name=directory-person-change-password]': 'change_password'
-    'click button[name=directory-export-to-csv]': 'export_to_csv'
+    'click button[name=directory-search]': 'search'
+
+  constructor: (params) ->
+    super
+    #@title = params.title if params and params.title
+
+  active: (params) =>
+    @query_preset = params.preset if params.preset
+    @render()
+
+  search: (e) ->
+    e.preventDefault()
+    @trigger('search')
+
+  render: =>
+    @html @view('directory/search_engine/search')(@)
+    @el.find('#search_string').keypress (e) =>
+      if (e.which == 13)
+        @el.find('input[type=submit]').click()
+
+class Edit extends App.ExtendedController
+  events:
+    'click input[data-action="next"]':    'edit'
+    'click input[data-action="update"]':  'update'
+    'click input[data-action="add"]':     'add'
+    'click input[data-action="destroy"]': 'destroy'
 
   constructor: (params) ->
     super
 
+  active: (params) =>
+    @query_preset = params.preset if params.preset
+    @render()
+
+  render: =>
+    @html @view('directory/search_engine/presets')(@)
+
+  fill_from_form: (query_preset) =>
+    query_preset.query = @get_filters(@el)
+    query_preset.name = @el.find("input[name='name']").attr('value')
+
+  edit: (e) ->
+    e.preventDefault()
+    @trigger('edit')
+
+  update: (e) =>
+    e.preventDefault()
+    # special form, using custom methods here instead of fromForm
+    @fill_from_form(@query_preset)
+    @save_with_notifications @query_preset, @render
+
+  add: (e) =>
+    e.preventDefault()
+    query_preset = new QueryPreset()
+    @fill_from_form(query_preset)
+    @save_with_notifications query_preset, (id) =>
+      @active(QueryPreset.find(id))
+
+  destroy: (e) =>
+    if confirm(I18n.t('common.are_you_sure'))
+      @destroy_with_notifications @query_preset, =>
+        @preset = new QueryPreset()
+        @render()
+
+class Index extends App.ExtendedController
+  events:
+    'click tr.item td:not(.ignore-click)': 'edit'
+    'click tr button[name=directory-person-destroy]': 'destroy'
+    'click tr button[name=directory-person-change-password]': 'change_password'
+    'click button[name=directory-export-to-csv]': 'export_to_csv'
+
+  constructor: (params) ->
+    super
     @json_query = $('#directory_json_query').val()
     @query = $.parseJSON(@json_query)
+
+  active: (params) ->
+    @render()
 
   render: =>
     @html @view('directory/search_engine/index')(@)
@@ -103,9 +171,21 @@ class Index extends App.ExtendedController
 class App.DirectorySearchEngine extends App.ExtendedController
   constructor: (params) ->
     super
+    @search = new Search
+    @edit = new Edit
     @index = new Index
-    @append(@index)
+    @append(@search, @edit, @index)
 
   activate: ->
     super
-    @index.render()
+    QueryPreset.one 'refresh', =>
+      qp = QueryPreset.first()
+      @search.active(preset: qp)
+      @edit.active(preset: qp)
+      @index.active(preset: qp)
+
+    SearchAttribute.one 'refresh', =>
+      QueryPreset.fetch()
+
+    # Do not use index but searchable method
+    SearchAttribute.fetch(url: "#{SearchAttribute.url()}/searchable")

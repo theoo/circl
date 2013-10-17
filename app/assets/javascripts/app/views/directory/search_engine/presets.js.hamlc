@@ -1,4 +1,5 @@
-#presets.panel-body.collapse
+#presets.panel-body
+  //.collapse
   .row
     .col-lg-12
       .filter
@@ -57,13 +58,13 @@
       .all_attributes
         %h3= I18n.t('directory.views.fields.available_attributes')
 
-        - for group, fields of @search_attributes
+        - for group of App.SearchAttribute.groups()
           %h4
             - missing_translation = "<i class='text-danger'>" + group.humanize() + "</i>"
             != I18n.t("activerecord.models." + group.toLowerCase(), defaultValue: missing_translation )
           .draggable
             %dl.dl-horizontal
-              - for field in fields
+              - for field of App.SearchAttribute.attributes_for(group)
                 %dt{'data-name' => field}= field
                 %dd
                   - missing_translation = "<i class='text-danger'>" + field.humanize() + "</i>"
