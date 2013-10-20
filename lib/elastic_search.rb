@@ -33,7 +33,9 @@ module ElasticSearch
 
   def self.count(search_string, current_person = nil)
     search = Tire::Search::Search.new(Rails.configuration.settings['elasticsearch']['name'])
+    search_string = exclude_hidden(search_string)
     search.query { string search_string }
+    search.size Rails.configuration.settings['elasticsearch']['max_per_page']
     search.filter :terms, { :accessible_by => current_person.roles.map(&:name) } if current_person
     search.results.size
   end
@@ -43,14 +45,7 @@ module ElasticSearch
 
     search_string = '*' if search_string.blank?
 
-    # exclude "hidden" people by default.
-    # This can be overrided by setting explicitly "AND hidden:true" or "AND hidden:all"
-    all_regex = /AND\shidden\:["']?all["']?/
-    if search_string.match(all_regex)
-      search_string = search_string.gsub(all_regex, '').strip
-    elsif ! search_string.match(/AND\shidden\:["']?true["']?/)
-      search_string = "(" + search_string + ") AND hidden:false"
-    end
+    search_string = exclude_hidden(search_string)
 
     search.query { string search_string }
     search.sort do
@@ -66,6 +61,19 @@ module ElasticSearch
     search.size(per_page)
     search.filter :terms, { :accessible_by => current_person.roles.map(&:name) } if current_person
     search.results
+  end
+
+  # FIXME This should not be accessible from the outside
+  def self.exclude_hidden(search_string)
+    # exclude "hidden" people by default.
+    # This can be overrided by setting explicitly "AND hidden:true" or "AND hidden:all"
+    all_regex = /AND\shidden\:["']?all["']?/
+    if search_string.match(all_regex)
+      search_string = search_string.gsub(all_regex, '').strip
+    elsif ! search_string.match(/AND\shidden\:["']?true["']?/)
+      search_string = "(" + search_string + ") AND hidden:false"
+    end
+    search_string
   end
 
   module Mapping
