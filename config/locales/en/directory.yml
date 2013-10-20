@@ -8,15 +8,12 @@ en:
     notices:
       result_return_only_one_person: The query returning only one person it has been redirected to editing.
     views:
+      new_preset: new preset
+      edit_preset_filters: Preset filters editing
       score: score
       add_person: add person
       add_to_subscription: add to subscription
       add_to_tag: add this tag
-      actions:
-        change_person_password: change person's password
-        destroy_person: remove from the directory
-        show_person: view person's information
-        search: search
       fields:
         available_attributes: Available attributes
         drag_and_drop_me: drag and drop me here

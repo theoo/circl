@@ -27,11 +27,6 @@ class FiltersController extends App.ExtendedController
   load_ui: (context) ->
     @context = context.closest(".query_presets")
 
-    # TODO: can I remove this dead code ?
-    #form = @context.find("form#search_engine")
-    #if form.size() > 0
-    #  @override_submit_action(form)
-
     filter = @context.find('.filter')
     if filter.size() > 0
       @load_filters(filter)

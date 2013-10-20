@@ -10,12 +10,14 @@
 
     .col-lg-4.col-md-4
       .form-group
-        %label{:for => 'directory_filters_selector'}
+        %label{:for => 'directory_presets_selector'}
           %small
             = I18n.t('directory.views.fields.presets')
         .input-group
-          %select{:id => 'directory_filters_selector',
+          %select{:id => 'directory_presets_selector',
                   :class => 'form-control input-sm'}
+            %option
+              %i= I18n.t("directory.views.new_preset")
             - for query_preset in App.QueryPreset.all()
               %option{:data-id => query_preset.id}
                 = query_preset.name
@@ -27,29 +29,31 @@
 
   .row
     .col-lg-12
-      .form-group
-        .input-group
-          %input{ :type => 'search',
-                  :name => 'search_string',
-                  :id => 'search_string',
-                  :class => 'form-control input-lg',
-                  :value => @query_preset.query.search_string }
-          .input-group-btn
-            %button{:type => 'submit',
-                    :name => 'directory-search',
-                    :class => 'btn btn-default btn-lg'}
-              .icon-search
-              -# @title
-  .row
+      %form
+        .form-group
+          .input-group
+            %input{ :type => 'search',
+                    :name => 'search_string',
+                    :id => 'search_string',
+                    :class => 'form-control input-lg',
+                    :value => @query_preset.query?.search_string }
+            .input-group-btn
+              %button{:type => 'submit',
+                      :name => 'directory-search',
+                      :class => 'btn btn-default btn-lg'}
+                .icon-search
+                -# @title
+
+  #presets_summary.row.in
     .col-lg-6
       %small
         %b
           = I18n.t('directory.views.fields.selected_attributes') + ": "
         - translation = []
-        - for s in @query_preset.query.selected_attributes
-          - missing_translation = "<i class='text-danger'>" + s.humanize() + "</i>"
-          - translation.push I18n.t("activerecord.attributes.person." + s, defaultValue: missing_translation )
-        - if translation.length > 0
+        - if @query_preset.query?.selected_attributes
+          - for s in @query_preset.query?.selected_attributes
+            - missing_translation = "<i class='text-danger'>" + s.humanize() + "</i>"
+            - translation.push I18n.t("activerecord.attributes.person." + s, defaultValue: missing_translation )
           != translation.join(", ")
         - else
           = I18n.t("common.none")
@@ -59,10 +63,13 @@
         %b
           = I18n.t('directory.views.fields.sorting_order') + ": "
         - translation = []
-        - for s in @query_preset.query.attributes_order
-          - missing_translation = "<i class='text-danger'>" + s.humanize() + "</i>"
-          - translation.push I18n.t("activerecord.attributes.person." + s, defaultValue: missing_translation )
-        - if translation.length > 0
+        - if @query_preset.query?.attributes_order
+          - for pair in @query_preset.query?.attributes_order
+            - key = Object.keys(pair)[0]
+            - value = pair[key]
+            - missing_translation = "<i class='text-danger'>" + key.humanize() + "</i>"
+            - translation.push I18n.t("activerecord.attributes.person." + key, defaultValue: missing_translation )
           != translation.join(", ")
         - else
           = I18n.t("common.none")
+

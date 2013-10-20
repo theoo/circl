@@ -5,20 +5,29 @@
         .collapse.navbar-collapse
           .navbar-right.btn-group
             - if can? :create, Person
-              %a{ :href => directory_mailchimp_path,
+              %a{ :href => new_person_path,
                   :class => 'btn btn-default navbar-btn',
                   :id => 'directory-add-person' }
                 .icon-user
                 = I18n.t('directory.views.add_person')
 
             - if can? :mailchimp, Directory
-              %a{ :href => '#',
-                  :class => 'btn btn-danger navbar-btn',
+              - # 00000000000000000000000000000000-us0 is the default value, not valid in real world
+              - if ApplicationSetting.value(:mailchimp_api_key) != "00000000000000000000000000000000-us0"
+                = link_to(directory_mailchimp_path,
                   :method => :post,
-                  :confirm => I18n.t('common.are_you_sure'),
-                  :id => 'directory-add-person' }
-                .icon-refresh
-                = I18n.t('directory.views.sync_mailchimp')
+                  :class => 'btn btn-danger navbar-btn',
+                  :confirm => I18n.t("common.are_you_sure")) do
+                  .icon-refresh
+                  = I18n.t('directory.views.sync_mailchimp')
+              - else
+                - # Disable mailchimp sync button
+                - # TODO print a nice modal window and link to config + doc to setup mailchimp
+                = link_to("#",
+                  :class => 'btn btn-default navbar-btn',
+                  :disabled => true ) do
+                  .icon-refresh
+                  = I18n.t('directory.views.sync_mailchimp')
 
 .container
 
@@ -31,7 +40,7 @@
       %input{ :id => "directory_json_query",
         :name => "directory_json_query",
         :type => "hidden",
-        :value => @query.to_json.html_safe } 
+        :value => @query.to_json.html_safe }
     .col-lg-3
 
   .panel.panel-default

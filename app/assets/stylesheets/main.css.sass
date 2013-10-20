@@ -35,6 +35,9 @@ $autocompleters: #00f
 $primary_menu_bg: #1d1d1d
 $secondary_menu_bg: #5b5b5b
 
+//bootstrap colors
+$success: #468847
+
 // $screen-sm-max: 991px
 // $screen-md-max: 1199px
 // @media (max-width: @screen-phone-max) { }
@@ -60,6 +63,9 @@ header
 
 .ui-autocomplete
   z-index: 1051 // Make it visible in modal windows
+
+.modal, .modal.fade.in
+  top: 80px // originaly 10%
 
 // panels
 .panel-disabled
@@ -123,6 +129,49 @@ input
 
 .autocomplete-icon
   color: $grey
+
+// search engine
+.grey-bg
+  background: repeating-linear-gradient(45deg, #fafafa, #fafafa 25px, #f5f5f5 25px, #f5f5f5 50px)
+
+.all_attributes
+  height: 565px
+
+.selected_attributes, .attributes_order
+  height: 250px
+
+.selected_attributes, .attributes_order, .all_attributes
+  overflow-y: scroll
+
+  // this should be the remove button
+  a.text-danger
+    cursor: pointer
+    text-decoration: none
+    font-size: 1.2em
+    line-height: 1em
+
+  a.text-danger:hover
+    color: $black
+
+  a.order, a.order:hover
+    font-size: 1.2em
+    line-height: 1em
+    cursor: pointer
+    text-decoration: none
+    color: $black
+
+  ol
+    li
+      cursor: move
+
+  dl
+    dt
+      cursor: move
+    dd
+      cursor: move
+
+.hidden
+  display: none
 
 
 // // TYPO

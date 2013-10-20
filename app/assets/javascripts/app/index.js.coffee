@@ -87,7 +87,7 @@ class @PersonEdit extends App
 class @Directory extends App
   constructor: (params) ->
     super
-    @subapp($('#directory_search_engine'), 'DirectorySearchEngine')
+    @subapp($('#directory_search_engine'), 'DirectorySearchEngine', params)
 
   # NOTE Use Directory.search(search_string: "somthing") to run a query in the directory
   @search: (query) =>

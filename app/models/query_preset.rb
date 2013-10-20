@@ -52,6 +52,7 @@ class QueryPreset < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
+  # TODO, ensure query store required hash values list selected_attributes and ordered_attributes
   validates_presence_of   :name, :query
   validates_uniqueness_of :name
 

@@ -42,7 +42,7 @@ class Edit extends App.ExtendedController
     'click a[name=tag-view-members]':   'view_members'
     'click a[name=tag-add-members]':    'add_members'
     'click a[name=tag-remove-members]': 'remove_members'
-    'click button[name=tag-destroy]':        'destroy'
+    'click button[name=tag-destroy]':   'destroy'
 
   constructor: ->
     super
