@@ -41,6 +41,23 @@
         :name => "directory_json_query",
         :type => "hidden",
         :value => @query.to_json.html_safe }
+
+      %input{ :id => "directory_results_count",
+        :type => "hidden",
+        :value => @results_count }
+
+      - # custom action (see index.js)
+      - if @custom_action
+        %input{ :id => "directory_custom_action_url",
+          :type => "hidden",
+          :value => @custom_action[:url].html_safe }
+        %input{ :id => "directory_custom_action_title",
+          :type => "hidden",
+          :value => @custom_action[:title].html_safe }
+        %input{ :id => "directory_custom_action_message",
+          :type => "hidden",
+          :value => @custom_action[:message].html_safe }
+
     .col-lg-3
 
   .panel.panel-default

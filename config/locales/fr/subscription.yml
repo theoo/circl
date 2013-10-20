@@ -9,6 +9,8 @@ fr:
       cannot_remove_members_if_there_is_receipts: Impossible de retirer les membres si ont des reçus ont été associés
       cannot_transfer_overpaid_value_if_subscription_value_is_zero: Impossible de transférer les paiements excédants si l'inscription d'origine à une valeur de zéro
       parent_id_is_set_without_status: Il n'est pas possible de définir parent_id si aucun status n'est donné.
+    notices:
+      members_added: "%{members_count} personnes ont été ajoutées à l'inscription. Veuillez attendre la fin de l'execution de la tâche d'arrière plan avant de modifier l'inscription concernée."
     mail:
       member_added_to_subscription_title: Des membres ont été ajouté à l'inscription
       please_find_a_link_to_access_the_subscription_pdf: Veuillez trouver ci-joint un lien vers le PDF de l'inscription
@@ -29,6 +31,10 @@ fr:
       the_following_members_were_already_in_the_subscription: Les membres suivants étaient déjà dans l'inscription
       the_following_members_were_updated: Les membres suivants ont étés mis à jour
     views:
+      sort_people_for_pdf_generation_of: Tri des personnes pour la génération du PDF de l'inscription
+      sort_people_message: Veuillez définir l'ordre de tri des personnes pour la fusion des factures dans un PDF, les autres attributs ne seront pas prit en compte. Pour modifier l'ordre de tri il faut afficher un pré-réglage (le crayon).
+      add_members_title: Ajouter des personnes à l'inscription
+      add_members_message: Les personnes sélectionnées seront ajoutées à l'inscription.
       members: membres
       actions:
         add_members_to_subscription: ajouter des membres à l'inscription

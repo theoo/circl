@@ -39,6 +39,7 @@ class @App extends Spine.Controller
     # Don't display the hash fragment
     Spine.Route.setup(shim: true)
 
+
     # Start background tasks on every pages
     # App.BackgroundTaskRefreshInterval = 5000
     # background_tasks = new App.BackgroundTasks(el: "#background_tasks_counter", person_id: @person_id)
@@ -52,6 +53,8 @@ class @App extends Spine.Controller
     instance = eval "new App." + class_name + "(params)"
     element.data('controller', instance)
     instance.activate()
+
+  @authenticity_token: -> $('meta[name="csrf-token"]').attr('content')
 
 class @PersonEdit extends App
 
@@ -89,7 +92,7 @@ class @Directory extends App
     super
     @subapp($('#directory_search_engine'), 'DirectorySearchEngine', params)
 
-  # NOTE Use Directory.search(search_string: "somthing") to run a query in the directory
+  # NOTE Use Directory.search(search_string: "something") to run a query in the directory
   @search: (query) =>
     window.location = @search_url(query)
 
@@ -98,6 +101,24 @@ class @Directory extends App
 
   @escape_query: (query) =>
     encodeURIComponent(JSON.stringify(query))
+
+  # This method POST on directory#index the query and given options to build
+  # a custom_action page. See SearchEngineController#Search for more informations.
+  @search_with_custom_action: (query, options = {}) ->
+    # The following options (* = required) are forwarded to directory#index
+    form = $("<form action='/directory' method='post' id='directory_custom_action'>")
+    query = $("<input type='hidden' name='query' value='#{JSON.stringify(query)}'>")
+    # The given URL will be POSTed
+    url = $("<input type='hidden' name='custom_action[url]' value=#{escape(options.url)}>")
+    title = $("<input type='hidden' name='custom_action[title]' value=#{escape(options.title)}>")
+    message = $("<input type='hidden' name='custom_action[message]' value=#{escape(options.message)}>")
+    auth_token = $("<input type='hidden' name='authenticity_token' value=#{@authenticity_token()}>")
+
+    form.append query, url, title, message, auth_token
+
+    $('body').append form
+
+    form.submit()
 
 class @Admin extends App
 

@@ -1,4 +1,29 @@
 .panel-body
+
+  - if @custom_action
+    .row
+      .col-lg-2
+      .col-lg-8
+        .alert.alert-info
+
+          %h2!= @custom_action.title
+
+          %p= I18n.t("directory.views.custom_action_introduction")
+
+          %p
+            %b!= @custom_action.message
+
+          %p= I18n.t("directory.views.custom_action_warning")
+
+          .text-right
+            %br
+            %button{:type => 'button',
+                    :name => 'directory-custom-action',
+                    :class => 'btn btn-primary'}
+              = I18n.t("common.next")
+              .icon-chevron-right
+      .col-lg-2
+
   .row
     .col-lg-12
       .validation_errors_placeholder

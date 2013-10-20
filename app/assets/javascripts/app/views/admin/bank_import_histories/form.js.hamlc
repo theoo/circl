@@ -14,7 +14,7 @@
         .form-group
           %label{:for => 'admin_bankfile_import_file'}
             = I18n.t('admin.views.select_file')
-          %input{:type => 'hidden', :name => 'authenticity_token', :value => @authenticity_token}
+          %input{:type => 'hidden', :name => 'authenticity_token', :value => App.authenticity_token()}
           %input{ :type => 'file',
                   :id => 'admin_bankfile_import_file',
                   :name => 'admin_receipts_file'}

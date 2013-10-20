@@ -4,8 +4,12 @@ fr:
     errors:
       cannot_be_its_own_parent: Le tag ne peut pas être son propre parent.
       cannot_destroy_tag_if_it_has_members: Un tag ne peut pas être supprimé si des membres y sont inscrit.
+    notices:
+      members_added: "%{members_count} personnes ont été ajoutées au tag."
     views:
       members: membres
+      add_members_title: Ajouter des personnes au tag
+      add_members_message: Les personnes sélectionnées seront ajoutées au tag.
       actions:
         add_members: inscrire des personnes
         remove_all_members: désinscrire tous les membres

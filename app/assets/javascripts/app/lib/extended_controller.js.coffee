@@ -36,9 +36,6 @@ class App.ExtendedController extends Spine.Controller
   constructor: ->
     super
 
-    # this token may be usefull for certain ajax calls
-    @authenticity_token = $('meta[name="csrf-token"]').attr('content')
-
   html: ->
     super
     Ui.load_ui(@el)

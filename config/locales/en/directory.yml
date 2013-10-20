@@ -8,6 +8,8 @@ en:
     notices:
       result_return_only_one_person: The query returning only one person it has been redirected to editing.
     views:
+      custom_action_introduction: You have been redirected to the search engine to run a special action.
+      custom_action_warning: You can search the directory like usual, when the result is satisfactory click 'next' to continue the pending action.
       new_preset: new preset
       edit_preset_filters: Preset filters editing
       score: score

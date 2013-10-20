@@ -216,13 +216,24 @@ class SearchEngineExtention extends App.ExtendedController
 
 class Search extends SearchEngineExtention
   events:
-    'submit form':                               'search'
-    'click button[name=directory-search]':       'search'
-    'click button[name=directory-preset-edit]':  'toggle_edit'
-    'change #directory_presets_selector':        'load_preset'
+    'submit form':                                'search'
+    'click button[name=directory-search]':        'search'
+    'click button[name=directory-custom-action]': 'call_custom_action' # It may not exists
+    'click button[name=directory-preset-edit]':   'toggle_edit'
+    'change #directory_presets_selector':         'load_preset'
 
   constructor: (params) ->
     super
+    # NOTE You can invoke custom_action from the search engine
+    # with the following hidden inputs (* = required for minimal action)
+    # custom_action[url] *
+    # custom_action[title]
+    # custom_action[message]
+    if $('#directory_custom_action_url').length > 0
+      @custom_action =
+        url: unescape($('#directory_custom_action_url').val())
+        title: unescape($('#directory_custom_action_title').val())
+        message: unescape($('#directory_custom_action_message').val())
 
   active: (params) =>
     @query_preset = params.preset if params.preset
@@ -249,7 +260,23 @@ class Search extends SearchEngineExtention
 
   search: (e) ->
     e.preventDefault()
-    @trigger 'search', @get_filters()
+    if @custom_action
+      Directory.search_with_custom_action @get_filters(),
+        url: @custom_action.url
+        title: @custom_action.title
+        message: @custom_action.message
+    else
+      Directory.search @get_filters()
+
+  call_custom_action: (e) ->
+    e.preventDefault()
+    # Redirect to the given url using POST
+    form = $("<form action='#{@custom_action.url}' method='post' id='directory_custom_action'>")
+    query = $("<input type='hidden' name='query' value='#{JSON.stringify(@get_filters())}'>")
+    auth_token = $("<input type='hidden' name='authenticity_token' value='#{App.authenticity_token()}'>")
+    form.append query, auth_token
+    $('body').append form
+    form.submit()
 
   load_preset: (e) ->
     e.preventDefault()
@@ -400,9 +427,6 @@ class App.DirectorySearchEngine extends App.ExtendedController
 
     @search.bind 'edit', (p) =>
       @edit.active(preset: p.preset)
-
-    @search.bind 'search', (query) =>
-      params.search_callback(query)
 
     @edit.bind 'edit', (p) =>
       @search.active(preset: p.preset)

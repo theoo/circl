@@ -1,6 +1,7 @@
 ---
 fr:
   common:
+    next: continuer
     download: télécharger
     upload: téléverser
     export: exporter

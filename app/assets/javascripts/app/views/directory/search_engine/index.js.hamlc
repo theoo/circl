@@ -1,7 +1,9 @@
 .panel-body
   .row
     .col-lg-12
-      %h2= I18n.t('directory.views.results')
+      %h2
+        = $("#directory_results_count").val()
+        = I18n.t('directory.views.results')
 
 // fake_action is overloaded in DirectorySearchEngine#Index.render() method.
 // It's used to load the remote callback (from Ui.datatable_params) and format rows nicely.

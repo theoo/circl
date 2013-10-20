@@ -18,8 +18,8 @@
   .row
     .col-lg-3
     .col-lg-6
-      -# TODO put the right object below
-      -#- error_messages_for(@settings)
+      - if flash[:error] or flash[:alert] or flash[:notice]
+        - flash_messages
     .col-lg-3
 
   .tab-content

@@ -67,32 +67,16 @@ class Edit extends App.ExtendedController
 
   add_members: (e) ->
     e.preventDefault()
-    # win = Ui.stack_window('tag-add-members-window', {width: 1200, remove_on_close: true})
-    # controller = new App.DirectoryQueryPresets(el: win, search: { text: I18n.t('directory.views.add_to_tag') })
-    # controller.bind 'search', (preset) =>
-    #   Ui.spin_on controller.search.el
 
-    #   settings =
-    #     url: "#{PublicTag.url()}/#{tag.id}/add_members"
-    #     type: 'POST',
-    #     data: JSON.stringify(query: preset.query)
+    query       = new App.QueryPreset
+    url         = "#{PublicTag.url()}/#{@tag.id}/add_members"
+    title       = I18n.t('tag.views.add_members_title') + " <i>" + @tag.name + "</i>"
+    message     = I18n.t('tag.views.add_members_message')
 
-    #   ajax_error = (xhr, statusText, error) =>
-    #     Ui.spin_off controller.search.el
-    #     Ui.notify controller.search.el, I18n.t('common.failed_to_update'), 'error'
-    #     controller.search.render_errors $.parseJSON(xhr.responseText)
-
-    #   ajax_success = (data, textStatus, jqXHR) =>
-    #     Ui.spin_off controller.search.el
-    #     Ui.notify controller.search.el, I18n.t('common.successfully_updated'), 'notice'
-    #     $(win).modal('hide')
-    #     PublicTag.fetch(id: tag.id)
-
-    #   PublicTag.ajax().ajax(settings).error(ajax_error).success(ajax_success)
-
-    # $(win).modal({title: I18n.t('tag.views.contextmenu.add_members')})
-    # $(win).modal('show')
-    # controller.activate()
+    Directory.search_with_custom_action query,
+      url: url
+      title: title
+      message: message
 
   remove_members: (e) ->
     e.preventDefault()

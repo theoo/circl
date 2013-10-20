@@ -260,31 +260,34 @@ fr:
           one: ! 'Une erreur a empêché l''enregistrement du formulaire:'
           other: ! '%{count} erreurs erreurs ont empêché l''enregistrement du formulaire:'
     models:
-      activity: Activity
-      affair: Affair
-      application_setting: Application Setting
-      background_task: Background Task
-      comment: Comment
-      elastic_search_attribute: Elastic Search Attribute
-      employment_contract: Emploment Contrat
-      invoice: Invoice
-      invoice_template: Invoice Template
-      job: Job
-      language: Language
-      location: Location
+      activity: Activité
+      affair: Affaire
+      application_setting: Configuration de l'application
+      background_task: Tâche d'arrière plan
+      comment: Commentaire
+      elastic_search_attribute: Attribut d'Elastic Search
+      employment_contract: Contrat d'emploi
+      invoice: Facture
+      invoice_template: Modèle de facture
+      job: Métier
+      language: Langue
+      location: Localité
       permission: Permission
-      person: Person
-      private_tag: Private Tag
-      public_tag: Public Tag
-      query_preset: Query Preset
-      receipt: Receipt
-      role: Role
-      setting: Setting
-      subscription: Subscription
-      task: Task
-      task_preset: Task Preset
-      task_type: Task Type
-      translation_aptitude: Translation Aptitude
+      person: Personne
+      private_tag: Tag privé
+      public_tag: Tag public
+      query_preset: Pré-réglage de recherche
+      receipt: Reçu
+      role: Rôle
+      salary: Salaire
+      salary_template: Modèle de Salaire
+      tax: Déduction
+      setting: Configuration
+      subscription: Inscription
+      task: Tâche
+      task_preset: Pré-réglage de tâche
+      task_type: Type de tâche
+      translation_aptitude: Aptitude de traduction
   date:
     abbr_day_names:
     - dim

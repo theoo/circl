@@ -1,6 +1,7 @@
 ---
 en:
   common:
+    next: next
     download: download
     upload: upload
     export: export

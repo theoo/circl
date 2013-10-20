@@ -62,47 +62,15 @@ class Index extends App.ExtendedController
     e.preventDefault()
     salary = $(e.target).salaries_salary()
 
-    win = $("<div class='modal fade' id='salaries-salary-copy-reference-modal' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
+    query       = new App.QueryPreset
+    url         = "#{Salary.url()}/#{salary.id}/copy_reference"
+    title       = I18n.t('salaries.salary.views.copy_reference_title') + " <i>" + salary.title + "</i>"
+    message     = I18n.t('salaries.salary.views.copy_reference_message')
 
-    controller = new App.DirectoryQueryPresets({el: win.find('.modal-content')})
-
-    controller.bind 'search', (preset) =>
-      Ui.spin_on controller.search.el
-
-      settings =
-        url: "#{Salary.url()}/#{salary.id}/copy_reference"
-        type: 'POST',
-        data: JSON.stringify(query: preset.query)
-
-      ajax_error = (xhr, statusText, error) =>
-        controller.search.render_errors $.parseJSON(xhr.responseText)
-
-      ajax_success = (data, textStatus, jqXHR) =>
-        $(win).modal('hide')
-        Salary.refresh([], clear: true)
-        Salary.fetch()
-
-      Salary.ajax().ajax(settings).error(ajax_error).success(ajax_success)
-
-    win.modal('show')
-    controller.activate()
-
-  stack_export_window: (e) ->
-    e.preventDefault()
-
-    win = $("<div class='modal fade' id='salaries-export-modal' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
-
-    controller = new App.ExportSalaries({el: win.find('.modal-content')})
-    win.modal('show')
-    controller.activate()
+    Directory.search_with_custom_action query,
+      url: url
+      title: title
+      message: message
 
   stack_export_to_accounting_window: (e) ->
     e.preventDefault()

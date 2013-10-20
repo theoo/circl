@@ -209,7 +209,7 @@ class App.UploadSalaryTaxes extends App.ExtendedController
     settings =
       url: "/salaries/taxes/#{tax.tax_id}/import_data.json"
       type: 'post'
-      data: {authenticity_token: @authenticity_token}
+      data: {authenticity_token: App.authenticity_token()}
       files: @el.find(':file')
       iframe: true
       processData: false

@@ -570,6 +570,10 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def can_have_salaries?
+    missing_employee_information.size == 0
+  end
+
 
   #######################
   ### API key renewal ###

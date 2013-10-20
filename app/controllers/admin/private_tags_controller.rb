@@ -85,7 +85,8 @@ class Admin::PrivateTagsController < ApplicationController
 
   def add_members
     respond_to do |format|
-      query = params[:query] # jQuery posts on this with content type as JSON, so no need to decode rails does it for us
+      query = JSON.parse params[:query]
+      query.symbolize_keys!
       if query[:search_string].blank?
         format.json { render :json => { :search_string => [I18n.t('activerecord.errors.messages.blank')] }, :status => :unprocessable_entity }
       else
@@ -93,6 +94,11 @@ class Admin::PrivateTagsController < ApplicationController
         current_people_array = @private_tag.people.map(&:id)
         @private_tag.people = Person.where(:id => [current_people_array, new_people_array].flatten.uniq)
         format.json { render :json => {} }
+        format.html do
+          # TODO improve report
+          flash[:notice] = I18n.t("tag.notices.members_added", :members_count => new_people_array.count)
+          redirect_to admin_path(:anchor => 'tags')
+        end
       end
     end
   end

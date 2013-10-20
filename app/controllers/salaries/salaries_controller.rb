@@ -52,19 +52,65 @@ class Salaries::SalariesController < ApplicationController
   def copy_reference
     respond_to do |format|
 
+      @employees = []
       if @salary.is_reference?
-        query = params[:query] # jQuery posts on this with content type as JSON, so no need to decode rails does it for us
+
+        query = JSON.parse params[:query]
+        query.symbolize_keys!
+
         if query[:search_string].blank?
           format.json { render :json => { :search_string => [I18n.t('activerecord.errors.messages.blank')] }, :status => :unprocessable_entity }
         else
-          people_ids = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order]).map(&:id)
+          succeed_token = true
+          Salaries::Salary.transaction do
+            people_ids = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order]).map(&:id)
 
-          people_ids.each do |id|
-            p = Person.find id
-            p.salaries << @salary.dup
+            people_ids.each do |id|
+              p = Person.find id
+              @employees << p if p.can_have_salaries?
+            end
+
+            if @employees.size != people_ids.size
+              flash[:alert] = I18n.t("salaries.salary.errors.one_or_more_people_doesnt_satisfy_requirements", 
+                                {:people_ids => (people_ids -@employees.map(&:id))})
+              succeed_token = false
+              raise ActiveRecord::Rollback
+            end
+
+            @employees.each do |employee|
+              # Don't copy to the reference salary owner.
+              if @salary.person_id != employee.id
+                new_salary = @salary.dup
+                new_salary.person_id = employee.id
+                unless new_salary.save
+                  msg = I18n.t("salaries.salary.errors.something_prevented_salaries_to_be_saved")
+                  msg += I18n.t("activerecord.models.person") + ": "
+                  msg += employee.id
+                  msg += I18n.t("activerecord.models.salary") + ": "
+                  msg += new_salary.errors.map{|k,v| k.to_s + ":" + v.join(", ")}
+                  flash[:alert] = msg
+                  succeed_token = false
+                  raise ActiveRecord::Rollback
+                end
+              end
+
+            end
           end
 
-          format.json { render :json => {} }
+          if succeed_token
+            format.json { render :json => {} }
+            format.html do
+              # TODO improve report
+              flash[:notice] = I18n.t("salaries.salary.notices.reference_were_copied", :members_count => @employees.size)
+              redirect_to salaries_path(:anchor => 'payroll')
+            end
+          else
+            format.json { render :json => { :error => [flash[:alert]] }, :status => :unprocessable_entity }
+            format.html do
+              flash[:notice] = I18n.t("salaries.salary.notices.plese_try_again")
+              redirect_to salaries_path(:anchor => 'payroll')
+            end
+          end
         end
       else
         format.json { render :json => { :error => [I18n.t('salaries.salary.is_not_a_reference')] }, :status => :unprocessable_entity }
@@ -189,7 +235,7 @@ class Salaries::SalariesController < ApplicationController
           redirect_to salaries_path
         end
       end
-    end 
+    end
   end
 
   def available_years

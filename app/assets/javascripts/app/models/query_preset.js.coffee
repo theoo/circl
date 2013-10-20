@@ -22,8 +22,12 @@ class App.QueryPreset extends Spine.Model
   @url: ->
     "#{Spine.Model.host}/directory/query_presets"
 
-  constructor: ->
+  constructor: (params) ->
     super
+    # Defaults and required fields
+    @selected_attributes = if params?.selected_attributes then params.selected_attributes else []
+    @attributes_order = if params?.attributes_order then params.attributes_order else []
+    @query = if params?.query then params.query else ""
 
   to_params: ->
     "query=#{encodeURIComponent(JSON.stringify(@query))}"

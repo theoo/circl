@@ -123,7 +123,7 @@ Directory::Application.routes.draw do
     end
   end
 
-  match 'directory' => 'directory#index'
+  match 'directory' => 'directory#index', :via => [:get, :post]
   match 'directory/mailchimp' => 'directory#mailchimp', :via => :post
   namespace :directory do
     resources :query_presets
@@ -178,7 +178,8 @@ Directory::Application.routes.draw do
 
     resources :subscriptions do
       member do
-        post 'add_members', 'transfer_overpaid_value'
+        # POST on show is required for the PDF generation from the search engine
+        post 'add_members', 'transfer_overpaid_value', 'show'
         delete 'remove_members'
       end
       collection do

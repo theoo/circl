@@ -232,47 +232,16 @@ class Edit extends ValueItemsController
 
   pdf: (e) ->
     e.preventDefault()
-    win = $("<div class='modal fade' id='subscription-pdf-modal' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
 
-    # Update title
-    win.find('h4').text I18n.t('subscription.edit_export_filter') + ": " + @subscription.title
+    query       = new App.QueryPreset
+    url         = "#{Subscription.url()}/#{@subscription.id}.pdf"
+    title       = I18n.t('subscription.views.sort_people_for_pdf_generation_of') + " <i>" + @subscription.title + "</i>"
+    message     = I18n.t('subscription.views.sort_people_message')
 
-    # Adapt width to A4
-    win.find('.modal-dialog')
-
-    # Add preview in new tab button
-    btn = "<button type='button' name='search' class='btn btn-default'>"
-    btn += I18n.t('directory.views.generate_pdf')
-    btn += "</button>"
-    btn = $(btn)
-    win.find('.modal-footer').append btn
-    btn.on 'click', (e) =>
-      e.preventDefault()
-      window.open "#{PersonAffairInvoice.url()}/#{@invoice.id}.html", "_blank"
-
-    controller = new App.DirectoryQueryPresets(el: win.find('.modal-body'))
-    controller.bind 'search', (preset) =>
-
-      settings =
-        url: "#{PrivateTag.url()}/#{@tag.id}/add_members"
-        type: 'POST',
-        data: JSON.stringify(query: preset.query)
-
-      ajax_error = (xhr, statusText, error) =>
-        controller.search.render_errors $.parseJSON(xhr.responseText)
-
-      ajax_success = (data, textStatus, jqXHR) =>
-        $(win).modal('hide')
-        PrivateTag.fetch(id: @tag.id)
-
-      PrivateTag.ajax().ajax(settings).error(ajax_error).success(ajax_success)
-
-    win.modal('show')
-    controller.activate()
+    Directory.search_with_custom_action query,
+      url: url
+      title: title
+      message: message
 
   destroy: (e) ->
     e.preventDefault()
@@ -303,42 +272,15 @@ class Edit extends ValueItemsController
   add_members: (e) ->
     e.preventDefault()
 
-    win = $("<div class='modal fade' id='subscription-add-members-modal' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
+    query       = new App.QueryPreset
+    url         = "#{Subscription.url()}/#{@subscription.id}/add_members"
+    title       = I18n.t('subscription.views.add_members_title') + " <i>" + @subscription.title + "</i>"
+    message     = I18n.t('subscription.views.add_members_message')
 
-    # Update title
-    win.find('h4').text I18n.t('subscription.views.actions.add_members_to_subscription') + ": " + @subscription.title
-
-    # Adapt width to A4
-    win.find('.modal-dialog')
-
-    # Add preview in new tab button
-    btn = "<input type='submit' class='btn btn-primary' value=\"#{I18n.t('directory.views.add_to_subscription')}\" />"
-    btn = $(btn)
-    win.find('.modal-footer').append btn
-
-    controller = new App.DirectoryQueryPresets(el: win.find('.modal-body'))
-    controller.bind 'search', (preset) =>
-      settings =
-        url: "#{Subscription.url()}/#{subscription.id}/add_members"
-        type: 'POST',
-        data: JSON.stringify(query: preset.query)
-
-      ajax_error = (xhr, statusText, error) =>
-        controller.search.render_errors $.parseJSON(xhr.responseText)
-
-      ajax_success = (data, textStatus, jqXHR) =>
-        $(win).modal('hide')
-        window.location = '/admin'
-
-      Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
-
-    win.modal('show')
-    controller.activate()
-
+    Directory.search_with_custom_action query,
+      url: url
+      title: title
+      message: message
 
   remove_members: (e) ->
     e.preventDefault()

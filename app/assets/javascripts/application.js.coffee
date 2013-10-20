@@ -69,6 +69,7 @@ $(document).ready ->
   $("#quick_search input[type='search']").on 'search', (e) ->
     $(e.target).attr('placeholder', I18n.t('directory.views.quick_search_placeholder'))
 
+
 Number.prototype.to_view = (num)->
     # this defines currency precision - decimals
     num = @ unless num

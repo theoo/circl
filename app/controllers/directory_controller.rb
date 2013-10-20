@@ -44,6 +44,8 @@ class DirectoryController < ApplicationController
   def index
     authorize! :index, Directory
 
+    @custom_action = params[:custom_action] if params[:custom_action]
+
     @query = HashWithIndifferentAccess.new((QueryPreset.count == 0) ? QueryPreset.new.query : QueryPreset.order(:id).first.query)
 
     person = false
@@ -60,6 +62,7 @@ class DirectoryController < ApplicationController
           if people.size == 1
             person = people.first.load
           end
+          @results_count = ElasticSearch::count(@query[:search_string])
         end
       else
         raise Tire::Search::SearchRequestFailed, I18n.t('directory.errors.you_need_to_select_at_least_one_attribute_to_display')
@@ -69,7 +72,7 @@ class DirectoryController < ApplicationController
 
     respond_to do |format|
       format.html do
-        if person
+        if person and not @custom_action
           flash[:notice] = I18n.t("directory.notices.result_return_only_one_person")
           redirect_to person_path(person)
         else

@@ -67,47 +67,16 @@ class Edit extends App.ExtendedController
 
   add_members: (e) ->
     e.preventDefault()
-    win = $("<div class='modal fade' id='invoice-preview' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
 
-    # Update title
-    win.find('h4').text I18n.t('tag.views.actions.add_members') + ": " + @tag.name
+    query       = new App.QueryPreset
+    url         = "#{PrivateTag.url()}/#{@tag.id}/add_members"
+    title       = I18n.t('tag.views.add_members_title') + " <i>" + @tag.name + "</i>"
+    message     = I18n.t('tag.views.add_members_message')
 
-    # Adapt width to A4
-    win.find('.modal-dialog')
-
-    # Add preview in new tab button
-    btn = "<button type='button' name='search' class='btn btn-default'>"
-    btn += I18n.t('directory.actions.search')
-    btn += "</button>"
-    btn = $(btn)
-    win.find('.modal-footer').append btn
-    btn.on 'click', (e) =>
-      e.preventDefault()
-      window.open "#{PersonAffairInvoice.url()}/#{@invoice.id}.html", "_blank"
-
-    controller = new App.DirectoryQueryPresets(el: win.find('.modal-body'))
-    controller.bind 'search', (preset) =>
-
-      settings =
-        url: "#{PrivateTag.url()}/#{@tag.id}/add_members"
-        type: 'POST',
-        data: JSON.stringify(query: preset.query)
-
-      ajax_error = (xhr, statusText, error) =>
-        controller.search.render_errors $.parseJSON(xhr.responseText)
-
-      ajax_success = (data, textStatus, jqXHR) =>
-        $(win).modal('hide')
-        PrivateTag.fetch(id: @tag.id)
-
-      PrivateTag.ajax().ajax(settings).error(ajax_error).success(ajax_success)
-
-    win.modal('show')
-    controller.activate()
+    Directory.search_with_custom_action query,
+      url: url
+      title: title
+      message: message
 
   remove_members: (e) ->
     e.preventDefault()

@@ -60,7 +60,8 @@ class Admin::SubscriptionsController < ApplicationController
 
   def add_members
     respond_to do |format|
-      query = params[:query] # jQuery posts on this with content type as JSON, so no need to decode rails does it for us
+      query = JSON.parse params[:query]
+      query.symbolize_keys!
       if query[:search_string].blank?
         format.json { render :json => { :search_string => [I18n.t('activerecord.errors.messages.blank')] }, :status => :unprocessable_entity }
       else
@@ -70,6 +71,11 @@ class Admin::SubscriptionsController < ApplicationController
                                                                   :person => current_person)
         flash[:notice] = I18n.t('admin.add_members_email_will_be_sent', :email => current_person.email)
         format.json { render :json => {} }
+        format.html do
+          # TODO improve report
+          flash[:notice] = I18n.t("subscription.notices.members_added", :members_count => people.count)
+          redirect_to admin_path(:anchor => 'affairs')
+        end
       end
     end
   end
