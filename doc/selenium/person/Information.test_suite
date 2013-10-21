@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Test Suite</title>
+</head>
+<body>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="usage_login">usage_login</a></td></tr>
+<tr><td><a href="information/global_personal_informaiton_editable">global_personal_information_editable</a></td></tr>
+<tr><td><a href="information/validation_org">validation_org</a></td></tr>
+<tr><td><a href="information/validation_full_name">validation_full_name</a></td></tr>
+<tr><td><a href="information/validation_second_email_is_different">validation_second_email_is_different</a></td></tr>
+<tr><td><a href="information/validation_email_exists_if_it_has_a_second_email">validation_email_exists_if_it_has_a_second_email</a></td></tr>
+<tr><td><a href="information/validation_do_not_destroy_if_first_admin">validation_do_not_destroy_if_first_admin</a></td></tr>
+<tr><td><a href="information/usage_private_tags">usage_private_tags</a></td></tr>
+<tr><td><a href="information/usage_public_tags">usage_public_tags</a></td></tr>
+<tr><td><a href="information/usage_secondary_communication_languages">usage_secondary_communication_languages</a></td></tr>
+<tr><td><a href="usage_logout">usage_logout</a></td></tr>
+</tbody></table>
+</body>
+</html>
