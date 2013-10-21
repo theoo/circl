@@ -1,37 +1,54 @@
+
+- if params[:action] == 'paginate'
+  .row
+    .col-lg-12
+      #pagination.navbar.navbar-intermediate.navbar-default.navbar-static-top{:style => 'margin-bottom: 0;'}
+        .container
+          .row
+            .col-sm-1.col-xs-1.visible-sm.visible-xs
+            .col-lg-4.col-md-4.col-sm-5.col-xs-5
+              - if @before
+                .nav.navbar-nav.navbar-text
+
+                  = link_to paginate_people_path(:query => @query.to_json, :index => 0) do
+                    .icon-double-angle-left.icon-3x
+
+                  &nbsp;
+
+                  = link_to paginate_people_path(:query => @query.to_json, :index => @index - 1) do
+                    .icon-angle-left.icon-3x
+                    -# = @before.try(:name)
+
+            .col-lg-4.col-md-4.hidden-sm.hidden-xs.text-center
+              %h2{:style => 'margin: 8px 0 0 0;'}= @person.name
+              %h4{:style => 'margin: 0 0 8px 0;'}= "#{@index + 1} / #{@total_entries}"
+
+            .col-lg-4.col-md-4.col-sm-5.col-xs-5
+              - if @after
+                .pull-right.nav.navbar-nav.navbar-text
+                  = link_to paginate_people_path(:query => @query.to_json, :index => @index + 1) do
+                    -#= @after.try(:name)
+                    .icon-angle-right.icon-3x
+
+                  &nbsp;
+
+                  = link_to paginate_people_path(:query => @query.to_json, :index => @total_entries - 1) do
+                    .icon-double-angle-right.icon-3x
+
+            .col-sm-1.col-xs-1.visible-sm.visible-xs
+
 = render :partial => 'header'
 
 .container
-  = hidden_field :person, :id
-
-  - if params[:action] == 'paginate'
-    .row
-      .col-lg-12
-        // TODO Bootstrap
-        #pagination.ui-widget-header.ui-corner-tl.ui-corner-tr
-
-          .previous_person
-            - if @before
-              = link_to_if @before, image_tag('small_arrows.png'), paginate_people_path(:query => @query.to_json, :index => 0), :class => 'first_item'
-              = link_to_if @before, raw(image_tag('big_arrow.png') + @before.try(:name)), paginate_people_path(:query => @query.to_json, :index => @index - 1), :class => 'previous_item'
-
-          .next_person
-            - if @after
-
-              = link_to_if @after, raw(@after.try(:name) + image_tag('big_arrow.png')), paginate_people_path(:query => @query.to_json, :index => @index + 1), :class => 'next_item'
-              = link_to_if @after, image_tag('small_arrows.png'), paginate_people_path(:query => @query.to_json, :index => @total_entries - 1), :class => 'last_item'
-
-          .current_person
-            .name
-              = @person.name
-            .index
-              = "#{@index + 1} / #{@total_entries}"
-
   .row
     .col-lg-3
     .col-lg-6.col-md-6
       - if flash[:error] or flash[:alert] or flash[:notice]
         - flash_messages
       - error_messages_for(@person)
+
+      = hidden_field :person, :id
+
     .col-lg-3
 
   .tab-content
