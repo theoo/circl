@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:3000/" />
+<title>validation_at_leat_one_role_mandatory</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">validation_at_leat_one_role_mandatory</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>100</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/people/4</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #sub_nav&nbsp;&nbsp;a[href=#permissions]</td>
+	<td></td>
+</tr>
+<!--element presence-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_roles</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_roles .checkbox input[value=1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_roles .checkbox input[value=2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_roles .checkbox input[value=3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_roles .checkbox input[value=4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_roles .checkbox input[value=5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_roles .checkbox input[value=6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_roles .checkbox input[value=7]</td>
+	<td></td>
+</tr>
+<!--uncheck-->
+<tr>
+	<td>uncheck</td>
+	<td>css= #person_roles .checkbox input[value=1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>uncheck</td>
+	<td>css= #person_roles .checkbox input[value=2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>uncheck</td>
+	<td>css= #person_roles .checkbox input[value=3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>uncheck</td>
+	<td>css= #person_roles .checkbox input[value=4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>uncheck</td>
+	<td>css= #person_roles .checkbox input[value=5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>uncheck</td>
+	<td>css= #person_roles .checkbox input[value=6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>uncheck</td>
+	<td>css= #person_roles .checkbox input[value=7]</td>
+	<td></td>
+</tr>
+<!--unchecking verification-->
+<tr>
+	<td>verifyNotChecked</td>
+	<td>css= #person_roles input[value=1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyNotChecked</td>
+	<td>css= #person_roles input[value=2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyNotChecked</td>
+	<td>css= #person_roles input[value=3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyNotChecked</td>
+	<td>css= #person_roles input[value=4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyNotChecked</td>
+	<td>css= #person_roles input[value=5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyNotChecked</td>
+	<td>css= #person_roles input[value=6]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyNotChecked</td>
+	<td>css= #person_roles input[value=7]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_roles .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_roles</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_roles.panel-success</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>
