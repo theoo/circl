@@ -1,32 +1,35 @@
-.row
-  .col-lg-12
-    #secondary_navigation.navbar.navbar-default.navbar-static-top
-      .container
-        .collapse.navbar-collapse
-          .navbar-right.btn-group
-            - if can? :create, Person
-              %a{ :href => new_person_path,
-                  :class => 'btn btn-default navbar-btn',
-                  :id => 'directory-add-person' }
-                .icon-user
+#secondary_navbar.navbar.navbar-default.navbar-static-top
+  .container
+    #secondary_navigation
+      // pull-right = XS
+      .pull-right
+        .navbar-right.btn-group
+          - if can? :create, Person
+            %a{ :href => new_person_path,
+                :class => 'btn btn-default navbar-btn',
+                :id => 'directory-add-person' }
+              .icon-user
+              .hidden-inline-xs
                 = I18n.t('directory.views.add_person')
 
-            - if can? :mailchimp, Directory
-              - # 00000000000000000000000000000000-us0 is the default value, not valid in real world
-              - if ApplicationSetting.value(:mailchimp_api_key) != "00000000000000000000000000000000-us0"
-                = link_to(directory_mailchimp_path,
-                  :method => :post,
-                  :class => 'btn btn-danger navbar-btn',
-                  :confirm => I18n.t("common.are_you_sure")) do
-                  .icon-refresh
+          - if can? :mailchimp, Directory
+            - # 00000000000000000000000000000000-us0 is the default value, not valid in real world
+            - if ApplicationSetting.value(:mailchimp_api_key) != "00000000000000000000000000000000-us0"
+              = link_to(directory_mailchimp_path,
+                :method => :post,
+                :class => 'btn btn-danger navbar-btn',
+                :confirm => I18n.t("common.are_you_sure")) do
+                .icon-refresh
+                .hidden-xs
                   = I18n.t('directory.views.sync_mailchimp')
-              - else
-                - # Disable mailchimp sync button
-                - # TODO print a nice modal window and link to config + doc to setup mailchimp
-                = link_to("#",
-                  :class => 'btn btn-default navbar-btn',
-                  :disabled => true ) do
-                  .icon-refresh
+            - else
+              - # Disable mailchimp sync button
+              - # TODO print a nice modal window and link to config + doc to setup mailchimp
+              = link_to("#",
+                :class => 'btn btn-default navbar-btn',
+                :disabled => true ) do
+                .icon-refresh
+                .hidden-inline-xs
                   = I18n.t('directory.views.sync_mailchimp')
 
 .container

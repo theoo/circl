@@ -1,45 +1,43 @@
 
 - if params[:action] == 'paginate'
-  .row
-    .col-lg-12
-      #pagination.navbar.navbar-intermediate.navbar-default.navbar-static-top{:style => 'margin-bottom: 0;'}
-        .container
-          .row
-            .col-sm-1.col-xs-1.visible-sm.visible-xs
-            .col-lg-4.col-md-4.col-sm-3.col-xs-3
-              - if @before
-                .nav.navbar-nav.navbar-text
+  #pagination.navbar.navbar-intermediate.navbar-default.navbar-static-top{:style => 'margin-bottom: 0;'}
+    .container
+      .row
+        .col-sm-1.col-xs-1.visible-sm.visible-xs
+        .col-lg-4.col-md-4.col-sm-3.col-xs-3
+          - if @before
+            .nav.navbar-nav.navbar-text
 
-                  = link_to paginate_people_path(:query => @query.to_json, :index => 0) do
-                    .icon-double-angle-left.icon-3x
+              = link_to paginate_people_path(:query => @query.to_json, :index => 0) do
+                .icon-double-angle-left.icon-3x
 
-                  &nbsp;
+              &nbsp;
 
-                  = link_to paginate_people_path(:query => @query.to_json, :index => @index - 1) do
-                    .icon-angle-left.icon-3x
-                    -# = @before.try(:name)
+              = link_to paginate_people_path(:query => @query.to_json, :index => @index - 1) do
+                .icon-angle-left.icon-3x
+                -# = @before.try(:name)
 
-            .col-lg-4.col-md-4.col-sm-4.col-xs-4.text-center
-              .hidden-sm.hidden-xs
-                %h2{:style => 'margin: 8px 0 0 0;'}= @person.name
-              .visible-sm.visible-xs
-                %div{:style => 'height: 27px;'} &nbsp;
+        .col-lg-4.col-md-4.col-sm-4.col-xs-4.text-center
+          .hidden-sm.hidden-xs
+            %h2{:style => 'margin: 8px 0 0 0;'}= @person.name
+          .visible-sm.visible-xs
+            %div{:style => 'height: 27px;'} &nbsp;
 
-              %h4{:style => 'margin: 0 0 8px 0;'}= "#{@index + 1} / #{@total_entries}"
+          %h4{:style => 'margin: 0 0 8px 0;'}= "#{@index + 1} / #{@total_entries}"
 
-            .col-lg-4.col-md-4.col-sm-3.col-xs-3
-              - if @after
-                .pull-right.nav.navbar-nav.navbar-text
-                  = link_to paginate_people_path(:query => @query.to_json, :index => @index + 1) do
-                    -#= @after.try(:name)
-                    .icon-angle-right.icon-3x
+        .col-lg-4.col-md-4.col-sm-3.col-xs-3
+          - if @after
+            .pull-right.nav.navbar-nav.navbar-text
+              = link_to paginate_people_path(:query => @query.to_json, :index => @index + 1) do
+                -#= @after.try(:name)
+                .icon-angle-right.icon-3x
 
-                  &nbsp;
+              &nbsp;
 
-                  = link_to paginate_people_path(:query => @query.to_json, :index => @total_entries - 1) do
-                    .icon-double-angle-right.icon-3x
+              = link_to paginate_people_path(:query => @query.to_json, :index => @total_entries - 1) do
+                .icon-double-angle-right.icon-3x
 
-            .col-sm-1.col-xs-1.visible-sm.visible-xs
+        .col-sm-1.col-xs-1.visible-sm.visible-xs
 
 = render :partial => 'header'
 

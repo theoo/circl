@@ -258,6 +258,7 @@ class Ui
 
     nav.find("a").on 'shown.bs.tab', (e) ->
       rewrite_url_anchor $(e.target).attr('href')
+      $("#tab_name").html(nav.find("li.active a").html())
 
     anchor = location.hash.split('#')
     anchor = anchor[1] if anchor

@@ -20,6 +20,8 @@ en:
     apply: apply
     a_webapp_developped_by: A webapp developped by
     add: add
+    people: Directory
+    admin: Administration
     administration: Administration
     already_synchronizing: The synchronization is already in progress.
     are_you_sure: are you sure?

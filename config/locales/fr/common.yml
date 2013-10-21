@@ -20,6 +20,8 @@ fr:
     apply: appliquer
     a_webapp_developped_by: Une application développée par
     add: ajouter
+    people: Annuaire
+    admin: Administration
     administration: Administration
     already_synchronizing: Une synchronisation est déjà en cours.
     are_you_sure: en êtes-vous sur?

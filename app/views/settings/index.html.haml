@@ -1,33 +1,43 @@
-.row
-  .col-lg-12
-    #secondary_navigation.navbar.navbar-default.navbar-static-top
-      .container
-        .collapse.navbar-collapse
-          %ul#sub_nav.nav.navbar-nav
-            - if can? :update, Language
-              %li
-                %a{:href => '#properties'}
-                  = I18n.t('settings.views.attributes')
+#secondary_navbar.navbar.navbar-default.navbar-static-top
 
-            - if can? :update, InvoiceTemplate
-              %li
-                %a{:href => '#templates'}
-                  = I18n.t('settings.views.templates')
+  .navbar-header
+    .visible-xs
+      .navbar-brand
+        #tab_name
 
-            - if can? :update, SearchAttribute
-              %li
-                %a{:href => '#searchengine'}
-                  = I18n.t('settings.views.search_engine')
+    // extra-small resolutions
+    %button{:class => 'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '#secondary_navigation'}
+      .icon-bar
+      .icon-bar
+      .icon-bar
 
-            - if can? :update, Role
-              %li
-                %a{:href => '#privileges'}
-                  = I18n.t('settings.views.privileges')
+  .container
+    #secondary_navigation.collapse.navbar-collapse
+      %ul#sub_nav.nav.navbar-nav
+        - if can? :update, Language
+          %li
+            %a{:href => '#properties'}
+              = I18n.t('settings.views.attributes')
 
-            - if can? :update, ApplicationSetting
-              %li
-                %a{:href => '#advanced'}
-                  = I18n.t('settings.views.advanced')
+        - if can? :update, InvoiceTemplate
+          %li
+            %a{:href => '#templates'}
+              = I18n.t('settings.views.templates')
+
+        - if can? :update, SearchAttribute
+          %li
+            %a{:href => '#searchengine'}
+              = I18n.t('settings.views.search_engine')
+
+        - if can? :update, Role
+          %li
+            %a{:href => '#privileges'}
+              = I18n.t('settings.views.privileges')
+
+        - if can? :update, ApplicationSetting
+          %li
+            %a{:href => '#advanced'}
+              = I18n.t('settings.views.advanced')
 
 .container
   .row
