@@ -78,13 +78,20 @@ class App.ExtendedController extends Spine.Controller
     # point fields with errors
     for attr, msg of errors
       field_with_error = $(@el).find("[name='#{attr}']")
+
+      # Autocompleters
+      # If attr ends with "_id" and field_with_error is hidden, use sibling text field instead
+      if attr.match(/_id$/) and field_with_error.attr('type') == 'hidden'
+        related_attr = attr.match(/^(.*)_id$/)[1]
+        field_with_error = $(@el).find("[name='#{related_attr}']")
+
       unless first_field
         first_field = field_with_error
 
       unless field_with_error.length > 0
         field_with_error = $(@el).find("[name='#{attr}_id']")
 
-      # If this no fields are found, push it in general_errors Object
+      # If no fields are found, push it in general_errors Object
       unless field_with_error.length > 0
         general_errors[attr] = msg
 

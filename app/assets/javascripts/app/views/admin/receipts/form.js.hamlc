@@ -13,7 +13,7 @@
             = I18n.t('receipt.views.owner')
           %input{ :type => 'search',
                   :id => 'admin_receipts_owner_name',
-                  :name => 'owner_name',
+                  :name => 'owner',
                   :autofocus => 'autofocus',
                   :value => @receipt.owner_name,
                   :action => '/people/search',
@@ -67,7 +67,7 @@
           %label{:for => 'admin_receipts_subscription_title'}
             = I18n.t('receipt.views.subscription_title')
           %input{:type => 'search',
-                 :name => 'subscription_title',
+                 :name => 'subscription',
                  :id => 'admin_receipts_subscription_title',
                  :value => '',
                  :action => '/admin/subscriptions/search',
@@ -80,7 +80,7 @@
           %label{:for => 'admin_receipts_affair_title'}
             = I18n.t('receipt.views.affair_title')
           %input{:type => 'search',
-                 :name => 'affair_title',
+                 :name => 'affair',
                  :id => 'admin_receipts_affair_title',
                  :value => @receipt.affair_title,
                  :disabled => 'disabled',
@@ -94,7 +94,7 @@
           %label{:for => 'admin_receipts_invoice_title'}
             = I18n.t('receipt.views.invoice_title')
           %input{:type => 'search',
-                 :name => 'invoice_title',
+                 :name => 'invoice',
                  :id => 'admin_receipts_invoice_title',
                  :value => @receipt.invoice_title,
                  :disabled => 'disabled',

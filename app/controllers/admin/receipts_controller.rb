@@ -80,11 +80,11 @@ class Admin::ReceiptsController < ApplicationController
           if Invoice.exists?(params[:invoice_id])
             @invoice = Invoice.find(params[:invoice_id])
           else
-            error[:invoice_id] = [I18n.t("permission.errors.record_not_found")]
+            errors[:invoice_id] = [I18n.t("permission.errors.record_not_found")]
           end
         end
       else
-        error[:affair_id] = [I18n.t("permission.errors.record_not_found")]
+        errors[:affair_id] = [I18n.t("permission.errors.record_not_found")]
       end
     else
       # expect to find a subscription if no affair_id is given
@@ -99,7 +99,7 @@ class Admin::ReceiptsController < ApplicationController
                         .select('affairs.*') # We need this otherwise the returned record is readonly
                         .first
       else
-        error[:subscription_id] = [I18n.t("permission.errors.record_not_found")]
+        errors[:subscription_id] = [I18n.t("permission.errors.record_not_found")]
       end
     end
 

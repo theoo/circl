@@ -10,7 +10,7 @@
           %label{:for => 'affair_subscription_title'}
             = I18n.t('subscription.views.subscription')
           %input{:type => 'search',
-                 :name => 'title',
+                 :name => 'subscription',
                  :id => 'affair_subscription_title',
                  :value => '',
                  :class => 'required form-control',

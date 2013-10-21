@@ -42,13 +42,17 @@ class People::Affairs::SubscriptionsController < ApplicationController
     authorize! :create, @affair => self.class.model
 
     # validate_params(:subscription_id)
-
-    subscription = Subscription.find params[:subscription_id]
-    @affair.subscriptions << subscription
-
     respond_to do |format|
-      format.json { render :json => subscription }
+      if ! params[:subscription_id].empty?
+        subscription = Subscription.find params[:subscription_id]
+        @affair.subscriptions << subscription
+
+        format.json { render :json => subscription }
+      else
+        format.json { render :json => { :subscription_id => [I18n.t('activerecord.errors.messages.blank')] }, :status => :unprocessable_entity }
+      end
     end
+
   end
 
   def destroy
