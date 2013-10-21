@@ -1,0 +1,38 @@
+%ul#person_session_navigation.nav.navbar-nav.navbar-right
+  //- if person_signed_in?
+  //  - if can? :read, BackgroundTask
+  //    #background_tasks_counter.background_tasks
+  //
+  //.lang
+  //  != select_languages
+
+  - if person_signed_in?
+    %li.dropdown
+      %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown', :class => 'btn btn-inline'}
+        .icon-user
+        = current_person.name
+        .icon-caret-down
+      %ul.dropdown-menu
+        - if can? :dashboard, current_person
+          %li
+            = link_to dashboard_person_path(current_person) do
+              .icon-dashboard
+              = I18n.t("common.dashboard")
+
+        - if can? :read, current_person
+          %li
+            = link_to person_path(current_person) do
+              .icon-user
+              = I18n.t("person.views.personal_information")
+
+          // %li
+          //   = link_to person_path(current_person) do
+          //     .icon-wrench
+          //     = I18n.t("person.views.account_settings")
+
+        %li
+          = link_to destroy_person_session_path,
+            :method => 'delete',
+            :class => 'button' do
+            .icon-power-off
+            = I18n.t('person.views.logout')

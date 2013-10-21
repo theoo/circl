@@ -3,11 +3,9 @@
   - if person_signed_in?
     %nav.navbar.navbar-default.navbar-static-top.navbar-inverse{:role => "navigation"}
       .row
-        .navbar-header.col-lg-1
+        .navbar-header.col-lg-1.col-md-1.col-sm-1
           // extra-small resolutions
-          %button{:class => 'navbar-toggle', 'data-togle' => 'collapse', 'data-target' => '.navbar-ex1-collapse'}
-            %span.sr-only
-              = I18n.t("common.toogle-navigation")
+          %button{:class => 'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '.navbar-ex1-collapse'}
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
@@ -15,9 +13,12 @@
           %span{:class => 'navbar-brand', :style => 'padding: 0 0 0 15px'}
             = image_tag 'logo_mini_white.png'
 
-        .col-lg-6
+        .col-lg-6.col-md-6.col-sm-8
           .collapse.navbar-collapse.navbar-ex1-collapse
             %ul#main_navigation.nav.navbar-nav
+              .visible-xs.login-xs
+                = render :partial => 'layouts/login'
+
               - if can? :index, Directory
                 %li
                   = link_to I18n.t('common.directory'),
@@ -42,7 +43,7 @@
                             settings_path,
                             :class => ('on' if request.path == settings_path)
 
-        .col-lg-3
+        .col-lg-3.col-md-3.hidden-sm.hidden-xs
           - if can? :index, Directory
             = form_tag directory_path,
                 :method => 'get',
@@ -59,35 +60,7 @@
                     %button{:type => 'submit', :class => 'btn btn-default'}
                       .icon-search
 
-        .col-lg-2
-          %ul#person_session_navigation.nav.navbar-nav.navbar-right
-            //- if person_signed_in?
-            //  - if can? :read, BackgroundTask
-            //    #background_tasks_counter.background_tasks
-            //
-            //.lang
-            //  != select_languages
+        .col-lg-2.col-md-2.col-sm-3.hidden-xs
+          %ul.nav.navbar-nav
+            = render :partial => 'layouts/login'
 
-            - if person_signed_in?
-              %li.dropdown
-                %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown'}
-                  = current_person.name
-                  %b.caret
-                %ul.dropdown-menu
-                  - if can? :dashboard, current_person
-                    %li
-                      = link_to I18n.t("common.dashboard"),
-                                dashboard_person_path(current_person)
-
-                  - if can? :read, current_person
-                    %li
-                      = link_to I18n.t("person.views.personal_information"), person_path(current_person)
-
-                    %li
-                      = link_to I18n.t("person.views.account_settings"), person_path(current_person)
-
-                  %li
-                    = link_to(I18n.t('person.views.logout'),
-                      destroy_person_session_path,
-                      :method => 'delete',
-                      :class => 'button')

@@ -49,8 +49,40 @@ $success: #468847
   text-shadow: 0 2px 2px rgba(0, 0, 0, .1)
   font-family: 'Open Sans', "Arial", "sans-serif"
 
-// Main navigation
+// Extending Bootstrap our way
+// https://github.com/twbs/bootstrap/issues/8869
 
+.hidden-inline-xs
+  display: inline !important
+.hidden-inline-sm
+  display: inline !important
+.hidden-inline-md
+  display: inline !important
+.hidden-inline-lg
+  display: inline !important
+
+// XS
+@media (max-width: 767px)
+  .hidden-inline-xs
+    display: none !important
+
+// SM
+@media (min-width: 768px) and (max-width: 991px)
+  .hidden-inline-sm
+    display: none !important
+
+// MD
+@media (min-width: 992px) and (max-width: 1199px)
+  .hidden-inline-md
+    display: none !important
+
+//LG
+@media (min-width: 1200px)
+  .hidden-inline-lg
+    display: none !important
+
+
+// Main navigation
 html
   overflow-x: hidden
   overflow-y: scroll
@@ -62,7 +94,7 @@ header
   nav
     margin-bottom: 0 !important // Override Bootstrap
 
-#secondary_navigation
+#secondary_navigation, #pagination
   z-index: 999 // Fixes z-index conflict with user's dropdown
 
 .ui-autocomplete
@@ -70,6 +102,19 @@ header
 
 .modal, .modal.fade.in
   top: 80px // originaly 10%
+
+.login-xs
+  li.dropdown
+    padding-right: 10px
+    &>a
+      text-align: right
+    ul
+      background-color: #efefef
+      border-bottom: solid 1px #393939 !important
+      li
+        text-align: left !important
+        padding: 5px 10px 10px 5px
+        margin: 0
 
 // panels
 .panel-disabled

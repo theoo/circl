@@ -1,5 +1,5 @@
 .row
-  .col-lg-12
+  .col-lg-12.col-md-12.col-sm-12.col-xs-12
     #secondary_navigation.navbar.navbar-default.navbar-static-top
       .container
         .collapse.navbar-collapse
@@ -31,13 +31,18 @@
 
           .navbar-right.btn-group
             - if can? :change_password, @person
-              = link_to I18n.t('person.views.change_password'),
-                  change_password_person_path(@person),
-                  :class => 'btn btn-default navbar-btn'
+              = link_to change_password_person_path(@person),
+                  :class => 'btn btn-default navbar-btn' do
+                .icon-lock
+                .hidden-inline-sm.hidden-inline-xs
+                  = I18n.t('person.views.change_password')
+
 
             - if can? :destroy, @person
-              = link_to I18n.t('person.views.destroy'),
-                  person_path(@person),
+              = link_to person_path(@person),
                   :method => :delete,
                   :confirm => I18n.t('common.are_you_sure'),
-                  :class => 'btn btn-danger navbar-btn'
+                  :class => 'btn btn-danger navbar-btn' do
+                .icon-remove
+                .hidden-inline-sm.hidden-inline-xs
+                  = I18n.t('person.views.destroy')
