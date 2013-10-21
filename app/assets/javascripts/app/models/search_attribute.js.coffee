@@ -40,7 +40,7 @@ class App.SearchAttribute extends Spine.Model
   @attributes_for: (group) ->
     sa = []
     for attr in @all()
-      sa.push(attr.name) if attr.group == group
+      sa.push(attr) if attr.group == group
     sa
 
   @groups: ->

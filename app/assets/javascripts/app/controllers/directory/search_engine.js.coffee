@@ -36,11 +36,6 @@ $.fn.query_preset = ->
 
 class SearchEngineExtention extends App.ExtendedController
 
-  # TODO Sort directory the new added attribute
-  # TODO Don't allow dropping of a non sortable item in selected_attributes
-  # TODO Don't allow dropping of a non orderable item in ordered_attributes
-  # TODO Don't display remove and sort button on placeholder
-  # TODO Ensure it's not possible to add dt/dd in sortable list
   # TODO Do not annimate already collapsed #presets and #presets_summary
 
   toggle_edit: (e) ->
@@ -75,63 +70,102 @@ class SearchEngineExtention extends App.ExtendedController
     @update_attribute_statuses()
 
     attributes_order_drop_callback = (event, ui) =>
+      el = ui.draggable
+
+      # Unable to make "accept" option to work. Doing it myself
+      if ! el.hasClass('orderable')
+        el.remove()
+        return true
+
       # Source: all attributes
-      name = $(ui.draggable).find('dt').data('name')
+      name = el.find('dt').data('name')
 
-      # Source: selected_attributes
-      name ||= $(ui.draggable).data('name')
+      # Continue if current dragged element if its name is set (then it's not in list)
+      if name != undefined and name != null
+        if preset.find(".attributes_order li[data-name=" + name + "]").length == 0
 
-      # Continue if current dragged element is not already in listing and if its name is set.
-      if preset.find(".attributes_order li[data-name=" + name + "]").length == 0 and name != undefined and name != null
+          preset.find(".attributes_order .placeholder").remove()
 
-        list = $(event.target).find('ol')
-        list.find(".placeholder").remove()
+          li = $("<li data-order='asc' class='orderable'></li>")
+            .text(el.find('dd').text())
 
-        li = $("<li data-order='asc'></li>")
-          .text($(ui.draggable).find('dd').text())
-          .appendTo(list)
+          # data-name must be set this way (not .data('name')) or is not searchable in DOM (jQuery caches it)
+          li.attr('data-name', name)
+          li.insertAfter $(event.target).find('.dt_dd_couple')
+          # li is cloned because .dt_dd_couple is double (cloned when dragged)
+          li.remove()
 
-        # data-name must be set this way or is not searchable in DOM (jQuery caches it)
-        li.attr('data-name', name)
+          li = $(".attributes_order li[data-name=" + name + "]")
+          @update_remove_button li
+          @update_attribute_order_button li
+          @update_attribute_statuses()
 
-        @update_attribute_order_button li
-        @update_remove_button li
-        @update_attribute_statuses()
+          # Source is all_attributes, then remove dropped element
+        el.remove()
 
-        # Source is all_attributes, then remove dropped element
-        ui.draggable.remove()
+    attributes_order_over_callback = (event, ui) =>
+      if ! ui.draggable.hasClass('orderable')
+        $('.attributes_order').addClass('drop_denied')
+
+    attributes_order_out_callback = (event, ui) =>
+      $('.attributes_order').removeClass('drop_denied')
 
     selected_attributes_drop_callback = (event, ui) =>
+      el = ui.draggable
+
+      # Unable to make "accept" option to work. Doing it myself
+      if ! el.hasClass('searchable')
+        el.remove()
+        return true
+
       # Source: all attributes
-      name = $(ui.draggable).find('dt').data('name')
+      name = el.find('dt').data('name')
 
-      # Source: selected_attributes
-      name ||= $(ui.draggable).data('name')
+      # Continue if current dragged element if its name is set (then it's not in list)
+      if name != undefined and name != null
+        if preset.find(".selected_attributes li[data-name=" + name + "]").length == 0
 
-      # Continue if current dragged element is not already in listing and if its name is set.
-      if preset.find(".selected_attributes li[data-name=" + name + "]").length == 0 and name != undefined and name != null
+          preset.find(".selected_attributes .placeholder").remove()
 
-        list = $(event.target).find('ol')
-        list.find(".placeholder").remove()
+          li = $("<li class='searchable'></li>")
+            .text(el.find('dd').text())
 
-        li = $("<li></li>")
-          .text($(ui.draggable).find('dd').text())
-          .appendTo(list)
+          # data-name must be set this way (not .data('name')) or is not searchable in DOM (jQuery caches it)
+          li.attr('data-name', name)
+          li.insertAfter $(event.target).find('.dt_dd_couple')
+          # li is cloned because .dt_dd_couple is double (cloned when dragged)
+          li.remove()
 
-        # data-name must be set this way or is not searchable in DOM (jQuery caches it)
-        li.attr('data-name', name)
+          @update_remove_button $(".selected_attributes li[data-name=" + name + "]")
+          @update_attribute_statuses()
 
-        @update_remove_button li
-        @update_attribute_statuses()
+          # Source is all_attributes, then remove dropped element
+        el.remove()
 
-        # Source is all_attributes, then remove dropped element
-        ui.draggable.remove()
+    selected_attributes_over_callback = (event, ui) =>
+      if ! ui.draggable.hasClass('searchable')
+        $('.selected_attributes').addClass('drop_denied')
 
-    $(".attributes_order .droppable").droppable { drop: attributes_order_drop_callback }
-    $(".selected_attributes .droppable").droppable { drop: selected_attributes_drop_callback }
+    selected_attributes_out_callback = (event, ui) =>
+      $('.selected_attributes').removeClass('drop_denied')
+
+    $(".attributes_order .droppable").droppable
+      drop: attributes_order_drop_callback
+      over: attributes_order_over_callback
+      out: attributes_order_out_callback
+      deactivate: attributes_order_out_callback
+      # accept: '.orderable' # not working, element can be dropped anyways
+      tolerence: 'touch'
+
+    $(".selected_attributes .droppable").droppable
+      drop: selected_attributes_drop_callback
+      over: selected_attributes_over_callback
+      out: selected_attributes_out_callback
+      deactivate: selected_attributes_out_callback
+      tolerence: 'touch'
 
   update_remove_button: (li) ->
-    unless li.find("a.text-danger").size() > 0
+    if li.find("a.text-danger").size() == 0 and ! li.hasClass('placeholder')
       remove_button = $("<a name='directory-preset-selected-attribute-remove' class='text-danger'>&times;</a>")
       li.append(remove_button)
 
@@ -139,25 +173,26 @@ class SearchEngineExtention extends App.ExtendedController
         .on('click', @remove_attribute_from_list)
 
   update_attribute_order_button: (li) ->
-    # Remove former button
-    li.find("a.order").remove()
+    unless li.hasClass('placeholder')
+      # Remove former button
+      li.find("a.order").remove()
 
-    # And add a new one
-    order_button = $("<a class='order'></a>")
-    li.prepend(order_button)
+      # And add a new one
+      order_button = $("<a class='order'></a>")
+      li.prepend(order_button)
 
-    if li.attr('data-order') == 'asc'
-      order_button.append("<i class='icon-caret-up'> ")
-      order_button.on 'click', (e) =>
-        li = $(e.target).closest('li')
-        li.attr('data-order', 'desc')
-        @update_attribute_order_button li
-    else
-      order_button.append("<i class='icon-caret-down'> ")
-      order_button.on 'click', (e) =>
-        li = $(e.target).closest('li')
-        li.attr('data-order', 'asc')
-        @update_attribute_order_button(li)
+      if li.attr('data-order') == 'asc'
+        order_button.append("<i class='icon-caret-up'> ")
+        order_button.on 'click', (e) =>
+          li = $(e.target).closest('li')
+          li.attr('data-order', 'desc')
+          @update_attribute_order_button li
+      else
+        order_button.append("<i class='icon-caret-down'> ")
+        order_button.on 'click', (e) =>
+          li = $(e.target).closest('li')
+          li.attr('data-order', 'asc')
+          @update_attribute_order_button(li)
 
   remove_attribute_from_list: (e) ->
     e.preventDefault()
@@ -170,6 +205,11 @@ class SearchEngineExtention extends App.ExtendedController
       original_attribute.removeClass("text-info")
     else
       original_attribute.removeClass("text-warning")
+
+    # Re-add placeholder if the last element is going to be removed.
+    if li.closest('ol').find('li').length == 1
+      li.closest('ol')
+        .append("<li class='placeholder searchable orderable'>#{I18n.t('directory.views.fields.drag_and_drop_me')}</li>")
 
     li.remove()
 
