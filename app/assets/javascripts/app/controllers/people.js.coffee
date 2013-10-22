@@ -47,7 +47,7 @@ class New extends App.ExtendedController
     @person.is_an_organization = data.is_an_organization?
     @person.hidden = data.hidden?
     @save_with_notifications @person, (id) =>
-      window.location = "people/#{id}"
+      window.location = id
 
 class Edit extends App.ExtendedController
   events:
@@ -82,7 +82,7 @@ class App.People extends Spine.Controller
   constructor: (params) ->
     super
 
-    @person_id = params.person_id
+    @person_id = params.person_id if params
 
     @edit = new Edit(id: @person_id)
     @new = new New()
@@ -93,15 +93,20 @@ class App.People extends Spine.Controller
 
   activate: ->
     super
-    Language.fetch()
-
-    if @person_id
-      Person.one 'refresh', =>
-        @edit.render()
-
+    # TODO refactor permissions with spine and ensure it's loaded before any other actions
     Permissions.get { person_id: @person_id, can: { person: ['destroy', 'restricted_attributes', 'authenticate_using_token'] }},
                       (data) =>
                         if @person_id?
                           @edit.active { can: data }
                         else
                           @new.active { can: data }
+
+    Language.one 'refresh', =>
+      if @person_id
+        @edit.render()
+      else
+        @new.render()
+
+    Language.fetch()
+
+

@@ -1,8 +1,6 @@
 $(document).ready ->
-  # show/edit
-  person_id = $('#person_id').attr('value')
-  if person_id
-    person_edit = new PersonEdit({id: person_id})
+  # new/edit
+  person_edit = new PersonEdit({id: $('#person_id').attr('value')})
 
   # finally load ui
   Ui.load_tabs $(document)

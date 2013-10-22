@@ -17,7 +17,11 @@
         - if can? :read, @person
           %li
             %a{:href => '#info'}
-              = @person.name
+              - if @person.new_record?
+                %i
+                  = I18n.t("person.views.new_contact")
+              - else
+                = @person.name
 
         - if can? :read, Affair
           %li
@@ -42,7 +46,7 @@
       // navbar-right doesn't pull buttons when resolition is XS. Forcing it with pull-right
       .pull-right
         .navbar-right.btn-group
-          - if can? :change_password, @person
+          - if can? :change_password, @person and ! @person.new_record?
             = link_to change_password_person_path(@person),
                 :class => 'btn btn-default navbar-btn' do
               .icon-lock
@@ -50,7 +54,7 @@
                 = I18n.t('person.views.change_password')
 
 
-          - if can? :destroy, @person
+          - if can? :destroy, @person and ! @person.new_record?
             = link_to person_path(@person),
                 :method => :delete,
                 :confirm => I18n.t('common.are_you_sure'),

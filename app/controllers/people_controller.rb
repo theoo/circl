@@ -46,6 +46,7 @@ class PeopleController < ApplicationController
 
   def new
     respond_to do |format|
+      format.html { render :layout => 'application', :action => 'show' }
       format.json { render :json => @person }
     end
   end

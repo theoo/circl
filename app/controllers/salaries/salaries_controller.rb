@@ -107,7 +107,7 @@ class Salaries::SalariesController < ApplicationController
           else
             format.json { render :json => { :error => [flash[:alert]] }, :status => :unprocessable_entity }
             format.html do
-              flash[:notice] = I18n.t("salaries.salary.notices.plese_try_again")
+              flash[:notice] = I18n.t("salaries.salary.notices.please_try_again")
               redirect_to salaries_path(:anchor => 'payroll')
             end
           end

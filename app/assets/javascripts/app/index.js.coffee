@@ -62,8 +62,11 @@ class @PersonEdit extends App
     super
 
     # everything depend on this person
-    @person_id = params.id
-    App.Person.fetch {id: @person_id}
+    @person_id = params.id if params
+    if @person_id
+      App.Person.fetch {id: @person_id}
+    else
+      @subapp($('#person'), 'People')
 
     App.Person.one 'refresh', =>
       @subapp($('#person'), 'People')
