@@ -1,28 +1,18 @@
-#secondary_navbar.navbar.navbar-default.navbar-static-top
+.row
+  .col-lg-12
+    #secondary_navigation.navbar.navbar-default.navbar-static-top
+      .container
+        .collapse.navbar-collapse
+          %ul#sub_nav.nav.navbar-nav
+            - if can? :read, Salaries::Salary
+              %li
+                %a{:href => '#payroll'}
+                  = I18n.t('common.salaries')
 
-  .navbar-header
-    .visible-xs
-      .navbar-brand
-        #tab_name
-
-    // extra-small resolutions
-    %button{:class => 'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '#secondary_navigation'}
-      .icon-bar
-      .icon-bar
-      .icon-bar
-
-  .container
-    #secondary_navigation.collapse.navbar-collapse
-      %ul#sub_nav.nav.navbar-nav
-        - if can? :read, Salaries::Salary
-          %li
-            %a{:href => '#payroll'}
-              = I18n.t('common.salaries')
-
-        - if can? :create, Salaries::Tax
-          %li
-            %a{:href => '#deductions'}
-              = I18n.t('salaries.views.taxes')
+            - if can? :create, Salaries::Tax
+              %li
+                %a{:href => '#deductions'}
+                  = I18n.t('salaries.views.taxes')
 
 .container
   .row
