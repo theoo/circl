@@ -12,14 +12,14 @@
   .tab-content
     #tags.tab-pane
       .row
-        .col-lg-6
+        .col-lg-6.col-md-6
           - if can? :update, PrivateTag
             #admin_private_tags.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('admin.views.private_tags')
 
-        .col-lg-6
+        .col-lg-6.col-md-6
           - if can? :update, PublicTag
             #admin_public_tags.panel.panel-default
               .panel-heading
