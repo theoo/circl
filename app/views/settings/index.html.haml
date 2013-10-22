@@ -50,51 +50,56 @@
   .tab-content
     #properties.tab-pane.fade
       .row
-        .col-lg-6
+        .col-lg-6.col-md-6
           - if can? :update, Location
             #settings_locations.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.locations')
 
+        .col-lg-6.col-md-6
           - if can? :update, Job
             #settings_jobs.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.jobs')
 
-        .col-lg-6
+      .row
+        .col-lg-6.col-md-6
           - if can? :update, Language
             #settings_languages.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.languages')
 
+        .col-lg-6.col-md-6
+
     #templates.tab-pane.fade
       .row
-        .col-lg-6
+        .col-lg-6.col-md-6
           - if can? :update, InvoiceTemplate
             #settings_invoice_templates.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.invoice_templates')
 
-        .col-lg-6
+        .col-lg-6.col-md-6
           - if can? :create, Salaries::SalaryTemplate
             #settings_salary_templates.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('salaries.views.salary_templates')
 
+
     #searchengine.tab-pane.fade
       .row
-        .col-lg-6
+        .col-lg-6.col-md-6
           - if can? :update, SearchAttribute
             #settings_search_attributes.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.search_attributes')
-        .col-lg-6
+        .col-lg-6.col-md-6
           - if can? :update, LdapAttribute
             #settings_ldap_attributes.panel.panel-default
               .panel-heading
@@ -103,13 +108,13 @@
 
     #privileges.tab-pane.fade
       .row
-        .col-lg-6
+        .col-lg-6.col-md-6
           - if can? :update, Role
             #settings_roles.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.roles')
-        .col-lg-6
+        .col-lg-6.col-md-6
           - if can? :update, Role
             #settings_role_permissions.panel.panel-default
               .panel-heading
