@@ -43,31 +43,46 @@ class ApplicationSetting < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
-  validates_presence_of :key, :value
+  validates_presence_of :key
   validates_uniqueness_of :key
   validate :ensure_key_is_unchanged, :unless => :new_record?
-  validate :ensure_value_is_not_too_long
 
   # Validate fields of type 'string' length
   validates_length_of :key, :maximum => 255
-  validates_length_of :value, :maximum => 255
+  # value is a text field: length unlimited says postgresql...
+  validate :length_of_value_if_mandatory
 
 
   #####################
   ### CLASS METHODS ###
   #####################
 
-  def self.value(key)
+  def self.value(key, options = {:silent => false})
     setting = find(:first, :conditions => {:key => key})
     if setting
       setting.value
-    else
+    elsif ! options[:silent]
       msg = I18n.t("application_setting.errors.missing_attribute", :key => key)
       logger.warn msg
       raise MissingAttribute, msg
     end
   end
 
+  # NOTE Mandatory fields are not defined in the database (non sense)
+  def self.mandatory_fields
+    [:application_id,
+    :mailchimp_list_name,
+    :mailchimp_api_key,
+    :mailchimp_connection_secure,
+    :mailchimp_connection_timeout,
+    :invoices_prefix,
+    :invoices_debit_account,
+    :invoices_credit_account,
+    :receipts_prefix,
+    :receipts_debit_account,
+    :receipts_credit_account,
+    :default_locale]
+  end
 
   protected
 
@@ -78,9 +93,9 @@ class ApplicationSetting < ActiveRecord::Base
     end
   end
 
-  def ensure_value_is_not_too_long
-    if value && value.length > 255
-      errors.add(:key, I18n.t('application_setting.errors.value_is_too_long'))
+  def length_of_value_if_mandatory
+    if self.class.mandatory_fields.index(self.key.to_sym)
+      errors.add(:value, I18n.t("activerecord.errors.messages.blank"))
       false
     end
   end

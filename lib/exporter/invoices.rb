@@ -33,7 +33,7 @@ module Exporter
     end
 
     def desc_for(i)
-      [ @options[:invoice_prefix], "Client " + i.owner.id.to_s, "#{i.title} - #{i.id}" ].join("/")
+      [ @options[:invoice_prefix], "client " + i.owner.id.to_s, "#{i.title} - #{i.id}" ].join("/")
     end
 
     def convert(invoice)

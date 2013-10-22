@@ -52,9 +52,15 @@ class Admin::ReceiptsController < ApplicationController
           exporter = Exporter::Factory.new( :receipts,
                                             params[:type].to_sym,
                                             { :account => params["account"], :counterpart_account => params['counterpart_account'] })
+
+          extention = case params[:type]
+            when 'banana' then 'txt'
+            else 'csv'
+          end
+
           send_data( exporter.export(receipts),
                      :type => 'application/octet-stream',
-                     :filename=> "receipts_#{from}_#{to}_#{params[:type]}.csv",
+                     :filename=> "receipts_#{from}_#{to}_#{params[:type]}.#{extention}",
                      :disposition => 'attachment' )
         else
           flash[:alert] = I18n.t('common.errors.date_must_match_format')

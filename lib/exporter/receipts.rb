@@ -37,7 +37,7 @@ module Exporter
     end
 
     def desc_for(i)
-      [ @options[:receipt_prefix], "Client " + i.owner.id.to_s, "#{title_for(i)} - #{i.id}" ].join("/")
+      [ @options[:receipt_prefix], "client " + i.owner.id.to_s, "#{title_for(i)} - #{i.id}" ].join("/")
     end
 
     def convert(receipt)
@@ -47,8 +47,8 @@ module Exporter
         :date                       => receipt.value_date,
         :title                      => title_for(receipt),
         :description                => desc_for(receipt),
-        :value                      => receipt.value,
-        :value_currency             => receipt.value_currency,
+        :value                      => "%.2f" % receipt.value,
+        :value_currency             => receipt.value.try(:currency).try(:to_s),
         :account                    => @options[:account],
         :counterpart_account        => @options[:counterpart_account],
         :vat_code                   => @options[:receipt_vat_code],

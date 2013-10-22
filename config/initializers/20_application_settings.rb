@@ -19,23 +19,8 @@
 # Ensure all required key exists in ApplicationSetting
 extend ColorizedOutput
 
-mandatory_fields = [:application_id,
-                    :mailchimp_list_name,
-                    :mailchimp_api_key,
-                    :mailchimp_connection_secure,
-                    :mailchimp_connection_timeout,
-                    :invoices_prefix,
-                    :invoices_debit_account,
-                    :invoices_credit_account,
-                    :invoices_vat_code,
-                    :invoices_vat_rate,
-                    :receipts_prefix,
-                    :receipts_debit_account,
-                    :receipts_credit_account,
-                    :receipts_vat_code,
-                    :receipts_vat_rate,
-                    :default_locale]
-
+mandatory_fields = ApplicationSetting.mandatory_fields
+ 
 # Table may not exist on rake db:schema:load
 if ActiveRecord::Base.connection.table_exists? 'application_settings' \
     and ENV['force_application_settings'] != 'true' \

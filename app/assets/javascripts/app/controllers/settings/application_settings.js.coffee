@@ -36,11 +36,11 @@ class ValidatingController extends App.ExtendedController
     if content_length > 255
       @char_counter.css "font-weight", "bolder"
       @char_counter.css "color", "error"
-      @submit.button('disable')
+      #@submit.button('disable')
     else
       @char_counter.css "font-weight", "lighter"
       @char_counter.css "color", "rgb(#{content_length},0,0)"
-      @submit.button('enable')
+      #@submit.button('enable')
 
 class New extends ValidatingController
   events:

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130821142246) do
+ActiveRecord::Schema.define(:version => 20131022192721) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(:version => 20130821142246) do
 
   create_table "application_settings", :force => true do |t|
     t.string "key",   :default => ""
-    t.string "value", :default => ""
+    t.text   "value", :default => ""
   end
 
   add_index "application_settings", ["key"], :name => "index_application_settings_on_key"
