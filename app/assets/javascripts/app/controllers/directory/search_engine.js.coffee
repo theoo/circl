@@ -416,7 +416,7 @@ class Index extends App.ExtendedController
     Ui.datatable_bootstrap_classes(table)
     Ui.datatable_localstorage(table)
     table.dataTable Ui.datatable_params(table, extended_params)
-    Ui.datatable_appareance(table)
+    Ui.datatable_appareance(table, {sorting: false})
 
   export_to_csv: (e) =>
     e.preventDefault()

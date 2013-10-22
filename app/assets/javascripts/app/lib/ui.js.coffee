@@ -188,7 +188,7 @@ class Ui
     # return params
     params
 
-  datatable_appareance: (table) ->
+  datatable_appareance: (table, params = {sorting: true}) ->
     # Customize appearance
 
     # SEARCH - Add the placeholder for Search and Turn this into in-line formcontrol
@@ -211,29 +211,30 @@ class Ui
     parent.addClass('panel-body form-group')
 
     # SORTING
-    table.find('th.sorting:not(.ignore-sort)').append("&nbsp;<span class='icon-sort'/>")
-    table.find('th.sorting_asc').append("&nbsp;<span class='icon-sort-up'/>")
-    table.find('th.sorting_desc').append("&nbsp;<span class='icon-sort-down'/>")
+    if params.sorting
+      table.find('th.sorting:not(.ignore-sort)').append("&nbsp;<span class='icon-sort'/>")
+      table.find('th.sorting_asc').append("&nbsp;<span class='icon-sort-up'/>")
+      table.find('th.sorting_desc').append("&nbsp;<span class='icon-sort-down'/>")
 
-    table.find('th.sorting:not(.ignore-sort), th.sorting_desc, th.sorting_asc').on 'click', (e) ->
+      table.find('th.sorting:not(.ignore-sort), th.sorting_desc, th.sorting_asc').on 'click', (e) ->
 
-      # reset all columns
-      table.find('th.sorting:not(.ignore-sort), th.sorting_desc, th.sorting_asc').each (index, i) ->
-        th = $(i)
-        th.find('span.icon-sort, span.icon-sort-up, span.icon-sort-down').remove()
+        # reset all columns
+        table.find('th.sorting:not(.ignore-sort), th.sorting_desc, th.sorting_asc').each (index, i) ->
+          th = $(i)
+          th.find('span.icon-sort, span.icon-sort-up, span.icon-sort-down').remove()
+          icon = $("<span class='icon-sort'/>")
+          th.append icon
+
+        th = $(e.target)
+        th.find('span.icon-sort').remove()
         icon = $("<span class='icon-sort'/>")
         th.append icon
-
-      th = $(e.target)
-      th.find('span.icon-sort').remove()
-      icon = $("<span class='icon-sort'/>")
-      th.append icon
-      if th.hasClass('sorting_asc')
-        icon.removeClass('icon-sort-down')
-        icon.addClass('icon-sort-up')
-      else
-        icon.removeClass('icon-sort')
-        icon.addClass('icon-sort-down')
+        if th.hasClass('sorting_asc')
+          icon.removeClass('icon-sort-down')
+          icon.addClass('icon-sort-up')
+        else
+          icon.removeClass('icon-sort')
+          icon.addClass('icon-sort-down')
 
   load_datatable: (table) ->
     # ensure datatable isn't already loaded on this table
