@@ -43,7 +43,7 @@ module Exporter
         :date                       => invoice.created_at,
         :title                      => invoice.title,
         :description                => desc_for(invoice),
-        :value                      => invoice.value,
+        :value                      => invoice.value.to_view,
         :value_currency             => invoice.value_currency,
         :account                    => @options[:account],
         :counterpart_account        => @options[:counterpart_account],

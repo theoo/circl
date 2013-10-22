@@ -47,7 +47,7 @@ module Exporter
         :date                       => receipt.value_date,
         :title                      => title_for(receipt),
         :description                => desc_for(receipt),
-        :value                      => "%.2f" % receipt.value,
+        :value                      => receipt.value.to_view,
         :value_currency             => receipt.value.try(:currency).try(:to_s),
         :account                    => @options[:account],
         :counterpart_account        => @options[:counterpart_account],

@@ -68,7 +68,7 @@ module Exporter
 
       # its employee taxes
       salary.tax_data.each do |t|
-        salary_and_taxes << employee_taxes_resource.convert_employee_taxes(t)
+        salary_and_taxes << employee_taxes_resource.convert_employee_taxes(t) if t.employee_value > 0
       end
 
       # balance the net salary
@@ -109,7 +109,7 @@ module Exporter
 
        # balance employer taxes
         salary.tax_data.each do |t|
-          salary_and_taxes << employer_taxes_resource.convert_employer_taxes(t)
+          salary_and_taxes << employer_taxes_resource.convert_employer_taxes(t) if t.employer_value > 0
         end
       end
 
