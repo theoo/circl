@@ -14,6 +14,7 @@ en:
       please_find_a_link_to_access_the_subscription_pdf: Please find a link to access the subscription pdf
       subscription_and_its_invoices_were_updated: Subscription "%{title}" and its invoices were updated
       subscription_pdf_title: Subscription pdf
+      subscription_were_merged: The subscription has been successfully merged
       table:
         email: email
         first_name: first name
@@ -30,7 +31,7 @@ en:
       the_following_members_were_updated: The following members were updated
     views:
       contextmenu:
-        merge: merge with another subscription
+        merge: merge to another subscription
         add_members_to_subscription: add members to subscription
         destroy_subscription: destroy subscription
         edit_subscription: edit subscription

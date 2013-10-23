@@ -32,7 +32,10 @@ class BackgroundTasks::MergeSubscriptions < BackgroundTask
 
     # add destination subscription to all current affairs
     source_subscription.affairs.each do |a|
+      # Append the new subscription to the current subscription's affair
     	a.subscriptions << destination_subscription
+      # Change affair's title so it's easier to read
+      a.update_attributes(:title => destination_subscription.title)
     end
 
     # detach from all affairs

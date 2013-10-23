@@ -14,6 +14,7 @@ fr:
       please_find_a_link_to_access_the_subscription_pdf: Veuillez trouver ci-joint un lien vers le PDF de l'inscription
       subscription_and_its_invoices_were_updated: L'inscription et ses factures ont étées mis à jour
       subscription_pdf_title: PDF de l'inscription
+      subscription_were_merged: L'inscription à correctement été fusionnée
       table:
         email: email
         first_name: prénom
@@ -30,7 +31,7 @@ fr:
       the_following_members_were_updated: Les membres suivants ont étés mis à jour
     views:
       contextmenu:
-        merge: fusionner avec une autre inscription
+        merge: fusionner vers une autre inscription
         add_members_to_subscription: ajouter des membres à l'inscription
         destroy_subscription: détruire l'inscription
         edit_subscription: modifier l'inscription
