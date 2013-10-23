@@ -53,7 +53,7 @@ $(document).ready ->
   $("#quick_search form").on 'submit', (e) ->
     input = $('#quick_search_string')[0]
     value = input.value
-    if(value.match(/\d+/g) != null)
+    if(value.match(/^\d+$/g) != null)
       window.location = '/people/' + value
     else
       window.location = '/directory?query=' + App.escape_query({ search_string: input.value })
