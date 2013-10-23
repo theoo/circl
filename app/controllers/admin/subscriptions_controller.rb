@@ -89,6 +89,7 @@ class Admin::SubscriptionsController < ApplicationController
   def transfer_overpaid_value
     errors = {}
 
+    # TODO Move this to a background task
     if @subscription.values.size <= 1 and @subscription.values.try(:first).try(:value) == 0
       errors[:subscription_id] = [ I18n.t('subscription.errors.cannot_transfer_overpaid_value_if_subscription_value_is_zero') ]
     elsif ! Subscription.exists?(params[:transfer_to_subscription_id])
@@ -99,10 +100,13 @@ class Admin::SubscriptionsController < ApplicationController
       Subscription.transaction do
         @subscription.affairs.each do |affair|
           new_affair = Affair.new :title => transfer_to.title,
-                                  :subscriptions => [ transfer_to ],
-                                  :owner => affair.owner,
+                                  :owner_id => affair.owner_id,
                                   :created_at => affair.created_at,
                                   :updated_at => affair.updated_at
+
+          # Affair requires to be saved before adding subscriptions
+          new_affair.save!
+          new_affair.subscriptions = [ transfer_to ]
 
           affair.invoices.each do |invoice|
             # Skip invoices that are not overpaid
