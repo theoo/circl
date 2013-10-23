@@ -53,13 +53,15 @@
                   %a{:href => '#', :name => 'tag-view-members'}
                     .icon-eye-open
                     = I18n.t('tag.views.actions.view_tag_members')
+                %li.divider
+                %li
+                  %a{:href => '#', :name => 'tag-add-members'}
+                    .icon-plus
+                    = I18n.t('tag.views.actions.add_members')
+
                 - if @tag.members_count > 0
                   %li
                     %a{:href => '#', :name => 'tag-remove-members'}
                       .icon-minus
                       = I18n.t('tag.views.actions.remove_all_members')
-                %li
-                  %a{:href => '#', :name => 'tag-add-members'}
-                    .icon-plus
-                    = I18n.t('tag.views.actions.add_members')
 

@@ -104,9 +104,11 @@
               %ul.dropdown-menu
                 %li
                   %a{:href => '#', :name => 'invoice-preview-pdf'}
+                    .icon-eye-open
                     = I18n.t('common.preview')
                 %li
                   %a{:href => '#', :name => 'invoice-download-pdf'}
+                    .icon-download-alt
                     = I18n.t('common.download')
 
 

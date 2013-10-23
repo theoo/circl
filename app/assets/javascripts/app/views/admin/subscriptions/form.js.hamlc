@@ -207,14 +207,6 @@
 
               %ul.dropdown-menu
                 %li
-                  %a{:href => '#', :name => 'subscription-members-add'}
-                    .icon-plus
-                    = I18n.t('subscription.views.actions.add_members_to_subscription')
-                %li
-                  %a{:href => '#', :name => 'subscription-members-remove'}
-                    .icon-minus
-                    = I18n.t('subscription.views.actions.remove_members_from_subscription')
-                %li
                   %a{:href => '#', :name => 'subscription-members-view'}
                     .icon-eye-open
                     = I18n.t('subscription.views.actions.view_subscription_members')
@@ -226,6 +218,7 @@
                   %a{:href => '#', :name => 'subscription-receivers-view'}
                     .icon-eye-open
                     = I18n.t('subscription.views.actions.view_subscription_receivers')
+                %li.divider
                 %li
                   %a{:href => '#', :name => 'subscription-members-who-paid-view'}
                     .icon-eye-open
@@ -234,6 +227,15 @@
                   %a{:href => '#', :name => 'subscription-members-who-didnt-paid-view'}
                     .icon-eye-open
                     = I18n.t('subscription.views.actions.view_subscription_members_who_didnt_paid')
+                %li.divider
+                %li
+                  %a{:href => '#', :name => 'subscription-members-add'}
+                    .icon-plus
+                    = I18n.t('subscription.views.actions.add_members_to_subscription')
+                %li
+                  %a{:href => '#', :name => 'subscription-members-remove'}
+                    .icon-minus
+                    = I18n.t('subscription.views.actions.remove_members_from_subscription')
 
 
             .btn-group
@@ -247,7 +249,7 @@
               %ul.dropdown-menu
                 %li
                   %a{:href => '#', :name => 'subscription-transfer-overpaid-value'}
-                    .icon-transfer
+                    .icon-stackexchange
                     = I18n.t('subscription.views.actions.transfer_overpaid_value')
                 %li
                   %a{:href => '#', :name => 'subscription-reminder'}

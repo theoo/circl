@@ -42,8 +42,10 @@
             - if @comment.is_closed
               %button{:name => "comment-reopen",
                       :class => 'btn btn-default' }
+                .icon-folder-open
                 = I18n.t("comment.views.actions.reopen")
             - else
               %button{:name => "comment-close",
                       :class => 'btn btn-default' }
+                .icon-minus-sign
                 = I18n.t("comment.views.actions.close")
