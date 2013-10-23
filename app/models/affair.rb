@@ -52,6 +52,7 @@ class Affair < ActiveRecord::Base
   after_save :update_elasticsearch
   before_save :compute_value, :update_statuses
   before_validation  :ensure_buyer_and_receiver_person_exists
+  before_destroy :do_not_destroy_if_has_invoices
   before_destroy { subscriptions.clear }
 
   #################
@@ -291,6 +292,14 @@ class Affair < ActiveRecord::Base
       end
     end
     true
+  end
+
+  def do_not_destroy_if_has_invoices
+    unless invoices.empty?
+      errors.add(:base,
+                 I18n.t('affair.errors.cant_delete_affair_who_has_invoices'))
+      false
+    end
   end
 
 end
