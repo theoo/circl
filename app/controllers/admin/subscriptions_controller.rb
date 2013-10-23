@@ -201,25 +201,27 @@ class Admin::SubscriptionsController < ApplicationController
       end
 
       if ! params[:parent_id].blank?
+        do_bg_tasks = false
         case params[:status]
         when 'reminder'
           people_ids = @subscription.parent
                                     .get_people_from_affairs_status(:open)
                                     .map(&:id)
+          do_bg_tasks = true
         when 'renewal'
           people_ids = Subscription.find(params[:parent_id])
                                     .get_people_from_affairs_status(:paid)
                                     .map(&:id)
-        else
-          @subscription.errors.add(:base, I18n.t("subscription.errors.parent_id_is_set_without_status"))
-          raise ActiveRecord::Rollback
+          do_bg_tasks = true
         end
 
-        BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(:subscription_id => @subscription.id,
-          :people_ids => people_ids,
-          :person => current_person,
-          :parent_subscription_id => params[:parent_id],
-          :status => params[:status])
+        if do_bg_tasks
+          BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(:subscription_id => @subscription.id,
+            :people_ids => people_ids,
+            :person => current_person,
+            :parent_subscription_id => params[:parent_id],
+            :status => params[:status])
+        end
       end
       succeed = true
     end
