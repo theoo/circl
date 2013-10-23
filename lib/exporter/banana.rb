@@ -28,11 +28,17 @@ module Exporter
       @mapping = ApplicationSetting.value("banana_accounting_headers_mapping", :silent => true)
       if @mapping
         begin
-          @mapping = JSON.parse(@mapping).symbolize_keys
+          # symbolize_values
+          h = JSON.parse(@mapping)
+          @mapping = {}
+          h.each do |k,v|
+            # Keep empty string if this is what user wants.
+            @mapping[k] = v == "" ? v : v.to_sym
+          end
         rescue
           @mapping = {:document_type => 'Configuration value error !'}
         end
-        @cols = @mapping.keys if @mapping
+        @cols = @mapping.values if @mapping
       end
 
       # Defaults
@@ -44,7 +50,7 @@ module Exporter
 
       if @mapping
         # ApplicationSettings
-        @mapping.values
+        @mapping.keys
       else
         # Defaults
         ["Date", "Description", "AccountDebit", "AccountCredit", "Amount", "VatCode", "VatPercentNonDeductible"]
