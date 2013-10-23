@@ -34,7 +34,16 @@ class People::Affairs::SubscriptionsController < ApplicationController
     @subscriptions = @affair.subscriptions
 
     respond_to do |format|
-      format.json { render :json => @subscriptions }
+      format.json do
+        subs = []
+        @subscriptions.map do |s|
+          h = s.to_hash
+          # Add current value for this person
+          h[:value] = s.value_for(@person).to_f
+          subs << h
+        end
+        render :json => subs
+      end
     end
   end
 
