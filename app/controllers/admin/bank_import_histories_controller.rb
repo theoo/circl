@@ -34,7 +34,7 @@ class Admin::BankImportHistoriesController < ApplicationController
 
     unless params[:receipts_file]
       flash[:alert] = I18n.t('admin.no_file_submitted')
-      redirect_to admin_path
+      redirect_to admin_path(:anchor => 'finances')
       return
     end
 

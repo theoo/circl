@@ -1,106 +1,113 @@
 - # TODO move some translation to bank_import_history.yml
 
-#content_wrapper
-  #content{ :style => 'box-sizing: border-box; padding: 10px;' }
+= render :partial => 'admin/header'
 
-    %h1= I18n.t('admin.views.receipts_found_in_file')
+.container
+  = form_tag(import_admin_bank_import_histories_path, :method => :post) do
+    .row
+      .col-lg-12
+        .panel.panel-default
+          .panel-heading
+            .panel-title
+              = I18n.t('admin.views.receipts_found_in_file')
 
-    %br
+          .panel-body
+            != I18n.t('admin.views.receipts_import_help')
 
-    != I18n.t('admin.views.receipts_import_help')
+          - unless @infos.empty?
+            %table.datatable
+              %thead
+                %tr
+                  %th= I18n.t('receipt.views.line')
+                  %th= I18n.t('admin.views.person')
+                  %th= I18n.t('admin.views.invoice_date')
+                  %th= I18n.t('admin.views.invoice_title')
+                  %th= I18n.t('admin.views.invoice_value')
+                  %th= I18n.t('admin.views.receipt_date')
+                  %th= I18n.t('admin.views.receipt_value')
+                  %th= I18n.t('receipt.views.import_status')
+                  %th= I18n.t('admin.views.import')
+              %tbody
+                - @infos.each do |line_number, info|
+                  - next if line_number == :errors # bypass general errors
+                  - next if line_number == :summary # bypass summary
 
-    %br
-    %br
+                  - class_mapping = { :correct => 'success',
+                                      :rectification => 'active',
+                                      :already_imported => 'warning',
+                                      :error => 'danger' }
 
-    = form_tag(import_admin_bank_import_histories_path, :method => :post) do
-      - unless @infos.empty?
-        %table#new_receipts
-          %thead
-            %tr
-              %th= I18n.t('receipt.views.line')
-              %th= I18n.t('admin.views.person')
-              %th= I18n.t('admin.views.invoice_date')
-              %th= I18n.t('admin.views.invoice_title')
-              %th= I18n.t('admin.views.invoice_value')
-              %th= I18n.t('admin.views.receipt_date')
-              %th= I18n.t('admin.views.receipt_value')
-              %th= I18n.t('receipt.views.import_status')
-              %th= I18n.t('admin.views.import')
-          %tbody
-            - @infos.each do |line_number, info|
-              - next if line_number == :errors # bypass general errors
-              - next if line_number == :summary # bypass summary
+                  - if info[:receipt].is_a? Receipt
+                    - receipt = info[:receipt]
+                    %tr{ :class => class_mapping[info[:status].to_sym] }
+                      %td
+                        = line_number
+                      %td
+                        = hidden_field_tag 'receipts[][line_number]', line_number
+                        = hidden_field_tag 'receipts[][line]', info[:line]
+                        = hidden_field_tag 'receipts[][owner_id]', receipt.invoice.owner.id
+                        = hidden_field_tag 'receipts[][invoice_id]', receipt.invoice.id
+                        = hidden_field_tag 'receipts[][receipt_id]', receipt.id
+                        = hidden_field_tag 'receipts[][old_value_in_cents]', receipt.changes[:value_in_cents].try(:first)
+                        = hidden_field_tag 'receipts[][value_in_cents]', receipt.value_in_cents
+                        = hidden_field_tag 'receipts[][value_date]', receipt.value_date
+                        = hidden_field_tag 'receipts[][means_of_payment]', 'bvr'
+                        = hidden_field_tag 'receipts[][already_imported]', !receipt.new_record?
+                        = hidden_field_tag 'receipts[][rectification]', info[:status] == 'rectification'
+                        = receipt.invoice.owner.name
+                      %td= receipt.invoice.created_at
+                      %td= receipt.invoice.title
+                      %td= receipt.invoice.value.to_view
+                      %td= receipt.value_date
+                      %td= info[:status] == 'rectification' ? receipt.changes[:value_in_cents].map{|i| Money.new(i).to_view }.join(' -> ') : receipt.value.to_view
+                      %td= I18n.t "receipt.import_status." + info[:status]
+                      %td= check_box_tag('receipts[][selected]',
+                                          true,
+                                          receipt.new_record? || info[:status] == 'rectification',
+                                          :class => 'normal')
+                  - if info[:status] == 'error'
+                    %tr{ :class => class_mapping[info[:status].to_sym] }
+                      %td
+                        = line_number
+                      %td
+                        = info[:errors][:message]
+                      %td{:colspan => 5, :title => info[:errors][:decoded_line].inspect}
+                        = info[:errors][:line]
+                      %td= I18n.t "receipt.import_status." + info[:status]
+                      %td
+                        = hidden_field_tag "errors[][line_number]", line_number
+                        = hidden_field_tag "errors[][message]", info[:errors][:message]
+                        = hidden_field_tag "errors[][line]", info[:errors][:line]
 
-              - if info[:receipt].is_a? Receipt
-                - receipt = info[:receipt]
-                %tr{ :class => "bvr_" + info[:status] }
-                  %td= line_number
-                  %td
-                    = hidden_field_tag 'receipts[][line_number]', line_number
-                    = hidden_field_tag 'receipts[][line]', info[:line]
-                    = hidden_field_tag 'receipts[][owner_id]', receipt.invoice.owner.id
-                    = hidden_field_tag 'receipts[][invoice_id]', receipt.invoice.id
-                    = hidden_field_tag 'receipts[][receipt_id]', receipt.id
-                    = hidden_field_tag 'receipts[][old_value_in_cents]', receipt.changes[:value_in_cents].try(:first)
-                    = hidden_field_tag 'receipts[][value_in_cents]', receipt.value_in_cents
-                    = hidden_field_tag 'receipts[][value_date]', receipt.value_date
-                    = hidden_field_tag 'receipts[][means_of_payment]', 'bvr'
-                    = hidden_field_tag 'receipts[][already_imported]', !receipt.new_record?
-                    = hidden_field_tag 'receipts[][rectification]', info[:status] == 'rectification'
-                    = receipt.invoice.owner.name
-                  %td= receipt.invoice.created_at
-                  %td= receipt.invoice.title
-                  %td= receipt.invoice.value.to_view
-                  %td= receipt.value_date
-                  %td= info[:status] == 'rectification' ? receipt.changes[:value_in_cents].map{|i| Money.new(i).to_view }.join(' -> ') : receipt.value.to_view
-                  %td= I18n.t "receipt.import_status." + info[:status]
-                  %td= check_box_tag('receipts[][selected]',
-                                      true,
-                                      receipt.new_record? || info[:status] == 'rectification',
-                                      :class => 'normal')
-              - if info[:status] == 'error'
-                %tr{ :class => "bvr_" + info[:status] }
-                  %td= line_number
-                  %td
-                    = info[:errors][:message]
-                  %td{:colspan => 5, :title => info[:errors][:decoded_line].inspect}
-                    = info[:errors][:line]
-                  %td= I18n.t "receipt.import_status." + info[:status]
-                  %td
-                    = hidden_field_tag "errors[][line_number]", line_number
-                    = hidden_field_tag "errors[][message]", info[:errors][:message]
-                    = hidden_field_tag "errors[][line]", info[:errors][:line]
+                - unless @infos[:summary].empty?
+                  %tr{ :class => "bvr_summary" }
+                    %td{:colspan => 3}
+                    %td{:colspan => 2}
+                      = I18n.t("common.file") + ":"
+                      %b= @file_name
+                    %td
+                      = I18n.t("receipt.media_date") + ":"
+                      %b= @infos[:summary][:media_date]
+                    %td
+                      = I18n.t("receipt.value_total") + ":"
+                      %b= (@infos[:summary][:value_total] / 100.0).to_money.to_view
+                    %td
+                      = I18n.t("receipt.receipts_count") + ":"
+                      %b= @infos[:summary][:receipts_count]
+                    %td
+                      = hidden_field_tag "summary[value_total]", @infos[:summary][:value_total]
+                      = hidden_field_tag "summary[receipts_count]", @infos[:summary][:receipts_count]
+                      = hidden_field_tag "summary[media_date]", @infos[:summary][:media_date]
+                      = hidden_field_tag "summary[file_name]", @file_name
 
-            - unless @infos[:summary].empty?
-              %tr{ :class => "bvr_summary" }
-                %td{:colspan => 3}
-                %td{:colspan => 2}
-                  = I18n.t("common.file") + ":"
-                  %b= @file_name
-                %td
-                  = I18n.t("receipt.media_date") + ":"
-                  %b= @infos[:summary][:media_date]
-                %td
-                  = I18n.t("receipt.value_total") + ":"
-                  %b= (@infos[:summary][:value_total] / 100.0).to_money.to_view
-                %td
-                  = I18n.t("receipt.receipts_count") + ":"
-                  %b= @infos[:summary][:receipts_count]
-                %td
-                  = hidden_field_tag "summary[value_total]", @infos[:summary][:value_total]
-                  = hidden_field_tag "summary[receipts_count]", @infos[:summary][:receipts_count]
-                  = hidden_field_tag "summary[media_date]", @infos[:summary][:media_date]
-                  = hidden_field_tag "summary[file_name]", @file_name
+          .panel-body
+            - unless @infos[:errors].empty?
+              %h1= I18n.t('admin.views.receipts_file_errors')
+              .alert.alert-danger
+                - @infos[:errors].each do |h|
+                  = hidden_field_tag 'errors[]', h
+                  = h
 
-        %br
-
-      - unless @infos[:errors].empty?
-        %h1= I18n.t('admin.views.receipts_file_errors')
-        .error
-          - @infos[:errors].each do |h|
-            = hidden_field_tag 'errors[]', h
-            = h
-            %br
-        %br
-
-      .align_right= submit_tag I18n.t('admin.views.proceed_with_import')
+          .panel-footer
+            .text-right
+              = submit_tag I18n.t('admin.views.proceed_with_import'), :class => 'btn btn-primary'

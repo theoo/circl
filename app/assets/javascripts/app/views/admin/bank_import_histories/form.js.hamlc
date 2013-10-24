@@ -1,3 +1,4 @@
+
 %form{:action => '/admin/bank_import_histories/confirm',
       :method => 'POST',
       :enctype => "multipart/form-data" }
@@ -17,7 +18,7 @@
           %input{:type => 'hidden', :name => 'authenticity_token', :value => App.authenticity_token()}
           %input{ :type => 'file',
                   :id => 'admin_bankfile_import_file',
-                  :name => 'admin_receipts_file'}
+                  :name => 'receipts_file'}
 
       .col-lg-4
         .pull-right
