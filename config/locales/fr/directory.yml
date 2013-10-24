@@ -2,6 +2,7 @@
 fr:
   directory:
     errors:
+      query_empty: Aucune requête transmise, veuillez en fournir une et recommancer.
       query_invalid: requête "%{query}" invalide
       search_error: erreur lors de la recherche -> %{error}
       you_need_to_select_at_least_one_attribute_to_display: Vous devez sélectionner au moins un attributs à afficher.

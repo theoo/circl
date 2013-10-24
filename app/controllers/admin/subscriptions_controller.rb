@@ -64,6 +64,10 @@ class Admin::SubscriptionsController < ApplicationController
       query.symbolize_keys!
       if query[:search_string].blank?
         format.json { render :json => { :search_string => [I18n.t('activerecord.errors.messages.blank')] }, :status => :unprocessable_entity }
+        format.html {
+          flash[:alert] = I18n.t("directory.errors.query_empty")
+          redirect_to admin_path(:anchor => 'affairs')
+        }
       else
         people = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order])
         BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(:subscription_id => @subscription.id,

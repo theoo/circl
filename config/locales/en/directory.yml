@@ -2,6 +2,7 @@
 en:
   directory:
     errors:
+      query_empty: No given query, please fill one and retry.
       query_invalid: Query "%{query}" is invalid.
       search_error: ! 'The search engine returned an error: %{error}'
       you_need_to_select_at_least_one_attribute_to_display: You need to select at least one attribute to display.
