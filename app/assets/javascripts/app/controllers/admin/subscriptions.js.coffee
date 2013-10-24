@@ -355,11 +355,16 @@ class Index extends App.ExtendedController
 
   tag_tool: (e) ->
     e.preventDefault()
-    # win = Ui.stack_window('subscription-tag-tool-window', {width: 500, remove_on_close: true})
-    # controller = new TagTool(el: win)
-    # $(win).modal({title: I18n.t('subscription.views.tool_box.tag_tool')})
-    # $(win).modal('show')
-    # controller.render()
+
+    win = $("<div class='modal fade' id='salaries-tag-tool-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    controller = new TagTool({el: win.find('.modal-content')})
+    win.modal('show')
+    controller.activate()
 
   table_redraw: =>
     if @subscription
@@ -402,6 +407,9 @@ class TagTool extends App.ExtendedController
   constructor: (params) ->
     super
 
+  activate: ->
+    @render()
+
   render: =>
     @html @view('admin/subscriptions/tag')(@)
 
@@ -410,20 +418,21 @@ class TagTool extends App.ExtendedController
     attr = $(e.target).serializeObject()
 
     settings =
-      url: "#{Subscription.url()}/tag_tool"
-      type: 'POST',
+      url: "#{Subscription.url()}/tag_tool",
+      type: 'PUT',
       data: JSON.stringify(attr)
 
     ajax_error = (xhr, statusText, error) =>
-      Ui.notify @el, I18n.t('common.failed_to_update'), 'error'
+      @enable_panel()
       @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      Ui.notify @el, I18n.t('common.successfully_updated'), 'notice'
+      @enable_panel()
       App.PrivateTag.fetch({id: attr.private_tag_id})
       $(@el).modal('hide')
 
     Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+    @disable_panel()
 
 class App.AdminSubscriptions extends Spine.Controller
   className: 'subscriptions'

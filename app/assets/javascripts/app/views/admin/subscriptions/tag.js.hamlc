@@ -1,55 +1,84 @@
+.modal-header
+  %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+    &times;
+  %h4.modal-title
+    = I18n.t("subscription.views.tool_box.tag_tool")
+
 %form
-  .validation_errors_placeholder
+  .modal-body
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
 
-  .block
-    %h3= I18n.t("subscription.views.tag_tool.tag_with")
+    .row
+      .col-lg-12
+        %h3= I18n.t("subscription.views.tag_tool.tag_with")
 
-    .autocompleted
-      %label= I18n.t('subscription.views.tag_tool.private_tag_name')
-      %input{:type => 'search',
-             :name => 'private_tag_name',
-             :value => '',
-             :action => '/admin/private_tags/search'}
-      %input{:type => 'hidden',
-             :name => 'private_tag_id'}
-    %br
-    %br
+    .row
+      .col-lg-2
+      .col-lg-8
+        .autocompleted.form-group
+          %label{:for => 'subscription_tag_tool_private_tag_name'}
+            = I18n.t('subscription.views.tag_tool.private_tag_name')
+          %input{ :type => 'search',
+                  :id => 'subscription_tag_tool_private_tag_name',
+                  :name => 'private_tag',
+                  :class => 'form-control',
+                  :value => '',
+                  :action => '/admin/private_tags/search'}
+          %input{:type => 'hidden',
+                 :name => 'private_tag_id'}
+      .col-lg-2
 
-  .block
-    %h3= I18n.t("subscription.views.tag_tool.members_following_theses_attributes")
+    .row
+      .col-lg-12
+        %h3= I18n.t("subscription.views.tag_tool.members_following_theses_attributes")
 
-    /%label= I18n.t('subscription.views.tag_tool.pre_search_query')
-    /%input{:type => 'search',
-    /       :name => 'search_query',
-    /       :value => '',
-    /       :class => 'large'}
+    .row
+      .col-lg-6
+        .checkbox
+          %label
+            %input{ :type => 'checkbox',
+                    :name => 'subscription_member',
+                    :checked => '',
+                    :value => 1 }
+            = I18n.t('subscription.views.tag_tool.member')
 
-  .block
-    %br
-    %label{:for => 'subscription_member', :class => 'inline'}= I18n.t('subscription.views.tag_tool.member')
-    %input{ :type => 'checkbox',
-            :id => 'subscription_member',
-            :name => 'subscription_member',
-            :checked => '',
-            :value => 1 }
+        = I18n.t("subscription.views.tag_tool.of_a")
 
-    = I18n.t("subscription.views.tag_tool.of_a")
+      .col-lg-6
+        .checkbox
+          %label
+            %input{ :type => 'checkbox',
+                    :name => 'subscription_paid',
+                    :checked => true,
+                    :value => 1 }
+            = I18n.t('subscription.views.tag_tool.paid')
 
-    %label{:for => 'subscription_paid', :class => 'inline'}= I18n.t('subscription.views.tag_tool.paid')
-    %input{ :type => 'checkbox',
-            :id => 'subscription_paid',
-            :name => 'subscription_paid',
-            :checked => true,
-            :value => 1 }
+        = I18n.t("subscription.views.tag_tool.subscription_at_this_date")
 
-    = I18n.t("subscription.views.tag_tool.subscription_at_this_date")
+    .row
+      .col-lg-3
+      .col-lg-6
+        .form-group
+          %label{:for => "subscription_tag_tool_date"}
+            = I18n.t('subscription.views.tag_tool.date')
+          %input{ :type => 'text',
+                  :id => 'subscription_tag_tool_date',
+                  :name => 'date',
+                  :class => 'datepicker form-control',
+                  :value => '' }
+      .col-lg-3
 
-  .block
-    %label= I18n.t('subscription.views.tag_tool.date')
-    %input{:type => 'text',
-           :name => 'date',
-           :class => 'datepicker',
-           :value => '' }
+  .modal-footer
+    %button{:type => 'button',
+            :class => 'btn btn-default',
+            :data-dismiss => 'modal'}
+      .icon-chevron-left
+      = I18n.t("common.close")
 
-  .block.align_right
-    %input{:type => 'submit', :data-title => I18n.t('subscription.views.tag_tool.send')}
+    %button{:type => 'submit',
+            :name => 'export',
+            :class => 'btn btn-primary'}
+      .icon-cloud-upload
+      = I18n.t('common.next')

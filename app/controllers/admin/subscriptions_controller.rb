@@ -340,7 +340,7 @@ class Admin::SubscriptionsController < ApplicationController
       tag = PrivateTag.find params[:private_tag_id]
     end
 
-    unless @errors.size > 0
+    if @errors.empty?
       begin
         # Find members of a subscription
         if params[:subscription_member]
