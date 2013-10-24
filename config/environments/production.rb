@@ -31,6 +31,11 @@ Directory::Application.configure do
   # In production, Apache or nginx will already do this
   config.serve_static_assets = false
 
+  # Compress assets
+  config.assets.compress = true
+  config.assets.css_compressor = :yui
+  config.assets.js_compressor = :yui
+
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 

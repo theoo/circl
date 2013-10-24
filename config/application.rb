@@ -45,6 +45,15 @@ module Directory
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    # Precomile all assets
+    config.assets.precompile += ['main.css',
+      'application.js',
+      'i18n.js',
+      'i18n/fr.js',
+      'i18n/en.js',
+      'i18n/datatables/fr.js',
+      'i18n/datatables/en.js' ]
+
     # SASS
     config.generators.stylesheet_engine = :sass
 

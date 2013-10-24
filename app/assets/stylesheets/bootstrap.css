@@ -2383,6 +2383,7 @@ input[type="button"].btn-block {
           transition: height 0.35s ease;
 }
 
+/*
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: url('glyphicons-halflings-regular.eot');
@@ -3199,6 +3200,7 @@ input[type="button"].btn-block {
 .glyphicon-wrench:before {
   content: "\1f527";
 }
+*/
 
 .caret {
   display: inline-block;

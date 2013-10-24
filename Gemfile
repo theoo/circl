@@ -44,6 +44,7 @@ group :assets do
   gem 'execjs', '1.4.0'
   gem 'therubyracer', '0.10.1'
   gem 'i18n-js', '2.1.2'
+  gem 'yui-compressor', '0.12.0'
 end
 
 ### authentication and authorization
