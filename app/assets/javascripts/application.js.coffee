@@ -52,14 +52,13 @@ Array.prototype.to_property = ->
 
 # quick search
 $(document).ready ->
-  $("#quick_search form").on 'submit', (e) ->
-    input = $('#quick_search_string')[0]
-    value = input.value
-    if(value.match(/\d+/g) != null)
-      window.location = '/people/' + value
+  $("form#quick_search").on 'submit', (e) ->
+    e.preventDefault()
+    search_string = $('form#quick_search input[type=search]').val()
+    if(search_string.match(/\d+/g) != null)
+      window.location = '/people/' + search_string
     else
-      window.location = '/directory?query=' + App.escape_query({ search_string: input.value })
-    return false
+    Directory.search({ search_string: search_string })
 
   # This overrides HTML5 behavior which doesn't clear inputs on focus but when typing
   $("#quick_search input[type='search']").on 'focus', (e) ->
