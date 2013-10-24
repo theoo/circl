@@ -53,7 +53,6 @@ class App.PersonSalaryItems extends App.ExtendedController
         items: "tr"
         handle: '.handle'
         helper: sortableTableHelper
-        placeholder: 'placeholder'
         axis: 'y'
         start: (event, ui) ->
           height = $(@).find('tr:first').height()

@@ -98,4 +98,4 @@ en:
         invoice_template: invoice template
         private_tag: private tag
         value: value
-      values_title: values and invoices template associated with private tags
+      values_title: values associated with private tags

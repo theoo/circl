@@ -98,4 +98,4 @@ fr:
         invoice_template: modèle de facture
         private_tag: tag privé
         value: valeur
-      values_title: valeurs et modèles de facture associés aux tags privés
+      values_title: valeurs associées aux tags privés

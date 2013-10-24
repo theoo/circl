@@ -4,7 +4,7 @@
       .col-lg-12
         .validation_errors_placeholder
 
-  %table.table.table-condensed.table-responsive
+  %table.table.table-condensed.table-responsive.sortable
     %thead
       %tr
         %th= I18n.t('salaries.item.views.position')

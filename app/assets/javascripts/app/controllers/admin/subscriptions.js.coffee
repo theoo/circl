@@ -48,10 +48,9 @@ class ValueItemsController extends App.ExtendedController
         $(@).width($(@).width());
       return ui
 
-    @el.find('table.category').sortable(
+    @el.find('table').sortable(
         items: "tr.item"
         handle: '.handle'
-        placeholder: 'placeholder'
         helper: sortableTableHelper
         axis: 'y'
         stop: (event,ui) =>
