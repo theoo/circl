@@ -15,12 +15,10 @@
           != I18n.t('admin.views.people_import_help')
 
         - if @infos[:people].size > 0
-          %table#import
+          %table.datatable
             %thead
               %tr
                 %th= I18n.t('admin.import.row')
-                %th= I18n.t('person.views.is_valid')
-                %th= I18n.t('admin.import.errors')
                 %th= I18n.t('person.views.first_name')
                 %th= I18n.t('person.views.last_name')
                 %th= I18n.t('person.views.title')
@@ -48,21 +46,27 @@
 
             %tbody
               - @infos[:people].each_with_index do |person, i|
-                %tr{ :class => person.errors.empty? ? '' : 'import_error' }
-                  %td= (i + 2)
-                  %td= person.errors.empty?
+                - error_msg = []
+                - person.errors.messages.each do |k,a|
+                  - error_msg << a.join(", ")
+
+                %tr{:class => (person.errors.empty? ? 'success' : 'danger'),
+                  'data-trigger' => 'click',
+                  'data-title' => (person.errors.size.to_s + " " + I18n.t("common.error") + "(s)"),
+                  'data-html' => true,
+                  'data-placement' => 'auto top',
+                  'data-content' => raw(error_msg.join(" | "))}
+
                   %td
-                    - person.errors.messages.each do |k, a|
-                      = "#{k}:"
-                      %br
+                    = (i + 2)
+                    - person.errors.messages.each do |k,a|
                       - a.each do |s|
-                        = hidden_field_tag "people[][errors][#{k}][]", s
-                        = "#{'&nbsp;' * 4}#{s}".html_safe
-                        %br
+                        = hidden_field_tag("people[][errors][#{k}][]", s)
+
                   %td= person.first_name
                   %td= person.last_name
                   %td= person.title
-                  %td= person.is_an_organization
+                  %td= I18n.t('common.' + person.is_an_organization.to_s)
                   %td= person.organization_name
                   %td= person.address
                   %td= relation_to_string(person.location)
@@ -82,18 +86,18 @@
                   %td= relation_to_string(person.translation_aptitudes)
                   %td= relation_to_string(person.private_tags)
                   %td= relation_to_string(person.public_tags)
-                  %td= person.hidden
+                  %td= I18n.t('common.' + person.hidden.to_s)
 
-        .panel-body
-
-          - if @infos[:errors].empty?
-            = form_tag(admin_import_people_path, :method => :post) do
-              = submit_tag I18n.t('admin.views.proceed_with_import')
-
-          - unless @infos[:errors].empty?
+          - if ! @infos[:errors].empty?
             %h3= I18n.t('admin.views.people_file_errors')
 
-            .error
+            .alert.alert-danger
               - @infos[:errors].each do |line|
                 = line
-                %br
+
+        - if @infos[:errors].empty?
+          .panel-footer
+            .text-right
+              = form_tag(admin_import_people_path, :method => :post) do
+                = submit_tag I18n.t('admin.views.proceed_with_import'), :class => 'btn btn-primary'
+

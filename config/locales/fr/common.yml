@@ -55,7 +55,7 @@ fr:
     failed_to_destroy: Echec lors de la destruction.
     failed_to_retrive_data: Impossible de récupérer les données.
     failed_to_update: Echec lors de la mise à jour.
-    false: non
+    "false": non
     file: fichier
     from: de
     id: id
@@ -82,7 +82,7 @@ fr:
     toolbox_export: Exporter
     toolbox_import_bank_file: Importer un fichier bancaire
     toolbox_template: modèle
-    true: oui
+    "true": oui
     update: mettre à jour
     use_right_click_save_as: utilisez le click droit et sélectionnez 'enregistrer le lien sous...'
     year: année

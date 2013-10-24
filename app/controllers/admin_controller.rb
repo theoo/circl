@@ -54,7 +54,7 @@ class AdminController < ApplicationController
 
     Person.transaction do
       people.each do |p|
-        p.save! if p.errors.empty?
+        p.save!
       end
     end
 

@@ -44,6 +44,7 @@ class PersonRelationsParser
   end
 
   def parse_translation_aptitudes(aptitudes)
+    # TODO fixme or remove me
     aptitudes.split(/\s*,\s*/).each do |aptitude|
       begin
         from, to = aptitude.match(/\s*(\w+)\s*->\s*(\w+)\s*/).captures.map{ |l| Language.find_by_name!(l) }

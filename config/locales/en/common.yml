@@ -55,7 +55,7 @@ en:
     failed_to_destroy: Failed to destroy.
     failed_to_retrive_data: Failed to retrive data.
     failed_to_update: Failed to update.
-    false: 'no'
+    "false": 'no'
     file: file
     from: from
     id: id
@@ -82,7 +82,7 @@ en:
     toolbox_export: Export
     toolbox_import_bank_file: Import bank file
     toolbox_template: template
-    true: 'yes'
+    "true": 'yes'
     update: update
     use_right_click_save_as: use right click to 'save link as'
     year: year
