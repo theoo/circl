@@ -27,7 +27,7 @@ class Index extends App.ExtendedController
     'click button[name=salaries-salary-check-as-paid]'      : 'check_as_paid'
     'click button[name=salaries-salary-copy]'               : 'copy_reference'
     'click button[name=salaries-salary-destroy]'            : 'destroy'
-    'click button[name=salaries-export]'                    : 'stack_export_window'
+    'click button[name=salaries-export]'                    : 'stack_export_generic'
     'click button[name=salaries-export-to-accounting]'      : 'stack_export_to_accounting_window'
     'click button[name=salaries-export-to-ocas]'            : 'stack_export_to_ocas_window'
     'click button[name=salaries-export-to-eLohnausweisSSK]' : 'stack_export_to_eLohnausweisSSK_window'
@@ -71,6 +71,19 @@ class Index extends App.ExtendedController
       url: url
       title: title
       message: message
+
+  stack_export_generic: (e) ->
+    e.preventDefault()
+
+    win = $("<div class='modal fade' id='salaries-export-generic-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    controller = new App.ExportSalaries({el: win.find('.modal-content')})
+    win.modal('show')
+    controller.activate()
 
   stack_export_to_accounting_window: (e) ->
     e.preventDefault()
