@@ -13,7 +13,16 @@
       = I18n.t("directory.views.edit_preset_filters")
       %i.text-info= @query_preset.name
 
-    %br
+
+    .row
+      .col-lg-2.col-md-2
+      .col-lg-8.col-md-8
+        .alert.alert-info.alert-dismissable
+          %button{ :type => "button", :class => "close", :data-dismiss => "alert", :aria-hidden => "true" }
+            &times;
+          = I18n.t("directory.views.query_preset_explanation")
+      .col-lg-2.col-md-2
+
     .row
       .col-lg-12
         .filter
@@ -83,11 +92,11 @@
     .row
       .col-lg-4.col-md-4
         %label.sr-only{:for => 'directory_preset_name'}
-          = I18n.t('query_preset.views.name')
+          = I18n.t('directory.views.query_preset_name')
         %input{ :type => 'text',
                 :id => 'directory_preset_name',
                 :name => 'name',
-                :placeholder => I18n.t('query_preset.views.name'),
+                :placeholder => I18n.t('directory.views.query_preset_name'),
                 :class => 'form-control required',
                 :value => @query_preset.name}
 

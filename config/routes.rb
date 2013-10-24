@@ -183,8 +183,8 @@ Directory::Application.routes.draw do
         delete 'remove_members'
       end
       collection do
+        put 'tag_tool'
         get 'search'
-        post 'tag_tool'
       end
     end
   end

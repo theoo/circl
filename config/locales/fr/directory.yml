@@ -14,6 +14,8 @@ fr:
       new_preset: Nouveau pré-réglage
       edit_preset_filters: Édition des filtres du pré-réglage
       score: score
+      query_preset_explanation: Vous pouvez glisser les attributs disponibles dans la liste des attributs sélectionnés ou l'ordre de tri.
+      query_preset_name: Nom du pré-réglage
       add_person: ajouter une personne
       add_to_subscription: ajouter à l'inscription
       add_to_tag: ajouter ce tag

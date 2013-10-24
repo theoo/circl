@@ -77,7 +77,7 @@ fr:
       tag_tool:
         date: date
         member: membre
-        members_following_theses_attributes: les membre résultant de la recherche suivante
+        members_following_theses_attributes: les membres résultants de la recherche suivante
         of_a: d'une inscription
         paid: payée
         pre_search_query: recherche de pré sélection
