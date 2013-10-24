@@ -71,7 +71,12 @@ class Admin::ReceiptsController < ApplicationController
   def create
     errors = {}
 
-    unless params[:affair_id].blank?
+    # Validate params
+    [:owner_id, :value_date, :value, :means_of_payment, :invoice_template_id].each do |k|
+      errors[k] = [I18n.t("activerecord.errors.messages.blank")] if params[k].blank?
+    end
+
+    if ! params[:affair_id].blank?
       if Affair.exists? params[:affair_id]
         @affair = Affair.find params[:affair_id]
 
@@ -86,15 +91,17 @@ class Admin::ReceiptsController < ApplicationController
       else
         errors[:affair_id] = [I18n.t("permission.errors.record_not_found")]
       end
+    elsif params[:subscription_id].blank?
+      errors[:subscription_id] = [I18n.t("activerecord.errors.messages.blank")]
     else
       # expect to find a subscription if no affair_id is given
       if Subscription.exists? params[:subscription_id]
-        subscription = Subscription.find(params[:subscription_id])
+        @subscription = Subscription.find(params[:subscription_id])
         @affair = Affair.joins(:subscriptions)
                         .where(:owner_id => params[:owner_id],
                                :subscriptions => {
-                                 :id => subscription.id,
-                                 :title => subscription.title
+                                 :id => @subscription.id,
+                                 :title => @subscription.title
                                })
                         .select('affairs.*') # We need this otherwise the returned record is readonly
                         .first
@@ -103,48 +110,49 @@ class Admin::ReceiptsController < ApplicationController
       end
     end
 
+    if errors.empty?
+      # Save all objects in a transaction to preserve rollback in case of failure
+      Receipt.transaction do
+        # Push sequentially in errors hash if validations fails
 
+        # Create an affair if the process of finding one failed
+        unless @affair
+          @affair = Affair.new( :owner_id => params[:owner_id],
+                                :title => @subscription.title )
 
-    # Save all objects in a transaction to preserve rollback in case of failure
-    Receipt.transaction do
-      # Push sequentially in errors hash if validations fails
+          # This will validate and populate receiver_id/buyer_id
+          unless @affair.save
+            errors = @affair.errors
+            raise ActiveRecord::Rollback
+          end
 
-      # Create an affair if the process of finding one failed
-      unless @affair
-        @affair = Affair.new(:owner_id => params[:owner_id])
-        unless params[:subscription_id].blank?
-          @affair.title = subscription.title
-          @affair.subscriptions = [ subscription ]
+          @affair.subscriptions = [ @subscription ]
         end
-      end
 
-      unless @affair.save
-        errors = @affair.errors
-        raise ActiveRecord::Rollback
-      end
 
-      # Create an invoice if the process of finding one failed
-      unless @invoice
-        @invoice = Invoice.new :value => @affair.value,
-                     :created_at => params[:value_date],
-                     :title => @affair.title,
-                     :invoice_template_id => params[:invoice_template_id],
-                     :affair_id => @affair.id
-      end
+        # Create an invoice if the process of finding one failed
+        unless @invoice
+          @invoice = Invoice.new :value => @affair.value,
+                       :created_at => params[:value_date],
+                       :title => @affair.title,
+                       :invoice_template_id => params[:invoice_template_id],
+                       :affair_id => @affair.id
+        end
 
-      unless @invoice.save
-        errors = @invoice.errors
-        raise ActiveRecord::Rollback
-      end
+        unless @invoice.save
+          errors = @invoice.errors
+          raise ActiveRecord::Rollback
+        end
 
-      # Finaly create a new receipt
-      @receipt = Receipt.new :value => params[:value],
-                             :value_date => params[:value_date],
-                             :means_of_payment => params[:means_of_payment],
-                             :invoice_id => @invoice.id
-      unless @receipt.save
-        errors = @receipt.errors
-        raise ActiveRecord::Rollback
+        # Finaly create a new receipt
+        @receipt = Receipt.new :value => params[:value],
+                               :value_date => params[:value_date],
+                               :means_of_payment => params[:means_of_payment],
+                               :invoice_id => @invoice.id
+        unless @receipt.save
+          errors = @receipt.errors
+          raise ActiveRecord::Rollback
+        end
       end
     end
 
