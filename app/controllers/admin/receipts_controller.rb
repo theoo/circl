@@ -72,7 +72,7 @@ class Admin::ReceiptsController < ApplicationController
     errors = {}
 
     # Validate params
-    [:owner_id, :value_date, :value, :means_of_payment, :invoice_template_id].each do |k|
+    [:owner_id, :value_date, :value, :invoice_template_id].each do |k|
       errors[k] = [I18n.t("activerecord.errors.messages.blank")] if params[k].blank?
     end
 

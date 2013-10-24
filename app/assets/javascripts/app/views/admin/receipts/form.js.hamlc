@@ -25,11 +25,11 @@
         .form-group
           %label{:for => 'admin_receipts_value_date'}
             = I18n.t('receipt.views.value_date')
-            %input{:type => 'text',
-                   :name => 'value_date',
-                   :id => 'admin_receipts_value_date',
-                   :class => 'form-control datepicker required',
-                   :value => @receipt.value_date }
+          %input{:type => 'text',
+                 :name => 'value_date',
+                 :id => 'admin_receipts_value_date',
+                 :class => 'form-control datepicker required',
+                 :value => @receipt.value_date }
       .col-lg-2
         .form-group
           %label{:for => 'admin_receipts_value'}
