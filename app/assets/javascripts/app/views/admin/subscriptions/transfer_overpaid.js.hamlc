@@ -1,19 +1,40 @@
+.modal-header
+  %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+    &times;
+  %h4.modal-title
+    = I18n.t('subscription.views.actions.transfer_overpaid_value') + ": "
+    .text-info= @subscription.title
+
 %form
-  .row
-    .col-lg-12
-      .validation_errors_placeholder
-  .row
-    .col-lg-3
-    .col-lg-6
-      .autocompleted
-        %label{:for => 'subscription_transfer_to_subscription_title'}
-          = I18n.t('receipt.views.subscription_title')
-        %input{ :type => 'search',
-                :id => 'subscription_transfer_to_subscription_title',
-                :name => 'transfer_to_subscription_title',
-                :class => 'form-control',
-                :value => '',
-                :action => '/admin/subscriptions/search'}
-        %input{ :type => 'hidden',
-                :name => 'transfer_to_subscription_id'}
-    .col-lg-3
+  .modal-body
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
+    .row
+      .col-lg-3
+      .col-lg-6
+        .autocompleted
+          %label{:for => 'subscription_transfer_to_subscription_title'}
+            = I18n.t('receipt.views.subscription_title')
+          %input{ :type => 'search',
+                  :id => 'subscription_transfer_to_subscription_title',
+                  :name => 'transfer_to_subscription_title',
+                  :class => 'form-control',
+                  :value => '',
+                  :action => '/admin/subscriptions/search'}
+          %input{ :type => 'hidden',
+                  :name => 'transfer_to_subscription_id'}
+      .col-lg-3
+
+  .modal-footer
+    %button{:type => 'button',
+            :class => 'btn btn-default',
+            :data-dismiss => 'modal'}
+      .icon-chevron-left
+      = I18n.t("common.close")
+
+    %button{:type => 'submit',
+            :name => 'export',
+            :class => 'btn btn-primary'}
+      .icon-cloud-upload
+      = I18n.t('common.next')

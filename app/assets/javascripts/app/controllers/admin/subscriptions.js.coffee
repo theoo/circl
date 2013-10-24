@@ -307,19 +307,9 @@ class Edit extends ValueItemsController
     win.append modal
     win.modal(keyboard: true, show: false)
 
-    # Update title
-    win.find('h4').text I18n.t('subscription.views.actions.transfer_overpaid_value') + ": " + @subscription.title
-
-    # Adapt width to A4
-    win.find('.modal-dialog')
-
-    # Add preview in new tab button
-    btn = "<input type='submit' class='btn btn-primary' value=\"#{I18n.t('common.update')}\" />"
-    btn = $(btn)
-    win.find('.modal-footer').append btn
-
-    controller = new TransferOverpaidValue(el: win.find('.modal-body'), subscription_id: @subscription.id)
+    controller = new TransferOverpaidValue({el: win.find('.modal-content'), subscription: @subscription})
     win.modal('show')
+    controller.activate()
 
   create_reminder: (e) ->
     e.preventDefault()
@@ -377,17 +367,18 @@ class TransferOverpaidValue extends App.ExtendedController
 
   constructor: (params) ->
     super
+    @subscription = params.subscription
     @render()
 
   render: =>
-    @html @view('admin/subscriptions/transfer_overpaid')(@)
+    @html @view("admin/subscriptions/transfer_overpaid")(@)
 
   submit: (e) ->
     e.preventDefault()
     attr = $(e.target).serializeObject()
 
     settings =
-      url: "#{Subscription.url()}/#{@subscription_id}/transfer_overpaid_value"
+      url: "#{Subscription.url()}/#{@subscription.id}/transfer_overpaid_value"
       type: 'POST',
       data: JSON.stringify(attr)
 
