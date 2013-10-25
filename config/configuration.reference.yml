@@ -85,3 +85,4 @@ imgkit:
 permissions:
   Person:
     - restricted_attributes
+    - authenticate_using_token
