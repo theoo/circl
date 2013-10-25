@@ -164,6 +164,11 @@
                         :class => 'form-control',
                         :step => 0.01,
                         :value => @salary.yearly_salary }
+                - if @salary.activity_rate != 100.0
+                  .help-block
+                    = I18n.t("salaries.salary.views.hundred_percent_equivalent") + ": "
+                    = (@salary.yearly_salary / @salary.activity_rate * 100.0).to_view()
+
 
             .col-lg-6
               .form-group
@@ -176,6 +181,9 @@
                         :step => 1,
                         :class => 'form-control',
                         :value => @salary.yearly_salary_count }
+                .help-block
+                  = I18n.t("salaries.salary.views.monthly_salary_computed") + ": "
+                  = (@salary.yearly_salary / @salary.yearly_salary_count).to_view()
 
           .row
             .col-lg-12

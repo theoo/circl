@@ -44,6 +44,8 @@ en:
         reference_were_copied: The salary reference were copied to %{members_count} people.
         please_try_again: Please fix the following issues and try again.
       views:
+        hundred_percent_equivalent: 100% salary equivalent
+        monthly_salary_computed: Calculated monthly salary
         copy_reference_title: Copying salary reference
         copy_reference_message: Copying salary reference to a group of people.
         montly_salaries_count: monthly salary count

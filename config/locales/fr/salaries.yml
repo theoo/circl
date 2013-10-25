@@ -44,6 +44,8 @@ fr:
         reference_were_copied: Le salaire de référence à été copié vers %{members_count} personnes.
         please_try_again: Veuillez corriger les éléments et réessayer.
       views:
+        hundred_percent_equivalent: Salaire équivalent à 100%
+        monthly_salary_computed: Salaire mensuel calculé
         copy_reference_title: Copie du salaire de référence
         copy_reference_message: Copie du salaire de référence vers un groupe de personne.
         montly_salaries_count: nombre des salaires mensuels
