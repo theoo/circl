@@ -119,6 +119,7 @@ class App.PersonComments extends Spine.Controller
       @edit.active(id: id)
 
     @edit.bind 'destroyError', (id, errors) =>
+      @edit.active(id: id)
       @edit.render_errors errors
 
   activate: ->

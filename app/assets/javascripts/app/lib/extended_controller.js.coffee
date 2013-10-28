@@ -204,6 +204,8 @@ class App.ExtendedController extends Spine.Controller
     ajax_error = (xhr, statusText, error) =>
       record.constructor.refresh record.attributes()
       @trigger 'destroyError', record.id, $.parseJSON(xhr.responseText)
+      # TODO Perhaps it's possible to remove callbacks and run the generic code here
+      # 90% of controllers have the same callback code.
 
     ajax_success = (xhr, statusText, error) =>
       record.destroy(ajax: false)

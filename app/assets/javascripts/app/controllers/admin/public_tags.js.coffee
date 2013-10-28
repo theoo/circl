@@ -146,6 +146,9 @@ class App.AdminPublicTags extends Spine.Controller
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
+    @edit.bind 'destroyError', (id, errors) =>
+      @edit.active id: id
+      @edit.render_errors errors
 
   activate: ->
     super

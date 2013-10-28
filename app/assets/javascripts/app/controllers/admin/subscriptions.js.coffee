@@ -45,7 +45,7 @@ class ValueItemsController extends App.ExtendedController
   make_table_sortable: (e) ->
     sortableTableHelper = (e, ui) ->
       ui.children().each ->
-        $(@).width($(@).width());
+        $(@).width($(@).width())
       return ui
 
     @el.find('table').sortable(

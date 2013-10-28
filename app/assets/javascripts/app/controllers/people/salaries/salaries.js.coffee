@@ -270,6 +270,7 @@ class App.PersonSalaries extends Spine.Controller
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
     @index.bind 'destroyError', (id, errors) =>
+      @edit.active(id: id)
       @salary_index.render_errors errors
 
     @append(@new, @edit, @index)

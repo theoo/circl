@@ -145,6 +145,9 @@ class App.AdminPrivateTags extends Spine.Controller
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
+    @edit.bind 'destroyError', (id, errors) =>
+      @edit.active id: id
+      @edit.render_errors errors
 
     @index.bind 'edit', (id) =>
       @edit.active(id: id)

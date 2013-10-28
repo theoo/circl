@@ -224,6 +224,7 @@ class App.PersonAffairs extends Spine.Controller
       @edit.active(id: id, person_id: @person_id)
 
     @index.bind 'destroyError', (id, errors) =>
+      @edit.active(id: id)
       @edit.render_errors errors
 
   activate: ->
