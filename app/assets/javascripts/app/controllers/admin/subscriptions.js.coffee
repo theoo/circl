@@ -195,6 +195,7 @@ class Edit extends ValueItemsController
     'click a[name=subscription-members-add]':                 'add_members'
     'click a[name=subscription-members-remove]':              'remove_members'
     'click a[name=subscription-transfer-overpaid-value]':     'transfer_overpaid_value'
+    'click a[name=subscription-merge]':                       'merge'
     'click a[name=subscription-reminder]':                    'create_reminder'
     'click a[name=subscription-renewal]':                     'renew'
 
@@ -307,6 +308,27 @@ class Edit extends ValueItemsController
     win.modal(keyboard: true, show: false)
 
     controller = new TransferOverpaidValue({el: win.find('.modal-content'), subscription: @subscription})
+
+    title = $("<h4>#{I18n.t('subscription.views.actions.transfer_overpaid_value')}: <span class='text-info'>#{@subscription.title}</span></h4<")
+    win.find(".modal-title").html title
+
+    win.modal('show')
+    controller.activate()
+
+  merge: (e) ->
+    e.preventDefault()
+
+    win = $("<div class='modal fade' id='subscription-merge' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    controller = new Merge({el: win.find('.modal-content'), subscription: @subscription})
+
+    title = $("<h4>#{I18n.t('subscription.views.actions.merge')}: <span class='text-info'>#{@subscription.title}</span></h4>")
+    win.find(".modal-title").html title
+
     win.modal('show')
     controller.activate()
 
@@ -327,6 +349,7 @@ class Index extends App.ExtendedController
   constructor: (params) ->
     super
     Subscription.bind('refresh', @render)
+
 
   render: =>
     @html @view('admin/subscriptions/index')(@)
@@ -383,6 +406,36 @@ class TransferOverpaidValue extends App.ExtendedController
 
     ajax_error = (xhr, statusText, error) =>
       @render_errors $.parseJSON(xhr.responseText)
+
+    ajax_success = (data, textStatus, jqXHR) =>
+      $(@el).modal('hide')
+      Subscription.fetch()
+
+    Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+
+class Merge extends App.ExtendedController
+  events:
+    'submit form': 'submit'
+
+  constructor: (params) ->
+    super
+    @subscription = params.subscription
+    @render()
+
+  render: =>
+    @html @view('admin/subscriptions/transfer_overpaid')(@)
+
+  submit: (e) ->
+    e.preventDefault()
+    attr = $(e.target).serializeObject()
+
+    settings =
+      url: "#{Subscription.url()}/#{@subscription.id}/merge"
+      type: 'POST',
+      data: JSON.stringify(attr)
+
+    ajax_error = (xhr, statusText, error) =>
+      @renderErrors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
       $(@el).modal('hide')

@@ -22,6 +22,7 @@ $.fn.application_setting = ->
   ApplicationSetting.find(elementID)
 
 class New extends App.ExtendedController
+
   render: =>
     @application_setting = new ApplicationSetting()
     @html @view('settings/application_settings/form')(@)
@@ -65,7 +66,7 @@ class Index extends App.ExtendedController
     if @application_setting
       target = $(@el).find("tr[data-id=#{@application_setting.id}]")
 
-    @activate_in_list(target) 
+    @activate_in_list(target)
 
 class App.SettingsApplicationSettings extends Spine.Controller
   className: 'application_settings'

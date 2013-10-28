@@ -16,6 +16,7 @@ fr:
       please_find_a_link_to_access_the_subscription_pdf: Veuillez trouver ci-joint un lien vers le PDF de l'inscription
       subscription_and_its_invoices_were_updated: L'inscription et ses factures ont étées mis à jour
       subscription_pdf_title: PDF de l'inscription
+      subscription_were_merged: L'inscription à correctement été fusionnée
       table:
         email: email
         first_name: prénom
@@ -37,6 +38,7 @@ fr:
       add_members_message: Les personnes sélectionnées seront ajoutées à l'inscription.
       members: membres
       actions:
+        merge: fusionner vers une autre inscription
         add_members_to_subscription: ajouter des membres à l'inscription
         destroy_subscription: détruire l'inscription
         edit_subscription: modifier l'inscription
@@ -74,6 +76,9 @@ fr:
         title: titre
         to: à
         value: valeur
+      merge:
+        source_subscription_id_missing: ID de l'inscription source manquant
+        destination_subscription_id_missing: ID de l'inscription de destination manquant
       tag_tool:
         date: date
         member: membre

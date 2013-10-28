@@ -16,6 +16,7 @@ en:
       please_find_a_link_to_access_the_subscription_pdf: Please find a link to access the subscription pdf
       subscription_and_its_invoices_were_updated: Subscription "%{title}" and its invoices were updated
       subscription_pdf_title: Subscription pdf
+      subscription_were_merged: The subscription has been successfully merged
       table:
         email: email
         first_name: first name
@@ -37,6 +38,7 @@ en:
       add_members_message: Selected people will be added to the subscription.
       members: members
       actions:
+        merge: merge to another subscription
         add_members_to_subscription: add members to subscription
         destroy_subscription: destroy subscription
         edit_subscription: edit subscription
@@ -74,6 +76,9 @@ en:
         title: title
         to: to
         value: value
+      merge:
+        source_subscription_id_missing: Source subscription ID missing
+        destination_subscription_id_missing: Destination subscription ID missing
       tag_tool:
         date: date
         member: member

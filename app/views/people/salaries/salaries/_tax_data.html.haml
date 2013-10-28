@@ -7,18 +7,28 @@
       %th= I18n.t("salaries.salary.views.table." + field.to_s)
 
   %tbody
-    - salary.tax_data.each do |data|
-      %tr
+    // DETAILS
+    - salary.selected_tax_data.each do |data|
+      // Print taxed_items in line title (mouse over)
+      %tr{:title => data.taxed_items.map(&:title).join(", ")}
         - options[:fields].each do |f|
           - field = data.send(f)
 
+          // format cell
           - if field.is_a? Time
             %td= field.to_date
           - elsif field.is_a? Money
             %td.number= field.to_view
+          - elsif field.is_a? Fixnum or field.is_a? Float or field.is_a? BigDecimal
+            // do not print percentage if value is selected
+            - if ! data.employee_use_percent or ! data.employer_use_percent
+              %td.number -
+            - else
+              %td.number= field.to_s
           - else
             %td= field
 
+    // TOTAL
     - employee_value_index = options[:fields].index(:employee_value)
     - employer_value_index = options[:fields].index(:employer_value)
 

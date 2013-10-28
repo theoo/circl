@@ -99,6 +99,10 @@ class Subscription < ActiveRecord::Base
     compute_tree_level(self)
   end
 
+  def self_and_parents
+    retrive_parents(self)
+  end
+
   def self_and_descendants
     [self, descendants].flatten
   end
@@ -122,7 +126,7 @@ class Subscription < ActiveRecord::Base
     self.self_and_descendants.map{|s| s.invoices}.flatten.uniq
   end
 
-  # returns an AREL for the list of people from self and its children subscriptions.
+  # returns an AREL for the list of people (owners) from self and its children subscriptions.
   def people_from_self_and_descendants
     Person.select("DISTINCT people.*")
           .joins(:subscriptions)
@@ -273,6 +277,13 @@ class Subscription < ActiveRecord::Base
       level = compute_tree_level(s.parent, level + 1)
     end
     level
+  end
+
+  # recusive!
+  def retrive_parents(s)
+    parents = [s]
+    parents << retrive_parents(s.parent) if s.parent
+    parents.flatten
   end
 
   def ensure_is_destroyable

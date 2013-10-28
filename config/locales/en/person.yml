@@ -51,7 +51,8 @@ en:
         something_wrong_happened: Something wrong happened, please verify production.log and the backtrace below.
         title: A critical error happened on a production directory
       report_error_subject: An error (500) occured on a production directory!
-      subscription_where_updated: subscription where updated
+      subscription_were_updated: subscription whre updated
+      subscription_were_merged: subscription were merged
     views:
       salary_taxes: Deductions
       salary_items: Items

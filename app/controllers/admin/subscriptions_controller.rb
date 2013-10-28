@@ -99,6 +99,7 @@ class Admin::SubscriptionsController < ApplicationController
   def transfer_overpaid_value
     errors = {}
 
+    # TODO Move this to a background task
     if @subscription.values.size <= 1 and @subscription.values.try(:first).try(:value) == 0
       errors[:subscription_id] = [ I18n.t('subscription.errors.cannot_transfer_overpaid_value_if_subscription_value_is_zero') ]
     elsif ! Subscription.exists?(params[:transfer_to_subscription_id])
@@ -109,10 +110,13 @@ class Admin::SubscriptionsController < ApplicationController
       Subscription.transaction do
         @subscription.affairs.each do |affair|
           new_affair = Affair.new :title => transfer_to.title,
-                                  :subscriptions => [ transfer_to ],
-                                  :owner => affair.owner,
+                                  :owner_id => affair.owner_id,
                                   :created_at => affair.created_at,
                                   :updated_at => affair.updated_at
+
+          # Affair requires to be saved before adding subscriptions
+          new_affair.save!
+          new_affair.subscriptions = [ transfer_to ]
 
           affair.invoices.each do |invoice|
             # Skip invoices that are not overpaid
@@ -207,25 +211,27 @@ class Admin::SubscriptionsController < ApplicationController
       end
 
       if ! params[:parent_id].blank?
+        do_bg_tasks = false
         case params[:status]
         when 'reminder'
           people_ids = @subscription.parent
                                     .get_people_from_affairs_status(:open)
                                     .map(&:id)
+          do_bg_tasks = true
         when 'renewal'
           people_ids = Subscription.find(params[:parent_id])
                                     .get_people_from_affairs_status(:paid)
                                     .map(&:id)
-        else
-          @subscription.errors.add(:base, I18n.t("subscription.errors.parent_id_is_set_without_status"))
-          raise ActiveRecord::Rollback
+          do_bg_tasks = true
         end
 
-        BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(:subscription_id => @subscription.id,
-          :people_ids => people_ids,
-          :person => current_person,
-          :parent_subscription_id => params[:parent_id],
-          :status => params[:status])
+        if do_bg_tasks
+          BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(:subscription_id => @subscription.id,
+            :people_ids => people_ids,
+            :person => current_person,
+            :parent_subscription_id => params[:parent_id],
+            :status => params[:status])
+        end
       end
       succeed = true
     end
@@ -352,7 +358,7 @@ class Admin::SubscriptionsController < ApplicationController
         end
 
         # And extract paying member or extract not paying members
-        people_ids = []
+        # people_ids = []
         if params[:subscription_member] and params[:subscription_paid]
           Person.transaction do
             people_arel.each do |p|
@@ -360,15 +366,28 @@ class Admin::SubscriptionsController < ApplicationController
               # obviously there is always less (or equal) paid_subscription than subscriptions
               if (p.paid_subscriptions & people_subs).size == people_subs.size
                 p.private_tags << tag
-                people_ids << p.id
+                # people_ids << p.id
               end
             end
           end
         else
-          Person.transaction do
-            people_arel.all.each do |p|
-              p.private_tags = [p.private_tags, tag].flatten
-              people_ids << p.id
+          if params[:subscription_member]
+            Person.transaction do
+              people_arel.all.each do |p|
+                people_subs = p.subscriptions.where("? BETWEEN interval_starts_on AND interval_ends_on", date)
+                if (p.unpaid_subscriptions & people_subs).size == people_subs.size
+                  p.private_tags << tag
+                end
+              end
+            end
+          elsif params[:subscription_paid]
+            Person.transaction do
+              people_arel.all.each do |p|
+                people_subs = p.subscriptions.where("? NOT BETWEEN interval_starts_on AND interval_ends_on", date)
+                if (p.paid_subscriptions & people_subs).size == people_subs.size
+                  p.private_tags << tag
+                end
+              end
             end
           end
         end
@@ -387,6 +406,31 @@ class Admin::SubscriptionsController < ApplicationController
         format.json { render :json => {} }
       else
         format.json { render :json => @errors , :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  def merge
+    @errors = {}
+    if params[:id].blank?
+      @errors[:id] = [I18n.t("subscription.views.merge.source_subscription_id_missing")]
+    end
+
+    if params[:transfer_to_subscription_id].blank?
+      @errors[:transfer_to_subscription_id] = [I18n.t("subscription.views.merge.destination_subscription_id_missing")]
+    end
+
+
+    respond_to do |format|
+      if @errors.size > 0
+        format.json { render :json => @errors , :status => :unprocessable_entity }
+      else
+        BackgroundTasks::MergeSubscriptions.schedule(
+          :source_subscription_id => params[:id],
+          :destination_subscription_id => params[:transfer_to_subscription_id],
+          :person => current_person)
+
+        format.json { render :json => {} }
       end
     end
   end

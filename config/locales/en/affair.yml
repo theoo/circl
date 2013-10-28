@@ -1,6 +1,8 @@
 ---
 en:
   affair:
+    errors:
+      cant_delete_affair_who_has_invoices: Cannot destroy an affair who has invoices. Revelent invoices must first be destroyed.
     view:
       edit_invoices_and_receipts: edit invoices and receipts
       edit_prestations: edit provisions

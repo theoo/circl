@@ -2,8 +2,6 @@
   %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
-    = I18n.t('subscription.views.actions.transfer_overpaid_value') + ": "
-    .text-info= @subscription.title
 
 %form
   .modal-body

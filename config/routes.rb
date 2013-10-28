@@ -179,7 +179,7 @@ Directory::Application.routes.draw do
     resources :subscriptions do
       member do
         # POST on show is required for the PDF generation from the search engine
-        post 'add_members', 'transfer_overpaid_value', 'show'
+        post 'add_members', 'transfer_overpaid_value', 'show', 'merge'
         delete 'remove_members'
       end
       collection do

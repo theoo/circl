@@ -51,7 +51,8 @@ fr:
         something_wrong_happened: Quelque chose d'incorrect est arrivé sur un annuaire en production. Veuillez consulter le backtrace ci-dessous et le fichier de log production.log.
         title: Une erreur critique a eu lieu sur un serveur en production
       report_error_subject: Une erreur critique (500) a eu lieu sur un serveur en production
-      subscription_where_updated: l'inscription à été mise à jour
+      subscription_were_updated: l'inscription à été mise à jour
+      subscription_were_merged: les inscriptions ont été fusionnées
     views:
       salary_taxes: Deductions
       salary_items: Objets

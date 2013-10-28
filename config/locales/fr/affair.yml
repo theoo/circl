@@ -1,6 +1,8 @@
 ---
 fr:
   affair:
+    errors:
+      cant_delete_affair_who_has_invoices: Il est impossible de détruire une affaire dont dépend une facture.
     view:
       edit_invoices_and_receipts: modifier les factures & reçus
       edit_prestations: modifier les prestations

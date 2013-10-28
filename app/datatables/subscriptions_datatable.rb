@@ -36,7 +36,6 @@ class SubscriptionsDatatable
 
   def data
     subscriptions.map do |subscription|
-
       values_summary = subscription.values.map do |v|
         if v.private_tag
           "#{v.private_tag.name}: #{v.value.to_view}"

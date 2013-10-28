@@ -81,11 +81,19 @@ class PersonMailer < ActionMailer::Base
           :title => @subscription.title))
   end
 
+  def send_subscriptions_merged(person, destination_subscription_id)
+    I18n.locale = person.main_communication_language.symbol
+    @destination_subscription = Subscription.find(destination_subscription_id)
+    mail( :to => person.email,
+          :subject => I18n.t('person.mail.subscription_were_merged',
+          :title => @destination_subscription.title))
+  end
+
   def send_subscription_invoices_updated(person, subscription_id)
     I18n.locale = person.main_communication_language.symbol
     @subscription = Subscription.find subscription_id
     mail( :to => person.email,
-          :subject => I18n.t('person.mail.subscription_where_updated',
+          :subject => I18n.t('person.mail.subscription_were_updated',
           :title => @subscription.title))
   end
 

@@ -55,7 +55,7 @@ $(document).ready ->
   $("form#quick_search").on 'submit', (e) ->
     e.preventDefault()
     search_string = $('form#quick_search input[type=search]').val()
-    if(search_string.match(/\d+/g) != null)
+    if(search_string.match(/^\d+$/g) != null)
       window.location = '/people/' + search_string
     else
     Directory.search({ search_string: search_string })

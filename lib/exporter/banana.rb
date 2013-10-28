@@ -24,12 +24,37 @@ module Exporter
     def initialize(resource)
       super
       @csv_options[:col_sep] = "\t"
-      @cols = [:date, :description, :account, :counterpart_account, :value, :vat_code, :vat_rate]
+
+      @mapping = ApplicationSetting.value("banana_accounting_headers_mapping", :silent => true)
+      if @mapping
+        begin
+          # symbolize_values
+          h = JSON.parse(@mapping)
+          @mapping = {}
+          h.each do |k,v|
+            # Keep empty string if this is what user wants.
+            @mapping[k] = v == "" ? v : v.to_sym
+          end
+        rescue
+          @mapping = {:document_type => 'Configuration value error !'}
+        end
+        @cols = @mapping.values if @mapping
+      end
+
+      # Defaults
+      @cols ||= [:date, :description, :account, :counterpart_account, :value, :vat_code, :vat_rate]
     end
 
     def headers
       # XML name following to the doc: http://www.banana.ch/cms/fr/node/3850
-      ["Date", "Description", "AccountDebit", "AccountCredit", "Amount", "VatCode", "VatPercentNonDeductible"]
+
+      if @mapping
+        # ApplicationSettings
+        @mapping.keys
+      else
+        # Defaults
+        ["Date", "Description", "AccountDebit", "AccountCredit", "Amount", "VatCode", "VatPercentNonDeductible"]
+      end
     end
 
     # override map_item to convert dates

@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(:version => 20130909123924) do
 
   create_table "application_settings", :force => true do |t|
     t.string "key",   :default => ""
-    t.string "value", :default => ""
+    t.text   "value", :default => ""
   end
 
   add_index "application_settings", ["key"], :name => "index_application_settings_on_key"

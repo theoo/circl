@@ -138,9 +138,15 @@ class Salaries::SalariesController < ApplicationController
           salaries = salaries_arel.where('salaries.from >= ? AND salaries.to <= ?', from, to).order('salaries.from ASC')
           exporter = Exporter::Factory.new( :salaries,
                                             :salary_details )
+
+          extention = case params[:type]
+            when 'banana' then 'txt'
+            else 'csv'
+          end
+
           send_data( exporter.export(salaries),
                      :type => 'application/octet-stream',
-                     :filename=> "salaries_#{from}_#{to}_#{params[:type]}.csv",
+                     :filename=> "salaries_#{from}_#{to}_#{params[:type]}.#{extention}",
                      :disposition => 'attachment' )
         else
           flash[:alert] = I18n.t('common.errors.date_must_match_format')

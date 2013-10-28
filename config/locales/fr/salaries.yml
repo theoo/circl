@@ -100,7 +100,7 @@ fr:
           person: employé
           reference: référence
           reference_title: titre de la référence
-          reference_value: valeur de la référence
+          reference_value: valeur de référence
           salary_id: salary id
           tax_id: tax id
           template: modèle

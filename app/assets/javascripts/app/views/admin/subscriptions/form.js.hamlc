@@ -263,3 +263,7 @@
                   %a{:href => '#', :name => 'subscription-renewal'}
                     .icon-retweet
                     = I18n.t('subscription.views.actions.subscription_renewal')
+                %li
+                  %a{:href => '#', :name => 'subscription-merge'}
+                    .icon-resize-small
+                    = I18n.t('subscription.views.actions.merge')
