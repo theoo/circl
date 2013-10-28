@@ -49,6 +49,12 @@ class Activity < ActiveRecord::Base
 
   serialize :data, Hash
 
+  #################
+  ### CALLBACKS ###
+  #################
+
+  # NOTE don't forget to update purge_activities rake task if
+  # you apply important reworks on this model.
 
   #################
   ### RELATIONS ###
