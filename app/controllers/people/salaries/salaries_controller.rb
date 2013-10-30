@@ -96,12 +96,15 @@ class People::Salaries::SalariesController < ApplicationController
 
     # Validate each item separatly
     errors = items.reject(&:valid?).each_with_object({}) do |item, h|
-      h["#{I18n.t('salaries.item.line')} #{item.position}"] = item.errors.messages.map{ |k, arr| "#{k}: #{arr.join(',')}" }
+      h[:base] = item.errors.messages.map do |k, arr|
+        msg = I18n.t("salaries.item.line") + " " + (item.position + 1).to_s + ": "
+        msg += "#{I18n.t("salaries.tax_data.views." + k.to_s)}: #{arr.join(',')}"
+      end
     end
 
     removed_items = @salary.items.reject{ |i| items.include?(i) }
     # TODO Validate items positions
-    # TODO move all this in SalaryController#update
+    # TODO move all this in ItemsController#update
 
     respond_to do |format|
       if errors.empty?
@@ -125,17 +128,19 @@ class People::Salaries::SalariesController < ApplicationController
       arr << item
     end
 
-
-    # Validate each item separatly
+    # Validate each tax separatly
     errors = tax_data.reject(&:valid?).each_with_object({}) do |data, h|
-      h["#{I18n.t('salaries.item.line')} #{item.position}"] = data.errors.messages.map{ |k, arr| "#{k}: #{arr.join(',')}" }
+      h[:base] = data.errors.messages.map do |k, arr|
+        msg = I18n.t("salaries.item.line") + " " + (data.position + 1).to_s + ": "
+        msg += "#{I18n.t("salaries.tax_data.views." + k.to_s)}: #{arr.join(',')}"
+      end
     end
 
     # TODO Validate items positions
-    # TODO move all this in SalaryController#update
+    # TODO move all this in TaxDataController#update
 
     respond_to do |format|
-      if errors.empty?
+      if errors.size == 0
         # Save new items
         tax_data.each(&:save!)
 

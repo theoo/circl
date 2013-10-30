@@ -39,7 +39,7 @@ class App.PersonSalaryItems extends App.ExtendedController
     @render()
 
   render: =>
-    @items = PersonSalaryItem.all()
+    @items = _.sortBy PersonSalaryItem.all(), (d) -> d.position
     @html @view('people/salaries/items')(@)
 
     # Keep width

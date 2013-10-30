@@ -43,8 +43,10 @@ class App.PersonSalaryTaxDatas extends App.ExtendedController
     @render()
 
   render: =>
-    @tax_data = PersonSalaryTaxData.all()
     @salary ||= [] # placeholder to prevent failure when rendering 'disabled' view.
+    # No matter which order is sent from the API, it's not respected
+    @tax_data = _.sortBy PersonSalaryTaxData.all(), (d) -> d.position
+
     @html @view('people/salaries/tax_data')(@)
     @select_percentage_or_rough_value()
 
@@ -77,20 +79,6 @@ class App.PersonSalaryTaxDatas extends App.ExtendedController
   disabled: =>
     PersonSalaryTaxData.url() == undefined
 
-  customRenderErrors: (errors) ->
-    @render_errors(errors)
-
-    # point rows errors
-    for pos, arr of errors
-      row = @el.find("#tax_data_#{pos}")
-
-      for messages in arr
-        # TODO make this match multiple errors
-        matches = messages.match(/(.*):(.*)/)
-        attr = matches[1]
-        field = row.find("[name='tax_data[#{pos}][#{attr}]']")
-        field.parents('td').addClass('field_with_errors')
-
   name_filter: (str) ->
     (index, item) ->
       name = $(item).attr('name')
@@ -102,9 +90,10 @@ class App.PersonSalaryTaxDatas extends App.ExtendedController
     id    = row.find('input').filter(@name_filter('id')).attr('value')
 
     ajax_error = (xhr, statusText, error) =>
-      @customRenderErrors $.parseJSON(xhr.responseText)
+      @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
+      @render_success()
       for key, value of data
         continue if key.match(/use_percent/)
         field = row.find('input').filter(@name_filter(key))
@@ -126,9 +115,10 @@ class App.PersonSalaryTaxDatas extends App.ExtendedController
     id    = row.find('input').filter(@name_filter('id')).attr('value')
 
     ajax_error = (xhr, statusText, error) =>
-      @customRenderErrors $.parseJSON(xhr.responseText)
+      @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
+      @render_success()
       for key, value of data
         field = row.find('input').filter(@name_filter(key))
         field.attr('value', value)
@@ -154,10 +144,12 @@ class App.PersonSalaryTaxDatas extends App.ExtendedController
     attr = $(e.target).serializeObject()
 
     ajax_error = (xhr, statusText, error) =>
-      @customRenderErrors $.parseJSON(xhr.responseText)
+      @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
+      @render_success()
       PersonSalary.refresh(data)
+      PersonSalaryTaxData.refresh(data.tax_data)
 
     settings =
       url: "#{PersonSalary.url()}/#{@salary.id}/update_tax_data",

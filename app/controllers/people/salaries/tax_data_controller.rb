@@ -26,15 +26,19 @@ class People::Salaries::TaxDataController < ApplicationController
 
   load_resource :person
   load_resource :salary, :class => Salaries::Salary
-  load_resource :class => model, :through => :salary
 
   def index
+    authorize! :index, Salaries::TaxData
+
+    @tax_data = @salary.selected_tax_data
     respond_to do |format|
       format.json { render :json => @tax_data }
     end
   end
 
   def reset
+    authorize! :update, Salaries::TaxData
+
     @tax_data = Salaries::TaxData.find(params[:id])
 
     @tax_data.reset
@@ -53,6 +57,8 @@ class People::Salaries::TaxDataController < ApplicationController
   end
 
   def compute_value_for_next_salaries
+    authorize! :update, Salaries::TaxData
+
     # TODO refactor this into a generic lib and use that
     @tax_data = Salaries::TaxData.find(params[:id])
     targets = params[:targets]
@@ -80,6 +86,8 @@ class People::Salaries::TaxDataController < ApplicationController
   end
 
   def compute_value_for_this_salary
+    authorize! :update, Salaries::TaxData
+
     # TODO refactor this into a generic lib and use that
     @tax_data = Salaries::TaxData.find(params[:id])
     targets = params[:targets]

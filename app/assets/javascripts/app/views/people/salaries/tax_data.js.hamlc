@@ -16,17 +16,17 @@
         %th{:style => 'min-width: 230px'}= I18n.t('salaries.tax_data.views.actions')
 
     %tbody
-      - for data, unique_id in @tax_data
-        %tr{:data-position => unique_id}
+      - for data, tax_id in @tax_data
+        %tr{:data-position => tax_id}
           %td.handle
-          .icon-resize-vertical
+            .icon-resize-vertical
           %td
-            %input{ :name => 'tax_data[#{unique_id}][id]',
+            %input{ :name => 'tax_data[#{tax_id}][id]',
                     :type => 'hidden',
                     :value => data.id }
-            %input{ :name => 'tax_data[#{unique_id}][position]',
+            %input{ :name => 'tax_data[#{tax_id}][position]',
                     :type => 'hidden',
-                    :value => unique_id }
+                    :value => tax_id }
             = data.tax_title
           %td.text-right
             = data.reference_value.to_view() if data.reference_value
@@ -36,11 +36,11 @@
             .form-group
               .input-group
                 .input-group-addon
-                  %input{ :name => 'tax_data[#{unique_id}][employer_use_percent]',
+                  %input{ :name => 'tax_data[#{tax_id}][employer_use_percent]',
                           :type => 'radio',
                           :value => 1,
                           :checked => data.employer_use_percent }
-                %input{ :name => 'tax_data[#{unique_id}][employer_percent]',
+                %input{ :name => 'tax_data[#{tax_id}][employer_percent]',
                         :type => 'number',
                         :class => 'form-control',
                         :data-type => 'percentage',
@@ -53,11 +53,11 @@
 
               .input-group
                 .input-group-addon
-                  %input{ :name => 'tax_data[#{unique_id}][employer_use_percent]',
+                  %input{ :name => 'tax_data[#{tax_id}][employer_use_percent]',
                           :type => 'radio',
                           :value => 0,
                           :checked => !data.employer_use_percent }
-                %input{ :name => 'tax_data[#{unique_id}][employer_value]',
+                %input{ :name => 'tax_data[#{tax_id}][employer_value]',
                         :data-type => 'value',
                         :type => 'number',
                         :class => 'form-control',
@@ -69,27 +69,28 @@
             .form-group
               .input-group
                 .input-group-addon
-                  %input{ :name => 'tax_data[#{unique_id}][employee_use_percent]',
+                  %input{ :name => 'tax_data[#{tax_id}][employee_use_percent]',
                           :type => 'radio',
                           :value => 1,
                           :checked => data.employee_use_percent }
-                %input{ :name => 'tax_data[#{unique_id}][employee_percent]',
+                %input{ :name => 'tax_data[#{tax_id}][employee_percent]',
                         :data-type => 'percentage',
                         :type => 'number',
                         :class => 'form-control',
                         :step => 0.001,
                         :min => 0.0,
+                        :value => data.employee_percent }
                 .input-group-addon %
 
               %br
 
               .input-group
                 .input-group-addon
-                  %input{ :name => 'tax_data[#{unique_id}][employee_use_percent]',
+                  %input{ :name => 'tax_data[#{tax_id}][employee_use_percent]',
                           :type => 'radio',
                           :value => 0,
                           :checked => !data.employee_use_percent }
-                %input{ :name => 'tax_data[#{unique_id}][employee_value]',
+                %input{ :name => 'tax_data[#{tax_id}][employee_value]',
                         :data-type => 'value',
                         :type => 'number',
                         :class => 'form-control',

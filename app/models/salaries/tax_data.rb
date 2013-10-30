@@ -66,6 +66,13 @@ class Salaries::TaxData < ActiveRecord::Base
   money :employer_value
   money :employee_value
 
+  ###################
+  ### VALIDATIONS ###
+  ###################
+
+  validates_presence_of :employee_percent, :if => :employee_use_percent
+  validates_presence_of :employer_percent, :if => :employer_use_percent
+
   ########################
   ### INSTANCE METHODS ###
   ########################
@@ -103,7 +110,9 @@ class Salaries::TaxData < ActiveRecord::Base
   end
 
   def compute_employer_percent_from_value
-    unless reference_value == 0
+    if reference_value == 0
+      self.employer_percent = 0
+    else
       self.employer_percent = (employer_value / reference_value) * 100.0
     end
   end
@@ -121,7 +130,9 @@ class Salaries::TaxData < ActiveRecord::Base
   end
 
   def compute_employee_percent_from_value
-    unless reference_value
+    if reference_value == 0
+      self.employee_percent = 0
+    else
       self.employee_percent = (employee_value / reference_value) * 100.0
     end
   end

@@ -109,9 +109,9 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
-    'change #person_salary_parent_id': 'reference_selected'
+    'change #person_salary_parent_id':     'reference_selected'
     'click a[name="salary-download-pdf"]': 'pdf'
-    'click a[name="salary-preview-pdf"]': 'preview'
+    'click a[name="salary-preview-pdf"]':  'preview'
     'click button[name="salary-destroy"]': 'destroy'
 
   constructor: (params) ->
@@ -134,6 +134,7 @@ class Edit extends App.ExtendedController
     @get_reference_id() == 'new'
 
   reference_selected: (e) =>
+    e.preventDefault()
     @new_reference_selected = @is_new_reference()
     @render()
 
