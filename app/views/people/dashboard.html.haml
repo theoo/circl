@@ -1,15 +1,37 @@
+#secondary_navbar.navbar.navbar-default.navbar-static-top
+  .container
+    #secondary_navigation
+      // pull-right = XS
+      .pull-right
+        .navbar-right.btn-group
+          %a{ :href => 'https://www.circl.ch/#support',
+              :class => 'btn btn-default navbar-btn' }
+            .icon-question
+            .hidden-inline-xs
+              = I18n.t('person.dashboard.tech_support')
+
+          %a{ :href => 'https://doc.circl.ch',
+              :class => 'btn btn-primary navbar-btn' }
+            .icon-book
+            .hidden-inline-xs
+              = I18n.t('person.dashboard.help')
+
+
 .container
   .row
     .col-lg-12
       %h1= I18n.t('person.dashboard.welcome');
 
-      %br
-      %br
-      This place is a placeholder for :
       %ul
-        %li directs messages (reminders)
-        %li last comment
-        %li activity
-        %li shortcuts
-        %li statistics
+        %li centre de messages
+        %li pointeuse
+        %li derniers commentaires
+        %li votre activité
+        %li factures ouvertes
+        %li affaires en cours
+        %li derniers contacts ajoutés
+        %li salaires à payer
+        %li technique: taille de l'annuaire, volumes de facture/person/etc. Date de la mise en service...
 
+  .row
+    .col-lg-12

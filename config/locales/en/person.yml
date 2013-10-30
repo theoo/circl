@@ -2,7 +2,9 @@
 en:
   person:
     dashboard:
-      welcome: Welcome
+      welcome: Welcome to CIRCL
+      help: oneline help
+      tech_support: tech support
     errors:
       an_email_is_required_if_it_is_loggable: An email is required in order to log into CIRCL.
       avs_number_control_key_is_invalid: the control key doesn't match, please ensure the number is correct
@@ -62,7 +64,7 @@ en:
       <li>A pair of <b>first and last name</b></li>
       <li>An <b>email address</b> unique in the directory</li>
       </ul><br/>
-      You will be able the to continue and add tags, affairs, salaries, etc. to this contact."
+      Then, you will be able the to continue and add tags, affairs, salaries, etc. to this contact."
 
       salary_taxes: Deductions
       salary_items: Items
