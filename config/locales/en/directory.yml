@@ -16,7 +16,7 @@ en:
       score: score
       query_preset_explanation: You can drag available attributes in selected attributes and attributes order lists.
       query_preset_name: Preset name
-      add_person: add person
+      add_person: add contact
       add_to_subscription: add to subscription
       add_to_tag: add this tag
       fields:

@@ -54,6 +54,15 @@ fr:
       subscription_were_updated: l'inscription à été mise à jour
       subscription_were_merged: les inscriptions ont été fusionnées
     views:
+      identifier_explanation: "<h3>Commencez par un identifiant</h3> 
+      La première étape pour la création d'un nouveau contact consiste à définir un <b>identifiant valide</b>,
+      composé d'au moins l'un de ces attributs, et unique dans l'annuaire:<br/>
+      <ul>
+      <li>Un <b>nom d'organisation</b> et la case \"<b>est une organisation</b>\" cochée</li>
+      <li>Une paire <b>prénom et nom de famille</b></li>
+      <li>Une <b>adresse email</b> unique dans l'annuaire</li>
+      </ul><br/>
+      Vous pourrez ensuite poursuivre en attribuant des tags, affaires, salaires, etc. à ce contact."
       salary_taxes: Deductions
       salary_items: Objets
       activities: Activités
