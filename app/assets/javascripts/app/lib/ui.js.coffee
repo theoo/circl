@@ -75,9 +75,13 @@ class Ui
       @load_datatable $(table)
 
     # Mark required fields
-    context.find('input.required, textarea.required, select.required')
-      .siblings('label')
-      .addClass('required')
+    context.find('input.required, textarea.required, select.required').each ->
+      label = $(@).siblings('label')
+      # In some case (input-groups) label is on the upper level of input
+      label = $(@).parent().siblings('label') if label.length == 0
+
+      label.addClass('required')
+
     # $('input.required').attr("required", true) # this enable HTML5 validation, might conflict with datepicker.
 
     # Add icon to datepickers

@@ -203,6 +203,7 @@ class Salaries::Salary < ActiveRecord::Base
   validates_presence_of :children_count
   validates_presence_of :person_id
   validates_presence_of :salary_template_id
+  validates_presence_of :yearly_salary_count, :if => :is_reference
   validate :ensure_person_have_required_fields, :if => :person
   validate :ensure_interval_dates_are_for_the_same_year, :if => [:from, :to]
   validate :ensure_from_date_is_before_to_date, :if => [:from, :to]

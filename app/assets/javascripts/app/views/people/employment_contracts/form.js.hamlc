@@ -15,8 +15,8 @@
           %label{:for => 'employment_contract_interval_starts'}
             = I18n.t('employment_contract.views.interval_starts_on')
           %input{ :type => 'text',
-                  :class => 'datepicker form-control',
-                  :id => 'employment_contract_inteval_starts',
+                  :class => 'datepicker form-control required',
+                  :id => 'employment_contract_interval_starts',
                   :name => 'interval_starts_on',
                   :value => @employment_contract.interval_starts_on }
       .col-lg-4
@@ -24,7 +24,7 @@
           %label{:for => 'employment_contract_interval_ends'}
             = I18n.t('employment_contract.views.interval_ends_on')
           %input{ :type => 'text',
-                  :class => 'datepicker form-control',
+                  :class => 'datepicker form-control required',
                   :id => 'employment_contract_interval_ends',
                   :name => 'interval_ends_on',
                   :value => @employment_contract.interval_ends_on }
@@ -36,7 +36,7 @@
             %input{ :type => 'number',
                     :name => 'percentage',
                     :id => 'employment_contract_percentage',
-                    :class => 'form-control',
+                    :class => 'form-control required',
                     :min => 0,
                     :max => 100,
                     :step => 0.1,
