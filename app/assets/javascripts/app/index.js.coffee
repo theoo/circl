@@ -115,9 +115,10 @@ class @Directory extends App
     url = $("<input type='hidden' name='custom_action[url]' value=#{escape(options.url)}>")
     title = $("<input type='hidden' name='custom_action[title]' value=#{escape(options.title)}>")
     message = $("<input type='hidden' name='custom_action[message]' value=#{escape(options.message)}>")
+    disabled = $("<input type='hidden' name='custom_action[disabled]' value=#{JSON.stringify(options.disabled)}>")
     auth_token = $("<input type='hidden' name='authenticity_token' value=#{@authenticity_token()}>")
 
-    form.append query, url, title, message, auth_token
+    form.append query, url, title, message, disabled, auth_token
 
     $('body').append form
 

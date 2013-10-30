@@ -52,7 +52,7 @@ class Admin::SubscriptionsController < ApplicationController
           else
             flash[:error] = I18n.t('directory.errors.query_invalid')
           end
-          redirect_to admin_path
+          redirect_to admin_path(:anchor => 'affairs')
         end
       end
     end

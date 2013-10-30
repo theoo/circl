@@ -38,6 +38,30 @@ class SearchEngineExtention extends App.ExtendedController
 
   # TODO Do not annimate already collapsed #presets and #presets_summary
 
+  constructor: ->
+    super
+    # NOTE You can invoke custom_action from the search engine
+    # with the following hidden inputs (* = required for minimal action)
+    # custom_action[url] *
+    # custom_action[title]
+    # custom_action[message]
+    @json_query = $('#directory_json_query').val()
+
+    if $('#directory_custom_action_url').length > 0
+      @custom_action =
+        search_string: $.parseJSON(@json_query).search_string
+        url: unescape($('#directory_custom_action_url').val())
+        title: unescape($('#directory_custom_action_title').val())
+        message: unescape($('#directory_custom_action_message').val())
+        disabled: unescape($('#directory_custom_action_disabled').val())
+
+      if @custom_action.disabled
+        ary = []
+        $.each @custom_action.disabled.split(","), ->
+          ary.push @.trim()
+        @custom_action.disabled = ary
+
+
   toggle_edit: (e) ->
     e.preventDefault()
     $("#presets_summary").collapse("toggle")
@@ -48,11 +72,15 @@ class SearchEngineExtention extends App.ExtendedController
 
     # Setup jQuery UI interactions methods
     # TODO try to enlarge the droppable zone to the panel instead of the list
-    preset.find(".sortable ol")
+
+    # If panel-disabled class is set, panel-default is removed.
+    # This way, only active panels are sortable
+    preset.find(".panel-default .sortable ol")
       .sortable()
       .disableSelection()
 
-    preset.find(".draggable .dt_dd_couple")
+    # This way, only active panels are draggable
+    preset.find(".panel-primary .draggable .dt_dd_couple")
       .draggable(
         helper: 'clone'
         connectToSortable: '.sortable ol')
@@ -105,10 +133,10 @@ class SearchEngineExtention extends App.ExtendedController
 
     attributes_order_over_callback = (event, ui) =>
       if ! ui.draggable.hasClass('orderable')
-        $('.attributes_order').addClass('drop_denied')
+        preset.find('.attributes_order').addClass('drop_denied')
 
     attributes_order_out_callback = (event, ui) =>
-      $('.attributes_order').removeClass('drop_denied')
+      preset.find('.attributes_order').removeClass('drop_denied')
 
     selected_attributes_drop_callback = (event, ui) =>
       el = ui.draggable
@@ -136,7 +164,7 @@ class SearchEngineExtention extends App.ExtendedController
           # li is cloned because .dt_dd_couple is double (cloned when dragged)
           li.remove()
 
-          @update_remove_button $(".selected_attributes li[data-name=" + name + "]")
+          @update_remove_button preset.find(".selected_attributes li[data-name=" + name + "]")
           @update_attribute_statuses()
 
           # Source is all_attributes, then remove dropped element
@@ -144,25 +172,29 @@ class SearchEngineExtention extends App.ExtendedController
 
     selected_attributes_over_callback = (event, ui) =>
       if ! ui.draggable.hasClass('searchable')
-        $('.selected_attributes').addClass('drop_denied')
+        preset.find('.selected_attributes').addClass('drop_denied')
 
     selected_attributes_out_callback = (event, ui) =>
-      $('.selected_attributes').removeClass('drop_denied')
+      preset.find('.selected_attributes').removeClass('drop_denied')
 
-    $(".attributes_order .droppable").droppable
-      drop: attributes_order_drop_callback
-      over: attributes_order_over_callback
-      out: attributes_order_out_callback
-      deactivate: attributes_order_out_callback
-      # accept: '.orderable' # not working, element can be dropped anyways
-      tolerence: 'touch'
+    # Unless the panel is disabled
+    if preset.find(".panel-disabled .attributes_order")
+      preset.find(".attributes_order .droppable").droppable
+        drop: attributes_order_drop_callback
+        over: attributes_order_over_callback
+        out: attributes_order_out_callback
+        deactivate: attributes_order_out_callback
+        # accept: '.orderable' # not working, element can be dropped anyways
+        tolerence: 'touch'
 
-    $(".selected_attributes .droppable").droppable
-      drop: selected_attributes_drop_callback
-      over: selected_attributes_over_callback
-      out: selected_attributes_out_callback
-      deactivate: selected_attributes_out_callback
-      tolerence: 'touch'
+    # Unless the panel is disabled
+    if preset.find(".panel-default .selected_attributes")
+      preset.find(".selected_attributes .droppable").droppable
+        drop: selected_attributes_drop_callback
+        over: selected_attributes_over_callback
+        out: selected_attributes_out_callback
+        deactivate: selected_attributes_out_callback
+        tolerence: 'touch'
 
   update_remove_button: (li) ->
     if li.find("a.text-danger").size() == 0 and ! li.hasClass('placeholder')
@@ -264,16 +296,6 @@ class Search extends SearchEngineExtention
 
   constructor: (params) ->
     super
-    # NOTE You can invoke custom_action from the search engine
-    # with the following hidden inputs (* = required for minimal action)
-    # custom_action[url] *
-    # custom_action[title]
-    # custom_action[message]
-    if $('#directory_custom_action_url').length > 0
-      @custom_action =
-        url: unescape($('#directory_custom_action_url').val())
-        title: unescape($('#directory_custom_action_title').val())
-        message: unescape($('#directory_custom_action_message').val())
 
   active: (params) =>
     @query_preset = params.preset if params.preset
@@ -298,6 +320,12 @@ class Search extends SearchEngineExtention
       .find("option[data-id=#{@query_preset.id}]")
       .prop(selected: 'selected')
 
+    # Disabled requested fields
+    if @custom_action and @custom_action.disabled.indexOf('search_string') != -1
+      $("#search_string").attr(disabled: true)
+      # If search_string is disabled you probably want to see preset
+      setTimeout (-> $("button[name=directory-preset-edit]").click()), 500
+
   search: (e) ->
     e.preventDefault()
     if @custom_action
@@ -321,6 +349,11 @@ class Search extends SearchEngineExtention
   load_preset: (e) ->
     e.preventDefault()
     @query_preset = $(e.target).query_preset()
+
+    # Keep custom action search_string if existing
+    if @custom_action and @custom_action.search_string
+      @query_preset.query.search_string = @custom_action.search_string
+
     @trigger 'edit', {preset: @query_preset}
     @render()
 
@@ -342,6 +375,21 @@ class Edit extends SearchEngineExtention
     current_toggle_status = $("#presets").hasClass('in')
     @html @view('directory/search_engine/presets')(@)
     $("#presets").collapse(toggle: current_toggle_status) # Do not display annimation on loading
+
+    # Disabled requested fields
+    if @custom_action
+      if @custom_action.disabled.indexOf('selected_attributes') != -1
+        $("#presets .selected_attributes")
+          .closest('.panel')
+          .addClass('panel-disabled')
+          .removeClass('panel-default')
+
+      if @custom_action.disabled.indexOf('attributes_order') != -1
+        $("#presets .selected_attributes")
+          .closest('.panel')
+          .addClass('panel-disabled')
+          .removeClass('panel-default')
+
     @load_jquery_ui_interactions()
 
   update: (e) =>

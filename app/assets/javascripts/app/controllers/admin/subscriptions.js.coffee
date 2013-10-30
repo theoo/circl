@@ -233,15 +233,17 @@ class Edit extends ValueItemsController
   pdf: (e) ->
     e.preventDefault()
 
-    query       = new App.QueryPreset
+    query       = {search_string: "subscriptions.id: #{@subscription.id}"}
     url         = "#{Subscription.url()}/#{@subscription.id}.pdf"
     title       = I18n.t('subscription.views.sort_people_for_pdf_generation_of') + " <i>" + @subscription.title + "</i>"
     message     = I18n.t('subscription.views.sort_people_message')
+    disabled    = 'search_string, selected_attributes'
 
     Directory.search_with_custom_action query,
       url: url
       title: title
       message: message
+      disabled: disabled
 
   destroy: (e) ->
     e.preventDefault()
@@ -272,7 +274,7 @@ class Edit extends ValueItemsController
   add_members: (e) ->
     e.preventDefault()
 
-    query       = new App.QueryPreset
+    query       = {}
     url         = "#{Subscription.url()}/#{@subscription.id}/add_members"
     title       = I18n.t('subscription.views.add_members_title') + " <i>" + @subscription.title + "</i>"
     message     = I18n.t('subscription.views.add_members_message')

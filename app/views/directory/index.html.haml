@@ -60,6 +60,9 @@
         %input{ :id => "directory_custom_action_message",
           :type => "hidden",
           :value => @custom_action[:message].html_safe }
+        %input{ :id => "directory_custom_action_disabled",
+          :type => "hidden",
+          :value => @custom_action[:disabled].html_safe }
 
     .col-lg-3
 
