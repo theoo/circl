@@ -131,7 +131,7 @@ header
   overflow-x: auto
   overflow-y: hidden
 
-table.datatable
+table.datatable, table.clickable
   margin-bottom: 0
 
   .sorting_desc, .sorting_asc, .sorting
@@ -154,8 +154,14 @@ table.datatable
 .table tr
   background-color: $white
 
-td.number
-  text-align: right
+
+table
+  .desc
+    min-width: 100px
+
+  .number
+    text-align: right
+    min-height: 20px
 
 // CIRCL stlyes
 input

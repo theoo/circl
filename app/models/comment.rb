@@ -72,6 +72,7 @@ class Comment < ActiveRecord::Base
     h = super(options)
 
     h[:person_name] = person.try(:name)
+    h[:resource_name] = resource.try(:name)
     h[:errors] = errors
 
     h

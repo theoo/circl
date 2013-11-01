@@ -16,21 +16,24 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Be sure to restart your server when you modify this file.
+class People::DashboardController < ApplicationController
 
-# Add new inflection rules using the following format
-# (all these examples are active by default):
-# ActiveSupport::Inflector.inflections do |inflect|
-#   inflect.plural /^(ox)$/i, '\1en'
-#   inflect.singular /^(ox)en/i, '\1'
-#   inflect.irregular 'person', 'people'
-#   inflect.uncountable %w( fish sheep )
-# end
+  layout false
 
-ActiveSupport::Inflector.inflections do |inflect|
-  inflect.singular 'taxes', 'tax'
-  inflect.singular 'Taxes', 'Tax'
+  def index
+    @person = params[:id] ? Person.find(params[:id]) : current_person
 
-  inflect.plural 'dashboard', 'dashboard'
-  inflect.plural 'Dashboard', 'Dashboard'
+    respond_to do |format|
+      format.html { render :layout => 'application' }
+    end
+  end
+
+  def comments
+    @comments = Comment.order("created_at desc").limit(10)
+
+    respond_to do |format|
+      format.json { render :json => @comments }
+    end
+  end
+
 end

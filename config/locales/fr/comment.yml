@@ -10,4 +10,5 @@ fr:
         comment: commentaire
         created_at: date
         editor: éditeur
+        person: personne
       title: titre

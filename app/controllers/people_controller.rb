@@ -109,24 +109,13 @@ class PeopleController < ApplicationController
     end
   end
 
-  # custom actions
-
   def welcome
     # this methods gathers first requests and redirect
     # to the dashboard with it's current_person params.
     # this redirection should not be possible through routes.rb
 
     #redirect_to dashboard_person_path(current_person)
-    redirect_to person_path(current_person)
-  end
-
-  def dashboard
-    # select current_person only if no ID is given
-    @person = params[:id] ? Person.find(params[:id]) : current_person
-
-    respond_to do |format|
-      format.html { render :layout => 'application' }
-    end
+    redirect_to person_dashboard_index_path(current_person)
   end
 
   def change_password

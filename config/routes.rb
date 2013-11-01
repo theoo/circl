@@ -15,13 +15,19 @@ Directory::Application.routes.draw do
   devise_for :people
   resources  :people do
     member do
-      get 'dashboard', 'change_password'
+      get 'change_password'
       post 'update_password'
       put 'update_password'
     end
 
     collection do
       get 'paginate', 'search', 'title_search', 'nationality_search'
+    end
+
+    resources :dashboard, :controller => 'people/dashboard', :only => :index do
+      collection do
+        get 'comments'
+      end
     end
 
     resources :activities, :controller => 'people/activities'

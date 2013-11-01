@@ -25,6 +25,8 @@
         - flash_messages
 
       = hidden_field :person, :id
+      - # Used to trigger Dashboard Spine controller instead of PersonEdit
+      %input{:type => 'hidden', :id => 'dashboard', :value => true}
 
     .col-lg-3
 

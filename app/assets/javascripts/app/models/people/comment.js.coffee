@@ -16,7 +16,8 @@
 
 class App.PersonComment extends Spine.Model
 
-  @configure 'PersonComment', 'person_name', 'resource_id', 'resource_type', 'title', 'description', 'is_closed', 'created_at'
+  @configure 'PersonComment', 'person_name', 'resource_id', 'resource_type',
+            'resource_name', 'title', 'description', 'is_closed', 'created_at'
 
   @extend Spine.Model.Ajax
 

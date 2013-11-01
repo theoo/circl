@@ -5,6 +5,16 @@ en:
       welcome: Welcome to CIRCL
       help: oneline help
       tech_support: tech support
+      panels:
+        messages: Messages
+        timesheet: Timesheet
+        last_comments: Last comments
+        your_activity: Your activity
+        open_invoices: Open invoices
+        current_affairs: Affairs in progress
+        last_people_added: Last people added
+        open_salaries: Open salaries
+        statistics: Statistics
     errors:
       an_email_is_required_if_it_is_loggable: An email is required in order to log into CIRCL.
       avs_number_control_key_is_invalid: the control key doesn't match, please ensure the number is correct

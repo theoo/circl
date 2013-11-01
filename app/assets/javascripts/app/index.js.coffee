@@ -56,6 +56,29 @@ class @App extends Spine.Controller
 
   @authenticity_token: -> $('meta[name="csrf-token"]').attr('content')
 
+class @Dashboard extends App
+
+  constructor: (params) ->
+    super
+
+    # everything depend on current user
+    if params.id
+      @person_id = params.id
+      App.Person.fetch {id: @person_id}
+    else
+      console.log "params.id is missing"
+
+    App.Person.one 'refresh', =>
+      # @subapp($('#dashboard_messages'), 'DashboardMessages')
+      # @subapp($('#dashboard_timesheet'), 'DashboardTimesheet')
+      @subapp($('#dashboard_comments'), 'DashboardComments')
+      # @subapp($('#dashboard_activity'), 'DashboardActivity')
+      # @subapp($('#dashboard_open_invoices'), 'DashboardOpenInvoices')
+      # @subapp($('#dashboard_current_affairs'), 'DashboardCurrentAffairs')
+      # @subapp($('#dashboard_last_people_added'), 'DashboardLastPeopleAdded')
+      # @subapp($('#dashboard_open_salaries'), 'DashboardOpenSalaries')
+      # @subapp($('#dashboard_statistics'), 'DashboardStatistics')
+
 class @PersonEdit extends App
 
   constructor: (params) ->
@@ -64,8 +87,10 @@ class @PersonEdit extends App
     # everything depend on this person
     @person_id = params.id if params
     if @person_id
+      # edit person
       App.Person.fetch {id: @person_id}
     else
+      # new person
       @subapp($('#person'), 'People')
 
     App.Person.one 'refresh', =>
@@ -88,7 +113,6 @@ class @PersonEdit extends App
       @subapp($('#person_roles'), 'PersonRoles')
       @subapp($('#person_comments'), 'PersonComments')
       @subapp($('#person_activities'), 'PersonActivities')
-
 
 class @Directory extends App
   constructor: (params) ->
