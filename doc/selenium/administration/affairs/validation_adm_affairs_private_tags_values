@@ -4,43 +4,19 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>login co</title>
+<title>validation_adm_affairs_private_tags_values</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">login co</td></tr>
+<tr><td rowspan="1" colspan="3">validation_adm_affairs_private_tags_values</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>0</td>
-	<td></td>
-</tr>
-<tr>
 	<td>open</td>
-	<td>/</td>
+	<td>/admin#affairs</td>
 	<td></td>
 </tr>
-<tr>
-	<td>type</td>
-	<td>css= #person_new&nbsp;&nbsp;input[id=login_email]</td>
-	<td>admin@complex.ch</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>css=#login_password</td>
-	<td>asd135</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>css= form input[name=commit]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyNotEval</td>
-	<td>window.location.href.indexOf(&quot;/people/&quot;)</td>
-	<td>-1</td>
-</tr>
+
 </tbody></table>
 </body>
 </html>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:3000/" />
+<title>New Test</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">New Test</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>300</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/people/1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #main_navigation</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #main_navigation&nbsp;&nbsp;&nbsp;&nbsp;a[href='/admin']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#main_navigation a[href='/admin']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #tags</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #tags</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_public_tags</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #admin_public_tags .btn </td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_public_tags.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #admin_public_tags.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #tag_name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_public_tags&nbsp;&nbsp;.popover</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #admin_public_tags .popover</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #admin_public_tags .popover</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #tag_name </td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementNotPresent</td>
+	<td>css= #admin_public_tags .popover</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #tag_name </td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #tag_name</td>
+	<td>liadjkf</td>
+</tr>
+<tr>
+	<td>storeValue</td>
+	<td>css= #tag_name</td>
+	<td>aptn</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #admin_public_tags .btn </td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_public_tags</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #admin_public_tags.panel-success</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_public_tags .dataTables_filter input[class='form-control input-sm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #admin_public_tags .dataTables_filter input[class='form-control input-sm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>css= #admin_public_tags .dataTables_filter input[class='form-control input-sm']</td>
+	<td>${aptn}</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_public_tags</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_public_tags&nbsp;&nbsp;tr[class='item odd']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #admin_public_tags&nbsp;&nbsp;tr[class='item odd']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_public_tags .btn-group .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #admin_public_tags .btn-group .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_public_tags .odd</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #admin_public_tags .odd .dataTables_empty</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #admin_public_tags.panel-success</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

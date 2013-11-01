@@ -8,9 +8,12 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
-<tr><td><a href="validation_login_failure">validation_login_failure</a></td></tr>
-<tr><td><a href="validation_new_password">validation_new_password</a></td></tr>
 <tr><td><a href="usage_login">usage_login</a></td></tr>
+<tr><td><a href="salaries/validation_salaries_form_completion">validation_salaries_form_completion</a></td></tr>
+<tr><td><a href="salaries/validation_pers_salaries_salaries_form">validation_pers_salaries_salaries_form</a></td></tr>
+<tr><td><a href="salaries/usage_pers_salaries_new_ref_new_sal">usage_pers_salaries_new_ref_new_sal</a></td></tr>
+<tr><td><a href="salaries/validation_pers_salaries_employment_contracts_form_no_combn">validation_pers_salaries_employment_contracts_form_no_combn</a></td></tr>
+<tr><td><a href="salaries/usage_pers_salaries">usage_pers_salaries</a></td></tr>
 <tr><td><a href="usage_logout">usage_logout</a></td></tr>
 </tbody></table>
 </body>

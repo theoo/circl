@@ -67,11 +67,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>refreshAndWait</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>waitForElementPresent</td>
 	<td>css= #person</td>
 	<td></td>
@@ -109,11 +104,6 @@
 <tr>
 	<td>verifyVisible</td>
 	<td>css= #person .has-error .popover</td>
-	<td></td>
-</tr>
-<tr>
-	<td>refreshAndWait</td>
-	<td></td>
 	<td></td>
 </tr>
 <tr>

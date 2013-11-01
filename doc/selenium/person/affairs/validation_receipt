@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:3000/" />
+<title>validation_receipt</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">validation_receipt</td></tr>
+</thead><tbody>
+<!--need for verification-->
+<!--validate fields presence-->
+<tr>
+	<td>setSpeed</td>
+	<td>200</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/people/1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #secondary_navigation a[href='#affairs']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_receipts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affair_receipts.panel-disabled</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= .dataTables_wrapper</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= .dataTables_wrapper input[type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>css= .dataTables_wrapper input[type='text']</td>
+	<td>${KEY_ENTER}</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs .dataTables_wrapper</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs .datatable</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs .datatable tr[class='item odd']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_affairs .datatable tr[class='item odd']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>css= #person_affair_receipts.disabled</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affair_receipts.active</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_affair_receipts .btn[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_receipts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_receipts.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affair_receipts.panel-danger</td>
+	<td></td>
+</tr>
+<!--validate title completion error-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #affair_receipt_invoice_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error input#affair_receipt_invoice_title </td>
+	<td></td>
+</tr>
+<!--validate value completion error-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_receipts label[for='affair_receipt_value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error label[for='affair_receipt_value']</td>
+	<td></td>
+</tr>
+<!--validate date value completion error-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #affair_receipt_value_date</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error input#affair_receipt_value_date </td>
+	<td></td>
+</tr>
+<!--form filling-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_receipts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #affair_receipt_invoice_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #affair_receipt_invoice_title</td>
+	<td>prj.title</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_receipts .form-group input[name='value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_affair_receipts .form-group input[name='value']</td>
+	<td>166</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #affair_receipt_value_date</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #affair_receipt_value_date</td>
+	<td>17-10-2013</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_affair_receipts .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_receipts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affair_receipts.panel-danger</td>
+	<td></td>
+</tr>
+<!--prob no panel-success (might be a use-case case)-->
+</tbody></table>
+</body>
+</html>

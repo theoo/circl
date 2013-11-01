@@ -4,39 +4,54 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>logout_co</title>
+<title>global_editable</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">logout_co</td></tr>
+<tr><td rowspan="1" colspan="3">global_editable</td></tr>
 </thead><tbody>
 <tr>
-	<td>setSpeed</td>
-	<td>300</td>
+	<td>setSpeed </td>
+	<td>50</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>css= #person_session_navigation&nbsp;&nbsp;a[class=dropdown-toggle]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>css= #person_session_navigation ul[class=dropdown-menu] a:last</td>
-	<td></td>
-</tr>
-<!--Selector should be on a ID instead of a:last... !-->
-<tr>
-	<td>click</td>
-	<td>css= #person_session_navigation ul[class=dropdown-menu] a:last</td>
+	<td>open</td>
+	<td>/people/2</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>css= #login</td>
+	<td>css=&nbsp;&nbsp;#person</td>
 	<td></td>
 </tr>
+<tr>
+	<td>click</td>
+	<td>css= #secondary_navigation a[href='#affairs']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs.active</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_subscriptions.panel-disabled</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_invoices.panel-disabled</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_receipts.panel-disabled</td>
+	<td></td>
+</tr>
+
 </tbody></table>
 </body>
 </html>

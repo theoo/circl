@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:3000/" />
+<title>validation_invoice</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">validation_invoice</td></tr>
+</thead><tbody>
+<!--validate fields presence-->
+<tr>
+	<td>setSpeed</td>
+	<td>150</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/people/1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #secondary_navigation a[href='#affairs']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_invoices</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affair_invoices.panel-disabled</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=&nbsp;&nbsp;.dataTables_wrapper input[type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= .dataTables_wrapper input[type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>css= .dataTables_wrapper input[type='text']</td>
+	<td>${KEY_ENTER}</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs .item</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_affairs .dataTables_wrapper tr[class='item odd']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affair_invoices.active</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_invoice_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_affair_invoice_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_invoice_template_id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_affair_invoice_template_id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_invoice_description</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_affair_invoice_description</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_invoice_printed_address</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_affair_invoice_printed_address</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_invoice_created_at</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_affair_invoice_created_at</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_invoice_value</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_affair_invoice_value</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_affair_invoices&nbsp;&nbsp;.btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_invoices.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affair_invoices.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_invoice_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error input#person_affair_invoice_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_affair_invoice_title</td>
+	<td>ldkjf</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_affair_invoices .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_invoices.panel-success</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affair_invoices.panel-success</td>
+	<td></td>
+</tr>
+<!--validate title-->
+<!--validate date value-->
+</tbody></table>
+</body>
+</html>

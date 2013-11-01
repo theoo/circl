@@ -4,78 +4,75 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>New Test</title>
+<title>validation_adm_affairs_forbid_existing_private_tag_recording</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">New Test</td></tr>
+<tr><td rowspan="1" colspan="3">validation_adm_affairs_forbid_existing_private_tag_recording</td></tr>
 </thead><tbody>
 <tr>
 	<td>setSpeed</td>
-	<td>50</td>
+	<td>100</td>
 	<td></td>
 </tr>
 <tr>
-	<td>open</td>
-	<td>/people/5</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>css= #person</td>
+	<td>open </td>
+	<td>/admin</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>css= #person_is_an_org</td>
+	<td>css= #admin_private_tags</td>
 	<td></td>
 </tr>
+<!--le private tag Association doit exister dans la db de test-->
 <tr>
 	<td>waitForElementPresent</td>
-	<td>css= #person_first_name</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>css= #person_last_name</td>
+	<td>css= #admin_private_tag_name</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>css= #person_organization_name</td>
-	<td>Complex IT Sàrl</td>
+	<td>css= #admin_private_tag_name</td>
+	<td>Association</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>css= #person_first_name</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>css= #person_last_name</td>
-	<td></td>
-</tr>
-<tr>
-	<td>uncheck</td>
-	<td>css= #person_is_an_org</td>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_private_tags .btn</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>css= #person .btn[type=submit]</td>
+	<td>css= #admin_private_tags .btn</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>css= #person.panel-danger</td>
+	<td>css= #admin_private_tags</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyVisible</td>
-	<td>css= #person</td>
+	<td>css= #admin_private_tags.panel-danger</td>
 	<td></td>
 </tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_private_tag_name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #admin_private_tag_name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #admin_private_tags&nbsp;&nbsp;.popover</td>
+	<td></td>
+</tr>
+
 </tbody></table>
 </body>
 </html>

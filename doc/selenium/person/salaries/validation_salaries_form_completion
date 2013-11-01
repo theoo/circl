@@ -4,44 +4,54 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>do_not_destroy_if_first_admin_co</title>
+<title>validation_salaries_form_completion</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">do_not_destroy_if_first_admin_co</td></tr>
+<tr><td rowspan="1" colspan="3">validation_salaries_form_completion</td></tr>
 </thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>100</td>
+	<td></td>
+</tr>
 <tr>
 	<td>open</td>
 	<td>/people/1</td>
 	<td></td>
 </tr>
+<!--to make sure that information is missing-->
 <tr>
-	<td>chooseOkOnNextConfirmation</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>css= #secondary_navigation a[href='/people/1']</td>
+	<td>waitForElementPresent</td>
+	<td>css= #person_avs_number</td>
 	<td></td>
 </tr>
 <tr>
-	<td>getConfirmation</td>
-	<td>confirmation</td>
+	<td>verifyValue</td>
+	<td>css= #person_avs_number</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>css= #person_id .alert.alert-danger:contains('enregistrement')</td>
+	<td>css= #sub_nav a[href='#salaries']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyVisible</td>
-	<td>css= #person_id div[class=alert]</td>
+	<td>click</td>
+	<td>css= #sub_nav a[href='#salaries']</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salaries</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css= #salaries .alert-warning</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

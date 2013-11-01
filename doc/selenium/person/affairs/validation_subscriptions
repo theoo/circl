@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:3000/" />
+<title>validation_subscriptions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">validation_subscriptions</td></tr>
+</thead><tbody>
+<!--ensure subscription exists-->
+<tr>
+	<td>setSpeed</td>
+	<td>200</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/people/1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #secondary_navigation a[href='#affairs']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #affair_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #affair_title</td>
+	<td>affair 2</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_affairs .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs.panel-success</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_subscriptions</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementNotPresent</td>
+	<td>css= #person_affair_subscriptions.panel-disabled</td>
+	<td></td>
+</tr>
+<!--ast 1 - > not in existing subscription-->
+<tr>
+	<td>type</td>
+	<td>css= #affair_subscription_title</td>
+	<td>ast 1</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_affair_subscriptions .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affair_subscriptions.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= .has-error #affair_subscription_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css= #person_affair_subscriptions.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=.has-error&nbsp;&nbsp;#affair_subscription_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css= .has-error #affair_subscription_title</td>
+	<td></td>
+</tr>
+<!--TODO check update success with existing subscription-->
+</tbody></table>
+</body>
+</html>

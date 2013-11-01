@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:3000/" />
+<title>validation_affair</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">validation_affair</td></tr>
+</thead><tbody>
+<!--validate title-->
+<tr>
+	<td>setSpeed</td>
+	<td>300</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/people/1</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #secondary_navigation a[href='#affairs']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #secondary_navigation a[href='#affairs']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_affairs .btn[type=submit]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs .popover-content</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affairs .popover-content</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>javascript{Math.floor((Math.random()*999999999999999)+1);}</td>
+	<td>affair_title</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${affair_title}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #affair_title</td>
+	<td>${affair_title}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_affairs .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs.panel-success</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affairs.panel-success</td>
+	<td></td>
+</tr>
+<!--ensure that below table is correctly updated-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs .dataTables_filter input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_affairs .dataTables_filter input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>css= #person_affairs .dataTables_filter input</td>
+	<td>${affair_title}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_affairs tbody</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs .btn-group button[name='affair-destroy']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affairs .btn-group button[name='affair-destroy']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>chooseOkOnNextConfirmation</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_affairs .btn-group button[name='affair-destroy']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>getConfirmation</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affairs.panel-success</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_affairs .dataTables_filter input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_affairs .dataTables_filter input</td>
+	<td>${affair_title}</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_affairs .datatable_wrapper&nbsp;&nbsp;td[class='dataTables_empty']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_affairs .datatable_wrapper td[class='dataTables_empty']</td>
+	<td></td>
+</tr>
+<!--TODO verify correctness of form auto-completion (buyer.receiver)-->
+</tbody></table>
+</body>
+</html>

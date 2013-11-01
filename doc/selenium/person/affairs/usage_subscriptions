@@ -4,33 +4,17 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>Password request</title>
+<title>usage_subscriptions</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Password request</td></tr>
+<tr><td rowspan="1" colspan="3">usage_subscriptions</td></tr>
 </thead><tbody>
-<tr>
-	<td>open</td>
-	<td>/people/password/new</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>//input[@id='person_email']</td>
-	<td>test@false.com</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>//input[@name='commit']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyElementPresent</td>
-	<td>//form[@id='person_new']/div[2]/h2</td>
-	<td></td>
-</tr>
+<!--add subscription-->
+<!--remove subscription-->
+<!--* ensure affair value is updated-->
+
 </tbody></table>
 </body>
 </html>

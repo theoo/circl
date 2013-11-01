@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:3000/" />
+<title>validation_adm_affairs_tag_tools</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">validation_adm_affairs_tag_tools</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>200</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/admin</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #secondary_navigation a[href='#affairs']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=&nbsp;&nbsp;#secondary_navigation a[href='#affairs']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions .panel-footer .btn</td>
+	<td></td>
+</tr>
+<!--tag tools arousal-->
+<tr>
+	<td>click</td>
+	<td>css= #admin_subscriptions .panel-footer .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= .modal-dialog</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #salaries-tag-tool-modal</td>
+	<td></td>
+</tr>
+<!--first way to exit modal mode (click outside the modal-pop)-->
+<tr>
+	<td>clickAt</td>
+	<td>css= #salaries-tag-tool-modal</td>
+	<td>10,20</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions</td>
+	<td></td>
+</tr>
+<tr>
+	<td>refresh</td>
+	<td></td>
+	<td></td>
+</tr>
+<!--second way to exit modal mode-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions .panel-footer .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #admin_subscriptions .panel-footer .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= .modal-dialog</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #salaries-tag-tool-modal .close</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #salaries-tag-tool-modal .close</td>
+	<td></td>
+</tr>
+<!--tird way to exit ->modal-footer .btn type=button-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions</td>
+	<td></td>
+</tr>
+<tr>
+	<td>refresh</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions .panel-footer .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #admin_subscriptions .panel-footer .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= .modal-dialog</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #salaries-tag-tool-modal .btn-default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #salaries-tag-tool-modal .btn-default</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions</td>
+	<td></td>
+</tr>
+<tr>
+	<td>refresh</td>
+	<td></td>
+	<td></td>
+</tr>
+<!--.......................................................-->
+<!--Form completion tests-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions .panel-footer .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #admin_subscriptions .panel-footer .btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= .modal-dialog</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitFroElementPresent</td>
+	<td>css= #salaries-tag-tool-modal .btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #salaries-tag-tool-modal .btn-primary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #subscription_tag_tool_private_tag_name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #subscription_tag_tool_private_tag_name</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #subscription_tag_tool_date</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #subscription_tag_tool_date</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>css= #subscription_tag_tool_private_tag_name</td>
+	<td>Association</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= .modal-dialog .ui-menu li:first</td>
+	<td></td>
+</tr>
+<!--TODO click on  proposition selector-->
+<tr>
+	<td>click</td>
+	<td>css=&nbsp;&nbsp;&nbsp;#subscription_tag_tool_date</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #ui-datepicker-div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #ui-datepicker-div </td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #ui-datepicker-div td:last</td>
+	<td></td>
+</tr>
+<!--TODO validate process validation-->
+<!--TODO validation tags values fields-->
+
+</tbody></table>
+</body>
+</html>

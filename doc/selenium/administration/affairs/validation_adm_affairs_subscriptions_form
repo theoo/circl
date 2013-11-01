@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:3000/" />
+<title>validation_adm_affairs_subscriptions_form</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">validation_adm_affairs_subscriptions_form</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>100</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/admin</td>
+	<td></td>
+</tr>
+<!--admin page is loaded-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #secondary_navigation </td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #sub_nav a[href=#affairs]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #sub_nav a[href=#affairs]</td>
+	<td></td>
+</tr>
+<!--adm affairs page is loaded-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions .btn[type='submit']</td>
+	<td></td>
+</tr>
+<!--try to record empty subs-->
+<tr>
+	<td>click</td>
+	<td>css= #admin_subscriptions .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #admin_subscriptions.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscription_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions .popover</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #admin_subscriptions .popover</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>100</td>
+	<td></td>
+</tr>
+<!--verification: popup is away-->
+<tr>
+	<td>verifyElementNotPresent</td>
+	<td>css= #admin_subscriptions .popover</td>
+	<td></td>
+</tr>
+<!--verification: field adm_subs_title still has-error-->
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #admin_subscription_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #admin_subscription_title</td>
+	<td>xxxxxx</td>
+</tr>
+<tr>
+	<td>storeValue</td>
+	<td>css= #admin_subscription_title</td>
+	<td>astv</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #admin_subscriptions&nbsp;&nbsp;.btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions.panel-success</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #admin_subscriptions.panel-success</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>css= #admin_subscriptions .input-sm[type='text']</td>
+	<td>${astv}</td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions .dataTable tr[class='odd item']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #admin_subscriptions .dataTable tr[class='odd item']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #admin_subscriptions .btn-danger[name='subscription-destroy']</td>
+	<td></td>
+</tr>
+<!--TODO verify deletion-->
+<tr>
+	<td>chooseOkOnNextConfirmation</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #admin_subscriptions .btn-danger[name='subscription-destroy']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>getConfirmation</td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

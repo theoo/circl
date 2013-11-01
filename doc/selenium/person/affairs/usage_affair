@@ -4,13 +4,14 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:3000/" />
-<title>Second_email_is_different</title>
+<title>usage_affair</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Second_email_is_different</td></tr>
+<tr><td rowspan="1" colspan="3">usage_affair</td></tr>
 </thead><tbody>
+<!--all fields are recorded-->
 <tr>
 	<td>setSpeed</td>
 	<td>50</td>
@@ -18,7 +19,7 @@
 </tr>
 <tr>
 	<td>open</td>
-	<td>/people/3</td>
+	<td>/people/1</td>
 	<td></td>
 </tr>
 <tr>
@@ -27,45 +28,36 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>css= input#person_email</td>
+	<td>click</td>
+	<td>css= #secondary_navigation a[href='#affairs']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>css= #person_second_email</td>
+	<td>css= #person_affairs.active</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #affair_title</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>css= #person_email</td>
-	<td>yyh@test.com</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>css= #person_second_email</td>
-	<td>yyh@test.com</td>
+	<td>css= #affair_title.required</td>
+	<td>affair 2</td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=#person form button[type=submit]</td>
+	<td>css= #person_affairs .btn</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForElementPresent</td>
-	<td>css= #person.panel-danger</td>
+	<td>css= #person_affairs.panel-success</td>
 	<td></td>
 </tr>
-<tr>
-	<td>waitForElementPresent</td>
-	<td>css= #person .has-error .popover</td>
-	<td></td>
-</tr>
-<tr>
-	<td>verifyVisible</td>
-	<td>css= #person .has-error .popover</td>
-	<td></td>
-</tr>
+<!--TODO ensure that all field are present in table below-->
 </tbody></table>
 </body>
 </html>

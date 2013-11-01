@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:3000/" />
+<title>usage_pers_salaries</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">usage_pers_salaries</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>200</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/people/3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #sub_nav</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #sub_nav a[href='#salaries']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #sub_nav&nbsp;&nbsp;a[href='#salaries']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salaries</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salary_parent_id</td>
+	<td></td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>css= #person_salary_parent_id </td>
+	<td>value=new</td>
+</tr>
+<!--create new salary reference-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salary_title</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_salary_title</td>
+	<td>javascript{Math.floor((Math.random()*999999999999999)+1);}</td>
+</tr>
+<tr>
+	<td>storeValue</td>
+	<td>css= #person_salary_title</td>
+	<td>pst</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${pst}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css=&nbsp;&nbsp;#person_salary_activity_rate</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_salary_activity_rate</td>
+	<td>javascript{Math.floor((Math.random()*99)+1);}</td>
+</tr>
+<tr>
+	<td>storeValue</td>
+	<td>css= #person_salary_activity_rate</td>
+	<td>psar</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${psar}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salary_yearly_salary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #person_salary_yearly_salary</td>
+	<td>javascript{Math.floor((Math.random()*10000)+60000);}</td>
+</tr>
+<tr>
+	<td>storeValue</td>
+	<td>css= #person_salary_yearly_salary</td>
+	<td>psys</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${psys}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salaries .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_salaries .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salaries.panel-success</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salaries .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_salaries .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salaries.panel-success</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_salaries.panel-success</td>
+	<td></td>
+</tr>
+<!--select reference-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salaries .nav a[href='#person_salary_references_index']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_salaries .nav a[href='#person_salary_references_index']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salary_references_index .datatable_wrapper</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css= #person_salary_references_index tr:contains(${pst})</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_salary_references_index tr:contains(${pst})</td>
+	<td></td>
+</tr>
+<!--validation: information recorded-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salary_items</td>
+	<td></td>
+</tr>
+<!--validation: deductions removal-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= .normal[type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyChecked</td>
+	<td>css= .normal[type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>uncheck</td>
+	<td>css= .normal[type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salary_tax_datas</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_salary_items .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_salary_items .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= .normal[type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyNotChecked</td>
+	<td>css= .normal[type='checkbox']</td>
+	<td></td>
+</tr>
+<!--TODO: verify that deduction does not appear in deduction panel-->
+</tbody></table>
+</body>
+</html>

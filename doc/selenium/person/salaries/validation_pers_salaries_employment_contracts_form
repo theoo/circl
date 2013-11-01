@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:3000/" />
+<title>validation_pers_salaries_employment_contracts_form</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">validation_pers_salaries_employment_contracts_form</td></tr>
+</thead><tbody>
+<tr>
+	<td>setSpeed</td>
+	<td>100</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/people/3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #sub_nav a[href='#salaries']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #sub_nav a[href='#salaries']</td>
+	<td></td>
+</tr>
+<!--case 0: contrac with no required informations-->
+<!--case 0: validation-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_employment_contracts.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #employment_contract_inteval_starts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #employment_contract_inteval_starts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #employment_contract_interval_ends</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #employment_contract_interval_ends</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #employment_contract_percentage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #employment_contract_percentage</td>
+	<td></td>
+</tr>
+<!--case 1: contract starts-->
+<tr>
+	<td>click</td>
+	<td>css= #employment_contract_inteval_starts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #ui-datepicker-div .ui-datepicker-calendar a[href='#']:first</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #ui-datepicker-div .ui-datepicker-calendar a[href='#']:first</td>
+	<td></td>
+</tr>
+<!--case 1: validation-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_employment_contracts.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #employment_contract_interval_ends</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #employment_contract_interval_ends</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #employment_contract_percentage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #employment_contract_percentage</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--case 2: contract ends-->
+<tr>
+	<td>type</td>
+	<td>css= #employment_contract_interval_starts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #employment_contract_interval_ends</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #ui-datepicker-div .ui-datepicker-calendar a[href='#']:last</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #ui-datepicker-div .ui-datepicker-calendar a[href='#']:last</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<!--case 2 :validation-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_employment_contracts.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #employment_contract_inteval_starts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #employment_contract_inteval_starts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #employment_contract_percentage</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #employment_contract_percentage</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--case 3: contract percentage-->
+<tr>
+	<td>type</td>
+	<td>css= #employment_contract_interval_ends</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #employment_contract_percentage</td>
+	<td>12</td>
+</tr>
+<!--case 3: validation-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_employment_contracts.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #employment_contract_inteval_starts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #employment_contract_inteval_starts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #employment_contract_interval_ends</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #employment_contract_interval_ends</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--case 4: contract starts + percentage-->
+<tr>
+	<td>click</td>
+	<td>css= #employment_contract_inteval_starts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #ui-datepicker-div .ui-datepicker-calendar a[href='#']:first</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #ui-datepicker-div .ui-datepicker-calendar a[href='#']:first</td>
+	<td></td>
+</tr>
+<!--case 4: validation-->
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= #person_employment_contracts.panel-danger</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #employment_contract_interval_ends</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyVisible</td>
+	<td>css= .has-error #employment_contract_interval_ends</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--case 5: contract starts + ends-->
+<tr>
+	<td>click</td>
+	<td>css= #ui-datepicker-div .ui-datepicker-calendar a[href='#']:last</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #person_employment_contracts .btn[type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #employment_contract_percentage</td>
+	<td></td>
+</tr>
+<!--case 6: validation-->
+<!--case 6: contract ends + percentage-->
+<tr>
+	<td>click</td>
+	<td>css= #employment_contract_inteval_starts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>css= #employment_contract_percentage</td>
+	<td>12</td>
+</tr>
+<!--case 7: contract (ok)-->
+<tr>
+	<td>click</td>
+	<td>css= #employment_contract_inteval_starts</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>css= #ui-datepicker-div .ui-datepicker-calendar a[href='#']:first</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css= #ui-datepicker-div .ui-datepicker-calendar a[href='#']:first</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

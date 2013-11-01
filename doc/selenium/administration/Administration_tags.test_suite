@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Test Suite</title>
+</head>
+<body>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="../person/usage_login">usage_login</a></td></tr>
+<tr><td><a href="tags/adm_tags_page_accessibility">validation_administration_tags</a></td></tr>
+<tr><td><a href="tags/validation_adm_tags_forbid_existing_private_tag_recording">validation_adm_affairs_forbid_existing_private_tag_recording</a></td></tr>
+<tr><td><a href="tags/validation_adm_tags_public_tags">validation_adm_affairs_public_tags</a></td></tr>
+<tr><td><a href="../person/usage_logout">usage_logout</a></td></tr>
+</tbody></table>
+</body>
+</html>
