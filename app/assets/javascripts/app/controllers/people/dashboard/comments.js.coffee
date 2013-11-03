@@ -43,8 +43,6 @@ class App.DashboardComments extends Spine.Controller
 
   constructor: (params) ->
     super
-    console.log "coucou"
-
     @person_id = params.person_id
 
     PersonComment.url = =>

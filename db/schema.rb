@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130909123924) do
+ActiveRecord::Schema.define(:version => 20131103153811) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -247,6 +247,7 @@ ActiveRecord::Schema.define(:version => 20130909123924) do
     t.datetime "updated_at"
     t.boolean  "hidden",                                        :default => false, :null => false
     t.boolean  "gender"
+    t.integer  "task_rate_id"
   end
 
   add_index "people", ["authentication_token"], :name => "index_people_on_authentication_token", :unique => true
@@ -264,6 +265,7 @@ ActiveRecord::Schema.define(:version => 20130909123924) do
   add_index "people", ["organization_name"], :name => "index_people_on_organization_name"
   add_index "people", ["reset_password_token"], :name => "index_people_on_reset_password_token", :unique => true
   add_index "people", ["second_email"], :name => "index_people_on_second_email"
+  add_index "people", ["task_rate_id"], :name => "index_people_on_task_rate_id"
   add_index "people", ["unlock_token"], :name => "index_people_on_unlock_token", :unique => true
   add_index "people", ["updated_at"], :name => "index_people_on_updated_at"
 
@@ -643,17 +645,36 @@ ActiveRecord::Schema.define(:version => 20130909123924) do
   add_index "task_presets", ["value_currency"], :name => "index_task_presets_on_value_currency"
   add_index "task_presets", ["value_in_cents"], :name => "index_task_presets_on_value_in_cents"
 
-  create_table "task_types", :force => true do |t|
-    t.string "title",       :default => "", :null => false
-    t.text   "description", :default => ""
-    t.float  "ratio",                       :null => false
+  create_table "task_rates", :force => true do |t|
+    t.string   "title",                             :null => false
+    t.text     "description"
+    t.integer  "value_in_cents",                    :null => false
+    t.string   "value_currency", :default => "CHF"
+    t.boolean  "archive",        :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
+  add_index "task_rates", ["archive"], :name => "index_task_rates_on_archive"
+  add_index "task_rates", ["value_currency"], :name => "index_task_rates_on_value_currency"
+  add_index "task_rates", ["value_in_cents"], :name => "index_task_rates_on_value_in_cents"
+
+  create_table "task_types", :force => true do |t|
+    t.string  "title",          :default => "",    :null => false
+    t.text    "description",    :default => ""
+    t.float   "ratio",                             :null => false
+    t.integer "value_in_cents"
+    t.string  "value_currency", :default => "CHF"
+    t.boolean "archive",        :default => false
+  end
+
+  add_index "task_types", ["archive"], :name => "index_task_types_on_archive"
   add_index "task_types", ["title"], :name => "index_task_types_on_title"
+  add_index "task_types", ["value_currency"], :name => "index_task_types_on_value_currency"
+  add_index "task_types", ["value_in_cents"], :name => "index_task_types_on_value_in_cents"
 
   create_table "tasks", :force => true do |t|
     t.integer  "executer_id",                                    :null => false
-    t.date     "date"
     t.text     "description",                 :default => ""
     t.integer  "duration"
     t.datetime "created_at"
@@ -663,12 +684,14 @@ ActiveRecord::Schema.define(:version => 20130909123924) do
     t.integer  "value_in_cents", :limit => 8, :default => 0,     :null => false
     t.string   "value_currency",              :default => "CHF", :null => false
     t.integer  "salary_id"
+    t.datetime "start_date"
   end
 
   add_index "tasks", ["affair_id"], :name => "index_tasks_on_affair_id"
-  add_index "tasks", ["date"], :name => "index_tasks_on_date"
+  add_index "tasks", ["duration"], :name => "index_tasks_on_duration"
   add_index "tasks", ["executer_id"], :name => "index_tasks_on_executer_id"
   add_index "tasks", ["salary_id"], :name => "index_tasks_on_salary_id"
+  add_index "tasks", ["start_date"], :name => "index_tasks_on_start_date"
   add_index "tasks", ["task_type_id"], :name => "index_tasks_on_task_type_id"
   add_index "tasks", ["value_currency"], :name => "index_tasks_on_value_currency"
   add_index "tasks", ["value_in_cents"], :name => "index_tasks_on_value_in_cents"

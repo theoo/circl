@@ -212,9 +212,16 @@ class Person < ActiveRecord::Base
   has_many    :background_tasks
 
   # tasks this person have edited
-  has_many    :tasks,
+  has_many    :executed_tasks,
+              :class_name => '::Task',
               :foreign_key => 'executer_id',
               :dependent => :destroy
+
+  # tasks made for this person
+  has_many    :tasks,
+              :through => :affairs
+
+  belongs_to  :task_rate
 
 
   ##################

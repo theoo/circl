@@ -50,23 +50,21 @@ class Task < ActiveRecord::Base
   #################
 
   after_commit  :update_elasticsearch
-  before_save   :compute_value
+  before_save   :set_value
 
   #################
   ### RELATIONS ###
   #################
 
   belongs_to  :affair
-
   # made for this person
   has_one     :owner, :through => :affair
-
   # made by this person
-  belongs_to  :executer, :class_name => Person
-
+  belongs_to  :executer, :class_name => 'Person'
   belongs_to  :task_type
-
   belongs_to  :salary, :class_name => 'Salaries::Salary'
+
+  scope :availables, Proc.new { where(:archive => false)}
 
   # Money
   money :value
@@ -75,21 +73,21 @@ class Task < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
-  validates_with DateValidator, :attribute => :date
+  validates_with DateValidator, :attribute => :start_date
   validates_presence_of :description,
                         :affair_id,
-                        :date,
-                        :duration,
                         :task_type_id,
+                        :executer_id,
+                        :start_date,
+                        :duration,
                         :value_in_cents,
                         :value_currency
 
-  validate :date_not_in_the_future
   validate :duration_is_positive
+  validate :owner_should_have_a_task_rate
 
   # Validate fields of type 'text' length
   validates_length_of :description, :maximum => 65536
-
 
   ########################
   ### INSTANCE METHODS ###
@@ -97,37 +95,55 @@ class Task < ActiveRecord::Base
 
   def as_json(options = nil)
     h = super(options)
-
-    h[:person_name] = person.try(:name)
+    h[:owner_name] = owner.try(:name)
+    h[:executer_name] = executer.try(:name)
     h[:errors] = errors
-
     h
+  end
+
+  def end_date
+    start_date + duration.minutes
+  end
+
+  def duration_in_hours
+    duration / 60.0
+  end
+
+  def compute_value
+    if task_type.ratio
+      owner.task_rate.value * duration_in_hours * task_type.ratio
+    else
+      task_type.value * duration_in_hours
+    end
   end
 
   private
 
-  def date_not_in_the_future
-    if date && date > Date.today
-      errors.add(:date, I18n.t('common.errors.date_cannot_be_in_the_future'))
-      return false
+  def set_value
+    # reset value only if none given
+    if value_in_cents.blank? or value == 0.to_money
+      self.value = compute_value unless value
+    end
+  end
+
+  def owner_should_have_a_task_rate
+    if affair_id # there is a validation for affair_id
+      if ! owner.task_rate
+        errors.add(:base, I18n.t('task_type.errors.owner_should_have_a_task_rate'))
+        return false
+      end
     end
   end
 
   def duration_is_positive
     if duration && duration < 0
-      errors.add(:duration, I18n.t('common.errors.duration_must_be_positive'))
+      errors.add(:duration, I18n.t('task_type.errors.duration_must_be_positive'))
       return false
     end
   end
 
   def update_elasticsearch
     person.update_index unless tracked_changes.empty?
-  end
-
-  def compute_value
-    # TODO: fetch initial value of an hour
-    hour = 100
-    self.value = duration * value * self.task_type.ratio
   end
 
 end

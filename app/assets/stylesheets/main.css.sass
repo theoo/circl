@@ -1,4 +1,5 @@
 @import "custom_fonts.css"
+@import "bootstrap-slider.css"
 @import "bootstrap.css"
 @import "jquery-ui-bootstrap/jquery-ui-custom.css"
 @import "jquery-ui-bootstrap/jquery-ui-ie.css"
@@ -145,6 +146,15 @@ table.datatable, table.clickable
 .pagination-footer
   text-align: center
 
+// timesheet
+#timesheet_slider
+  .slider
+    display: block
+    width: 100%
+
+  .summary
+    height: 2em
+
 // sortable
 .handle
   font-size: 25px
@@ -153,7 +163,6 @@ table.datatable, table.clickable
 // When moving object (with sorttable for instance), backgound is not transparent
 .table tr
   background-color: $white
-
 
 table
   .desc

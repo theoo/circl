@@ -70,7 +70,7 @@ class @Dashboard extends App
 
     App.Person.one 'refresh', =>
       # @subapp($('#dashboard_messages'), 'DashboardMessages')
-      # @subapp($('#dashboard_timesheet'), 'DashboardTimesheet')
+      @subapp($('#dashboard_timesheet'), 'DashboardTimesheet')
       @subapp($('#dashboard_comments'), 'DashboardComments')
       # @subapp($('#dashboard_activity'), 'DashboardActivity')
       # @subapp($('#dashboard_open_invoices'), 'DashboardOpenInvoices')

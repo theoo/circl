@@ -25,6 +25,7 @@
 #= require jquery.strength
 #
 #= require bootstrap
+#= require bootstrap-slider.js
 #
 #= require hamlcoffee
 #= require app
@@ -109,7 +110,7 @@ Number.prototype.pad = (length) ->
   str = @ + ""
   while (str.length < length)
     str = "0" + str;
-  str
+  str.substring(0,2)
 
 # If I dared to write somewhere how javascript sucks that would be here.
 Date.prototype.to_view = (date)->

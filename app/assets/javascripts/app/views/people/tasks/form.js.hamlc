@@ -1,30 +1,61 @@
-%form
-  .validation_errors_placeholder
+%form.panel-body
+  .row
+    .col-lg-12
+      .validation_errors_placeholder
 
-  .float_right
-    %label.white &nbsp;
-    != @partial("submit_button")(@task)
+  .row
+    .col-lg-4
+      .form-group
+        %label{:for => 'task_start_date'}
+          = I18n.t('task.views.date')
+        %input{ :type => 'text',
+                :id => 'task_start_date',
+                :name => 'start_date',
+                :class => 'datepicker form-control',
+                :value => @task.date }
 
-  .stackable-block
-    %label= I18n.t('task.views.date')
-    %input{ :type => 'text',
-            :name => 'date',
-            :class => 'datepicker',
-            :value => @task.date }
+    .col-lg-4
+      .form-group
+        %label{:for => 'task_duration'}
+          = I18n.t('task.views.duration')
+        %input{ :type => 'number',
+                :name => 'duration',
+                :class => 'form-control',
+                :id => 'task_duration',
+                :min => 0,
+                :max => 999,
+                :value => @task.duration}
 
-  .stackable-block
-    %label= I18n.t('task.views.duration')
-    %input{ :type => 'number',
-            :name => 'duration',
-            :min => 0,
-            :max => 999,
-            :value => @task.duration}
+    .col-lg-4
 
-  .block
+  #timesheet_slider
+    .row.summary
+      .col-lg-6.text-center
+        = I18n.t("common.from")
+        %span.from 09:00
 
-  .full_width_textarea
-    %label= I18n.t('task.views.description')
-    %textarea{ :name => 'description',
-               :rows => 5,
-               :class => 'like_an_input'}
-      = @task.description
+      .col-lg-6.text-center
+        = I18n.t("common.to")
+        %span.to 18:00
+
+    .row
+      .col-lg-12
+        %div{'data-slider-value' => "[9,18]", :class => 'timeline'}
+
+  .row
+    .col-lg-12
+      type and preset
+
+  .row
+    .col-lg-12.form-group
+      %label{:for => 'task_description'}
+        = I18n.t('task.views.description')
+      %textarea{:name => 'description',
+                :id => 'task_description',
+                :rows => 5,
+                :class => 'form-control'}
+        = @task.description
+
+  .row
+    .col-lg-12.text-right
+      != @partial("submit_button")(@task)

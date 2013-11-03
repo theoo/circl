@@ -159,9 +159,9 @@ class Index extends App.ExtendedController
     @html @view('people/affairs/index')(@)
 
   edit: (e) ->
-    affair = $(e.target).affair()
+    @affair = $(e.target).affair()
     @activate_in_list(e.target)
-    @trigger 'edit', affair.id
+    @trigger 'edit', @affair.id
 
   table_redraw: =>
     if @affair

@@ -16,22 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# == Schema Information
-#
-# Table name: task_presets
-#
-# *id*::             <tt>integer, not null, primary key</tt>
-# *task_type_id*::   <tt>integer</tt>
-# *title*::          <tt>string(255), default(""), not null</tt>
-# *description*::    <tt>text, default("")</tt>
-# *duration*::       <tt>float</tt>
-# *value_in_cents*:: <tt>integer</tt>
-# *value_currency*:: <tt>string(255)</tt>
-#--
-# == Schema Information End
-#++
-
-class TaskPreset < ActiveRecord::Base
+class TaskRate < ActiveRecord::Base
 
   ################
   ### INCLUDES ###
@@ -41,17 +26,36 @@ class TaskPreset < ActiveRecord::Base
   extend  MoneyComposer
 
   #################
+  ### CALLBACKS ###
+  #################
+
+  #################
   ### RELATIONS ###
   #################
 
-  belongs_to  :task_type
+  has_many :people
 
+  # Money
   money :value
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates_presence_of :title, :task_type_id
+  validates_presence_of :title,
+                        :value_in_cents
+
+  # Validate fields of type 'text' length
+  validates_length_of :description, :maximum => 65536
+
+  ########################
+  ### INSTANCE METHODS ###
+  ########################
+
+  def as_json(options = nil)
+    h = super(options)
+    h[:errors] = errors
+    h
+  end
 
 end

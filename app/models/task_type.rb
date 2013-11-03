@@ -35,19 +35,37 @@ class TaskType < ActiveRecord::Base
   ################
 
   include ChangesTracker
+  extend  MoneyComposer
 
+  #################
+  ### CALLBACKS ###
+  #################
 
   #################
   ### RELATIONS ###
   #################
 
   has_many :tasks
+  has_many :task_presets
 
+  scope :availables, Proc.new { where(:archive => false)}
+
+  money :value
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates_presence_of :title, :ratio
+  validates_presence_of :title
+  validate :should_have_a_ratio_or_a_value
+
+  private
+
+  def should_have_a_ratio_or_a_value
+    if ratio.blank? and value_in_cents.blank?
+      errors.add(:base, I18n.t('task_type.errors.should_have_a_ratio_or_a_title'))
+      return false
+    end
+  end
 
 end

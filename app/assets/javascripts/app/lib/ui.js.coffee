@@ -47,7 +47,9 @@ class Ui
       $(@).datepicker
         inline: true
         buttonImageOnly: true
-        showWeek: true, firstDay: 1
+        showTime: true
+        showWeek: true
+        firstDay: 1
         showOtherMonths: true
         selectOtherMonths: true
         showButtonPanel: true

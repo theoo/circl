@@ -16,7 +16,9 @@
 
 class App.PersonTask extends Spine.Model
 
-  @configure 'PersonTask', 'person_name', 'date', 'duration', 'description', 'created_at'
+  @configure 'PersonTask', 'affair_id', 'created_at', 'description',
+    'duration', 'executer_id', 'id', 'salary_id', 'start_date', 'task_type_id',
+    'updated_at', 'value_currency', 'value_in_cents', 'owner_name', 'executer_name'
 
   @extend Spine.Model.Ajax
 
