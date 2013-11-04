@@ -18,6 +18,8 @@
 
 class People::DashboardController < ApplicationController
 
+  load_resource :person
+
   layout false
 
   def index
@@ -33,6 +35,14 @@ class People::DashboardController < ApplicationController
 
     respond_to do |format|
       format.json { render :json => @comments }
+    end
+  end
+
+  def activities
+    @activities = @person.activities.order("created_at desc").limit(10)
+
+    respond_to do |format|
+      format.json { render :json => @activities }
     end
   end
 
