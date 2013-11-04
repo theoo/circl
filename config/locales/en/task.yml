@@ -1,13 +1,28 @@
 ---
 en:
   task:
+    errors:
+      duration_is_required_if_selected_task_type_have_a_ratio: Duration is required if selected task type have a ratio
+      owner_should_have_a_task_rate: Owner should have a task rate
+      duration_must_be_positive: Duration must be positive
+    notices:
+      computed_value_is: Computed value is %{value}
     views:
-      contextmenu:
+      actions:
         destroy_task: destroy task
         edit_task: edit task
       date: date
+      value: value
       description: description
       duration: duration
+      duration_help: in minutes
+      times_help: "example: 9, 915, 09:15"
+      task_type: task type
+      task_types: task types
+      task_rate: task rate
+      task_rates: task rates
+      owner: client
+      affair: affair
       table:
         date: date
         description: description

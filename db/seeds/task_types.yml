@@ -1,0 +1,9 @@
+---
+- title: Intervention
+  description: Generic intervention
+  ratio: 1
+  archive: false
+- title: Emergency
+  description: Emergency intervention with ratio of two
+  ratio: 2
+  archive: false

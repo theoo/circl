@@ -16,23 +16,15 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class People::TasksController < ApplicationController
+class Admin::TaskTypesController < ApplicationController
 
   layout false
 
-  # monitor_changes :@task
-
-  before_filter do
-    @person = Person.find(params[:person_id])
-  end
+  load_and_authorize_resource
 
   def index
-    authorize! :index, ::Task
-
-    @tasks = @person.executed_tasks
-
     respond_to do |format|
-      format.json { render :json => @tasks }
+      format.json { render :json => @task_types }
     end
   end
 
@@ -41,51 +33,37 @@ class People::TasksController < ApplicationController
   end
 
   def create
-    authorize! :create, ::Task
-
-    @task = ::Task.new(params[:task])
-    @task.executer_id = @person.id
-    @task.value = params[:value] if params[:value]
-
     respond_to do |format|
-      if @task.save
-        format.json { render :json => @task }
+      if @task_type.save
+        format.json { render :json => @task_type }
       else
-        format.json { render :json => @task.errors, :status => :unprocessable_entity }
+        format.json { render :json => @task_type.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   def edit
-    authorize! :read, ::Task
-
     respond_to do |format|
-      format.json { render :json => @task }
+      format.json { render :json => @task_type }
     end
   end
 
   def update
-    authorize! :update, ::Task
-    @task = ::Task.find(params[:id])
-    @task.value = params[:value] if params[:value]
-
     respond_to do |format|
-      if @task.update_attributes(params[:task])
-        format.json { render :json => @task }
+      if @task_type.update_attributes(params[:task_type])
+        format.json { render :json => @task_type }
       else
-        format.json { render :json => @task.errors, :status => :unprocessable_entity }
+        format.json { render :json => @task_type.errors, :status => :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    authorize! :destroy, ::Task
-
     respond_to do |format|
-      if @task.destroy
+      if @task_type.destroy
         format.json { render :json => {} }
       else
-        format.json { render :json => @task.errors, :status => :unprocessable_entity}
+        format.json { render :json => @task_type.errors, :status => :unprocessable_entity}
       end
     end
   end

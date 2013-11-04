@@ -662,7 +662,7 @@ ActiveRecord::Schema.define(:version => 20131103153811) do
   create_table "task_types", :force => true do |t|
     t.string  "title",          :default => "",    :null => false
     t.text    "description",    :default => ""
-    t.float   "ratio",                             :null => false
+    t.float   "ratio"
     t.integer "value_in_cents"
     t.string  "value_currency", :default => "CHF"
     t.boolean "archive",        :default => false

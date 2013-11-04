@@ -9,7 +9,9 @@ tasks = %w{languages
            ldap_attributes
            search_attributes
            salary_templates
-           invoice_templates}
+           invoice_templates
+           task_types
+           task_rates}
 
 tasks.each do |task|
   Rake::Task["db:seed:#{task}:create"].invoke

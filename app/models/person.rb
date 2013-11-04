@@ -217,7 +217,7 @@ class Person < ActiveRecord::Base
               :foreign_key => 'executer_id',
               :dependent => :destroy
 
-  # tasks made for this person
+  # tasks made for this person, the client
   has_many    :tasks,
               :through => :affairs
 

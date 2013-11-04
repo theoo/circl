@@ -46,9 +46,10 @@ class TaskType < ActiveRecord::Base
   #################
 
   has_many :tasks
-  has_many :task_presets
 
-  scope :availables, Proc.new { where(:archive => false)}
+  default_scope { where(:archive => false)}
+  scope :archived, Proc.new { where(:archive => true)}
+  scope :everything, Proc.new { where(:archive => [true, false])}
 
   money :value
 
@@ -58,6 +59,13 @@ class TaskType < ActiveRecord::Base
 
   validates_presence_of :title
   validate :should_have_a_ratio_or_a_value
+
+  def as_json(options = nil)
+    h = super(options)
+    h[:value] = value.to_f
+    h[:errors] = errors
+    h
+  end
 
   private
 

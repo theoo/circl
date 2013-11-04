@@ -1,0 +1,6 @@
+---
+- title: Normal rate
+  description: Normal rate applied to normal customers
+  value_in_cents: 16000
+  value_currency: CHF
+  archive: false

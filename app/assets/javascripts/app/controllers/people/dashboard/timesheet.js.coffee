@@ -15,62 +15,239 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 PersonTask = App.PersonTask
+TaskType   = App.TaskType
 
 $.fn.task = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
   PersonTask.find(elementID)
 
-class New extends App.ExtendedController
+class TimesheetController extends App.ExtendedController
+
+  constructor: ->
+    super
+
+  render: =>
+    @html @view('people/tasks/form')(@)
+
+    ### Field variables ###
+    @owner_field = @el.find("input[name='owner']")
+    @owner_id_field = @el.find("input[name='owner_id']")
+    @affair_field = @el.find("input[name='affair']")
+    @affair_id_field = @el.find("input[name='affair_id']")
+
+    @slider_div = @el.find(".timesheet_timeline")
+
+    @date_field = @el.find("input[name='start_date']")
+    @start_field = @el.find("input[name='start_time']")
+    @end_field = @el.find("input[name='end_time']")
+    @duration_field = @el.find("input[name='duration']")
+    @value_field = @el.find("input[name='value']")
+    @task_type_field = @el.find("select[name='task_type_id']")
+    @description_field = @el.find("textarea[name='description']")
+
+    @submit_button = @el.find('button[type=submit]')
+
+    ### Callbacks ###
+    # client is cleared
+    @owner_field.on 'keyup search', (e) =>
+      if $(e.target).val() == ''
+        @disable_affair_selection()
+        @disable_timesheet()
+        @disable_submit()
+
+    # client is selected
+    @owner_field.autocomplete('option', 'select', (e, ui) =>
+      @owner_id_field.val ui.item.id
+      # set affairs search url
+      @affair_field.autocomplete({source: '/people/' + ui.item.id + '/affairs/search'})
+      @enable_affair_selection()
+    )
+
+    # affair is cleared
+    @affair_field.on 'keyup search', (e) =>
+      if $(e.target).val() == ''
+        @disable_timesheet()
+        @disable_submit()
+
+    # affair is selected
+    @affair_field.autocomplete('option', 'select', (e, ui) =>
+      @affair_id_field.val ui.item.id
+      @enable_submit()
+      @enable_timesheet()
+    )
+
+    ### Load slider ###
+    @slider_div
+      .slider(min: 0, max: 23.75, step: 0.25, tooltip: 'hide')
+    @el.find(".slider").width("100%")
+
+  disable_affair_selection: ->
+    @affair_field.val("")
+    @affair_id_field.val(null)
+    @affair_field.prop('disabled', true)
+
+  disable_timesheet: ->
+    $("#timesheet").prop('disabled', true)
+    # @date_field.prop('disabled', true)
+    # @start_field.prop('disabled', true)
+    # @end_field.prop('disabled', true)
+    # @duration_field.prop('disabled', true)
+    # @value_field.prop('disabled', true)
+    # @task_type_field.prop('disabled', true)
+    # @description_field.prop('disabled', true)
+
+  disable_submit: ->
+    @submit_button.addClass('disabled')
+
+  enable_affair_selection: ->
+    @affair_field.removeAttr('disabled')
+
+  enable_timesheet: ->
+    $("#timesheet").removeAttr('disabled')
+    # @date_field.removeAttr('disabled')
+    # @start_field.removeAttr('disabled')
+    # @end_field.removeAttr('disabled')
+    # @duration_field.removeAttr('disabled')
+    # @value_field.removeAttr('disabled')
+    # @task_type_field.removeAttr('disabled')
+    # @description_field.removeAttr('disabled')
+
+  enable_submit: ->
+    @submit_button.removeClass('disabled')
+
+  select_content: (e) ->
+    $(e.target).select()
+
+  # shoud update duration and time values
+  on_slide_change: (e) ->
+    # duration is in minutes
+    duration = (e.value[1] - e.value[0]) * 60
+
+    # Update duration
+    @duration_field.val duration
+    # Update times
+    @start_field.val @float_to_time(e.value[0])
+    @end_field.val @float_to_time(e.value[1])
+
+  # should update time and slider values
+  on_duration_change: (e) ->
+    duration = $(e.target).val()
+    slider = @slider_div.data('slider')
+
+    values = slider.getValue()
+    # I have to write it. JS sucks.
+    values[1] = values[0] + parseFloat((duration / 60).toFixed(2))
+
+    # Update slider
+    slider.setValue(values)
+    # Update times
+    @start_field.val @float_to_time(values[0])
+    @end_field.val @float_to_time(values[1])
+
+  # should update duration and slider
+  on_time_change: (e) ->
+    value = $(e.target).val()
+    if value
+      success = false
+      if value.match(":")
+        success = true
+
+      # Matches 1015
+      v = value.match(/([0-9]+)([0-9]{2})/)
+      if v and v.length == 3
+        v.splice(0,1)
+        $(e.target).val(v.join(":"))
+        success = true
+
+      # Matches 12
+      v = value.match(/^([0-9]{1,2})$/)
+      if v and v.length == 2
+        v.splice(0,1)
+        $(e.target).val(v + ":00")
+        success = true
+
+      if success
+        start = @time_to_float @start_field.val()
+        end   = @time_to_float @end_field.val()
+        duration =
+        # Update slider
+        slider = @slider_div.data('slider')
+        slider.setValue([start, end])
+
+        # Update duration
+        @duration_field.val (60 * (end - start)).toFixed(0)
+
+      else
+        # bad luck
+        $(e.target).val("")
+
+  float_to_time: (f) ->
+    h = Math.floor f
+    m = parseInt((60 * (f - h)).toPrecision(2))
+    h.pad(2) + ":" + m.pad(2)
+
+  time_to_float: (ts) ->
+    f = parseFloat(ts.split(":").join("."))
+    h = Math.floor f
+    m = (f - h) / 60 * 100
+    h + m
+
+  time_to_hours: (ts) ->
+    parseFloat ts.split(":")[0]
+
+  time_to_minutes: (ts) ->
+    parseFloat ts.split(":")[1]
+
+  repack_date_time:  ->
+    d = @date_field.val().split("-")
+    start_time = @start_field.val()
+
+    # start date is a datetime
+    new Date(d[2], d[1], d[0], @time_to_hours(start_time), @time_to_minutes(start_time))
+
+class New extends TimesheetController
+
   events:
     'submit form': 'submit'
-    'slide': 'slide'
-    'keyup #task_duration': 'duration_change'
+    'slide': 'on_slide_change'
+    'keyup #task_duration': 'on_duration_change'
+    'focus .time': 'select_content'
+    'blur .time': 'on_time_change'
 
   constructor: (params) ->
     super
 
   render: =>
     @task = new PersonTask
-    @html @view('people/tasks/form')(@)
-    @el.find(".timeline")
-      .slider(min: 0, max: 23, step: 0.25, tooltip: 'hide')
 
-  slide: (e) ->
-    # duration is in minutes
-    duration = (e.value[1] - e.value[0]) * 60
-    $("#task_duration").val duration
-    @update_summary(e.value)
+    @task.start_date = (new Date).to_view()
+    @task.start_time = '09:00'
+    @task.end_time = '18:00'
+    @task.duration = 9 * 60
 
-  duration_change: (e) ->
-    duration = $(e.target).val()
-    slider = @el.find(".timeline").data('slider')
+    super
 
-    values = slider.getValue()
-    # I have to write it. JS sucks.
-    values[1] = values[0] + parseFloat((duration / 60).toPrecision(duration.toString().length))
-    slider.setValue(values)
-
-    @update_summary(values)
-
-  update_summary: (values) ->
-    # funktional yeah
-    base100_to_base60 = (f) =>
-      h = Math.floor f
-      m = parseInt((60 * (f - h)).toPrecision(2))
-      h.pad(2) + ":" + m.pad(2)
-
-    @el.find('.summary .from').html base100_to_base60(values[0])
-    @el.find('.summary .to').html base100_to_base60(values[1])
+    @disable_affair_selection()
+    @disable_timesheet()
+    @disable_submit()
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @task.fromForm(e.target), @render
+    @task.fromForm(e.target)
+    @task.start_date = @repack_date_time(@task.start_date)
+    @save_with_notifications @task, @render
 
-class Edit extends App.ExtendedController
+class Edit extends TimesheetController
+
   events:
     'submit form': 'submit'
     'task-destroy': 'destroy'
+    'slide': 'on_slide_change'
+    'keyup #task_duration': 'on_duration_change'
+    'focus .time': 'select_content'
+    'blur .time': 'on_time_change'
+    'click button[name=reset_value]': 'reset_value'
 
   constructor: ->
     super
@@ -81,19 +258,32 @@ class Edit extends App.ExtendedController
     @render()
 
   render: =>
-    @html @view('people/tasks/form')(@)
+    # Unpack date/time
+    dt = @task.start_date.split(" ")
+    @task.start_date = dt[0]
+    @task.start_time = dt[1]
+
+    st = @time_to_float(dt[1])
+    @task.end_time = @float_to_time(st + (@task.duration / 60))
+
+    super
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @task.fromForm(e.target), @hide
+    @task.fromForm(e.target)
+    @task.start_date = @repack_date_time(@task.start_date)
+    @save_with_notifications @task, @hide
 
   destroy: (e) ->
     if confirm(I18n.t("common.are_you_sure"))
       @destroy_with_notifications(@task)
 
+  reset_value: () ->
+    @value_field.val @task.computed_value
+
 class Index extends App.ExtendedController
   events:
-    'task-edit': 'edit'
+    'click tr.item': 'edit'
     'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
@@ -110,7 +300,7 @@ class Index extends App.ExtendedController
 
   edit: (e) ->
     @task = $(e.target).task()
-    @trigger 'edit', task.id
+    @trigger 'edit', @task.id
 
   table_redraw: =>
     if @task
@@ -135,6 +325,7 @@ class App.DashboardTimesheet extends Spine.Controller
 
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
+      @edit.show()
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
@@ -145,5 +336,10 @@ class App.DashboardTimesheet extends Spine.Controller
 
   activate: ->
     super
-    PersonTask.fetch()
-    @new.render()
+
+    TaskType.one 'refresh', =>
+      PersonTask.fetch()
+      @new.render()
+
+    TaskType.fetch()
+

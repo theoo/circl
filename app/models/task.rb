@@ -42,6 +42,15 @@ class Task < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
+  # Yes, it's bad to load helper in a model...
+  class TaskHelper
+    include ActionView::Helpers::DateHelper
+  end
+
+  def helper
+    @h || TaskHelper.new
+  end
+
   include ChangesTracker
   extend  MoneyComposer
 
@@ -79,10 +88,10 @@ class Task < ActiveRecord::Base
                         :task_type_id,
                         :executer_id,
                         :start_date,
-                        :duration,
                         :value_in_cents,
                         :value_currency
 
+  validate :duration_is_required_if_selected_task_type_have_a_ratio
   validate :duration_is_positive
   validate :owner_should_have_a_task_rate
 
@@ -95,8 +104,13 @@ class Task < ActiveRecord::Base
 
   def as_json(options = nil)
     h = super(options)
+    h[:task_type_title] = task_type.try(:title)
+    h[:affair_title] = affair.try(:title)
     h[:owner_name] = owner.try(:name)
     h[:executer_name] = executer.try(:name)
+    h[:duration_in_words] = helper.distance_of_time_in_words(duration * 60)
+    h[:value] = value.to_f
+    h[:computed_value] = compute_value.to_f
     h[:errors] = errors
     h
   end
@@ -122,22 +136,29 @@ class Task < ActiveRecord::Base
   def set_value
     # reset value only if none given
     if value_in_cents.blank? or value == 0.to_money
-      self.value = compute_value unless value
+      self.value = compute_value
     end
   end
 
   def owner_should_have_a_task_rate
     if affair_id # there is a validation for affair_id
       if ! owner.task_rate
-        errors.add(:base, I18n.t('task_type.errors.owner_should_have_a_task_rate'))
+        errors.add(:base, I18n.t('task.errors.owner_should_have_a_task_rate'))
         return false
       end
     end
   end
 
+  def duration_is_required_if_selected_task_type_have_a_ratio
+    if task_type.ratio and duration.blank?
+      errors.add(:base, I18n.t('task.errors.duration_is_required_if_selected_task_type_have_a_ratio'))
+      return false
+    end
+  end
+
   def duration_is_positive
     if duration && duration < 0
-      errors.add(:duration, I18n.t('task_type.errors.duration_must_be_positive'))
+      errors.add(:duration, I18n.t('task.errors.duration_must_be_positive'))
       return false
     end
   end

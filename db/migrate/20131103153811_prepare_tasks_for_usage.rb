@@ -26,7 +26,7 @@ class PrepareTasksForUsage < ActiveRecord::Migration
     add_index   :people, :task_rate_id
 
     # Update task_types
-    change_column :task_types, :ratio, :null => true
+    change_column_default :task_types, :ratio, nil
     add_column  :task_types, :value_in_cents, :integer
     add_column  :task_types, :value_currency, :string, :default => 'CHF'
     add_column  :task_types, :archive, :boolean, :default => false

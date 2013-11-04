@@ -14,19 +14,14 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class App.PersonTask extends Spine.Model
+class App.TaskType extends Spine.Model
 
-  @configure 'PersonTask', 'affair_id', 'created_at', 'description',
-    'duration', 'executer_id', 'id', 'salary_id', 'start_date', 'task_type_id',
-    'updated_at', 'value_currency', 'owner_name', 'executer_name',
-    'value'
+  @configure 'TaskType', 'title', 'description', 'ratio', 'value', 'archive'
 
   @extend Spine.Model.Ajax
 
+  @url: ->
+    "#{Spine.Model.host}/admin/task_types"
+
   constructor: ->
     super
-
-  validate: ->
-    e = new App.ErrorsList
-
-    return e unless e.is_empty()

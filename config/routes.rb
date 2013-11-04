@@ -193,6 +193,12 @@ Directory::Application.routes.draw do
         get 'search'
       end
     end
+
+    resources :tasks
+    resources :task_presets
+    resources :task_types
+    resources :task_rates
+
   end
 
   resources :background_tasks, :only => [:index, :destroy]
