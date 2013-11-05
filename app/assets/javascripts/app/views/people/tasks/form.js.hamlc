@@ -4,7 +4,7 @@
       .validation_errors_placeholder
 
   .row
-    .col-lg-6.autocompleted.form-group
+    .col-lg-6.col-md-6.col-sm-6.autocompleted.form-group
       %label{:for => 'task_owner'}
         = I18n.t('task.views.owner')
       %input{:type => 'search',
@@ -17,7 +17,7 @@
              :name => 'owner_id',
              :value => @task.owner_id}
 
-    .col-lg-6.autocompleted.form-group
+    .col-lg-6.col-md-6.col-sm-6.autocompleted.form-group
       %label{:for => 'task_affair'}
         = I18n.t('task.views.affair')
       %input{:type => 'search',
@@ -32,7 +32,7 @@
 
   %fieldset#timesheet
     .row
-      .col-lg-4.form-group
+      .col-lg-4.col-md-4.col-sm-4.form-group
         %label{:for => 'task_start_date'}
           = I18n.t('task.views.date')
         %input{ :type => 'text',
@@ -41,9 +41,9 @@
                 :class => 'datepicker form-control required',
                 :value => @task.start_date }
 
-      .col-lg-4.form-group
+      .col-lg-4.col-md-4.col-sm-4.form-group
         .row
-          .col-lg-6
+          .col-lg-6.col-md-6.col-sm-6.col-xs-6
             %label{:for => 'task_start_time'}
               = I18n.t("common.from")
             %input{ :type => 'text',
@@ -52,7 +52,7 @@
                     :class => 'form-control time',
                     :value => @task.start_time }
 
-          .col-lg-6
+          .col-lg-6.col-md-6.col-sm-6.col-xs-6
             %label{:for => 'task_end_time'}
               = I18n.t("common.to")
             %input{ :type => 'text',
@@ -63,7 +63,7 @@
         %small.help-block
           = I18n.t("task.views.times_help")
 
-      .col-lg-4.form-group
+      .col-lg-4.col-md-4.col-sm-4.form-group
         %label{:for => 'task_duration'}
           = I18n.t('task.views.duration')
         .input-group
