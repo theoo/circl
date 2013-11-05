@@ -1,0 +1,24 @@
+%table.table.table-hover.clickable
+  %thead
+    %tr
+      %th.desc= I18n.t('common.id')
+      %th.desc= I18n.t('person.views.created_at')
+      %th= I18n.t('person.views.name')
+
+  %tbody
+    - for person in @people
+
+      %tr{:data-id => person.id, :class => 'item'}
+        %td= person.id
+        %td= person.created_at
+        %td
+          %b= person.name
+          %br
+          - if person.phone != ""
+            = person.phone.concat(',')
+          - else if person.mobile != ""
+            = person.mobile.concat(',')
+          - if person.email
+            %a{:href => "mailto:#{person.email}"}= person.email
+          %br
+          = person.address
