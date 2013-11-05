@@ -14,6 +14,7 @@ en:
         download_pdf: download
       counterpart_account: counterpart account
       description: description
+      age: age
       export: invoices export
       invoice_date: date
       invoices: invoices

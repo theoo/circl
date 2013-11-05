@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-LastPerson = App.LastPerson
+Invoice = App.Invoice
 
 class Index extends App.ExtendedController
   events:
@@ -22,32 +22,32 @@ class Index extends App.ExtendedController
 
   constructor: (params) ->
     super
-    LastPerson.bind('refresh', @render)
+    Invoice.bind('refresh', @render)
 
   render: =>
     # Spine orders by ID, no matter what server sends.
-    @people = _.sortBy(LastPerson.all(), (d) -> d.created_at).reverse()
-    @html @view('people/dashboard/last_people_added')(@)
+    @invoices = Invoice.all()
+    @html @view('people/dashboard/open_invoices')(@)
 
   show: (e) ->
     e.preventDefault()
 
     id = $(e.target).parents('[data-id]').data('id')
-    window.location = "#{Spine.Model.host}/people/#{id}"
+    window.location = "#{Spine.Model.host}/people/#{id}#affairs"
 
-class App.DashboardLastPeopleAdded extends Spine.Controller
-  className: 'last_people_added'
+class App.DashboardOpenInvoices extends Spine.Controller
+  className: 'open_invoices'
 
   constructor: (params) ->
     super
     @person_id = params.person_id
 
-    LastPerson.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/dashboard/last_people_added"
+    Invoice.url = =>
+      "#{Spine.Model.host}/people/#{@person_id}/dashboard/open_invoices"
 
     @index = new Index
     @append(@index)
 
   activate: ->
     super
-    LastPerson.fetch()
+    Invoice.fetch()

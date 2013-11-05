@@ -1,7 +1,7 @@
 %table.table.table-hover.clickable
   %thead
     %tr
-      %th.desc= I18n.t('common.id')
+      %th= I18n.t('common.id')
       %th.desc= I18n.t('person.views.created_at')
       %th= I18n.t('person.views.name')
 

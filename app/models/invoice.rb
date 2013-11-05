@@ -54,6 +54,15 @@ class Invoice < ActiveRecord::Base
   include ElasticSearch::Indexing
   extend  MoneyComposer
 
+  # Yes, it's bad to load helper in a model...
+  class InvoiceHelper
+    include ActionView::Helpers::DateHelper
+  end
+
+  def helper
+    @h || InvoiceHelper.new
+  end
+
   #################
   ### CALLBACKS ###
   #################
@@ -81,6 +90,11 @@ class Invoice < ActiveRecord::Base
 
   # money
   money :value
+
+  scope :open_invoices, Proc.new {
+    mask = Invoice.statuses_value_for(:open)
+    where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+  }
 
   ###################
   ### VALIDATIONS ###
@@ -335,6 +349,7 @@ class Invoice < ActiveRecord::Base
 
     h[:value]          = value.try(:to_f)
     h[:created_at]     = created_at.to_date # FIXME: do a migration
+    h[:age]            = helper.distance_of_time_in_words_to_now(created_at)
 
     h[:receipts_value] = receipts_value.try(:to_f)
     h[:balance_value]  = balance_value.try(:to_f)

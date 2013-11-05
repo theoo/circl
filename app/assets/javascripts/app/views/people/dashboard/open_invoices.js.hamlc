@@ -1,0 +1,25 @@
+%table.datatable 
+  %thead
+    %tr
+      %th= I18n.t('invoice.views.id')
+      %th.desc= I18n.t('invoice.views.created_at')
+      %th.desc= I18n.t('invoice.views.age')
+      %th= I18n.t('invoice.views.description')
+
+  %tbody
+    - for invoice in @invoices
+
+      %tr{:data-id => invoice.id, :class => 'item'}
+        %td= invoice.affair_id
+        %td= invoice.created_at
+        %td= invoice.age
+        %td
+          %b= invoice.owner_name
+          \-
+          %i= invoice.affair_title
+          %br
+            = invoice.value
+            \-
+            %i= invoice.statuses
+            %br
+              = invoice.description

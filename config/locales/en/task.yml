@@ -24,6 +24,7 @@ en:
       owner: client
       affair: affair
       table:
+        age: age
         date: date
         description: description
         duration: duration

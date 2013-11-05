@@ -73,7 +73,7 @@ class @Dashboard extends App
       @subapp($('#dashboard_timesheet'), 'DashboardTimesheet')
       @subapp($('#dashboard_comments'), 'DashboardComments')
       @subapp($('#dashboard_activity'), 'DashboardActivities')
-      # @subapp($('#dashboard_open_invoices'), 'DashboardOpenInvoices')
+      @subapp($('#dashboard_open_invoices'), 'DashboardOpenInvoices')
       # @subapp($('#dashboard_current_affairs'), 'DashboardCurrentAffairs')
       @subapp($('#dashboard_last_people_added'), 'DashboardLastPeopleAdded')
       # @subapp($('#dashboard_open_salaries'), 'DashboardOpenSalaries')

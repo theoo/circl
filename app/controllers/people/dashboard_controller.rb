@@ -53,4 +53,12 @@ class People::DashboardController < ApplicationController
       format.json { render :json => @last_people_added }
     end
   end
+
+  def open_invoices
+    @open_invoices = Invoice.open_invoices.order("created_at desc").limit(10)
+
+    respond_to do |format|
+      format.json { render :json => @open_invoices }
+    end
+  end
 end
