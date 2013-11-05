@@ -265,7 +265,7 @@ class Edit extends ValueItemsController
 
   view_members_who_paid: (e) ->
     e.preventDefault()
-    Directory.search(search_string: "paid_subscriptions.id:#{@id}")
+    Directory.search(search_string: "paid_subscriptions_or_reminders.id:#{@id}")
 
   view_members_who_didnt_paid: (e) ->
     e.preventDefault()

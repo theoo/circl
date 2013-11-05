@@ -6,6 +6,7 @@ fr:
       owner_should_have_a_task_rate: Un tarif doit d'abord être sélectionné pour ce client
       duration_must_be_positive: La durée doit être positive
     notices:
+      the_value_is_automaticaly_computed: La valeur est calculée automatiquement
       computed_value_is: La valeur calculée est %{value}
     views:
       actions:

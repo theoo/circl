@@ -44,6 +44,7 @@ class TimesheetController extends App.ExtendedController
     @duration_field = @el.find("input[name='duration']")
     @value_field = @el.find("input[name='value']")
     @task_type_field = @el.find("select[name='task_type_id']")
+    @task_type_description_div = @el.find("#task_type_description")
     @description_field = @el.find("textarea[name='description']")
 
     @submit_button = @el.find('button[type=submit]')
@@ -81,6 +82,8 @@ class TimesheetController extends App.ExtendedController
     @slider_div
       .slider(min: 0, max: 23.75, step: 0.25, tooltip: 'hide')
     @el.find(".slider").width("100%")
+
+    @update_task_type_description()
 
   disable_affair_selection: ->
     @affair_field.val("")
@@ -206,6 +209,11 @@ class TimesheetController extends App.ExtendedController
     # start date is a datetime
     new Date(d[2], d[1], d[0], @time_to_hours(start_time), @time_to_minutes(start_time))
 
+  update_task_type_description: (e) ->
+    id = @task_type_field.val()
+    task_type = TaskType.find(id)
+    @task_type_description_div.html task_type.description
+
 class New extends TimesheetController
 
   events:
@@ -214,6 +222,7 @@ class New extends TimesheetController
     'keyup #task_duration': 'on_duration_change'
     'focus .time': 'select_content'
     'blur .time': 'on_time_change'
+    'change select[name=task_type_id]': 'update_task_type_description'
 
   constructor: (params) ->
     super
@@ -248,6 +257,7 @@ class Edit extends TimesheetController
     'focus .time': 'select_content'
     'blur .time': 'on_time_change'
     'click button[name=reset_value]': 'reset_value'
+    'change select[name=task_type_id]': 'update_task_type_description'
 
   constructor: ->
     super
@@ -300,6 +310,7 @@ class Index extends App.ExtendedController
 
   edit: (e) ->
     @task = $(e.target).task()
+    @activate_in_list(e.target)
     @trigger 'edit', @task.id
 
   table_redraw: =>

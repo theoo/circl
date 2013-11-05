@@ -6,6 +6,7 @@ en:
       owner_should_have_a_task_rate: Owner should have a task rate
       duration_must_be_positive: Duration must be positive
     notices:
+      the_value_is_automaticaly_computed: Value is automaticaly calculated
       computed_value_is: Computed value is %{value}
     views:
       actions:
