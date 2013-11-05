@@ -103,18 +103,18 @@
                 .panel-title
                   = I18n.t('person.views.affairs')
 
-        .col-lg-6.col-md-6
           - if can? :read, @person => Affair
             #person_affair_subscriptions.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('affair.views.subscriptions')
 
-          // - if can? :read, @person => Affair
-          //   #person_affair_tasks.panel.panel-default
-          //     .panel-heading
-          //       .panel-title
-          //         = I18n.t('affair.views.tasks')
+        .col-lg-6.col-md-6
+          - if can? :read, @person => Affair
+            #person_affair_tasks.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('affair.views.tasks')
 
           // - if can? :read, @person => Affair
           //   #person_affair_products.panel.panel-default

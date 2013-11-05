@@ -109,10 +109,6 @@ class App.PersonAffairSubscriptions extends Spine.Controller
 
   activate: (params) ->
     super
-    # URL is defined in Affair Edit controller.
-    # PersonAffairSubscription.url = =>
-    #   "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@affair_id}/subscriptions"
-
     # Render empty values (placeholders)
     PersonAffairSubscription.refresh([], clear: true)
     @index.active()

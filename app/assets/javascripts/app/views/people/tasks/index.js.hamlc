@@ -2,9 +2,9 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th= I18n.t('task.views.table.date')
-      %th= I18n.t('task.views.table.duration')
-      %th= I18n.t('task.views.table.description')
+      %th= I18n.t('task.views.date')
+      %th= I18n.t('task.views.duration')
+      %th= I18n.t('task.views.description')
 
   %tbody
     - for task in App.PersonTask.all()

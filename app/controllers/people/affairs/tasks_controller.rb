@@ -16,21 +16,18 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class People::TasksController < ApplicationController
+class People::Affairs::TasksController < ApplicationController
 
   layout false
 
-  # monitor_changes :@task
+  load_resource :person
+  load_resource :affair
+  load_resource :through => :affair, :class => ::Task
 
-  before_filter do
-    @person = Person.find(params[:person_id])
-  end
+  # monitor_changes :@task
 
   def index
     authorize! :index, ::Task
-
-    @tasks = @person.executed_tasks
-
     respond_to do |format|
       format.json { render :json => @tasks }
     end
@@ -42,8 +39,6 @@ class People::TasksController < ApplicationController
 
   def create
     authorize! :create, ::Task
-
-    @task = ::Task.new(params[:task])
     @task.executer_id = current_person.id
     @task.value = params[:value] if params[:value]
 
@@ -58,7 +53,6 @@ class People::TasksController < ApplicationController
 
   def edit
     authorize! :read, ::Task
-
     respond_to do |format|
       format.json { render :json => @task }
     end
@@ -66,9 +60,7 @@ class People::TasksController < ApplicationController
 
   def update
     authorize! :update, ::Task
-    @task = ::Task.find(params[:id])
     @task.value = params[:value] if params[:value]
-
     respond_to do |format|
       if @task.update_attributes(params[:task])
         format.json { render :json => @task }
@@ -80,7 +72,6 @@ class People::TasksController < ApplicationController
 
   def destroy
     authorize! :destroy, ::Task
-
     respond_to do |format|
       if @task.destroy
         format.json { render :json => {} }

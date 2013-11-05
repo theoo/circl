@@ -19,9 +19,12 @@ class App.PersonTask extends Spine.Model
   @configure 'PersonTask', 'affair_id', 'created_at', 'description',
     'duration', 'executer_id', 'id', 'salary_id', 'start_date', 'task_type_id',
     'updated_at', 'value_currency', 'owner_name', 'executer_name',
-    'value'
+    'value', 'duration_in_words', 'affair_title'
 
   @extend Spine.Model.Ajax
+
+  # URL is defined when loading an affair
+  @url: -> undefined
 
   constructor: ->
     super

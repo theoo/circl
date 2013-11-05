@@ -20,6 +20,10 @@ class App.TimesheetExtention extends App.ExtendedController
     super
 
   render: =>
+    @task.slider_values = "[" +
+      @time_to_float(@task.start_time) + "," +
+      @time_to_float(@task.end_time) + "]"
+
     @html @view('people/tasks/form')(@)
 
     ### Field variables ###
@@ -124,6 +128,8 @@ class App.TimesheetExtention extends App.ExtendedController
     # Update times
     @start_field.val @float_to_time(e.value[0])
     @end_field.val @float_to_time(e.value[1])
+    # Clear value
+    @value_field.val(null)
 
   # should update time and slider values
   on_duration_change: (e) ->
@@ -139,6 +145,9 @@ class App.TimesheetExtention extends App.ExtendedController
     # Update times
     @start_field.val @float_to_time(values[0])
     @end_field.val @float_to_time(values[1])
+
+    # Clear value
+    @value_field.val(null)
 
   # should update duration and slider
   on_time_change: (e) ->
@@ -172,6 +181,9 @@ class App.TimesheetExtention extends App.ExtendedController
 
         # Update duration
         @duration_field.val (60 * (end - start)).toFixed(0)
+
+        # Clear value
+        @value_field.val(null)
 
       else
         # bad luck

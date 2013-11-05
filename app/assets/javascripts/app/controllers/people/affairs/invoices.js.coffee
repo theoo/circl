@@ -270,12 +270,6 @@ class App.PersonAffairInvoices extends Spine.Controller
       @edit.active id: id
       @edit.render_errors errors
 
-    InvoiceTemplate.fetch()
-    Permissions.get { person_id: @person_id, can: { invoice: ['create', 'update'] }}, (data) =>
-      @edit.active {can: data}
-      @edit.hide()
-      @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
-      @index.active {can: data}
 
   activate: (params) ->
     super
@@ -284,4 +278,11 @@ class App.PersonAffairInvoices extends Spine.Controller
       @person_id = params.person_id if params.person_id
       @affair_id = params.affair_id if params.affair_id
 
-    @new.active(person_id: @person_id, affair_id: @affair_id)
+    InvoiceTemplate.one "refresh", =>
+      Permissions.get { person_id: @person_id, can: { invoice: ['create', 'update'] }}, (data) =>
+        @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
+        @index.active {can: data}
+        @edit.active {can: data}
+        @edit.hide()
+
+    InvoiceTemplate.fetch()

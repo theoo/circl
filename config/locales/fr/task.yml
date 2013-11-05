@@ -24,8 +24,3 @@ fr:
       task_rates: tarifs
       owner: client
       affair: affaire
-      table:
-        age: age
-        date: date
-        description: description
-        duration: durée

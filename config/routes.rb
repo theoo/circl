@@ -55,6 +55,7 @@ Directory::Application.routes.draw do
           delete 'destroy' #spine posts on this by default
         end
       end
+      resources :tasks, :controller => 'people/affairs/tasks'
     end
 
     resources :comments, :controller => 'people/comments'

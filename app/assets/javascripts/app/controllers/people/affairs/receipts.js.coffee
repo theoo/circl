@@ -18,6 +18,7 @@ Person = App.Person
 PersonAffair = App.PersonAffair
 PersonAffairReceipt = App.PersonAffairReceipt
 PersonAffairInvoice = App.PersonAffairInvoice
+Permissions = App.Permissions
 
 $.fn.receipt = ->
   elementID   = $(@).data('id')
@@ -38,6 +39,7 @@ class New extends App.ExtendedController
       @person_id = params.person_id if params.person_id
       @affair_id = params.affair_id if params.affair_id
       @invoice = params.invoice if params.invoice
+      @can = params.can if params.can
     @render()
 
   render: =>
@@ -83,7 +85,9 @@ class Edit extends App.ExtendedController
     super
 
   active: (params) ->
-    @id = params.id if params.id
+    if params
+      @id = params.id if params.id
+      @can = params.can if params.can
     @show()
     @render()
 
@@ -176,9 +180,6 @@ class App.PersonAffairReceipts extends Spine.Controller
       @person_id = params.person_id if params.person_id
       @affair_id = params.affair_id if params.affair_id
 
-    #PersonAffairReceipt.url = =>
-    #  "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@affair_id}/receipts"
-
     @index = new Index
     @edit = new Edit
     @new = new New
@@ -205,4 +206,8 @@ class App.PersonAffairReceipts extends Spine.Controller
       @person_id = params.person_id if params.person_id
       @affair_id = params.affair_id if params.affair_id
 
-    @new.active(person_id: @person_id, affair_id: @affair_id)
+    Permissions.get { person_id: @person_id, can: { receipt: ['create', 'update'] }}, (data) =>
+      @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
+      @index.active {can: data}
+      @edit.active {can: data}
+      @edit.hide()

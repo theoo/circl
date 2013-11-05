@@ -3,7 +3,7 @@
     .col-lg-12
       .validation_errors_placeholder
 
-  .row
+  #task_owner_affair.row
     .col-lg-6.col-md-6.col-sm-6.autocompleted.form-group
       %label{:for => 'task_owner'}
         = I18n.t('task.views.owner')
@@ -81,7 +81,7 @@
 
     .row
       .col-lg-12.form-group
-        %div{'data-slider-value' => "[9,18]", :class => 'timesheet_timeline'}
+        %div{'data-slider-value' => @task.slider_values, :class => 'timesheet_timeline'}
 
     .row
       .col-lg-6.col-md-6.col-sm-6.form-group
