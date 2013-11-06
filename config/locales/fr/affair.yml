@@ -7,6 +7,8 @@ fr:
       edit_invoices_and_receipts: modifier les factures & reçus
       edit_prestations: modifier les prestations
     views:
+      update_date: dernière mise à jour
+      id: id
       invoices: Factures
       receipts: Reçus
       buyer: payeur

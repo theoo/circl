@@ -77,6 +77,12 @@ class Affair < ActiveRecord::Base
   # Money
   money :value
 
+  scope :open_affairs, Proc.new {
+    mask = Affair.statuses_value_for(:open)
+    where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+  }
+
+
   ###################
   ### VALIDATIONS ###
   ###################

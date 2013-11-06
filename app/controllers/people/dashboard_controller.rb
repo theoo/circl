@@ -61,4 +61,20 @@ class People::DashboardController < ApplicationController
       format.json { render :json => @open_invoices }
     end
   end
+
+  def current_affairs
+    @current_affairs = Affair.open_affairs("created_at desc").limit(10)
+
+    respond_to do |format|
+      format.json { render :json => @current_affairs }
+    end
+  end
+
+  def open_salaries
+    @open_salaries = Salary.order("created_at desc").limit(10)
+
+    respond_to do |format|
+      format.json { render :json => @open_salaries }
+    end
+  end
 end

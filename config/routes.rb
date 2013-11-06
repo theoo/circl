@@ -26,7 +26,8 @@ Directory::Application.routes.draw do
 
     resources :dashboard, :controller => 'people/dashboard', :only => :index do
       collection do
-        get 'comments', 'activities', 'last_people_added', 'open_invoices'
+        get 'comments', 'activities', 'last_people_added', 'open_invoices', 'current_affairs',
+          'open_salaries'
       end
     end
 

@@ -1,0 +1,36 @@
+%table.datatable
+  %thead
+    %tr
+      %th= I18n.t('affair.views.id')
+      %th.desc= I18n.t('affair.views.update_date')
+      %th= I18n.t('affair.views.description')
+
+  %tbody
+    - for affair in @affairs
+
+      %tr{:data-id => affair.id, :class => 'item'}
+        %td= affair.id
+        %td= affair.updated_at
+        %td
+          %b= affair.owner_name
+          \-
+          %i= affair.title
+          %br
+          = affair.description
+
+          %br
+          .badge TODO
+          = I18n.t('affair.views.tasks') + " :"
+          TODO
+
+          %br
+          .badge= affair.invoices_count
+          = I18n.t('affair.views.invoices') + " :"
+          = affair.invoices_value
+          = affair.value_currency
+
+          %br
+          .badge= affair.receipts_count
+          = I18n.t('affair.views.receipts') + " :"
+          = affair.receipts_value
+          = affair.value_currency
