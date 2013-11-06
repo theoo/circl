@@ -1,6 +1,8 @@
 ---
 fr:
   salaries:
+    from: de
+    to: à
     copy_reference: copier la référence vers un groupe de personnes
     export: Export générique
     export_salary_certificates: ! "Export pour la génération des certificats de salaire"
@@ -120,6 +122,7 @@ fr:
         yearly_salary_count: nombre de salaire par an
     salary_template:
       views:
+        description: description
         contextmenu:
           destroy_salary_template: détruire le modèle de salaire
           edit_salary_template: modifier le modèle de salaire
@@ -128,7 +131,7 @@ fr:
         placeholders:
           person_address: adresse de la personne
           person_bank_information: informations bancaires de la personne
-          person_name: nom complet de la personne
+          person_name: nom 
           placeholders: emplacements
           salary_advanced_details: détails avancés du salaire (retenues employé et organisation)
           salary_created_at: date de création du salaire

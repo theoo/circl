@@ -71,7 +71,7 @@ class People::DashboardController < ApplicationController
   end
 
   def open_salaries
-    @open_salaries = Salary.order("created_at desc").limit(10)
+    @open_salaries = Salaries::Salary.unpaid_salaries.order("created_at desc").limit(10)
 
     respond_to do |format|
       format.json { render :json => @open_salaries }
