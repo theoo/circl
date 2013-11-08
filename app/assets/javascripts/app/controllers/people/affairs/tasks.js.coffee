@@ -73,7 +73,7 @@ class Edit extends App.TimesheetExtention
 
   events:
     'submit form': 'submit'
-    'task-destroy': 'destroy'
+    'click button[name=task-destroy]': 'destroy'
     'slide': 'on_slide_change'
     'keyup #task_duration': 'on_duration_change'
     'focus .time': 'select_content'
@@ -123,6 +123,8 @@ class Index extends App.ExtendedController
   events:
     'click tr.item': 'edit'
     'datatable_redraw': 'table_redraw'
+    'click a[name=tasks-csv]': 'export_csv'
+    'click a[name=tasks-pdf]': 'export_pdf'
 
   constructor: (params) ->
     super
@@ -145,6 +147,14 @@ class Index extends App.ExtendedController
     if @task
       target = $(@el).find("tr[data-id=#{@task.id}]")
     @activate_in_list(target)
+
+  export_csv: (e) ->
+    e.preventDefault()
+    console.log "export CSV"
+
+  export_pdf: (e) ->
+    e.preventDefault()
+    console.log "export PDF"
 
 class App.PersonAffairTasks extends Spine.Controller
   className: 'tasks'
