@@ -15,9 +15,9 @@
           %b= person.name
           %br
           - if person.phone != ""
-            = person.phone.concat(',')
+            = person.phone + ", "
           - else if person.mobile != ""
-            = person.mobile.concat(',')
+            = person.mobile + ", "
           - if person.email
             %a{:href => "mailto:#{person.email}"}= person.email
           %br
