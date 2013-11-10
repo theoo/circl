@@ -150,7 +150,7 @@ class Index extends App.ExtendedController
 
   export_csv: (e) ->
     e.preventDefault()
-    console.log "export CSV"
+    window.location = PersonTask.url() + ".csv"
 
   export_pdf: (e) ->
     e.preventDefault()
