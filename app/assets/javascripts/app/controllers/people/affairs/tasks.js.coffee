@@ -154,7 +154,7 @@ class Index extends App.ExtendedController
 
   export_pdf: (e) ->
     e.preventDefault()
-    console.log "export PDF"
+    window.location = PersonTask.url() + ".pdf"
 
 class App.PersonAffairTasks extends Spine.Controller
   className: 'tasks'

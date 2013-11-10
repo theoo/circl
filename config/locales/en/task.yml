@@ -24,3 +24,12 @@ en:
       task_rates: task rates
       owner: client
       affair: affair
+      start_date: start date
+      end_date: end date
+      duration: duration
+      task_type_title: type
+      description: description
+      executer_name: executer name
+      value: value
+      tasks_list_pdf_title: Task list for affair %{affair_title}
+

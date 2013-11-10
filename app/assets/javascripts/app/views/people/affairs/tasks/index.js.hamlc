@@ -24,22 +24,23 @@
           - else
             != task.description.replace(/\n/g, '<br/>')
 
-.panel-footer
-  .btn-group
-    %button{:name => "task-destroy",
-            :type => 'button',
-            :data-toggle => 'dropdown',
-            :class => 'btn btn-default dropdown-toggle' }
-      .icon-paper-clip
-      = I18n.t("common.export")
-      .caret
+- if App.PersonTask.all().length > 0
+  .panel-footer
+    .btn-group
+      %button{:name => "task-destroy",
+              :type => 'button',
+              :data-toggle => 'dropdown',
+              :class => 'btn btn-default dropdown-toggle' }
+        .icon-paper-clip
+        = I18n.t("common.export")
+        .caret
 
-    %ul.dropdown-menu
-      %li
-        %a{:href => '#', :name => 'tasks-csv'}
-          .icon-file-text
-          = I18n.t('common.csv')
-      %li
-        %a{:href => '#', :name => 'tasks-pdf'}
-          .icon-file
-          = I18n.t('common.pdf')
+      %ul.dropdown-menu
+        %li
+          %a{:href => '#', :name => 'tasks-csv'}
+            .icon-file-text
+            = I18n.t('common.csv')
+        %li
+          %a{:href => '#', :name => 'tasks-pdf'}
+            .icon-file
+            = I18n.t('common.pdf')

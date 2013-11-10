@@ -25,12 +25,14 @@ class People::Affairs::TasksController < ApplicationController
   def index
     authorize! :index, ::Task
 
-    @tasks = Affair.find(params[:affair_id]).tasks
+    @affair = Affair.find(params[:affair_id])
+    @tasks = @affair.tasks
 
     respond_to do |format|
       format.json { render :json => @tasks }
       format.csv do
         fields = []
+        fields << 'id'
         fields << 'start_date'
         fields << 'end_date'
         fields << 'duration'
@@ -41,7 +43,21 @@ class People::Affairs::TasksController < ApplicationController
         render :inline => csv_ify(@tasks, fields)
      end
 
-      # format.pdf { render :json => @tasks }
+      format.pdf do
+        # TODO Allow user to edit this pdf listing through a template
+        html = render_to_string(:layout => 'pdf.html.haml')
+
+        html.assets_to_full_path!
+
+        file = Tempfile.new(['tasks', '.pdf'], :encoding => 'ascii-8bit')
+        file.binmode
+        file.write(PDFKit.new(html).to_pdf)
+        file.flush
+
+        send_data File.read(file), :filename => "affair_#{params[:affair_id]}_tasks.pdf", :type => 'application/pdf'
+
+        file.unlink
+      end
     end
   end
 
