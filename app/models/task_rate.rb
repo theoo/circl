@@ -29,6 +29,10 @@ class TaskRate < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
+  before_destroy do
+    people.clear
+  end
+
   #################
   ### RELATIONS ###
   #################
@@ -38,16 +42,17 @@ class TaskRate < ActiveRecord::Base
   # Money
   money :value
 
-  default_scope { where(:archive => false)}
+  scope :actives, Proc.new { where(:archive => false)}
   scope :archived, Proc.new { where(:archive => true)}
-  scope :everything, Proc.new { where(:archive => [true, false])}
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates_presence_of :title,
-                        :value_in_cents
+  validates_presence_of :title
+  validates :value, :presence => true,
+                    :numericality => {:greater_than => 0,
+                                      :less_than_or_equal => 99999999.99 } # BVR limit
 
   # Validate fields of type 'text' length
   validates_length_of :description, :maximum => 65536
@@ -58,7 +63,9 @@ class TaskRate < ActiveRecord::Base
 
   def as_json(options = nil)
     h = super(options)
-    h[:errors] = errors
+    h[:value]        = value.to_f
+    h[:people_count] = people.count
+    h[:errors]       = errors
     h
   end
 

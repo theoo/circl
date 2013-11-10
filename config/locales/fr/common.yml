@@ -1,6 +1,7 @@
 ---
 fr:
   common:
+    hour: heure
     per_hour: par heure
     next: continuer
     download: télécharger

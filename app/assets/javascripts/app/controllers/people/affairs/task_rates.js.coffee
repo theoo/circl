@@ -19,6 +19,7 @@ TaskRate = App.TaskRate
 class Index extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'change #person_affair_task_rate_id': 'update_description'
 
   constructor: (params) ->
     super
@@ -28,11 +29,18 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('people/affairs/task_rates/index')(@)
+    @update_description()
 
   submit: (e) ->
     e.preventDefault()
     @person.task_rate_id = $("#person_affair_task_rate_id").val()
     @save_with_notifications @person
+
+  update_description: (e) =>
+    id = $("#person_affair_task_rate_id").val()
+    task_rate = App.TaskRate.find(id)
+    @el.find(".description").html task_rate.description
+    @el.find(".value").html task_rate.value + " CHF / " + I18n.t("common.hour")
 
 class App.PersonAffairTaskRates extends Spine.Controller
   className: 'person_affair_task_rates'

@@ -16,13 +16,16 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Admin::TaskRatesController < ApplicationController
+class Settings::TaskRatesController < ApplicationController
 
   layout false
 
   load_and_authorize_resource
 
   def index
+
+    @task_rates = TaskRate.actives
+
     respond_to do |format|
       format.json { render :json => @task_rates }
     end
@@ -31,7 +34,7 @@ class Admin::TaskRatesController < ApplicationController
   def everything
     authorize! :index, TaskRate
 
-    @task_rates = TaskRate.everything
+    @task_rates = TaskRate.all
 
     respond_to do |format|
       format.json { render :json => @task_rates }
@@ -43,6 +46,7 @@ class Admin::TaskRatesController < ApplicationController
   end
 
   def create
+    @task_rate.value = params[:value]
     respond_to do |format|
       if @task_rate.save
         format.json { render :json => @task_rate }
@@ -59,6 +63,7 @@ class Admin::TaskRatesController < ApplicationController
   end
 
   def update
+    @task_rate.value = params[:value]
     respond_to do |format|
       if @task_rate.update_attributes(params[:task_rate])
         format.json { render :json => @task_rate }

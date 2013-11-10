@@ -107,7 +107,6 @@ Directory::Application.routes.draw do
     end
 
     resources :tasks, :controller => 'people/tasks'
-    resources :task_rates, :controller => 'people/task_rates', :only => [:index]
     resources :translation_aptitudes, :controller => 'people/translation_aptitudes'
   end
 
@@ -197,11 +196,6 @@ Directory::Application.routes.draw do
       end
     end
 
-    resources :tasks
-    resources :task_presets
-    resources :task_types
-    resources :task_rates
-
   end
 
   resources :background_tasks, :only => [:index, :destroy]
@@ -258,6 +252,19 @@ Directory::Application.routes.draw do
         post 'synchronize'
       end
     end
+
+    # resources :tasks
+    resources :task_types do
+      collection do
+        get 'everything'
+      end
+    end
+    resources :task_rates do
+      collection do
+        get 'everything'
+      end
+    end
+
   end
 
   resources :permissions, :only => :index, :controller => 'people/permissions'

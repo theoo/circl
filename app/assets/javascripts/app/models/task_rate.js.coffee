@@ -21,7 +21,7 @@ class App.TaskRate extends Spine.Model
   @extend Spine.Model.Ajax
 
   @url: ->
-    "#{Spine.Model.host}/admin/task_rates"
+    "#{Spine.Model.host}/settings/task_rates"
 
   constructor: ->
     super

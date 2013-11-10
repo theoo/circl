@@ -1,6 +1,6 @@
 %form
   .panel-body
-    .col-lg-3.col-md-3
+    .col-lg-2.col-md-2
 
     .col-lg-6.col-md-6.form-group
       %label{:for => 'person_affair_task_rate_id'}
@@ -13,9 +13,12 @@
             %option{:value => r.id, :selected => true}= r.title
           - else
             %option{:value => r.id}= r.title
+      %small.help-block.description
 
-    .col-lg-3.col-md-3
+    .col-lg-4.col-md-4
+      %label &nbsp;
+      .help-block.value
 
   .panel-footer
     .text-right
-      != @partial('submit_button')(@affair)
+      != @partial('submit_button')(@person)

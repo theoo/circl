@@ -191,4 +191,7 @@ class @Settings extends App
     @subapp($('#settings_roles'), 'SettingsRoles')
     @subapp($('#settings_role_permissions'), 'SettingsRolePermissions')
 
+    @subapp($('#settings_task_types'), 'SettingsTaskTypes')
+    @subapp($('#settings_task_rates'), 'SettingsTaskRates')
+
     @subapp($('#settings_application_settings'), 'SettingsApplicationSettings')

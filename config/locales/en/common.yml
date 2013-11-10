@@ -1,6 +1,7 @@
 ---
 en:
   common:
+    hour: hour
     per_hour: per hour
     next: next
     download: download

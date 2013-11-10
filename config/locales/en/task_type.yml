@@ -1,11 +1,10 @@
 ---
 en:
-  task_rate:
+  task_type:
     views:
-      rate: rate
-      rates: rates
       title: title
       value: value
       archive: archive
       description: description
-      people_count: customers
+      tasks_count: tasks
+      ratio: ratio

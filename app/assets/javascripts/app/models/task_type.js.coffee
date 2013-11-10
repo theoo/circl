@@ -21,7 +21,7 @@ class App.TaskType extends Spine.Model
   @extend Spine.Model.Ajax
 
   @url: ->
-    "#{Spine.Model.host}/admin/task_types"
+    "#{Spine.Model.host}/settings/task_types"
 
   constructor: ->
     super
