@@ -38,6 +38,10 @@ class TaskRate < ActiveRecord::Base
   # Money
   money :value
 
+  default_scope { where(:archive => false)}
+  scope :archived, Proc.new { where(:archive => true)}
+  scope :everything, Proc.new { where(:archive => [true, false])}
+
   ###################
   ### VALIDATIONS ###
   ###################

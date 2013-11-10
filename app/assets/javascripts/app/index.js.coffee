@@ -100,6 +100,7 @@ class @PersonEdit extends App
       @subapp($('#person_private_tags'), 'PersonPrivateTags')
       @subapp($('#person_public_tags'), 'PersonPublicTags')
       @subapp($('#person_affairs'), 'PersonAffairs')
+      @subapp($('#person_affair_task_rates'), 'PersonAffairTaskRates')
       @subapp($('#person_affair_tasks'), 'PersonAffairTasks')
       # @subapp($('#person_affair_products'), 'PersonAffairProducts')
       # @subapp($('#person_affair_extras'), 'PersonAffairExtras')

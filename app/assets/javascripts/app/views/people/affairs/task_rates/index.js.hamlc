@@ -1,0 +1,21 @@
+%form
+  .panel-body
+    .col-lg-3.col-md-3
+
+    .col-lg-6.col-md-6.form-group
+      %label{:for => 'person_affair_task_rate_id'}
+        = I18n.t("task_rate.views.rate")
+      %select{:id => 'person_affair_task_rate_id',
+              :class => 'form-control required',
+              :name => 'task_rate_id'}
+        - for r in App.TaskRate.all()
+          - if r.id == @person.task_rate_id
+            %option{:value => r.id, :selected => true}= r.title
+          - else
+            %option{:value => r.id}= r.title
+
+    .col-lg-3.col-md-3
+
+  .panel-footer
+    .text-right
+      != @partial('submit_button')(@affair)

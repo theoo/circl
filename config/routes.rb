@@ -107,6 +107,7 @@ Directory::Application.routes.draw do
     end
 
     resources :tasks, :controller => 'people/tasks'
+    resources :task_rates, :controller => 'people/task_rates', :only => [:index]
     resources :translation_aptitudes, :controller => 'people/translation_aptitudes'
   end
 
