@@ -39,9 +39,9 @@ class AffairsDatatable
       {
         0 => affair.id,
         1 => affair.title,
-        2 => [I18n.t("affair.views.table.owner")  + ": " + affair.owner.name,
-              I18n.t("affair.views.table.buyer")  + ": " + affair.buyer.name,
-              I18n.t("affair.views.table.receiver") + ": " + affair.receiver.name].join("<br />"),
+        2 => [I18n.t("affair.views.owner")  + ": " + affair.owner.name,
+              I18n.t("affair.views.buyer")  + ": " + affair.buyer.name,
+              I18n.t("affair.views.receiver") + ": " + affair.receiver.name].join("<br />"),
         3 => affair.invoices_count, # sql shortcut
         4 => affair.receipts_count, # sql shortcut
         5 => affair.invoices_sum.to_money.to_view, # sql shortcut

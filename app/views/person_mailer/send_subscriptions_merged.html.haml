@@ -7,10 +7,10 @@
   %table
     %thead
       %tr
-        %th= I18n.t("subscription.mail.table.private_tag")
-        %th= I18n.t("subscription.mail.table.value")
-        %th= I18n.t("subscription.mail.table.invoice_template")
-        %th= I18n.t("subscription.mail.table.members_count")
+        %th= I18n.t("subscription.mail.private_tag")
+        %th= I18n.t("subscription.mail.value")
+        %th= I18n.t("subscription.mail.invoice_template")
+        %th= I18n.t("subscription.mail.members_count")
     %tbody
       - @destination_subscription.values.each do |value|
         %tr

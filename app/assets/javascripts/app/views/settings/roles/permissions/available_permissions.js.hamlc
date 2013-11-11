@@ -4,8 +4,8 @@
 %table{:name => 'settings_role_available_permissions', :class => 'datatable'}
   %thead
     %tr
-      %th= I18n.t('permission.views.table.action')
-      %th= I18n.t('permission.views.table.subject')
+      %th= I18n.t('permission.views.action')
+      %th= I18n.t('permission.views.subject')
 
   %tbody
     - for permission in @available_permissions

@@ -3,14 +3,14 @@
     %tr
       %th= I18n.t('common.id')
       %th= I18n.t('common.parent')
-      %th= I18n.t('subscription.views.table.title')
-      %th= I18n.t('subscription.views.table.value')
-      %th= I18n.t('subscription.views.table.invoices')
-      %th= I18n.t('subscription.views.table.receipts')
-      %th= I18n.t('subscription.views.table.invoices_value')
-      %th= I18n.t('subscription.views.table.receipts_value')
-      %th= I18n.t('subscription.views.table.overpaid_value')
-      %th.desc= I18n.t('subscription.views.table.created_at')
+      %th= I18n.t('subscription.views.title')
+      %th= I18n.t('subscription.views.value')
+      %th= I18n.t('subscription.views.invoices')
+      %th= I18n.t('subscription.views.receipts')
+      %th= I18n.t('subscription.views.invoices_value')
+      %th= I18n.t('subscription.views.receipts_value')
+      %th= I18n.t('subscription.views.overpaid_value')
+      %th.desc= I18n.t('subscription.views.created_at')
 
 .panel-footer
   .row

@@ -1,7 +1,7 @@
 %table.receipts
   %tr
     - options[:fields].each do |field|
-      %th= I18n.t("receipt.views.table." + field.to_s)
+      %th= I18n.t("receipt.views." + field.to_s)
 
   - receipts.order(options[:order]).each do |s|
     %tr

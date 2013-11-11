@@ -1,11 +1,11 @@
 %table.datatable
   %thead
     %tr
-      %th.desc= I18n.t('activity.views.table.created_at')
-      %th= I18n.t('activity.views.table.person')
-      %th= I18n.t('activity.views.table.action')
-      %th= I18n.t('activity.views.table.resource_type')
-      %th= I18n.t('activity.views.table.resource_id')
+      %th.desc= I18n.t('activity.views.created_at')
+      %th= I18n.t('activity.views.person')
+      %th= I18n.t('activity.views.action')
+      %th= I18n.t('activity.views.resource_type')
+      %th= I18n.t('activity.views.resource_id')
 
   %tbody
     - for activity in @activities

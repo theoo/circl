@@ -2,9 +2,9 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th= I18n.t('tag.views.table.name')
-      %th.asc= I18n.t('tag.views.table.parent')
-      %th= I18n.t('tag.views.table.members')
+      %th= I18n.t('tag.views.name')
+      %th.asc= I18n.t('tag.views.parent')
+      %th= I18n.t('tag.views.members')
 
   %tbody
     - for tag in App.PublicTag.all()

@@ -8,8 +8,8 @@
 %table.with_contextmenu.datatable
   %thead
     %tr
-      %th= I18n.t('translation_aptitude.views.table.from')
-      %th= I18n.t('translation_aptitude.views.table.to')
+      %th= I18n.t('translation_aptitude.views.from')
+      %th= I18n.t('translation_aptitude.views.to')
 
   %tbody
     - for translation in App.PersonTranslationAptitude.all()

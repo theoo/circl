@@ -1,7 +1,7 @@
 %table.subscriptions
   %tr
     - options[:fields].each do |field|
-      %th= I18n.t("subscription.views.table." + field.to_s)
+      %th= I18n.t("subscription.views." + field.to_s)
 
   - subscriptions.order(options[:order]).each do |s|
     %tr

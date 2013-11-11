@@ -2,8 +2,8 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th.asc= I18n.t('language.views.table.name')
-      %th= I18n.t('language.views.table.code')
+      %th.asc= I18n.t('language.views.name')
+      %th= I18n.t('language.views.code')
 
   %tbody
     - for lang in App.Language.all()

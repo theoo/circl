@@ -2,8 +2,8 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th.asc= I18n.t('job.views.table.name')
-      %th= I18n.t('job.views.table.members_count')
+      %th.asc= I18n.t('job.views.name')
+      %th= I18n.t('job.views.members_count')
   %tbody
     - for job in App.Job.all()
       %tr{:data-id => job.id, :class => 'item'}

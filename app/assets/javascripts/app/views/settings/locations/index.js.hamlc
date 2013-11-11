@@ -13,8 +13,8 @@
 %table.with_contextmenu.datatable{ :action => '/settings/locations' }
   %thead
     %tr
-      %th= I18n.t('location.views.table.name')
-      %th= I18n.t('location.views.table.parent')
-      %th= I18n.t('location.views.table.iso_code_a2')
-      %th= I18n.t('location.views.table.postal_code_prefix')
-      %th= I18n.t('location.views.table.phone_prefix')
+      %th= I18n.t('location.views.name')
+      %th= I18n.t('location.views.parent')
+      %th= I18n.t('location.views.iso_code_a2')
+      %th= I18n.t('location.views.postal_code_prefix')
+      %th= I18n.t('location.views.phone_prefix')

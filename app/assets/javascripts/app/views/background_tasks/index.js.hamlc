@@ -8,10 +8,10 @@
 %table.with_contextmenu.datatable
   %thead
     %tr
-      %th= I18n.t('background_task.views.table.created_at')
-      %th= I18n.t('background_task.views.table.person')
-      %th= I18n.t('background_task.views.table.title')
-      %th= I18n.t('background_task.views.table.status')
+      %th= I18n.t('background_task.views.created_at')
+      %th= I18n.t('background_task.views.person')
+      %th= I18n.t('background_task.views.title')
+      %th= I18n.t('background_task.views.status')
 
   %tbody
     - for background_task in App.BackgroundTask.all()

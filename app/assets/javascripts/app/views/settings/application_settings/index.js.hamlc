@@ -1,8 +1,8 @@
 %table.datatable
   %thead
     %tr
-      %th.asc= I18n.t('application_setting.views.table.key')
-      %th= I18n.t('application_setting.views.table.value')
+      %th.asc= I18n.t('application_setting.views.key')
+      %th= I18n.t('application_setting.views.value')
   %tbody
     - for application_setting in App.ApplicationSetting.all()
       %tr{:data-id => application_setting.id, :class => 'item' }

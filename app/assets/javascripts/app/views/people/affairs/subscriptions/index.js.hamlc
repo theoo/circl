@@ -2,11 +2,11 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th= I18n.t('subscription.views.table.title')
-      %th= I18n.t('subscription.views.table.from')
-      %th= I18n.t('subscription.views.table.to')
-      %th= I18n.t('subscription.views.table.value')
-      %th.desc= I18n.t('subscription.views.table.created_at')
+      %th= I18n.t('subscription.views.title')
+      %th= I18n.t('subscription.views.from')
+      %th= I18n.t('subscription.views.to')
+      %th= I18n.t('subscription.views.value')
+      %th.desc= I18n.t('subscription.views.created_at')
       %th.actions
 
   %tbody

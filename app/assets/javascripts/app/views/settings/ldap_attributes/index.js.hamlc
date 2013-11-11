@@ -2,8 +2,8 @@
   %thead
     %tr
       %th.asc= I18n.t('common.id')
-      %th= I18n.t('ldap_attribute.views.table.name')
-      %th= I18n.t('ldap_attribute.views.table.mapping')
+      %th= I18n.t('ldap_attribute.views.name')
+      %th= I18n.t('ldap_attribute.views.mapping')
 
   %tbody
     - for attr in App.LdapAttribute.all()

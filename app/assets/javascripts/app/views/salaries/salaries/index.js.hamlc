@@ -7,16 +7,16 @@
 %table.datatable
   %thead
     %tr
-      %th= I18n.t('salaries.salary.views.table.id')
-      %th= I18n.t('salaries.salary.views.table.person')
-      %th= I18n.t('salaries.salary.views.table.title')
-      %th= I18n.t('salaries.salary.views.table.reference')
+      %th= I18n.t('salaries.salary.views.id')
+      %th= I18n.t('salaries.salary.views.person')
+      %th= I18n.t('salaries.salary.views.title')
+      %th= I18n.t('salaries.salary.views.reference')
       %th= I18n.t('salaries.salary.views.from')
       %th= I18n.t('salaries.salary.views.to')
       %th= I18n.t('salaries.salary.views.gross_pay')
-      %th= I18n.t('salaries.salary.views.table.net_salary')
-      %th= I18n.t('salaries.salary.views.table.paid')
-      %th= I18n.t('salaries.salary.views.table.created_at')
+      %th= I18n.t('salaries.salary.views.net_salary')
+      %th= I18n.t('salaries.salary.views.paid')
+      %th= I18n.t('salaries.salary.views.created_at')
       %th.ignore-sort
         -# copy reference
       %th.ignore-sort

@@ -1,13 +1,13 @@
 %table.datatable
   %thead
     %tr
-      %th= I18n.t('invoice.views.table.id')
-      %th= I18n.t('invoice.views.table.buyer')
-      %th= I18n.t('invoice.views.table.title')
-      %th= I18n.t('invoice.views.table.invoice_value')
-      %th= I18n.t('invoice.views.table.balance_value')
-      %th= I18n.t('invoice.views.table.status')
-      %th.desc= I18n.t('invoice.views.table.invoice_date')
+      %th= I18n.t('invoice.views.id')
+      %th= I18n.t('invoice.views.buyer')
+      %th= I18n.t('invoice.views.title')
+      %th= I18n.t('invoice.views.invoice_value')
+      %th= I18n.t('invoice.views.balance_value')
+      %th= I18n.t('invoice.views.status')
+      %th.desc= I18n.t('invoice.views.invoice_date')
 
   %tbody
     - for i in @invoices

@@ -1,13 +1,13 @@
 %table.datatable
   %thead
     %tr
-      %th= I18n.t('affair.views.table.id')
-      %th= I18n.t('affair.views.table.title')
-      %th= I18n.t('affair.views.table.value')
-      %th= I18n.t('affair.views.table.invoices_value')
-      %th= I18n.t('affair.views.table.receipts_value')
-      %th= I18n.t('affair.views.table.status')
-      %th.desc= I18n.t('affair.views.table.created_at')
+      %th= I18n.t('affair.views.id')
+      %th= I18n.t('affair.views.title')
+      %th= I18n.t('affair.views.value')
+      %th= I18n.t('affair.views.invoices_value')
+      %th= I18n.t('affair.views.receipts_value')
+      %th= I18n.t('affair.views.status')
+      %th.desc= I18n.t('affair.views.created_at')
 
   %tbody
     - for affair in App.PersonAffair.all()
@@ -18,13 +18,13 @@
       - if affair.owner_id != @person_id
         - classes << 'warning'
 
-      - relations =  I18n.t("affair.views.table.owner")  + ": " + affair.owner_name + "\n"
-      - relations << I18n.t("affair.views.table.buyer")  + ": " + affair.buyer_name + "\n"
-      - relations << I18n.t("affair.views.table.receiver") + ": " + affair.receiver_name
+      - relations =  I18n.t("affair.views.owner")  + ": " + affair.owner_name + "\n"
+      - relations << I18n.t("affair.views.buyer")  + ": " + affair.buyer_name + "\n"
+      - relations << I18n.t("affair.views.receiver") + ": " + affair.receiver_name
 
       %tr{:data-id => affair.id,
           :class => classes.join(" "),
-          :data-title => I18n.t("affair.views.table.relations"),
+          :data-title => I18n.t("affair.views.relations"),
           :data-content => relations,
           :data-placement => 'auto bottom',
           :data-trigger => 'hover'}

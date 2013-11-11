@@ -2,9 +2,9 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th.asc= I18n.t('search_attribute.views.table.model')
-      %th= I18n.t('search_attribute.views.table.name')
-      %th= I18n.t('search_attribute.views.table.group')
+      %th.asc= I18n.t('search_attribute.views.model')
+      %th= I18n.t('search_attribute.views.name')
+      %th= I18n.t('search_attribute.views.group')
 
   %tbody
     - for attr in App.SearchAttribute.all()

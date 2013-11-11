@@ -1,9 +1,9 @@
 %table.datatable
   %thead
     %tr
-      %th.desc= I18n.t('comment.views.table.created_at')
-      %th= I18n.t('comment.views.table.editor')
-      %th= I18n.t('comment.views.table.comment')
+      %th.desc= I18n.t('comment.views.created_at')
+      %th= I18n.t('comment.views.editor')
+      %th= I18n.t('comment.views.comment')
 
   %tbody
     - for comment in App.PersonComment.all()

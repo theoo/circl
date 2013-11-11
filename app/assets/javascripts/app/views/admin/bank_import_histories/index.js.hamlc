@@ -5,6 +5,6 @@
 %table.datatable{ :action => '/admin/bank_import_histories' }
   %thead
     %tr
-      %th= I18n.t('bank_import_history.views.table.file_name')
-      %th.desc= I18n.t('bank_import_history.views.table.media_date')
-      %th= I18n.t('bank_import_history.views.table.reference_line')
+      %th= I18n.t('bank_import_history.views.file_name')
+      %th.desc= I18n.t('bank_import_history.views.media_date')
+      %th= I18n.t('bank_import_history.views.reference_line')

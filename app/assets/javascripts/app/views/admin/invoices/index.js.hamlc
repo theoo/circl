@@ -1,12 +1,12 @@
 %table.datatable{ :action => '/admin/invoices' }
   %thead
     %tr
-      %th= I18n.t('invoice.views.table.id')
-      %th= I18n.t('invoice.views.table.buyer')
-      %th= I18n.t('invoice.views.table.title')
-      %th.number= I18n.t('invoice.views.table.value')
-      %th= I18n.t('invoice.views.table.status')
-      %th.desc= I18n.t('invoice.views.table.creation_date')
+      %th= I18n.t('invoice.views.id')
+      %th= I18n.t('invoice.views.buyer')
+      %th= I18n.t('invoice.views.title')
+      %th.number= I18n.t('invoice.views.value')
+      %th= I18n.t('invoice.views.status')
+      %th.desc= I18n.t('invoice.views.creation_date')
 
 
 .panel-footer

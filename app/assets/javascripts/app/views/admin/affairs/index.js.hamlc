@@ -1,12 +1,12 @@
 %table.datatable{ :action => '/admin/affairs' }
   %thead
     %tr.item
-      %th= I18n.t('affair.views.table.id')
-      %th= I18n.t('affair.views.table.title')
-      %th= I18n.t('affair.views.table.relations')
-      %th= I18n.t('affair.views.table.invoices_count')
-      %th= I18n.t('affair.views.table.receipts_count')
-      %th= I18n.t('affair.views.table.value')
-      %th= I18n.t('affair.views.table.paid')
-      %th= I18n.t('affair.views.table.status')
-      %th.desc= I18n.t('affair.views.table.created_at')
+      %th= I18n.t('affair.views.id')
+      %th= I18n.t('affair.views.title')
+      %th= I18n.t('affair.views.relations')
+      %th= I18n.t('affair.views.invoices_count')
+      %th= I18n.t('affair.views.receipts_count')
+      %th= I18n.t('affair.views.value')
+      %th= I18n.t('affair.views.paid')
+      %th= I18n.t('affair.views.status')
+      %th.desc= I18n.t('affair.views.created_at')

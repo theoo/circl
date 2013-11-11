@@ -14,44 +14,44 @@
     %table
       %thead
         %tr
-          %th= I18n.t("receipt.mail.table.part")
-          %th= I18n.t("receipt.mail.table.number_of_characters")
-          %th= I18n.t("receipt.mail.table.from")
-          %th= I18n.t("receipt.mail.table.to")
-          %th= I18n.t("receipt.mail.table.info")
+          %th= I18n.t("receipt.mail.part")
+          %th= I18n.t("receipt.mail.number_of_characters")
+          %th= I18n.t("receipt.mail.from")
+          %th= I18n.t("receipt.mail.to")
+          %th= I18n.t("receipt.mail.info")
       %tbody
         %tr
-          %td= I18n.t("receipt.mail.table.application_id")
+          %td= I18n.t("receipt.mail.application_id")
           %td 6
           %td 1
           %td 6
-          %td= I18n.t("receipt.mail.table.padded_by_zeros_at_its_left")
+          %td= I18n.t("receipt.mail.padded_by_zeros_at_its_left")
         %tr
-          %td= I18n.t("receipt.mail.table.invoice_date")
+          %td= I18n.t("receipt.mail.invoice_date")
           %td 6
           %td 7
           %td 12
-          %td= I18n.t("receipt.mail.table.date_format_ddmmyy")
+          %td= I18n.t("receipt.mail.date_format_ddmmyy")
         %tr
-          %td= I18n.t("receipt.mail.table.person_id")
+          %td= I18n.t("receipt.mail.person_id")
           %td 6
           %td 13
           %td 18
-          %td= I18n.t("receipt.mail.table.padded_by_zeros_at_its_left")
+          %td= I18n.t("receipt.mail.padded_by_zeros_at_its_left")
         %tr
-          %td= I18n.t("receipt.mail.table.invoice_id")
+          %td= I18n.t("receipt.mail.invoice_id")
           %td 6
           %td 19
           %td 24
-          %td= I18n.t("receipt.mail.table.padded_by_zeros_at_its_left")
+          %td= I18n.t("receipt.mail.padded_by_zeros_at_its_left")
         %tr
-          %td= I18n.t("receipt.mail.table.available_digits")
+          %td= I18n.t("receipt.mail.available_digits")
           %td 2
           %td 25
           %td 26
-          %td= I18n.t("receipt.mail.table.should_be_two_zeros")
+          %td= I18n.t("receipt.mail.should_be_two_zeros")
         %tr
-          %td= I18n.t("receipt.mail.table.checksum_digits")
+          %td= I18n.t("receipt.mail.checksum_digits")
           %td 1
           %td 27
           %td 27
@@ -63,12 +63,12 @@
     %table
       %thead
         %tr
-          %th= I18n.t("receipt.mail.table.message")
-          %th= I18n.t("receipt.mail.table.account")
-          %th= I18n.t("receipt.mail.table.type")
-          %th= I18n.t("receipt.mail.table.bvr_reference")
-          %th= I18n.t("receipt.mail.table.value")
-          %th= I18n.t("receipt.mail.table.date_value")
+          %th= I18n.t("receipt.mail.message")
+          %th= I18n.t("receipt.mail.account")
+          %th= I18n.t("receipt.mail.type")
+          %th= I18n.t("receipt.mail.bvr_reference")
+          %th= I18n.t("receipt.mail.value")
+          %th= I18n.t("receipt.mail.date_value")
       %tbody
         - @errors.each do |info|
           - if info.is_a? Hash
@@ -93,14 +93,14 @@
   %table
     %thead
       %tr
-        %th= I18n.t("receipt.mail.table.person_id")
-        %th= I18n.t("receipt.mail.table.invoice_id")
-        %th= I18n.t("receipt.mail.table.receipt_id")
-        %th= I18n.t("receipt.mail.table.receipt_date")
-        %th= I18n.t("receipt.mail.table.receipt_value")
-        %th= I18n.t("receipt.mail.table.already_imported")
-        %th= I18n.t("receipt.mail.table.rectification")
-        %th= I18n.t("receipt.mail.table.selected")
+        %th= I18n.t("receipt.mail.person_id")
+        %th= I18n.t("receipt.mail.invoice_id")
+        %th= I18n.t("receipt.mail.receipt_id")
+        %th= I18n.t("receipt.mail.receipt_date")
+        %th= I18n.t("receipt.mail.receipt_value")
+        %th= I18n.t("receipt.mail.already_imported")
+        %th= I18n.t("receipt.mail.rectification")
+        %th= I18n.t("receipt.mail.selected")
     %tbody
       - @receipts.each do |info|
         %tr

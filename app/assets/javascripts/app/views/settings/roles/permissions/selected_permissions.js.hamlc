@@ -1,9 +1,9 @@
 %table{:name => 'settings_role_selected_permissions', :class => 'datatable'}
   %thead
     %tr
-      %th= I18n.t('permission.views.table.action')
-      %th= I18n.t('permission.views.table.subject')
-      %th= I18n.t('permission.views.table.hash_conditions')
+      %th= I18n.t('permission.views.action')
+      %th= I18n.t('permission.views.subject')
+      %th= I18n.t('permission.views.hash_conditions')
       %th.ignore-sort
 
   %tbody

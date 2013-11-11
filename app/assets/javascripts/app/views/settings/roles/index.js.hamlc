@@ -2,8 +2,8 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th.asc= I18n.t('role.views.table.name')
-      %th= I18n.t('role.views.table.members')
+      %th.asc= I18n.t('role.views.name')
+      %th= I18n.t('role.views.members')
 
   %tbody
     - for role in App.Role.all()
