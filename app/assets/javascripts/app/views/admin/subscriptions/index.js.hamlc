@@ -10,7 +10,7 @@
       %th= I18n.t('subscription.views.invoices_value')
       %th= I18n.t('subscription.views.receipts_value')
       %th= I18n.t('subscription.views.overpaid_value')
-      %th.desc= I18n.t('subscription.views.created_at')
+      %th.desc= I18n.t('common.created_at')
 
 .panel-footer
   .row

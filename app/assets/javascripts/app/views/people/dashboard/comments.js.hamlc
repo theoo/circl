@@ -1,7 +1,7 @@
 %table.table-hover.clickable
   %thead
     %tr
-      %th.desc= I18n.t('comment.views.created_at')
+      %th.desc= I18n.t('common.created_at')
       %th= I18n.t('comment.views.comment')
 
   %tbody

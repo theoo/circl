@@ -6,7 +6,7 @@
       %th= I18n.t('receipt.views.means_of_payment')
       %th= I18n.t('receipt.views.value')
       %th= I18n.t('receipt.views.value_date')
-      %th.desc= I18n.t('receipt.views.created_at')
+      %th.desc= I18n.t('common.created_at')
 
   %tbody
     - for r in @receipts

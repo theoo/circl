@@ -5,7 +5,7 @@
       %th= I18n.t('invoice_template.views.title')
       %th= I18n.t('invoice_template.views.language')
       %th= I18n.t('invoice_template.views.bvr_account')
-      %th.desc= I18n.t('invoice_template.views.created_at')
+      %th.desc= I18n.t('common.created_at')
   %tbody
     - for invoice_template in App.InvoiceTemplate.all()
       %tr{:data-id => invoice_template.id, :class => 'item' }

@@ -16,7 +16,7 @@
       %th= I18n.t('salaries.salary.views.gross_pay')
       %th= I18n.t('salaries.salary.views.net_salary')
       %th= I18n.t('salaries.salary.views.paid')
-      %th= I18n.t('salaries.salary.views.created_at')
+      %th= I18n.t('common.created_at')
       %th.ignore-sort
         -# copy reference
       %th.ignore-sort
