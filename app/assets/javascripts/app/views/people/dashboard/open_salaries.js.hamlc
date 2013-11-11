@@ -15,7 +15,7 @@
           \-
           %i= salary.title
           %br
-          %b= I18n.t('salaries.from')
+          %b= I18n.t('common.from')
           = salary.from
           %b= I18n.t('salaries.to')
           = salary.to

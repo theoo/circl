@@ -7,7 +7,7 @@
         %input{:type => 'hidden',
           :name => 'person_id',
           :value => @person_id}
-        %label= I18n.t('translation_aptitude.views.from')
+        %label= I18n.t('common.from')
         %select{:name => 'from_language_id',
                 :class => 'required'}
           - for l in App.Language.all()
