@@ -16,7 +16,7 @@
           %th= I18n.t('common.title')
           %th= I18n.t('salaries.salary.views.gross_pay')
           %th= I18n.t('salaries.salary.views.net_salary')
-          %th= I18n.t('salaries.salary.views.paid')
+          %th= I18n.t('common.paid')
 
       %tbody
         - for salary in App.PersonSalary.instances()

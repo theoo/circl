@@ -139,14 +139,14 @@
           .col-lg-6
             .form-group
               %label{ :for => 'salary_is_paid', :class => 'label-control' }
-                = I18n.t('salaries.salary.views.paid')
+                = I18n.t('common.paid')
               .checkbox
                 %input{ :name => 'paid',
                         :id => 'salary_is_paid',
                         :type => 'checkbox',
                         :checked => @salary.paid,
                         :value => 1 }
-                = I18n.t('salaries.salary.views.paid')
+                = I18n.t('common.paid')
 
         - if @salary.is_reference
           .row

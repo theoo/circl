@@ -53,7 +53,7 @@
                     :name => 'subscription_paid',
                     :checked => true,
                     :value => 1 }
-            = I18n.t('subscription.views.tag_tool.paid')
+            = I18n.t('common.paid')
 
         = I18n.t("subscription.views.tag_tool.subscription_at_this_date")
 
