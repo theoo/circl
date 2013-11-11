@@ -14,7 +14,7 @@
   %thead
     %tr
       %th= I18n.t('location.views.name')
-      %th= I18n.t('location.views.parent')
+      %th= I18n.t('common.parent')
       %th= I18n.t('location.views.iso_code_a2')
       %th= I18n.t('location.views.postal_code_prefix')
       %th= I18n.t('location.views.phone_prefix')

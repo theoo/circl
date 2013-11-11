@@ -17,7 +17,7 @@
       .col-lg-6
         .form-group.autocompleted
           %label{:for => 'admin_private_tag_parent_id'}
-            = I18n.t('tag.views.parent')
+            = I18n.t('common.parent')
           %input{ :type => 'search',
                   :id => 'admin_private_tag_parent_id',
                   :name => 'tag_parent_id',
