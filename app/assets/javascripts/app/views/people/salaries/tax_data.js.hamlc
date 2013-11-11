@@ -7,7 +7,7 @@
   %table.table.table-condensed.table-resonsive
     %thead
       %tr
-        %th= I18n.t('salaries.tax_data.views.position')
+        %th= I18n.t('common.position')
         %th= I18n.t('common.title')
         %th= I18n.t('salaries.tax_data.views.reference_value')
         %th= I18n.t('salaries.tax_data.views.taxed_value')
