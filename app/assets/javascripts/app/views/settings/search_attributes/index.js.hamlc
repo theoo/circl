@@ -3,7 +3,7 @@
     %tr
       %th= I18n.t('common.id')
       %th.asc= I18n.t('search_attribute.views.model')
-      %th= I18n.t('search_attribute.views.name')
+      %th= I18n.t('common.name')
       %th= I18n.t('search_attribute.views.group')
 
   %tbody

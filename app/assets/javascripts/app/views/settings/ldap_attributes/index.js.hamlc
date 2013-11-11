@@ -2,7 +2,7 @@
   %thead
     %tr
       %th.asc= I18n.t('common.id')
-      %th= I18n.t('ldap_attribute.views.name')
+      %th= I18n.t('common.name')
       %th= I18n.t('ldap_attribute.views.mapping')
 
   %tbody

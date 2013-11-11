@@ -2,7 +2,7 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th= I18n.t('tag.views.name')
+      %th= I18n.t('common.name')
       %th.asc= I18n.t('common.parent')
       %th= I18n.t('tag.views.members')
 

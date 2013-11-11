@@ -22,7 +22,7 @@
       .col-lg-6
         .form-group
           %label{:for => 'settings_location_name'}
-            = I18n.t('location.views.name')
+            = I18n.t('common.name')
           %input{ :type => 'text',
                   :name => 'name',
                   :id => 'settings_location_name',

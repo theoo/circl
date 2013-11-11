@@ -2,7 +2,7 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th.asc= I18n.t('language.views.name')
+      %th.asc= I18n.t('common.name')
       %th= I18n.t('language.views.code')
 
   %tbody
