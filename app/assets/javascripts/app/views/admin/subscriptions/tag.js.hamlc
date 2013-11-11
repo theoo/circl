@@ -2,7 +2,7 @@
   %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
-    = I18n.t("subscription.views.tool_box.tag_tool")
+    = I18n.t("subscription.views.tag_tool")
 
 %form
   .modal-body
