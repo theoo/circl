@@ -13,7 +13,7 @@
   %dd= Time.now
 
   - if @current_person
-    %dt= I18n.t("person.mail.report_error.person")
+    %dt= I18n.t("common.person")
     %dd= link_to @current_person.full_name, person_path(@current_person)
 
 

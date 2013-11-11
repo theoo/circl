@@ -84,7 +84,7 @@ class Salaries::SalariesController < ApplicationController
                 new_salary.person_id = employee.id
                 unless new_salary.save
                   msg = I18n.t("salaries.salary.errors.something_prevented_salaries_to_be_saved")
-                  msg += I18n.t("activerecord.models.person") + ": "
+                  msg += I18n.t("common.person") + ": "
                   msg += employee.id
                   msg += I18n.t("activerecord.models.salary") + ": "
                   msg += new_salary.errors.map{|k,v| k.to_s + ":" + v.join(", ")}
