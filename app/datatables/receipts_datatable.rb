@@ -46,7 +46,7 @@ class ReceiptsDatatable
         5 => receipt.value_date,
         6 => receipt.created_at,
         'id' => receipt.id,
-        'actions' => [ I18n.t('receipt.views.contextmenu.edit_receipt') ],
+        'actions' => [ I18n.t('receipt.views.actions.edit_receipt') ],
         'number_columns' => [3,4]
       }
     end

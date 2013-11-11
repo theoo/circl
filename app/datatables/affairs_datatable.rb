@@ -49,7 +49,7 @@ class AffairsDatatable
         7 => affair.get_statuses.map{|s| I18n.t("affair.views.statuses." + s.to_s)}.join(", "),
         8 => affair.created_at,
         'id' => affair.id,
-        'actions' => [ I18n.t('affair.views.contextmenu.edit_affair') ],
+        'actions' => [ I18n.t('affair.views.actions.edit_affair') ],
         'number_columns' => [5,6,7,8]
       }
     end

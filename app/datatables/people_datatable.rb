@@ -55,7 +55,7 @@ class PeopleDatatable
         haml_tag  :button,
                   :class => 'btn btn-default',
                   :name => 'directory-person-change-password',
-                  :title => I18n.t("directory.views.contextmenu.change_person_password") do
+                  :title => I18n.t("directory.views.actions.change_person_password") do
           haml_tag :i, :class => 'icon-key'
         end
       end

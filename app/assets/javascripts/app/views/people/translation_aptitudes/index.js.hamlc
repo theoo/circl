@@ -1,4 +1,4 @@
-- destroy_ta_trad = I18n.t('translation_aptitude.views.contextmenu.destroy_translation_aptitude')
+- destroy_ta_trad = I18n.t('translation_aptitude.views.actions.destroy_translation_aptitude')
 
 %menu.context_menu_actions
   %command{ :data-label => destroy_ta_trad,

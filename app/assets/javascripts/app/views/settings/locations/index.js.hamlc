@@ -1,5 +1,5 @@
-- edit_location_trad = I18n.t('location.views.contextmenu.edit_location')
-- destroy_location_trad = I18n.t('location.views.contextmenu.destroy_location')
+- edit_location_trad = I18n.t('location.views.actions.edit_location')
+- destroy_location_trad = I18n.t('location.views.actions.destroy_location')
 
 %menu.context_menu_actions
   %command{ :data-label => edit_location_trad,

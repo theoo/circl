@@ -44,8 +44,8 @@ class LocationsDatatable
         3 => location.postal_code_prefix,
         4 => location.phone_prefix,
         'id' => location.id,
-        'actions' => [ I18n.t('location.views.contextmenu.edit_location'),
-                       I18n.t('location.views.contextmenu.destroy_location') ],
+        'actions' => [ I18n.t('location.views.actions.edit_location'),
+                       I18n.t('location.views.actions.destroy_location') ],
         'number_columns' => [2,3,4]
       }
     end

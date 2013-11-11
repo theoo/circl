@@ -1,4 +1,4 @@
-- destroy_background_task_trad = I18n.t("background_task.views.contextmenu.destroy_background_task")
+- destroy_background_task_trad = I18n.t("background_task.views.actions.destroy_background_task")
 
 %menu.context_menu_actions
   %command{ :data-label => destroy_background_task_trad,
