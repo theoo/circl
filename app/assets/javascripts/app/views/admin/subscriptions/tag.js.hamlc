@@ -62,7 +62,7 @@
       .col-lg-6
         .form-group
           %label{:for => "subscription_tag_tool_date"}
-            = I18n.t('subscription.views.tag_tool.date')
+            = I18n.t('common.date')
           %input{ :type => 'text',
                   :id => 'subscription_tag_tool_date',
                   :name => 'date',
