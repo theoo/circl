@@ -33,7 +33,7 @@ class App.Receipt extends Spine.Model
     # e = new App.ErrorsList
 
     # unless @owner_id
-    #   e.add owner: I18n.t("receipt.validations.owner_required")
+    #   e.add owner: I18n.t("receipt.errors.owner_required")
 
     # if ! @subscription_id and ! @affair_id
     #   e.add subscription: I18n.t("activerecord.errors.messages.blank")
