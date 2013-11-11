@@ -51,6 +51,7 @@ class Product < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
+  validates :key, :presence => true, :length => { :maximum => 255 }
 
   ########################
   #### CLASS METHODS #####

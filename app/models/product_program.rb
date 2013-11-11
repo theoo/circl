@@ -44,6 +44,8 @@ class ProductProgram < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
+  validates :key, :presence => true, :length => { :maximum => 255 }
+  validates :variant_name, :presence => true, :length => { :maximum => 255 }
 
   ########################
   #### CLASS METHODS #####

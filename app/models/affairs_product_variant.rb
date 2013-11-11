@@ -46,6 +46,8 @@ class AffairsProductVariant < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
+  validates :position, :presence => true
+  validates :quantity, :presence => true
 
   ########################
   #### CLASS METHODS #####

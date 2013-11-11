@@ -47,6 +47,8 @@ class ProductVariant < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
+  validates :key, :presence => true, :length => { :maximum => 255 }
+  validates :price, :presence => true
 
   ########################
   #### CLASS METHODS #####
