@@ -2,7 +2,7 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th= I18n.t('salaries.salary_template.views.description')
+      %th= I18n.t('common.description')
       %th= I18n.t('common.value')
 
   %tbody

@@ -19,7 +19,7 @@
       .col-lg-12
         .form-group
           %label{:for => 'affair_description'}
-            = I18n.t('affair.views.description')
+            = I18n.t('common.description')
           %textarea{:name => 'description',
                     :rows => 4,
                     :id => 'affair_description',

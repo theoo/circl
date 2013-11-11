@@ -47,7 +47,7 @@
       .col-lg-12
         .form-group
           %label{:for => 'employment_contract_description'}
-            = I18n.t('employment_contract.views.description')
+            = I18n.t('common.description')
           %textarea{:name => 'description',
                     :rows => 5,
                     :class => 'form-control'}

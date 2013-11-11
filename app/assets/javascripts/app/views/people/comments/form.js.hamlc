@@ -17,7 +17,7 @@
 
         .form-group
           %label{:for => 'comment_description', :class => 'label-control'}
-            = I18n.t('comment.views.description')
+            = I18n.t('common.description')
           %textarea{:name => 'description',
                     :id => 'comment_description',
                     :rows => 5,

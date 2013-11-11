@@ -20,7 +20,7 @@
       .col-lg-12
         .form-group
           %label{:for => 'settings_role_description'}
-            = I18n.t('role.views.description')
+            = I18n.t('common.description')
           %textarea{:name => 'description',
                     :id => 'settings_role_description',
                     :rows => 5,

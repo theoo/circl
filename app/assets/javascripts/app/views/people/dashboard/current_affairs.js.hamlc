@@ -3,7 +3,7 @@
     %tr
       %th= I18n.t('common.id')
       %th.desc= I18n.t('affair.views.update_date')
-      %th= I18n.t('affair.views.description')
+      %th= I18n.t('common.description')
 
   %tbody
     - for affair in @affairs

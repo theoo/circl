@@ -4,7 +4,7 @@
       %th= I18n.t('common.id')
       %th.desc= I18n.t('common.created_at')
       %th.desc= I18n.t('invoice.views.age')
-      %th= I18n.t('invoice.views.description')
+      %th= I18n.t('common.description')
 
   %tbody
     - for invoice in @invoices

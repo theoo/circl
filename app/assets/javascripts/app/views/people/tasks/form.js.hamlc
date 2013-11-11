@@ -137,7 +137,7 @@
     .row
       .col-lg-12.form-group
         %label{:for => 'task_description'}
-          = I18n.t('task.views.description')
+          = I18n.t('common.description')
         %textarea{:name => 'description',
                   :id => 'task_description',
                   :rows => 5,

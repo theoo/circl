@@ -4,7 +4,7 @@
       %th= I18n.t('common.id')
       %th.desc= I18n.t('common.date')
       %th= I18n.t('common.value')
-      %th= I18n.t('task.views.description')
+      %th= I18n.t('common.description')
 
   %tbody
     - for task in App.PersonTask.all()
