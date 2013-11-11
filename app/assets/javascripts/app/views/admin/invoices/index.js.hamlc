@@ -6,7 +6,7 @@
       %th= I18n.t('common.title')
       %th.number= I18n.t('common.value')
       %th= I18n.t('invoice.views.status')
-      %th.desc= I18n.t('invoice.views.creation_date')
+      %th.desc= I18n.t('common.created_at')
 
 
 .panel-footer

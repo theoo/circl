@@ -67,7 +67,7 @@
           .col-lg-6
             .form-group
               %label{:for => 'person_salary_created_at'}
-                = I18n.t('salaries.salary.views.creation_date')
+                = I18n.t('common.created_at')
               %input{ :type => 'text',
                       :name => 'created_at',
                       :id => 'person_salary_created_at',
