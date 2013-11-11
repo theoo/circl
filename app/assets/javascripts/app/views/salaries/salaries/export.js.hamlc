@@ -27,7 +27,7 @@
                     :type => 'checkbox',
                     :checked => true,
                     :value => 1 }
-            = I18n.t('salaries.salary.views.unpaid')
+            = I18n.t('common.unpaid')
 
       .col-lg-4
 
