@@ -5,7 +5,7 @@
       %th= I18n.t('common.title')
       %th= I18n.t('common.from')
       %th= I18n.t('common.to')
-      %th= I18n.t('subscription.views.value')
+      %th= I18n.t('common.value')
       %th.desc= I18n.t('common.created_at')
       %th.actions
 

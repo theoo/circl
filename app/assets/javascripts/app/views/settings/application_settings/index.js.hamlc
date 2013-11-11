@@ -2,7 +2,7 @@
   %thead
     %tr
       %th.asc= I18n.t('application_setting.views.key')
-      %th= I18n.t('application_setting.views.value')
+      %th= I18n.t('common.value')
   %tbody
     - for application_setting in App.ApplicationSetting.all()
       %tr{:data-id => application_setting.id, :class => 'item' }

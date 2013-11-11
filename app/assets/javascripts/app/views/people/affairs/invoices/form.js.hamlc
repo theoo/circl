@@ -63,7 +63,7 @@
 
         .form-group
           %label{:for => 'person_affair_invoice_value'}
-            = I18n.t('invoice.views.value')
+            = I18n.t('common.value')
           .input-group
             %input{ :type => 'number',
                     :step => 0.01,

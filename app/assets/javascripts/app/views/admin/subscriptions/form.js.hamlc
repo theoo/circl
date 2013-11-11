@@ -78,7 +78,7 @@
             %tr
               %th
               %th= I18n.t('subscription.views.values.private_tag')
-              %th= I18n.t('subscription.views.values.value')
+              %th= I18n.t('common.value')
               %th= I18n.t('subscription.views.values.invoice_template')
               %th
 

@@ -3,7 +3,7 @@
     %tr
       %th= I18n.t('common.id')
       %th.desc= I18n.t('task.views.date')
-      %th= I18n.t('task.views.value')
+      %th= I18n.t('common.value')
       %th= I18n.t('task.views.description')
 
   %tbody

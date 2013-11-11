@@ -9,7 +9,7 @@
       %tr
         %th= I18n.t('salaries.item.views.position')
         %th= I18n.t('common.title')
-        %th= I18n.t('salaries.item.views.value')
+        %th= I18n.t('common.value')
         - for tax in App.SalaryTax.all()
           %th= tax.title
         %th= I18n.t('salaries.item.views.category')

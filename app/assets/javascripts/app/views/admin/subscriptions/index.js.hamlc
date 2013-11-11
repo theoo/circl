@@ -4,7 +4,7 @@
       %th= I18n.t('common.id')
       %th= I18n.t('common.parent')
       %th= I18n.t('common.title')
-      %th= I18n.t('subscription.views.value')
+      %th= I18n.t('common.value')
       %th= I18n.t('subscription.views.invoices')
       %th= I18n.t('subscription.views.receipts')
       %th= I18n.t('subscription.views.invoices_value')

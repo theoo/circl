@@ -20,7 +20,7 @@
       .col-lg-12
         .form-group
           %label{:for => 'settings_application_setting_value'}
-            = I18n.t('application_setting.views.value')
+            = I18n.t('common.value')
           %textarea{:name => 'value',
                     :id => 'settings_application_setting_value',
                     :rows => 5,
