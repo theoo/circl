@@ -1,10 +1,10 @@
 %ul#person_salaries_nav.nav.nav-tabs
   %li
     %a{:href => '#person_salaries_index', :data-toggle => 'tab'}
-      = I18n.t('salaries.salary.views.salaries')
+      = I18n.t('salary.views.salaries')
   %li
     %a{:href => '#person_salary_references_index', :data-toggle => 'tab'}
-      = I18n.t('salaries.salary.views.references')
+      = I18n.t('salary.views.references')
 
 .tab-content
   #person_salaries_index.tab-pane.active
@@ -12,10 +12,10 @@
       %thead
         %tr
           %th= I18n.t('common.id')
-          %th= I18n.t('salaries.salary.views.reference_title')
+          %th= I18n.t('salary.views.reference_title')
           %th= I18n.t('common.title')
-          %th= I18n.t('salaries.salary.views.gross_pay')
-          %th= I18n.t('salaries.salary.views.net_salary')
+          %th= I18n.t('salary.views.gross_pay')
+          %th= I18n.t('salary.views.net_salary')
           %th= I18n.t('common.paid')
 
       %tbody
@@ -34,9 +34,9 @@
         %tr
           %th= I18n.t('common.id')
           %th= I18n.t('common.title')
-          %th= I18n.t('salaries.salary.views.activity_rate')
-          %th= I18n.t('salaries.salary.views.gross_pay')
-          %th= I18n.t('salaries.salary.views.net_salary')
+          %th= I18n.t('salary.views.activity_rate')
+          %th= I18n.t('salary.views.gross_pay')
+          %th= I18n.t('salary.views.net_salary')
 
       %tbody
         - for salary in App.PersonSalary.references()

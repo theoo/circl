@@ -2,9 +2,9 @@
   %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
-    = I18n.t('salaries.export')
+    = I18n.t('export')
 
-%form{ :method =>'get', :action => '/salaries/salaries/export' }
+%form{ :method =>'get', :action => '/salaries/export' }
   .modal-body
     .row
       .col-lg-12
@@ -34,26 +34,26 @@
     .row
       .col-lg-12
         .alert.alert-info
-          = I18n.t("salaries.salary.views.export_interval_explanation")
+          = I18n.t("salary.views.export_interval_explanation")
 
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'salaries_export_from'}
+          %label{:for => 'export_from'}
             = I18n.t('common.from')
           %input{:type => 'text',
                  :name => 'from',
-                 :id => 'salaries_export_from',
+                 :id => 'export_from',
                  :class => 'datepicker required form-control',
                  :value => @export.from }
 
       .col-lg-6
         .form-group
-          %label{:for => 'salaries_export_to'}
+          %label{:for => 'export_to'}
             = I18n.t('common.to')
           %input{:type => 'text',
                  :name => 'to',
-                 :id => 'salaries_export_to',
+                 :id => 'export_to',
                  :class => 'datepicker required form-control',
                  :value => @export.to }
 

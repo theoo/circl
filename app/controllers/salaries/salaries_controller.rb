@@ -71,7 +71,7 @@ class Salaries::SalariesController < ApplicationController
             end
 
             if @employees.size != people_ids.size
-              flash[:alert] = I18n.t("salaries.salary.errors.one_or_more_people_doesnt_satisfy_requirements", 
+              flash[:alert] = I18n.t("salary.errors.one_or_more_people_doesnt_satisfy_requirements", 
                                 {:people_ids => (people_ids -@employees.map(&:id))})
               succeed_token = false
               raise ActiveRecord::Rollback
@@ -83,7 +83,7 @@ class Salaries::SalariesController < ApplicationController
                 new_salary = @salary.dup
                 new_salary.person_id = employee.id
                 unless new_salary.save
-                  msg = I18n.t("salaries.salary.errors.something_prevented_salaries_to_be_saved")
+                  msg = I18n.t("salary.errors.something_prevented_salaries_to_be_saved")
                   msg += I18n.t("common.person") + ": "
                   msg += employee.id
                   msg += I18n.t("activerecord.models.salary") + ": "
@@ -101,19 +101,19 @@ class Salaries::SalariesController < ApplicationController
             format.json { render :json => {} }
             format.html do
               # TODO improve report
-              flash[:notice] = I18n.t("salaries.salary.notices.reference_were_copied", :members_count => @employees.size)
+              flash[:notice] = I18n.t("salary.notices.reference_were_copied", :members_count => @employees.size)
               redirect_to salaries_path(:anchor => 'payroll')
             end
           else
             format.json { render :json => { :error => [flash[:alert]] }, :status => :unprocessable_entity }
             format.html do
-              flash[:notice] = I18n.t("salaries.salary.notices.please_try_again")
+              flash[:notice] = I18n.t("salary.notices.please_try_again")
               redirect_to salaries_path(:anchor => 'payroll')
             end
           end
         end
       else
-        format.json { render :json => { :error => [I18n.t('salaries.salary.is_not_a_reference')] }, :status => :unprocessable_entity }
+        format.json { render :json => { :error => [I18n.t('salary.is_not_a_reference')] }, :status => :unprocessable_entity }
       end
     end
   end

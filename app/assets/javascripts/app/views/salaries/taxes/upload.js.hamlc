@@ -2,7 +2,7 @@
   %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
-    = I18n.t('salaries.tax.views.upload_tax') + ": " + @tax.title
+    = I18n.t('tax.views.upload_tax') + ": " + @tax.title
 
 %form
   .modal-body
@@ -12,21 +12,21 @@
 
     .row
       .col-lg-12
-        %h3= I18n.t("salaries.tax.views.example_files_title")
-        != I18n.t("salaries.tax.views.example_files_explanation")
+        %h3= I18n.t("tax.views.example_files_title")
+        != I18n.t("tax.views.example_files_explanation")
         %br
         %br
 
         %ol
           %li 1.
             %a{:href => 'assets/tax_generic.csv'}
-              = I18n.t("salaries.tax.views.generic_tax_example_file_desc")
+              = I18n.t("tax.views.generic_tax_example_file_desc")
           %li 2.
             %a{:href => 'assets/tax_age.csv'}
-              = I18n.t("salaries.tax.views.age_tax_example_file_desc")
+              = I18n.t("tax.views.age_tax_example_file_desc")
           %li 3.
             %a{:href => 'assets/tax_is.txt'}
-              = I18n.t("salaries.tax.views.is_tax_example_file_desc")
+              = I18n.t("tax.views.is_tax_example_file_desc")
 
         %input{ :type => 'hidden', :name => 'tax_id', :value => @tax.id }
         %br
@@ -35,11 +35,11 @@
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'salaries_taxes_upload_file'}
+          %label{:for => 'taxes_upload_file'}
             = I18n.t('admin.views.select_file')
           %input{ :type => 'file',
                   :name => 'file',
-                  :id => 'salaries_taxes_upload_file'}
+                  :id => 'taxes_upload_file'}
 
   .modal-footer
     %button{:type => 'button',

@@ -314,8 +314,8 @@ class Salaries::Salary < ActiveRecord::Base
   def init_items
     wage = yearly_salary && yearly_salary_count ? self.yearly_salary / self.yearly_salary_count : 1000.to_money
     taxes = Salaries::Tax.all
-    item = Salaries::Item.new(:title => I18n.t("salaries.salary.template_item_title"),
-                              :category => I18n.t("salaries.salary.template_item_category"), 
+    item = Salaries::Item.new(:title => I18n.t("salary.template_item_title"),
+                              :category => I18n.t("salary.template_item_category"), 
                               :position => 0,
                               :value => wage,
                               :taxes => taxes)
@@ -522,7 +522,7 @@ class Salaries::Salary < ActiveRecord::Base
       missing_fields = missing_fields.join(", ")
 
       errors.add(:base,
-                  I18n.t('salaries.salary.errors.the_required_information_about_this_person_are_not_satisfied',
+                  I18n.t('salary.errors.the_required_information_about_this_person_are_not_satisfied',
                     :required_fields => missing_fields ))
       false
     end
@@ -533,7 +533,7 @@ class Salaries::Salary < ActiveRecord::Base
     children = Salaries::Salary.where(:parent_id => self.id)
     if children.size > 0
       errors.add(:base,
-                 I18n.t('salaries.salary.errors.unable_to_destroy_a_reference_which_has_children_salaries'))
+                 I18n.t('salary.errors.unable_to_destroy_a_reference_which_has_children_salaries'))
       false
     end
   end
@@ -541,9 +541,9 @@ class Salaries::Salary < ActiveRecord::Base
   def ensure_interval_dates_are_for_the_same_year
     if from.year != to.year
       errors.add(:from,
-                 I18n.t('salaries.salary.errors.from_and_to_dates_should_be_in_the_same_year'))
+                 I18n.t('salary.errors.from_and_to_dates_should_be_in_the_same_year'))
       errors.add(:to,
-                 I18n.t('salaries.salary.errors.from_and_to_dates_should_be_in_the_same_year'))
+                 I18n.t('salary.errors.from_and_to_dates_should_be_in_the_same_year'))
       false
     end
 
@@ -552,9 +552,9 @@ class Salaries::Salary < ActiveRecord::Base
   def ensure_from_date_is_before_to_date
     if from > to
       errors.add(:from,
-                 I18n.t('salaries.salary.errors.from_date_should_be_before_to_date'))
+                 I18n.t('salary.errors.from_date_should_be_before_to_date'))
       errors.add(:to,
-                 I18n.t('salaries.salary.errors.to_date_should_be_after_from_date'))
+                 I18n.t('salary.errors.to_date_should_be_after_from_date'))
       false
     end
 

@@ -1,7 +1,7 @@
 %ul.nav.nav-tabs
   %li
     %a{:href => '#salary-index', :data-toggle => 'tab'}
-      = I18n.t('salaries.salary.views.salaries')
+      = I18n.t('salary.views.salaries')
   %li
     %a{:href => '#salary-references-index', :data-toggle => 'tab'}
-      = I18n.t('salaries.salary.views.references')
+      = I18n.t('salary.views.references')

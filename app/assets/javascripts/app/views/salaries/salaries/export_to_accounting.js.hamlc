@@ -36,12 +36,12 @@
                     :type => 'checkbox',
                     :checked => true,
                     :value => 1 }
-            = I18n.t('salaries.salary.views.employer_part')
+            = I18n.t('salary.views.employer_part')
 
     .row
       .col-lg-12
         .alert.alert-info
-          = I18n.t("salaries.salary.views.export_interval_explanation")
+          = I18n.t("salary.views.export_interval_explanation")
 
     .row
       .col-lg-6

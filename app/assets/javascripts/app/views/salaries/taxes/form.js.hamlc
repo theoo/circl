@@ -7,22 +7,22 @@
     .row
       .col-lg-3
         .form-group
-          %label{:for => 'salaries_tax_title'}
+          %label{:for => 'tax_title'}
             %br
             = I18n.t('common.title')
           %input{ :type => 'text',
                   :name => 'title',
-                  :id => 'salaries_tax_title',
+                  :id => 'tax_title',
                   :value => @tax.title,
                   :class => 'form-control' }
 
       .col-lg-3
         .form-group
-          %label{:for => 'salaries_tax_model'}
+          %label{:for => 'tax_model'}
             %br
-            = I18n.t('salaries.tax.views.model')
+            = I18n.t('tax.views.model')
           %select{:name => 'model',
-                  :id => 'salaries_tax_model',
+                  :id => 'tax_model',
                   :class => 'form-control'}
             - for model in @all_models
               - if @tax.model == model
@@ -32,33 +32,33 @@
 
       .col-lg-2
         .form-group
-          %label{:for => 'salaries_tax_employee_account'}
-            = I18n.t('salaries.tax.views.employee_account')
+          %label{:for => 'tax_employee_account'}
+            = I18n.t('tax.views.employee_account')
           %input{ :type => 'text',
                   :name => 'employee_account',
-                  :id => 'salaries_tax_employee_account',
+                  :id => 'tax_employee_account',
                   :value => @tax.employee_account,
                   :class => 'form-control' }
       .col-lg-2
         .form-group
-          %label{:for => 'salaries_tax_employer_account'}
-            = I18n.t('salaries.tax.views.employer_account')
+          %label{:for => 'tax_employer_account'}
+            = I18n.t('tax.views.employer_account')
           %input{ :type => 'text',
                   :name => 'employer_account',
-                  :id => 'salaries_tax_employer_account',
+                  :id => 'tax_employer_account',
                   :value => @tax.employer_account,
                   :class => 'form-control' }
 
       .col-lg-2
         .form-group
-          %label{:for => 'salaries_tax_exporter_group'}
-            = I18n.t('salaries.tax.views.exporter_group')
+          %label{:for => 'tax_exporter_group'}
+            = I18n.t('tax.views.exporter_group')
           - available_groups = { none: I18n.t("common.none"), exporter_avs_group: 'AVS', exporter_lpp_group: 'LPP', exporter_is_group: 'IS' }
           - # only one group can be set as true
           - for group, name of available_groups
             %input{:type => 'hidden', :name => group, :value => 'false'}
           %select{:name => 'exporter_group',
-                  :id => 'salaries_tax_exporter_group',
+                  :id => 'tax_exporter_group',
                   :class => 'form-control'}
             - for group, name of available_groups
               - if @tax[group] == true

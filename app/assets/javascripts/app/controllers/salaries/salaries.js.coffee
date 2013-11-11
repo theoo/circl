@@ -16,7 +16,7 @@
 
 Salary = App.Salary
 
-$.fn.salaries_salary = ->
+$.fn.salary = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
   Salary.find(elementID)
@@ -24,9 +24,9 @@ $.fn.salaries_salary = ->
 class Index extends App.ExtendedController
   events:
     'click tr.item td:not(.ignore-click)'                   : 'edit'
-    'click button[name=salaries-salary-check-as-paid]'      : 'check_as_paid'
-    'click button[name=salaries-salary-copy]'               : 'copy_reference'
-    'click button[name=salaries-salary-destroy]'            : 'destroy'
+    'click button[name=salary-check-as-paid]'      : 'check_as_paid'
+    'click button[name=salary-copy]'               : 'copy_reference'
+    'click button[name=salary-destroy]'            : 'destroy'
     'click button[name=salaries-export]'                    : 'stack_export_generic'
     'click button[name=salaries-export-to-accounting]'      : 'stack_export_to_accounting_window'
     'click button[name=salaries-export-to-ocas]'            : 'stack_export_to_ocas_window'
@@ -41,18 +41,18 @@ class Index extends App.ExtendedController
 
   edit: (e) ->
     e.preventDefault()
-    salary = $(e.target).salaries_salary()
+    salary = $(e.target).salary()
     window.location = "/people/#{salary.person_id}#salaries"
 
   destroy: (e) ->
     e.preventDefault()
-    salary = $(e.target).salaries_salary()
+    salary = $(e.target).salary()
     if confirm(I18n.t('common.are_you_sure'))
       @destroy_with_notifications(salary)
 
   check_as_paid: (e) ->
     e.preventDefault()
-    salary = $(e.target).salaries_salary()
+    salary = $(e.target).salary()
     if confirm(I18n.t('common.are_you_sure'))
       salary.updateAttributes(paid: true)
       Salary.refresh([], clear: true)
@@ -60,12 +60,12 @@ class Index extends App.ExtendedController
 
   copy_reference: (e) ->
     e.preventDefault()
-    salary = $(e.target).salaries_salary()
+    salary = $(e.target).salary()
 
     query       = new App.QueryPreset
     url         = "#{Salary.url()}/#{salary.id}/copy_reference"
-    title       = I18n.t('salaries.salary.views.copy_reference_title') + " <i>" + salary.title + "</i>"
-    message     = I18n.t('salaries.salary.views.copy_reference_message')
+    title       = I18n.t('salary.views.copy_reference_title') + " <i>" + salary.title + "</i>"
+    message     = I18n.t('salary.views.copy_reference_message')
 
     Directory.search_with_custom_action query,
       url: url

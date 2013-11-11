@@ -1,4 +1,4 @@
-%h3.section= I18n.t('salaries.salary.views.summary')
+%h3.section= I18n.t('salary.views.summary')
 
 .validation_errors_placeholder
 
@@ -6,8 +6,8 @@
   %table.summary
     %thead
       %tr
-        %th= I18n.t('salaries.summary.views.category')
-        %th= I18n.t('salaries.summary.views.total')
+        %th= I18n.t('summary.views.category')
+        %th= I18n.t('summary.views.total')
 
     %tbody
       // taxed categories
@@ -21,7 +21,7 @@
       // taxes total
       %tr
         %td
-          = I18n.t("salaries.salary.views.tax_data")
+          = I18n.t("salary.views.tax_data")
         %td
           = @salary.summary.tax_data.to_view() if @salary.summary.tax_data
 
@@ -36,6 +36,6 @@
       // net salary
       %tr
         %td
-          %b= I18n.t("salaries.summary.views.net_salary_total")
+          %b= I18n.t("summary.views.net_salary_total")
         %td
           %b= @salary.summary.net_salary.to_view() if @salary.summary.net_salary

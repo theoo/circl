@@ -9,7 +9,7 @@
             - missing_fields.push I18n.t("activerecord.attributes.person." + f)
           - missing_fields = missing_fields.join(", ")
           .alert.alert-warning
-            = I18n.t('salaries.salary.errors.the_required_information_about_this_person_are_not_satisfied', {required_fields: missing_fields} )
+            = I18n.t('salary.errors.the_required_information_about_this_person_are_not_satisfied', {required_fields: missing_fields} )
             .label.label-warning
               = I18n.t("common.incomplete")
     - else
@@ -23,7 +23,7 @@
             .form-group
               // Allow salary creation only it at least one reference exists
               %label{:for => 'person_salary_parent_id'}
-                = I18n.t('salaries.salary.views.reference')
+                = I18n.t('salary.views.reference')
               %select{:name => 'parent_id',
                       :id => 'person_salary_parent_id',
                       :class => 'form-control required'}
@@ -35,15 +35,15 @@
 
                 - if @new_reference_selected
                   %option{:value => 'new', :selected => true}
-                    = I18n.t("salaries.salary.views.actions.new_reference")
+                    = I18n.t("salary.views.actions.new_reference")
                 - else
                   %option{:value => 'new'}
-                    = I18n.t("salaries.salary.views.actions.new_reference")
+                    = I18n.t("salary.views.actions.new_reference")
 
           .col-lg-6
             .form-group
               %label{:for => 'person_salary_template'}
-                = I18n.t('salaries.salary.views.salary_template')
+                = I18n.t('salary.views.salary_template')
               %select{:name => 'salary_template_id',
                       :id => 'person_salary_template',
                       :class => 'form-control required'}
@@ -99,7 +99,7 @@
           .col-lg-6
             .form-group
               %label{:for => 'person_salary_activity_rate'}
-                = I18n.t('salaries.salary.views.activity_rate')
+                = I18n.t('salary.views.activity_rate')
               .input-group
                 %input{ :name => 'activity_rate',
                         :type => 'number',
@@ -114,7 +114,7 @@
           .col-lg-6
             .form-group
               %label{:for => 'person_salary_children_count'}
-                = I18n.t('salaries.salary.views.children_count')
+                = I18n.t('salary.views.children_count')
               %input{ :name => 'children_count',
                       :id => 'person_salary_children_count',
                       :type => 'number',
@@ -127,14 +127,14 @@
           .col-lg-6
             .form-group
               %label{ :for => 'salary_is_married', :class => 'label-control' }
-                = I18n.t('salaries.salary.views.civil_status')
+                = I18n.t('salary.views.civil_status')
               .checkbox
                 %input{ :name => 'married',
                         :id => 'salary_is_married',
                         :type => 'checkbox',
                         :checked => @salary.married,
                         :value => 1 }
-                = I18n.t('salaries.salary.views.married')
+                = I18n.t('salary.views.married')
 
           .col-lg-6
             .form-group
@@ -151,12 +151,12 @@
         - if @salary.is_reference
           .row
             .col-lg-12
-              %h3= I18n.t("salaries.salary.views.annual_salary")
+              %h3= I18n.t("salary.views.annual_salary")
           .row
             .col-lg-6
               .form-group
                 %label{:for => 'person_salary_yearly_salary'}
-                  = I18n.t('salaries.salary.views.annual_earning_total')
+                  = I18n.t('salary.views.annual_earning_total')
                 %input{ :name => 'yearly_salary',
                         :type => 'number',
                         :id => 'person_salary_yearly_salary',
@@ -167,14 +167,14 @@
 
                 - if @salary.activity_rate != 100.0 and @salary.yearly_salary
                   .help-block
-                    = I18n.t("salaries.salary.views.hundred_percent_equivalent") + ": "
+                    = I18n.t("salary.views.hundred_percent_equivalent") + ": "
                     = (@salary.yearly_salary / @salary.activity_rate * 100.0).to_view()
 
 
             .col-lg-6
               .form-group
                 %label{:for => 'person_salary_yearly_salary_count'}
-                  = I18n.t('salaries.salary.views.montly_salaries_count')
+                  = I18n.t('salary.views.montly_salaries_count')
                 %input{ :name => 'yearly_salary_count',
                         :id => 'person_salary_yearly_salary_count',
                         :type => 'number',
@@ -185,17 +185,17 @@
 
                 - if @salary.yearly_salary and @salary.yearly_salary_count
                   .help-block
-                    = I18n.t("salaries.salary.views.monthly_salary_computed") + ": "
+                    = I18n.t("salary.views.monthly_salary_computed") + ": "
                     = (@salary.yearly_salary / @salary.yearly_salary_count).to_view()
 
           .row
             .col-lg-12
-              %h3= I18n.t("salaries.salary.views.accounting")
+              %h3= I18n.t("salary.views.accounting")
           .row
             .col-lg-4
               .form-group
                 %label{:for => 'person_salary_brut_account'}
-                  = I18n.t('salaries.salary.views.brut_account')
+                  = I18n.t('salary.views.brut_account')
                 %input{ :name => 'brut_account',
                         :id => 'person_salary_brut_account',
                         :class => 'form-control',
@@ -205,7 +205,7 @@
             .col-lg-4
               .form-group
                 %label{:for => 'person_salary_net_account'}
-                  = I18n.t('salaries.salary.views.net_account')
+                  = I18n.t('salary.views.net_account')
                 %input{ :name => 'net_account',
                         :id => 'person_salary_net_account',
                         :class => 'form-control',
@@ -215,7 +215,7 @@
             .col-lg-4
               .form-group
                 %label{:for => 'person_salary_employer_account'}
-                  = I18n.t('salaries.salary.views.employer_account')
+                  = I18n.t('salary.views.employer_account')
                 %input{ :name => 'employer_account',
                         :id => 'person_salary_employer_account',
                         :class => 'form-control',

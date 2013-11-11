@@ -2,9 +2,9 @@
   %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
-    = I18n.t('salaries.export')
+    = I18n.t('export')
 
-%form{ :method =>'get', :action => '/salaries/salaries/export_ocas' }
+%form{ :method =>'get', :action => '/salaries/export_ocas' }
   .modal-body
     .row
       .col-lg-12
@@ -13,10 +13,10 @@
     .row
       .col-lg-3
       .col-lg-6
-        %label{:for => 'salaries_export_ocas_year'}
+        %label{:for => 'export_ocas_year'}
           = I18n.t('common.year')
         %select{:name => 'year',
-                :id => 'salaries_export_ocas_year',
+                :id => 'export_ocas_year',
                 :class => 'form-control'}
           - for y in [@from...@to]
             %option{:value => y}= y

@@ -10,11 +10,11 @@
       %th= I18n.t('common.id')
       %th= I18n.t('common.person')
       %th= I18n.t('common.title')
-      %th= I18n.t('salaries.salary.views.reference')
+      %th= I18n.t('salary.views.reference')
       %th= I18n.t('common.from')
       %th= I18n.t('common.to')
-      %th= I18n.t('salaries.salary.views.gross_pay')
-      %th= I18n.t('salaries.salary.views.net_salary')
+      %th= I18n.t('salary.views.gross_pay')
+      %th= I18n.t('salary.views.net_salary')
       %th= I18n.t('common.paid')
       %th= I18n.t('common.created_at')
       %th.ignore-sort
@@ -41,45 +41,45 @@
           - if salary.is_reference
             %button{:type => 'button',
                     :class => 'btn btn-default',
-                    :name => 'salaries-salary-copy',
-                    :title => I18n.t('salaries.salary.views.actions.copy_reference') }
+                    :name => 'salary-copy',
+                    :title => I18n.t('salary.views.actions.copy_reference') }
               .icon-copy
         %td.ignore-click
           - if ! salary.is_reference and ! salary.paid
             %button{:type => 'button',
                     :class => 'btn btn-default',
-                    :name => 'salaries-salary-check-as-paid',
-                    :title => I18n.t('salaries.salary.views.actions.check_as_paid') }
+                    :name => 'salary-check-as-paid',
+                    :title => I18n.t('salary.views.actions.check_as_paid') }
               .icon-ok
         %td.ignore-click
           %button{:type => 'button',
                   :class => 'btn btn-danger',
-                  :name => 'salaries-salary-destroy',
+                  :name => 'salary-destroy',
                   :title => I18n.t('common.destroy') }
             .icon-remove
 
 .panel-footer
   .btn-group
     %button{:type => 'button',
-            :name => 'salaries-export',
+            :name => 'export',
             :class => 'btn btn-default' }
       .icon-cloud-upload
-      = I18n.t('salaries.export')
+      = I18n.t('export')
 
     %button{:type => 'button',
-            :name => 'salaries-export-to-accounting',
+            :name => 'export-to-accounting',
             :class => 'btn btn-default' }
       .icon-cloud-upload
-      = I18n.t('salaries.export_to_accounting')
+      = I18n.t('export_to_accounting')
 
     %button{:type => 'button',
-            :name => 'salaries-export-to-ocas',
+            :name => 'export-to-ocas',
             :class => 'btn btn-default' }
       .icon-cloud-upload
-      = I18n.t('salaries.export_to_ocas')
+      = I18n.t('export_to_ocas')
 
     %button{:type => 'button',
-            :name => 'salaries-export-to-eLohnausweisSSK',
+            :name => 'export-to-eLohnausweisSSK',
             :class => 'btn btn-default' }
       .icon-cloud-upload
-      = I18n.t('salaries.export_salary_certificates')
+      = I18n.t('export_salary_certificates')

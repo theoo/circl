@@ -189,7 +189,7 @@
                     - missing_fields.push I18n.t("activerecord.attributes.person." + f)
                   - missing_fields = missing_fields.join(", ")
                   .alert.alert-warning
-                    = I18n.t('salaries.salary.errors.the_required_information_about_this_person_are_not_satisfied', {required_fields: missing_fields} )
+                    = I18n.t('salary.errors.the_required_information_about_this_person_are_not_satisfied', {required_fields: missing_fields} )
               - else
                 %h3
                   = I18n.t('person.views.employee_information')

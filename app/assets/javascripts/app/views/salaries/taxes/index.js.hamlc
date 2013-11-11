@@ -2,11 +2,11 @@
   %thead
     %tr
       %th= I18n.t('common.title')
-      %th= I18n.t('salaries.tax.views.model')
-      %th= I18n.t('salaries.tax.views.employee_account')
-      %th= I18n.t('salaries.tax.views.employer_account')
-      %th= I18n.t('salaries.tax.views.number_of_rows')
-      %th= I18n.t('salaries.tax.views.available_years')
+      %th= I18n.t('tax.views.model')
+      %th= I18n.t('tax.views.employee_account')
+      %th= I18n.t('tax.views.employer_account')
+      %th= I18n.t('tax.views.number_of_rows')
+      %th= I18n.t('tax.views.available_years')
 
   %tbody
     - for tax in App.SalaryTax.all()
