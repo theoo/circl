@@ -29,15 +29,11 @@ class TaskRate < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
-  before_destroy do
-    people.clear
-  end
-
   #################
   ### RELATIONS ###
   #################
 
-  has_many :people
+  has_many :people, :dependent => :nullify
 
   # Money
   money :value

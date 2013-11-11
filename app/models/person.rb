@@ -221,6 +221,12 @@ class Person < ActiveRecord::Base
   has_many    :tasks,
               :through => :affairs
 
+  has_many    :products_to_sell,  :class_name => 'Product',
+                                  :foreign_key => :provider_id
+
+  has_many    :products_to_maintain,  :class_name => 'Product',
+                                      :foreign_key => :after_sale_id
+
   belongs_to  :task_rate
 
 

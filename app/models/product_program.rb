@@ -16,64 +16,42 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# == Schema Information
-#
-# Table name: task_types
-#
-# *id*::          <tt>integer, not null, primary key</tt>
-# *title*::       <tt>string(255), default(""), not null</tt>
-# *description*:: <tt>text, default("")</tt>
-# *ratio*::       <tt>float, not null</tt>
-#--
-# == Schema Information End
-#++
-
-class TaskType < ActiveRecord::Base
+class ProductProgram < ActiveRecord::Base
 
   ################
   ### INCLUDES ###
   ################
 
   include ChangesTracker
+  include ElasticSearch::Mapping
+  include ElasticSearch::Indexing
   extend  MoneyComposer
 
   #################
   ### CALLBACKS ###
   #################
 
+
   #################
   ### RELATIONS ###
   #################
 
-  has_many :tasks, :dependent => :nullify
-
-  scope :actives, Proc.new { where(:archive => false)}
-  scope :archived, Proc.new { where(:archive => true)}
-
-  money :value
+  has_many :variants, :class_name => 'ProductVariant',
+                      :dependent => :restrict
+  has_many :products, :through => :variants
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates_presence_of :title
-  validate :should_have_a_ratio_or_a_value
 
-  def as_json(options = nil)
-    h = super(options)
-    h[:value]       = value.to_f
-    h[:tasks_count] = tasks.count
-    h[:errors]      = errors
-    h
-  end
+  ########################
+  #### CLASS METHODS #####
+  ########################
 
-  private
 
-  def should_have_a_ratio_or_a_value
-    if ratio.blank? and value_in_cents.blank?
-      errors.add(:base, I18n.t('task_type.errors.should_have_a_ratio_or_a_title'))
-      return false
-    end
-  end
+  ########################
+  ### INSTANCE METHODS ###
+  ########################
 
 end

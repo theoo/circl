@@ -68,6 +68,11 @@ class Affair < ActiveRecord::Base
   has_many    :receipts, :through => :invoices, :uniq => true
 
   has_many    :tasks, :dependent => :destroy
+  has_many    :product_items, :class_name => 'AffairsProductVariant',
+                              :dependent => :destroy
+  has_many    :product_variants, :through => :product_items, :source => :variant
+  has_many    :products, :through => :product_variants
+
   monitored_habtm :subscriptions,
                   :after_add    => :update_on_subscription_habtm_alteration,
                   :after_remove => :update_on_subscription_habtm_alteration
