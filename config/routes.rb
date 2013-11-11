@@ -242,6 +242,18 @@ Directory::Application.routes.draw do
 
     resources :permissions, :only => :index
 
+    resources :products do
+      collection do
+      end
+    end
+
+    resources :product_programs do
+      collection do
+        get 'variant_names'
+        get 'variant_name_search'
+      end
+    end
+
     resources :roles do
       resources :permissions, :controller => 'roles/permissions'
     end
