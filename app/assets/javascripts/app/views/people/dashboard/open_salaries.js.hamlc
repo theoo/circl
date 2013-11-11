@@ -1,7 +1,7 @@
 %table.datatable
   %thead
     %tr
-      %th= I18n.t('salaries.item.views.id')
+      %th= I18n.t('common.id')
       %th= I18n.t('salaries.salary_template.views.description')
       %th= I18n.t('salaries.item.views.value')
 

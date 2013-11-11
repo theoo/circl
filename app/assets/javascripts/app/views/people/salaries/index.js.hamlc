@@ -11,7 +11,7 @@
     %table{:name => "person_salaries", :class => "datatable"}
       %thead
         %tr
-          %th= I18n.t('salaries.salary.views.id')
+          %th= I18n.t('common.id')
           %th= I18n.t('salaries.salary.views.reference_title')
           %th= I18n.t('salaries.salary.views.title')
           %th= I18n.t('salaries.salary.views.gross_pay')
@@ -32,7 +32,7 @@
     %table{:name => "person_salary_references", :class => "datatable"}
       %thead
         %tr
-          %th= I18n.t('salaries.salary.views.id')
+          %th= I18n.t('common.id')
           %th= I18n.t('salaries.salary.views.title')
           %th= I18n.t('salaries.salary.views.activity_rate')
           %th= I18n.t('salaries.salary.views.gross_pay')

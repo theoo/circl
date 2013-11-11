@@ -1,7 +1,7 @@
 %table.datatable 
   %thead
     %tr
-      %th= I18n.t('invoice.views.id')
+      %th= I18n.t('common.id')
       %th.desc= I18n.t('invoice.views.created_at')
       %th.desc= I18n.t('invoice.views.age')
       %th= I18n.t('invoice.views.description')

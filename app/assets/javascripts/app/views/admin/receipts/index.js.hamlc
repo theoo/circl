@@ -1,7 +1,7 @@
 %table.datatable{ :action => '/admin/receipts' }
   %thead
     %tr
-      %th= I18n.t('receipt.views.id')
+      %th= I18n.t('common.id')
       %th= I18n.t('receipt.views.owner_name')
       %th= I18n.t('receipt.views.affair_title')
       %th= I18n.t('receipt.views.invoice_value')
