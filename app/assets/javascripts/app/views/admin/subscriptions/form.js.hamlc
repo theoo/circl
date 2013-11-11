@@ -63,7 +63,7 @@
           .col-lg-6
             .form-group
               %label{:for => 'admin_subscription_interval_ends_on'}
-                = I18n.t('subscription.views.to')
+                = I18n.t('common.to')
               %input{:type => 'text',
                      :name => 'interval_ends_on',
                      :id => 'admin_subscription_interval_ends_on',

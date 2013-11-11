@@ -9,7 +9,7 @@
   %thead
     %tr
       %th= I18n.t('common.from')
-      %th= I18n.t('translation_aptitude.views.to')
+      %th= I18n.t('common.to')
 
   %tbody
     - for translation in App.PersonTranslationAptitude.all()

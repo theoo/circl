@@ -12,7 +12,7 @@
       %th= I18n.t('salaries.salary.views.title')
       %th= I18n.t('salaries.salary.views.reference')
       %th= I18n.t('common.from')
-      %th= I18n.t('salaries.salary.views.to')
+      %th= I18n.t('common.to')
       %th= I18n.t('salaries.salary.views.gross_pay')
       %th= I18n.t('salaries.salary.views.net_salary')
       %th= I18n.t('salaries.salary.views.paid')

@@ -14,7 +14,7 @@
             %option{:value => l.id}= l.name
 
       %td
-        %label= I18n.t('translation_aptitude.views.to')
+        %label= I18n.t('common.to')
         %select{:name => 'to_language_id',
                 :class => 'required'}
           - for l in App.Language.all()

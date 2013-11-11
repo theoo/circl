@@ -17,7 +17,7 @@
           %br
           %b= I18n.t('common.from')
           = salary.from
-          %b= I18n.t('salaries.to')
+          %b= I18n.t('common.to')
           = salary.to
 
         %td= salary.net_salary
