@@ -24,7 +24,7 @@ class Settings::TaskTypesController < ApplicationController
 
   def index
 
-    @task_types = TaskType.active
+    @task_types = TaskType.actives
 
     respond_to do |format|
       format.json { render :json => @task_types }
