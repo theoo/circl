@@ -38,14 +38,14 @@ class BankImportHistoriesDatatable
     bank_import_histories.map do |bank_import_history|
       dl = bank_import_history.decoded_line
       details = [ 
-        I18n.t("bank_import_history.views.datatable.account")       + ": " + dl[:account].to_s,
-        I18n.t("bank_import_history.views.datatable.owner")         + ": " + Person.find(dl[:owner_id]).full_name + " (#{dl[:owner_id]})",
-        I18n.t("bank_import_history.views.datatable.invoice")       + ": " + dl[:invoice_id].to_s,
-        I18n.t("bank_import_history.views.datatable.invoice_date")  + ": " + dl[:invoice_date].to_s,
-        I18n.t("bank_import_history.views.datatable.receipt_value") + ": " + Money.new(dl[:value_in_cents]).to_view,
-        I18n.t("bank_import_history.views.datatable.date_entry")    + ": " + dl[:date_entry].to_s,
-        I18n.t("bank_import_history.views.datatable.date_write")    + ": " + dl[:date_write].to_s,
-        I18n.t("bank_import_history.views.datatable.date_value")    + ": " + dl[:date_value].to_s
+        I18n.t("bank_import_history.views.account")       + ": " + dl[:account].to_s,
+        I18n.t("bank_import_history.views.owner")         + ": " + Person.find(dl[:owner_id]).full_name + " (#{dl[:owner_id]})",
+        I18n.t("bank_import_history.views.invoice")       + ": " + dl[:invoice_id].to_s,
+        I18n.t("bank_import_history.views.invoice_date")  + ": " + dl[:invoice_date].to_s,
+        I18n.t("bank_import_history.views.receipt_value") + ": " + Money.new(dl[:value_in_cents]).to_view,
+        I18n.t("bank_import_history.views.date_entry")    + ": " + dl[:date_entry].to_s,
+        I18n.t("bank_import_history.views.date_write")    + ": " + dl[:date_write].to_s,
+        I18n.t("bank_import_history.views.date_value")    + ": " + dl[:date_value].to_s
       ].join("<br />")
 
       {
