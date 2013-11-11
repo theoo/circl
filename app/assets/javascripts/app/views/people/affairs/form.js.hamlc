@@ -32,7 +32,7 @@
           %label{:for => 'affair_buyer'}
             = I18n.t('affair.views.buyer')
           %input{:type => 'search',
-                 :name => 'buyer_name',
+                 :name => 'buyer',
                  :id => 'affair_buyer',
                  :class => 'required form-control',
                  :value => @affair.buyer_name,
@@ -46,7 +46,7 @@
           %label{:for => 'affair_receiver'}
             = I18n.t('affair.views.receiver')
           %input{ :type => 'search',
-                  :name => 'receiver_name',
+                  :name => 'receiver',
                   :id => 'affair_receiver',
                   :class => 'required form-control',
                   :value => @affair.receiver_name,

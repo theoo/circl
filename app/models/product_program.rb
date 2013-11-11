@@ -40,12 +40,18 @@ class ProductProgram < ActiveRecord::Base
                       :dependent => :restrict
   has_many :products, :through => :variants
 
+  scope :actives, Proc.new { where(:archive => false)}
+  scope :archived, Proc.new { where(:archive => true)}
+
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates :key, :presence => true, :length => { :maximum => 255 }
-  validates :variant_name, :presence => true, :length => { :maximum => 255 }
+  validates :key, :presence => true,
+                  :length => { :maximum => 255 },
+                  :uniqueness => true
+  validates :variant_name,  :presence => true,
+                            :length => { :maximum => 255 }
 
   ########################
   #### CLASS METHODS #####

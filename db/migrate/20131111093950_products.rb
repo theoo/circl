@@ -51,7 +51,10 @@ class Products < ActiveRecord::Migration
       t.string  :title
       t.text    :description
       t.string  :color
+      t.string  :variant_name, :null => false
       t.boolean :archive, :null => false, :default => false
+
+      t.timestamps
     end
     add_index :product_programs, :key
     add_index :product_programs, :title

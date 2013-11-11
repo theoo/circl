@@ -135,12 +135,24 @@
                 .panel-title
                   = I18n.t('settings.views.task_types')
 
-        .col-lg-6
           - if can? :manage, TaskRate
             #settings_task_rates.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.task_rates')
+
+        .col-lg-6
+          - if can? :manage, Product
+            #settings_products.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.products')
+
+          - if can? :manage, ProductProgram
+            #settings_product_programs.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.product_programs')
 
     #advanced.tab-pane.fade
       .row

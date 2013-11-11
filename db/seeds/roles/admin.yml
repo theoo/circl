@@ -46,3 +46,9 @@
 
 - subject: TaskRate
   action: manage
+
+- subject: Product
+  action: manage
+
+- subject: ProductProgram
+  action: manage

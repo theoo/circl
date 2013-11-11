@@ -1,0 +1,10 @@
+---
+fr:
+  product_program:
+    views:
+      color: color
+      description: description
+      key: key
+      title: title
+      update_at: update at
+      variant_name: variant name
