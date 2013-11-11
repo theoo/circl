@@ -13,7 +13,7 @@
         %tr
           %th= I18n.t('common.id')
           %th= I18n.t('salaries.salary.views.reference_title')
-          %th= I18n.t('salaries.salary.views.title')
+          %th= I18n.t('common.title')
           %th= I18n.t('salaries.salary.views.gross_pay')
           %th= I18n.t('salaries.salary.views.net_salary')
           %th= I18n.t('salaries.salary.views.paid')
@@ -33,7 +33,7 @@
       %thead
         %tr
           %th= I18n.t('common.id')
-          %th= I18n.t('salaries.salary.views.title')
+          %th= I18n.t('common.title')
           %th= I18n.t('salaries.salary.views.activity_rate')
           %th= I18n.t('salaries.salary.views.gross_pay')
           %th= I18n.t('salaries.salary.views.net_salary')

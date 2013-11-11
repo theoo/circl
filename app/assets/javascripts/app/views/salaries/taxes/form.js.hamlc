@@ -9,7 +9,7 @@
         .form-group
           %label{:for => 'salaries_tax_title'}
             %br
-            = I18n.t('salaries.tax.views.title')
+            = I18n.t('common.title')
           %input{ :type => 'text',
                   :name => 'title',
                   :id => 'salaries_tax_title',

@@ -2,7 +2,7 @@
   %thead
     %tr
       %th= I18n.t('salaries.salary_template.views.thumb')
-      %th= I18n.t('salaries.salary_template.views.title')
+      %th= I18n.t('common.title')
       %th.desc= I18n.t('common.created_at')
   %tbody
     - for salary_template in App.SalaryTemplate.all()

@@ -1,7 +1,7 @@
 %table.datatable
   %thead
     %tr
-      %th= I18n.t('salaries.tax.views.title')
+      %th= I18n.t('common.title')
       %th= I18n.t('salaries.tax.views.model')
       %th= I18n.t('salaries.tax.views.employee_account')
       %th= I18n.t('salaries.tax.views.employer_account')

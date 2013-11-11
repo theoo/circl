@@ -3,7 +3,7 @@
     %tr
       %th= I18n.t('common.id')
       %th= I18n.t('invoice.views.buyer')
-      %th= I18n.t('invoice.views.title')
+      %th= I18n.t('common.title')
       %th.number= I18n.t('invoice.views.value')
       %th= I18n.t('invoice.views.status')
       %th.desc= I18n.t('invoice.views.creation_date')

@@ -2,7 +2,7 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th= I18n.t('affair.views.title')
+      %th= I18n.t('common.title')
       %th= I18n.t('affair.views.value')
       %th= I18n.t('affair.views.invoices_value')
       %th= I18n.t('affair.views.receipts_value')

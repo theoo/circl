@@ -10,7 +10,7 @@
     %tr
       %th= I18n.t('common.created_at')
       %th= I18n.t('background_task.views.person')
-      %th= I18n.t('background_task.views.title')
+      %th= I18n.t('common.title')
       %th= I18n.t('background_task.views.status')
 
   %tbody

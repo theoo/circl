@@ -9,7 +9,7 @@
     %tr
       %th= I18n.t('common.id')
       %th= I18n.t('salaries.salary.views.person')
-      %th= I18n.t('salaries.salary.views.title')
+      %th= I18n.t('common.title')
       %th= I18n.t('salaries.salary.views.reference')
       %th= I18n.t('common.from')
       %th= I18n.t('common.to')

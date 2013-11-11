@@ -8,7 +8,7 @@
       .col-lg-8
         .form-group
           %label{:for => 'settings_invoice_template_title'}
-            = I18n.t('invoice_template.views.title')
+            = I18n.t('common.title')
           %input{ :type => 'text',
                   :name => 'title',
                   :id => 'settings_invoice_template_title',

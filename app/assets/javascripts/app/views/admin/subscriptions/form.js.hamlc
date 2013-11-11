@@ -10,7 +10,7 @@
           .col-lg-6
             .form-group
               %label{:for => 'admin_subscription_title'}
-                = I18n.t('subscription.views.title')
+                = I18n.t('common.title')
               %input{:type => 'text',
                      :name => 'title',
                      :id => 'admin_subscription_title',

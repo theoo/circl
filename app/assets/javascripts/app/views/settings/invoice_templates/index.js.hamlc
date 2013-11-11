@@ -2,7 +2,7 @@
   %thead
     %tr
       %th= I18n.t('invoice_template.views.thumb')
-      %th= I18n.t('invoice_template.views.title')
+      %th= I18n.t('common.title')
       %th= I18n.t('invoice_template.views.language')
       %th= I18n.t('invoice_template.views.bvr_account')
       %th.desc= I18n.t('common.created_at')
