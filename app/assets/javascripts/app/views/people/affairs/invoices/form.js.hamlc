@@ -18,7 +18,7 @@
       .col-lg-4
         .form-group
           %label{:for => 'person_affair_invoice_template_id'}
-            = I18n.t('invoice.views.template')
+            = I18n.t('common.template')
           %select{:name => 'invoice_template_id',
                   :id => 'person_affair_invoice_template_id',
                   :class => 'required form-control'}
