@@ -48,7 +48,7 @@ class Admin::SubscriptionsController < ApplicationController
                                                                       :person => current_person,
                                                                       :query => query)
 
-            flash[:notice] = I18n.t('admin.pdf_will_be_sent', :email => current_person.email)
+            flash[:notice] = I18n.t('admin.notices.pdf_will_be_sent', :email => current_person.email)
           else
             flash[:error] = I18n.t('directory.errors.query_invalid')
           end
@@ -73,7 +73,7 @@ class Admin::SubscriptionsController < ApplicationController
         BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(:subscription_id => @subscription.id,
                                                                   :people_ids => people.map{ |p| p.id.to_i },
                                                                   :person => current_person)
-        flash[:notice] = I18n.t('admin.add_members_email_will_be_sent', :email => current_person.email)
+        flash[:notice] = I18n.t('admin.notices.add_members_email_will_be_sent', :email => current_person.email)
         format.json { render :json => {} }
         format.html do
           # TODO improve report

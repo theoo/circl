@@ -80,9 +80,9 @@ class Settings::SearchAttributesController < ApplicationController
   def synchronize
     if BackgroundTasks::RunRakeTask.schedule(:name => 'elasticsearch:sync')
       Activity.create!(:person => current_person, :resource_type => 'SearchAttribute', :resource_id => '0', :action => 'info', :data => { :synchronize => "Sync started at #{Time.now}" })
-      flash[:notice] = I18n.t('common.synchronization_started', :email => current_person.email)
+      flash[:notice] = I18n.t('common.notices.synchronization_started', :email => current_person.email)
     else
-      flash[:alert] = I18n.t('common.already_synchronizing')
+      flash[:alert] = I18n.t('common.errors.already_synchronizing')
     end
 
     redirect_to settings_path

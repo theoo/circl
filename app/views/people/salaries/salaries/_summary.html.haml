@@ -1,4 +1,4 @@
-%h2= I18n.t("salaries.item.views.summary")
+%h2= I18n.t("item.views.summary")
 
 %table.summary
   - summary[:taxed_categories].each do |cat, value|
@@ -7,7 +7,7 @@
       %td.number= value.to_view
 
   %tr
-    %td= I18n.t("salaries.views.taxes")
+    %td= I18n.t("salary.views.taxes")
     %td.number= summary[:tax_data].to_view
 
   - summary[:untaxed_categories].each do |cat, value|
@@ -16,5 +16,5 @@
       %td.number= value.to_view
 
   %tr
-    %td= I18n.t("salaries.salary.views.net_salary_total")
+    %td= I18n.t("salary.views.net_salary_total")
     %td.number= summary[:net_salary].to_view

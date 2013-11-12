@@ -86,13 +86,13 @@
                       = I18n.t("common.file") + ":"
                       %b= @file_name
                     %td
-                      = I18n.t("receipt.media_date") + ":"
+                      = I18n.t("receipt.views.media_date") + ":"
                       %b= @infos[:summary][:media_date]
                     %td
-                      = I18n.t("receipt.value_total") + ":"
+                      = I18n.t("receipt.views.value_total") + ":"
                       %b= (@infos[:summary][:value_total] / 100.0).to_money.to_view
                     %td
-                      = I18n.t("receipt.receipts_count") + ":"
+                      = I18n.t("receipt.views.receipts_count") + ":"
                       %b= @infos[:summary][:receipts_count]
                     %td
                       = hidden_field_tag "summary[value_total]", @infos[:summary][:value_total]

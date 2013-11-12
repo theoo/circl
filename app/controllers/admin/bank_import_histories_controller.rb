@@ -33,7 +33,7 @@ class Admin::BankImportHistoriesController < ApplicationController
     authorize! :confirm, BankImportHistory
 
     unless params[:receipts_file]
-      flash[:alert] = I18n.t('admin.no_file_submitted')
+      flash[:alert] = I18n.t('admin.errors.no_file_submitted')
       redirect_to admin_path(:anchor => 'finances')
       return
     end
@@ -80,7 +80,7 @@ class Admin::BankImportHistoriesController < ApplicationController
       PersonMailer.send_receipts_import_report( current_person,
                                                 params[:receipts],
                                                 params[:errors]).deliver
-      flash[:notice] = I18n.t('admin.receipts_imported', :email => current_person.email)
+      flash[:notice] = I18n.t('admin.notices.receipts_imported', :email => current_person.email)
       Activity.create!( :person => current_person,
                         :resource_type => 'Admin',
                         :resource_id => '0',
@@ -90,7 +90,7 @@ class Admin::BankImportHistoriesController < ApplicationController
 
     else
 
-      flash[:error] = I18n.t('receipt.no_receipts_selected')
+      flash[:error] = I18n.t('receipt.errors.no_receipts_selected')
       redirect_to admin_path
 
     end

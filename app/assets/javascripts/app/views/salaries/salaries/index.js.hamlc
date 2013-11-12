@@ -64,22 +64,22 @@
             :name => 'export',
             :class => 'btn btn-default' }
       .icon-cloud-upload
-      = I18n.t('export')
+      = I18n.t('common.export')
 
     %button{:type => 'button',
             :name => 'export-to-accounting',
             :class => 'btn btn-default' }
       .icon-cloud-upload
-      = I18n.t('export_to_accounting')
+      = I18n.t('salary.export.export_to_accounting')
 
     %button{:type => 'button',
             :name => 'export-to-ocas',
             :class => 'btn btn-default' }
       .icon-cloud-upload
-      = I18n.t('export_to_ocas')
+      = I18n.t('salary.export.export_to_ocas')
 
     %button{:type => 'button',
             :name => 'export-to-eLohnausweisSSK',
             :class => 'btn btn-default' }
       .icon-cloud-upload
-      = I18n.t('export_salary_certificates')
+      = I18n.t('salary.export.export_salary_certificates')

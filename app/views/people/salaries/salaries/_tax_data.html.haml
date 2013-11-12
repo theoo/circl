@@ -1,10 +1,10 @@
-%h2= I18n.t("salaries.views.taxes")
+%h2= I18n.t("salary.views.taxes")
 
 %table.tax_data
   %thead
     %tr
     - options[:fields].each do |field|
-      %th= I18n.t("salaries.salary.views." + field.to_s)
+      %th= I18n.t("salary.views." + field.to_s)
 
   %tbody
     // DETAILS

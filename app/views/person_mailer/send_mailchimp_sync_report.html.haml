@@ -1,11 +1,11 @@
 %h1
-  = I18n.t("misc.mailchimp.mail.sync_report_title")
+  = I18n.t("mailchimp.mail.sync_report_title")
 %p
   - if @report.sync_success?
     %h2
-      = I18n.t("misc.mailchimp.mail.synchronization_succeed")
+      = I18n.t("mailchimp.mail.synchronization_succeed")
     %p
-      = I18n.t("misc.mailchimp.mail.job_report")+ ":"
+      = I18n.t("mailchimp.mail.job_report")+ ":"
       %br
       - @report.activity_messages[0..-2].each do |message|
         = message
@@ -22,9 +22,9 @@
       %table
         %thead
           %tr
-            %th= I18n.t("misc.mailchimp.mail.code")
-            %th= I18n.t("misc.mailchimp.mail.email")
-            %th= I18n.t("misc.mailchimp.mail.message")
+            %th= I18n.t("mailchimp.mail.code")
+            %th= I18n.t("mailchimp.mail.email")
+            %th= I18n.t("mailchimp.mail.message")
             %tbody
               - status.errors.each do |info|
                 %tr
@@ -34,9 +34,9 @@
 
   - else
     %h2
-      = I18n.t("misc.mailchimp.mail.failed_to_synchronize")
+      = I18n.t("mailchimp.mail.failed_to_synchronize")
     %p
-      = I18n.t("misc.mailchimp.mail.failure_report")+ ":"
+      = I18n.t("mailchimp.mail.failure_report")+ ":"
       %br
       - @report.failure_messages.each do |message|
         = message

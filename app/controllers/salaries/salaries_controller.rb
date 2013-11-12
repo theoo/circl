@@ -113,7 +113,7 @@ class Salaries::SalariesController < ApplicationController
           end
         end
       else
-        format.json { render :json => { :error => [I18n.t('salary.is_not_a_reference')] }, :status => :unprocessable_entity }
+        format.json { render :json => { :error => [I18n.t('salary.errors.is_not_a_reference')] }, :status => :unprocessable_entity }
       end
     end
   end

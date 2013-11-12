@@ -152,7 +152,7 @@ class App.SalariesTaxes extends Spine.Controller
     SalaryTax.fetch()
 
     ajax_error = (xhr, statusText, error) =>
-      text = I18n.t('common.failed_to_update')
+      text = I18n.t('common.errors.failed_to_update')
       response = JSON.parse(xhr.responseText)
       @render_errors(response.errors)
 
@@ -191,7 +191,7 @@ class App.UploadSalaryTaxes extends App.ExtendedController
       response = JSON.parse(xhr.responseText)
       # error
       if Object.keys(response.errors).length > 0
-        text = I18n.t('common.failed_to_update')
+        text = I18n.t('common.errors.failed_to_update')
         @render_errors(response.errors)
 
       # success

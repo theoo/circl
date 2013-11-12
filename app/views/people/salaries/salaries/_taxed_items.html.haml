@@ -1,9 +1,9 @@
-%h2= I18n.t("salaries.item.views.taxed_items")
+%h2= I18n.t("item.views.taxed_items")
 
 %table.taxed_items
   %tr
   - options[:fields].each do |field|
-    %th= I18n.t("salaries.item.views." + field.to_s)
+    %th= I18n.t("item.views." + field.to_s)
 
   - salary.taxed_items.each do |data|
     %tr

@@ -232,7 +232,7 @@ class App.ExportToOcasSalaries extends App.ExtendedController
 
   fetch_years: ->
     ajax_error = (xhr, statusText, error) =>
-      text = I18n.t('common.failed_to_retrive_data')
+      text = I18n.t('common.errors.failed_to_retrieve_data')
       Ui.notify @el, text, 'error'
 
     ajax_success = (data, textStatus, jqXHR) =>
@@ -275,7 +275,7 @@ class App.ExportToELohnausweisSSKSalaries extends App.ExtendedController
 
   fetch_years: ->
     ajax_error = (xhr, statusText, error) =>
-      text = I18n.t('common.failed_to_retrive_data')
+      text = I18n.t('common.errors.failed_to_retrieve_data')
       Ui.notify @el, text, 'error'
 
     ajax_success = (data, textStatus, jqXHR) =>

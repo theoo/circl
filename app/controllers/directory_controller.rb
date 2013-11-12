@@ -113,9 +113,9 @@ class DirectoryController < ApplicationController
     authorize! :mailchimp, Directory
 
     if mailchimp_synchronizing?
-      flash[:alert] = I18n.t('misc.mailchimp.already_synchronizing')
+      flash[:alert] = I18n.t('common.errors.already_synchronizing')
     else
-      flash[:notice] = I18n.t('misc.mailchimp.synchronization_started', :email => current_person.email)
+      flash[:notice] = I18n.t('common.notices.synchronization_started', :email => current_person.email)
       BackgroundTasks::RunRakeTask.schedule(:name => 'mailchimp:sync',
                                             :arguments => { :person_id => current_person.id })
       Activity.create!(:person => current_person, :resource_type => 'Directory', :resource_id => '0', :action => 'info', :data => { :mailchimp => "Sync started at #{Time.now}" })

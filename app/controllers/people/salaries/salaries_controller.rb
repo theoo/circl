@@ -97,8 +97,8 @@ class People::Salaries::SalariesController < ApplicationController
     # Validate each item separatly
     errors = items.reject(&:valid?).each_with_object({}) do |item, h|
       h[:base] = item.errors.messages.map do |k, arr|
-        msg = I18n.t("salaries.item.line") + " " + (item.position + 1).to_s + ": "
-        msg += "#{I18n.t("salaries.tax_data.views." + k.to_s)}: #{arr.join(',')}"
+        msg = I18n.t("item.views.line") + " " + (item.position + 1).to_s + ": "
+        msg += "#{I18n.t("tax_data.views." + k.to_s)}: #{arr.join(',')}"
       end
     end
 
@@ -131,8 +131,8 @@ class People::Salaries::SalariesController < ApplicationController
     # Validate each tax separatly
     errors = tax_data.reject(&:valid?).each_with_object({}) do |data, h|
       h[:base] = data.errors.messages.map do |k, arr|
-        msg = I18n.t("salaries.item.line") + " " + (data.position + 1).to_s + ": "
-        msg += "#{I18n.t("salaries.tax_data.views." + k.to_s)}: #{arr.join(',')}"
+        msg = I18n.t("item.views.line") + " " + (data.position + 1).to_s + ": "
+        msg += "#{I18n.t("tax_data.views." + k.to_s)}: #{arr.join(',')}"
       end
     end
 

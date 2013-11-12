@@ -103,22 +103,22 @@ class Salaries::TaxesController < ApplicationController
 
           # bad file alert
           format.html do
-            flash[:error] = I18n.t('admin.wrong_file_format')
+            flash[:error] = I18n.t('admin.errors.wrong_file_format')
             redirect_to salaries_path
           end
           format.json do
-            render :json => {:errors => {:base => [I18n.t("admin.wrong_file_format")]}}, :status => :unprocessable_entity
+            render :json => {:errors => {:base => [I18n.t("admin.errors.wrong_file_format")]}}, :status => :unprocessable_entity
           end
         end
       else
 
         # no file alert
         format.html do
-          flash[:error] = I18n.t('admin.no_file_submitted')
+          flash[:error] = I18n.t('admin.errors.no_file_submitted')
           redirect_to salaries_path
         end
         format.json do
-          render :json => {:errors => {:base => [I18n.t("admin.no_file_submitted")]}}, :status => :unprocessable_entity
+          render :json => {:errors => {:base => [I18n.t("admin.errors.no_file_submitted")]}}, :status => :unprocessable_entity
         end
       end
 

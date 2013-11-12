@@ -33,7 +33,7 @@ class AdminController < ApplicationController
     authorize! :confirm_people, Admin
 
     unless params[:people_file]
-      flash[:alert] = I18n.t('admin.no_file_submitted')
+      flash[:alert] = I18n.t('admin.errors.no_file_submitted')
       redirect_to admin_path
       return
     end
@@ -67,7 +67,7 @@ class AdminController < ApplicationController
     end
 
     PersonMailer.send_people_import_report(current_person, people).deliver
-    flash[:notice] = I18n.t('admin.people_imported', :email => current_person.email)
+    flash[:notice] = I18n.t('admin.notices.people_imported', :email => current_person.email)
     Activity.create!(:person => current_person, :resource_type => 'Admin', :resource_id => '0', :action => 'info', :data => { :people => "imported at #{Time.now}" })
     redirect_to admin_path
   end
