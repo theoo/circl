@@ -2,16 +2,16 @@
 fr:
   location:
     errors:
-      cannot_destroy_location_if_people_depend_on_it: cannot destroy location if people depend on it
-      no_parent_location: no parent location
+      cannot_destroy_location_if_people_depend_on_it:  Une locatité ne peut pas être détruite si des personnes en dépendent.
+      no_parent_location: aucun parent n'a été défini
     views:
       actions:
-        destroy_location: destroy location
-        edit_location: edit location
+        destroy_location: détruire cette localité
+        edit_location: modifier la localité
       iso_alpha2: iso alpha2
       iso_alpha3: iso alpha3
       iso_code_a2: iso code a2
       iso_numerical: iso numerical
-      phone_prefix: phone prefix
-      post_code_or_zip: post code or zip
-      postal_code_prefix: postal code prefix
+      phone_prefix: préfixe téléphonique
+      post_code_or_zip: code postal ou zip
+      postal_code_prefix: préfixe postal

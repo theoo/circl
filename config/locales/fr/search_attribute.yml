@@ -2,9 +2,9 @@
 fr:
   search_attribute:
     errors:
-      not_json: not json
+      not_json: ! 'Mauvais protocole (attendu: JSON)'
     views:
-      group: group
-      indexing: indexing
-      mapping: mapping
-      model: model
+      group: groupe
+      indexing: indexation
+      mapping: représentation
+      model: modèle

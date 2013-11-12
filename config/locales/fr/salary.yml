@@ -2,55 +2,55 @@
 fr:
   salary:
     errors:
-      from_and_to_dates_should_be_in_the_same_year: from and to dates should be in the same year
-      from_date_should_be_before_to_date: from date should be before to date
-      is_not_a_reference: is not a reference
-      one_or_more_people_doesnt_satisfy_requirements: one or more people doesnt satisfy requirements
-      something_prevented_salaries_to_be_saved: something prevented salaries to be saved
-      the_required_information_about_this_person_are_not_satisfied: the required information about this person are not satisfied
-      to_date_should_be_after_from_date: to date should be after from date
-      unable_to_destroy_a_reference_which_has_children_salaries: unable to destroy a reference which has children salaries
+      from_and_to_dates_should_be_in_the_same_year: Les dates "de" et "à" devraient appartenir à la même année.
+      from_date_should_be_before_to_date: La date "de" devait être avant la date "à".
+      is_not_a_reference: n'est pas une référence
+      one_or_more_people_doesnt_satisfy_requirements: Les personnes aux ID suivants %{people_ids} ne remplissent pas les exigences de la base de donnée pour créer un salaire.
+      something_prevented_salaries_to_be_saved: Une erreur à empéché l'enregistrement des salaires.
+      the_required_information_about_this_person_are_not_satisfied: ! 'Les informations personnelles resquises de cet employé n''ont pas été complétées et emplêchent la création d''un salaire. Veuillez vérifier et mettre à jour les champs suivants de cette personne: ''%{required_fields}'' avant de créer un salaire.'
+      to_date_should_be_after_from_date: La date "à" devait être après la date "de".
+      unable_to_destroy_a_reference_which_has_children_salaries: Impossible de détruire un salaire de référence dont des salaires dépendent.
     export:
-      export_salary_certificates: export salary certificates
-      export_to_accounting: export to accounting
-      export_to_ocas: export to ocas
+      export_salary_certificates: ! "Export pour la génération des certificats de salaire"
+      export_to_accounting: Exporter vers la comptabilité
+      export_to_ocas: Exporter vers l'attestation de salaires OCAS
     notices:
-      please_try_again: please try again
-      reference_were_copied: reference were copied
-    template_item_category: template item category
-    template_item_title: template item title
+      please_try_again: Veuillez corriger les éléments et réessayer.
+      reference_were_copied: Le salaire de référence à été copié vers %{members_count} personnes.
+    template_item_category: Revenus
+    template_item_title: Revenu brut
     views:
-      accounting: accounting
+      accounting: Logiciel de comptabilité
       actions:
-        check_as_paid: check as paid
-        copy_reference: copy reference
-        new_reference: new reference
-      activity_rate: activity rate
-      annual_earning_total: annual earning total
-      annual_salary: annual salary
-      brut_account: brut account
-      children_count: children count
-      civil_status: civil status
-      copy_reference_message: copy reference message
-      copy_reference_title: copy reference title
-      employer_account: employer account
-      employer_part: employer part
-      export_interval_explanation: export interval explanation
-      gross: gross
-      gross_pay: gross pay
-      hundred_percent_equivalent: hundred percent equivalent
-      married: married
-      monthly_salary_computed: monthly salary computed
-      montly_salaries_count: montly salaries count
+        check_as_paid: marquer comme payé
+        copy_reference: copier la référence vers un groupe de personnes
+        new_reference: Nouvelle référence
+      activity_rate: taux d'occupation
+      annual_earning_total: revenu annuel total
+      annual_salary: Salaire annuel
+      brut_account: salaire brut
+      children_count: nombre d'enfants
+      civil_status: état civil
+      copy_reference_message: Copie du salaire de référence vers un groupe de personne.
+      copy_reference_title: Copie du salaire de référence
+      employer_account: retenues employeur
+      employer_part: part employeur
+      export_interval_explanation: L'intervale sélectionnée doit correspondre à l'intervale couverte par les salaires et non à leurs dates de création.
+      gross: brut
+      gross_pay: salaire brut
+      hundred_percent_equivalent: Salaire équivalent à 100%
+      married: marié
+      monthly_salary_computed: Salaire mensuel calculé
+      montly_salaries_count: nombre des salaires mensuels
       net: net
-      net_account: net account
-      net_salary: net salary
-      reference: reference
-      reference_title: reference title
-      references: references
-      salaries: salaries
-      salary_template: salary template
-      salary_templates: salary templates
-      summary: summary
-      tax_data: tax data
-      taxes: taxes
+      net_account: salaire net
+      net_salary: salaire net
+      reference: référence
+      reference_title: titre de la référence
+      references: Références
+      salaries: Salaires
+      salary_template: modèle de salaire
+      salary_templates: Modèles de salaire
+      summary: Résumé
+      tax_data: données de retenue
+      taxes: Déductions

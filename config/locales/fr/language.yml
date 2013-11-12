@@ -3,6 +3,6 @@ fr:
   language:
     views:
       actions:
-        view_members: view members
+        view_members: voir les membres
       code: code
-      communication_language: communication language
+      communication_language: langue de communication

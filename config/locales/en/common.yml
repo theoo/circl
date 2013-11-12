@@ -1,33 +1,34 @@
-fr:
+---
+en:
   common:
     a_webapp_developped_by:
-    add:
-    adjust:
-    administration:
+    add: add
+    adjust: adjust
+    administration: administration
     are_you_sure: are you sure
     browser:
-      a_modern_browser_is_required:
-      currently_supported_browser_are:
-      mobile_browsers:
-      multiplateform_browsers:
-    cancel:
-    close:
-    create:
-    created_at:
-    css:
-    dashboard:
-    date:
-    description:
-    destroy:
-    directory:
-    download:
+      a_modern_browser_is_required: a modern browser is required
+      currently_supported_browser_are: currently supported browser are
+      mobile_browsers: mobile browsers
+      multiplateform_browsers: multiplateform browsers
+    cancel: cancel
+    close: close
+    create: create
+    created_at: created at
+    css: CSS
+    dashboard: dashboard
+    date: date
+    description: description
+    destroy: destroy
+    directory: directory
+    download: download
     errors:
       absence_of_identifier: absence of identifier
-      already_synchronizing:
+      already_synchronizing: already synchronizing
       date_must_match_format: date must match format
       does_not_point_to_valid_model: does not point to valid model
       end_must_be_after_start: end must be after start
-      failed_to_destroy:
+      failed_to_destroy: failed to destroy
       failed_to_retrieve_data: failed to retrieve data
       failed_to_update: failed to update
       if_you_think_it_s_a_bug: if you think it s a bug
@@ -35,47 +36,47 @@ fr:
       invalid_phone: invalid phone
       must_provide_first_name_if_last_name: must provide first name if last name
       must_provide_last_name_if_first_name: must provide last name if first name
-      please_verify_rights_and_record:
-    export:
-    export_to:
-    file:
-    from:
+      please_verify_rights_and_record: please verify rights and record
+    export: export
+    export_to: export to
+    file: file
+    from: from
     good: good
-    id:
-    incomplete:
-    info:
-    name:
-    next:
-    none:
+    id: id
+    incomplete: incomplete
+    info: info
+    name: name
+    next: next
+    none: none
     notices:
-      successfully_destroyed:
-      successfully_updated:
-      synchronization_started:
-    paid:
-    parent:
-    pdf:
-    person:
-    position:
+      successfully_destroyed: successfully destroyed
+      successfully_updated: successfully updated
+      synchronization_started: synchronization started
+    paid: paid
+    parent: parent
+    pdf: pdf
+    person: person
+    position: position
     preview: preview
-    released_under:
-    requires_browser_update:
-    reset:
-    salaries:
-    settings:
+    released_under: released under
+    requires_browser_update: requires browser update
+    reset: reset
+    salaries: salaries
+    settings: settings
     strong: strong
-    synchronize:
-    template:
-    this_application_unique_id:
-    title:
-    to:
-    toolbox_export:
-    toolbox_import_bank_file:
-    toolbox_template:
-    tools:
-    unpaid:
-    update:
-    upload:
-    use_right_click_save_as:
-    value:
+    synchronize: synchronize
+    template: template
+    this_application_unique_id: this application unique id
+    title: title
+    to: to
+    toolbox_export: toolbox export
+    toolbox_import_bank_file: toolbox import bank file
+    toolbox_template: toolbox template
+    tools: tools
+    unpaid: unpaid
+    update: update
+    upload: upload
+    use_right_click_save_as: use right click save as
+    value: value
     weak: weak
-    year:
+    year: year

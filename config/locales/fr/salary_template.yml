@@ -2,14 +2,14 @@
 fr:
   salary_template:
     errors:
-      unable_to_destroy_a_template_which_has_salaries: unable to destroy a template which has salaries
+      unable_to_destroy_a_template_which_has_salaries: Il est impossible de détruire un modèle dont des salaires dépendent.
     views:
       actions:
-        edit_template: edit template
-      language: language
+        edit_template: modifier le modèle
+      language: langue
       template:
-        person_bank_information: person bank information
-        salary_id: salary
-        salary_interval: salary interval
-        salary_yearly_salary: salary yearly salary
-      thumb: thumb
+        person_bank_information: informations bancaires de l'employé
+        salary_id: identifiant unique du salaire
+        salary_interval: intervalle du salaire 
+        salary_yearly_salary: valeur annuelle des salaires
+      thumb: vignette

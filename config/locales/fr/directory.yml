@@ -2,30 +2,30 @@
 fr:
   directory:
     errors:
-      query_empty: query empty
-      query_invalid: query invalid
-      search_error: search error
-      you_need_to_select_at_least_one_attribute_to_display: you need to select at least one attribute to display
+      query_empty: Aucune requête transmise, veuillez en fournir une et recommancer.
+      query_invalid: requête "%{query}" invalide
+      search_error: erreur lors de la recherche -> %{error}
+      you_need_to_select_at_least_one_attribute_to_display: Vous devez sélectionner au moins un attributs à afficher.
     notices:
-      result_return_only_one_person: result return only one person
+      result_return_only_one_person: Le résultat ne retournant qu'une personne votre requête à été redirigée vers l'édition.
     views:
       actions:
-        change_person_password: change person password
-      add_person: add person
-      custom_action_introduction: custom action introduction
-      custom_action_warning: custom action warning
-      edit_preset_filters: edit preset filters
+        change_person_password: changer le mot de passe
+      add_person: ajouter un contact
+      custom_action_introduction: Vous avez été redirigé sur la page du moteur de recherche pour effectuer une action spéciale.
+      custom_action_warning: Vous pouvez rechercher dans l'annuaire de manière ordinaire, lorsque le résultat de la recherche vous conviendra, cliquez sur 'continuer' vous poursuivre le processus en cours.
+      edit_preset_filters: Édition des filtres du pré-réglage
       fields:
-        available_attributes: available attributes
-        drag_and_drop_me: drag and drop me
-        presets: presets
-        selected_attributes: selected attributes
-        sorting_order: sorting order
-      new_preset: new preset
-      query_preset_explanation: query preset explanation
-      query_preset_name: query preset name
-      quick_search_placeholder: quick search placeholder
-      results: results
+        available_attributes: Attributs disponibles
+        drag_and_drop_me: glisser-déposer ici
+        presets: Pré-réglages
+        selected_attributes: Attributs sélectionnés
+        sorting_order: Ordre de tri
+      new_preset: Nouveau pré-réglage
+      query_preset_explanation: Vous pouvez glisser les attributs disponibles dans la liste des attributs sélectionnés ou l'ordre de tri.
+      query_preset_name: Nom du pré-réglage
+      quick_search_placeholder: Recherche rapide
+      results: Résultat
       score: score
-      search_the_directory: search the directory
-      sync_mailchimp: sync mailchimp
+      search_the_directory: Rechercher dans CIRCL
+      sync_mailchimp: synchroniser mailchimp

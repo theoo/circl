@@ -4,9 +4,9 @@ fr:
     mail:
       code: code
       email: email
-      failed_to_synchronize: failed to synchronize
-      failure_report: failure report
-      job_report: job report
+      failed_to_synchronize: La synchronisation a échouée
+      failure_report: Rapport d'échec
+      job_report: Rapport de la tâche
       message: message
-      sync_report_title: sync report title
-      synchronization_succeed: synchronization succeed
+      sync_report_title: Rapport de synchronisation
+      synchronization_succeed: La synchronisation a réussi

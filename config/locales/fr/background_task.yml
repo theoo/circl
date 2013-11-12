@@ -2,23 +2,25 @@
 fr:
   background_task:
     mail:
-      error_report_title: error report title
+      error_report_title: Rapport d'erreur
     tasks:
-      add_people_to_subscription_and_email: add people to subscription and email
-      concat_and_email_subscription_pdf: concat and email subscription pdf
-      generate_invoice_pdf: generate invoice pdf
-      generate_invoice_template_jpg: generate invoice template jpg
-      generate_salary_pdf: generate salary pdf
-      generate_salary_template_jpg: generate salary template jpg
-      merge_subscriptions: merge subscriptions
-      prepare_subscription_pdf_and_email: prepare subscription pdf and email
-      run_rake_task: run rake task
-      update_index_for_people: update index for people
-      update_subscription_invoices_and_email: update subscription invoices and email
+      add_people_to_subscription_and_email: Ajout de %{people_count} personne(s) à l'inscription %{subscription_id} - %{subscription_title}
+      concat_and_email_subscription_pdf: Fusion dans un fichier des factures de %{people_count} personne(s) pour l'inscription %{subscription_id} - %{subscription_title}
+      generate_invoice_pdf: Génération du PDF de la facture %{invoice_id} - %{invoice_title}
+      generate_invoice_template_jpg: Génération de la vignette pour le modèle de facture %{invoice_template_id} - %{invoice_template_title}
+      generate_salary_pdf: Génération du PDF du salaire %{salary_id} - %{salary_title}
+      generate_salary_template_jpg: Génération de la vignette pour le modèle de salaire %{salary_template_id} - %{salary_template_title}
+      merge_subscriptions:  Fusion de l'inscription %{source_subscription_id} dans %{destination_subscription_id}
+      prepare_subscription_pdf_and_email: Génération des PDF pour les factures de %{people_count} personne(s), à l'attention de l'inscription %{subscription_id} - %{subscription_title}
+      run_rake_task: Exécution d'une tâche extraordinaire - %{name}
+      update_index_for_people: Mise à jour de l'index du moteur de recherche pour %{people_count} personne(s)
+      update_subscription_invoices_and_email: Mise à jour des indices et factures pour l'inscription %{subscription_id} - %{subscription_title}
     views:
       actions:
-        destroy_background_task: destroy background task
-      background_tasks_list_title: background tasks list title
-      status: status
-      statuses: statuses
-      tasks_pending: tasks pending
+        destroy_background_task: détruire la tâche
+      background_tasks_list_title: Liste des tâche d'arrière plan
+      status: statut
+      statuses:
+        pending: en attente
+        running: en cours d'exécution
+      tasks_pending: tâche(s) d'arrière plan

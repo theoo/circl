@@ -3,7 +3,7 @@ fr:
   comment:
     views:
       actions:
-        close: close
-        reopen: reopen
-      comment: comment
-      editor: editor
+        close: clore
+        reopen: réouvrir
+      comment: commentaire
+      editor: éditeur

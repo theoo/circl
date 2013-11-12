@@ -2,17 +2,17 @@
 fr:
   bank_import_history:
     views:
-      account: account
-      date_entry: date entry
-      date_value: date value
-      date_write: date write
-      export_title: export title
-      file_name: file name
-      invoice: invoice
-      invoice_date: invoice date
-      media_date: media date
-      owner: owner
-      previously_uploaded_lines_title: previously uploaded lines title
-      receipt_value: receipt value
-      reference_line: reference line
-      upload_a_new_file_title: upload a new file title
+      account: compte
+      date_entry: date d'entrée
+      date_value: date de valeur
+      date_write: date d'écriture
+      export_title: Exporter
+      file_name: nom du fichier
+      invoice: Facture
+      invoice_date: date de la facture
+      media_date: date du média
+      owner: propriétaire
+      previously_uploaded_lines_title: Ligne précédemment importées
+      receipt_value: valeur du reçu
+      reference_line: ligne de référence
+      upload_a_new_file_title: Téléverser un nouveau fichier

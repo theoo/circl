@@ -2,72 +2,72 @@
 fr:
   subscription:
     errors:
-      can_not_delete_if_has_children: can not delete if has children
-      can_not_delete_if_has_receipts: can not delete if has receipts
-      cannot_remove_members_if_there_is_receipts: cannot remove members if there is receipts
-      cannot_transfer_overpaid_value_if_subscription_value_is_zero: cannot transfer overpaid value if subscription value is zero
+      can_not_delete_if_has_children: Impossible de détruire une inscription qui a des enfants
+      can_not_delete_if_has_receipts: Impossible de détruire l'inscription dont un reçu dépend. Le reçu concerné doit être supprimé avant.
+      cannot_remove_members_if_there_is_receipts: Impossible de retirer les membres si ont des reçus ont été associés
+      cannot_transfer_overpaid_value_if_subscription_value_is_zero: Impossible de transférer les paiements excédants si l'inscription d'origine à une valeur de zéro
     mail:
       email: email
-      first_name: first name
-      invoice_template: invoice template
-      is_an_organization: is an organization
-      last_name: last name
-      member_added_to_subscription_title: member added to subscription title
-      members_count: members count
-      organization_name: organization name
-      person_id: person
-      please_find_a_link_to_access_the_subscription_pdf: please find a link to access the subscription pdf
-      private_tag: private tag
-      subscription_and_its_invoices_were_updated: subscription and its invoices were updated
-      subscription_pdf_title: subscription pdf title
-      subscription_were_merged: subscription were merged
-      the_following_members_were_added_to_the_subscription: the following members were added to the subscription
-      the_following_members_were_already_in_the_subscription: the following members were already in the subscription
-      the_following_members_were_updated: the following members were updated
+      first_name: prénom
+      invoice_template: modèle de facture
+      is_an_organization: est une organisation
+      last_name: nom
+      member_added_to_subscription_title: Des membres ont été ajouté à l'inscription
+      members_count: compte des membres
+      organization_name: nom de l'organisation
+      person_id: ID de la personne
+      please_find_a_link_to_access_the_subscription_pdf: Veuillez trouver ci-joint un lien vers le PDF de l'inscription
+      private_tag: tag privé
+      subscription_and_its_invoices_were_updated: L'inscription et ses factures ont étées mis à jour
+      subscription_pdf_title: PDF de l'inscription
+      subscription_were_merged: L'inscription à correctement été fusionnée
+      the_following_members_were_added_to_the_subscription: Les membres suivants ont étés ajouté à l'inscription
+      the_following_members_were_already_in_the_subscription: Les membres suivants étaient déjà dans l'inscription
+      the_following_members_were_updated: Les membres suivants ont étés mis à jour
     notices:
-      members_added: members added
+      members_added: "%{members_count} personnes ont été ajoutées à l'inscription. Veuillez attendre la fin de l'execution de la tâche d'arrière plan avant de modifier l'inscription concernée."
     views:
       actions:
-        add_members_to_subscription: add members to subscription
-        merge: merge
-        remove_members_from_subscription: remove members from subscription
-        subscription_reminder: subscription reminder
-        subscription_renewal: subscription renewal
-        transfer_overpaid_value: transfer overpaid value
-        view_subscription_buyers: view subscription buyers
-        view_subscription_members: view subscription members
-        view_subscription_members_who_didnt_paid: view subscription members who didnt paid
-        view_subscription_members_who_paid: view subscription members who paid
-        view_subscription_pdf: view subscription pdf
-        view_subscription_receivers: view subscription receivers
-      add_members_message: add members message
-      add_members_title: add members title
-      interval_title: interval title
-      invoices: invoices
-      invoices_value: invoices value
-      members: members
+        add_members_to_subscription: ajouter des membres à l'inscription
+        merge: usionner vers une autre inscription
+        remove_members_from_subscription: retirer tous les membres de l'inscription
+        subscription_reminder: créer une inscription de rappel
+        subscription_renewal: renouveler l'inscription
+        transfer_overpaid_value: transférer les paiements excédants
+        view_subscription_buyers: voir les payeurs
+        view_subscription_members: voir les membres
+        view_subscription_members_who_didnt_paid: voir les membres qui n'ont pas payé
+        view_subscription_members_who_paid: voir les membres qui ont payé
+        view_subscription_pdf: télécharger le PDF des factures
+        view_subscription_receivers: voir les receveurs
+      add_members_message: Les personnes sélectionnées seront ajoutées à l'inscription.
+      add_members_title: Ajouter des personnes à l'inscription
+      interval_title: dates de l'intervalle de cette inscription
+      invoices: factures
+      invoices_value: total des factures
+      members: membres
       merge:
-        destination_subscription_id_missing: destination subscription id missing
-        source_subscription_id_missing: source subscription id missing
-      overpaid_value: overpaid value
-      receipts: receipts
+        destination_subscription_id_missing: ID de l'inscription de destination manquant
+        source_subscription_id_missing: ID de l'inscription source manquant
+      overpaid_value: paiements excédants
+      receipts: reçus
       receipts_value: receipts value
-      reminder: reminder
-      renewal: renewal
-      sort_people_for_pdf_generation_of: sort people for pdf generation of
-      sort_people_message: sort people message
-      subscription: subscription
+      reminder: rappel
+      renewal: renouvellement
+      sort_people_for_pdf_generation_of: Tri des personnes pour la génération du PDF de l'inscription
+      sort_people_message: Veuillez définir l'ordre de tri des personnes pour la fusion des factures dans un PDF, les autres attributs ne seront pas prit en compte. Pour modifier l'ordre de tri il faut afficher un pré-réglage (le crayon).
+      subscription: inscription
       tag_tool:
-        member: member
+        member: membre
         members_following_theses_attributes: members following theses attributes
-        of_a: of a
-        private_tag_name: private tag name
-        subscription_at_this_date: subscription at this date
-        tag_name_missing: tag name missing
-        tag_with: tag with
+        of_a: d'une inscription
+        private_tag_name: nom du tag privé
+        subscription_at_this_date: à la date suivante
+        tag_name_missing: nom du tag privé manquant
+        tag_with: tagger avec
         unprocessable_request: unprocessable request
-        wrong_date: wrong date
+        wrong_date: format de date incorrect
       values:
-        invoice_template: invoice template
-        private_tag: private tag
-      values_title: values title
+        invoice_template: modèle de facture
+        private_tag: tag privé
+      values_title: valeurs associées aux tags privés

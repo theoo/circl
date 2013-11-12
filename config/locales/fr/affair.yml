@@ -2,25 +2,32 @@
 fr:
   affair:
     errors:
-      cant_delete_affair_who_has_invoices: cant delete affair who has invoices
+      cant_delete_affair_who_has_invoices: Il est impossible de détruire une affaire dont dépend une facture.
     views:
       actions:
-        edit_affair: edit affair
-        show_owner: show owner
-      buyer: buyer
-      extras: extras
-      invoices: invoices
-      invoices_count: invoices count
-      invoices_value: invoices value
-      owner: owner
-      products: products
-      receipts: receipts
-      receipts_count: receipts count
-      receipts_value: receipts value
-      receiver: receiver
+        edit_affair: modifier l'affaire
+        show_owner: consulter la page du propriétaire
+      buyer: payeur
+      extras: Extras
+      invoices: Factures
+      invoices_count: nombre de factures
+      invoices_value: valeur des factures
+      owner: propriétaire
+      products: Produits
+      receipts: Reçus
+      receipts_count: nombre de reçus
+      receipts_value: valeur des reçus
+      receiver: receveur
       relations: relations
-      status: status
-      statuses: statuses
-      subscriptions: subscriptions
-      tasks: tasks
-      update_date: update date
+      status: statut
+      statuses:
+        cancelled: annulée
+        offered: offerte
+        open: ouverte
+        overpaid: surpayée
+        paid: payée
+        partially_paid: partiellement payée
+        underpaid: sous-payée
+      subscriptions: Inscriptions
+      tasks: Tâches
+      update_date: dernière mise à jour

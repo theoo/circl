@@ -4,4 +4,4 @@ fr:
     views:
       action: action
       resource_id: resource
-      resource_type: resource type
+      resource_type: type de ressource

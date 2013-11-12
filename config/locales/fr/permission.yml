@@ -2,26 +2,26 @@
 fr:
   permission:
     errors:
-      attribute_not_found: attribute not found
-      condition_does_not_evaluate: condition does not evaluate
-      forbidden: forbidden
-      forbidden_explanation: forbidden explanation
-      internal_server_error: internal server error
-      internal_server_error_explanation: internal server error explanation
-      invalid_parameters: invalid parameters
-      invalid_request: invalid request
-      invalid_request_explanation: invalid request explanation
-      page_not_found: page not found
-      page_not_found_explanation: page not found explanation
-      record_not_found: record not found
-      record_not_found_explanation: record not found explanation
-      service_unavailable: service unavailable
-      service_unavailable_explanation: service unavailable explanation
-      subject_must_point_to_model_if_condition_present: subject must point to model if condition present
+      attribute_not_found: L'attribut n'a pas été trouvé.
+      condition_does_not_evaluate: Cette condition ne peut pas être évaluée.
+      forbidden: Accès refusé
+      forbidden_explanation: Vous n'avez pas accès à cette ressource.
+      internal_server_error: Erreur interne du serveur
+      internal_server_error_explanation: Un problème interne empêche le bon fonctionnement du programme.
+      invalid_parameters: paramètres invalides
+      invalid_request: Requête invalide
+      invalid_request_explanation: Le format ou le contenu de la requête est inapporprié.
+      page_not_found: Page non trouvé
+      page_not_found_explanation: La page recherchée n'existe pas.
+      record_not_found: Enregistrement non trouvé
+      record_not_found_explanation: L'enregistrement cherché n'existe pas.
+      service_unavailable: Service indisponible
+      service_unavailable_explanation: Le service est temporairement indisponible
+      subject_must_point_to_model_if_condition_present: Le sujet doit pointer vers un modèle si une condition est présente.
     views:
       action: action
-      available_permissions: available permissions
-      cannot_fetch_permissions: cannot fetch permissions
-      hash_conditions: hash conditions
-      selected_permissions: selected permissions
-      subject: subject
+      available_permissions: Permissions disponibles
+      cannot_fetch_permissions: Impossible de récupérer les permissions
+      hash_conditions: tableau de conditions
+      selected_permissions: Permissions sélectionnées
+      subject: sujet

@@ -2,15 +2,15 @@
 fr:
   tax:
     views:
-      age_tax_example_file_desc: age tax example file desc
-      available_years: available years
-      employee_account: employee account
-      employer_account: employer account
-      example_files_explanation: example files explanation
-      example_files_title: example files title
-      exporter_group: exporter group
-      generic_tax_example_file_desc: generic tax example file desc
-      is_tax_example_file_desc: is tax example file desc
-      model: model
-      number_of_rows: number of rows
-      upload_tax: upload tax
+      age_tax_example_file_desc: Fichier d'exemple pour une retenue basée sur l'age
+      available_years: années disponible
+      employee_account: compte des retenues employés
+      employer_account: compte des retenues employeurs
+      example_files_explanation: Ci-dessous peuvent être téléchargés trois fichiers d'exemple pour mettre à jour les retenues. D'avantage d'information peut être obtenue sur <a href='http://tracker.circl.ch/projects/circl/wiki/D%C3%A9ductions'>la documentation de CIRCL</a>.
+      example_files_title: Fichieris d'exemple
+      exporter_group: groupe de retenue des certificats
+      generic_tax_example_file_desc: Fichier d'exemple pour une retenue générique
+      is_tax_example_file_desc: Fichier d'exemple pour la retenue de l'impôt à la source
+      model: modèle
+      number_of_rows: nombre de lignes
+      upload_tax: téléverser une mise à jour
