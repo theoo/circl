@@ -2,14 +2,8 @@
 en:
   job:
     errors:
-      cannot_contain_comma: The name cannot contain a comma.
+      cannot_contain_comma: cannot contain comma
     views:
       actions:
-        destroy_job: destroy job
-        edit_job: edit job
-        view_members: view job members
-      description: description
-      name: name
-      table:
-        members_count: members count
-        name: name
+        view_members: view members
+      members_count: members count

@@ -2,48 +2,25 @@
 en:
   affair:
     errors:
-      cant_delete_affair_who_has_invoices: Cannot destroy an affair who has invoices. Revelent invoices must first be destroyed.
-    view:
-      edit_invoices_and_receipts: edit invoices and receipts
-      edit_prestations: edit provisions
+      cant_delete_affair_who_has_invoices: cant delete affair who has invoices
     views:
-      invoices: Invoices
-      receipts: Receipts
-      buyer: buyer
       actions:
-        destroy_affair: destroy affair
-        show_owner: show this affair on owner's page
-      description: description
-      from: from
-      invoice_and_receipts: invoices and receipts
+        edit_affair: edit affair
+        show_owner: show owner
+      buyer: buyer
+      extras: extras
+      invoices: invoices
+      invoices_count: invoices count
+      invoices_value: invoices value
       owner: owner
+      products: products
+      receipts: receipts
+      receipts_count: receipts count
+      receipts_value: receipts value
       receiver: receiver
-      statuses:
-        cancelled: cancelled
-        offered: offered
-        open: open
-        overpaid: overpaid
-        paid: paid
-        partially_paid: partially paid
-        underpaid: underpaid
-      subscriptions: Subscriptions
-      extras: Extras
-      tasks: Tasks
-      products: Products
-      table:
-        buyer: buyer
-        created_at: creation date
-        id: id
-        invoices_count: invoices count
-        invoices_value: invoices value
-        owner: owner
-        paid: paid
-        receipts_count: receipts count
-        receipts_value: receipts value
-        receiver: receiver
-        relations: relations
-        status: status
-        title: title
-        value: value
-      title: title
-      value: value
+      relations: relations
+      status: status
+      statuses: statuses
+      subscriptions: subscriptions
+      tasks: tasks
+      update_date: update date

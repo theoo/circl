@@ -2,20 +2,17 @@
 en:
   bank_import_history:
     views:
-      datatable:
-        account: account
-        date_entry: date entry
-        date_value: date value
-        date_write: date write
-        invoice: invoice
-        invoice_date: invoice date
-        owner: owner
-        receipt_value: receipt value
-      export_title: Export
-      previously_uploaded_lines_title: Previously uploaded lines
-      table:
-        file_name: file name
-        id: id
-        media_date: media date
-        reference_line: reference line
-      upload_a_new_file_title: Upload a new file
+      account: account
+      date_entry: date entry
+      date_value: date value
+      date_write: date write
+      export_title: export title
+      file_name: file name
+      invoice: invoice
+      invoice_date: invoice date
+      media_date: media date
+      owner: owner
+      previously_uploaded_lines_title: previously uploaded lines title
+      receipt_value: receipt value
+      reference_line: reference line
+      upload_a_new_file_title: upload a new file title

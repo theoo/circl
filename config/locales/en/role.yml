@@ -2,17 +2,9 @@
 en:
   role:
     errors:
-      cant_delete_if_in_use: A role cannot be destroyed if it has members.
+      cant_delete_if_in_use: cant delete if in use
     views:
-      permissions: Permissions
       actions:
-        destroy_role: destroy role
-        edit_permissions: permissions
-        edit_role: edit role
         view_role_members: view role members
-      description: description
-      name: name
-      table:
-        description: description
-        members: members
-        name: name
+      members: members
+      permissions: permissions

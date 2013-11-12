@@ -2,25 +2,16 @@
 fr:
   task:
     errors:
-      duration_is_required_if_selected_task_type_have_a_ratio: Une durée est requise si le type de tâche est calculé selon un ratio
-      owner_should_have_a_task_rate: Un tarif doit d'abord être sélectionné pour ce client
-      duration_must_be_positive: La durée doit être positive
+      duration_is_required_if_selected_task_type_have_a_ratio: duration is required if selected task type have a ratio
+      duration_must_be_positive: duration must be positive
+      owner_should_have_a_task_rate: owner should have a task rate
     notices:
-      the_value_is_automaticaly_computed: La valeur est calculée automatiquement
-      computed_value_is: La valeur calculée est %{value}
+      computed_value_is: computed value is
+      the_value_is_automaticaly_computed: the value is automaticaly computed
     views:
-      actions:
-        destroy_task: détruire la tâche
-        edit_task: modifier la tâche
-      date: date
-      value: valeur
-      description: description
-      duration: durée
-      duration_help: en minutes
-      times_help: "exemple: 9, 915, 09:15"
-      task_type: type de tâche
-      task_types: types de tâche
-      task_rate: tarif
-      task_rates: tarifs
-      owner: client
-      affair: affaire
+      affair: affair
+      duration: duration
+      duration_help: duration help
+      owner: owner
+      task_type: task type
+      times_help: times help

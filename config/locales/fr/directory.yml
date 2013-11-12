@@ -2,35 +2,30 @@
 fr:
   directory:
     errors:
-      query_empty: Aucune requête transmise, veuillez en fournir une et recommancer.
-      query_invalid: requête "%{query}" invalide
-      search_error: erreur lors de la recherche -> %{error}
-      you_need_to_select_at_least_one_attribute_to_display: Vous devez sélectionner au moins un attributs à afficher.
+      query_empty: query empty
+      query_invalid: query invalid
+      search_error: search error
+      you_need_to_select_at_least_one_attribute_to_display: you need to select at least one attribute to display
     notices:
-      result_return_only_one_person: Le résultat ne retournant qu'une personne votre requête à été redirigée vers l'édition.
+      result_return_only_one_person: result return only one person
     views:
-      custom_action_introduction: Vous avez été redirigé sur la page du moteur de recherche pour effectuer une action spéciale.
-      custom_action_warning: Vous pouvez rechercher dans l'annuaire de manière ordinaire, lorsque le résultat de la recherche vous conviendra, cliquez sur 'continuer' vous poursuivre le processus en cours.
-      new_preset: Nouveau pré-réglage
-      edit_preset_filters: Édition des filtres du pré-réglage
-      score: score
-      query_preset_explanation: Vous pouvez glisser les attributs disponibles dans la liste des attributs sélectionnés ou l'ordre de tri.
-      query_preset_name: Nom du pré-réglage
-      add_person: ajouter un contact
-      add_to_subscription: ajouter à l'inscription
-      add_to_tag: ajouter ce tag
+      actions:
+        change_person_password: change person password
+      add_person: add person
+      custom_action_introduction: custom action introduction
+      custom_action_warning: custom action warning
+      edit_preset_filters: edit preset filters
       fields:
-        available_attributes: Attributs disponibles
-        drag_and_drop_me: glisser-déposer ici
-        presets: Pré-réglages
-        selected_attributes: Attributs sélectionnés
-        sorting_order: Ordre de tri
-      filters: filtres
-      generate_pdf: générer le PDF
-      quick_search_placeholder: Recherche rapide
-      results: Résultats
-      search: Rechercher
-      search_help_link: aide pour la recherche
-      search_help_text: ! '<b>exemple de recherche simple:</b><br /> Ecrivez un nom, un email ou une adresse dans le champs de recherche et clickez "rechercher".<br/> <br/> <b>exemple de recherche avancée:</b><br/> les critères de recherche font référence à des attributs de la base de donnée et doivent être traduit en anglais:<br /> tags -> tags<br /> inscription -> subscriptions<br /> langue de communication principale -> main_communication_language<br /> les opérateurs logiques sont traduits ainsi et doivent être écrit en majuscule. et -> AND<br /> ou -> OR<br /> n est pas -> NOT<br /> <a onclick="App.search_query({search_string: ''email:* AND main_communication_language.name:french''})">email:* AND main_communication_language.name:french</a><br/> <a onclick="App.search_query({search_string: ''last_paid_subscriptions.id:2''})">last_paid_subscriptions.id:2</a><br/> <a onclick="App.search_query({search_string: ''last_paid_subscriptions.id:(2 3 4)''})">last_paid_subscriptions.id:(2 3 4)</a><br/> <br/> <b>pour plus d''information:</b><br/> Plus d''information peut être trouvé sur le site de lucene:<br /> <a href="http://lucene.apache.org/core/3_6_0/queryparsersyntax.html">http://lucene.apache.org/core/3_6_0/queryparsersyntax.html</a>'
-      search_the_directory: Rechercher dans CIRCL
-      sync_mailchimp: synchroniser mailchimp
+        available_attributes: available attributes
+        drag_and_drop_me: drag and drop me
+        presets: presets
+        selected_attributes: selected attributes
+        sorting_order: sorting order
+      new_preset: new preset
+      query_preset_explanation: query preset explanation
+      query_preset_name: query preset name
+      quick_search_placeholder: quick search placeholder
+      results: results
+      score: score
+      search_the_directory: search the directory
+      sync_mailchimp: sync mailchimp

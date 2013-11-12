@@ -5,10 +5,5 @@ en:
       actions:
         close: close
         reopen: reopen
-      description: description
-      table:
-        comment: comment
-        created_at: date
-        editor: editor
-        person: person
-      title: title
+      comment: comment
+      editor: editor

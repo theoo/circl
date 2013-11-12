@@ -2,14 +2,8 @@
 fr:
   job:
     errors:
-      cannot_contain_comma: Le nom ne peut pas contenir de virgules.
+      cannot_contain_comma: cannot contain comma
     views:
       actions:
-        destroy_job: détruire le métier
-        edit_job: modifier le métier
-        view_members: voir les membres
-      description: description
-      name: nom
-      table:
-        members_count: nombre de membres
-        name: nom
+        view_members: view members
+      members_count: members count

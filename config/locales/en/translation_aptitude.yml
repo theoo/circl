@@ -2,13 +2,8 @@
 en:
   translation_aptitude:
     errors:
-      translation_aptitude_languages_should_be_different: Languages should be different.
-      translation_aptitude_should_be_uniq_for_a_person: Language pair should be unique for a person.
+      translation_aptitude_languages_should_be_different: translation aptitude languages should be different
+      translation_aptitude_should_be_uniq_for_a_person: translation aptitude should be uniq for a person
     views:
-      contextmenu:
+      actions:
         destroy_translation_aptitude: destroy translation aptitude
-      from: from
-      table:
-        from: from
-        to: to
-      to: to

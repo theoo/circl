@@ -2,13 +2,9 @@
 fr:
   employment_contract:
     errors:
-      cant_delete_contract_if_current: Il n'est pas possible de supprimer un contrat s'il encore en cours.
-      person_does_not_exist: Cette personne n'existe pas.
+      cant_delete_contract_if_current: cant delete contract if current
+      person_does_not_exist: person does not exist
     views:
-      contextmenu:
-        destroy: détruire
-        edit: modifier
-      description: description
-      interval_ends_on: fin de l'intervale
-      interval_starts_on: début de l'intervale
-      percentage: pourcentage
+      interval_ends_on: interval ends on
+      interval_starts_on: interval starts on
+      percentage: percentage

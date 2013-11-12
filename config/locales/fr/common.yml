@@ -1,89 +1,82 @@
 ---
 fr:
   common:
-    per_hour: par heure
-    next: continuer
-    download: télécharger
-    upload: téléverser
-    export: exporter
-    weak: faible
-    good: bon
-    strong: fort
-    reset: réinitialiser
-    adjust: ajuster
-    preview_in_new_tab: prévisualiser dans un nouvel onglet
-    pdf: PDF
-    download: télécharger
-    info: info
-    incomplete: incomplet
-    preview: prévisualisation
-    close: fermer
-    apply: appliquer
-    a_webapp_developped_by: Une application développée par
-    add: ajouter
-    people: Annuaire
-    admin: Administration
-    administration: Administration
-    already_synchronizing: Une synchronisation est déjà en cours.
-    are_you_sure: en êtes-vous sur?
+    a_webapp_developped_by:
+    add:
+    adjust:
+    administration:
+    are_you_sure: are you sure
     browser:
-      a_modern_browser_is_requied: Un navigateur moderne et compatible avec HTML5/JS/CSS3 est requis.
-      currently_supported_browser_are: CIRCL supporte actuellement ces navigateurs
-      mobile_browsers: navigateurs mobiles
-      multiplateform_browsers: navigateurs multiplateforme
-    clip_all_widgets: fermer tous les widgets
-    create: créer
-    dashboard: Tableau de bord
-    destroy: détruire
-    directory: Annuaire
-    error: erreur
+      a_modern_browser_is_required:
+      currently_supported_browser_are:
+      mobile_browsers:
+      multiplateform_browsers:
+    cancel:
+    close:
+    create:
+    created_at:
+    css:
+    dashboard:
+    date:
+    description:
+    destroy:
+    directory:
+    download:
     errors:
-      absence_of_identifier: Identifiant manquant.
-      date_cannot_be_in_the_future: La date ne peut pas être dans le futur.
-      date_must_match_format: la date doit correspondre au format JJ-MM-AAAA
-      does_not_point_to_valid_model: Ne pointe pas vers un modèle valable.
-      duration_must_be_positive: La durée doit être positive.
-      end_must_be_after_start: La date de fin doit être après la date de début.
-      if_you_think_it_s_a_bug: ! 'Si vous pensez qu''il s''agit d''un bug, veuillez nous écire par email à l''adresse: <a href=''mailto:support@circl.ch''>support@circl.ch</a>'
-      invalid_date: La date n'est pas valide.
-      invalid_phone: Le format n'est pas valide, vous devez utiliser un format comme "+11 22 333 44 55" (entre 7 et 18 numéros).
-      must_provide_first_name_if_last_name: Il doit y avoir un prénom s'il y a un nom de famille.
-      must_provide_last_name_if_first_name: Il doit y avoir un nom de famille s'il y a un prénom.
-      please_verify_rights_and_record: Veuillez vérifier que vous êtes autorisé à effectuer cette action, et assurez vous que cette action est valable pour cet enregistrement.
-    expand_all_widgets: ouvrir toutes les widgets
-    export_to: exporter vers
-    failed_to_create: Echec lors de la création.
-    failed_to_destroy: Echec lors de la destruction.
-    failed_to_retrive_data: Impossible de récupérer les données.
-    failed_to_update: Echec lors de la mise à jour.
-    "false": non
-    file: fichier
-    from: de
-    id: id
-    language_name: français
-    none: aucun
-    not_implemented: Cette fonctionalité n'est pas encore implémentée
-    notice: Notification
-    parent: parent
-    rearrange_widgets: réarranger tous les widgets
-    released_under: livrée sous la version 3 de la license
-    requires_browser_update: Une mise à jour de votre navigateur est requise pour consulter cette page.
-    salaries: Salaires
-    sending: envoi...
-    settings: Configuration
-    successfully_created: création réussie
-    successfully_destroyed: destruction réussie
-    successfully_updated: mise à jour réussie
-    synchronization_started: La synchronisation a démarrée.
-    synchronize: Synchroniser
-    this_application_unique_id: L'identifiant unique de cette application est
-    to: à
-    tools: outils
-    toolbox: boîte à outil
-    toolbox_export: Exporter
-    toolbox_import_bank_file: Importer un fichier bancaire
-    toolbox_template: modèle
-    "true": oui
-    update: mettre à jour
-    use_right_click_save_as: utilisez le click droit et sélectionnez 'enregistrer le lien sous...'
-    year: année
+      absence_of_identifier: absence of identifier
+      already_synchronizing:
+      date_must_match_format: date must match format
+      does_not_point_to_valid_model: does not point to valid model
+      end_must_be_after_start: end must be after start
+      failed_to_destroy:
+      failed_to_retrieve_data: failed to retrieve data
+      failed_to_update: failed to update
+      if_you_think_it_s_a_bug: if you think it s a bug
+      invalid_date: invalid date
+      invalid_phone: invalid phone
+      must_provide_first_name_if_last_name: must provide first name if last name
+      must_provide_last_name_if_first_name: must provide last name if first name
+      please_verify_rights_and_record:
+    export:
+    export_to:
+    file:
+    from:
+    good: good
+    id:
+    incomplete:
+    info:
+    name:
+    next:
+    none:
+    notices:
+      successfully_destroyed:
+      successfully_updated:
+      synchronization_started:
+    paid:
+    parent:
+    pdf:
+    person:
+    position:
+    preview: preview
+    released_under:
+    requires_browser_update:
+    reset:
+    salaries:
+    settings:
+    strong: strong
+    synchronize:
+    template:
+    this_application_unique_id:
+    title:
+    to:
+    toolbox_export:
+    toolbox_import_bank_file:
+    toolbox_template:
+    tools:
+    unpaid:
+    update:
+    upload:
+    use_right_click_save_as:
+    value:
+    weak: weak
+    year:

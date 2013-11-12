@@ -52,7 +52,7 @@
 
                 %tr{:class => (person.errors.empty? ? 'success' : 'danger'),
                   'data-trigger' => 'click',
-                  'data-title' => (person.errors.size.to_s + " " + I18n.t("common.error") + "(s)"),
+                  'data-title' => (person.errors.size.to_s + " " + I18n.t("common.errors) + "(s)"),
                   'data-html' => true,
                   'data-placement' => 'auto top',
                   'data-content' => raw(error_msg.join(" | "))}

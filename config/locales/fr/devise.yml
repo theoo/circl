@@ -1,33 +1,33 @@
 ---
 fr:
   devise:
+    help:
+      request_new_password_tooltip: request new password tooltip
     mail:
-      change_my_password: Changer mon mot de passe
-      click_the_link_below_to_unlock_your_account: ! 'Veuillez cliquer le lien ci-dessous pour débloquer votre compte:'
-      confirm_my_account: Confirmer mon compte
-      hello: Bonjour
-      if_you_didnt_request_this: Veuillez ignorer cet email si vous ne l'avez pas demandé.
-      someone_has_requested_a_link_to_change_your_password: ! 'Quelqu''un à demandé de changer votre mot de passe, vous pouvez le faire en cliquant sur le lien suivant:'
-      unlock_my_account: Débloquer mon compte
-      welcome: Bienvenue
-      you_can_confirm_your_account_through_the_link_below: ! 'Veuillez confirmer votre compte en cliquant sur le lien suivant:'
-      your_account_has_been_locked: Votre compte à été bloqué à cause d'un nombre d'échec d'authentification trop important.
-      your_password_wont_change_until_you_access_the_link_above_and_create_a_new_one: ! 'Votre mot de passe ne sera pas changé à moins que vous ne cliquiez sur le lien suivant:'
+      change_my_password: change my password
+      click_the_link_below_to_unlock_your_account: click the link below to unlock your account
+      confirm_my_account: confirm my account
+      hello: hello
+      if_you_didnt_request_this: if you didnt request this
+      someone_has_requested_a_link_to_change_your_password: someone has requested a link to change your password
+      unlock_my_account: unlock my account
+      welcome: welcome
+      you_can_confirm_your_account_through_the_link_below: you can confirm your account through the link below
+      your_account_has_been_locked: your account has been locked
+      your_password_wont_change_until_you_access_the_link_above_and_create_a_new_one: your password wont change until you access the link above and create a new one
     views:
-      back_to_login_page: Retour à la page de connexion
-      change_my_password: changer mon mot de passe
-      change_your_password: changer votre mode passe
-      confirm_new_password: confirmation du nouveau mot de passe
+      back_to_login_page: back to login page
+      change_my_password: change my password
+      change_your_password: change your password
+      confirm_new_password: confirm new password
       email: email
-      i_dont_have_an_account: Je ne suis pas inscrit
-      i_have_an_account: Je suis inscrit
-      login: Connexion
-      new_password: nouveau mot de passe
-      password: mot de passe
-      remember_me: se souvenir de moi
-      request_new_password: Demander un nouveau mot de passe
-      request_new_password_explanation: Ce processus ne fonctionnera que si vous êtes déjà membre de l'annuaire.
-      request_new_password_explanation_title: Veuillez saisir votre adresse email ci-dessous pour demander un nouveau mot de passe.
-      resend_confirmation_instructions: réexpédier les instructions de confirmation
-      resend_unlock_instructions: réexpédier les instructions de déblocage
-      sign_in: Connexion
+      login: login
+      new_password: new password
+      password: password
+      remember_me: remember me
+      request_new_password: request new password
+      request_new_password_explanation: request new password explanation
+      request_new_password_explanation_title: request new password explanation title
+      resend_confirmation_instructions: resend confirmation instructions
+      resend_unlock_instructions: resend unlock instructions
+      sign_in: sign in

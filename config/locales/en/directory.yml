@@ -2,35 +2,30 @@
 en:
   directory:
     errors:
-      query_empty: No given query, please fill one and retry.
-      query_invalid: Query "%{query}" is invalid.
-      search_error: ! 'The search engine returned an error: %{error}'
-      you_need_to_select_at_least_one_attribute_to_display: You need to select at least one attribute to display.
+      query_empty: query empty
+      query_invalid: query invalid
+      search_error: search error
+      you_need_to_select_at_least_one_attribute_to_display: you need to select at least one attribute to display
     notices:
-      result_return_only_one_person: The query returning only one person it has been redirected to editing.
+      result_return_only_one_person: result return only one person
     views:
-      custom_action_introduction: You have been redirected to the search engine to run a special action.
-      custom_action_warning: You can search the directory like usual, when the result is satisfactory click 'next' to continue the pending action.
-      new_preset: new preset
-      edit_preset_filters: Preset filters editing
-      score: score
-      query_preset_explanation: You can drag available attributes in selected attributes and attributes order lists.
-      query_preset_name: Preset name
-      add_person: add contact
-      add_to_subscription: add to subscription
-      add_to_tag: add this tag
+      actions:
+        change_person_password: change person password
+      add_person: add person
+      custom_action_introduction: custom action introduction
+      custom_action_warning: custom action warning
+      edit_preset_filters: edit preset filters
       fields:
-        available_attributes: Available attributes
-        drag_and_drop_me: drag and drop me here
-        presets: Presets
-        selected_attributes: Selected attributes
-        sorting_order: Attributes order
-      filters: filters
-      generate_pdf: generate PDF
-      quick_search_placeholder: Quick search
-      results: Results
-      search: Search
-      search_help_link: toggle help
-      search_help_text: ! '<b>For a simple search:</b><br /> Type a name, email or address the search field and click search.<br/> <br/> <b>Advanced search:</b><br/> <a onclick="App.search_query({search_string: ''email:* AND main_communication_language.name:french''})">email:* AND main_communication_language.name:french</a><br/> <a onclick="App.search_query({search_string: ''last_paid_subscriptions.id:2''})">last_paid_subscriptions.id:2</a><br/> <a onclick="App.search_query({search_string: ''last_paid_subscriptions.id:(2 3 4)''})">last_paid_subscriptions.id:(2 3 4)</a><br/> <b>more information:</b><br/> More information can be found on lucene''s website:<br/> <a href=''http://lucene.apache.org/core/3_6_0/queryparsersyntax.html''>http://lucene.apache.org/core/3_6_0/queryparsersyntax.html</a>'
-      search_the_directory: CIRCL Search
+        available_attributes: available attributes
+        drag_and_drop_me: drag and drop me
+        presets: presets
+        selected_attributes: selected attributes
+        sorting_order: sorting order
+      new_preset: new preset
+      query_preset_explanation: query preset explanation
+      query_preset_name: query preset name
+      quick_search_placeholder: quick search placeholder
+      results: results
+      score: score
+      search_the_directory: search the directory
       sync_mailchimp: sync mailchimp

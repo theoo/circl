@@ -2,10 +2,6 @@
 en:
   activity:
     views:
-      table:
-        action: action
-        created_at: date
-        description: description
-        person: editor
-        resource_id: resource
-        resource_type: resource type
+      action: action
+      resource_id: resource
+      resource_type: resource type

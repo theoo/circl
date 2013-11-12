@@ -3,12 +3,7 @@ fr:
   comment:
     views:
       actions:
-        close: clore
-        reopen: réouvrir
-      description: description
-      table:
-        comment: commentaire
-        created_at: date
-        editor: éditeur
-        person: personne
-      title: titre
+        close: close
+        reopen: reopen
+      comment: comment
+      editor: editor

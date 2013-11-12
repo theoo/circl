@@ -2,15 +2,7 @@
 en:
   application_setting:
     errors:
-      cant_change_key: cannot change key
-      missing_attribute: Key '%{key}' is not set.
-      value_is_too_long: value is too long
+      cant_change_key: cant change key
+      missing_attribute: missing attribute
     views:
-      content_length: content length
-      contextmenu:
-        edit: edit
       key: key
-      table:
-        key: key
-        value: value
-      value: value

@@ -2,11 +2,4 @@
 en:
   ldap_attribute:
     views:
-      contextmenu:
-        destroy_attribute: destroy attribute
-        edit_attribute: edit attribute
       mapping: mapping
-      name: name
-      table:
-        mapping: mapping
-        name: name

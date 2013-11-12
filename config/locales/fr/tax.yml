@@ -1,0 +1,16 @@
+---
+fr:
+  tax:
+    views:
+      age_tax_example_file_desc: age tax example file desc
+      available_years: available years
+      employee_account: employee account
+      employer_account: employer account
+      example_files_explanation: example files explanation
+      example_files_title: example files title
+      exporter_group: exporter group
+      generic_tax_example_file_desc: generic tax example file desc
+      is_tax_example_file_desc: is tax example file desc
+      model: model
+      number_of_rows: number of rows
+      upload_tax: upload tax

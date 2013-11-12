@@ -2,17 +2,9 @@
 en:
   search_attribute:
     errors:
-      not_json: ! 'Wrong protocol (expected: JSON)'
+      not_json: not json
     views:
-      contextmenu:
-        destroy_search_attribute: destroy search attribute
-        edit_search_attribute: edit search attribute
       group: group
       indexing: indexing
       mapping: mapping
       model: model
-      name: name
-      table:
-        group: group
-        model: model
-        name: name

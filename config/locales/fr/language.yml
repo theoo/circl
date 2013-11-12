@@ -2,13 +2,7 @@
 fr:
   language:
     views:
-      code: code
-      communication_language: langue de communication
       actions:
-        destroy_language: détruire la langue
-        edit_language: modifier la langue
-        view_members: voir les membres
-      name: nom
-      table:
-        code: code
-        name: nom
+        view_members: view members
+      code: code
+      communication_language: communication language
