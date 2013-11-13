@@ -79,24 +79,24 @@ class Settings::ProductProgramsController < ApplicationController
     end
   end
 
-  def variant_name_search
+  def program_group_search
     if params[:term].blank?
       result = []
     else
-      result = @product_programs.where("product_programs.variant_name #{SQL_REGEX_KEYWORD} ?", params[:term])
-        .select("DISTINCT(product_programs.variant_name)")
+      result = @product_programs.where("product_programs.program_group #{SQL_REGEX_KEYWORD} ?", params[:term])
+        .select("DISTINCT(product_programs.program_group)")
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:label => t.variant_name}}}
+      format.json { render :json => result.map{|t| {:label => t.program_group}}}
     end
   end
 
-  def variant_names
-    result = @product_programs.select("DISTINCT(product_programs.variant_name)")
+  def program_groups
+    result = @product_programs.select("DISTINCT(product_programs.program_group)")
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:label => t.variant_name}}}
+      format.json { render :json => result.map{|t| t.program_group}}
     end
   end
 

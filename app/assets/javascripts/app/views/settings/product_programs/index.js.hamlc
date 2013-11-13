@@ -3,9 +3,9 @@
     %tr
       %th= I18n.t('common.id')
       %th= I18n.t('product_program.views.key')
-      %th= I18n.t('product_program.views.variant_name')
+      %th= I18n.t('product_program.views.program_group')
       %th= I18n.t('product_program.views.description')
-      %th= I18n.t('product_program.views.update_at')
+      %th.desc= I18n.t('product_program.views.update_at')
 
   %tbody
     - for program in App.ProductProgram.all()
@@ -14,7 +14,7 @@
       %tr{:data-id => program.id, :class => classes.join(" ")}
         %td= program.id
         %td= program.key
-        %td= program.variant_name
+        %td= program.program_group
         %td
           %b= program.title
           \ -

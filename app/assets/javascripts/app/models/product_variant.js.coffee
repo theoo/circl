@@ -14,14 +14,13 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class App.Product extends Spine.Model
+class App.ProductVariant extends Spine.Model
 
-  @configure 'Product', "id", "provider_id", "after_sale_id", "key", "title",
-              "description", "has_accessories", "archive", "variants"
+  @configure 'ProductVariant', "id", "program_id", "product_id", "key", "title",
+              "description", "price", "list_price", "art"
 
   @extend Spine.Model.Ajax
-  @url: ->
-    "#{Spine.Model.host}/settings/products"
+  @url: -> undefined
 
   constructor: ->
     super

@@ -31,18 +31,15 @@ class Product < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
-
   #################
   ### RELATIONS ###
   #################
 
-  has_one   :provider, :class_name => 'Person'
-  has_one   :after_sale, :class_name => 'Person'
+  belongs_to :provider, :class_name => 'Person'
+  belongs_to :after_sale, :class_name => 'Person'
 
   has_many  :variants,  :class_name => 'ProductVariant',
                         :dependent => :destroy
-
-  has_many  :programs,  :through => :variants
 
   scope :actives, Proc.new { where(:archive => false)}
   scope :archived, Proc.new { where(:archive => true)}
@@ -59,9 +56,38 @@ class Product < ActiveRecord::Base
   #### CLASS METHODS #####
   ########################
 
+  # Attributes overridden - JSON API
+  def as_json(options = nil)
+    h = super(options)
+
+    h[:provider_name]   = provider.try(:name)
+    h[:after_sale_name] = after_sale.try(:name)
+
+    h[:variants_count] = variants.count
+
+    h[:variants] = variants.map do |v|
+      { :id            => v.id,
+        :product_id    => v.product_id,
+        :program_group => v.program_group,
+        :title         => v.title,
+        :description   => v.description,
+        :buying_price  => v.buying_price.to_f,
+        :selling_price => v.selling_price.to_f,
+        :art           => v.art.to_f,
+        :created_at    => v.created_at,
+        :updated_at    => v.updated_at }
+    end
+
+    h[:errors]         = errors
+
+    h
+  end
+
 
   ########################
   ### INSTANCE METHODS ###
   ########################
+
+  private
 
 end

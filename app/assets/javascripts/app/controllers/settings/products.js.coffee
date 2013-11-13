@@ -15,53 +15,110 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Product = App.Product
+ProductProgram = App.ProductProgram
 
 $.fn.product = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
 
-class New extends App.ExtendedController
+class VariantsController extends App.ExtendedController
+
+  remove_variant: (e) ->
+    current_row = $(e.target).closest("tr")
+    current_row.remove()
+
+  add_variant: (e) ->
+    template = @el.find('tr[data-name="variant_template"]')
+    new_row = template.clone()
+    # theses attributes belongs to template only
+    new_row.removeAttr('data-name')
+    new_row.removeClass('hidden')
+    # this class make it selected on submit
+    new_row.addClass('item')
+
+    variant_add = @el.find('tr[data-name="variant_add"]')
+    variant_add.before(new_row)
+
+    Ui.load_ui(new_row)
+
+  make_item_removable: (e) ->
+    @el.find('table.category tr.item').each ->
+      $(@).find('td:last input[type="button"]').show()
+
+    # hide the first remove button
+    @el.find('table.category tr.item:first td:last input[type="button"]').hide()
+
+  fetch_items: (e) ->
+    values = []
+    @el.find('table.table tr.item:not(.hidden)').each (i, tr) ->
+      tr = $(tr)
+      val =
+        id: tr.find("input[name='variants[][id]']").val()
+        title: tr.find("input[name='variants[][title]']").val()
+        description: tr.find("textarea[name='variants[][description]']").val()
+        buying_price: tr.find("input[name='variants[][buying_price]']").val()
+        selling_price: tr.find("input[name='variants[][selling_price]']").val()
+        art: tr.find("input[name='variants[][art]']").val()
+        program_group: tr.find("select[name='variants[][program_group]'] option:selected").val()
+
+      values.push val
+
+    return values
+
+class New extends VariantsController
   events:
     'submit form': 'submit'
+    'click button[name="remove_variant"]':  'remove_variant'
+    'click button[name="add_variant"]':     'add_variant'
 
   constructor: ->
     super
+    ProductProgram.bind 'names_fetched', @render
+
+  active: (params) =>
+    @render()
 
   render: =>
-    @show()
     @product = new Product(archive: false, has_accessories: true)
     @html @view('settings/products/form')(@)
+    @make_item_removable()
+    @show()
 
   submit: (e) ->
     e.preventDefault()
     data = $(e.target).serializeObject()
+    data.variants = @fetch_items()
     @product.load(data)
     @product.archive = data.archive?
     @product.has_accessories = data.has_accessories?
     @save_with_notifications @product, @render
 
-class Edit extends App.ExtendedController
+class Edit extends VariantsController
   events:
     'submit form': 'submit'
     'click button[name=settings-product-destroy]': 'destroy'
+    'click button[name="remove_variant"]':  'remove_variant'
+    'click button[name="add_variant"]':     'add_variant'
 
   constructor: ->
     super
+    # Won't reload program names if updated
+    # ProductProgram.bind 'names_fetched', @render
 
-  active: (params) ->
+  active: (params) =>
     @id = params.id if params.id
-    Product.one 'refresh', =>
-      @product = Product.find(@id)
-      @render()
-    Product.fetch id: @id
+    @product = Product.find(@id)
+    @render()
 
   render: =>
-    @show()
     @html @view('settings/products/form')(@)
+    @make_item_removable()
+    @show()
 
   submit: (e) ->
     e.preventDefault()
     data = $(e.target).serializeObject()
+    data.variants = @fetch_items()
     @product.load(data)
     @product.archive = data.archive?
     @product.has_accessories = data.has_accessories?
@@ -117,5 +174,9 @@ class App.SettingsProducts extends Spine.Controller
 
   activate: ->
     super
-    Product.fetch()
-    @new.render()
+
+    ProductProgram.one 'names_fetched', =>
+      Product.fetch()
+      @new.active()
+
+    ProductProgram.fetch_names()

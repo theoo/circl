@@ -22,41 +22,39 @@ class Products < ActiveRecord::Migration
     # VARIANTS
     create_table :product_variants do |t|
       t.integer :product_id, :null => false
-      t.integer :program_id, :null => false
 
-      t.string  :key, :null => false
+      t.string  :program_group, :null => false
       t.string  :title
       t.text    :description
 
-      t.integer :price_in_cents, :null => false
-      t.string  :price_currency, :null => false, :default => 'CHF'
-      t.integer :list_price_in_cents
-      t.string  :list_price_currency, :default => 'CHF'
+      t.integer :buying_price_in_cents
+      t.string  :buying_price_currency, :null => false, :default => 'CHF'
+      t.integer :selling_price_in_cents, :null => false
+      t.string  :selling_price_currency, :default => 'CHF'
       # http://en.wikipedia.org/wiki/Electronic_Waste_Recycling_Fee for switzerland
       t.integer :art_in_cents
-      t.string  :art_currency, :deafault => 'CHF'
+      t.string  :art_currency, :default => 'CHF'
 
       t.timestamps
     end
     add_index :product_variants, :product_id
-    add_index :product_variants, :program_id
-    add_index :product_variants, :key
-    add_index :product_variants, :price_in_cents
-    add_index :product_variants, :list_price_in_cents
+    add_index :product_variants, :program_group
+    add_index :product_variants, :buying_price_in_cents
+    add_index :product_variants, :selling_price_in_cents
     add_index :product_variants, :art_in_cents
 
     # PROGRAMS
     create_table :product_programs do |t|
       t.string  :key, :null => false
+      t.string  :program_group, :null => false
       t.string  :title
       t.text    :description
-      t.string  :color
-      t.string  :variant_name, :null => false
       t.boolean :archive, :null => false, :default => false
 
       t.timestamps
     end
     add_index :product_programs, :key
+    add_index :product_programs, :program_group
     add_index :product_programs, :title
     add_index :product_programs, :archive
 

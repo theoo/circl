@@ -6,7 +6,7 @@
       %th= I18n.t('task_rate.views.value')
       %th= I18n.t('task_rate.views.archive')
       %th= I18n.t('task_rate.views.people_count')
-      %th= I18n.t('common.creation_date')
+      %th= I18n.t('common.creation_at')
 
   %tbody
     - for rate in App.TaskRate.all()

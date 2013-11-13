@@ -17,10 +17,20 @@
 class App.ProductProgram extends Spine.Model
 
   @configure 'ProductProgram', "id", "key", "title", "description", "color",
-              "variant_name", "archive"
+              "program_group", "archive"
   @extend Spine.Model.Ajax
   @url: ->
     "#{Spine.Model.host}/settings/product_programs"
 
-  constructor: ->
-    super
+  constructor: (params) ->
+    super(params)
+
+  @fetch_names: ->
+    get_callback = (data) =>
+      @program_names = data
+      @trigger "names_fetched"
+
+    $.get(ProductProgram.url() + "/program_groups", get_callback, 'json')
+
+  @names: ->
+    @program_names.sort()

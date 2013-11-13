@@ -17,14 +17,14 @@
 
       .col-lg-6.col-md-6
         .form-group.autocompleted
-          %label{:for => 'settings_product_program_variant_name', :class => 'control-label'}
-            = I18n.t('product_program.views.variant_name')
+          %label{:for => 'settings_product_program_program_group', :class => 'control-label'}
+            = I18n.t('product_program.views.program_group')
           %input{ :type => 'search',
-                  :name => 'variant_name',
-                  :id => 'settings_product_program_variant_name',
+                  :name => 'program_group',
+                  :id => 'settings_product_program_program_group',
                   :class => 'form-control required',
-                  :value => @product_program.variant_name,
-                  :action => '/settings/product_programs/variant_name_search' }
+                  :value => @product_program.program_group,
+                  :action => '/settings/product_programs/program_group_search' }
 
     .row
       .col-lg-12.col-md-12
@@ -36,17 +36,6 @@
                  :id => 'settings_product_program_title',
                  :class => 'form-control',
                  :value => @product_program.title}
-
-    .row
-      .col-lg-12.col-md-12
-        .form-group
-          %label{:for => 'settings_product_program_color'}
-            = I18n.t('product_program.views.color')
-          %input{:type => 'text',
-                 :name => 'color',
-                 :id => 'settings_product_program_color',
-                 :class => 'form-control',
-                 :value => @product_program.color}
 
     .row
       .col-lg-12

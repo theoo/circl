@@ -37,26 +37,25 @@ class ProductVariant < ActiveRecord::Base
   #################
 
   belongs_to :product
-  belongs_to :program,      :class_name => 'ProductProgram'
 
   has_many :product_items,  :class_name => 'AffairsProductVariant',
                             :foreign_key => 'variant_id'
 
   has_many :affairs,        :through => :product_items
 
-  money :price
-  money :list_price
+  money :buying_price
+  money :selling_price
   money :art
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates :key, :presence => true, 
-                  :length => { :maximum => 255 }
-  validates_uniqueness_of :key, :scope => :product_id
-  validates :price, :presence => true
-  validates :price_in_cents, :presence => true
+  validates :program_group, :presence => true,
+                            :length => { :maximum => 255 }
+  validates_uniqueness_of :program_group, :scope => :product_id
+  validates :selling_price, :presence => true, :numericality => {:greater_than => 0}
+  validates :selling_price_in_cents, :presence => true, :numericality => {:greater_than => 0}
 
   ########################
   #### CLASS METHODS #####

@@ -40,8 +40,29 @@ class Settings::ProductsController < ApplicationController
   end
 
   def create
+    succeed = false
+
+    Product.transaction do
+
+      # raise the error and rollback transaction if validation fails
+      raise ActiveRecord::Rollback unless @product.save
+
+      # append variants
+      params[:variants].each do |v|
+        pv = @product.variants.new(v)
+        unless pv.save
+          pv.errors.messages.each do |k,v|
+            @product.errors.add(("variants[][" + k.to_s + "]").to_sym, v.join(", "))
+          end
+          raise ActiveRecord::Rollback
+        end
+      end
+
+      succeed = true
+    end
+
     respond_to do |format|
-      if @product.save
+      if succeed
         format.json do
           render :json => @product
         end
@@ -58,8 +79,42 @@ class Settings::ProductsController < ApplicationController
   end
 
   def update
+    succeed = false
+
+    Product.transaction do
+      # Force removal of relation if not sent
+      params[:product][:provider_id] = nil unless params[:product][:provider_id]
+      params[:product][:after_sale_id] = nil unless params[:product][:after_sale_id]
+
+      # Only keep variants that are returned
+      surplus_variants = @product.variants.map(&:id) - params[:variants].map{|v| v[:id].to_i}
+      ProductVariant.destroy surplus_variants
+
+      # append or update variants
+      params[:variants].each do |v|
+        if @product.variants.exists?(v[:id])
+          pv = @product.variants.find(v[:id])
+          pv.assign_attributes(v)
+        else
+          pv = @product.variants.new(v)
+        end
+
+        unless pv.save
+          pv.errors.messages.each do |k,v|
+            @product.errors.add(("variants[][" + k.to_s + "]").to_sym, v.join(", "))
+          end
+          raise ActiveRecord::Rollback
+        end
+      end
+
+      # raise the error and rollback transaction if validation fails
+      raise ActiveRecord::Rollback unless @product.update_attributes(params[:product])
+
+      succeed = true
+    end
+
     respond_to do |format|
-      if @product.update_attributes(params[:product])
+      if succeed
         format.json do
           render :json => @product
         end

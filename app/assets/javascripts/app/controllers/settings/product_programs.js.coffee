@@ -49,10 +49,8 @@ class Edit extends App.ExtendedController
 
   active: (params) ->
     @id = params.id if params.id
-    ProductProgram.one 'refresh', =>
-      @product_program = ProductProgram.find(@id)
-      @render()
-    ProductProgram.fetch id: @id
+    @product_program = ProductProgram.find(@id)
+    @render()
 
   render: =>
     @show()

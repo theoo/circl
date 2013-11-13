@@ -242,15 +242,12 @@ Directory::Application.routes.draw do
 
     resources :permissions, :only => :index
 
-    resources :products do
-      collection do
-      end
-    end
+    resources :products
 
     resources :product_programs do
       collection do
-        get 'variant_names'
-        get 'variant_name_search'
+        get 'program_groups'
+        get 'program_group_search'
       end
     end
 

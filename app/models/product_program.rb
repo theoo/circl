@@ -36,9 +36,9 @@ class ProductProgram < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  has_many :variants, :class_name => 'ProductVariant',
-                      :dependent => :restrict
-  has_many :products, :through => :variants
+  #has_many :variants, :class_name => 'ProductVariant',
+  #                    :dependent => :restrict
+  #has_many :products, :through => :variants
 
   scope :actives, Proc.new { where(:archive => false)}
   scope :archived, Proc.new { where(:archive => true)}
@@ -50,7 +50,7 @@ class ProductProgram < ActiveRecord::Base
   validates :key, :presence => true,
                   :length => { :maximum => 255 },
                   :uniqueness => true
-  validates :variant_name,  :presence => true,
+  validates :program_group, :presence => true,
                             :length => { :maximum => 255 }
 
   ########################
