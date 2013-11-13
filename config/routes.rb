@@ -196,11 +196,6 @@ Directory::Application.routes.draw do
       end
     end
 
-    resources :tasks
-    resources :task_presets
-    resources :task_types
-    resources :task_rates
-
   end
 
   resources :background_tasks, :only => [:index, :destroy]
@@ -247,6 +242,15 @@ Directory::Application.routes.draw do
 
     resources :permissions, :only => :index
 
+    resources :products
+
+    resources :product_programs do
+      collection do
+        get 'program_groups'
+        get 'program_group_search'
+      end
+    end
+
     resources :roles do
       resources :permissions, :controller => 'roles/permissions'
     end
@@ -257,6 +261,19 @@ Directory::Application.routes.draw do
         post 'synchronize'
       end
     end
+
+    # resources :tasks
+    resources :task_types do
+      collection do
+        get 'everything'
+      end
+    end
+    resources :task_rates do
+      collection do
+        get 'everything'
+      end
+    end
+
   end
 
   resources :permissions, :only => :index, :controller => 'people/permissions'

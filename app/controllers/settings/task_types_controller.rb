@@ -16,13 +16,25 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Admin::TaskTypesController < ApplicationController
+class Settings::TaskTypesController < ApplicationController
 
   layout false
 
   load_and_authorize_resource
 
   def index
+
+    @task_types = TaskType.actives
+
+    respond_to do |format|
+      format.json { render :json => @task_types }
+    end
+  end
+
+  def everything
+
+    @task_types = TaskType.all
+
     respond_to do |format|
       format.json { render :json => @task_types }
     end
@@ -33,6 +45,7 @@ class Admin::TaskTypesController < ApplicationController
   end
 
   def create
+    @task_type.value = params[:value]
     respond_to do |format|
       if @task_type.save
         format.json { render :json => @task_type }
@@ -49,6 +62,7 @@ class Admin::TaskTypesController < ApplicationController
   end
 
   def update
+    @task_type.value = params[:value]
     respond_to do |format|
       if @task_type.update_attributes(params[:task_type])
         format.json { render :json => @task_type }

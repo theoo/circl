@@ -91,9 +91,9 @@ class Task < ActiveRecord::Base
                         :value_in_cents,
                         :value_currency
 
-  validate :duration_is_required_if_selected_task_type_have_a_ratio
+  validate :duration_is_required_if_selected_task_type_have_a_ratio, :if => 'task_type_id'
   validate :duration_is_positive
-  validate :owner_should_have_a_task_rate
+  validate :owner_should_have_a_task_rate, :if => 'affair_id'
 
   # Validate fields of type 'text' length
   validates_length_of :description, :maximum => 65536
@@ -141,11 +141,9 @@ class Task < ActiveRecord::Base
   end
 
   def owner_should_have_a_task_rate
-    if affair_id # there is a validation for affair_id
-      if ! owner.task_rate
-        errors.add(:base, I18n.t('task.errors.owner_should_have_a_task_rate'))
-        return false
-      end
+    if ! owner.task_rate
+      errors.add(:base, I18n.t('task.errors.owner_should_have_a_task_rate'))
+      return false
     end
   end
 

@@ -20,16 +20,44 @@ class People::Affairs::TasksController < ApplicationController
 
   layout false
 
-  load_resource :person
-  load_resource :affair
-  load_resource :through => :affair, :class => ::Task
-
-  # monitor_changes :@task
+  monitor_changes :@task
 
   def index
     authorize! :index, ::Task
+
+    @affair = Affair.find(params[:affair_id])
+    @tasks = @affair.tasks
+
     respond_to do |format|
       format.json { render :json => @tasks }
+      format.csv do
+        fields = []
+        fields << 'id'
+        fields << 'start_date'
+        fields << 'end_date'
+        fields << 'duration'
+        fields << 'task_type.title'
+        fields << 'description'
+        fields << 'executer.name'
+        fields << 'value'
+        render :inline => csv_ify(@tasks, fields)
+     end
+
+      format.pdf do
+        # TODO Allow user to edit this pdf listing through a template
+        html = render_to_string(:layout => 'pdf.html.haml')
+
+        html.assets_to_full_path!
+
+        file = Tempfile.new(['tasks', '.pdf'], :encoding => 'ascii-8bit')
+        file.binmode
+        file.write(PDFKit.new(html).to_pdf)
+        file.flush
+
+        send_data File.read(file), :filename => "affair_#{params[:affair_id]}_tasks.pdf", :type => 'application/pdf'
+
+        file.unlink
+      end
     end
   end
 
@@ -39,8 +67,10 @@ class People::Affairs::TasksController < ApplicationController
 
   def create
     authorize! :create, ::Task
-    @task.executer_id = current_person.id
-    @task.value = params[:value] if params[:value]
+
+    @task = ::Task.new(params[:task])
+
+    override_posted_values
 
     respond_to do |format|
       if @task.save
@@ -60,7 +90,9 @@ class People::Affairs::TasksController < ApplicationController
 
   def update
     authorize! :update, ::Task
-    @task.value = params[:value] if params[:value]
+
+    @task = ::Task.find(params[:id])
+
     respond_to do |format|
       if @task.update_attributes(params[:task])
         format.json { render :json => @task }
@@ -72,6 +104,9 @@ class People::Affairs::TasksController < ApplicationController
 
   def destroy
     authorize! :destroy, ::Task
+
+    @task = ::Task.find(params[:id])
+
     respond_to do |format|
       if @task.destroy
         format.json { render :json => {} }
@@ -79,6 +114,14 @@ class People::Affairs::TasksController < ApplicationController
         format.json { render :json => @task.errors, :status => :unprocessable_entity}
       end
     end
+  end
+
+  private
+
+  def override_posted_values
+    @task.affair_id = params[:affair_id]
+    @task.executer_id = current_person.id
+    @task.value = params[:value] if params[:value]
   end
 
 end

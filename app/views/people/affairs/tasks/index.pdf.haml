@@ -1,0 +1,27 @@
+
+%h1
+  != I18n.t("task.views.tasks_list_pdf_title", :affair_title => @affair.title)
+
+%table.table
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th= I18n.t('task.views.start_date')
+      %th= I18n.t('task.views.end_date')
+      %th= I18n.t('task.views.duration')
+      %th= I18n.t('task.views.task_type_title')
+      %th= I18n.t('task.views.description')
+      %th= I18n.t('task.views.executer_name')
+      %th= I18n.t('task.views.value')
+
+  %tbody
+    - @tasks.each do |t|
+      %tr
+        %td= t.id
+        %td= t.start_date
+        %td= t.end_date
+        %td= t.duration
+        %td= t.task_type.try(:title)
+        %td= t.description
+        %td= t.executer.try(:name)
+        %td= t.value.to_view

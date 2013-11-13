@@ -109,7 +109,14 @@
                 .panel-title
                   = I18n.t('affair.views.subscriptions')
 
+          - if can? :read, @person => TaskRate
+            #person_affair_task_rates.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('task_rate.views.rates')
+
         .col-lg-6.col-md-6
+
           - if can? :read, @person => Affair
             #person_affair_tasks.panel.panel-default
               .panel-heading
@@ -138,6 +145,7 @@
               .panel-heading
                 .panel-title
                   = I18n.t('affair.views.invoices')
+
         .col-lg-6.col-md-6
           - if can? :read, @person => Affair
             #person_affair_receipts.panel.panel-default

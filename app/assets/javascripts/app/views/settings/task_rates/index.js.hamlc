@@ -1,0 +1,25 @@
+%table.datatable
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th= I18n.t('task_rate.views.title')
+      %th= I18n.t('task_rate.views.value')
+      %th= I18n.t('task_rate.views.archive')
+      %th= I18n.t('task_rate.views.people_count')
+      %th= I18n.t('common.creation_at')
+
+  %tbody
+    - for rate in App.TaskRate.all()
+      - classes = ['item']
+      - classes.push 'success' if ! rate.archive
+      %tr{:data-id => rate.id, :class => classes.join(" ")}
+        %td= rate.id
+        %td
+          %b= rate.title
+          %br
+          = rate.description
+
+        %td.number= rate.value.to_view()
+        %td= I18n.t("common." + rate.archive)
+        %td= rate.people_count
+        %td= rate.created_at

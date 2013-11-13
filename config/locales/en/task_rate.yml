@@ -1,0 +1,11 @@
+---
+en:
+  task_rate:
+    views:
+      rate: rate
+      rates: rates
+      title: title
+      value: value
+      archive: archive
+      description: description
+      people_count: customers

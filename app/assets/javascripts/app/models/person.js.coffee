@@ -22,7 +22,7 @@ class App.Person extends Spine.Model
     'phone', 'second_phone', 'mobile', 'email', 'second_email', 'postal_code',
     'address', 'birth_date', 'nationality', 'avs_number', 'bank_informations',
     'authentication_token', 'generate_authentication_token', 'errors', 'hidden',
-    'created_at'
+    'created_at', 'task_rate_id'
 
   @extend Spine.Model.Ajax
   @url: ->

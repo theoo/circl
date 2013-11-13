@@ -1,0 +1,120 @@
+%form
+  .panel-body
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
+
+    .row
+      .col-lg-3.col-md-3
+        .form-group
+          %label{:for => 'settings_product_key'}
+            = I18n.t('product.views.key')
+          %input{:type => 'text',
+                 :name => 'key',
+                 :id => 'settings_product_key',
+                 :class => 'form-control required',
+                 :value => @product.key}
+
+      .col-lg-9.col-md-9
+        .form-group
+          %label{:for => 'settings_product_title'}
+            = I18n.t('product.views.title')
+          %input{:type => 'text',
+                 :name => 'title',
+                 :id => 'settings_product_title',
+                 :class => 'form-control',
+                 :value => @product.title}
+
+    .row
+      .col-lg-12
+        .form-group
+          %label{:for => 'settings_product_description'}
+            = I18n.t('common.description')
+          %textarea{:name => 'description',
+                    :rows => 4,
+                    :id => 'settings_product_description',
+                    :class => 'form-control'}
+            = @product.description
+    .row
+      .col-lg-6
+        .autocompleted.form-group
+          %label{:for => 'settings_product_provider_id'}
+            = I18n.t('product.views.provider')
+          %input{:type => 'search',
+                 :name => 'provider',
+                 :id => 'settings_product_provider_id',
+                 :class => 'form-control',
+                 :value => @product.provider_name,
+                 :action => '/people/search'}
+          %input{:type => 'hidden',
+                 :name => 'provider_id',
+                 :value => @product.provider_id}
+
+      .col-lg-6
+        .autocompleted.form-group
+          %label{:for => 'settings_product_after_sale_id'}
+            = I18n.t('product.views.after_sale')
+          %input{:type => 'search',
+                 :name => 'after_sale',
+                 :id => 'settings_product_after_sale_id',
+                 :class => 'form-control',
+                 :value => @product.after_sale_name,
+                 :action => '/people/search'}
+          %input{:type => 'hidden',
+                 :name => 'after_sale_id',
+                 :value => @product.after_sale_id}
+
+    .row
+      .col-lg-6.col-md-6
+        .checkbox
+          %label.control-label
+            %input{ :type => 'checkbox',
+                    :id => 'settings_product_archive',
+                    :name => 'archive',
+                    :checked => @product.archive,
+                    :value => 1 }
+            = I18n.t('common.archive')
+
+      .col-lg-6.col-md-6
+        .checkbox
+          %label.control-label
+            %input{ :type => 'checkbox',
+                    :id => 'settings_product_has_accessories',
+                    :name => 'has_accessories',
+                    :checked => @product.has_accessories,
+                    :value => 1 }
+            = I18n.t('product.views.has_accessories')
+    .row
+      .col-lg-12
+        %h3= I18n.t("product_variant.views.variant_selection_title")
+
+  %table.table.table-condensed.sortable
+    %tbody
+      - if @product.variants and @product.variants.length > 0
+        - for variant in @product.variants
+          != @partial('product_variant_item')(variant)
+      - else
+        != @partial('product_variant_item')({})
+
+      != @partial('product_variant_item')({stub: true})
+
+      %tr{'data-name' => 'variant_add', :class => 'row'}
+        %td.col-lg-11
+        %td.col-lg-1
+          %button{:type => 'button',
+                  :name => 'add_variant',
+                  :class => 'btn btn-default'}
+            .icon-plus
+
+  .panel-body
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')(@product)
+
+        - unless @product.isNew()
+          %button{:type => 'button',
+                  :class => 'btn btn-danger',
+                  :name => 'settings-product-destroy'}
+            .icon-remove
+            = I18n.t("common.destroy")

@@ -1,0 +1,83 @@
+
+- classes = ['item', 'row']
+- if @stub
+  - name = 'variant_template'
+  - classes.push 'hidden'
+- else
+  - name = 'variant_item'
+
+%tr{:data-id => @id, :data-name => name, :class => classes.join(" ")}
+  %td.col-lg-11
+
+    %input{ :name => "variants[][position]", :type => 'hidden', :value => @position }
+    %input{ :name => "variants[][id]", :type => 'hidden', :value => @id }
+
+    .row
+      .col-lg-8.col-md-8
+        .form-group
+          %input{ :type => 'text',
+                  :class => 'form-control input-sm',
+                  :placeholder => I18n.t("common.title"),
+                  :name => "variants[][title]",
+                  :value => @title }
+
+        .form-group
+          %textarea{:name => 'variants[][description]',
+                    :rows => 3,
+                    :placeholder => I18n.t("common.description"),
+                    :class => 'form-control input-sm'}
+            = @description
+
+      .col-lg-4.col-md-4
+        .form-group
+          %input{ :type => 'number',
+                  :class => 'form-control input-sm',
+                  :step => 0.01,
+                  :min => 0,
+                  :max => 1000000,
+                  :placeholder => I18n.t("product_variant.views.buying_price"),
+                  :name => "variants[][buying_price]",
+                  :value => @buying_price }
+
+        .form-group
+          %input{ :type => 'number',
+                  :class => 'form-control input-sm',
+                  :step => 0.01,
+                  :min => 0,
+                  :max => 1000000,
+                  :placeholder => I18n.t("product_variant.views.selling_price"),
+                  :name => "variants[][selling_price]",
+                  :value => @selling_price }
+
+        .form-group
+          %input{ :type => 'number',
+                  :class => 'form-control input-sm',
+                  :step => 0.01,
+                  :min => 0,
+                  :max => 1000000,
+                  :placeholder => I18n.t("product_variant.views.art"),
+                  :name => "variants[][art]",
+                  :value => @art }
+
+    .form-horizontal
+      .form-group
+        %label{:for => "product_variant_program_name_" + @id,
+                :class => "control-label col-lg-8 col-md-8"}
+          = I18n.t("product_variant.views.program_group")
+
+        .col-lg-4.col-md-4
+          %select{:name => 'variants[][program_group]',
+                  :id => "product_variant_program_name_" + @id,
+                  :class => 'form-control input-sm'}
+            - if App.ProductProgram.names()
+              - for name in App.ProductProgram.names()
+                - if @program_group == name
+                  %option{:value => name, :selected => true}= name
+                - else
+                  %option{:value => name}= name
+
+  %td.col-lg-1.actions
+    %button{:type => 'button',
+            :name => 'remove_variant',
+            :class => 'btn btn-danger'}
+      .icon-remove

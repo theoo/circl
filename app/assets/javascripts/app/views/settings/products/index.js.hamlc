@@ -1,0 +1,24 @@
+%table.datatable
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th= I18n.t('product.views.key')
+      %th= I18n.t('product.views.description')
+      %th= I18n.t('product.views.variants')
+      %th= I18n.t('product.views.has_accessories')
+      %th.desc= I18n.t('product.views.update_at')
+
+  %tbody
+    - for product in App.Product.all()
+      - classes = ['item']
+      - classes.push 'success' if ! product.archive
+      %tr{:data-id => product.id, :class => classes.join(" ")}
+        %td= product.id
+        %td= product.key
+        %td
+          %b= product.title
+          %br
+          = product.description
+        %td= product.variants_count
+        %td= I18n.t("common." + product.has_accessories)
+        %td= product.updated_at

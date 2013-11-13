@@ -2,16 +2,19 @@
 en:
   settings:
     views:
-      advanced: advanced
-      application_settings: application settings
-      attributes: attributes
-      invoice_templates: invoice templates
-      jobs: jobs
-      languages: languages
-      ldap_attributes: ldap attributes
-      locations: locations
-      privileges: privileges
-      roles: roles
-      search_attributes: search attributes
-      search_engine: search engine
-      templates: templates
+      advanced: Advanced
+      affairs: Affairs
+      application_settings: Application settings
+      attributes: Attributes
+      invoice_templates: Invoice templates
+      jobs: Jobs
+      languages: Languages
+      ldap_attributes: LDAP attributes
+      locations: Locations
+      privileges: Privileges
+      roles: Roles
+      search_attributes: Search attributes
+      search_engine: Search engine
+      task_rates: Task rates
+      task_types: Task types
+      templates: Templates

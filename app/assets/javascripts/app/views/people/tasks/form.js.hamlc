@@ -145,5 +145,13 @@
           = @task.description
 
   .row
-    .col-lg-12.text-right
-      != @partial("submit_button")(@task)
+    .col-lg-12
+      .pull-right
+        != @partial("submit_button")(@task)
+
+      .btn-group
+        - unless @task.isNew?()
+          %button{:name => "task-destroy",
+                  :class => 'btn btn-danger' }
+            .icon-remove
+            = I18n.t("common.destroy")

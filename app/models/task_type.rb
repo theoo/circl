@@ -45,11 +45,10 @@ class TaskType < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  has_many :tasks
+  has_many :tasks, :dependent => :nullify
 
-  default_scope { where(:archive => false)}
+  scope :actives, Proc.new { where(:archive => false)}
   scope :archived, Proc.new { where(:archive => true)}
-  scope :everything, Proc.new { where(:archive => [true, false])}
 
   money :value
 
@@ -62,8 +61,9 @@ class TaskType < ActiveRecord::Base
 
   def as_json(options = nil)
     h = super(options)
-    h[:value] = value.to_f
-    h[:errors] = errors
+    h[:value]       = value.to_f
+    h[:tasks_count] = tasks.count
+    h[:errors]      = errors
     h
   end
 

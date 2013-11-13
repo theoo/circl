@@ -2,3 +2,13 @@
 - subject: Person
   action: restricted_attributes
   hash_conditions: '{:id => user.id}'
+
+- subject: Task
+  action: manage
+  hash_conditions: '{:person_id => user.id}'
+
+- subject: TaskType
+  action: read
+
+- subject: TaskRate
+  action: read

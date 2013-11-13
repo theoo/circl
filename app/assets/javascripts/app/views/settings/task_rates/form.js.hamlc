@@ -1,0 +1,66 @@
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
+
+    .row
+      .col-lg-6.col-md-6
+        .form-group
+          %label{:for => 'settings_task_rate_title'}
+            = I18n.t('task_rate.views.title')
+          %input{ :type => 'text',
+                  :name => 'title',
+                  :id => 'settings_task_rate_title',
+                  :value => @task_rate.title,
+                  :class => 'form-control required' }
+
+      .col-lg-6.col-md-6
+        %label{:for => 'settings_task_rate_value'}
+          = I18n.t('task_rate.views.value')
+        .input-group
+          %input{ :type => 'number',
+                  :step => 0.01,
+                  :min => 0,
+                  :max => 99999999.99,
+                  :name => 'value',
+                  :id => 'settings_task_rate_value',
+                  :value => @task_rate.value,
+                  :class => 'form-control required'}
+          .input-group-addon
+            CHF /
+            = I18n.t("common.hour")
+
+    .row
+      .col-lg-12
+        .form-group
+          %label{:for => 'settings_task_rate_description'}
+            = I18n.t('task_rate.views.description')
+          %input{ :type => 'text',
+                  :name => 'description',
+                  :id => 'settings_task_rate_description',
+                  :value => @task_rate.description,
+                  :class => 'form-control' }
+
+    .row
+      .col-lg-12
+        .checkbox
+          %label.control-label
+            %input{ :type => 'checkbox',
+                    :id => 'settings_task_rate_archive',
+                    :name => 'archive',
+                    :checked => @task_rate.archive,
+                    :value => 1 }
+            = I18n.t('task_rate.views.archive')
+
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('submit_button')(@task_rate)
+
+        - unless @task_rate.isNew()
+          %button{:type => 'button',
+                  :class => 'btn btn-danger',
+                  :name => 'settings-task-rate-destroy'}
+            .icon-remove
+            = I18n.t("common.destroy")

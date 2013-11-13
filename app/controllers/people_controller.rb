@@ -187,11 +187,12 @@ class PeopleController < ApplicationController
     if params[:term].blank?
       result = []
     else
-      result = @people.where("people.title #{SQL_REGEX_KEYWORD} ?", params[:term]).map{ |p| p.title }.uniq
+      result = @people.where("people.title #{SQL_REGEX_KEYWORD} ?", params[:term])
+        .select("DISTINCT(people.title)")
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:label => t}}}
+      format.json { render :json => result.map{|t| {:label => t.title}}}
     end
   end
 

@@ -27,10 +27,7 @@ class Settings::RolesController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        roles = @roles.map do |role|
-          role.as_json.merge('members_count' => role.people.count)
-        end
-        render :json => roles
+        render :json => @roles
       end
     end
   end
@@ -43,7 +40,7 @@ class Settings::RolesController < ApplicationController
     respond_to do |format|
       if @role.save
         format.json do
-          render :json => @role.as_json.merge('members_count' => @role.people.count)
+          render :json => @role
         end
       else
         format.json { render :json => @role.errors, :status => :unprocessable_entity }
@@ -61,7 +58,7 @@ class Settings::RolesController < ApplicationController
     respond_to do |format|
       if @role.update_attributes(params[:role])
         format.json do
-          render :json => @role.as_json.merge('members_count' => @role.people.count)
+          render :json => @role
         end
       else
         format.json { render :json => @role.errors, :status => :unprocessable_entity }

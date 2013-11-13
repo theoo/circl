@@ -1,0 +1,25 @@
+%table.datatable
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th= I18n.t('task_type.views.title')
+      %th= I18n.t('task_type.views.value')
+      %th= I18n.t('task_type.views.ratio')
+      %th= I18n.t('task_type.views.archive')
+      %th= I18n.t('task_type.views.tasks_count')
+
+  %tbody
+    - for type in App.TaskType.all()
+      - classes = ['item']
+      - classes.push 'success' if ! type.archive
+      %tr{:data-id => type.id, :class => classes.join(" ")}
+        %td= type.id
+        %td
+          %b= type.title
+          %br
+          = type.description
+
+        %td.number= type.value.to_view()
+        %td.number= type.ratio.to_view() if type.ratio?
+        %td= I18n.t("common." + type.archive)
+        %td= type.tasks_count

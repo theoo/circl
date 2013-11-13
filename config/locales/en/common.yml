@@ -1,10 +1,11 @@
 ---
 en:
   common:
-    a_webapp_developped_by:
+    a_webapp_developped_by: A webapp developped by
     add: add
     adjust: adjust
     administration: administration
+    apply: apply
     are_you_sure: are you sure
     browser:
       a_modern_browser_is_required: a modern browser is required
@@ -16,6 +17,7 @@ en:
     create: create
     created_at: created at
     css: CSS
+    csv: CSV (Spreadsheet)
     dashboard: dashboard
     date: date
     description: description
@@ -42,6 +44,7 @@ en:
     file: file
     from: from
     good: good
+    hour: hour
     id: id
     incomplete: incomplete
     info: info
@@ -55,7 +58,9 @@ en:
     paid: paid
     parent: parent
     pdf: pdf
+    per_hour: per hour
     person: person
+    preview_in_new_tab: preview in new tab
     position: position
     preview: preview
     released_under: released under

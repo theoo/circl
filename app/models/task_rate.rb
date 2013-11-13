@@ -33,17 +33,22 @@ class TaskRate < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  has_many :people
+  has_many :people, :dependent => :nullify
 
   # Money
   money :value
+
+  scope :actives, Proc.new { where(:archive => false)}
+  scope :archived, Proc.new { where(:archive => true)}
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates_presence_of :title,
-                        :value_in_cents
+  validates_presence_of :title
+  validates :value, :presence => true,
+                    :numericality => {:greater_than => 0,
+                                      :less_than_or_equal => 99999999.99 } # BVR limit
 
   # Validate fields of type 'text' length
   validates_length_of :description, :maximum => 65536
@@ -54,7 +59,9 @@ class TaskRate < ActiveRecord::Base
 
   def as_json(options = nil)
     h = super(options)
-    h[:errors] = errors
+    h[:value]        = value.to_f
+    h[:people_count] = people.count
+    h[:errors]       = errors
     h
   end
 

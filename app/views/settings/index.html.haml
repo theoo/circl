@@ -14,27 +14,32 @@
   .container
     #secondary_navigation.collapse.navbar-collapse
       %ul#sub_nav.nav.navbar-nav
-        - if can? :update, Language
+        - if can? :manage, Language
           %li
             %a{:href => '#properties'}
               = I18n.t('settings.views.attributes')
 
-        - if can? :update, InvoiceTemplate
+        - if can? :manage, InvoiceTemplate
           %li
             %a{:href => '#templates'}
               = I18n.t('settings.views.templates')
 
-        - if can? :update, SearchAttribute
+        - if can? :manage, SearchAttribute
           %li
             %a{:href => '#searchengine'}
               = I18n.t('settings.views.search_engine')
 
-        - if can? :update, Role
+        - if can? :manage, Role
           %li
             %a{:href => '#privileges'}
               = I18n.t('settings.views.privileges')
 
-        - if can? :update, ApplicationSetting
+        - if can? :manage, Affair
+          %li
+            %a{:href => '#affairs'}
+              = I18n.t('settings.views.affairs')
+
+        - if can? :manage, ApplicationSetting
           %li
             %a{:href => '#advanced'}
               = I18n.t('settings.views.advanced')
@@ -120,6 +125,34 @@
               .panel-heading
                 .panel-title
                   = I18n.t('role.views.permissions')
+
+    #affairs.tab-pane.fade
+      .row
+        .col-lg-6
+          - if can? :manage, TaskType
+            #settings_task_types.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.task_types')
+
+          - if can? :manage, TaskRate
+            #settings_task_rates.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.task_rates')
+
+        .col-lg-6
+          - if can? :manage, Product
+            #settings_products.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.products')
+
+          - if can? :manage, ProductProgram
+            #settings_product_programs.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.product_programs')
 
     #advanced.tab-pane.fade
       .row

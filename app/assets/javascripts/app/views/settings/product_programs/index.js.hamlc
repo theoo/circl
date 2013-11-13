@@ -1,0 +1,24 @@
+%table.datatable
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th= I18n.t('product_program.views.key')
+      %th= I18n.t('product_program.views.program_group')
+      %th= I18n.t('product_program.views.description')
+      %th.desc= I18n.t('product_program.views.update_at')
+
+  %tbody
+    - for program in App.ProductProgram.all()
+      - classes = ['item']
+      - classes.push 'success' if ! program.archive
+      %tr{:data-id => program.id, :class => classes.join(" ")}
+        %td= program.id
+        %td= program.key
+        %td= program.program_group
+        %td
+          %b= program.title
+          \ -
+          %i= program.color
+          %br
+          = program.description
+        %td= program.updated_at

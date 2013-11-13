@@ -3,3 +3,10 @@ fr:
   task_type:
     errors:
       should_have_a_ratio_or_a_title: Doit avoir un ratio ou un titre
+    views:
+      title: titre
+      value: valeur
+      archive: archive
+      description: description
+      tasks_count: tâches
+      ratio: ratio

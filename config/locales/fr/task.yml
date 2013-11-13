@@ -14,4 +14,17 @@ fr:
       duration_help: en minutes
       owner: propriétaire
       task_type: type de tâche
-      times_help: tXX***
+      times_help: "Par ex: 9:15, 915, 9"
+      task_types: types de tâche
+      task_rate: tarif
+      task_rates: tarifs
+      owner: client
+      affair: affaire
+      start_date: date de début
+      end_date: date de fin
+      duration: durée
+      task_type_title: type
+      description: description
+      executer_name: nom de l'éxecutant
+      value: valeur
+      tasks_list_pdf_title: "List des tâches pour l'affaire <i>%{affair_title}</i>"

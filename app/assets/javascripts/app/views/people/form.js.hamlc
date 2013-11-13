@@ -178,12 +178,12 @@
         - if @can.person.restricted_attributes
           .row
             .col-lg-12
+              %h3= I18n.t('person.views.employee_information')
+
               - if @person.missing_employee_information
                 - if @person.missing_employee_information.length > 0
-                  %h3
-                    = I18n.t('person.views.employee_information')
-                    .label.label-warning
-                      = I18n.t("common.incomplete")
+                  .label.label-warning
+                    = I18n.t("common.incomplete")
                   - missing_fields = []
                   - for f in @person.missing_employee_information
                     - missing_fields.push I18n.t("activerecord.attributes.person." + f)

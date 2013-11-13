@@ -1,5 +1,5 @@
 require 'seed_helper'
-SeedHelper::create_tasks_for(:application_settings)
+SeedHelper::create_tasks_for(:application_settings, :except => [:upgrade])
 
 namespace :db do
   namespace :seed do

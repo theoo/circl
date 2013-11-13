@@ -37,3 +37,18 @@
 
 - subject: BackgroundTask
   action: manage
+
+- subject: Task
+  action: manage
+
+- subject: TaskType
+  action: manage
+
+- subject: TaskRate
+  action: manage
+
+- subject: Product
+  action: manage
+
+- subject: ProductProgram
+  action: manage
