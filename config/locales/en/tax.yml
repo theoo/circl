@@ -1,6 +1,8 @@
 ---
 en:
   tax:
+    errors:
+      unable_to_destroy_a_tax_which_is_used: unable to destroy a tax which is used
     views:
       age_tax_example_file_desc: age tax example file desc
       available_years: available years

@@ -17,7 +17,7 @@ fr:
       invoice_value: valeur de la facture
       printed_address: adresse imprimée
       status: statut
-      statuses: 
+      statuses:
         cancelled: annulée
         offered: offerte
         open: ouverte

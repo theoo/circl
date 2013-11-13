@@ -2,11 +2,11 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th= I18n.t('product.views.key')
-      %th= I18n.t('product.views.description')
+      %th= I18n.t('common.key')
+      %th= I18n.t('common.description')
       %th= I18n.t('product.views.variants')
       %th= I18n.t('product.views.has_accessories')
-      %th.desc= I18n.t('product.views.update_at')
+      %th.desc= I18n.t('common.updated_at')
 
   %tbody
     - for product in App.Product.all()

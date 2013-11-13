@@ -2,10 +2,8 @@
 fr:
   product_variant:
     views:
-      art: art
-      buying_price: buying price
-      price: price
+      art: TAR
+      buying_price: prix d'achat
       program_group: program group
-      selling_price: selling price
-      title: title
-      variant_selection_title: variant selection title
+      selling_price: prix de vente
+      variant_selection_title: Définition des variantes

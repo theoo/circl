@@ -11,7 +11,7 @@ fr:
       to_date_should_be_after_from_date: La date "à" devait être après la date "de".
       unable_to_destroy_a_reference_which_has_children_salaries: Impossible de détruire un salaire de référence dont des salaires dépendent.
     export:
-      export_salary_certificates: ! "Export pour la génération des certificats de salaire"
+      export_salary_certificates: Export pour la génération des certificats de salaire
       export_to_accounting: Exporter vers la comptabilité
       export_to_ocas: Exporter vers l'attestation de salaires OCAS
     notices:

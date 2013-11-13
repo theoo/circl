@@ -3,9 +3,6 @@ en:
   product:
     views:
       after_sale: after sale
-      description: description
       has_accessories: has accessories
-      key: key
       provider: provider
-      title: title
-      update_at: update at
+      variants: variants

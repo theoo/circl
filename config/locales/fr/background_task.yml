@@ -10,7 +10,7 @@ fr:
       generate_invoice_template_jpg: Génération de la vignette pour le modèle de facture %{invoice_template_id} - %{invoice_template_title}
       generate_salary_pdf: Génération du PDF du salaire %{salary_id} - %{salary_title}
       generate_salary_template_jpg: Génération de la vignette pour le modèle de salaire %{salary_template_id} - %{salary_template_title}
-      merge_subscriptions:  Fusion de l'inscription %{source_subscription_id} dans %{destination_subscription_id}
+      merge_subscriptions: Fusion de l'inscription %{source_subscription_id} dans %{destination_subscription_id}
       prepare_subscription_pdf_and_email: Génération des PDF pour les factures de %{people_count} personne(s), à l'attention de l'inscription %{subscription_id} - %{subscription_title}
       run_rake_task: Exécution d'une tâche extraordinaire - %{name}
       update_index_for_people: Mise à jour de l'index du moteur de recherche pour %{people_count} personne(s)

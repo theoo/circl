@@ -1,8 +1,9 @@
 ---
-  fr:
+fr:
   devise:
     help:
       request_new_passord_tooltip: demander un nouveau mot de passe
+      request_new_password_tooltip: request new password tooltip
     mail:
       change_my_password: Changer mon mot de passe
       click_the_link_below_to_unlock_your_account: ! 'Veuillez cliquer le lien ci-dessous pour débloquer votre compte:'

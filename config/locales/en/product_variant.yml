@@ -4,8 +4,6 @@ en:
     views:
       art: art
       buying_price: buying price
-      price: price
       program_group: program group
       selling_price: selling price
-      title: title
-      variant_selection_title: variant selection title
+      variant_selection_title: Variants definition

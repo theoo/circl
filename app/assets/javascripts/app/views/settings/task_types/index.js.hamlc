@@ -2,10 +2,10 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th= I18n.t('task_type.views.title')
-      %th= I18n.t('task_type.views.value')
+      %th= I18n.t('common.title')
+      %th= I18n.t('common.value')
       %th= I18n.t('task_type.views.ratio')
-      %th= I18n.t('task_type.views.archive')
+      %th= I18n.t('common.archive')
       %th= I18n.t('task_type.views.tasks_count')
 
   %tbody

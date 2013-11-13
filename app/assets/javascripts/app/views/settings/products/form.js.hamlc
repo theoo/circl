@@ -8,7 +8,7 @@
       .col-lg-3.col-md-3
         .form-group
           %label{:for => 'settings_product_key'}
-            = I18n.t('product.views.key')
+            = I18n.t('common.key')
           %input{:type => 'text',
                  :name => 'key',
                  :id => 'settings_product_key',
@@ -18,7 +18,7 @@
       .col-lg-9.col-md-9
         .form-group
           %label{:for => 'settings_product_title'}
-            = I18n.t('product.views.title')
+            = I18n.t('common.title')
           %input{:type => 'text',
                  :name => 'title',
                  :id => 'settings_product_title',

@@ -2,29 +2,26 @@
 fr:
   task:
     errors:
-      duration_is_required_if_selected_task_type_have_a_ratio: Une durée est requise si le tpe de tâche est calculé selon un ratio 
+      duration_is_required_if_selected_task_type_have_a_ratio: Une durée est requise si le tpe de tâche est calculé selon un ratio
       duration_must_be_positive: La durée doit être positive
       owner_should_have_a_task_rate: Un tarif doit dâvord être sélectionné pour ce client
     notices:
       computed_value_is: La valeur calculée est %{value}
       the_value_is_automaticaly_computed: La valeur est calculée automatiquement
     views:
-      affair: Affaires
+      affair: affaire
+      description: description
       duration: durée
       duration_help: en minutes
-      owner: propriétaire
-      task_type: type de tâche
-      times_help: "Par ex: 9:15, 915, 9"
-      task_types: types de tâche
+      end_date: date de fin
+      executer_name: nom de l'éxecutant
+      owner: client
+      start_date: date de début
       task_rate: tarif
       task_rates: tarifs
-      owner: client
-      affair: affaire
-      start_date: date de début
-      end_date: date de fin
-      duration: durée
+      task_type: type de tâche
       task_type_title: type
-      description: description
-      executer_name: nom de l'éxecutant
+      task_types: types de tâche
+      tasks_list_pdf_title: List des tâches pour l'affaire <i>%{affair_title}</i>
+      times_help: ! 'Par ex: 9:15, 915, 9'
       value: valeur
-      tasks_list_pdf_title: "List des tâches pour l'affaire <i>%{affair_title}</i>"

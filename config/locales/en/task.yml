@@ -10,21 +10,18 @@ en:
       the_value_is_automaticaly_computed: the value is automaticaly computed
     views:
       affair: affair
+      description: description
       duration: duration
       duration_help: duration help
-      owner: owner
-      task_type: task type
-      times_help: times help
-      task_types: task types
+      end_date: end date
+      executer_name: executer name
+      owner: client
+      start_date: start date
       task_rate: task rate
       task_rates: task rates
-      owner: client
-      affair: affair
-      start_date: start date
-      end_date: end date
-      duration: duration
+      task_type: task type
       task_type_title: type
-      description: description
-      executer_name: executer name
-      value: value
+      task_types: task types
       tasks_list_pdf_title: Task list for affair %{affair_title}
+      times_help: times help
+      value: value

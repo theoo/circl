@@ -2,8 +2,8 @@
 fr:
   tax_data:
     views:
+      actions: action
       employee_value: valeur employé
       employer_value: valeur employeur
-      taxed_value: valeur déduite
       reference_value: valeur de référence
-      actions: action
+      taxed_value: valeur déduite

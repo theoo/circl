@@ -64,6 +64,7 @@ en:
         private_tag_name: private tag name
         subscription_at_this_date: subscription at this date
         tag_name_missing: tag name missing
+        tag_tool: tag tool
         tag_with: tag with
         unprocessable_request: unprocessable request
         wrong_date: wrong date

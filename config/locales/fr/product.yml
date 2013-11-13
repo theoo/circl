@@ -2,10 +2,10 @@
 fr:
   product:
     views:
-      after_sale: after sale
+      after_sale: après-vente
       description: description
-      has_accessories: has accessories
-      key: key
-      provider: provider
-      title: title
-      update_at: update at
+      has_accessories: accessoires
+      key: clé
+      provider: fournisseur
+      title: titre
+      variants: variantes

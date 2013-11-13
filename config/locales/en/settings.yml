@@ -12,6 +12,8 @@ en:
       ldap_attributes: LDAP attributes
       locations: Locations
       privileges: Privileges
+      product_programs: product programs
+      products: products
       roles: Roles
       search_attributes: Search attributes
       search_engine: Search engine

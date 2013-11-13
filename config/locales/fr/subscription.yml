@@ -25,11 +25,12 @@ fr:
       the_following_members_were_already_in_the_subscription: Les membres suivants étaient déjà dans l'inscription
       the_following_members_were_updated: Les membres suivants ont étés mis à jour
     notices:
-      members_added: "%{members_count} personnes ont été ajoutées à l'inscription. Veuillez attendre la fin de l'execution de la tâche d'arrière plan avant de modifier l'inscription concernée."
+      members_added: ! '%{members_count} personnes ont été ajoutées à l''inscription. Veuillez attendre la fin de l''execution de la tâche d''arrière plan avant de modifier l''inscription concernée.'
     views:
       actions:
         add_members_to_subscription: ajouter des membres à l'inscription
         fusionner: merge vers une autre inscription
+        merge: merge
         remove_members_from_subscription: retirer tous les membres de l'inscription
         subscription_reminder: créer une inscription de rappel
         subscription_renewal: renouveler l'inscription

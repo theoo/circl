@@ -6,6 +6,7 @@ fr:
     adjust: ajuster
     administration: Administration
     apply: appliquer
+    archive: archive
     are_you_sure: en êtes-vous sur?
     browser:
       a_modern_browser_is_required: Un navigateur moderne et compatible avec HTML5/JS/CSS3 est requis.
@@ -49,6 +50,7 @@ fr:
     id: id
     incomplete: incomplet
     info: info
+    key: clé
     name: nom
     next: suvant
     none: aucun
@@ -60,16 +62,17 @@ fr:
     parent: parent
     pdf: PDF
     per_hour: par heure
-    person:  personne
+    person: personne
     position: position
     preview: pré-visualisation
     preview_in_new_tab: prévisualiser dans un nouvel onglet
-    released_under:  livrée sous la version 3 de la license
+    released_under: livrée sous la version 3 de la license
     requires_browser_update: Une mise à jour de votre navigateur est requise pour consulter cette page.
     reset: réinitialise
     salaries: Salaires
     settings: Configuration
     strong: fort
+    successfully_updated: successfully updated
     synchronize: Synchroniser
     template: modèle
     this_application_unique_id: L'identifiant unique de cette application est
@@ -81,6 +84,7 @@ fr:
     tools: outils
     true: vrai
     unpaid: à payé
+    updated_at: mise à jour
     update: mettre à jour
     upload: téléverser
     use_right_click_save_as: utilisez le click droit et sélectionnez 'enregistrer le lien sous...'

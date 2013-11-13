@@ -2,7 +2,7 @@
 fr:
   location:
     errors:
-      cannot_destroy_location_if_people_depend_on_it:  Une locatité ne peut pas être détruite si des personnes en dépendent.
+      cannot_destroy_location_if_people_depend_on_it: Une locatité ne peut pas être détruite si des personnes en dépendent.
       no_parent_location: aucun parent n'a été défini
     views:
       actions:

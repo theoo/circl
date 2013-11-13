@@ -40,7 +40,6 @@ fr:
       message: message
       number_of_characters: nombre de charactères
       one_or_more_lines_are_not_formated_correctly: Une ou plusieurs lignes ne sont pas formatée correctement
-      receipts: Reçus
       padded_by_zeros_at_its_left: ajusté à droite par des zéro
       part: part
       person_id: personne

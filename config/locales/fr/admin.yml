@@ -17,7 +17,7 @@ fr:
       finances: Finances
       import: importer
       import_people: Import des personnes
-      invoice_date:  date lde la facture
+      invoice_date: date de la facture
       invoice_title: titre de la facture
       invoice_value: valeur de la facture
       invoices: Facture

@@ -10,6 +10,6 @@ fr:
       template:
         person_bank_information: informations bancaires de l'employé
         salary_id: identifiant unique du salaire
-        salary_interval: intervalle du salaire 
+        salary_interval: intervalle du salaire
         salary_yearly_salary: valeur annuelle des salaires
       thumb: vignette

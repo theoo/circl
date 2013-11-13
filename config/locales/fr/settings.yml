@@ -3,6 +3,7 @@ fr:
   settings:
     views:
       advanced: Avancé
+      affairs: Affaires
       application_settings: Paramètres de l'application
       attributes: Attributs
       invoice_templates: Modèles de facture
@@ -11,11 +12,11 @@ fr:
       ldap_attributes: Attributs LDAP
       locations: Localités
       privileges: Privilèges
+      product_programs: product programs
+      products: products
       roles: Rôles
       search_attributes: Attributs de recherche
       search_engine: Moteur de recherche
-      templates: Modèles
-      privileges: Privilèges
-      affairs: Affaires
       task_rates: Tarifs
       task_types: Type de tâches
+      templates: Modèles

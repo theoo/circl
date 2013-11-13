@@ -6,6 +6,7 @@ en:
     adjust: adjust
     administration: administration
     apply: apply
+    archive: archive
     are_you_sure: are you sure
     browser:
       a_modern_browser_is_required: a modern browser is required
@@ -48,6 +49,7 @@ en:
     id: id
     incomplete: incomplete
     info: info
+    key: key
     name: name
     next: next
     none: none
@@ -60,15 +62,16 @@ en:
     pdf: pdf
     per_hour: per hour
     person: person
-    preview_in_new_tab: preview in new tab
     position: position
     preview: preview
+    preview_in_new_tab: preview in new tab
     released_under: released under
     requires_browser_update: requires browser update
     reset: reset
     salaries: salaries
     settings: settings
     strong: strong
+    successfully_updated: successfully updated
     synchronize: synchronize
     template: template
     this_application_unique_id: this application unique id
@@ -80,6 +83,7 @@ en:
     tools: tools
     unpaid: unpaid
     update: update
+    updated_at: update at
     upload: upload
     use_right_click_save_as: use right click save as
     value: value
