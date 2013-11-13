@@ -21,4 +21,4 @@
                 :class => 'btn btn-default' }
           .icon-tags
           &nbsp;
-          = I18n.t('subscription.views.tag_tool')
+          = I18n.t('subscription.views.tag_tool.tag_tool')

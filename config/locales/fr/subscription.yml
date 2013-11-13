@@ -5,7 +5,7 @@ fr:
       can_not_delete_if_has_children: Impossible de détruire une inscription qui a des enfants
       can_not_delete_if_has_receipts: Impossible de détruire l'inscription dont un reçu dépend. Le reçu concerné doit être supprimé avant.
       cannot_remove_members_if_there_is_receipts: Impossible de retirer les membres si ont des reçus ont été associés
-      cannot_transfer_overpaid_value_if_subscription_value_is_zero: Impossible de transférer les paiements excédants si l'inscription d'origine à une valeur de zéro
+      cannot_transfer_overpaid_value_if_subscription_value_is_zero: Impossible de transférer les paiements excédantaires si l'inscription d'origine à une valeur de zéro
     mail:
       email: email
       first_name: prénom
@@ -29,11 +29,11 @@ fr:
     views:
       actions:
         add_members_to_subscription: ajouter des membres à l'inscription
-        merge: usionner vers une autre inscription
+        fusionner: merge vers une autre inscription
         remove_members_from_subscription: retirer tous les membres de l'inscription
         subscription_reminder: créer une inscription de rappel
         subscription_renewal: renouveler l'inscription
-        transfer_overpaid_value: transférer les paiements excédants
+        transfer_overpaid_value: transférer les paiements excédantaires
         view_subscription_buyers: voir les payeurs
         view_subscription_members: voir les membres
         view_subscription_members_who_didnt_paid: voir les membres qui n'ont pas payé
@@ -49,7 +49,7 @@ fr:
       merge:
         destination_subscription_id_missing: ID de l'inscription de destination manquant
         source_subscription_id_missing: ID de l'inscription source manquant
-      overpaid_value: paiements excédants
+      overpaid_value: paiements excédantaires
       receipts: reçus
       receipts_value: receipts value
       reminder: rappel
@@ -64,10 +64,11 @@ fr:
         private_tag_name: nom du tag privé
         subscription_at_this_date: à la date suivante
         tag_name_missing: nom du tag privé manquant
+        tag_tool: outil à tagger
         tag_with: tagger avec
         unprocessable_request: unprocessable request
         wrong_date: format de date incorrect
       values:
-        invoice_template: modèle de facture
+        invoice_template: modèle de facturese
         private_tag: tag privé
       values_title: valeurs associées aux tags privés

@@ -124,7 +124,7 @@ class Salaries::Tax < ActiveRecord::Base
   def prevent_destroy_if_used
     if tax_data.size > 0
       errors.add(:base,
-                 I18n.t(.*.tax.errors.unable_to_destroy_a_tax_which_is_used'))
+                 I18n.t('tax.errors.unable_to_destroy_a_tax_which_is_used'))
       false
     end
   end

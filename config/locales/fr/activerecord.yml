@@ -4,98 +4,98 @@ fr:
     attributes:
       activity:
         action: action
-        created_at: created_at
-        data: data
+        created_at: création
+        data: donnée
         id: id
-        person_id: person_id
-        resource_id: resource_id
-        resource_type: resource_type
-        updated_at: updated_at
+        person_id: ID de la personne
+        resource_id: ID de la ressource
+        resource_type: type de la ressource
+        updated_at: mise à jour
       affair:
-        buyer_id: buyer_id
-        created_at: created_at
+        buyer_id: ID de l'acheteur
+        created_at: création
         description: description
         id: id
-        owner_id: owner_id
-        receiver_id: receiver_id
-        title: title
-        updated_at: updated_at
+        owner_id: ID du propriétaire
+        receiver_id: ID du bénéficiaire
+        title: titre
+        updated_at: mise à jour
         value_currency: value_currency
-        value_in_cents: value_in_cents
+        value_in_cents: valeur en centimes
       application_setting:
         id: id
-        key: key
-        value: value
+        key: clé
+        value: valeur
       background_task:
-        created_at: created_at
+        created_at: création
         id: id
         options: options
         type: type
-        updated_at: updated_at
+        updated_at: mise à jour
       comment:
-        created_at: created_at
+        created_at: création
         description: description
         id: id
-        is_closed: is_closed
-        person_id: person_id
-        resource_id: resource_id
-        resource_type: resource_type
-        title: title
-        updated_at: updated_at
+        is_closed: est fermé
+        person_id: ID de la personne
+        resource_id: ID de la ressource
+        resource_type: type de la ressource
+        title: titre
+        updated_at: mise à jour
       elastic_search_attribute:
-        group: group
+        group: groupe
         id: id
-        indexing: indexing
-        mapping: mapping
-        model: model
-        name: name
+        indexing: indexation
+        mapping: représentations
+        model: modèle
+        name: nom
       employment_contract:
-        created_at: created_at
+        created_at: création
         description: description
         id: id
-        interval_ends_on: interval_ends_on
-        interval_starts_on: interval_starts_on
-        percentage: percentage
-        person_id: person_id
-        updated_at: updated_at
+        interval_ends_on: fin de l'intervalle
+        interval_starts_on: début de l'intervalle
+        percentage: pourcentage
+        person_id: ID de la personne
+        updated_at: mise à jour
       invoice:
-        affair_id: affair_id
-        created_at: created_at
+        affair_id: ID de l'affaire
+        created_at: création
         description: description
         id: id
-        invoice_template_id: invoice_template_id
-        is_closed: is_closed
-        pdf_content_type: pdf_content_type
-        pdf_file_name: pdf_file_name
-        pdf_file_size: pdf_file_size
-        pdf_updated_at: pdf_updated_at
-        printed_address: printed_address
-        title: title
-        updated_at: updated_at
+        invoice_template_id: ID de l'example de facture
+        is_closed: est fermé
+        pdf_content_type: type de contenu PDF
+        pdf_file_name: nom du fichier PDF
+        pdf_file_size: taille du fichier PDF
+        pdf_updated_at: mise à jour du PDF
+        printed_address: adresse imprimée
+        title: titre
+        updated_at: mise à jour
         value_currency: value_currency
-        value_in_cents: value_in_cents
+        value_in_cents: valeur en centimes
       invoice_template:
         bvr_account: bvr_account
         bvr_address: bvr_address
-        created_at: created_at
+        created_at: création
         html: html
         id: id
-        show_invoice_value: show_invoice_value
+        show_invoice_value: voir le montant de la facture
         snapshot_content_type: snapshot_content_type
         snapshot_file_name: snapshot_file_name
         snapshot_file_size: snapshot_file_size
         snapshot_updated_at: snapshot_updated_at
-        title: title
-        updated_at: updated_at
-        with_bvr: with_bvr
+        title: titre
+        updated_at: mise à jour
+        with_bvr: avec BVR
       job:
         description: description
         id: id
-        name: name
+        name: nom
       language:
         code: code
         id: id
-        name: name
+        name: nom
       location:
         id: id
         iso_code_a2: iso_code_a2
@@ -103,16 +103,16 @@ fr:
         iso_code_num: iso_code_num
         name: name
         parent_id: parent_id
-        phone_prefix: phone_prefix
-        postal_code_prefix: postal_code_prefix
+        phone_prefix: préfixe téléphonique
+        postal_code_prefix: préfixe du code postal
       permission:
         action: action
-        created_at: created_at
+        created_at: création
         hash_conditions: hash_conditions
         id: id
-        role_id: role_id
-        subject: subject
-        updated_at: updated_at
+        role_id: ID du rôle
+        subject: sujet
+        updated_at: mise à jour
       person:
         address: adresse
         authentication_token: jeton d'authentification
@@ -153,77 +153,77 @@ fr:
       private_tag:
         id: id
         name: name
-        parent_id: parent_id
+        parent_id: ID du parent
       public_tag:
         id: id
-        name: name
-        parent_id: parent_id
+        name: nom
+        parent_id: ID du parent
       query_preset:
         id: id
-        name: name
-        query: query
+        name: nom
+        query: requète
       receipt:
-        created_at: created_at
+        created_at: création
         id: id
-        invoice_id: invoice_id
-        means_of_payment: means_of_payment
-        updated_at: updated_at
+        invoice_id: ID de la facture
+        means_of_payment: moyen de paiement
+        updated_at: mise à jour
         value_currency: value_currency
-        value_date: value_date
-        value_in_cents: value_in_cents
+        value_date: date de valeur
+        value_in_cents: valeur en centimes
       role:
-        created_at: created_at
+        created_at: création
         description: description
         id: id
-        ldap_query: ldap_query
-        name: name
-        updated_at: updated_at
+        ldap_query: requète LDAP
+        name: nom
+        updated_at: mise à jour
       subscription:
-        created_at: created_at
+        created_at: création
         description: description
         id: id
-        interval_ends_on: interval_ends_on
-        interval_starts_on: interval_starts_on
-        invoice_template_id: invoice_template_id
+        interval_ends_on: fin de l'intervalle
+        interval_starts_on: début de l'intervalle
+        invoice_template_id: Id de l'example de facture
         last_pdf_generation_query: last_pdf_generation_query
-        pdf_content_type: pdf_content_type
-        pdf_file_name: pdf_file_name
-        pdf_file_size: pdf_file_size
+        pdf_content_type: type de contenu PDF
+        pdf_file_name: nom du fichier PDF
+        pdf_file_size: taille du fichier PDF
         pdf_updated_at: pdf_updated_at
-        title: title
-        updated_at: updated_at
+        title: titre
+        updated_at: mise à jour
         value_currency: value_currency
-        value_in_cents: value_in_cents
+        value_in_cents: valeur en centimes
       task:
-        affair_id: affair_id
-        created_at: created_at
+        affair_id: ID de l'affaire
+        created_at: création
         date: date
         description: description
-        duration: duration
-        executer_id: executer_id
+        duration: durée
+        executer_id: ID de l'exécutant
         id: id
-        task_type_id: task_type_id
-        updated_at: updated_at
+        task_type_id: ID du type de tâche
+        updated_at: mise à jour
         value_currency: value_currency
-        value_in_cents: value_in_cents
+        value_in_cents: valeur en centimes
       task_preset:
         description: description
-        duration: float
+        duration: durée
         id: id
-        task_type_id: task_type_id
-        title: title
+        task_type_id: ID du type de tâche
+        title: titre
         value_currency: value_currency
-        value_in_cents: value_in_cents
+        value_in_cents: valeur en centimes
       task_type:
         description: description
         id: id
         ratio: ratio
-        title: title
+        title: titre
       translation_aptitude:
-        from_language_id: from_language_id
+        from_language_id: de la langue
         id: id
-        person_id: person_id
-        to_language_id: to_language_id
+        person_id: ID de la personne
+        to_language_id: à la langue
     errors:
       format: ! '%{attribute} %{message}'
       messages:

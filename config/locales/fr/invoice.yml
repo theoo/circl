@@ -15,7 +15,7 @@ fr:
       export: export des factures
       invoice_date: date de la facture
       invoice_value: valeur de la facture
-      printed_address: dresse imprimée
+      printed_address: adresse imprimée
       status: statut
       statuses: 
         cancelled: annulée

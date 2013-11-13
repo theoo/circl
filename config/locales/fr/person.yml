@@ -6,7 +6,7 @@ fr:
       panels:
         current_affairs: Affaires en cours
         last_comments: Derniers commentaires
-        last_people_added: ernières personnes ajoutées
+        last_people_added: Dernières personnes ajoutées
         messages: Messages
         open_invoices: Factures ouvertes
         open_salaries: Salaries ouverts
@@ -14,7 +14,7 @@ fr:
         timesheet: Pointeuse
         your_activity: Votre activité
       tech_support: support technique
-      welcome: welcome
+      welcome: Bienvenu
     errors:
       an_email_is_required_if_it_is_loggable: Un email est requis pour que la personne puisse se connecter.
       avs_number_control_key_is_invalid: la clé de contrôle ne correspond pas, veuillez vérifier la saisie du numéro.
@@ -62,12 +62,12 @@ fr:
     views:
       account_settings: paramètres du compte
       activities: Activités
-      address: Adresse
+      address: adresse
       affairs: Projets / Affaires
       api: API
       autentication_token: jeton d'authentification
       avs_number: numéro AVS
-      bank_informations: Informations bancaires
+      bank_informations: informations bancaires
       birth_date: date de naissance
       change_password: Changer de mot de passe
       change_password_for: Changer le mot de pass de <b>%{person}</b>
@@ -85,7 +85,7 @@ fr:
       is_an_organization: est une organisation
       job: métier
       last_name: nom de famille
-      location: Localité / lieu
+      location: localité / lieu
       logout: Déconnexion
       mobile: mobile
       nationality: nationalité
