@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+  <title>Test Suite</title>
+</head>
+<body>
+<table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
+<tr><td><b>Test Suite</b></td></tr>
+<tr><td><a href="../person/usage_login">usage_login</a></td></tr>
+<tr><td><a href="dashboard_last_people_added_panel">dashboard_last_people_added_panel</a></td></tr>
+<tr><td><a href="usage_dashboard_activity_panel">usage_dashboard_activity_panel</a></td></tr>
+<tr><td><a href="usage_dashboard_comments_panel">usage_dashboard_comments_panel</a></td></tr>
+<tr><td><a href="usage_dashboard_comments_panel">usage_dashboard_comments_panel</a></td></tr>
+<tr><td><a href="usage_dashboard_current_affaires_panel">usage_dashboard_current_affaires_panel</a></td></tr>
+<tr><td><a href="usage_dashboard_open_invoices_panel">usage_dashboard_open_invoices_panel</a></td></tr>
+<tr><td><a href="usage_dashboard_open_salaries_panel">usage_dashboard_open_salaries_panel</a></td></tr>
+<tr><td><a href="../person/usage_logout">usage_logout</a></td></tr>
+</tbody></table>
+</body>
+</html>
