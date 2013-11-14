@@ -134,4 +134,41 @@ class Settings::ProductsController < ApplicationController
     end
   end
 
+  def search
+    if params[:term].blank?
+      result = []
+    else
+      param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
+      result = @products.where("products.key #{SQL_REGEX_KEYWORD} ? OR products.title #{SQL_REGEX_KEYWORD} ?", param, param)
+    end
+
+    respond_to do |format|
+      format.json do
+        render :json => result.map{ |t| { :id => t.id,
+          :label => t.key,
+          :title => t.title,
+          :desc => t.description }}
+      end
+    end
+  end
+
+  def programs
+    if params[:term].blank?
+      result = []
+    else
+      param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
+      result = @product.programs.where("product_programs.key #{SQL_REGEX_KEYWORD} ? OR product_programs.title #{SQL_REGEX_KEYWORD} ?", param, param)
+    end
+
+    respond_to do |format|
+      format.json do
+        render :json => result.map{ |t| { :id => t.id,
+          :label => t.key,
+          :title => t.title,
+          :desc => t.description }}
+      end
+    end
+  end
+
+
 end

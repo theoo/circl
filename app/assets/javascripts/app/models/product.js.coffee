@@ -20,8 +20,7 @@ class App.Product extends Spine.Model
               "description", "has_accessories", "archive", "variants"
 
   @extend Spine.Model.Ajax
-  @url: ->
-    "#{Spine.Model.host}/settings/products"
+  @url: -> undefined
 
   constructor: ->
     super

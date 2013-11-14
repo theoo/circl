@@ -4,5 +4,8 @@ en:
     views:
       after_sale: after sale
       has_accessories: has accessories
+      position: position
+      product_search: product
       provider: provider
+      quantity: quantity
       variants: variants

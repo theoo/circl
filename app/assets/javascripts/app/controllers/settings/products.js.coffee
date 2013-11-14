@@ -157,6 +157,9 @@ class App.SettingsProducts extends Spine.Controller
   constructor: (params) ->
     super
 
+    Product.url = ->
+      "#{Spine.Model.host}/settings/products"
+
     @index = new Index
     @edit = new Edit
     @new = new New

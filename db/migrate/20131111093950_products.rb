@@ -60,15 +60,19 @@ class Products < ActiveRecord::Migration
 
     # PRODUCT LISTS
     create_table :affairs_product_variants, :id => false do |t|
+      t.integer :parent_id
       t.integer :affair_id
       t.integer :variant_id
+      t.integer :program_id
       t.integer :position
       t.integer :quantity
 
       t.timestamps
     end
     add_index :affairs_product_variants, [:affair_id, :variant_id, :position], :uniq => true, :name => "affairs_product_variants_unique_position"
+    add_index :affairs_product_variants, :parent_id
     add_index :affairs_product_variants, :affair_id
+    add_index :affairs_product_variants, :program_id
     add_index :affairs_product_variants, :variant_id
   end
 end

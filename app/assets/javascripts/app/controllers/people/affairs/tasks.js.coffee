@@ -35,6 +35,7 @@ class New extends App.TimesheetExtention
 
   constructor: (params) ->
     super
+    PersonTask.bind('refresh', @render)
 
   active: (params) =>
     if params

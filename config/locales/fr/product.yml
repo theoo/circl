@@ -6,6 +6,9 @@ fr:
       description: description
       has_accessories: accessoires
       key: clé
+      position: position
+      product_search: produit
       provider: fournisseur
+      quantity: quantité
       title: titre
       variants: variantes

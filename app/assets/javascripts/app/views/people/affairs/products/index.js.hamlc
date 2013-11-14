@@ -1,0 +1,48 @@
+%table.datatable
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th= I18n.t('common.key')
+      %th= I18n.t('common.description')
+      %th= I18n.t('product.views.variants')
+      %th= I18n.t('product.views.has_accessories')
+      %th.desc= I18n.t('common.updated_at')
+
+  %tbody
+    - for product in App.Product.all()
+      - classes = ['item']
+      - classes.push 'success' if ! product.archive
+      %tr{:data-id => product.id, :class => classes.join(" ")}
+        %td= product.id
+        %td= product.key
+        %td
+          %b= product.title
+          %br
+          - if product.description.length > 250
+            != product.description.replace(/\n/g, '<br/>').substring(0, 250).trim() + "..."
+          - else
+            != product.description.replace(/\n/g, '<br/>')
+
+        %td= product.variants_count
+        %td= I18n.t("common." + product.has_accessories)
+        %td= product.updated_at
+
+- if App.Product.all().length > 0
+  .panel-footer
+    .btn-group
+      %button{:type => 'button',
+              :data-toggle => 'dropdown',
+              :class => 'btn btn-default dropdown-toggle' }
+        .icon-paper-clip
+        = I18n.t("common.export")
+        .caret
+
+      %ul.dropdown-menu
+        %li
+          %a{:href => '#', :name => 'products-csv'}
+            .icon-file-text
+            = I18n.t('common.csv')
+        %li
+          %a{:href => '#', :name => 'products-pdf'}
+            .icon-file
+            = I18n.t('common.pdf')

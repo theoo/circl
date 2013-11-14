@@ -386,6 +386,20 @@ class Ui
                 .autocomplete
                   source: text_field.attr('action')
                   select: select_callback
+                .data("ui-autocomplete")._renderItem = (ul, item) ->
+                  if item.title or item.desc
+                    content = $("<a><b>#{item.label}</b></a>")
+                  else
+                    content = $("<a>#{item.label}</a>")
+
+                  if item.title
+                    content.append(" <i>#{item.title}</i>")
+
+                  if item.desc
+                    content.append("<br/>#{item.desc}")
+
+                  $("<li>").append(content).appendTo(ul)
+
 
   load_multi_autocompleters: (context) ->
     context.find('div.multi_autocompleted').each (index, div) ->

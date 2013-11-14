@@ -36,11 +36,13 @@ class AffairsProductVariant < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
+  acts_as_tree
+
   belongs_to :affair
   belongs_to :variant, :class_name => "ProductVariant"
+  belongs_to :program, :class_name => "ProductProgram"
 
   has_one :product, :through => :variant
-  has_many :programs, :through => :variant
 
   ###################
   ### VALIDATIONS ###
@@ -53,6 +55,18 @@ class AffairsProductVariant < ActiveRecord::Base
   #### CLASS METHODS #####
   ########################
 
+  # Attributes overridden - JSON API
+  def as_json(options = nil)
+    h = super(options)
+
+    h[:program_key]     = provider.try(:name)
+    h[:parent_key]      = parent.try(:key)
+    h[:has_accessories] = product.try(:has_accessories)
+
+    h[:errors]         = errors
+
+    h
+  end
 
   ########################
   ### INSTANCE METHODS ###

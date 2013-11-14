@@ -14,23 +14,15 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class App.ProductProgram extends Spine.Model
+class App.PersonAffairProductVariant extends Spine.Model
 
-  @configure 'ProductProgram', "id", "key", "title", "description", "color",
-              "program_group", "archive"
+  @configure 'PersonAffairProductVariant', "parent_id", "affair_id", "variant_id", "program_id",
+    "parent_key", "affair_title", "variant_key", "program_key",
+    "position", "quantity", "created_at", "updated_at"
+
   @extend Spine.Model.Ajax
-  @url: ->
-    "#{Spine.Model.host}/settings/product_programs"
 
-  constructor: (params) ->
-    super(params)
+  @url: -> undefined
 
-  @fetch_names: ->
-    get_callback = (data) =>
-      @program_names = data
-      @trigger "names_fetched"
-
-    $.get(ProductProgram.url() + "/program_groups", get_callback, 'json')
-
-  @names: ->
-    @program_names.sort() if @program_names
+  constructor: ->
+    super

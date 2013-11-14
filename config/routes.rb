@@ -49,6 +49,12 @@ Directory::Application.routes.draw do
         end
       end
 
+      resources :products, :controller => 'people/affairs/products' do
+        collection do
+          get 'search'
+        end
+      end
+
       resources :receipts, :controller => 'people/affairs/receipts'
 
       resources :subscriptions, :controller => 'people/affairs/subscriptions' do
@@ -242,12 +248,18 @@ Directory::Application.routes.draw do
 
     resources :permissions, :only => :index
 
-    resources :products
+    resources :products do
+      collection do
+        get 'search'
+      end
+      member do
+        get 'programs'
+      end
+    end
 
     resources :product_programs do
       collection do
-        get 'program_groups'
-        get 'program_group_search'
+        get 'program_groups', 'program_group_search', 'search'
       end
     end
 
