@@ -139,15 +139,23 @@ class Affair < ActiveRecord::Base
   # attributes overridden - JSON API
   def as_json(options = nil)
     h = super(options)
-    h[:owner_name]     = owner.try(:name)
-    h[:buyer_name]     = buyer.try(:name)
-    h[:receiver_name]  = receiver.try(:name)
-    h[:invoices_count] = invoices.count
-    h[:invoices_value] = invoices_value.to_f
-    h[:receipts_count] = receipts.count
-    h[:receipts_value] = receipts_value.to_f
-    h[:value]          = value.try(:to_f)
-    h[:statuses]       = get_statuses.map{|s| I18n.t("affair.views.statuses." + s.to_s)}.join(", ")
+    h[:owner_name]          = owner.try(:name)
+    h[:buyer_name]          = buyer.try(:name)
+    h[:receiver_name]       = receiver.try(:name)
+    h[:invoices_count]      = invoices.count
+    h[:invoices_value]      = invoices_value.to_f
+    h[:receipts_count]      = receipts.count
+    h[:receipts_value]      = receipts_value.to_f
+    h[:subscriptions_count] = subscriptions.count
+    h[:subscriptions_value] = subscriptions_value.to_f
+    h[:tasks_count]         = tasks.count
+    h[:tasks_value]         = tasks_value.to_f
+    h[:products_count]      = product_items.count
+    h[:products_value]      = product_items_value.to_f
+    h[:extras_count]        = extras.count
+    h[:extras_value]        = extras_value.to_f
+    h[:value]               = value.try(:to_f)
+    h[:statuses]            = get_statuses.map{|s| I18n.t("affair.views.statuses." + s.to_s)}.join(", ")
     h
   end
 
@@ -157,6 +165,29 @@ class Affair < ActiveRecord::Base
 
   def receipts_value
     receipts.map(&:value).sum.to_money
+  end
+
+  def subscriptions_value
+    # Sum only leaves of a subscription tree (the last child)
+    leaves = find_children(subscriptions)
+    leaves.map{|l| l.value_for(owner)}.sum.to_money
+  end
+
+  def tasks_value
+    tasks.map(&:value).sum.to_money
+  end
+
+  def product_items_value
+    product_items.map(&:value).sum.to_money
+  end
+
+  # TODO remove me when extras exist
+  def extras
+    []
+  end
+
+  def extras_value
+    extras.map(&:value).sum.to_money
   end
 
   def balance_value
@@ -221,8 +252,10 @@ class Affair < ActiveRecord::Base
   # It will set this affair's value to the computed value of all provisions and
   # returns its value.
   def compute_value
-    self.value = compute_subscriptions_total
-    # self.value += compute_tasks_total
+    self.value = subscriptions_value
+    self.value += tasks_value
+    self.value += product_items_value
+    # self.value += extras_value
     self.value
   end
 
@@ -244,12 +277,6 @@ class Affair < ActiveRecord::Base
     statuses
   end
 
-  def compute_subscriptions_total
-    # Sum only leaves of a subscription tree (the last child)
-    leaves = find_children(subscriptions)
-    leaves.map{|l| l.value_for(owner)}.sum.to_money
-  end
-
   def find_children(subscriptions)
     subs = []
     subscriptions.each do |s|
@@ -260,10 +287,6 @@ class Affair < ActiveRecord::Base
       end
     end
     subs.flatten.uniq
-  end
-
-  def compute_tasks_total
-    tasks.map(&:value).sum.to_money
   end
 
   def ensure_buyer_and_receiver_person_exists
