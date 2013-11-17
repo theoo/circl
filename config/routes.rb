@@ -250,7 +250,7 @@ Directory::Application.routes.draw do
 
     resources :products do
       collection do
-        get 'search'
+        get 'search', 'count'
       end
       member do
         get 'programs'

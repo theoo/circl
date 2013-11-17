@@ -1,33 +1,31 @@
 %table.datatable
   %thead
     %tr
-      %th= I18n.t('common.id')
+      %th= I18n.t('product.views.table.position')
+      %th= I18n.t('product.views.table.quantity')
       %th= I18n.t('common.key')
       %th= I18n.t('common.description')
-      %th= I18n.t('product.views.variants')
-      %th= I18n.t('product.views.has_accessories')
-      %th.desc= I18n.t('common.updated_at')
+      %th= I18n.t('common.value')
 
   %tbody
-    - for product in App.Product.all()
+    - for item in App.PersonAffairProductVariant.all()
       - classes = ['item']
-      - classes.push 'success' if ! product.archive
-      %tr{:data-id => product.id, :class => classes.join(" ")}
-        %td= product.id
-        %td= product.key
+      - classes.push 'success' if ! item.archive
+      %tr{:data-id => item.id, :class => classes.join(" ")}
+        %td= item.position
+        %td= item.quantity
+        %td= item.key
         %td
-          %b= product.title
+          %b= item.title
           %br
-          - if product.description.length > 250
-            != product.description.replace(/\n/g, '<br/>').substring(0, 250).trim() + "..."
+          - if item.description.length > 250
+            != item.description.replace(/\n/g, '<br/>').substring(0, 250).trim() + "..."
           - else
-            != product.description.replace(/\n/g, '<br/>')
+            != item.description.replace(/\n/g, '<br/>')
 
-        %td= product.variants_count
-        %td= I18n.t("common." + product.has_accessories)
-        %td= product.updated_at
+        %td.number= item.value.to_view()
 
-- if App.Product.all().length > 0
+- if App.PersonAffairProductVariant.all().length > 0
   .panel-footer
     .btn-group
       %button{:type => 'button',

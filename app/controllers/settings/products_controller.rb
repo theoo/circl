@@ -170,5 +170,10 @@ class Settings::ProductsController < ApplicationController
     end
   end
 
+  def count
+    respond_to do |format|
+      format.json { render :json => {:count => Product.count} }
+    end
+  end
 
 end

@@ -1,5 +1,5 @@
 class Products < ActiveRecord::Migration
-  def change
+  def up
     # PRODUCTS
     create_table :products do |t|
       t.integer :provider_id
@@ -25,7 +25,6 @@ class Products < ActiveRecord::Migration
 
       t.string  :program_group, :null => false
       t.string  :title
-      t.text    :description
 
       t.integer :buying_price_in_cents
       t.string  :buying_price_currency, :null => false, :default => 'CHF'
@@ -59,7 +58,7 @@ class Products < ActiveRecord::Migration
     add_index :product_programs, :archive
 
     # PRODUCT LISTS
-    create_table :affairs_product_variants, :id => false do |t|
+    create_table :affairs_product_variants do |t|
       t.integer :parent_id
       t.integer :affair_id
       t.integer :variant_id
@@ -74,5 +73,12 @@ class Products < ActiveRecord::Migration
     add_index :affairs_product_variants, :affair_id
     add_index :affairs_product_variants, :program_id
     add_index :affairs_product_variants, :variant_id
+  end
+
+  def down
+    drop_table :products
+    drop_table :product_variants
+    drop_table :product_programs
+    drop_table :affairs_product_variants
   end
 end

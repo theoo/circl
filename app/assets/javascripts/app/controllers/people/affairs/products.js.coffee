@@ -24,27 +24,9 @@ $.fn.product = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
 
-class New extends App.ExtendedController
-  events:
-    'submit form': 'submit'
-
-  constructor: ->
-    super
-    PersonAffairProductVariant.bind('refresh', @render)
-
-  active: (params) =>
-    if params
-      @person_id = params.person_id if params.person_id
-      @affair_id = params.affair_id if params.affair_id
-      @can = params.can if params.can
-
-    @render()
+class PersonAffairProductExtention extends App.ExtendedController
 
   render: =>
-    @show()
-    @product = new PersonAffairProductVariant()
-    @html @view('people/affairs/products/form')(@)
-
     @product_field = @el.find("#person_affair_product_search")
     @product_id_field = @el.find("input[name=variant_id]")
     @program_field = @el.find("#person_affair_product_program_search")
@@ -62,6 +44,28 @@ class New extends App.ExtendedController
       @program_field.autocomplete({source: '/settings/products/' + ui.item.id + '/programs' })
     )
 
+
+class New extends PersonAffairProductExtention
+  events:
+    'submit form': 'submit'
+
+  constructor: ->
+    super
+
+  active: (params) =>
+    if params
+      @person_id = params.person_id if params.person_id
+      @affair_id = params.affair_id if params.affair_id
+      @can = params.can if params.can
+
+    @render()
+
+  render: =>
+    super
+    @show()
+    @product = new PersonAffairProductVariant(quantity: 1)
+    @html @view('people/affairs/products/form')(@)
+
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>
@@ -69,12 +73,13 @@ class New extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @product.fromForm(e.target), @render
+    @product.fromForm(e.target)
+    @save_with_notifications @product, @render
 
-class Edit extends App.ExtendedController
+class Edit extends PersonAffairProductExtention
   events:
     'submit form': 'submit'
-    'click button[name=settings-product-destroy]': 'destroy'
+    'click button[name=person-affair-product-destroy]': 'destroy'
 
   constructor: ->
     super
@@ -86,6 +91,7 @@ class Edit extends App.ExtendedController
 
   render: =>
     return unless PersonAffairProductVariant.exists(@id) && @can
+    super
 
     @product = PersonAffairProductVariant.find(@id)
 
@@ -98,7 +104,8 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @product.fromForm(e.target), @hide
+    @product.fromForm(e.target)
+    @save_with_notifications @product, @hide
 
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
@@ -108,6 +115,8 @@ class Index extends App.ExtendedController
   events:
     'click tr.item':      'edit'
     'datatable_redraw': 'table_redraw'
+    'click a[name=products-csv]': 'export_csv'
+    'click a[name=products-pdf]': 'export_pdf'
 
   constructor: (params) ->
     super
@@ -130,6 +139,14 @@ class Index extends App.ExtendedController
       target = $(@el).find("tr[data-id=#{@id}]")
 
     @activate_in_list(target)
+
+  export_csv: (e) ->
+    e.preventDefault()
+    window.location = PersonAffairProductVariant.url() + ".csv"
+
+  export_pdf: (e) ->
+    e.preventDefault()
+    window.location = PersonAffairProductVariant.url() + ".pdf"
 
 class App.PersonAffairProducts extends Spine.Controller
   className: 'products'
@@ -159,11 +176,14 @@ class App.PersonAffairProducts extends Spine.Controller
       @person_id = params.person_id if params.person_id
       @affair_id = params.affair_id if params.affair_id
 
-    ProductProgram.one 'names_fetched', =>
-      Permissions.get { person_id: @person_id, can: { invoice: ['create', 'update'] }}, (data) =>
-        @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
-        @index.active {can: data}
-        @edit.active {can: data}
-        @edit.hide()
+    App.Product.one 'count_fetched', =>
+      ProductProgram.one 'names_fetched', =>
+        Permissions.get { person_id: @person_id, can: { invoice: ['create', 'update'] }}, (data) =>
+          @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
+          @index.active {can: data}
+          @edit.active {can: data}
+          @edit.hide()
 
-    ProductProgram.fetch_names()
+      ProductProgram.fetch_names()
+
+    App.Product.fetch_count()

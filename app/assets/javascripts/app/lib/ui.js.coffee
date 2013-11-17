@@ -109,25 +109,25 @@ class Ui
     table.addClass("table table-hover table-condensed table-responsive")
 
   datatable_localstorage: (table) ->
-    # get widget name to scope localstorage entry (datatable state)
+    # get panel name to scope localstorage entry (datatable state)
     # it is required to set a "name" attribute when two tables are
-    # displayed in the same widget.
-    widget_id = table.closest('.widget').attr('id')
+    # displayed in the same panel.
+    panel_id = table.closest('.panel').attr('id')
     table_name = table.attr('name')
 
     if table_name == undefined
-      if widget_id == undefined
-        widget_name = 'datatable_' + window.location.pathname
+      if panel_id == undefined
+        panel_name = 'datatable' + window.location.pathname
       else
-        widget_name = 'widget_datatable_' + widget_id
+        panel_name = 'panel_datatable_' + panel_id
     else
-      widget_name = 'widget_datatable_' + table_name
+      panel_name = 'panel_datatable_' + table_name
 
     # callbacks to save and load in localstorage
     @datatable_local_storage_save_callback = (oSettings, oData) ->
-      localStorage.setItem(widget_name, JSON.stringify(oData))
+      localStorage.setItem(panel_name, JSON.stringify(oData))
     @datatable_local_storage_load_callback = (oSettings) ->
-      return JSON.parse(localStorage.getItem(widget_name))
+      return JSON.parse(localStorage.getItem(panel_name))
 
 
   datatable_params: (table, overloaded_params = {}) ->

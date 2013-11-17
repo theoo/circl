@@ -30,15 +30,42 @@ class People::Affairs::ProductsController < ApplicationController
   def index
     authorize! :read, @person => AffairsProductVariant
 
-    @products = @affair.product_variants
+    @products = @affair.product_items
 
     respond_to do |format|
       format.json { render :json => @products }
+
       format.csv do
         fields = []
-        fields << 'title'
+        fields << 'position'
+        fields << 'parent.try(:position)'
+        fields << 'parent.try(:product).try(:key)'
+        fields << 'quantity'
+        fields << 'product.key'
+        fields << 'product.title'
+        fields << 'program.description'
+        fields << 'product.key'
+        fields << 'program.key'
+        fields << 'program.title'
+        fields << 'program.description'
         fields << 'value'
         render :inline => csv_ify(@products, fields)
+      end
+
+      format.pdf do
+        # TODO Allow user to edit this pdf listing through a template
+        html = render_to_string(:layout => 'pdf.html.haml')
+
+        html.assets_to_full_path!
+
+        file = Tempfile.new(['products', '.pdf'], :encoding => 'ascii-8bit')
+        file.binmode
+        file.write(PDFKit.new(html).to_pdf)
+        file.flush
+
+        send_data File.read(file), :filename => "affair_#{params[:affair_id]}_products.pdf", :type => 'application/pdf'
+
+        file.unlink
       end
     end
   end
@@ -50,12 +77,8 @@ class People::Affairs::ProductsController < ApplicationController
   def create
     authorize! :create, @person => AffairsProductVariant
 
-    # remove relations if not sent
-    params[:parent_id] = nil unless params[:parent_id]
-    params[:program_id] = nil unless params[:program_id]
-    params[:variant_id] = nil unless params[:variant_id]
-
-    @product = @affair.product_variant.new(params)
+    @product = @affair.product_items.new
+    update_instance(params)
 
     respond_to do |format|
       if @product.save
@@ -69,7 +92,7 @@ class People::Affairs::ProductsController < ApplicationController
   def edit
     authorize! :read, @person => AffairsProductVariant
 
-    @product = @affair.product_variants.find(params[:id])
+    @product = @affair.product_items.find(params[:id])
 
     respond_to do |format|
       format.json { render :json => @product }
@@ -79,11 +102,11 @@ class People::Affairs::ProductsController < ApplicationController
   def update
     authorize! :update, @person => AffairsProductVariant
 
-    @product = @affair.product_variants.find(params[:id])
+    @product = @affair.product_items.find(params[:id])
+    update_instance(params)
 
-    @product.value = params[:value]
     respond_to do |format|
-      if @product.update_attributes(params[:product])
+      if @product.save
         format.json { render :json => @product }
       else
         format.json { render :json => @product.errors, :status => :unprocessable_entity }
@@ -94,7 +117,7 @@ class People::Affairs::ProductsController < ApplicationController
   def destroy
     authorize! :destroy, @person => AffairsProductVariant
 
-    @product = @affair.product_variants.find(params[:id])
+    @product = @affair.product_items.find(params[:id])
 
     respond_to do |format|
       if @product.destroy
@@ -108,7 +131,7 @@ class People::Affairs::ProductsController < ApplicationController
   def search
     authorize! :read, @person => AffairsProductVariant
 
-    @products = @affair.product_variants
+    @products = @affair.product_items
 
     if params[:term].blank?
       result = []
@@ -119,6 +142,22 @@ class People::Affairs::ProductsController < ApplicationController
     respond_to do |format|
       format.json { render :json => result.map{|t| {:id => t.id, :label => t.title}}}
     end
+  end
+
+  private
+
+  def update_instance(prod)
+    # remove relations if not sent
+    prod[:parent_id] = nil unless prod[:parent_id]
+    prod[:program_id] = nil unless prod[:program_id]
+    prod[:variant_id] = nil unless prod[:variant_id]
+
+    @product.assign_attributes(
+      :parent_id  => prod[:parent_id],
+      :program_id => prod[:program_id],
+      :variant_id => prod[:variant_id],
+      :position   => prod[:position],
+      :quantity   => prod[:quantity])
   end
 
 end

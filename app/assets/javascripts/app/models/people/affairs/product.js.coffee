@@ -18,7 +18,7 @@ class App.PersonAffairProductVariant extends Spine.Model
 
   @configure 'PersonAffairProductVariant', "parent_id", "affair_id", "variant_id", "program_id",
     "parent_key", "affair_title", "variant_key", "program_key",
-    "position", "quantity", "created_at", "updated_at"
+    "position", "quantity", "created_at", "updated_at", 'description', 'key', 'value'
 
   @extend Spine.Model.Ajax
 

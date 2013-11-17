@@ -114,10 +114,12 @@ class Edit extends App.TimesheetExtention
     @save_with_notifications @task, @hide
 
   destroy: (e) ->
+    e.preventDefault()
     if confirm(I18n.t("common.are_you_sure"))
-      @destroy_with_notifications(@task)
+      @destroy_with_notifications @task, @hide
 
   reset_value: () ->
+    e.preventDefault()
     @value_field.val @task.computed_value
 
 class Index extends App.ExtendedController

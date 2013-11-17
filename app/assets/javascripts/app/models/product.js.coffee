@@ -24,3 +24,13 @@ class App.Product extends Spine.Model
 
   constructor: ->
     super
+
+  @fetch_count: ->
+    get_callback = (data) =>
+      @products_count = data
+      @trigger "count_fetched"
+
+    $.get("#{Spine.Model.host}/settings/products/count", get_callback, 'json')
+
+  @count: ->
+    @products_count.count if @products_count
