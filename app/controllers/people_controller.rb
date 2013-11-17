@@ -140,7 +140,7 @@ class PeopleController < ApplicationController
     end
   end
 
-  def paginate
+  def paginate 
     unless params[:query] && params[:query].is_a?(ActiveSupport::HashWithIndifferentAccess)
       params[:query] = HashWithIndifferentAccess.new(JSON.parse(params[:query]))
     end

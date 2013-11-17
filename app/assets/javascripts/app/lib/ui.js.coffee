@@ -254,10 +254,11 @@ class Ui
       @datatable_appareance(table)
 
 
-  load_tabs: (context) ->
+  load_tabs: (context, on_tab_change_callback = undefined) ->
     rewrite_url_anchor = (anchor_name) ->
       hash = anchor_name.split('#')
       location.hash = hash[1] if hash.length > 1
+      # FIXME This horrid line cause display artifacts on chrome and ff.
       setTimeout((-> window.scrollTo(0,0)), 0) # :-(
 
     nav = context.find("#sub_nav")
@@ -268,6 +269,8 @@ class Ui
     nav.find("a").on 'shown.bs.tab', (e) ->
       rewrite_url_anchor $(e.target).attr('href')
       $("#tab_name").html(nav.find("li.active a").html())
+      if on_tab_change_callback
+        on_tab_change_callback()
 
     anchor = location.hash.split('#')
     anchor = anchor[1] if anchor
