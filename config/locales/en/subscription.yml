@@ -26,6 +26,8 @@ en:
       the_following_members_were_updated: the following members were updated
     notices:
       members_added: members added
+      no_existing_invoice_template_alert: no existing invoice template alert
+      no_existing_subscription_alert: no existing subscription alert
     views:
       actions:
         add_members_to_subscription: add members to subscription

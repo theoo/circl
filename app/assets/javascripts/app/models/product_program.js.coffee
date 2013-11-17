@@ -34,3 +34,13 @@ class App.ProductProgram extends Spine.Model
 
   @names: ->
     @program_names.sort() if @program_names
+
+  @fetch_count: ->
+    get_callback = (data) =>
+      @_count = data
+      @trigger "count_fetched"
+
+    $.get(@url() + "/count", get_callback, 'json')
+
+  @count: ->
+    @_count.count if @_count

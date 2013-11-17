@@ -108,4 +108,10 @@ class Settings::SalaryTemplatesController < ApplicationController
     end
   end
 
+  def count
+    respond_to do |format|
+      format.json { render :json => {:count => Salaries::SalaryTemplate.count} }
+    end
+  end
+
 end

@@ -27,11 +27,14 @@ class App.SalaryTemplate extends Spine.Model
 
   validate: ->
     e = new App.ErrorsList
-
-#    unless @title
-#      e.add title: I18n.t("activerecord.errors.messages.blank")
-
-#    unless @html
-#      e.add html: I18n.t("activerecord.errors.messages.blank")
-
     return e unless e.is_empty()
+
+  @fetch_count: ->
+    get_callback = (data) =>
+      @_count = data
+      @trigger "count_fetched"
+
+    $.get(@url() + "/count", get_callback, 'json')
+
+  @count: ->
+    @_count.count if @_count

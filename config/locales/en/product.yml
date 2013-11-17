@@ -1,6 +1,10 @@
 ---
 en:
   product:
+    notices:
+      no_existing_product_alert: no existing product alert
+      no_existing_product_button: no existing product button
+      no_existing_product_program_alert: no existing product program alert
     pdf:
       parent_position: parent position
       parent_product_key: parent product key

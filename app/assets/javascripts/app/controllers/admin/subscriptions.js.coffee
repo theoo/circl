@@ -509,7 +509,10 @@ class App.AdminSubscriptions extends Spine.Controller
 
   activate: ->
     super
-    InvoiceTemplate.fetch()
-    InvoiceTemplate.one 'refresh', =>
-      # No need to fetch, datatable is remote and loaded by Ui.js
-      @index.render()
+    InvoiceTemplate.one 'count_fetched', =>
+      InvoiceTemplate.one 'refresh', =>
+        # No need to fetch, datatable is remote and loaded by Ui.js
+        @index.render()
+
+      InvoiceTemplate.fetch()
+    InvoiceTemplate.fetch_count()

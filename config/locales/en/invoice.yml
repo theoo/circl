@@ -3,6 +3,8 @@ en:
   invoice:
     errors:
       cant_destroy_if_existing_receipt: cant destroy if existing receipt
+    notices:
+      no_existing_invoice_template_alert: no existing invoice template alert
     views:
       account: account
       actions:

@@ -1,25 +1,31 @@
-.panel-body
-  %form
-    .row
-      .col-lg-12
-        .validation_errors_placeholder
+- if App.Subscription.count() > 0
+  .panel-body
+    %form
+      .row
+        .col-lg-12
+          .validation_errors_placeholder
 
-    .row
-      .col-lg-12
-        .autocompleted.form-group
-          %label{:for => 'affair_subscription_title'}
-            = I18n.t('subscription.views.subscription')
-          %input{:type => 'search',
-                 :name => 'subscription',
-                 :id => 'affair_subscription_title',
-                 :value => '',
-                 :class => 'required form-control',
-                 :action => '/admin/subscriptions/search'}
-          %input{:type => 'hidden',
-            :name => 'subscription_id',
-            :value => ''}
+      .row
+        .col-lg-12
+          .autocompleted.form-group
+            %label{:for => 'affair_subscription_title'}
+              = I18n.t('subscription.views.subscription')
+            %input{:type => 'search',
+                   :name => 'subscription',
+                   :id => 'affair_subscription_title',
+                   :value => '',
+                   :class => 'required form-control',
+                   :action => '/admin/subscriptions/search'}
+            %input{:type => 'hidden',
+              :name => 'subscription_id',
+              :value => ''}
 
-    .row
-      .col-lg-12
-        .pull-right
-          != @partial('submit_button')()
+      .row
+        .col-lg-12
+          .pull-right
+            != @partial('submit_button')()
+
+- else
+  .panel-body
+    .alert.alert-warning
+      = I18n.t("subscription.notices.no_existing_subscription_alert")

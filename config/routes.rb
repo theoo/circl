@@ -129,10 +129,10 @@ Directory::Application.routes.draw do
 
     resources :taxes do
       member do
-        post :import_data
+        post 'import_data'
       end
       collection do
-        get :models
+        get 'models', 'count'
       end
     end
   end
@@ -198,7 +198,7 @@ Directory::Application.routes.draw do
       end
       collection do
         put 'tag_tool'
-        get 'search'
+        get 'search', 'count'
       end
     end
 
@@ -216,13 +216,13 @@ Directory::Application.routes.draw do
 
     resources :invoice_templates do
       collection do
-        get 'placeholders'
+        get 'placeholders', 'count'
       end
     end
 
     resources :salary_templates do
       collection do
-        get 'placeholders'
+        get 'placeholders', 'count'
       end
     end
 
@@ -259,7 +259,7 @@ Directory::Application.routes.draw do
 
     resources :product_programs do
       collection do
-        get 'program_groups', 'program_group_search', 'search'
+        get 'program_groups', 'program_group_search', 'search', 'count'
       end
     end
 

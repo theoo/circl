@@ -125,4 +125,10 @@ class Salaries::TaxesController < ApplicationController
     end
   end
 
+  def count
+    respond_to do |format|
+      format.json { render :json => {:count => Salaries::Tax.count} }
+    end
+  end
+
 end

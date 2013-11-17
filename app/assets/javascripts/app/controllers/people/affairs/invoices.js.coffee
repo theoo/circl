@@ -248,9 +248,6 @@ class App.PersonAffairInvoices extends Spine.Controller
       @person_id = params.person_id if params.person_id
       @affair_id = params.affair_id if params.affair_id
 
-    # PersonAffairInvoice.url = =>
-    #   "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@affair_id}/invoices"
-
     @index = new Index
     @edit = new Edit
     @new = new New
@@ -278,11 +275,14 @@ class App.PersonAffairInvoices extends Spine.Controller
       @person_id = params.person_id if params.person_id
       @affair_id = params.affair_id if params.affair_id
 
-    InvoiceTemplate.one "refresh", =>
-      Permissions.get { person_id: @person_id, can: { invoice: ['create', 'update'] }}, (data) =>
-        @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
-        @index.active {can: data}
-        @edit.active {can: data}
-        @edit.hide()
+    InvoiceTemplate.one 'count_fetched', =>
+      InvoiceTemplate.one "refresh", =>
+        Permissions.get { person_id: @person_id, can: { invoice: ['create', 'update'] }}, (data) =>
+          @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
+          @index.active {can: data}
+          @edit.active {can: data}
+          @edit.hide()
 
-    InvoiceTemplate.fetch()
+      InvoiceTemplate.fetch()
+
+    InvoiceTemplate.fetch_count()
