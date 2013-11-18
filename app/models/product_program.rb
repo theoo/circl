@@ -36,9 +36,7 @@ class ProductProgram < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  #has_many :variants, :class_name => 'ProductVariant',
-  #                    :dependent => :restrict
-  #has_many :products, :through => :variants
+  has_many :affairs_product_variants
 
   scope :actives, Proc.new { where(:archive => false)}
   scope :archived, Proc.new { where(:archive => true)}

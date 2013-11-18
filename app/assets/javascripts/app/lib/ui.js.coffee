@@ -109,25 +109,25 @@ class Ui
     table.addClass("table table-hover table-condensed table-responsive")
 
   datatable_localstorage: (table) ->
-    # get widget name to scope localstorage entry (datatable state)
+    # get panel name to scope localstorage entry (datatable state)
     # it is required to set a "name" attribute when two tables are
-    # displayed in the same widget.
-    widget_id = table.closest('.widget').attr('id')
+    # displayed in the same panel.
+    panel_id = table.closest('.panel').attr('id')
     table_name = table.attr('name')
 
     if table_name == undefined
-      if widget_id == undefined
-        widget_name = 'datatable_' + window.location.pathname
+      if panel_id == undefined
+        panel_name = 'datatable' + window.location.pathname
       else
-        widget_name = 'widget_datatable_' + widget_id
+        panel_name = 'panel_datatable_' + panel_id
     else
-      widget_name = 'widget_datatable_' + table_name
+      panel_name = 'panel_datatable_' + table_name
 
     # callbacks to save and load in localstorage
     @datatable_local_storage_save_callback = (oSettings, oData) ->
-      localStorage.setItem(widget_name, JSON.stringify(oData))
+      localStorage.setItem(panel_name, JSON.stringify(oData))
     @datatable_local_storage_load_callback = (oSettings) ->
-      return JSON.parse(localStorage.getItem(widget_name))
+      return JSON.parse(localStorage.getItem(panel_name))
 
 
   datatable_params: (table, overloaded_params = {}) ->
@@ -254,11 +254,12 @@ class Ui
       @datatable_appareance(table)
 
 
-  load_tabs: (context) ->
+  load_tabs: (context, on_tab_change_callback = undefined) ->
     rewrite_url_anchor = (anchor_name) ->
       hash = anchor_name.split('#')
-      location.hash = hash[1] if hash.length > 1
-      setTimeout((-> window.scrollTo(0,0)), 0) # :-(
+      if hash.length > 1
+        tab = hash[1].split("_")[0]
+        location.hash = tab if tab
 
     nav = context.find("#sub_nav")
     nav.find("a").click (e) ->
@@ -266,13 +267,20 @@ class Ui
       $(@).tab('show')
 
     nav.find("a").on 'shown.bs.tab', (e) ->
+      # Update url location in browser
       rewrite_url_anchor $(e.target).attr('href')
+
+      # Update info tab name
       $("#tab_name").html(nav.find("li.active a").html())
+
+      # Run callback if given
+      if on_tab_change_callback
+        on_tab_change_callback()
 
     anchor = location.hash.split('#')
     anchor = anchor[1] if anchor
 
-    tab_link = nav.find("a[href=#" + anchor + "]")
+    tab_link = nav.find("a[href=#" + anchor + "_tab]")
     tab_link = nav.find("a:first") if tab_link.length == 0
     tab_link.tab('show')
 
@@ -386,6 +394,20 @@ class Ui
                 .autocomplete
                   source: text_field.attr('action')
                   select: select_callback
+                .data("ui-autocomplete")._renderItem = (ul, item) ->
+                  if item.title or item.desc
+                    content = $("<a><b>#{item.label}</b></a>")
+                  else
+                    content = $("<a>#{item.label}</a>")
+
+                  if item.title
+                    content.append(" <i>#{item.title}</i>")
+
+                  if item.desc
+                    content.append("<br/>#{item.desc}")
+
+                  $("<li>").append(content).appendTo(ul)
+
 
   load_multi_autocompleters: (context) ->
     context.find('div.multi_autocompleted').each (index, div) ->

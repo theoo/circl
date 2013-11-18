@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131103153811) do
+ActiveRecord::Schema.define(:version => 20131111093950) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -34,6 +34,23 @@ ActiveRecord::Schema.define(:version => 20131103153811) do
   add_index "affairs", ["updated_at"], :name => "index_affairs_on_updated_at"
   add_index "affairs", ["value_currency"], :name => "index_affairs_on_value_currency"
   add_index "affairs", ["value_in_cents"], :name => "index_affairs_on_value_in_cents"
+
+  create_table "affairs_product_variants", :id => false, :force => true do |t|
+    t.integer  "parent_id"
+    t.integer  "affair_id"
+    t.integer  "variant_id"
+    t.integer  "program_id"
+    t.integer  "position"
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "affairs_product_variants", ["affair_id", "variant_id", "position"], :name => "affairs_product_variants_unique_position"
+  add_index "affairs_product_variants", ["affair_id"], :name => "index_affairs_product_variants_on_affair_id"
+  add_index "affairs_product_variants", ["parent_id"], :name => "index_affairs_product_variants_on_parent_id"
+  add_index "affairs_product_variants", ["program_id"], :name => "index_affairs_product_variants_on_program_id"
+  add_index "affairs_product_variants", ["variant_id"], :name => "index_affairs_product_variants_on_variant_id"
 
   create_table "affairs_subscriptions", :id => false, :force => true do |t|
     t.integer "affair_id"
@@ -323,6 +340,60 @@ ActiveRecord::Schema.define(:version => 20131103153811) do
 
   add_index "private_tags", ["name"], :name => "index_private_tags_on_name"
   add_index "private_tags", ["parent_id"], :name => "index_private_tags_on_parent_id"
+
+  create_table "product_programs", :force => true do |t|
+    t.string   "key",                              :null => false
+    t.string   "program_group",                    :null => false
+    t.string   "title"
+    t.text     "description"
+    t.boolean  "archive",       :default => false, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_programs", ["archive"], :name => "index_product_programs_on_archive"
+  add_index "product_programs", ["key"], :name => "index_product_programs_on_key"
+  add_index "product_programs", ["program_group"], :name => "index_product_programs_on_program_group"
+  add_index "product_programs", ["title"], :name => "index_product_programs_on_title"
+
+  create_table "product_variants", :force => true do |t|
+    t.integer  "product_id",                                :null => false
+    t.string   "program_group",                             :null => false
+    t.string   "title"
+    t.text     "description"
+    t.integer  "buying_price_in_cents"
+    t.string   "buying_price_currency",  :default => "CHF", :null => false
+    t.integer  "selling_price_in_cents",                    :null => false
+    t.string   "selling_price_currency", :default => "CHF"
+    t.integer  "art_in_cents"
+    t.string   "art_currency",           :default => "CHF"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "product_variants", ["art_in_cents"], :name => "index_product_variants_on_art_in_cents"
+  add_index "product_variants", ["buying_price_in_cents"], :name => "index_product_variants_on_buying_price_in_cents"
+  add_index "product_variants", ["product_id"], :name => "index_product_variants_on_product_id"
+  add_index "product_variants", ["program_group"], :name => "index_product_variants_on_program_group"
+  add_index "product_variants", ["selling_price_in_cents"], :name => "index_product_variants_on_selling_price_in_cents"
+
+  create_table "products", :force => true do |t|
+    t.integer  "provider_id"
+    t.integer  "after_sale_id"
+    t.string   "key",                                :null => false
+    t.string   "title"
+    t.text     "description"
+    t.boolean  "has_accessories", :default => false, :null => false
+    t.boolean  "archive",         :default => false, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "products", ["after_sale_id"], :name => "index_products_on_after_sale_id"
+  add_index "products", ["has_accessories"], :name => "index_products_on_has_accessories"
+  add_index "products", ["key"], :name => "index_products_on_key"
+  add_index "products", ["provider_id"], :name => "index_products_on_provider_id"
+  add_index "products", ["title"], :name => "index_products_on_title"
 
   create_table "public_tags", :force => true do |t|
     t.integer "parent_id"

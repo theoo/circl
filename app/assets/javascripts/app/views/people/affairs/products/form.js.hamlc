@@ -1,0 +1,95 @@
+- if App.Product.count() > 0
+  %form.panel-body
+    .row
+      .col-md-12
+        .validation_errors_placeholder
+
+    .row
+      .col-md-6.autocompleted.form-group
+        %label{:for => 'person_affair_product_search'}
+          = I18n.t('product.views.product_search')
+        %input{ :type => 'search',
+                :id => 'person_affair_product_search',
+                :name => 'variant',
+                :class => 'form-control required',
+                :value => @product.key,
+                :action => '/settings/products/search'}
+        %input{:type => 'hidden',
+               :name => 'variant_id',
+               :value => @product.variant_id}
+
+      .col-md-6.autocompleted.form-group
+        %label{:for => 'person_affair_product_program_search'}
+          = I18n.t('product_program.views.program_search')
+        %input{ :type => 'search',
+                :id => 'person_affair_product_program_search',
+                :name => 'program',
+                :class => 'form-control required',
+                :value => @product.program_key,
+                :action => '/settings/product_programs/search'}
+        %input{:type => 'hidden',
+               :name => 'program_id',
+               :value => @product.program_id}
+    .row
+      .col-md-6.autocompleted.form-group
+        %label{:for => 'person_affair_product_parent'}
+          = I18n.t('common.parent')
+        %input{ :type => 'search',
+                :id => 'person_affair_product_parent',
+                :name => 'parent',
+                :class => 'form-control',
+                :value => @product.parent_key,
+                :action => "/people/#{@person_id}/affairs/#{@affair_id}/products/search"}
+        %input{:type => 'hidden',
+               :name => 'parent_id',
+               :value => @product.parent_id}
+
+      .col-md-3.form-group
+        %label{:for => 'person_affair_product_quantity'}
+          = I18n.t('product.views.quantity')
+        %input{ :type => 'number',
+                :step => 1,
+                :min => 0,
+                :id => 'person_affair_product_quantity',
+                :name => 'quantity',
+                :class => 'form-control required',
+                :value => @product.quantity }
+
+      .col-md-3.form-group
+        - # if @product.has_accessories
+        %label{:for => 'person_affair_product_position'}
+          = I18n.t('product.views.position')
+        %input{ :type => 'number',
+                :step => 1,
+                :min => 0,
+                :id => 'person_affair_product_position',
+                :name => 'position',
+                :class => 'form-control',
+                :value => @product.position }
+
+    .row
+      .col-lg-12
+        .pull-right
+          %button{:type => 'submit', :class => 'btn btn-primary'}
+            - if @product.isNew()
+              .icon-plus
+              = I18n.t("common.add")
+            - else
+              .icon-download-alt
+              = I18n.t("common.update")
+
+        - unless @product.isNew()
+          %button{:type => 'button',
+                  :class => 'btn btn-danger',
+                  :name => 'person-affair-product-destroy'}
+            .icon-minus
+            = I18n.t("common.destroy")
+- else
+  .panel-body
+    .alert.alert-warning
+      = I18n.t("product.notices.no_existing_product_alert")
+
+      .text-right
+        %a{:href => '/settings#affairs', :class => 'btn btn-warning'}
+          = I18n.t("product.notices.no_existing_product_button")
+          .icon-chevron-right

@@ -18,7 +18,7 @@ Person = App.Person
 PersonAffair = App.PersonAffair
 PersonAffairSubscription = App.PersonAffairSubscription
 PersonTask = App.PersonTask
-# PersonAffairProduct = App.PersonAffairProduct
+PersonAffairProductVariant = App.PersonAffairProductVariant
 # PersonAffairExtra = App.PersonAffairExtra
 PersonAffairInvoice = App.PersonAffairInvoice
 PersonAffairReceipt = App.PersonAffairReceipt
@@ -90,6 +90,12 @@ class Edit extends App.ExtendedController
       PersonTask.fetch()
 
       # Products
+      person_affair_products_ctrl = $("#person_affair_products").data('controller')
+      person_affair_products_ctrl.activate(person_id: @person_id, affair_id: @id)
+      PersonAffairProductVariant.url = =>
+        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/products"
+      PersonAffairProductVariant.refresh([], clear: true)
+      PersonAffairProductVariant.fetch()
 
       # Extras
 
@@ -116,6 +122,20 @@ class Edit extends App.ExtendedController
     # Subscriptions
     PersonAffairSubscription.url = => undefined
     PersonAffairSubscription.refresh([], clear: true)
+
+    # Tasks
+    PersonTask.url = => undefined
+    PersonTask.refresh([], clear: true)
+
+    # Products
+    PersonAffairProductVariant.url = => undefined
+    PersonAffairProductVariant.refresh([], clear: true)
+
+    # Extras
+    #PersonAffairExtra.url = => undefined
+    #PersonAffairExtra.refresh([], clear: true)
+
+    @balance.deactive()
 
     # Invoices
     PersonAffairInvoice.url = => undefined
@@ -197,6 +217,10 @@ class Balance extends App.ExtendedController
         @overpaid = true
         @paid = 100 / @affair.receipts_value * @affair.invoices_value
 
+    @render()
+
+  deactive: (params) =>
+    # TODO
     @render()
 
   render: =>

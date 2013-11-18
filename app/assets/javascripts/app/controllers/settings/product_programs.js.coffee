@@ -42,7 +42,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
-    'click button[name=settings-product_program-destroy]': 'destroy'
+    'click button[name=settings-product-program-destroy]': 'destroy'
 
   constructor: ->
     super

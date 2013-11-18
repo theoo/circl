@@ -110,6 +110,9 @@ class App.PersonAffairSubscriptions extends Spine.Controller
   activate: (params) ->
     super
     # Render empty values (placeholders)
-    PersonAffairSubscription.refresh([], clear: true)
-    @index.active()
-    @new.active()
+    App.Subscription.one 'count_fetched', =>
+      PersonAffairSubscription.refresh([], clear: true)
+      @index.active()
+      @new.active()
+
+    App.Subscription.fetch_count()

@@ -27,8 +27,7 @@
 - if App.PersonTask.all().length > 0
   .panel-footer
     .btn-group
-      %button{:name => "task-destroy",
-              :type => 'button',
+      %button{:type => 'button',
               :data-toggle => 'dropdown',
               :class => 'btn btn-default dropdown-toggle' }
         .icon-paper-clip

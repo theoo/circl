@@ -1,0 +1,46 @@
+%table.datatable
+  %thead
+    %tr
+      %th= I18n.t('product.views.table.position')
+      %th= I18n.t('product.views.table.quantity')
+      %th= I18n.t('common.key')
+      %th= I18n.t('common.description')
+      %th= I18n.t('common.value')
+
+  %tbody
+    - for item in App.PersonAffairProductVariant.all()
+      - classes = ['item']
+      - classes.push 'success' if ! item.archive
+      %tr{:data-id => item.id, :class => classes.join(" ")}
+        %td= item.position
+        %td= item.quantity
+        %td= item.key
+        %td
+          %b= item.title
+          %br
+          - if item.description.length > 250
+            != item.description.replace(/\n/g, '<br/>').substring(0, 250).trim() + "..."
+          - else
+            != item.description.replace(/\n/g, '<br/>')
+
+        %td.number= item.value.to_view()
+
+- if App.PersonAffairProductVariant.all().length > 0
+  .panel-footer
+    .btn-group
+      %button{:type => 'button',
+              :data-toggle => 'dropdown',
+              :class => 'btn btn-default dropdown-toggle' }
+        .icon-paper-clip
+        = I18n.t("common.export")
+        .caret
+
+      %ul.dropdown-menu
+        %li
+          %a{:href => '#', :name => 'products-csv'}
+            .icon-file-text
+            = I18n.t('common.csv')
+        %li
+          %a{:href => '#', :name => 'products-pdf'}
+            .icon-file
+            = I18n.t('common.pdf')

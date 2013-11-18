@@ -13,59 +13,20 @@
     %input{ :name => "variants[][id]", :type => 'hidden', :value => @id }
 
     .row
-      .col-lg-8.col-md-8
+      .col-md-8
         .form-group
+          %label{:for => "product_variant_title_" + @id}
+            = I18n.t("product_variant.views.title")
           %input{ :type => 'text',
+                  :id => "product_variant_title_" + @id,
                   :class => 'form-control input-sm',
-                  :placeholder => I18n.t("common.title"),
                   :name => "variants[][title]",
                   :value => @title }
 
+      .col-md-4
         .form-group
-          %textarea{:name => 'variants[][description]',
-                    :rows => 3,
-                    :placeholder => I18n.t("common.description"),
-                    :class => 'form-control input-sm'}
-            = @description
-
-      .col-lg-4.col-md-4
-        .form-group
-          %input{ :type => 'number',
-                  :class => 'form-control input-sm',
-                  :step => 0.01,
-                  :min => 0,
-                  :max => 1000000,
-                  :placeholder => I18n.t("product_variant.views.buying_price"),
-                  :name => "variants[][buying_price]",
-                  :value => @buying_price }
-
-        .form-group
-          %input{ :type => 'number',
-                  :class => 'form-control input-sm',
-                  :step => 0.01,
-                  :min => 0,
-                  :max => 1000000,
-                  :placeholder => I18n.t("product_variant.views.selling_price"),
-                  :name => "variants[][selling_price]",
-                  :value => @selling_price }
-
-        .form-group
-          %input{ :type => 'number',
-                  :class => 'form-control input-sm',
-                  :step => 0.01,
-                  :min => 0,
-                  :max => 1000000,
-                  :placeholder => I18n.t("product_variant.views.art"),
-                  :name => "variants[][art]",
-                  :value => @art }
-
-    .form-horizontal
-      .form-group
-        %label{:for => "product_variant_program_name_" + @id,
-                :class => "control-label col-lg-8 col-md-8"}
-          = I18n.t("product_variant.views.program_group")
-
-        .col-lg-4.col-md-4
+          %label{:for => "product_variant_program_name_" + @id}
+            = I18n.t("product_variant.views.program_group")
           %select{:name => 'variants[][program_group]',
                   :id => "product_variant_program_name_" + @id,
                   :class => 'form-control input-sm'}
@@ -75,6 +36,47 @@
                   %option{:value => name, :selected => true}= name
                 - else
                   %option{:value => name}= name
+
+    .row
+      .col-md-4
+        .form-group
+          %label{:for => "product_variant_buying_price_" + @id}
+            = I18n.t("product_variant.views.buying_price")
+          %input{ :type => 'number',
+                  :class => 'form-control input-sm',
+                  :id => "product_variant_buying_pride_" + @id,
+                  :step => 0.01,
+                  :min => 0,
+                  :max => 1000000,
+                  :name => "variants[][buying_price]",
+                  :value => @buying_price }
+
+      .col-md-4
+        .form-group
+          %label{:for => "product_variant_selling_price_" + @id}
+            = I18n.t("product_variant.views.selling_price")
+          %input{ :type => 'number',
+                  :class => 'form-control input-sm',
+                  :id => "product_variant_sellgin_pride" + @id,
+                  :step => 0.01,
+                  :min => 0,
+                  :max => 1000000,
+                  :name => "variants[][selling_price]",
+                  :value => @selling_price }
+
+      .col-md-4
+        .form-group
+          %label{:for => "product_variant_art_" + @id}
+            = I18n.t("product_variant.views.art")
+          %input{ :type => 'number',
+                  :class => 'form-control input-sm',
+                  :id => "product_variant_art_" + @id,
+                  :step => 0.01,
+                  :min => 0,
+                  :max => 1000000,
+                  :name => "variants[][art]",
+                  :value => @art }
+
 
   %td.col-lg-1.actions
     %button{:type => 'button',

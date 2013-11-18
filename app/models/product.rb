@@ -44,6 +44,10 @@ class Product < ActiveRecord::Base
   scope :actives, Proc.new { where(:archive => false)}
   scope :archived, Proc.new { where(:archive => true)}
 
+  def programs
+    ProductProgram.where(:program_group => variants.map(&:program_group))
+  end
+
   ###################
   ### VALIDATIONS ###
   ###################

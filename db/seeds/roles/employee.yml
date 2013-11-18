@@ -12,3 +12,15 @@
 
 - subject: TaskRate
   action: read
+
+- subject: Product
+  action: manage
+
+- subject: ProductProgram
+  action: manage
+
+- subject: ProductVariant
+  action: manage
+
+- subject: AffairsProductVariant
+  action: manage

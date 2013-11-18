@@ -4,4 +4,5 @@ en:
     views:
       color: color
       program_group: program group
+      program_search: program
       variant_name: variant name

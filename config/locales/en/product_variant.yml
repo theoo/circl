@@ -1,9 +1,12 @@
 ---
 en:
   product_variant:
+    errors:
+      this_relation_already_exists: This product is already selected. Please update the existing product instead.
     views:
       art: art
       buying_price: buying price
       program_group: program group
       selling_price: selling price
+      title: title
       variant_selection_title: Variants definition

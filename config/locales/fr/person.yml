@@ -14,7 +14,7 @@ fr:
         timesheet: Pointeuse
         your_activity: Votre activité
       tech_support: support technique
-      welcome: Bienvenu
+      welcome: Bienvenue
     errors:
       an_email_is_required_if_it_is_loggable: Un email est requis pour que la personne puisse se connecter.
       avs_number_control_key_is_invalid: la clé de contrôle ne correspond pas, veuillez vérifier la saisie du numéro.

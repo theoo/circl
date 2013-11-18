@@ -15,6 +15,8 @@ fr:
       export_to_accounting: Exporter vers la comptabilité
       export_to_ocas: Exporter vers l'attestation de salaires OCAS
     notices:
+      no_existing_salary_taxes_alert: Les déductions salariales n'ont pas étés importées, veuillez les saisir avant de poursuivre avec la création d'un salaire.
+      no_existing_salary_template_alert: Il n'existe pas de modèle de salaire, veuillez en créer avant de poursuivre avec la création d'un salaire.
       please_try_again: Veuillez corriger les éléments et réessayer.
       reference_were_copied: Le salaire de référence à été copié vers %{members_count} personnes.
     template_item_category: Revenus

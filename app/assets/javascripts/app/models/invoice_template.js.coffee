@@ -28,18 +28,14 @@ class App.InvoiceTemplate extends Spine.Model
 
   validate: ->
     e = new App.ErrorsList
-
-#    if @with_bvr
-#      if ! @bvr_address or ! @bvr_account
-#        e.add with_bvr: I18n.t('invoice_template.errors.bvr_address_and_bvr_account_are_required_if_with_bvr_is_set')
-
-#      unless @bvr_account.match(/^[0-9]{1,2}-[0-9]{1,6}-[0-9]{1,2}$/)
-#        e.add bvr_account: I18n.t('invoice_template.errors.bvr_account_must_match_format')
-
-#    unless @title
-#      e.add title: I18n.t("activerecord.errors.messages.blank")
-
-#    unless @html
-#      e.add html: I18n.t("activerecord.errors.messages.blank")
-
     return e unless e.is_empty()
+
+  @fetch_count: ->
+    get_callback = (data) =>
+      @_count = data
+      @trigger "count_fetched"
+
+    $.get(@url() + "/count", get_callback, 'json')
+
+  @count: ->
+    @_count.count if @_count

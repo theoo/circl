@@ -157,6 +157,11 @@ class App.SettingsProducts extends Spine.Controller
   constructor: (params) ->
     super
 
+    Product.url = ->
+      "#{Spine.Model.host}/settings/products"
+
+    App.ProductProgram.bind 'refresh', => @activate()
+
     @index = new Index
     @edit = new Edit
     @new = new New
@@ -175,8 +180,11 @@ class App.SettingsProducts extends Spine.Controller
   activate: ->
     super
 
-    ProductProgram.one 'names_fetched', =>
-      Product.fetch()
-      @new.active()
+    App.ProductProgram.one 'count_fetched', =>
+      ProductProgram.one 'names_fetched', =>
+        Product.fetch()
+        @new.active()
 
-    ProductProgram.fetch_names()
+      ProductProgram.fetch_names()
+
+    App.ProductProgram.fetch_count()

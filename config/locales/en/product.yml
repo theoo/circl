@@ -1,8 +1,30 @@
 ---
 en:
   product:
+    notices:
+      no_existing_product_alert: no existing product alert
+      no_existing_product_button: no existing product button
+      no_existing_product_program_alert: no existing product program alert
+    pdf:
+      parent_position: parent position
+      parent_product_key: parent product key
+      product_key: product key
+      product_title: product title
+      program_description: program description
+      program_key: program key
+      program_title: program title
     views:
       after_sale: after sale
+      description: description
       has_accessories: has accessories
+      key: key
+      position: position
+      product_search: product
+      products_list_pdf_title: products list pdf title
       provider: provider
+      quantity: quantity
+      table:
+        position: pos.
+        quantity: qt.
+      title: title
       variants: variants

@@ -15,13 +15,37 @@
           %b= affair.owner_name
           \-
           %i= affair.title
-          %br
-          = affair.description
+          - if affair.description.length > 0
+            %br
+            = affair.description
 
-          %br
-          .badge TODO
-          = I18n.t('affair.views.tasks') + " :"
-          TODO
+          - if affair.subscriptions_count > 0
+            %br
+            .badge= affair.subscriptions_count
+            = I18n.t('affair.views.subscriptions') + " :"
+            = affair.subscriptions_value
+            = affair.value_currency
+
+          - if affair.tasks_count > 0
+            %br
+            .badge= affair.tasks_count
+            = I18n.t('affair.views.tasks') + " :"
+            = affair.tasks_value
+            = affair.value_currency
+
+          - if affair.products_count > 0
+            %br
+            .badge= affair.products_count
+            = I18n.t('affair.views.products') + " :"
+            = affair.products_value
+            = affair.value_currency
+
+          - if affair.extras_count > 0
+            %br
+            .badge= affair.extras_count
+            = I18n.t('affair.views.extras') + " :"
+            = affair.extras_count
+            = affair.value_currency
 
           %br
           .badge= affair.invoices_count

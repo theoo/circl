@@ -1,0 +1,37 @@
+
+%h1
+  != I18n.t("product.views.products_list_pdf_title", :affair_title => @affair.title)
+
+%table.table
+  %thead
+    %tr
+      %th= I18n.t('product.views.position')
+      %th= I18n.t('product.pdf.parent_position')
+      %th= I18n.t('product.pdf.parent_product_key')
+      %th= I18n.t('product.views.quantity')
+      %th= I18n.t('product.pdf.product_key')
+      %th= I18n.t('product.pdf.product_title')
+      %th= I18n.t('product.pdf.program_description')
+      %th= I18n.t('product.pdf.product_key')
+      %th= I18n.t('product.pdf.program_key')
+      %th= I18n.t('product.pdf.program_title')
+      %th= I18n.t('product.pdf.program_description')
+      %th= I18n.t('common.value')
+
+
+
+  %tbody
+    - @products.each do |t|
+      %tr
+        %td= t.position
+        %td= t.parent.try(:position)
+        %td= t.parent.try(:product).try(:key)
+        %td= t.quantity
+        %td= t.product.key
+        %td= t.product.title
+        %td= t.program.description
+        %td= t.product.key
+        %td= t.program.key
+        %td= t.program.title
+        %td= t.program.description
+        %td= t.value

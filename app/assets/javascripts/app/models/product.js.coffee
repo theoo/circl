@@ -20,8 +20,17 @@ class App.Product extends Spine.Model
               "description", "has_accessories", "archive", "variants"
 
   @extend Spine.Model.Ajax
-  @url: ->
-    "#{Spine.Model.host}/settings/products"
+  @url: -> undefined
 
   constructor: ->
     super
+
+  @fetch_count: ->
+    get_callback = (data) =>
+      @_count = data
+      @trigger "count_fetched"
+
+    $.get("#{Spine.Model.host}/settings/products/count", get_callback, 'json')
+
+  @count: ->
+    @_count.count if @_count

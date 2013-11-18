@@ -1,11 +1,30 @@
 ---
 fr:
   product:
+    notices:
+      no_existing_product_alert: Le catalogue des produits est vide, veuillez en créer pour en ajouter à une affaire.
+      no_existing_product_button: Créer un produit
+      no_existing_product_program_alert: Il n'existe pas de programme pour le regroupement des tarifs de produit, veuillez en ajouter ci-dessous avant de poursuivre avec la création de produit.
+    pdf:
+      parent_position: position du parent
+      parent_product_key: titre du produit parent
+      product_key: clé du produit
+      product_title: titre du produit
+      program_description: description du programme
+      program_key: clé du programme
+      program_title: titre du programme
     views:
       after_sale: après-vente
       description: description
       has_accessories: accessoires
       key: clé
+      position: position
+      product_search: produit
+      products_list_pdf_title: List des produits pour l'affaire <i>%{affair_title}</i>
       provider: fournisseur
+      quantity: quantité
+      table:
+        position: pos.
+        quantity: qt.
       title: titre
       variants: variantes

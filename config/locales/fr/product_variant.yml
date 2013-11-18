@@ -1,9 +1,12 @@
 ---
 fr:
   product_variant:
+    errors:
+      this_relation_already_exists: Ce produit a déjà été sélectionné, veuillez éditer le produit existant.
     views:
       art: TAR
       buying_price: prix d'achat
       program_group: program group
       selling_price: prix de vente
+      title: titre
       variant_selection_title: Définition des variantes

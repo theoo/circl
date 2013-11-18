@@ -16,20 +16,20 @@
       %ul#sub_nav.nav.navbar-nav
         - if can? :update, PrivateTag
           %li
-            %a{:href => '#tags'}
+            %a{:href => '#tags_tab'}
               = I18n.t('admin.views.tags')
 
         - if can? :update, Affair
           %li
-            %a{:href => '#affairs'}
+            %a{:href => '#affairs_tab'}
               = I18n.t('admin.views.affairs')
 
         - if can? :update, Invoice
           %li
-            %a{:href => '#finances'}
+            %a{:href => '#finances_tab'}
               = I18n.t('admin.views.finances')
 
         - if can? :create, Person
           %li
-            %a{:href => '#tools'}
+            %a{:href => '#tools_tab'}
               = I18n.t('admin.views.tools')
