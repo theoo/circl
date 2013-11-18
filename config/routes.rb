@@ -43,6 +43,12 @@ Directory::Application.routes.draw do
         get 'search'
       end
 
+      resources :extras, :controller => 'people/affairs/extras' do
+        collection do
+          get 'count'
+        end
+      end
+
       resources :invoices, :controller => 'people/affairs/invoices' do
         collection do
           get 'search'

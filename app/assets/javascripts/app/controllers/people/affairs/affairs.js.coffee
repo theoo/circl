@@ -19,7 +19,7 @@ PersonAffair = App.PersonAffair
 PersonAffairSubscription = App.PersonAffairSubscription
 PersonTask = App.PersonTask
 PersonAffairProductVariant = App.PersonAffairProductVariant
-# PersonAffairExtra = App.PersonAffairExtra
+PersonAffairExtra = App.PersonAffairExtra
 PersonAffairInvoice = App.PersonAffairInvoice
 PersonAffairReceipt = App.PersonAffairReceipt
 
@@ -98,6 +98,12 @@ class Edit extends App.ExtendedController
       PersonAffairProductVariant.fetch()
 
       # Extras
+      person_affair_extras_ctrl = $("#person_affair_extras").data('controller')
+      person_affair_extras_ctrl.activate(person_id: @person_id, affair_id: @id)
+      PersonAffairExtra.url = =>
+        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/extras"
+      PersonAffairExtra.refresh([], clear: true)
+      PersonAffairExtra.fetch()
 
       @balance.active(affair_id: @id)
 
@@ -132,8 +138,8 @@ class Edit extends App.ExtendedController
     PersonAffairProductVariant.refresh([], clear: true)
 
     # Extras
-    #PersonAffairExtra.url = => undefined
-    #PersonAffairExtra.refresh([], clear: true)
+    PersonAffairExtra.url = => undefined
+    PersonAffairExtra.refresh([], clear: true)
 
     @balance.deactive()
 

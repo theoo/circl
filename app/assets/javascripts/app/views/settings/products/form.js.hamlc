@@ -123,3 +123,5 @@
   .panel-body
     .alert.alert-warning
       = I18n.t("product.notices.no_existing_product_program_alert")
+      .label.label-warning
+        = I18n.t("common.incomplete")

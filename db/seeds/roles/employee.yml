@@ -24,3 +24,6 @@
 
 - subject: AffairsProductVariant
   action: manage
+
+- subject: Extra
+  action: manage

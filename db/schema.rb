@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131111093950) do
+ActiveRecord::Schema.define(:version => 20131118083454) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20131111093950) do
   add_index "affairs", ["value_currency"], :name => "index_affairs_on_value_currency"
   add_index "affairs", ["value_in_cents"], :name => "index_affairs_on_value_in_cents"
 
-  create_table "affairs_product_variants", :id => false, :force => true do |t|
+  create_table "affairs_product_variants", :force => true do |t|
     t.integer  "parent_id"
     t.integer  "affair_id"
     t.integer  "variant_id"
@@ -124,6 +124,23 @@ ActiveRecord::Schema.define(:version => 20131111093950) do
   add_index "employment_contracts", ["interval_starts_on"], :name => "index_employment_contracts_on_interval_starts_on"
   add_index "employment_contracts", ["person_id"], :name => "index_employment_contracts_on_person_id"
   add_index "employment_contracts", ["updated_at"], :name => "index_employment_contracts_on_updated_at"
+
+  create_table "extras", :force => true do |t|
+    t.integer  "affair_id"
+    t.string   "title"
+    t.text     "description"
+    t.integer  "value_in_cents"
+    t.string   "value_currency"
+    t.integer  "quantity"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "extras", ["affair_id"], :name => "index_extras_on_affair_id"
+  add_index "extras", ["position"], :name => "index_extras_on_position"
+  add_index "extras", ["quantity"], :name => "index_extras_on_quantity"
+  add_index "extras", ["value_in_cents"], :name => "index_extras_on_value_in_cents"
 
   create_table "invoice_templates", :force => true do |t|
     t.string   "title",                 :default => "",    :null => false
@@ -360,7 +377,6 @@ ActiveRecord::Schema.define(:version => 20131111093950) do
     t.integer  "product_id",                                :null => false
     t.string   "program_group",                             :null => false
     t.string   "title"
-    t.text     "description"
     t.integer  "buying_price_in_cents"
     t.string   "buying_price_currency",  :default => "CHF", :null => false
     t.integer  "selling_price_in_cents",                    :null => false

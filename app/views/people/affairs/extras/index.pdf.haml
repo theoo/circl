@@ -1,0 +1,27 @@
+
+%h1
+  != I18n.t("extra.views.extra_list_pdf_title", :affair_title => @affair.title)
+
+%table.table
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th= I18n.t('extra.views.position')
+      %th= I18n.t('extra.views.quantity')
+      %th= I18n.t('common.title')
+      %th= I18n.t('common.description')
+      %th= I18n.t('common.value')
+      %th= I18n.t('common.created_at')
+      %th= I18n.t('common.updated_at')
+
+  %tbody
+    - @extras.each do |e|
+      %tr
+        %td= e.id
+        %td= e.position
+        %td= e.quantity
+        %td= e.title
+        %td= e.description
+        %td= e.value
+        %td= e.created_at
+        %td= e.updated_at

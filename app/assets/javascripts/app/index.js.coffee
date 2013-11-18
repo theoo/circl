@@ -103,7 +103,7 @@ class @PersonEdit extends App
       @subapp($('#person_affair_task_rates'), 'PersonAffairTaskRates')
       @subapp($('#person_affair_tasks'), 'PersonAffairTasks')
       @subapp($('#person_affair_products'), 'PersonAffairProducts')
-      # @subapp($('#person_affair_extras'), 'PersonAffairExtras')
+      @subapp($('#person_affair_extras'), 'PersonAffairExtras')
       @subapp($('#person_affair_subscriptions'), 'PersonAffairSubscriptions')
       @subapp($('#person_affair_invoices'), 'PersonAffairInvoices')
       @subapp($('#person_affair_receipts'), 'PersonAffairReceipts')

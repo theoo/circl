@@ -23,8 +23,5 @@ en:
       products_list_pdf_title: products list pdf title
       provider: provider
       quantity: quantity
-      table:
-        position: pos.
-        quantity: qt.
       title: title
       variants: variants

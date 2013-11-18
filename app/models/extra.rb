@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Product < ActiveRecord::Base
+class Extra < ActiveRecord::Base
 
   ################
   ### INCLUDES ###
@@ -25,35 +25,32 @@ class Product < ActiveRecord::Base
   include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
+  extend  MoneyComposer
 
   #################
   ### CALLBACKS ###
   #################
 
+  before_validation :set_position_if_none_given, :if => Proc.new {|i| i.position.blank? }
+
   #################
   ### RELATIONS ###
   #################
 
-  belongs_to :provider, :class_name => 'Person'
-  belongs_to :after_sale, :class_name => 'Person'
+  belongs_to  :affair
+  has_one     :owner, :through => 'affair'
 
-  has_many  :variants,  :class_name => 'ProductVariant',
-                        :dependent => :destroy
-
-  scope :actives, Proc.new { where(:archive => false)}
-  scope :archived, Proc.new { where(:archive => true)}
-
-  def programs
-    ProductProgram.where(:program_group => variants.map(&:program_group))
-  end
+  money :value
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates :key, :presence => true,
-                  :length => { :maximum => 255 },
-                  :uniqueness => true
+  validates :title, :presence => true
+  validates :value, :presence => true,
+                    :numericality => { :less_than_or_equal => 99999999.99, :greater_than => 0 }
+  validates :position, :uniqueness => true
+  validates :quantity, :presence => true
 
   ########################
   #### CLASS METHODS #####
@@ -63,34 +60,25 @@ class Product < ActiveRecord::Base
   def as_json(options = nil)
     h = super(options)
 
-    h[:provider_name]   = provider.try(:name)
-    h[:after_sale_name] = after_sale.try(:name)
-
-    h[:variants_count] = variants.count
-
-    h[:variants] = variants.map do |v|
-      { :id            => v.id,
-        :product_id    => v.product_id,
-        :program_group => v.program_group,
-        :title         => v.title,
-        :description   => v.description,
-        :buying_price  => v.buying_price.to_f,
-        :selling_price => v.selling_price.to_f,
-        :art           => v.art.to_f,
-        :created_at    => v.created_at,
-        :updated_at    => v.updated_at }
-    end
-
-    h[:errors]         = errors
+    h[:value]  = value.to_f
+    h[:errors] = errors
 
     h
   end
-
 
   ########################
   ### INSTANCE METHODS ###
   ########################
 
   private
+
+  def set_position_if_none_given
+    last_item = self.affair.extras.order(:position).last
+    if last_item
+      self.position = last_item.position + 1
+    else
+      self.position = 1
+    end
+  end
 
 end

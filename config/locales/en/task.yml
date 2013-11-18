@@ -10,7 +10,6 @@ en:
       the_value_is_automaticaly_computed: the value is automaticaly computed
     views:
       affair: affair
-      description: description
       duration: duration
       duration_help: duration help
       end_date: end date
@@ -24,4 +23,3 @@ en:
       task_types: task types
       tasks_list_pdf_title: Task list for affair %{affair_title}
       times_help: times help
-      value: value

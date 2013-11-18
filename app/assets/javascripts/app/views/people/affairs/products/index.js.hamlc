@@ -1,8 +1,8 @@
 %table.datatable
   %thead
     %tr
-      %th= I18n.t('product.views.table.position')
-      %th= I18n.t('product.views.table.quantity')
+      %th= I18n.t('common.table.position')
+      %th= I18n.t('common.table.quantity')
       %th= I18n.t('common.key')
       %th= I18n.t('common.description')
       %th= I18n.t('common.value')

@@ -52,7 +52,7 @@ class AffairsProductVariant < ActiveRecord::Base
   validates :affair_id, :presence => true
   validates :variant_id, :presence => true
   validates :program_id, :presence => true
-  validates :position, :presence => true
+  validates :position, :presence => true, :uniqueness => true
   validates :quantity, :presence => true
   validate :uniquness_of_jointure, :if => Proc.new {|i| i.new_record?}
 

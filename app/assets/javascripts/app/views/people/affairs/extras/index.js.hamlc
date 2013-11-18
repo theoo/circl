@@ -1,0 +1,38 @@
+%table.datatable
+  %thead
+    %tr
+      %th= I18n.t('common.table.position')
+      %th= I18n.t('common.table.quantity')
+      %th= I18n.t('common.description')
+      %th= I18n.t('common.value')
+
+  %tbody
+    - for extra in App.PersonAffairExtra.all()
+      %tr{:data-id => extra.id, :class => 'item'}
+        %td= extra.position
+        %td= extra.quantity
+        %td
+          %b= extra.title
+          %br
+          = extra.description
+        %td= extra.value.to_view()
+
+- if App.PersonAffairExtra.all().length > 0
+  .panel-footer
+    .btn-group
+      %button{:type => 'button',
+              :data-toggle => 'dropdown',
+              :class => 'btn btn-default dropdown-toggle' }
+        .icon-paper-clip
+        = I18n.t("common.export")
+        .caret
+
+      %ul.dropdown-menu
+        %li
+          %a{:href => '#', :name => 'extras-csv'}
+            .icon-file-text
+            = I18n.t('common.csv')
+        %li
+          %a{:href => '#', :name => 'extras-pdf'}
+            .icon-file
+            = I18n.t('common.pdf')

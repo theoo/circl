@@ -67,6 +67,7 @@ class Affair < ActiveRecord::Base
   has_many    :invoices, :dependent => :destroy
   has_many    :receipts, :through => :invoices, :uniq => true
 
+  has_many    :extras, :dependent => :destroy
   has_many    :tasks, :dependent => :destroy
   has_many    :product_items, :class_name => 'AffairsProductVariant',
                               :dependent => :destroy
@@ -77,7 +78,6 @@ class Affair < ActiveRecord::Base
                   :after_add    => :update_on_subscription_habtm_alteration,
                   :after_remove => :update_on_subscription_habtm_alteration
   has_many :affairs_subscriptions # for permissions
-  # has_and_belongs_to_many :products
 
   # Money
   money :value
@@ -179,11 +179,6 @@ class Affair < ActiveRecord::Base
 
   def product_items_value
     product_items.map(&:value).sum.to_money
-  end
-
-  # TODO remove me when extras exist
-  def extras
-    []
   end
 
   def extras_value

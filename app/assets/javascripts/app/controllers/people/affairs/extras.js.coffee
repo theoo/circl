@@ -14,38 +14,13 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-Person = App.Person
-PersonAffair = App.PersonAffair
-PersonAffairProductVariant = App.PersonAffairProductVariant
-ProductProgram = App.ProductProgram
-Permissions = App.Permissions
+PersonAffairExtra = App.PersonAffairExtra
 
-$.fn.product = ->
+$.fn.extra = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
 
-class PersonAffairProductExtention extends App.ExtendedController
-
-  render: =>
-    @product_field = @el.find("#person_affair_product_search")
-    @product_id_field = @el.find("input[name=variant_id]")
-    @program_field = @el.find("#person_affair_product_program_search")
-    @program_id_field = @el.find("input[name=program_id]")
-
-    ### Callbacks ###
-    # product is cleared
-    @product_field.on 'keyup search', (e) =>
-      # if $(e.target).val() == ''
-
-    # product is selected
-    @product_field.autocomplete('option', 'select', (e, ui) =>
-      @product_id_field.val ui.item.id
-      # set program search url
-      @program_field.autocomplete({source: '/settings/products/' + ui.item.id + '/programs' })
-    )
-
-
-class New extends PersonAffairProductExtention
+class New extends App.ExtendedController
   events:
     'submit form': 'submit'
 
@@ -61,25 +36,22 @@ class New extends PersonAffairProductExtention
     @render()
 
   render: =>
-    super
     @show()
-    @product = new PersonAffairProductVariant(quantity: 1)
-    @html @view('people/affairs/products/form')(@)
-
+    @extra = new PersonAffairExtra(quantity: 1)
+    @html @view('people/affairs/extras/form')(@)
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>
-    PersonAffairProductVariant.url() == undefined
+    PersonAffairExtra.url() == undefined
 
   submit: (e) ->
     e.preventDefault()
-    @product.fromForm(e.target)
-    @save_with_notifications @product, @render
+    @save_with_notifications @extra.fromForm(e.target), @render
 
-class Edit extends PersonAffairProductExtention
+class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
-    'click button[name=person-affair-product-destroy]': 'destroy'
+    'click button[name=person-affair-extra-destroy]': 'destroy'
 
   constructor: ->
     super
@@ -90,47 +62,48 @@ class Edit extends PersonAffairProductExtention
     @render()
 
   render: =>
-    return unless PersonAffairProductVariant.exists(@id) && @can
-    super
+    return unless PersonAffairExtra.exists(@id) && @can
+    @extra = PersonAffairExtra.find(@id)
 
-    @product = PersonAffairProductVariant.find(@id)
-
-    @html @view('people/affairs/products/form')(@)
+    @html @view('people/affairs/extras/form')(@)
     @show()
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>
-    PersonAffairProductVariant.url() == undefined
+    PersonAffairExtra.url() == undefined
 
   submit: (e) ->
     e.preventDefault()
-    @product.fromForm(e.target)
-    @save_with_notifications @product, @hide
+    @save_with_notifications @extra.fromForm(e.target), @hide
 
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications @product, @hide
+      @destroy_with_notifications @extra, @hide
 
 class Index extends App.ExtendedController
   events:
     'click tr.item':      'edit'
     'datatable_redraw': 'table_redraw'
-    'click a[name=products-csv]': 'export_csv'
-    'click a[name=products-pdf]': 'export_pdf'
+    'click a[name=extras-csv]': 'export_csv'
+    'click a[name=extras-pdf]': 'export_pdf'
 
   constructor: (params) ->
     super
-    PersonAffairProductVariant.bind('refresh', @render)
+    PersonAffairExtra.bind('refresh', @render)
 
   active: (params) ->
     @can = params.can if params.can
     @render()
 
   render: =>
-    @html @view('people/affairs/products/index')(@)
+    @html @view('people/affairs/extras/index')(@)
+    if @disabled() then @disable_panel() else @enable_panel()
+
+  disabled: =>
+    PersonAffairExtra.url() == undefined
 
   edit: (e) ->
-    @id = $(e.target).product()
+    @id = $(e.target).extra()
     @activate_in_list e.target
     @trigger 'edit', @id
 
@@ -142,14 +115,14 @@ class Index extends App.ExtendedController
 
   export_csv: (e) ->
     e.preventDefault()
-    window.location = PersonAffairProductVariant.url() + ".csv"
+    window.location = PersonAffairExtra.url() + ".csv"
 
   export_pdf: (e) ->
     e.preventDefault()
-    window.location = PersonAffairProductVariant.url() + ".pdf"
+    window.location = PersonAffairExtra.url() + ".pdf"
 
-class App.PersonAffairProducts extends Spine.Controller
-  className: 'products'
+class App.PersonAffairExtras extends Spine.Controller
+  className: 'extras'
 
   constructor: (params) ->
     super
@@ -176,14 +149,8 @@ class App.PersonAffairProducts extends Spine.Controller
       @person_id = params.person_id if params.person_id
       @affair_id = params.affair_id if params.affair_id
 
-    App.Product.one 'count_fetched', =>
-      ProductProgram.one 'names_fetched', =>
-        Permissions.get { person_id: @person_id, can: { invoice: ['create', 'update'] }}, (data) =>
-          @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
-          @index.active {can: data}
-          @edit.active {can: data}
-          @edit.hide()
-
-      ProductProgram.fetch_names()
-
-    App.Product.fetch_count()
+    App.Permissions.get { person_id: @person_id, can: { extra: ['create', 'update'] }}, (data) =>
+      @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
+      @index.active {can: data}
+      @edit.active {can: data}
+      @edit.hide()

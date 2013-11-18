@@ -88,6 +88,8 @@
   .panel-body
     .alert.alert-warning
       = I18n.t("product.notices.no_existing_product_alert")
+      .label.label-warning
+        = I18n.t("common.incomplete")
 
       .text-right
         %a{:href => '/settings#affairs', :class => 'btn btn-warning'}

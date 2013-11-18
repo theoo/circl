@@ -73,6 +73,9 @@ en:
     strong: strong
     successfully_updated: successfully updated
     synchronize: synchronize
+    table:
+      position: pos.
+      quantity: qt.
     template: template
     this_application_unique_id: this application unique id
     title: title

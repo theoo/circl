@@ -10,7 +10,6 @@ fr:
       the_value_is_automaticaly_computed: La valeur est calculée automatiquement
     views:
       affair: affaire
-      description: description
       duration: durée
       duration_help: en minutes
       end_date: date de fin
@@ -24,4 +23,3 @@ fr:
       task_types: types de tâche
       tasks_list_pdf_title: List des tâches pour l'affaire <i>%{affair_title}</i>
       times_help: ! 'Par ex: 9:15, 915, 9'
-      value: valeur
