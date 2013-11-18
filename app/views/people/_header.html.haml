@@ -16,7 +16,7 @@
       %ul#sub_nav.nav.navbar-nav
         - if can? :read, @person
           %li
-            %a{:href => '#info'}
+            %a{:href => '#info_tab'}
               - if @person.new_record?
                 %i
                   = I18n.t("person.views.new_contact")
@@ -25,22 +25,22 @@
 
         - if can? :read, Affair
           %li
-            %a{:href => '#affairs'}
+            %a{:href => '#affairs_tab'}
               = I18n.t('person.views.affairs')
 
         - if can? :read, Salaries::Salary
           %li
-            %a{:href => '#salaries'}
+            %a{:href => '#salaries_tab'}
               = I18n.t('person.views.salaries')
 
         - if can? :read, Role
           %li
-            %a{:href => '#permissions'}
+            %a{:href => '#permissions_tab'}
               = I18n.t('person.views.permissions')
 
         - if can? :read, Activity
           %li
-            %a{:href => '#activities'}
+            %a{:href => '#activities_tab'}
               = I18n.t('person.views.activities')
 
       // navbar-right doesn't pull buttons when resolition is XS. Forcing it with pull-right

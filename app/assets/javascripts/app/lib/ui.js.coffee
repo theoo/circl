@@ -257,9 +257,9 @@ class Ui
   load_tabs: (context, on_tab_change_callback = undefined) ->
     rewrite_url_anchor = (anchor_name) ->
       hash = anchor_name.split('#')
-      location.hash = hash[1] if hash.length > 1
-      # FIXME This horrid line cause display artifacts on chrome and ff.
-      setTimeout((-> window.scrollTo(0,0)), 0) # :-(
+      if hash.length > 1
+        tab = hash[1].split("_")[0]
+        location.hash = tab if tab
 
     nav = context.find("#sub_nav")
     nav.find("a").click (e) ->
@@ -267,15 +267,20 @@ class Ui
       $(@).tab('show')
 
     nav.find("a").on 'shown.bs.tab', (e) ->
+      # Update url location in browser
       rewrite_url_anchor $(e.target).attr('href')
+
+      # Update info tab name
       $("#tab_name").html(nav.find("li.active a").html())
+
+      # Run callback if given
       if on_tab_change_callback
         on_tab_change_callback()
 
     anchor = location.hash.split('#')
     anchor = anchor[1] if anchor
 
-    tab_link = nav.find("a[href=#" + anchor + "]")
+    tab_link = nav.find("a[href=#" + anchor + "_tab]")
     tab_link = nav.find("a:first") if tab_link.length == 0
     tab_link.tab('show')
 

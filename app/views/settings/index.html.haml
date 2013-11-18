@@ -16,32 +16,32 @@
       %ul#sub_nav.nav.navbar-nav
         - if can? :manage, Language
           %li
-            %a{:href => '#properties'}
+            %a{:href => '#properties_tab'}
               = I18n.t('settings.views.attributes')
 
         - if can? :manage, InvoiceTemplate
           %li
-            %a{:href => '#templates'}
+            %a{:href => '#templates_tab'}
               = I18n.t('settings.views.templates')
 
         - if can? :manage, SearchAttribute
           %li
-            %a{:href => '#searchengine'}
+            %a{:href => '#searchengine_tab'}
               = I18n.t('settings.views.search_engine')
 
         - if can? :manage, Role
           %li
-            %a{:href => '#privileges'}
+            %a{:href => '#privileges_tab'}
               = I18n.t('settings.views.privileges')
 
         - if can? :manage, Affair
           %li
-            %a{:href => '#affairs'}
+            %a{:href => '#affairs_tab'}
               = I18n.t('settings.views.affairs')
 
         - if can? :manage, ApplicationSetting
           %li
-            %a{:href => '#advanced'}
+            %a{:href => '#advanced_tab'}
               = I18n.t('settings.views.advanced')
 
 .container
@@ -53,7 +53,7 @@
     .col-lg-3
 
   .tab-content
-    #properties.tab-pane.fade
+    #properties_tab.tab-pane.fade
       .row
         .col-lg-6.col-md-6
           - if can? :update, Location
@@ -79,7 +79,7 @@
 
         .col-lg-6.col-md-6
 
-    #templates.tab-pane.fade
+    #templates_tab.tab-pane.fade
       .row
         .col-lg-6.col-md-6
           - if can? :update, InvoiceTemplate
@@ -96,7 +96,7 @@
                   = I18n.t('salary.views.salary_templates')
 
 
-    #searchengine.tab-pane.fade
+    #searchengine_tab.tab-pane.fade
       .row
         .col-lg-6.col-md-6
           - if can? :update, SearchAttribute
@@ -111,7 +111,7 @@
                 .panel-title
                   = I18n.t('settings.views.ldap_attributes')
 
-    #privileges.tab-pane.fade
+    #privileges_tab.tab-pane.fade
       .row
         .col-lg-6.col-md-6
           - if can? :update, Role
@@ -126,7 +126,7 @@
                 .panel-title
                   = I18n.t('role.views.permissions')
 
-    #affairs.tab-pane.fade
+    #affairs_tab.tab-pane.fade
       .row
         .col-lg-6
           - if can? :manage, TaskType
@@ -154,7 +154,7 @@
                 .panel-title
                   = I18n.t('settings.views.product_programs')
 
-    #advanced.tab-pane.fade
+    #advanced_tab.tab-pane.fade
       .row
         .col-lg-6
           - if can? :update, ApplicationSetting
