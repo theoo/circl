@@ -4,44 +4,43 @@ en:
     attributes:
       activity:
         action: action
-        created_at: created_at
+        created_at: createdt at
         data: data
         id: id
-        person_id: person_id
-        resource_id: resource_id
-        resource_type: resource_type
-        updated_at: updated_at
+        person_id: person id
+        resource_id: resource id
+        resource_type: resource type
+        updated_at: updated at
       affair:
-        buyer_id: buyer_id
-        created_at: created_at
+        buyer_id: buyer id
+        created_at: created at
         description: description
         id: id
-        owner_id: owner_id
-        receiver_id: receiver_id
+        owner_id: owner id
+        receiver_id: receiver id
         title: title
-        updated_at: updated_at
-        value_currency: value_currency
-        value_in_cents: value_in_cents
+        updated_at: updated at
+        value_in_cents: value in cents
       application_setting:
         id: id
         key: key
         value: value
       background_task:
-        created_at: created_at
+        created_at: created at
         id: id
         options: options
         type: type
-        updated_at: updated_at
+        updated_at: updated at
       comment:
-        created_at: created_at
+        created_at: created at
         description: description
         id: id
-        is_closed: is_closed
-        person_id: person_id
-        resource_id: resource_id
-        resource_type: resource_type
+        is_closed: is closed
+        person_id: person id
+        resource_id: resource id
+        resource_type: resource type
         title: title
-        updated_at: updated_at
+        updated_at: updated at
       elastic_search_attribute:
         group: group
         id: id
@@ -50,44 +49,43 @@ en:
         model: model
         name: name
       employment_contract:
-        created_at: created_at
+        created_at: created at
         description: description
         id: id
-        interval_ends_on: interval_ends_on
-        interval_starts_on: interval_starts_on
+        interval_ends_on: interval ends on
+        interval_starts_on: interval starts on
         percentage: percentage
-        person_id: person_id
-        updated_at: updated_at
+        person_id: person id
+        updated_at: updated at
       invoice:
-        affair_id: affair_id
-        created_at: created_at
+        affair_id: affair id
+        created_at: created at
         description: description
         id: id
-        invoice_template_id: invoice_template_id
-        is_closed: is_closed
-        pdf_content_type: pdf_content_type
-        pdf_file_name: pdf_file_name
-        pdf_file_size: pdf_file_size
-        pdf_updated_at: pdf_updated_at
-        printed_address: printed_address
+        invoice_template_id: invoice template id
+        is_closed: is closed
+        pdf_content_type: pdf content type
+        pdf_file_name: pdf file name
+        pdf_file_size: pdf file size
+        pdf_updated_at: pdf updated at
+        printed_address: printed address
         title: title
-        updated_at: updated_at
-        value_currency: value_currency
-        value_in_cents: value_in_cents
+        updated_at: updated at
+        value_in_cents: value in cents
       invoice_template:
-        bvr_account: bvr_account
-        bvr_address: bvr_address
-        created_at: created_at
+        bvr_account: bvr account
+        bvr_address: bvr address
+        created_at: created at
         html: html
         id: id
-        show_invoice_value: show_invoice_value
-        snapshot_content_type: snapshot_content_type
-        snapshot_file_name: snapshot_file_name
-        snapshot_file_size: snapshot_file_size
-        snapshot_updated_at: snapshot_updated_at
+        show_invoice_value: show invoice value
+        snapshot_content_type: snapshot content type
+        snapshot_file_name: snapshot file name
+        snapshot_file_size: snapshot file size
+        snapshot_updated_at: snapshot updated at
         title: title
-        updated_at: updated_at
-        with_bvr: with_bvr
+        updated_at: updated at
+        with_bvr: with bvr
       job:
         description: description
         id: id
@@ -98,21 +96,21 @@ en:
         name: name
       location:
         id: id
-        iso_code_a2: iso_code_a2
-        iso_code_a3: iso_code_a3
-        iso_code_num: iso_code_num
+        iso_code_a2: iso code a2
+        iso_code_a3: iso code a3
+        iso_code_num: iso code num
         name: name
-        parent_id: parent_id
-        phone_prefix: phone_prefix
-        postal_code_prefix: postal_code_prefix
+        parent_id: parent id
+        phone_prefix: phone prefix
+        postal_code_prefix: postal code prefix
       permission:
         action: action
-        created_at: created_at
-        hash_conditions: hash_conditions
+        created_at: created at
+        hash_conditions: hash conditions
         id: id
-        role_id: role_id
+        role_id: role id
         subject: subject
-        updated_at: updated_at
+        updated_at: updated at
       person:
         address: address
         authentication_token: authentication token
@@ -153,76 +151,72 @@ en:
       private_tag:
         id: id
         name: name
-        parent_id: parent_id
+        parent_id: parent id
       public_tag:
         id: id
         name: name
-        parent_id: parent_id
+        parent_id: parent id
       query_preset:
         id: id
         name: name
         query: query
       receipt:
-        created_at: created_at
+        created_at: created at
         id: id
-        invoice_id: invoice_id
-        means_of_payment: means_of_payment
-        updated_at: updated_at
-        value_currency: value_currency
-        value_date: value_date
-        value_in_cents: value_in_cents
+        invoice_id: invoice id
+        means_of_payment: means of payment
+        updated_at: updated at
+        value_date: value date
+        value_in_cents: value in cents
       role:
-        created_at: created_at
+        created_at: created at
         description: description
         id: id
         name: name
-        updated_at: updated_at
+        updated_at: updated at
       subscription:
-        created_at: created_at
+        created_at: created at
         description: description
         id: id
-        interval_ends_on: interval_ends_on
-        interval_starts_on: interval_starts_on
-        invoice_template_id: invoice_template_id
-        last_pdf_generation_query: last_pdf_generation_query
-        pdf_content_type: pdf_content_type
-        pdf_file_name: pdf_file_name
-        pdf_file_size: pdf_file_size
-        pdf_updated_at: pdf_updated_at
+        interval_ends_on: interval ends on
+        interval_starts_on: interval starts on
+        invoice_template_id: invoice template id
+        last_pdf_generation_query: last_pdf generation query
+        pdf_content_type: pdf content type
+        pdf_file_name: pdf file name
+        pdf_file_size: pdf file size
+        pdf_updated_at: pdf updated at
         title: title
-        updated_at: updated_at
-        value_currency: value_currency
-        value_in_cents: value_in_cents
+        updated_at: updated at
+        value_in_cents: value in cents
       task:
-        affair_id: affair_id
-        created_at: created_at
+        affair_id: affair id
+        created_at: created at
         date: date
         description: description
         duration: duration
-        executer_id: executer_id
+        executer_id: executer id
         id: id
-        task_type_id: task_type_id
-        updated_at: updated_at
-        value_currency: value_currency
-        value_in_cents: value_in_cents
+        task_type_id: task type id
+        updated_at: updated at
+        value_in_cents: value in cents
       task_preset:
         description: description
         duration: float
         id: id
-        task_type_id: task_type_id
+        task_type_id: task type id
         title: title
-        value_currency: value_currency
-        value_in_cents: value_in_cents
+        value_in_cents: value in cents
       task_type:
         description: description
         id: id
         ratio: ratio
         title: title
       translation_aptitude:
-        from_language_id: from_language_id
+        from_language_id: from language id
         id: id
         person_id: person_id
-        to_language_id: to_language_id
+        to_language_id: to language id
     errors:
       format: ! '%{attribute} %{message}'
       messages:

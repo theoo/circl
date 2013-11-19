@@ -2,7 +2,7 @@
 en:
   affair:
     errors:
-      cant_delete_affair_who_has_invoices: cant delete affair who has invoices
+      cant_delete_affair_who_has_invoices: Cannot destroy an affair who has invoices. Revelent invoices must first be destroyed.
     views:
       actions:
         edit_affair: edit affair
@@ -13,14 +13,21 @@ en:
       invoices_count: invoices count
       invoices_value: invoices value
       owner: owner
-      products: products
-      receipts: receipts
+      products: Products
+      receipts: Receipts
       receipts_count: receipts count
       receipts_value: receipts value
       receiver: receiver
       relations: relations
       status: status
-      statuses: statuses
+      statuses:
+        cancelled: cancelled
+        offered: offered
+        open: open
+        overpaid: overpaid
+        paid: paid
+        partially_paid: partially paid
+        underpaid: underpaid
       subscriptions: subscriptions
       tasks: tasks
       update_date: update date

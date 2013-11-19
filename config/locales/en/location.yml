@@ -2,8 +2,7 @@
 en:
   location:
     errors:
-      cannot_destroy_location_if_people_depend_on_it: cannot destroy location if people depend on it
-      no_parent_location: no parent location
+      cannot_destroy_location_if_people_depend_on_it: A location cannot be destroyed if it has people depending on it.
     views:
       actions:
         destroy_location: destroy location

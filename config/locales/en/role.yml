@@ -2,7 +2,8 @@
 en:
   role:
     errors:
-      cant_delete_if_in_use: cant delete if in use
+      cant_delete_if_in_use: A role cannot be destroyed if it has members.
+    views:
     views:
       actions:
         view_role_members: view role members

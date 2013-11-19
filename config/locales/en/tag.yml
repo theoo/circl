@@ -2,15 +2,15 @@
 en:
   tag:
     errors:
-      cannot_be_its_own_parent: cannot be its own parent
-      cannot_destroy_tag_if_it_has_members: cannot destroy tag if it has members
+      cannot_be_its_own_parent: The tag cannot be its own parent.
+      cannot_destroy_tag_if_it_has_members: A tag cannot be destroyed if it has members.
     notices:
-      members_added: members added
+      members_added: "%{members_count} members where added to the tag."
     views:
       actions:
-        add_members: add members
-        remove_all_members: remove all members
+        add_members: add people
+        remove_all_members: untag all members
         view_tag_members: view tag members
-      add_members_message: add members message
-      add_members_title: add members title
+      add_members_message: Selected people will be added to the tag.
+      add_members_title: Add people to tag
       members: members

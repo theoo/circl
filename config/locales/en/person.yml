@@ -2,84 +2,84 @@
 en:
   person:
     dashboard:
-      help: help
+      help: online help
       panels:
-        current_affairs: current affairs
-        last_comments: last comments
-        last_people_added: last people added
-        messages: messages
-        open_invoices: open invoices
-        open_salaries: open salaries
-        statistics: statistics
-        timesheet: timesheet
-        your_activity: your activity
+        current_affairs: Current affairs
+        last_comments: Last comments
+        last_people_added: Last people added
+        messages: Messages
+        open_invoices: Open invoices
+        open_salaries: Open salaries
+        statistics: Statistics
+        timesheet: Timesheet
+        your_activity: Your activity
       tech_support: tech support
-      welcome: welcome
+      welcome: Welcome
     errors:
-      an_email_is_required_if_it_is_loggable: an email is required if it is loggable
-      avs_number_control_key_is_invalid: avs number control key is invalid
-      avs_number_is_invalid: avs number is invalid
-      cannot_remove_admin_role_for_first_user: cannot remove admin role for first user
-      cant_be_org_without_org_name: cant be org without org name
-      cant_delete_first_admin: cant delete first admin
-      cant_delete_person_who_has_invoices: cant delete person who has invoices
-      cant_delete_person_who_has_running_contract: cant delete person who has running contract
-      cant_delete_person_who_has_salaries: cant delete person who has salaries
-      combination_of_first_name_and_last_name_already_taken: combination of first name and last name already taken
-      invalid_current_password: invalid current password
-      main_language_already_in_communication_languages: main language already in communication languages
-      no_second_email_if_no_primary_email: no second email if no primary email
-      organization_not_ticked_but_no_person_info: organization not ticked but no person info
-      second_email_should_be_different: second email should be different
-      the_required_information_about_this_employee_are_not_satisfied: the required information about this employee are not satisfied
+      an_email_is_required_if_it_is_loggable: An email is required in order to log into CIRCL.
+      avs_number_control_key_is_invalid: he control key doesn't match, please ensure the number is correct
+      avs_number_is_invalid: avs number is invalid, format should be 756.XXXX.XXXX.XX
+      cannot_remove_admin_role_for_first_user: Cannot remove admin role from the first user.
+      cant_be_org_without_org_name: Cannot be an organization without organization name.
+      cant_delete_first_admin: Cannot destroy the first admin.
+      cant_delete_person_who_has_invoices: Cannot destroy a person who has invoices. Revelent invoices must first be destroyed.
+      cant_delete_person_who_has_running_contract: Cannot destroy a person who has current contracts.
+      cant_delete_person_who_has_salaries: Cannot destroy a person who has salaries. Revelent salaries must first be destroyed.
+      combination_of_first_name_and_last_name_already_taken: This combination of first name and last name is already taken.
+      invalid_current_password: The current password is invalid.
+      main_language_already_in_communication_languages: A language cannot be selected in both 'main communication language' and 'secondary communication languages' widget.
+      no_second_email_if_no_primary_email: It is not possible to add a second email if the first email is left blank.
+      organization_not_ticked_but_no_person_info: This entry should be set as an organization as long as there is no personal information.
+      second_email_should_be_different: The second email should not be the same as the first email.
+      the_required_information_about_this_employee_are_not_satisfied: This person has salaries. '%{field}' attribute is required.
     import:
-      cannot_parse: cannot parse
+      cannot_parse: Cannot parse
       invalid_#{name}: ! 'invalid #{name}'
       invalid_line: invalid line
-      invalid_location: invalid location
-      invalid_translation_aptitude: invalid translation aptitude
+      invalid_location: Invalid location "%{location}"
+      invalid_translation_aptitude: Invalid translation aptitude "%{translation_aptitude}"
       line: line
     mail:
-      background_task_error_report: background task error report
-      imported_people: imported people
-      mailchimp_synchronisation_report: mailchimp synchronisation report
-      members_were_added_to_subscription: members were added to subscription
-      pdf_for_subscription: pdf for subscription
+      background_task_error_report: Background task error report
+      imported_people: Imported people
+      mailchimp_synchronisation_report: Mailchimp synchronisation report
+      members_were_added_to_subscription: Members were added to subscription
+      pdf_for_subscription: Subscription PDF
       people_import_report: people import report
-      people_import_report_title: people import report title
-      receipts_import_report: receipts import report
+      people_import_report_title: People import report
+      receipts_import_report: Receipts import report
       report_error:
-        datetime: datetime
-        directory_id: directory
+        datetime: date and time
+        directory_id: directory unique ID
         directory_name: directory name
-        exception_trace: exception trace
-        something_wrong_happened: something wrong happened
+        exception_trace: Exception backtrace
+        something_wrong_happened: Something wrong happened, please verify production.log and the backtrace below.
       report_error_subject: report error subject
       subscription_were_merged: subscription were merged
       subscription_were_updated: subscription were updated
     views:
       account_settings: account settings
-      activities: activities
-      address: address
-      affairs: affairs
+      activities: Activities
+      address: Address
+      affairs: Project / Affairs
       api: api
       autentication_token: autentication token
       avs_number: avs number
       bank_informations: bank informations
       birth_date: birth date
-      change_password: change password
-      change_password_for: change password for
-      comments: comments
-      communication_languages: communication languages
+      change_password: Change password
+      change_password_for: Change <b>%{person}</b>'s password
+      comments: Comments
+      communication_languages: Secondary communication languages
       current_password: current password
       destroy: destroy
       email: email
-      employee_information: employee information
-      employment_contracts: employment contracts
+      employee_information: Employee information
+      employment_contracts: Employment contracts
       first_name: first name
-      generate_authentication_token: generate authentication token
+      generate_authentication_token: (re)generate
       hidden: hidden
-      identifier_explanation: identifier explanation
+      identifier_explanation: "<h3>Start with an identifier</h3>"
       is_an_organization: is an organization
       job: job
       last_name: last name
@@ -91,17 +91,17 @@ en:
       new_password: new password
       new_password_confirmation: new password confirmation
       organization_name: organization name
-      permissions: permissions
-      personal_information: personal information
+      permissions: Permissions
+      personal_information: Personal information
       phone: phone
-      private_tags: private tags
-      public_tags: public tags
-      roles: roles
-      salaries: salaries
-      salary_items: salary items
-      salary_taxes: salary taxes
+      private_tags: Private tags
+      public_tags: Public tags
+      roles: Roles
+      salaries: Salaries
+      salary_items: Items
+      salary_taxes: Deductions
       second_email: second email
       second_phone: second phone
       this_person_uniq_id: this person uniq
-      translation_aptitudes: translation aptitudes
+      translation_aptitudes: Translation aptitudes
       update_password: update password
