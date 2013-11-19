@@ -2,15 +2,14 @@
 fr:
   devise:
     help:
-      request_new_passord_tooltip: demander un nouveau mot de passe
-      request_new_password_tooltip: request new password tooltip
+      request_new_password_tooltip: demander un nouveau mot de passe
     mail:
       change_my_password: Changer mon mot de passe
       click_the_link_below_to_unlock_your_account: ! 'Veuillez cliquer le lien ci-dessous pour débloquer votre compte:'
       confirm_my_account: Confirmer mon compte
       hello: Bonjour
       if_you_didnt_request_this: Veuillez ignorer cet email si vous ne l'avez pas demandé.
-      someone_has_requested_a_link_to_change_your_password: ! 'Quelqu''un à demandé de changer votre mot de passe, vous pouvez le faire en cliquant sur le lien suivant:'
+      someone_has_requested_a_link_to_change_your_password: ! 'Quelqu''un à demandé à changer votre mot de passe, vous pouvez le faire en cliquant sur le lien suivant:'
       unlock_my_account: Débloquer mon compte
       welcome: Bienvenue
       you_can_confirm_your_account_through_the_link_below: ! 'Veuillez confirmer votre compte en cliquant sur le lien suivant:'

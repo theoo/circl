@@ -11,14 +11,14 @@ fr:
       cannot_find_invoice: Impossible de trouver la facture (id %{invoice_id}) pour cette personne (id %{owner_id}).
       cannot_find_owner: Impossible de trouver le propriétaire (id %{owner_id}).
       cannot_find_receipt: Impossible de trouver le reçu.
-      cannot_parse_line: Import d'analyser la ligne.
+      cannot_parse_line: Impossible d'analyser la ligne.
       cannot_parse_reference_number: Impossible d'analyser le numéro de référence.
       checksum_mismatch: La somme de vérification du BVR ne correspond pas.
-      correction_without_rectification: ne ligne contient une correction mais aucune rectification n'a suivi.
+      correction_without_rectification: Une ligne contient une correction mais aucune rectification n'a suivi.
       invoice_found_but_its_creation_date_mismatch: La facture a été trouvée mais la date de création ne correspond pas.
       invoice_found_but_its_owner_mismatch: La facture a été trouvée mais le propriétaire ne correspond pas.
       rectification_for_inexistant_receipt: Rectification pour un reçu inexistant (invoice id %{invoice_id}). Vous pourriez essayer de réimporter le fichier après ce premier import.
-      total_cannot_parse: mpossible de parser la ligne de total.
+      total_cannot_parse: Impossible de parser la ligne de total.
       total_mismatch: Le total ne correspond pas (%{total} != %{computed_total})
       total_receipts_count_mismatch: Le nombre de reçus ne correspond pas (%{receipts_count} != %{computed_receipts_count})
       unknown_type: type inconnu
@@ -27,7 +27,7 @@ fr:
       already_imported: déjà importé
       application_id: ID de l'application
       available_digits: chiffres libres
-      bvr_reference: reference BVR
+      bvr_reference: référence BVR
       checksum_digits: chiffre clé
       date_format_ddmmyy: date au format ( jj mm aa )
       date_value: date de valeur
@@ -50,7 +50,7 @@ fr:
       receipts_file_import_report_title: Rapport de l'importation des reçus
       rectification: rectification
       selected: sélectionné
-      should_be_two_zeros: evrait être deux zéros (00)
+      should_be_two_zeros: devrait être deux zéros (00)
       type: type
     views:
       actions:

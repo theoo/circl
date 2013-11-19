@@ -9,7 +9,7 @@ fr:
         last_people_added: Dernières personnes ajoutées
         messages: Messages
         open_invoices: Factures ouvertes
-        open_salaries: Salaries ouverts
+        open_salaries: Salaires ouverts
         statistics: Statistiques
         timesheet: Pointeuse
         your_activity: Votre activité
@@ -25,8 +25,8 @@ fr:
       cant_delete_person_who_has_invoices: Il est impossible de détruire une personne dont dépend une facture.
       cant_delete_person_who_has_running_contract: Il est impossible de détruire une personne dont un contrat dépend.
       cant_delete_person_who_has_salaries: Il est impossible de détruire une personne dont dépend un salaire.
-      combination_of_first_name_and_last_name_already_taken: ette combinaison de nom et prénom est déjà prise.
-      invalid_current_password: Le mot de passe actuel invalide.
+      combination_of_first_name_and_last_name_already_taken: Cette combinaison de nom et prénom est déjà prise.
+      invalid_current_password: Le mot de passe actuel est invalide.
       main_language_already_in_communication_languages: Cette langue principale est déjà sélectionnée dans les langues de communication secondaires.
       no_second_email_if_no_primary_email: Impossible d'ajouter un email secondaire sans email principal.
       organization_not_ticked_but_no_person_info: Vous devez cocher 'organisation' si il n'y a pas d'information personnelle.
@@ -45,7 +45,7 @@ fr:
       mailchimp_synchronisation_report: Rapport de synchronisation Mailchimp
       members_were_added_to_subscription: Des membres ont été ajouté à l'inscription
       pdf_for_subscription: PDF de l'inscription
-      people_import_report: apport d'importation des personnes
+      people_import_report: rapport d'importation des personnes
       people_import_report_title: Rapport de l'import de personnes
       receipts_import_report: Rapport d'importation des reçus
       report_error:

@@ -33,8 +33,8 @@ fr:
       end_must_be_after_start: La date de fin doit être après la date de début.
       failed_to_destroy: Echec lors de la destruction.
       failed_to_retrieve_data: Impossible de récupérer les données.
-      failed_to_update: chec lors de la mise à jour.
-      if_you_think_it_s_a_bug: ! 'Si vous pensez qu''il s''agit d''un bug, veuillez nous écire par email à l''adresse: <a href=''mailto:support@circl.ch''>support@circl.ch</a>'
+      failed_to_update: échec lors de la mise à jour.
+      if_you_think_it_s_a_bug: ! 'Si vous pensez qu'il s'agit d''un bug, veuillez nous écire par email à l'adresse: <a href=''mailto:support@circl.ch''>support@circl.ch</a>'
       invalid_date: La date n'est pas valide.
       invalid_phone: Le format n'est pas valide, vous devez utiliser un format comme "+11 22 333 44 55" (entre 7 et 18 numéros).
       must_provide_first_name_if_last_name: Il doit y avoir un prénom s'il y a un nom de famille.
@@ -64,8 +64,8 @@ fr:
     per_hour: par heure
     person: personne
     position: position
-    preview: pré-visualisation
-    preview_in_new_tab: prévisualiser dans un nouvel onglet
+    preview: aperçu
+    preview_in_new_tab: ouvrir dans un nouvel onglet
     released_under: livrée sous la version 3 de la license
     requires_browser_update: Une mise à jour de votre navigateur est requise pour consulter cette page.
     reset: réinitialise
@@ -89,5 +89,6 @@ fr:
     upload: téléverser
     use_right_click_save_as: utilisez le click droit et sélectionnez 'enregistrer le lien sous...'
     value: valeur
+    value_currency: devise
     weak: faible
     year: année

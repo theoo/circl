@@ -9,7 +9,7 @@ fr:
       account: compte
       actions:
         add_receipt: ajouter un reçu
-        preview_pdf_in_new_tab: pré-visualiser
+        preview_pdf_in_new_tab: dans un nouvel onglet
       age: age
       balance_value: balance
       buyer: payeur
