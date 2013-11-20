@@ -7,45 +7,9 @@ en:
       actions:
         edit_template: edit template
       language: language
-      placeholders:
-          employee_percent_total: employee percent total
-          employee_value_total: employee value total
-          employer_percent_total: employer percent total
-          employer_value_total: employer value total
-          gross_pay: gross pay
-          language: language
-          locale: locale
-          net_salary: net salary
-          new_template: new_template
-          person_address: person address
-          person_bank_information: person bank information
-          person_name: person name
-          placeholders: placeholders
-          salary_children_count: children count
-          salary_created_at: creation date
-          salary_day_numeric: creation day in numeric
-          salary_day_word: creation day in word
-          salary_from: from date
-          salary_id: salary unique id
-          salary_interval_in_days: interval in days
-          salary_married: married
-          salary_month_numeric: creation month in numeric
-          salary_month_word: creation month in word
-          salary_reference_title: reference salary title
-          salary_template_title: template page title
-          salary_title: title
-          salary_to: to date
-          salary_year_numeric: creation year in numeric
-          salary_yearly_salary: yearly salary value
-          salary_yearly_salary_count: count of salaries in a year
-          summary: ! 'Summary - Options: { } - None but requires the brackets.'
-          tax_data: ! 'Tax data. Options: { attributes | sort by | separator, ''table''}, Attributes: id, salary_id, tax_id, title, position, employer_value, employer_percent, employer_use_percent, employee_value, employee_percent, employee_use_percent, created_at, updated_at'
-          taxed_items: ! 'Taxed items. Options: { attributes | sort by | separator, ''table''}, Attributes: id, position, title, value, category, created_at'
-          untaxed_items: ! 'Unaxed items. Options: { attributes | sort by | separator, ''table''}, Attributes: id, position, title, value, category, created_at'
       template:
         person_bank_information: person bank information
         salary_id: salary
         salary_interval: salary interval
+        salary_yearly_salary: salary yearly salary
       thumb: thumb
-
-

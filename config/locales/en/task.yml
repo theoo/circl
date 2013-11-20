@@ -2,17 +2,17 @@
 en:
   task:
     errors:
-      duration_is_required_if_selected_task_type_have_a_ratio: Duration is required if selected task type have a ratio
-      duration_must_be_positive: Duration must be positive
-      owner_should_have_a_task_rate: Owner should have a task rate
+      duration_is_required_if_selected_task_type_have_a_ratio: duration is required if selected task type have a ratio
+      duration_must_be_positive: duration must be positive
+      owner_should_have_a_task_rate: owner should have a task rate
     notices:
-      computed_value_is: Computed value is %{value}
-      the_value_is_automaticaly_computed: Value is automaticaly computed
+      computed_value_is: computed value is
+      the_value_is_automaticaly_computed: the value is automaticaly computed
     views:
       affair: affair
       description: description
       duration: duration
-      duration_help: in minutes
+      duration_help: duration help
       end_date: end date
       executer_name: executer name
       owner: client
@@ -23,5 +23,5 @@ en:
       task_type_title: type
       task_types: task types
       tasks_list_pdf_title: Task list for affair %{affair_title}
-      times_help: "example: 9, 915, 09:15"
+      times_help: times help
       value: value

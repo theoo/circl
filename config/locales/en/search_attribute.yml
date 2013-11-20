@@ -2,7 +2,7 @@
 en:
   search_attribute:
     errors:
-      not_json: ! 'Wrong protocol (expected: JSON)'
+      not_json: not json
     views:
       group: group
       indexing: indexing

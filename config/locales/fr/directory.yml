@@ -1,11 +1,11 @@
-  ---
+---
 fr:
   directory:
     errors:
-      query_empty: Aucune requête transmise, veuillez en fournir une et recommencer.
+      query_empty: Aucune requête transmise, veuillez en fournir une et recommancer.
       query_invalid: requête "%{query}" invalide
       search_error: erreur lors de la recherche -> %{error}
-      you_need_to_select_at_least_one_attribute_to_display: Vous devez sélectionner au moins un attribut à afficher.
+      you_need_to_select_at_least_one_attribute_to_display: Vous devez sélectionner au moins un attributs à afficher.
     notices:
       result_return_only_one_person: Le résultat ne retournant qu'une personne votre requête à été redirigée vers l'édition.
     views:
@@ -13,7 +13,7 @@ fr:
         change_person_password: changer le mot de passe
       add_person: ajouter un contact
       custom_action_introduction: Vous avez été redirigé sur la page du moteur de recherche pour effectuer une action spéciale.
-      custom_action_warning: Vous pouvez rechercher dans l'annuaire de manière ordinaire, lorsque le résultat de la recherche vous conviendra, cliquez sur 'continuer' pour poursuivre le processus en cours.
+      custom_action_warning: Vous pouvez rechercher dans l'annuaire de manière ordinaire, lorsque le résultat de la recherche vous conviendra, cliquez sur 'continuer' vous poursuivre le processus en cours.
       edit_preset_filters: Édition des filtres du pré-réglage
       fields:
         available_attributes: Attributs disponibles
@@ -25,7 +25,7 @@ fr:
       query_preset_explanation: Vous pouvez glisser les attributs disponibles dans la liste des attributs sélectionnés ou l'ordre de tri.
       query_preset_name: Nom du pré-réglage
       quick_search_placeholder: Recherche rapide
-      results: Résultats
+      results: Résultat
       score: score
       search_the_directory: Rechercher dans CIRCL
       sync_mailchimp: synchroniser mailchimp

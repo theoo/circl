@@ -4,13 +4,13 @@ en:
     a_webapp_developped_by: A webapp developped by
     add: add
     adjust: adjust
-    administration: Administration
+    administration: administration
     apply: apply
     archive: archive
-    are_you_sure: are you sure?
+    are_you_sure: are you sure
     browser:
-      a_modern_browser_is_required: A modern browser is required
-      currently_supported_browser_are: CIRCL currently supports theses browsers
+      a_modern_browser_is_required: a modern browser is required
+      currently_supported_browser_are: currently supported browser are
       mobile_browsers: mobile browsers
       multiplateform_browsers: multiplateform browsers
     cancel: cancel
@@ -26,20 +26,20 @@ en:
     directory: directory
     download: download
     errors:
-      absence_of_identifier: Absence of identifier
-      already_synchronizing: The synchronization is already in progress.
-      date_must_match_format: date must match format DD-MM-YYYY
-      does_not_point_to_valid_model: Does not point to valid model
-      end_must_be_after_start: The ending date must be after the starting date.
-      failed_to_destroy: Failed to destroy
-      failed_to_retrieve_data: Failed to retrieve data
-      failed_to_update: Failed to update
-      if_you_think_it_s_a_bug: ! 'If you think that you found a bug, please send us an email: <a href=''mailto:support@circl.ch''>support@circl.ch</a>'
-      invalid_date: The date is invalid.
-      invalid_phone: The format is invalid, you have to use a format like "+11 22 333 44 55" (between 7 and 18 numbers).
-      must_provide_first_name_if_last_name: You must provide a first name if there is a last name.
-      must_provide_last_name_if_first_name: You must provide a last name if there is a first name.
-      please_verify_rights_and_record: Please verify that you are allowed to do this action and check if this action apply to the current record.
+      absence_of_identifier: absence of identifier
+      already_synchronizing: already synchronizing
+      date_must_match_format: date must match format
+      does_not_point_to_valid_model: does not point to valid model
+      end_must_be_after_start: end must be after start
+      failed_to_destroy: failed to destroy
+      failed_to_retrieve_data: failed to retrieve data
+      failed_to_update: failed to update
+      if_you_think_it_s_a_bug: if you think it s a bug
+      invalid_date: invalid date
+      invalid_phone: invalid phone
+      must_provide_first_name_if_last_name: must provide first name if last name
+      must_provide_last_name_if_first_name: must provide last name if first name
+      please_verify_rights_and_record: please verify rights and record
     export: export
     export_to: export to
     file: file
@@ -68,25 +68,24 @@ en:
     released_under: released under
     requires_browser_update: requires browser update
     reset: reset
-    salaries:value_c salaries
+    salaries: salaries
     settings: settings
     strong: strong
     successfully_updated: successfully updated
     synchronize: synchronize
     template: template
-    this_application_unique_id: This application unique id
+    this_application_unique_id: this application unique id
     title: title
     to: to
     toolbox_export: toolbox export
     toolbox_import_bank_file: toolbox import bank file
-    toolbox_template: template
+    toolbox_template: toolbox template
     tools: tools
     unpaid: unpaid
     update: update
     updated_at: update at
     upload: upload
-    use_right_click_save_as: use right click to 'save link as'
+    use_right_click_save_as: use right click save as
     value: value
-    value_currency: currency
     weak: weak
     year: year

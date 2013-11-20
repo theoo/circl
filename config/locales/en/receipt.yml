@@ -6,21 +6,21 @@ en:
       owner_required: owner required
     import:
       already_imported: already imported
-      already_imported_but_corresponding_receipt_not_found: The line were already imported but corresponding receipt cannot be found!
-      cannot_find_affair_for_this_invoice: Cannot find affair %{affair_id} related to invoice %{invoice_id} pour for this person (id %{owner_id}).
-      cannot_find_invoice: annot find invoice (id %{invoice_id}) for this person (id %{owner_id}).
-      cannot_find_owner: Cannot find the owner (id %{owner_id}).
-      cannot_find_receipt: Cannot find receipt.
-      cannot_parse_line: Cannot parse line.
-      cannot_parse_reference_number: Cannot parse reference number
-      checksum_mismatch: The BVR checksum does not match.
-      correction_without_rectification: A line contains a correction but no rectification.
-      invoice_found_but_its_creation_date_mismatch: nvoice found, but its creation date mismatch.
-      invoice_found_but_its_owner_mismatch: Invoice found, but its owner mismatch.
-      rectification_for_inexistant_receipt: Rectification for a non-existing receipt (invoice id %{invoice_id}). You should try to re-import this file after this import.
-      total_cannot_parse: Cannot parse total.
-      total_mismatch: The total mismatches (%{total} != %{computed_total}).
-      total_receipts_count_mismatch: The total receipts count mismatches (%{receipts_count} != %{computed_receipts_count}).
+      already_imported_but_corresponding_receipt_not_found: already imported but corresponding receipt not found
+      cannot_find_affair_for_this_invoice: cannot find affair for this invoice
+      cannot_find_invoice: cannot find invoice
+      cannot_find_owner: cannot find owner
+      cannot_find_receipt: cannot find receipt
+      cannot_parse_line: cannot parse line
+      cannot_parse_reference_number: cannot parse reference number
+      checksum_mismatch: checksum mismatch
+      correction_without_rectification: correction without rectification
+      invoice_found_but_its_creation_date_mismatch: invoice found but its creation date mismatch
+      invoice_found_but_its_owner_mismatch: invoice found but its owner mismatch
+      rectification_for_inexistant_receipt: rectification for inexistant receipt
+      total_cannot_parse: total cannot parse
+      total_mismatch: total mismatch
+      total_receipts_count_mismatch: total receipts count mismatch
       unknown_type: unknown type
     mail:
       account: account
@@ -29,17 +29,17 @@ en:
       available_digits: available digits
       bvr_reference: bvr reference
       checksum_digits: checksum digits
-      date_format_ddmmyy: date format ( dd mm yy )
+      date_format_ddmmyy: date format ddmmyy
       date_value: date value
-      errors_occured: Errors occured
-      errors_occured_on_theses_lines: Errors occured on theses lines
+      errors_occured: errors occured
+      errors_occured_on_theses_lines: errors occured on theses lines
       info: info
       invoice_date: invoice date
       invoice_id: invoice
-      lines_should_be_formatted_as_following: Lines should be formatted as following
+      lines_should_be_formatted_as_following: lines should be formatted as following
       message: message
       number_of_characters: number of characters
-      one_or_more_lines_are_not_formated_correctly: One or more lines are not formated correctly
+      one_or_more_lines_are_not_formated_correctly: one or more lines are not formated correctly
       padded_by_zeros_at_its_left: padded by zeros at its left
       part: part
       person_id: person
@@ -47,16 +47,16 @@ en:
       receipt_id: receipt
       receipt_value: receipt value
       receipts: receipts
-      receipts_file_import_report_title: Receipts file import report
+      receipts_file_import_report_title: receipts file import report title
       rectification: rectification
       selected: selected
-      should_be_two_zeros: should be two zeros (00)
+      should_be_two_zeros: should be two zeros
       type: type
     views:
       actions:
         edit_receipt: edit receipt
       affair_title: affair title
-      export: receipts export
+      export: export
       id: id
       import_bank_file: import bank file
       invoice: invoice

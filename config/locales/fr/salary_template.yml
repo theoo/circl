@@ -7,12 +7,6 @@ fr:
       actions:
         edit_template: modifier le modèle
       language: langue
-      template:
-        person_bank_information: informations bancaires de l'employé
-        salary_id: identifiant unique du salaire
-        salary_interval: intervalle du salaire
-        salary_yearly_salary: valeur annuelle des salaires
-      thumb: vignette
       placeholders:
         employee_percent_total: total des pourcentages déduits de l'employé
         employee_value_total: total des valeurs déduites de l'employé
@@ -46,3 +40,5 @@ fr:
         tax_data: ! 'Déductions. Options: { attributs | ordre de tri | séparateurs, ''table''}, Attributs: id, salary_id, tax_id, title, position, employer_value, employer_percent, employer_use_percent, employee_value, employee_percent, employee_use_percent, created_at, updated_at'
         taxed_items: ! 'Objet avec déductions. Options: { attributs | ordre de tri | séparateurs, ''table''}, Attributs: id, position, title, value, category, created_at'
         untaxed_items: ! 'Objets sans déductions. Options: { attributs | ordre de tri | séparateurs, ''table''}, Attributs: id, position, title, value, category, created_at'
+      template:
+      thumb: vignette

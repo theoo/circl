@@ -2,26 +2,26 @@
 en:
   permission:
     errors:
-      attribute_not_found: Attribute not found
-      condition_does_not_evaluate: The condition does not evaluate.
-      forbidden: Access forbidden
-      forbidden_explanation: You don't have access to this ressource.
-      internal_server_error: Internal server error
-      internal_server_error_explanation: An error occured, please reload the page and contact the technical support.
+      attribute_not_found: attribute not found
+      condition_does_not_evaluate: condition does not evaluate
+      forbidden: forbidden
+      forbidden_explanation: forbidden explanation
+      internal_server_error: internal server error
+      internal_server_error_explanation: internal server error explanation
       invalid_parameters: invalid parameters
       invalid_request: invalid request
-      invalid_request_explanation: The request is invalid or malformed. Please ensure URL is correct.
-      page_not_found: Page not found
-      page_not_found_explanation: The page you are looking for does not exist.
-      record_not_found: Record not found
-      record_not_found_explanation: The record you are looking for does not exist.
-      service_unavailable: Service temporarly unavailable
-      service_unavailable_explanation: Please wait a minute and reload the page.
-      subject_must_point_to_model_if_condition_present: The subject must point to a model if condition is present.
+      invalid_request_explanation: invalid request explanation
+      page_not_found: page not found
+      page_not_found_explanation: page not found explanation
+      record_not_found: record not found
+      record_not_found_explanation: record not found explanation
+      service_unavailable: service unavailable
+      service_unavailable_explanation: service unavailable explanation
+      subject_must_point_to_model_if_condition_present: subject must point to model if condition present
     views:
       action: action
-      available_permissions: Available permissions
-      cannot_fetch_permissions: Cannot fetch permissions
+      available_permissions: available permissions
+      cannot_fetch_permissions: cannot fetch permissions
       hash_conditions: hash conditions
-      selected_permissions: Selected permissions
+      selected_permissions: selected permissions
       subject: subject

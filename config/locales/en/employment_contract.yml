@@ -2,7 +2,7 @@
 en:
   employment_contract:
     errors:
-      cant_delete_contract_if_current: cannot delete contract if current
+      cant_delete_contract_if_current: cant delete contract if current
       person_does_not_exist: person does not exist
     views:
       interval_ends_on: interval ends on

@@ -3,9 +3,10 @@ fr:
   invoice_template:
     errors:
       bvr_account_must_match_format: Le numéro de compte BVR doit correspondre au format XX-XXXXXX-X.
-      bvr_address_and_bvr_account_are_required_if_with_bvr_is_set: Le numéro de compte BVR et l'adresse doivent être saisis, si vous sélectionnez "imprimer le BVR"
+      bvr_address_and_bvr_account_are_required_if_with_bvr_is_set: Le numéro de compte BVR et l'adresse doivent être saisi si vous sélectionnez "imprimer le BVR"
       can_not_delete_if_invoices_are_subscribed: Il est impossible de supprimer le modèle si des factures y sont liées.
       can_not_delete_if_subscriptions_are_subscribed: Il est impossible de supprimer le modèle si des inscriptions y sont liées.
+      failed_to_substitute_iterator: ERREUR LORS DE LA SUBSTITUTION DE L'ITÉRATEUR "%{iterator}"
     views:
       actions:
         edit_template: modifier le modèle
@@ -13,15 +14,16 @@ fr:
       bvr_account_number: numéro de compte BVR
       bvr_address: adresse figurant sur le BVR
       language: langue du modèle
-      language_notice: localisation des attributs
+      language_notice: ocalisation des attributs
+      show_invoice_value: imprimer avec la valeure de la facture
       placeholders:
-        failed_to_substitute_iterator: ERREUR LORS DE LA SUBSTITUTION DE L'ITÉRATEUR "%{iterator}"
         bvr_account: Compte BVR
         bvr_address: Adresse de l'émetteur affichée sur le BVR
         bvr_codeline: ligne codée pour le scan
         bvr_reference_number: ligne de référence du BVR
         bvr_spaced_reference_number: ligne de référence du BVR séparée par des espaces
         bvr_value: Valeur formatée pour le BVR
+        failed_to_substitute_iterator: ERREUR LORS DE LA SUBSTITUTION DE L'ITÉRATEUR "%{iterator}"
         invoice_address: Adresse du destinataire de la facture
         invoice_balance_value: Invoice balance value
         invoice_buyer_first_name: Prénom du payeur de la facture
@@ -67,6 +69,5 @@ fr:
         placeholders: placeholders
         receipts: ! 'Itérateur des reçus. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
         subscriptions: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, parend_id, title, description, value, interval_starts_on, interval_ends_on, created_at, updated_at'
-      show_invoice_value: imprimer avec la valeur de la facture
       thumb: vignette
       with_bvr: imprimer le BVR

@@ -2,17 +2,17 @@
 en:
   tax:
     errors:
-      unable_to_destroy_a_tax_which_is_used: Unable to destroy a tax which is used
+      unable_to_destroy_a_tax_which_is_used: unable to destroy a tax which is used
     views:
-      age_tax_example_file_desc: Age based deduction example file
+      age_tax_example_file_desc: age tax example file desc
       available_years: available years
-      employee_account: account for employee deductions
-      employer_account: account for employer deductions
-      example_files_explanation: Below are three example files to download as template to update deductions. More information can be found on <a href='http://tracker.circl.ch/projects/circl/wiki/D%C3%A9ductions'>CIRCL documentation wiki</a>.
-      example_files_title: Example files
-      exporter_group: certificate group
-      generic_tax_example_file_desc: Generic deduction example file
-      is_tax_example_file_desc: (Geneva) Withholding tax example file
+      employee_account: employee account
+      employer_account: employer account
+      example_files_explanation: example files explanation
+      example_files_title: example files title
+      exporter_group: exporter group
+      generic_tax_example_file_desc: generic tax example file desc
+      is_tax_example_file_desc: is tax example file desc
       model: model
       number_of_rows: number of rows
-      upload_tax: upload deduction
+      upload_tax: upload tax

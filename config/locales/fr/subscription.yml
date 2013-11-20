@@ -4,7 +4,7 @@ fr:
     errors:
       can_not_delete_if_has_children: Impossible de détruire une inscription qui a des enfants
       can_not_delete_if_has_receipts: Impossible de détruire l'inscription dont un reçu dépend. Le reçu concerné doit être supprimé avant.
-      cannot_remove_members_if_there_is_receipts: Impossible de retirer les membres ad sont associé des reçus
+      cannot_remove_members_if_there_is_receipts: Impossible de retirer les membres auxquels sont associé des reçus
       cannot_transfer_overpaid_value_if_subscription_value_is_zero: Impossible de transférer les paiements excédantaires si l'inscription d'origine à une valeur de zéro
     mail:
       email: email
@@ -25,7 +25,7 @@ fr:
       the_following_members_were_already_in_the_subscription: Les membres suivants étaient déjà dans l'inscription
       the_following_members_were_updated: Les membres suivants ont étés mis à jour
     notices:
-      members_added: ! "%{members_count} personnes ont été ajoutées à l'inscription. Veuillez attendre la fin de l'exécution de la tâche d'arrière plan avant de modifier l'inscription concernée.
+      members_added: ! '%{members_count} personnes ont été ajoutées à l''inscription. Veuillez attendre la fin de l''exécution de la tâche d''arrière plan avant de modifier l''inscription concernée.'
       no_existing_invoice_template_alert: Il n'existe pas de modèle de facture, veuillez en créer avant de poursuivre avec la création d'inscription.
       no_existing_subscription_alert: Il n'existe pas d'inscription, veuillez en créer pour en ajouter à une affaire.
     views:
@@ -58,18 +58,18 @@ fr:
       reminder: rappel
       renewal: renouvellement
       sort_people_for_pdf_generation_of: Tri des personnes pour la génération du PDF de l'inscription
-      sort_people_message: Veuillez définir l'ordre de tri des personnes pour la fusion des factures dans un PDF, les autres attributs ne seront pas pris en compte. Pour modifier l'ordre de tri il faut afficher un pré-réglage (le crayon).
+      sort_people_message: Veuillez définir l'ordre de tri des personnes pour la fusion des factures dans un PDF, les autres attributs ne seront pas prit en compte. Pour modifier l'ordre de tri il faut afficher un pré-réglage (le crayon).
       subscription: inscription
       tag_tool:
         member: membre
-        members_following_theses_attributes: les membres résultants de la recherche suivante
+        members_following_theses_attributes: members following theses attributes
         of_a: d'une inscription
         private_tag_name: nom du tag privé
         subscription_at_this_date: à la date suivante
         tag_name_missing: nom du tag privé manquant
         tag_tool: outil à tagger
         tag_with: tagger avec
-        unprocessable_request: formulation de la requère incorrect
+        unprocessable_request: formulation de la requète incorrect
         wrong_date: format de date incorrect
       values:
         invoice_template: modèle de facturese

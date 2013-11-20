@@ -2,9 +2,9 @@
 en:
   invoice:
     errors:
-      cant_destroy_if_existing_receipt: An invoice cannot be destroyed if it has existing receipts. Revelent receipts must first be destroyed.
+      cant_destroy_if_existing_receipt: cant destroy if existing receipt
     notices:
-      no_existing_invoice_template_alert: no existing invoice template
+      no_existing_invoice_template_alert: no existing invoice template alert
     views:
       account: account
       actions:
@@ -21,4 +21,4 @@ en:
       status: status
       statuses: statuses
       subscription_title: subscription title
-      wipe_content_to_update_address: Wipe address content to update from its buyer information.
+      wipe_content_to_update_address: wipe content to update address
