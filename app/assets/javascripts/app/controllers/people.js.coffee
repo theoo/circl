@@ -96,7 +96,7 @@ class App.People extends Spine.Controller
     # TODO refactor permissions with spine and ensure it's loaded before any other actions
     Permissions.get { person_id: @person_id, can: { person: ['destroy', 'restricted_attributes', 'authenticate_using_token'] }},
                       (data) =>
-                        if @person_id?
+                        if @person_id
                           @edit.active { can: data }
                         else
                           @new.active { can: data }

@@ -178,8 +178,8 @@
         - if @can.person.restricted_attributes
           .row
             .col-lg-12
-              %h3= I18n.t('person.views.employee_information')
-
+              %h3
+                = I18n.t('person.views.employee_information')
               - if @person.missing_employee_information
                 - if @person.missing_employee_information.length > 0
                   - missing_fields = []
@@ -190,9 +190,6 @@
                     = I18n.t('salary.errors.the_required_information_about_this_person_are_not_satisfied', {required_fields: missing_fields} )
                     .label.label-warning
                       = I18n.t("common.incomplete")
-              - else
-                %h3
-                  = I18n.t('person.views.employee_information')
 
           .row
             .col-lg-6.col-md-6.col-sm-6.form-group
