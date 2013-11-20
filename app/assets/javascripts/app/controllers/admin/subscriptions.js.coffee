@@ -352,7 +352,6 @@ class Index extends App.ExtendedController
     super
     Subscription.bind('refresh', @render)
 
-
   render: =>
     @html @view('admin/subscriptions/index')(@)
 

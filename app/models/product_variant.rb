@@ -38,11 +38,6 @@ class ProductVariant < ActiveRecord::Base
 
   belongs_to :product
 
-  has_many :product_items,  :class_name => 'AffairsProductVariant',
-                            :foreign_key => 'variant_id'
-
-  has_many :affairs,        :through => :product_items
-
   money :buying_price
   money :selling_price
   money :art

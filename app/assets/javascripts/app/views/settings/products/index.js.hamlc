@@ -1,24 +1,9 @@
-%table.datatable
+%table.datatable{ :action => '/settings/products' }
   %thead
-    %tr
+    %tr.item
       %th= I18n.t('common.id')
       %th= I18n.t('common.key')
       %th= I18n.t('common.description')
       %th= I18n.t('product.views.variants')
-      %th= I18n.t('product.views.has_accessories')
+      -# %th= I18n.t('product.views.has_accessories')
       %th.desc= I18n.t('common.updated_at')
-
-  %tbody
-    - for product in App.Product.all()
-      - classes = ['item']
-      - classes.push 'success' if ! product.archive
-      %tr{:data-id => product.id, :class => classes.join(" ")}
-        %td= product.id
-        %td= product.key
-        %td
-          %b= product.title
-          %br
-          = product.description
-        %td= product.variants_count
-        %td= I18n.t("common." + product.has_accessories)
-        %td= product.updated_at

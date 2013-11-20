@@ -31,12 +31,17 @@ class ProductProgram < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
+  # TODO prevent destroy if has product
 
   #################
   ### RELATIONS ###
   #################
 
-  has_many :affairs_product_variants
+  has_many :product_items, :class_name => 'AffairsProductsProgram',
+                           :foreign_key => 'program_id',
+                           :dependent => :destroy
+  has_many :products, :through => :product_items
+  has_many :affairs,  :through => :product_items
 
   scope :actives, Proc.new { where(:archive => false)}
   scope :archived, Proc.new { where(:archive => true)}

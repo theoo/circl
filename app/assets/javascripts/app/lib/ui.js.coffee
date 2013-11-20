@@ -171,6 +171,10 @@ class Ui
           # make it nice and clickable
           $(row).addClass('item')
 
+          # add custom classes
+          if data.classes
+            $(row).addClass(data.classes)
+
           # display trees
           if data.level
             $(row).addClass("level" + data.level)
@@ -545,7 +549,6 @@ class Ui
       schema: 'html5'
       editor_selector: 'wysiwyg'
       valid_children : '+body[style]'
-      height: $(window).height() - 280 # 280 is guessed
       language: I18n.locale
       body_class: 'a4_page'
       content_css: ['/assets/custom_fonts.css', '/assets/pdf_common.css', '/assets/pdf_preview.css']
@@ -554,10 +557,10 @@ class Ui
       browser_spellcheck : true
       object_resizing : true
       visual: true
-      resize: false
       menubar: false
       toolbar1: "save cancel | undo redo | cut copy paste searchreplace | link image | table | charmap hr pagebreak | visualaid visualblocks visualchars | code"
-      toolbar2: "styleselect formatselect fontselect fontsizeselect forecolor backcolor | bold italic subscript superscript | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
+      toolbar2: "styleselect formatselect fontselect fontsizeselect forecolor backcolor"
+      toolbar3: "bold italic subscript superscript | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
       statusbar: true
       font_formats: "Andale Mono=andale mono,times;"+
         "Arial=arial,helvetica,sans-serif;"+

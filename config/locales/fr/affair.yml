@@ -27,6 +27,7 @@ fr:
         overpaid: surpayée
         paid: payée
         partially_paid: partiellement payée
+        to_be_billed: à facturer
         underpaid: sous-payée
       subscriptions: Inscriptions
       tasks: Tâches

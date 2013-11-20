@@ -58,27 +58,27 @@ class Products < ActiveRecord::Migration
     add_index :product_programs, :archive
 
     # PRODUCT LISTS
-    create_table :affairs_product_variants do |t|
+    create_table :affairs_products_programs do |t|
       t.integer :parent_id
       t.integer :affair_id
-      t.integer :variant_id
+      t.integer :product_id
       t.integer :program_id
       t.integer :position
       t.integer :quantity
 
       t.timestamps
     end
-    add_index :affairs_product_variants, [:affair_id, :variant_id, :position], :uniq => true, :name => "affairs_product_variants_unique_position"
-    add_index :affairs_product_variants, :parent_id
-    add_index :affairs_product_variants, :affair_id
-    add_index :affairs_product_variants, :program_id
-    add_index :affairs_product_variants, :variant_id
+    add_index :affairs_products_programs, [:affair_id, :product_id, :position], :uniq => true, :name => "affairs_products_programs_unique_position"
+    add_index :affairs_products_programs, :parent_id
+    add_index :affairs_products_programs, :affair_id
+    add_index :affairs_products_programs, :program_id
+    add_index :affairs_products_programs, :product_id
   end
 
   def down
     drop_table :products
     drop_table :product_variants
     drop_table :product_programs
-    drop_table :affairs_product_variants
+    drop_table :affairs_products_programs
   end
 end

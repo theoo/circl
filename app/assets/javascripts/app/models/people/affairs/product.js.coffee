@@ -14,10 +14,10 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class App.PersonAffairProductVariant extends Spine.Model
+class App.PersonAffairProductsProgram extends Spine.Model
 
-  @configure 'PersonAffairProductVariant', "parent_id", "affair_id", "variant_id", "program_id",
-    "parent_key", "affair_title", "variant_key", "program_key",
+  @configure 'PersonAffairProductsProgram', "parent_id", "affair_id", "product_id", "program_id",
+    "parent_key", "affair_title", "program_key",
     "position", "quantity", "created_at", "updated_at", 'description', 'key', 'value'
 
   @extend Spine.Model.Ajax

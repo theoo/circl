@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131118083454) do
+ActiveRecord::Schema.define(:version => 20131118151459) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -35,10 +35,10 @@ ActiveRecord::Schema.define(:version => 20131118083454) do
   add_index "affairs", ["value_currency"], :name => "index_affairs_on_value_currency"
   add_index "affairs", ["value_in_cents"], :name => "index_affairs_on_value_in_cents"
 
-  create_table "affairs_product_variants", :force => true do |t|
+  create_table "affairs_products_programs", :force => true do |t|
     t.integer  "parent_id"
     t.integer  "affair_id"
-    t.integer  "variant_id"
+    t.integer  "product_id"
     t.integer  "program_id"
     t.integer  "position"
     t.integer  "quantity"
@@ -46,11 +46,11 @@ ActiveRecord::Schema.define(:version => 20131118083454) do
     t.datetime "updated_at"
   end
 
-  add_index "affairs_product_variants", ["affair_id", "variant_id", "position"], :name => "affairs_product_variants_unique_position"
-  add_index "affairs_product_variants", ["affair_id"], :name => "index_affairs_product_variants_on_affair_id"
-  add_index "affairs_product_variants", ["parent_id"], :name => "index_affairs_product_variants_on_parent_id"
-  add_index "affairs_product_variants", ["program_id"], :name => "index_affairs_product_variants_on_program_id"
-  add_index "affairs_product_variants", ["variant_id"], :name => "index_affairs_product_variants_on_variant_id"
+  add_index "affairs_products_programs", ["affair_id", "product_id", "position"], :name => "affairs_product_variants_unique_position"
+  add_index "affairs_products_programs", ["affair_id"], :name => "index_affairs_product_variants_on_affair_id"
+  add_index "affairs_products_programs", ["parent_id"], :name => "index_affairs_product_variants_on_parent_id"
+  add_index "affairs_products_programs", ["product_id"], :name => "index_affairs_product_variants_on_variant_id"
+  add_index "affairs_products_programs", ["program_id"], :name => "index_affairs_product_variants_on_program_id"
 
   create_table "affairs_subscriptions", :id => false, :force => true do |t|
     t.integer "affair_id"
@@ -156,6 +156,9 @@ ActiveRecord::Schema.define(:version => 20131118083454) do
     t.datetime "snapshot_updated_at"
     t.boolean  "show_invoice_value",    :default => true
     t.integer  "language_id",                              :null => false
+    t.text     "bvr"
+    t.text     "header"
+    t.text     "footer"
   end
 
   add_index "invoice_templates", ["language_id"], :name => "index_invoice_templates_on_language_id"

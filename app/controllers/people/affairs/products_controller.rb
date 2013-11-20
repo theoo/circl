@@ -28,7 +28,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def index
-    authorize! :read, @person => AffairsProductVariant
+    authorize! :read, @person => AffairsProductsProgram
 
     @products = @affair.product_items
 
@@ -75,7 +75,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def create
-    authorize! :create, @person => AffairsProductVariant
+    authorize! :create, @person => AffairsProductsProgram
 
     @product = @affair.product_items.new
     update_instance(params)
@@ -90,7 +90,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def edit
-    authorize! :read, @person => AffairsProductVariant
+    authorize! :read, @person => AffairsProductsProgram
 
     @product = @affair.product_items.find(params[:id])
 
@@ -100,7 +100,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def update
-    authorize! :update, @person => AffairsProductVariant
+    authorize! :update, @person => AffairsProductsProgram
 
     @product = @affair.product_items.find(params[:id])
     update_instance(params)
@@ -115,7 +115,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def destroy
-    authorize! :destroy, @person => AffairsProductVariant
+    authorize! :destroy, @person => AffairsProductsProgram
 
     @product = @affair.product_items.find(params[:id])
 
@@ -129,18 +129,21 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def search
-    authorize! :read, @person => AffairsProductVariant
+    authorize! :read, @person => AffairsProductsProgram
 
-    @products = @affair.product_items
-
-    if params[:term].blank?
+    hash = {}
+    if ! params[:term].blank?
       result = []
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @products.joins(:product).where("products.key #{SQL_REGEX_KEYWORD} ? OR products.title #{SQL_REGEX_KEYWORD} ?", param, param)
+      result = Product
+        .joins(:product_items)
+        .where("affairs_products_programs.affair_id = ?", @affair.id)
+        .where("products.key #{SQL_REGEX_KEYWORD} ? OR products.title #{SQL_REGEX_KEYWORD} ?", param, param)
+      hash = result.map{ |t| { :id => t.id, :label => t.key, :title => t.title, :desc => t.description }} if result
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:id => t.id, :label => t.title}}}
+      format.json { render :json => hash }
     end
   end
 
@@ -150,12 +153,12 @@ class People::Affairs::ProductsController < ApplicationController
     # remove relations if not sent
     prod[:parent_id] = nil unless prod[:parent_id]
     prod[:program_id] = nil unless prod[:program_id]
-    prod[:variant_id] = nil unless prod[:variant_id]
+    prod[:product_id] = nil unless prod[:product_id]
 
     @product.assign_attributes(
       :parent_id  => prod[:parent_id],
       :program_id => prod[:program_id],
-      :variant_id => prod[:variant_id],
+      :product_id => prod[:product_id],
       :position   => prod[:position],
       :quantity   => prod[:quantity])
   end

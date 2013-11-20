@@ -37,15 +37,18 @@ class Product < ActiveRecord::Base
   belongs_to :provider, :class_name => 'Person'
   belongs_to :after_sale, :class_name => 'Person'
 
-  has_many  :variants,  :class_name => 'ProductVariant',
-                        :dependent => :destroy
+  has_many :variants, :class_name => 'ProductVariant',
+                      :dependent => :destroy
+
+  has_many :product_items, :class_name => 'AffairsProductsProgram',
+                           :dependent => :destroy
+
+  has_many :programs, :through => :product_items
+  has_many :affairs,  :through => :product_items
 
   scope :actives, Proc.new { where(:archive => false)}
   scope :archived, Proc.new { where(:archive => true)}
 
-  def programs
-    ProductProgram.where(:program_group => variants.map(&:program_group))
-  end
 
   ###################
   ### VALIDATIONS ###
@@ -73,7 +76,6 @@ class Product < ActiveRecord::Base
         :product_id    => v.product_id,
         :program_group => v.program_group,
         :title         => v.title,
-        :description   => v.description,
         :buying_price  => v.buying_price.to_f,
         :selling_price => v.selling_price.to_f,
         :art           => v.art.to_f,

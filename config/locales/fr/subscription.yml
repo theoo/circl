@@ -28,6 +28,11 @@ fr:
       members_added: ! '%{members_count} personnes ont été ajoutées à l''inscription. Veuillez attendre la fin de l''exécution de la tâche d''arrière plan avant de modifier l''inscription concernée.'
       no_existing_invoice_template_alert: Il n'existe pas de modèle de facture, veuillez en créer avant de poursuivre avec la création d'inscription.
       no_existing_subscription_alert: Il n'existe pas d'inscription, veuillez en créer pour en ajouter à une affaire.
+    pdf:
+      interval_starts_on: début de l'intervalle
+      interval_ends_on: fin de l'intervalle
+      value: valeur
+      title: titre
     views:
       actions:
         add_members_to_subscription: ajouter des membres à l'inscription

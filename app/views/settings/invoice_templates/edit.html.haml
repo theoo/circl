@@ -1,43 +1,73 @@
-//    = I18n.t("invoice_template.views.placeholders.display_placeholders")
 
-//    %div{:class => 'float_right', :style => 'width: 720px; display: none;', :id => 'invoice_template_placeholders_list'}
-//      %label= I18n.t('invoice_template.views.placeholders.placeholders')
-//      %dl.placeholders
-//        - for p,v in @invoice_template.placeholders.simples
-//          %dt= "#" + p
-//          %dd= I18n.t('invoice_template.views.placeholders.' + p.toLowerCase())
-
-//      %dl.placeholders
-//        - for p,v in @invoice_template.placeholders.iterators
-//          %dt= "#" + p + "{}"
-//          %dd= I18n.t('invoice_template.views.placeholders.' + p.toLowerCase())
-
-// small header
 %nav.navbar.navbar-default.navbar-static-top.navbar-inverse{:role => "navigation"}
   .row
-    .navbar-header.col-lg-1
+    .navbar-header.col-md-1
       %span{:class => 'navbar-brand', :style => 'padding: 0 0 0 15px'}
         = image_tag 'logo_mini_white.png'
 
-    .navbar-brand.col-lg-2
+    .navbar-brand.col-md-11
       = I18n.t("invoice_template.views.actions.edit_template") + ": "
       %i= @invoice_template.title
 
 .container
-  .row
-    .col-lg-12
-      %br
-      - flash_messages
-      - error_messages_for(@invoice_template)
+  = form_for @invoice_template,
+    :as => 'invoice_template',
+    :url => settings_invoice_template_path(@invoice_template) do |f|
+    = f.hidden_field :id
+    .row
+      .col-md-3
+        %br
+      .col-md-6
+        %br
+        - flash_messages
+        - error_messages_for(@invoice_template)
+      .col-md-3
+        %br
 
-  .row
-    .col-lg-12
-      // Override settings_invoice_template default params scope with invoice_template
-      = form_for @invoice_template,
-        :as => 'invoice_template',
-        :url => settings_invoice_template_path(@invoice_template) do |f|
-        = f.hidden_field :id
+    .row
+      .col-lg-9
+        %label
+          = I18n.t("invoice_template.views.header")
+        %small.help-block= I18n.t("invoice_template.help.remove_content_if_you_dont_want_header")
+        = f.text_area :header, :rows => 5, :id => "header", :class => 'wysiwyg'
+        %br
+      .col-lg-3
+        %label= I18n.t("invoice_template.views.placeholders.placeholders")
+        .wk-placeholders
+          %dl
+            - Rails.configuration.settings["wk_placeholders"].each do |p|
+              %dt= "#" + p.upcase
+              %dd= I18n.t('invoice_template.views.placeholders.' + p)
 
-        = f.text_area :html, :rows => 25, :id => "wysiwyg", :class => 'wysiwyg'
+    .row
+      .col-lg-9
+        %label{:class => 'required'}
+          = I18n.t("invoice_template.views.body")
+        = f.text_area :html, :rows => 25, :id => "body", :class => 'wysiwyg'
+        %br
+      .col-lg-3
+        %label= I18n.t('invoice_template.views.placeholders.placeholders')
+        .pdf-placeholders
+          %dl
+            - @invoice_template.placeholders["simples"].each do |p,v|
+              %dt= "#" + p
+              %dd= I18n.t('invoice_template.views.placeholders.' + p.downcase)
+          %dl
+            - @invoice_template.placeholders["iterators"].each do |p,v|
+              %dt= "#" + p + "{}"
+              %dd= I18n.t('invoice_template.views.placeholders.' + p.downcase)
 
-      %br
+    .row
+      .col-lg-9
+        %label
+          = I18n.t("invoice_template.views.footer")
+        %small.help-block= I18n.t("invoice_template.help.remove_content_if_you_dont_want_footer")
+        = f.text_area :footer, :rows => 5, :id => "footer", :class => 'wysiwyg'
+        %br
+      .col-lg-3
+        %label= I18n.t("invoice_template.views.placeholders.placeholders")
+        .wk-placeholders
+          %dl
+            - Rails.configuration.settings["wk_placeholders"].each do |p|
+              %dt= "#" + p.upcase
+              %dd= I18n.t('invoice_template.views.placeholders.' + p)

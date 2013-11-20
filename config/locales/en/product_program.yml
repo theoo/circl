@@ -2,7 +2,8 @@
 en:
   product_program:
     views:
-      color: color
       program_group: program group
       program_search: program
       variant_name: variant name
+      table:
+        program_group: grp.

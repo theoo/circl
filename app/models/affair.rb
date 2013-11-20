@@ -69,10 +69,11 @@ class Affair < ActiveRecord::Base
 
   has_many    :extras, :dependent => :destroy
   has_many    :tasks, :dependent => :destroy
-  has_many    :product_items, :class_name => 'AffairsProductVariant',
+  has_many    :product_items, :class_name => 'AffairsProductsProgram',
                               :dependent => :destroy
-  has_many    :product_variants, :through => :product_items, :source => :variant
-  has_many    :products, :through => :product_variants
+  has_many    :products, :through => :product_items
+  has_many    :programs, :through => :product_items
+  # has_many    :product_variants, :through => :products
 
   monitored_habtm :subscriptions,
                   :after_add    => :update_on_subscription_habtm_alteration,
@@ -113,7 +114,7 @@ class Affair < ActiveRecord::Base
      :open,           # 0
      :underpaid,      # 1
      :partially_paid, # 2
-     nil,             # 3
+     :to_be_billed,   # 3
      nil,             # 4
      nil,             # 5
      nil,             # 6
@@ -212,27 +213,36 @@ class Affair < ActiveRecord::Base
   # If the sum of receipts is greater than the sum of invoices, it
   # doesn't means every single invoice has been paid.
   def paid?
+    return false if invoices.count == 0
     invoices.inject(true) { |sum, i| sum & i.has_status?(:paid) }
   end
 
   # Returns true if at leaset one invoice is overpaid in this affair.
   def overpaid?
+    return false if invoices.count == 0
     invoices.inject(false) { |sum, i| sum | i.has_status?(:overpaid) }
   end
 
   # Returns true if at least one invoice is underpaid in this affair.
   def underpaid?
+    return false if invoices.count == 0
     invoices.inject(false) { |sum, i| sum | i.has_status?(:underpaid) }
   end
 
   # Returns true if all invoices are set to cancelled.
   def cancelled?
+    return false if invoices.count == 0
     invoices.inject(true) { |sum, i| sum & i.has_status?(:cancelled) }
   end
 
   # Returns true if all invoices are set to offered.
   def offered?
+    return false if invoices.count == 0
     invoices.inject(true) { |sum, i| sum & i.has_status?(:offered) }
+  end
+
+  def to_be_billed?
+    invoices_value < value
   end
 
   private
@@ -250,7 +260,7 @@ class Affair < ActiveRecord::Base
     self.value = subscriptions_value
     self.value += tasks_value
     self.value += product_items_value
-    # self.value += extras_value
+    self.value += extras_value
     self.value
   end
 
@@ -261,6 +271,7 @@ class Affair < ActiveRecord::Base
     statuses << :open if open?
     statuses << :underpaid if underpaid?
     statuses << :partially_paid if partially_paid?
+    statuses << :to_be_billed if to_be_billed?
     statuses << :cancelled if cancelled?
 
     # TODO How an invoice could be paid and open in the same time ?

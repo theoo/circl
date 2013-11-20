@@ -638,7 +638,7 @@ class Person < ActiveRecord::Base
   end
 
   def do_not_remove_admin_role_for_first_admin
-    if id == 1 && roles.find{|r| r.name == 'admin' }.nil?
+    if id == ApplicationSetting.value(:me) and roles.find{|r| r.name == 'admin' }.nil?
       errors.add(:role,
                  I18n.t('person.errors.cannot_remove_admin_role_for_first_user'))
       false

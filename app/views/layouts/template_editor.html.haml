@@ -23,11 +23,7 @@
 
     = csrf_meta_tag
 
-  %body
-  %header
-
+  %body#template-editor
     ~ yield
 
     = render :partial => 'layouts/footer'
-
-    #dialogs

@@ -2,8 +2,8 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th= I18n.t('common.key')
-      %th= I18n.t('product_program.views.program_group')
+      %th.desc= I18n.t('common.key')
+      %th= I18n.t('product_program.views.table.program_group')
       %th= I18n.t('common.description')
       %th.desc= I18n.t('common.updated_at')
 

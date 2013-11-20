@@ -30,6 +30,9 @@
 
 # Options are: :invoice_id, :person
 class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
+
+  include Rails.application.routes.url_helpers
+
   def self.generate_title(options)
     I18n.t("background_task.tasks.generate_invoice_pdf",
       :invoice_id => options[:invoice_id],
@@ -38,16 +41,37 @@ class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
 
   def process!
     invoice = Invoice.find(options[:invoice_id])
+    affair  = invoice.affair
+    person  = invoice.owner
 
     controller = People::Affairs::InvoicesController.new
     html = controller.render_to_string( :inline => controller.build_from_template(invoice),
                                         :layout => 'pdf.html.haml')
-
     html.assets_to_full_path!
 
     file = Tempfile.new(['invoice', '.pdf'], :encoding => 'ascii-8bit')
     file.binmode
-    file.write(PDFKit.new(html).to_pdf)
+
+    token = Person.find(ApplicationSetting.value(:me)).authentication_token
+
+    options = {}
+
+    if invoice.invoice_template.header
+      options[:header_html] =
+        Rails.configuration.settings['directory_url'] +
+          header_person_affair_invoice_path(person, affair, invoice, :auth_token => token)
+    end
+
+    if invoice.invoice_template.footer
+      options[:footer_html] =
+        Rails.configuration.settings['directory_url'] +
+          footer_person_affair_invoice_path(person, affair, invoice, :auth_token => token)
+    end
+
+    # Using path instead of url so it works in dev mode too.
+    kit = PDFKit.new(html, options)
+
+    file.write(kit.to_pdf)
     file.flush
     invoice.pdf = file
     invoice.save

@@ -36,3 +36,13 @@ IMGKit.configure do |config|
     config.send("#{k}=", v)
   end
 end
+
+# FIXME using "me" to authenticate wkhtmltopdf.
+# NOTE me always has admin role
+admin = Person.find ApplicationSetting.value(:me)
+if admin.authentication_token.nil?
+  admin.update_authentication_token(:renew_authentication_token => true)
+end
+
+# Placeholders
+Rails.configuration.settings["wk_placeholders"] = %w(page frompage topage webpage section subsection date time)

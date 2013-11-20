@@ -39,9 +39,6 @@
     %strong Company
     | Rue du Paradis-fiscal 7 | 1200 Gen&egrave;ve | T&eacute;l. +41 22 345 67 89 | Email info@company.com
 
-// No partial here because rake db:seed:invoice_templates:create won't work
-// != @partial('bvr')(@)
-
 .bvr
   .bvr_organisation_address1
     %pre #BVR_ADDRESS

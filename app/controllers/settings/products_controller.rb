@@ -20,17 +20,17 @@ class Settings::ProductsController < ApplicationController
 
   layout false
 
-  load_and_authorize_resource
+  load_and_authorize_resource :except => :index
 
   monitor_changes :@product
 
   def index
-
-    @product.actives if params[:actives]
+    authorize! :index, Product
+    # TODO @product.actives if params[:actives]
 
     respond_to do |format|
       format.json do
-        render :json => @products
+        render :json => ProductsDatatable.new(view_context)
       end
     end
   end
@@ -139,7 +139,9 @@ class Settings::ProductsController < ApplicationController
       result = []
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @products.where("products.key #{SQL_REGEX_KEYWORD} ? OR products.title #{SQL_REGEX_KEYWORD} ?", param, param)
+      result = @products
+        .where("products.key #{SQL_REGEX_KEYWORD} ? OR products.title #{SQL_REGEX_KEYWORD} ?", param, param)
+        .limit(10)
     end
 
     respond_to do |format|
@@ -157,7 +159,10 @@ class Settings::ProductsController < ApplicationController
       result = []
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @product.programs.where("product_programs.key #{SQL_REGEX_KEYWORD} ? OR product_programs.title #{SQL_REGEX_KEYWORD} ?", param, param)
+      result = @product
+        .programs
+        .where("product_programs.key #{SQL_REGEX_KEYWORD} ? OR product_programs.title #{SQL_REGEX_KEYWORD} ?", param, param)
+        .limit(10)
     end
 
     respond_to do |format|

@@ -70,9 +70,8 @@ pdfkit:
     encoding: utf-8
     page_size: A4
     print_media_type: true
-    margin_top: 0mm
     margin_right: 0mm
-    margin_bottom: 0mm
+#     margin_bottom: 0mm
     margin_left: 0mm
 
 # IMGKit

@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class AffairsProductVariant < ActiveRecord::Base
+class AffairsProductsProgram < ActiveRecord::Base
 
   ################
   ### INCLUDES ###
@@ -40,18 +40,15 @@ class AffairsProductVariant < ActiveRecord::Base
   acts_as_tree
 
   belongs_to :affair
-  belongs_to :variant, :class_name => "ProductVariant"
+  belongs_to :product
   belongs_to :program, :class_name => "ProductProgram"
-
-  has_one :product, :through => :variant
 
   ###################
   ### VALIDATIONS ###
   ###################
 
   validates :affair_id, :presence => true
-  validates :variant_id, :presence => true
-  validates :program_id, :presence => true
+  validates :product_id, :presence => true
   validates :position, :presence => true, :uniqueness => true
   validates :quantity, :presence => true
   validate :uniquness_of_jointure, :if => Proc.new {|i| i.new_record?}
@@ -81,9 +78,20 @@ class AffairsProductVariant < ActiveRecord::Base
   ### INSTANCE METHODS ###
   ########################
 
+  def variant
+    if program
+      product.variants.where(:program_group => program.program_group).first
+    end
+  end
+
   # The value of an item depends on its variant and its program
+  # An item may not have value (free accessories)
   def value
-    variant.selling_price
+    if variant
+      variant.selling_price * quantity
+    else
+      0.to_money
+    end
   end
 
   private
@@ -98,7 +106,7 @@ class AffairsProductVariant < ActiveRecord::Base
   end
 
   def uniquness_of_jointure
-    if AffairsProductVariant.where(:affair_id => affair_id, :variant_id => variant_id, :program_id => program_id).count > 0
+    if self.class.where(:affair_id => affair_id, :product_id => product_id, :program_id => program_id).count > 0
       errors.add :base, I18n.t("product_variant.errors.this_relation_already_exists")
       false
     end

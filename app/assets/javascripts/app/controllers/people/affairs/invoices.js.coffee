@@ -259,11 +259,11 @@ class App.PersonAffairInvoices extends Spine.Controller
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
 
-    @index.bind 'error', (id, errors) =>
+    @edit.bind 'error', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 
-    @index.bind 'destroyError', (id, errors) =>
+    @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 

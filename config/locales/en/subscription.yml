@@ -28,6 +28,11 @@ en:
       members_added: members added
       no_existing_invoice_template_alert: no existing invoice template alert
       no_existing_subscription_alert: no existing subscription alert
+    pdf:
+      interval_starts_on: interval start
+      interval_ends_on: interval end
+      value: value
+      title: title
     views:
       actions:
         add_members_to_subscription: add members to subscription

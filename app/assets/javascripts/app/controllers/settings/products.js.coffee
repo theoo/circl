@@ -141,9 +141,14 @@ class Index extends App.ExtendedController
     @html @view('settings/products/index')(@)
 
   edit: (e) ->
+    e.preventDefault()
+
     @id = $(e.target).product()
-    @activate_in_list e.target
-    @trigger 'edit', @id
+    Product.one 'refresh', =>
+      @activate_in_list e.target
+      @trigger 'edit', @id
+
+    Product.fetch(id: @id)
 
   table_redraw: =>
     if @id
@@ -182,7 +187,8 @@ class App.SettingsProducts extends Spine.Controller
 
     App.ProductProgram.one 'count_fetched', =>
       ProductProgram.one 'names_fetched', =>
-        Product.fetch()
+        # Product.fetch() # Datatable takes care of this
+        @index.render()
         @new.active()
 
       ProductProgram.fetch_names()

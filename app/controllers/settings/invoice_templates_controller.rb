@@ -71,8 +71,16 @@ class Settings::InvoiceTemplatesController < ApplicationController
         BackgroundTasks::GenerateInvoiceTemplateJpg.process!(:invoice_template_id => @invoice_template.id)
         @invoice_template.reload
         format.json { render :json => @invoice_template }
+        format.html do
+          flash[:notice] = I18n.t("common.successfully_updated")
+          redirect_to edit_settings_invoice_template_path(@invoice_template)
+        end
       else
         format.json { render :json => @invoice_template.errors, :status => :unprocessable_entity }
+        format.html do
+          flash[:error] = I18n.t("common.failed_to_update")
+          render 'edit', :layout => 'template_editor'
+        end
       end
     end
   end

@@ -5,3 +5,5 @@ fr:
       program_group: groupe du programme
       program_search: program
       variant_name: nom de la variante
+      table:
+        program_group: grp.

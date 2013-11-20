@@ -53,6 +53,9 @@ Directory::Application.routes.draw do
         collection do
           get 'search'
         end
+        member do
+          get 'header', 'footer', 'bvr'
+        end
       end
 
       resources :products, :controller => 'people/affairs/products' do

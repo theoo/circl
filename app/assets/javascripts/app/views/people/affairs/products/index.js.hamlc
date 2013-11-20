@@ -8,7 +8,7 @@
       %th= I18n.t('common.value')
 
   %tbody
-    - for item in App.PersonAffairProductVariant.all()
+    - for item in App.PersonAffairProductsProgram.all()
       - classes = ['item']
       - classes.push 'success' if ! item.archive
       %tr{:data-id => item.id, :class => classes.join(" ")}
@@ -25,7 +25,7 @@
 
         %td.number= item.value.to_view()
 
-- if App.PersonAffairProductVariant.all().length > 0
+- if App.PersonAffairProductsProgram.all().length > 0
   .panel-footer
     .btn-group
       %button{:type => 'button',

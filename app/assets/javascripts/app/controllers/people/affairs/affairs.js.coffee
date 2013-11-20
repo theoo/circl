@@ -18,7 +18,7 @@ Person = App.Person
 PersonAffair = App.PersonAffair
 PersonAffairSubscription = App.PersonAffairSubscription
 PersonTask = App.PersonTask
-PersonAffairProductVariant = App.PersonAffairProductVariant
+PersonAffairProductsProgram = App.PersonAffairProductsProgram
 PersonAffairExtra = App.PersonAffairExtra
 PersonAffairInvoice = App.PersonAffairInvoice
 PersonAffairReceipt = App.PersonAffairReceipt
@@ -92,10 +92,10 @@ class Edit extends App.ExtendedController
       # Products
       person_affair_products_ctrl = $("#person_affair_products").data('controller')
       person_affair_products_ctrl.activate(person_id: @person_id, affair_id: @id)
-      PersonAffairProductVariant.url = =>
+      PersonAffairProductsProgram.url = =>
         "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/products"
-      PersonAffairProductVariant.refresh([], clear: true)
-      PersonAffairProductVariant.fetch()
+      PersonAffairProductsProgram.refresh([], clear: true)
+      PersonAffairProductsProgram.fetch()
 
       # Extras
       person_affair_extras_ctrl = $("#person_affair_extras").data('controller')
@@ -134,8 +134,8 @@ class Edit extends App.ExtendedController
     PersonTask.refresh([], clear: true)
 
     # Products
-    PersonAffairProductVariant.url = => undefined
-    PersonAffairProductVariant.refresh([], clear: true)
+    PersonAffairProductsProgram.url = => undefined
+    PersonAffairProductsProgram.refresh([], clear: true)
 
     # Extras
     PersonAffairExtra.url = => undefined

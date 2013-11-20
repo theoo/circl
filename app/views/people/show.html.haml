@@ -117,10 +117,10 @@
 
         .col-lg-6.col-md-6
           - if can? :read, @person => Affair
-            #person_affair_extras.panel.panel-default
+            #person_affair_tasks.panel.panel-default
               .panel-heading
                 .panel-title
-                  = I18n.t('affair.views.extras')
+                  = I18n.t('affair.views.tasks')
 
           - if can? :read, @person => Affair
             #person_affair_products.panel.panel-default
@@ -129,11 +129,10 @@
                   = I18n.t('affair.views.products')
 
           - if can? :read, @person => Affair
-            #person_affair_tasks.panel.panel-default
+            #person_affair_extras.panel.panel-default
               .panel-heading
                 .panel-title
-                  = I18n.t('affair.views.tasks')
-
+                  = I18n.t('affair.views.extras')
 
       .well
         #balance

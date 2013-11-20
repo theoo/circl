@@ -10,13 +10,13 @@
           = I18n.t('product.views.product_search')
         %input{ :type => 'search',
                 :id => 'person_affair_product_search',
-                :name => 'variant',
+                :name => 'product',
                 :class => 'form-control required',
                 :value => @product.key,
                 :action => '/settings/products/search'}
         %input{:type => 'hidden',
-               :name => 'variant_id',
-               :value => @product.variant_id}
+               :name => 'product_id',
+               :value => @product.product_id}
 
       .col-md-6.autocompleted.form-group
         %label{:for => 'person_affair_product_program_search'}

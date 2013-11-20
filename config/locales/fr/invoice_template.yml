@@ -15,7 +15,6 @@ fr:
       bvr_address: adresse figurant sur le BVR
       language: langue du modèle
       language_notice: ocalisation des attributs
-      show_invoice_value: imprimer avec la valeure de la facture
       placeholders:
         bvr_account: Compte BVR
         bvr_address: Adresse de l'émetteur affichée sur le BVR
@@ -69,5 +68,14 @@ fr:
         placeholders: placeholders
         receipts: ! 'Itérateur des reçus. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
         subscriptions: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, parend_id, title, description, value, interval_starts_on, interval_ends_on, created_at, updated_at'
+        page: The number of the pages currently being printed
+        frompage: The number of the first page to be printed
+        topage: The number of the last page to be printed
+        webpage: The URL of the page being printed
+        section: The name of the current section
+        subsection: The name of the current subsection
+        date: The current date in system local format
+        time: The current time in system local format
+      show_invoice_value: imprimer avec la valeure de la facture
       thumb: vignette
       with_bvr: imprimer le BVR

@@ -121,6 +121,36 @@ class People::Affairs::InvoicesController < ApplicationController
     end
   end
 
+  def header
+    html = @invoice.invoice_template.header.dup
+
+    Rails.configuration.settings["wk_placeholders"].each do |p|
+      html.gsub!("##{p.upcase}", params[p.to_sym]) if html.match("#{p.upcase}")
+    end
+
+    respond_to do |format|
+      format.html { render :inline =>  html }
+    end
+  end
+
+  def footer
+    html = @invoice.invoice_template.footer.dup
+
+    Rails.configuration.settings["wk_placeholders"].each do |p|
+      html.gsub!("##{p.upcase}", params[p.to_sym]) if html.match("#{p.upcase}")
+    end
+
+    respond_to do |format|
+      format.html { render :inline => html }
+    end
+  end
+
+  def bvr
+    respond_to do |format|
+      format.html {}
+    end
+  end
+
   ##
   # PDF generation
   #
@@ -129,8 +159,8 @@ class People::Affairs::InvoicesController < ApplicationController
   # Returns an HTML page (that can be used to build a PDF)
   # with its placeholders substituted.
   #
-  def build_from_template(invoice)
-    html = invoice.invoice_template.html.dup
+  def build_from_template(invoice, html = 'html')
+    html = invoice.invoice_template.send(html).dup
 
     invoice.placeholders[:simples].each do |p, v|
       html.gsub!("##{p}", v) if html.match("#{p}")

@@ -16,7 +16,7 @@
 
 Person = App.Person
 PersonAffair = App.PersonAffair
-PersonAffairProductVariant = App.PersonAffairProductVariant
+PersonAffairProductsProgram = App.PersonAffairProductsProgram
 ProductProgram = App.ProductProgram
 Permissions = App.Permissions
 
@@ -28,7 +28,7 @@ class PersonAffairProductExtention extends App.ExtendedController
 
   render: =>
     @product_field = @el.find("#person_affair_product_search")
-    @product_id_field = @el.find("input[name=variant_id]")
+    @product_id_field = @el.find("input[name=product_id]")
     @program_field = @el.find("#person_affair_product_program_search")
     @program_id_field = @el.find("input[name=program_id]")
 
@@ -63,13 +63,13 @@ class New extends PersonAffairProductExtention
   render: =>
     super
     @show()
-    @product = new PersonAffairProductVariant(quantity: 1)
+    @product = new PersonAffairProductsProgram(quantity: 1)
     @html @view('people/affairs/products/form')(@)
 
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>
-    PersonAffairProductVariant.url() == undefined
+    PersonAffairProductsProgram.url() == undefined
 
   submit: (e) ->
     e.preventDefault()
@@ -90,17 +90,17 @@ class Edit extends PersonAffairProductExtention
     @render()
 
   render: =>
-    return unless PersonAffairProductVariant.exists(@id) && @can
+    return unless PersonAffairProductsProgram.exists(@id) && @can
     super
 
-    @product = PersonAffairProductVariant.find(@id)
+    @product = PersonAffairProductsProgram.find(@id)
 
     @html @view('people/affairs/products/form')(@)
     @show()
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>
-    PersonAffairProductVariant.url() == undefined
+    PersonAffairProductsProgram.url() == undefined
 
   submit: (e) ->
     e.preventDefault()
@@ -120,7 +120,7 @@ class Index extends App.ExtendedController
 
   constructor: (params) ->
     super
-    PersonAffairProductVariant.bind('refresh', @render)
+    PersonAffairProductsProgram.bind('refresh', @render)
 
   active: (params) ->
     @can = params.can if params.can
@@ -142,11 +142,11 @@ class Index extends App.ExtendedController
 
   export_csv: (e) ->
     e.preventDefault()
-    window.location = PersonAffairProductVariant.url() + ".csv"
+    window.location = PersonAffairProductsProgram.url() + ".csv"
 
   export_pdf: (e) ->
     e.preventDefault()
-    window.location = PersonAffairProductVariant.url() + ".pdf"
+    window.location = PersonAffairProductsProgram.url() + ".pdf"
 
 class App.PersonAffairProducts extends Spine.Controller
   className: 'products'
