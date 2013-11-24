@@ -6,24 +6,30 @@ en:
       bvr_address_and_bvr_account_are_required_if_with_bvr_is_set: bvr address and bvr account are required if with bvr is set
       can_not_delete_if_invoices_are_subscribed: can not delete if invoices are subscribed
       can_not_delete_if_subscriptions_are_subscribed: can not delete if subscriptions are subscribed
+    help:
+      remove_content_if_you_dont_want_footer: remove content if you dont want footer
+      remove_content_if_you_dont_want_header: remove content if you dont want header
     views:
       actions:
         edit_template: edit template
+      body: body
       bvr_account: bvr account
       bvr_account_number: bvr account number
       bvr_address: bvr address
+      footer: footer
+      header: header
       language: language
       language_notice: language notice
       placeholders:
+        date: The current date in system local format
         failed_to_substitute_iterator: failed to substitute iterator
-        page: The number of the pages currently being printed
         frompage: The number of the first page to be printed
-        topage: The number of the last page to be printed
-        webpage: The URL of the page being printed
+        page: The number of the pages currently being printed
         section: The name of the current section
         subsection: The name of the current subsection
-        date: The current date in system local format
         time: The current time in system local format
+        topage: The number of the last page to be printed
+        webpage: The URL of the page being printed
       show_invoice_value: show invoice value
       thumb: thumb
       with_bvr: with bvr

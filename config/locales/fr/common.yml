@@ -66,6 +66,7 @@ fr:
     position: position
     preview: pré-visualisation
     preview_in_new_tab: prévisualiser dans un nouvel onglet
+    quantity: quantité
     released_under: livrée sous la version 3 de la license
     requires_browser_update: Une mise à jour de votre navigateur est requise pour consulter cette page.
     reset: réinitialise
@@ -85,6 +86,7 @@ fr:
     toolbox_import_bank_file: Importer un fichier bancaire
     toolbox_template: modèle
     tools: outils
+    total: total
     true: vrai
     unpaid: à payé
     update: mettre à jour

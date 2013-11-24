@@ -2,7 +2,7 @@
 fr:
   invoice:
     errors:
-      cant_destroy_if_existing_receipt: Il n'est pas possible de détruire cette facture si un reçu y est lié
+      cant_destroy_if_existing_receipt: Il n'est pas possible de détruire cette facture si un reçu y est lié.
     notices:
       no_existing_invoice_template_alert: Il n'existe pas de modèle de facture, veuillez en créer un avant de poursuivre avec la création d'une facture.
     views:

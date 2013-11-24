@@ -3,7 +3,7 @@ fr:
   product_program:
     views:
       program_group: groupe du programme
-      program_search: program
-      variant_name: nom de la variante
+      program_search: programme
       table:
         program_group: grp.
+      variant_name: nom de la variante

@@ -15,7 +15,6 @@ fr:
       program_title: titre du programme
     views:
       after_sale: après-vente
-      description: description
       has_accessories: accessoires
       key: clé
       position: position
@@ -23,5 +22,4 @@ fr:
       products_list_pdf_title: List des produits pour l'affaire <i>%{affair_title}</i>
       provider: fournisseur
       quantity: quantité
-      title: titre
       variants: variantes

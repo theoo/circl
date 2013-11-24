@@ -115,10 +115,15 @@ fr:
         updated_at: mise à jour
       person:
         address: adresse
+        affairs: affaires
+        affairs_as_buyer: affaires en temps que payeur
+        affairs_as_receiver: affaires en temps que receveur
         authentication_token: jeton d'authentification
         avs_number: numéro AVS
         bank_informations: informations bancaires
         birth_date: date de naissance
+        communication_languages: langues de communications
+        country: pays
         created_at: date de création
         current_sign_in_at: date d'ouverture de la session
         current_sign_in_ip: adresse IP d'ouverture de la session
@@ -128,27 +133,45 @@ fr:
         first_name: prénom
         hidden: caché
         id: id
+        invoices: factures
         is_an_organization: est une organisation
+        job: métier
         job_id: id du métier
         last_name: nom de famille
         last_sign_in_at: date de la dernière session
         last_sign_in_ip: adresse ip de la dernière session
         location_id: id de la localité
         locked_at: date de blockage
+        main_communication_language: langue de communication principale
         main_communication_language_id: id de la langue de communication principale
         mobile: numéro de mobile
         nationality: nationalité
+        npa: NPA
+        npa_town: NPA et localité
         organization_name: nom de l'organisation
+        paid_affairs: affaires payées
+        paid_subscriptions_or_reminders: inscriptions ou rappels payées
         password_salt: sel du mot de passe
         phone: numéro de téléphone
+        private_tags: tags privés
+        public_tags: tags publics
+        receipts: reçus
         remember_created_at: date de "se souvenir de moi"
         reset_password_sent_at: date du changement de mot de passe
         reset_password_token: jeton de changment de mot de passe
+        roles: roles
         second_email: email secondaire
         second_phone: numéro de téléphone secondaire
         sign_in_count: décompte du nombre de session
+        subscriptions: inscriptions
+        subscriptions_as_buyer: inscriptions en temps que payeur
+        subscriptions_as_receiver: inscriptions en temps que receveur
         title: titre
+        town: localité
+        translation_aptitudes: aptitude de traduction
         unlock_token: jeton de déblocage de la session
+        unpaid_affairs: affaires impayées
+        unpaid_subscriptions: inscriptions impayées
         updated_at: date de mise à jour
       private_tag:
         id: id

@@ -52,6 +52,7 @@ en:
       selected: selected
       should_be_two_zeros: should be two zeros
       type: type
+    pdf: pdf
     views:
       actions:
         edit_receipt: edit receipt
@@ -59,12 +60,17 @@ en:
       export: export
       id: id
       import_bank_file: import bank file
+      import_status: import status
       invoice: invoice
       invoice_template: invoice template
       invoice_title: invoice title
       invoice_value: invoice value
+      line: line
       means_of_payment: means of payment
+      media_date: media date
       owner: owner
       owner_name: owner name
+      receipts_count: receipts count
       subscription_title: subscription title
       value_date: value date
+      value_total: value total

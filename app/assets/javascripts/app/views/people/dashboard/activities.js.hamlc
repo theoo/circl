@@ -2,7 +2,7 @@
   %thead
     %tr
       %th.desc= I18n.t('common.created_at')
-      %th= I18n.t('activity.views.action')
+      %th= I18n.t('common.action')
       %th= I18n.t('activity.views.resource_type')
       %th= I18n.t('activity.views.resource_id')
 

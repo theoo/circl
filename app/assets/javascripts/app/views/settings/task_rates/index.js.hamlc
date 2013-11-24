@@ -2,9 +2,9 @@
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th= I18n.t('task_rate.views.title')
-      %th= I18n.t('task_rate.views.value')
-      %th= I18n.t('task_rate.views.archive')
+      %th= I18n.t('common.title')
+      %th= I18n.t('common.value')
+      %th= I18n.t('common.archive')
       %th= I18n.t('task_rate.views.people_count')
       %th= I18n.t('common.creation_at')
 

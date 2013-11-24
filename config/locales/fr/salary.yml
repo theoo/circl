@@ -3,7 +3,7 @@ fr:
   salary:
     errors:
       from_and_to_dates_should_be_in_the_same_year: Les dates "de" et "à" devraient appartenir à la même année.
-      from_date_should_be_before_to_date: La date "de" devait être avant la date "à".
+      from_date_should_be_before_to_date: La date "de" devait être avant la date "à", l'intervalle est à l'envers.
       is_not_a_reference: n'est pas une référence
       one_or_more_people_doesnt_satisfy_requirements: Les personnes aux ID suivants %{people_ids} ne remplissent pas les exigences de la base de donnée pour créer un salaire.
       something_prevented_salaries_to_be_saved: Une erreur à empéché l'enregistrement des salaires.
@@ -31,13 +31,14 @@ fr:
       annual_earning_total: revenu annuel total
       annual_salary: Salaire annuel
       brut_account: salaire brut
+      category: categorie
       children_count: nombre d'enfants
       civil_status: état civil
       copy_reference_message: Copie du salaire de référence vers un groupe de personne.
       copy_reference_title: Copie du salaire de référence
       employer_account: retenues employeur
       employer_part: part employeur
-      export_interval_explanation: L'intervale sélectionnée doit correspondre à l'intervale couverte par les salaires et non à leurs dates de création.
+      export_interval_explanation: L'intervalle sélectionnée doit correspondre à l'intervalle couverte par les salaires et non à leurs dates de création.
       gross: brut
       gross_pay: salaire brut
       hundred_percent_equivalent: Salaire équivalent à 100%
@@ -47,6 +48,7 @@ fr:
       net: net
       net_account: salaire net
       net_salary: salaire net
+      net_salary_total: salaire net total
       reference: référence
       reference_title: titre de la référence
       references: Références

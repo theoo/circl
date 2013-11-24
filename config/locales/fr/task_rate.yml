@@ -2,10 +2,6 @@
 fr:
   task_rate:
     views:
-      archive: archive
-      description: description
       people_count: clients
       rate: tarif
       rates: tarifs
-      title: titre
-      value: valeur

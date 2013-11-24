@@ -2,7 +2,7 @@
 fr:
   tax:
     errors:
-      unable_to_destroy_a_tax_which_is_used: unable to destroy a tax which is used
+      unable_to_destroy_a_tax_which_is_used: Il est impossible de détruire une retenue lorsqu'elle est employée.
     views:
       age_tax_example_file_desc: Fichier d'exemple pour une retenue basée sur l'age
       available_years: années disponible
@@ -15,5 +15,4 @@ fr:
       is_tax_example_file_desc: Fichier d'exemple pour la retenue de l'impôt à la source
       model: modèle
       number_of_rows: nombre de lignes
-      unable_to_destroy_a_tax_which_is_used: Impossible de d'éliminer une taxe en usage
       upload_tax: téléverser une mise à jour

@@ -21,15 +21,15 @@ fr:
       avs_number_is_invalid: le numéro AVS est invalide, le format devrait être 756.XXXX.XXXX.XX
       cannot_remove_admin_role_for_first_user: Il n'est pas possible de supprimer le rôle administrateur de la première personne.
       cant_be_org_without_org_name: Ne peut pas être une organisation sans un nom d'organisation.
-      cant_delete_first_admin: Vous ne pouvez pas effacer le premier administrateur.
+      cant_delete_first_admin: Il est impossible d'effacer le premier administrateur.
       cant_delete_person_who_has_invoices: Il est impossible de détruire une personne dont dépend une facture.
       cant_delete_person_who_has_running_contract: Il est impossible de détruire une personne dont un contrat dépend.
       cant_delete_person_who_has_salaries: Il est impossible de détruire une personne dont dépend un salaire.
-      combination_of_first_name_and_last_name_already_taken: ette combinaison de nom et prénom est déjà prise.
-      invalid_current_password: Le mot de passe actuel invalide.
+      combination_of_first_name_and_last_name_already_taken: Cette combinaison de nom et prénom est déjà prise.
+      invalid_current_password: Le mot de passe actuel est invalide.
       main_language_already_in_communication_languages: Cette langue principale est déjà sélectionnée dans les langues de communication secondaires.
-      no_second_email_if_no_primary_email: Impossible d'ajouter un email secondaire sans email principal.
-      organization_not_ticked_but_no_person_info: Vous devez cocher 'organisation' si il n'y a pas d'information personnelle.
+      no_second_email_if_no_primary_email: Il est impossible d'ajouter un email secondaire sans email principal.
+      organization_not_ticked_but_no_person_info: ! '''est une organisation'' doit être coché si il n''y a pas d''information personnelle.'
       second_email_should_be_different: L'email secondaire doit être différent de l'email principal.
       the_required_information_about_this_employee_are_not_satisfied: Cette personne a des salaires. L'attribut '%{field}' est requis.
     import:
@@ -81,7 +81,7 @@ fr:
       first_name: prénom
       generate_authentication_token: (re)générer
       hidden: caché
-      identifier_explanation: <h3>Commencer par un identifiant</h3>
+      identifier_explanation: ! '<h3>Commencez par un identifiant</h3> L''identifiant doit être composé au moins de l''un des trois éléments suivants: <ul><li>un nom d''organisation</li><li>une paire prénom-nom</li><li>une adresse email</li></ul>'
       is_an_organization: est une organisation
       job: métier
       last_name: nom de famille

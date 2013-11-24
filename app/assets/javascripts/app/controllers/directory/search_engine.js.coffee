@@ -426,7 +426,7 @@ class Index extends App.ExtendedController
     'click tr.item td:not(.ignore-click)': 'edit'
     'click tr button[name=directory-person-destroy]': 'destroy'
     'click tr button[name=directory-person-change-password]': 'change_password'
-    'click button[name=directory-export-to-csv]': 'export_to_csv'
+    'click a[name=directory-export-to-csv]': 'export_to_csv'
 
   constructor: (params) ->
     super

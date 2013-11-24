@@ -16,7 +16,7 @@
       .col-md-8
         .form-group
           %label{:for => "product_variant_title_" + @id}
-            = I18n.t("product_variant.views.title")
+            = I18n.t("common.title")
           %input{ :type => 'text',
                   :id => "product_variant_title_" + @id,
                   :class => 'form-control input-sm',

@@ -7,18 +7,18 @@ fr:
     import:
       already_imported: déjà importé
       already_imported_but_corresponding_receipt_not_found: La ligne a déjà été importée mais le reçu correspondant est introuvable!
-      cannot_find_affair_for_this_invoice: Impossible de trouver l'affaire %{affair_id} associée à cette facture %{invoice_id} pour cette personne (id %{owner_id}).
-      cannot_find_invoice: Impossible de trouver la facture (id %{invoice_id}) pour cette personne (id %{owner_id}).
-      cannot_find_owner: Impossible de trouver le propriétaire (id %{owner_id}).
-      cannot_find_receipt: Impossible de trouver le reçu.
-      cannot_parse_line: Import d'analyser la ligne.
-      cannot_parse_reference_number: Impossible d'analyser le numéro de référence.
+      cannot_find_affair_for_this_invoice: Il est mpossible de trouver l'affaire %{affair_id} associée à cette facture %{invoice_id} pour cette personne (id %{owner_id}).
+      cannot_find_invoice: Il est impossible de trouver la facture (id %{invoice_id}) pour cette personne (id %{owner_id}).
+      cannot_find_owner: Il est impossible de trouver le propriétaire (id %{owner_id}).
+      cannot_find_receipt: Il est impossible de trouver le reçu.
+      cannot_parse_line: Il est impossible d'analyser la ligne.
+      cannot_parse_reference_number: Il est impossible d'analyser le numéro de référence.
       checksum_mismatch: La somme de vérification du BVR ne correspond pas.
-      correction_without_rectification: ne ligne contient une correction mais aucune rectification n'a suivi.
+      correction_without_rectification: Une ligne contient une correction mais aucune rectification n'a suivi.
       invoice_found_but_its_creation_date_mismatch: La facture a été trouvée mais la date de création ne correspond pas.
       invoice_found_but_its_owner_mismatch: La facture a été trouvée mais le propriétaire ne correspond pas.
       rectification_for_inexistant_receipt: Rectification pour un reçu inexistant (invoice id %{invoice_id}). Vous pourriez essayer de réimporter le fichier après ce premier import.
-      total_cannot_parse: mpossible de parser la ligne de total.
+      total_cannot_parse: Il est impossible de parser la ligne de total.
       total_mismatch: Le total ne correspond pas (%{total} != %{computed_total})
       total_receipts_count_mismatch: Le nombre de reçus ne correspond pas (%{receipts_count} != %{computed_receipts_count})
       unknown_type: type inconnu
@@ -52,6 +52,7 @@ fr:
       selected: sélectionné
       should_be_two_zeros: evrait être deux zéros (00)
       type: type
+    pdf: pdf
     views:
       actions:
         edit_receipt: modifier le reçu
@@ -59,12 +60,17 @@ fr:
       export: export des reçus
       id: id
       import_bank_file: importer un fichier bancaire
+      import_status: statut de l'import
       invoice: facture
       invoice_template: modèle de facture
       invoice_title: titre de la facture
       invoice_value: valeur de la facture
+      line: ligne
       means_of_payment: moyen de règlement
+      media_date: date du fichier
       owner: propriétaire
       owner_name: propriétaire
+      receipts_count: reçus
       subscription_title: titre de l'inscription
       value_date: date de valeur
+      value_total: valeur totale

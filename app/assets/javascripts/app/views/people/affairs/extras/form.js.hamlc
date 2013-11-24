@@ -44,7 +44,7 @@
       .col-md-3.col-sm-6
         .form-group
           %label{:for => 'person_affair_extra_quantity'}
-            = I18n.t('extra.views.quantity')
+            = I18n.t('common.quantity')
           %input{ :type => 'number',
                   :step => 1,
                   :id => 'person_affair_extra_quantity',
@@ -57,7 +57,7 @@
       .col-md-3.col-sm-6
         .form-group
           %label{:for => 'person_affair_extra_position'}
-            = I18n.t('extra.views.position')
+            = I18n.t('common.position')
           %input{ :type => 'number',
                   :step => 1,
                   :id => 'person_affair_extra_position',

@@ -61,25 +61,26 @@
 .panel-footer
   .btn-group
     %button{:type => 'button',
-            :name => 'export',
-            :class => 'btn btn-default' }
-      .icon-cloud-upload
-      = I18n.t('common.export')
+            :data-toggle => 'dropdown',
+            :class => 'btn btn-default dropdown-toggle' }
+      .icon-paper-clip
+      = I18n.t("common.export")
+      .caret
 
-    %button{:type => 'button',
-            :name => 'export-to-accounting',
-            :class => 'btn btn-default' }
-      .icon-cloud-upload
-      = I18n.t('salary.export.export_to_accounting')
-
-    %button{:type => 'button',
-            :name => 'export-to-ocas',
-            :class => 'btn btn-default' }
-      .icon-cloud-upload
-      = I18n.t('salary.export.export_to_ocas')
-
-    %button{:type => 'button',
-            :name => 'export-to-eLohnausweisSSK',
-            :class => 'btn btn-default' }
-      .icon-cloud-upload
-      = I18n.t('salary.export.export_salary_certificates')
+    %ul.dropdown-menu
+      %li
+        %a{:href => '#', :name => 'salaries-export'}
+          .icon-file-text
+          = I18n.t('common.csv')
+      %li
+        %a{:href => '#', :name => 'salaries-export-to-accounting'}
+          .icon-file
+          = I18n.t('salary.export.export_to_accounting')
+      %li
+        %a{:href => '#', :name => 'salaries-export-to-ocas' }
+          .icon-certificate
+          = I18n.t('salary.export.export_to_ocas')
+      %li
+        %a{:href => '#', :name => 'salaries-export-to-eLohnausweisSSK'}
+          .icon-certificate
+          = I18n.t('salary.export.export_salary_certificates')

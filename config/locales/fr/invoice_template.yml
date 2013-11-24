@@ -7,14 +7,20 @@ fr:
       can_not_delete_if_invoices_are_subscribed: Il est impossible de supprimer le modèle si des factures y sont liées.
       can_not_delete_if_subscriptions_are_subscribed: Il est impossible de supprimer le modèle si des inscriptions y sont liées.
       failed_to_substitute_iterator: ERREUR LORS DE LA SUBSTITUTION DE L'ITÉRATEUR "%{iterator}"
+    help:
+      remove_content_if_you_dont_want_footer: Supprimer le contenu pour ne pas afficher de pied de page.
+      remove_content_if_you_dont_want_header: Supprimer le contenu pour ne pas afficher d'entête.
     views:
       actions:
         edit_template: modifier le modèle
+      body: Corps du texte
       bvr_account: compte BVR
       bvr_account_number: numéro de compte BVR
       bvr_address: adresse figurant sur le BVR
+      footer: pied de page
+      header: entête
       language: langue du modèle
-      language_notice: ocalisation des attributs
+      language_notice: localisation des attributs
       placeholders:
         bvr_account: Compte BVR
         bvr_address: Adresse de l'émetteur affichée sur le BVR
@@ -22,7 +28,9 @@ fr:
         bvr_reference_number: ligne de référence du BVR
         bvr_spaced_reference_number: ligne de référence du BVR séparée par des espaces
         bvr_value: Valeur formatée pour le BVR
+        date: La date de génération du document
         failed_to_substitute_iterator: ERREUR LORS DE LA SUBSTITUTION DE L'ITÉRATEUR "%{iterator}"
+        frompage: Le numéro de la première page
         invoice_address: Adresse du destinataire de la facture
         invoice_balance_value: Invoice balance value
         invoice_buyer_first_name: Prénom du payeur de la facture
@@ -61,21 +69,19 @@ fr:
         invoice_receiver_organization_name: Nom de l'organisation du receveur des préstations
         invoice_receiver_title: Titre du receveur des préstations
         invoice_receiver_title_and_full_name: Titre et nom complet du receveur des préstations
-        invoice_title: Invoice title
-        invoice_value: Invoice value
+        invoice_title: titre de la facture
+        invoice_value: valeur de la facture
         invoice_year_numeric: Année d'émission de la facture
         locale: Code de la langue du modèle
-        placeholders: placeholders
+        page: Le numéro de la page actuelle
+        placeholders: substituants
         receipts: ! 'Itérateur des reçus. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
+        section: La section de la page
         subscriptions: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, parend_id, title, description, value, interval_starts_on, interval_ends_on, created_at, updated_at'
-        page: The number of the pages currently being printed
-        frompage: The number of the first page to be printed
-        topage: The number of the last page to be printed
-        webpage: The URL of the page being printed
-        section: The name of the current section
-        subsection: The name of the current subsection
-        date: The current date in system local format
-        time: The current time in system local format
+        subsection: La sous-section de la page
+        time: La date et l'heure de la génération du document
+        topage: Le nombre de page du document
+        webpage: L'adresse (URL) de la page imprimée
       show_invoice_value: imprimer avec la valeure de la facture
       thumb: vignette
       with_bvr: imprimer le BVR

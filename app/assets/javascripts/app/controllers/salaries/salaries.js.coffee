@@ -27,10 +27,10 @@ class Index extends App.ExtendedController
     'click button[name=salary-check-as-paid]'      : 'check_as_paid'
     'click button[name=salary-copy]'               : 'copy_reference'
     'click button[name=salary-destroy]'            : 'destroy'
-    'click button[name=salaries-export]'                    : 'stack_export_generic'
-    'click button[name=salaries-export-to-accounting]'      : 'stack_export_to_accounting_window'
-    'click button[name=salaries-export-to-ocas]'            : 'stack_export_to_ocas_window'
-    'click button[name=salaries-export-to-eLohnausweisSSK]' : 'stack_export_to_eLohnausweisSSK_window'
+    'click a[name=salaries-export]'                    : 'stack_export_generic'
+    'click a[name=salaries-export-to-accounting]'      : 'stack_export_to_accounting_window'
+    'click a[name=salaries-export-to-ocas]'            : 'stack_export_to_ocas_window'
+    'click a[name=salaries-export-to-eLohnausweisSSK]' : 'stack_export_to_eLohnausweisSSK_window'
 
   constructor: (params) ->
     Salary.bind('refresh', @render)

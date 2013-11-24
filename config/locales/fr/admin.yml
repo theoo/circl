@@ -9,7 +9,7 @@ fr:
       row: ligne
     notices:
       add_members_email_will_be_sent: Le processus d'import des membres à commencé, un rapport sera envoyé par email à %{email} lorsqu'il sera fini.
-      pdf_will_be_sent: Un lien vers le pdf sera envoyé $ %{email} lorsque la fusion sera terminée.
+      pdf_will_be_sent: Un lien vers le pdf sera envoyé à %{email} lorsque la fusion sera terminée.
       people_imported: Les personnes ont étés importées, un rapport a été envoyé par email à %{email}.
       receipts_imported: les reçus ont étés importés, un rapport a été envoyé par email à %{email}.
     views:

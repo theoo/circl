@@ -5,7 +5,7 @@ fr:
       query_empty: Aucune requête transmise, veuillez en fournir une et recommancer.
       query_invalid: requête "%{query}" invalide
       search_error: erreur lors de la recherche -> %{error}
-      you_need_to_select_at_least_one_attribute_to_display: Vous devez sélectionner au moins un attributs à afficher.
+      you_need_to_select_at_least_one_attribute_to_display: Au moins un attributs à afficher doit être sélectionné.
     notices:
       result_return_only_one_person: Le résultat ne retournant qu'une personne votre requête à été redirigée vers l'édition.
     views:

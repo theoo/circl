@@ -12,8 +12,8 @@ fr:
       ldap_attributes: Attributs LDAP
       locations: Localités
       privileges: Privilèges
-      product_programs: product programs
-      products: products
+      product_programs: Programmes
+      products: Produits
       roles: Rôles
       search_attributes: Attributs de recherche
       search_engine: Moteur de recherche

@@ -31,6 +31,7 @@ en:
       annual_earning_total: annual earning total
       annual_salary: annual salary
       brut_account: brut account
+      category: category
       children_count: children count
       civil_status: civil status
       copy_reference_message: copy reference message
@@ -47,6 +48,7 @@ en:
       net: net
       net_account: net account
       net_salary: net salary
+      net_salary_total: net salary total
       reference: reference
       reference_title: reference title
       references: references

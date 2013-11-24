@@ -6,8 +6,8 @@
   %table.summary
     %thead
       %tr
-        %th= I18n.t('summary.views.category')
-        %th= I18n.t('summary.views.total')
+        %th= I18n.t('salary.views.category')
+        %th= I18n.t('common.total')
 
     %tbody
       // taxed categories
@@ -36,6 +36,6 @@
       // net salary
       %tr
         %td
-          %b= I18n.t("summary.views.net_salary_total")
+          %b= I18n.t("salary.views.net_salary_total")
         %td
           %b= @salary.summary.net_salary.to_view() if @salary.summary.net_salary

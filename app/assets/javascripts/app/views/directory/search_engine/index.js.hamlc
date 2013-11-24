@@ -20,8 +20,16 @@
       %th.ignore-sort
 
 .panel-footer
-  %button{:type => 'button',
-          :class => 'btn btn-default',
-          :name => 'directory-export-to-csv'}
-    .icon-cloud-download
-    = I18n.t('common.export_to') + " CSV"
+  .btn-group
+    %button{:type => 'button',
+            :data-toggle => 'dropdown',
+            :class => 'btn btn-default dropdown-toggle' }
+      .icon-paper-clip
+      = I18n.t("common.export")
+      .caret
+
+    %ul.dropdown-menu
+      %li
+        %a{:href => '#', :name => 'directory-export-to-csv'}
+          .icon-file-text
+          = I18n.t('common.csv')

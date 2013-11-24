@@ -51,7 +51,8 @@ class AffairsProductsProgram < ActiveRecord::Base
   validates :product_id, :presence => true
   validates :position, :presence => true, :uniqueness => true
   validates :quantity, :presence => true
-  validate :uniquness_of_jointure, :if => Proc.new {|i| i.new_record?}
+  # TODO: edit if this validation should exists in application settings.
+  # validate :uniquness_of_jointure, :if => Proc.new {|i| i.new_record?}
 
   ########################
   #### CLASS METHODS #####

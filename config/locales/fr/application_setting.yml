@@ -2,7 +2,7 @@
 fr:
   application_setting:
     errors:
-      cant_change_key: impossible de changer la clé
+      cant_change_key: Il est impossible de changer la clé.
       missing_attribute: La clé '%{key}' n'est pas définie.
     views:
       key: clé
