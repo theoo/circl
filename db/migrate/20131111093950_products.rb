@@ -7,6 +7,7 @@ class Products < ActiveRecord::Migration
 
       t.string  :key, :null => false
       t.string  :title
+      t.string  :category
       t.text    :description
       t.boolean :has_accessories, :null => false, :default => false
       t.boolean :archive, :null => false, :default => false
@@ -17,6 +18,7 @@ class Products < ActiveRecord::Migration
     add_index :products, :after_sale_id
     add_index :products, :key
     add_index :products, :title
+    add_index :products, :category
     add_index :products, :has_accessories
 
     # VARIANTS

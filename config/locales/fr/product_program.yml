@@ -2,7 +2,7 @@
 fr:
   product_program:
     views:
-      program_group: groupe du programme
+      program_group: groupe de variante
       program_search: programme
       table:
         program_group: grp.

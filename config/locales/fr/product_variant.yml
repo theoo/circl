@@ -6,6 +6,6 @@ fr:
     views:
       art: TAR
       buying_price: prix d'achat
-      program_group: groupe du programme
+      program_group: groupe de variante
       selling_price: prix de vente
       variant_selection_title: Définition des variantes
