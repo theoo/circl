@@ -33,7 +33,6 @@ class Ui
   initialize_ui: =>
     @load_locale()
     @bind_datepicker()
-    @timeout_session()
     @setup_datatable()
 
 #--- delegated to events ---
@@ -467,18 +466,6 @@ class Ui
         search: search_callback
         focus:  focus_callback
         select: select_callback
-
-
-#--- Timeouts ---
-  timeout_session: ->
-    remaining_time = $("meta[name='session-remaining-time']").attr("content")
-
-    if remaining_time
-      redirect = ->
-        window.location.reload()
-
-      setTimeout redirect, (remaining_time * 1000)
-
 
 #--- in page tools ---
   build_modal: (uniq_id, options = {}) ->
