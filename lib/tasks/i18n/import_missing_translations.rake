@@ -4,7 +4,6 @@ module Translator
   PATHS = %w(app lib public)
   EXTENSIONS = %w(haml hamlc rb erb coffee)
   PATTERN = /I18n\.t\(['"]([^'"]*?)['"]/
-                      LANGUAGES = %w{en fr}
 
   #IDEA: flatten to i18n scope in an array and arr1&arr2 or arr1-arr2
   #FIXME handle defaults (:default => "blabla")
@@ -31,7 +30,7 @@ module Translator
   end
 
   def handle_entity(scope, values)
-    LANGUAGES.each do |lang|
+    I18n.available_locales.each do |lang|
       hash = { lang => { scope => values } }
 
       filename = "config/locales/#{lang}/#{scope}.yml"
@@ -62,7 +61,7 @@ end
 
 namespace :i18n do
   desc 'import translations'
-  task :import_missing_translations do
+  task :import_missing_translations => :environment do
     include Translator
 
     paths = PATHS.each_with_object([]) do |path, arr|
