@@ -52,8 +52,9 @@ fr:
     incomplete: incomplet
     info: info
     key: clé
+    members: membres
     name: nom
-    next: suvant
+    next: suivant
     none: aucun
     notices:
       successfully_destroyed: destruction réussie

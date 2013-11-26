@@ -85,8 +85,15 @@
           != @partial('submit_button')(@location)
 
         - unless @location.isNew()
-          %button{:type => 'button',
-                  :class => 'btn btn-danger',
-                  :name => 'settings-location-destroy'}
-            .icon-remove
-            = I18n.t("common.destroy")
+          .btn-group
+            %button{:type => 'button',
+                    :class => 'btn btn-danger',
+                    :name => 'settings-location-destroy'}
+              .icon-remove
+              = I18n.t("common.destroy")
+
+            %a{ :type => 'button',
+                :class => 'btn btn-default',
+                :name => 'settings-location-view-members'}
+              .icon-group
+              = I18n.t('location.views.actions.view_members')

@@ -4,7 +4,7 @@
       %th= I18n.t('common.id')
       %th= I18n.t('common.name')
       %th.asc= I18n.t('common.parent')
-      %th= I18n.t('tag.views.members')
+      %th= I18n.t('common.members')
 
   %tbody
     - for tag in App.PrivateTag.all()

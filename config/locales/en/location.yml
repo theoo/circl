@@ -8,6 +8,7 @@ en:
       actions:
         destroy_location: destroy location
         edit_location: edit location
+        view_members: view members
       iso_alpha2: iso alpha2
       iso_alpha3: iso alpha3
       iso_code_a2: iso code a2

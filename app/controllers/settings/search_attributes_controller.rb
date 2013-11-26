@@ -58,6 +58,8 @@ class Settings::SearchAttributesController < ApplicationController
   end
 
   def update
+    # reserialize
+    params[:search_attribute][:mapping] = YAML.load params[:search_attribute][:mapping]
     respond_to do |format|
       if @search_attribute.update_attributes(params[:search_attribute])
         format.json { render :json => @search_attribute }

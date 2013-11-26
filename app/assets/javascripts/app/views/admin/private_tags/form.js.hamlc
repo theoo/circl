@@ -45,7 +45,7 @@
                       :type => 'button',
                       :class => 'btn btn-default dropdown-toggle' }
                 .icon-user
-                = I18n.t('tag.views.members')
+                = I18n.t('common.members')
                 .caret
 
               %ul.dropdown-menu

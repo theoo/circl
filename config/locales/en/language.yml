@@ -4,5 +4,7 @@ en:
     views:
       actions:
         view_members: view members
+        view_members_as_main_language: members as main language
+        view_members_as_secondary_language: members as secondary language
       code: code
       communication_language: communication language

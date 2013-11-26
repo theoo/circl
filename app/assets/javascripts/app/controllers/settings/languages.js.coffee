@@ -37,7 +37,8 @@ class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click button[name=settings-language-destroy]': 'destroy'
-    'click button[name=settings-language-view-members]': 'view_members'
+    'click a[name=settings-language-view-main-members]': 'view_main_members'
+    'click a[name=settings-language-view-members]': 'view_members'
 
   active: (params) ->
     @id = params.id if params.id
@@ -52,9 +53,13 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @language.fromForm(e.target), @hide
 
-  view_members: (e) ->
+  view_main_members: (e) ->
     e.preventDefault()
     Directory.search(search_string: "main_communication_language.id:#{@language.id}")
+
+  view_members: (e) ->
+    e.preventDefault()
+    Directory.search(search_string: "communication_languages.id:#{@language.id}")
 
   destroy: (e) ->
     e.preventDefault()

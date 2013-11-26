@@ -37,8 +37,21 @@
               .icon-remove
               = I18n.t("common.destroy")
 
-            %button{:type => 'button',
-                    :class => 'btn btn-default',
-                    :name => 'settings-language-view-members'}
-              .icon-group
-              = I18n.t('language.views.actions.view_members')
+            .btn-group
+              %button{:data-toggle => 'dropdown',
+                      :type => 'button',
+                      :class => 'btn btn-default dropdown-toggle' }
+                .icon-group
+                = I18n.t('language.views.actions.view_members')
+                .caret
+
+              %ul.dropdown-menu
+                %li
+                  %a{:href => '#', :name => 'settings-language-view-main-members'}
+                    .icon-eye-open
+                    = I18n.t('language.views.actions.view_members_as_main_language')
+                %li
+                  %a{:href => '#', :name => 'settings-language-view-members'}
+                    .icon-eye-open
+                    = I18n.t('language.views.actions.view_members_as_secondary_language')
+

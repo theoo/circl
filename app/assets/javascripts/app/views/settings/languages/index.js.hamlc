@@ -4,6 +4,7 @@
       %th= I18n.t('common.id')
       %th.asc= I18n.t('common.name')
       %th= I18n.t('language.views.code')
+      %th.number= I18n.t('common.members')
 
   %tbody
     - for lang in App.Language.all()
@@ -11,3 +12,4 @@
         %td= lang.id
         %td= lang.name
         %td= lang.code
+        %td.number= lang.people_count

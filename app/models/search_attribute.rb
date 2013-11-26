@@ -41,11 +41,15 @@ class SearchAttribute < ActiveRecord::Base
 
   include ChangesTracker
 
+  #################
+  ### CALLBACK  ###
+  #################
+
+  serialize :mapping, Hash
 
   #################
   ### RELATIONS ###
   #################
-  serialize :mapping
 
   ###################
   ### VALIDATIONS ###
@@ -75,4 +79,6 @@ class SearchAttribute < ActiveRecord::Base
     h[:orderable] = mapping.to_s.match(/object/).nil?
     h
   end
+
+
 end

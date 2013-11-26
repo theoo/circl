@@ -113,6 +113,7 @@ class Location < ActiveRecord::Base
     h = super(options)
 
     h[:parent_name] = parent.try(:name)
+    h[:people_count] = people.count
     h[:errors] = errors
 
     h

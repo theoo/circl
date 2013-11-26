@@ -16,12 +16,12 @@ $(document).ready ->
       ajax_error = (xhr, statusText, error) =>
         ph.removeClass "alert-success"
         ph.addClass "alert alert-danger"
-        ph.html I18n.t("common.failed_to_update")
+        ph.html I18n.t("common.errors.failed_to_update")
 
       ajax_success = (data, textStatus, jqXHR) =>
         ph.removeClass "alert-danger"
         ph.addClass "alert alert-success"
-        ph.html I18n.t("common.successfully_updated")
+        ph.html I18n.t("common.notices.successfully_updated")
 
       $.ajax(settings).error(ajax_error).success(ajax_success)
 

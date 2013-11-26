@@ -40,13 +40,10 @@ class LocationsDatatable
       {
         0 => location.name,
         1 => location.parent.try(:name),
-        2 => location.iso_code_a2,
-        3 => location.postal_code_prefix,
-        4 => location.phone_prefix,
+        2 => location.postal_code_prefix,
+        3 => location.people.count,
         'id' => location.id,
-        'actions' => [ I18n.t('location.views.actions.edit_location'),
-                       I18n.t('location.views.actions.destroy_location') ],
-        'number_columns' => [2,3,4]
+        'number_columns' => [2,3]
       }
     end
   end
@@ -60,9 +57,11 @@ class LocationsDatatable
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       param = "^#{param}"
-      locations = locations.where("locations.postal_code_prefix #{SQL_REGEX_KEYWORD} ? OR
-                                   locations.name #{SQL_REGEX_KEYWORD} ?",
-                                   *([param]*2))
+      locations = locations
+        .where("locations.postal_code_prefix #{SQL_REGEX_KEYWORD} ? OR
+          locations.name #{SQL_REGEX_KEYWORD} ?",
+          *([param]*2))
+
     end
     locations = locations.page(page).per_page(per_page)
     locations
@@ -77,7 +76,7 @@ class LocationsDatatable
   end
 
   def sort_column
-    columns = %w{name parent_id iso_code_a2 postal_code_prefix phone_prefix}
+    columns = %w{name parent_id postal_code_prefix id}
     columns[params[:iSortCol_0].to_i]
   end
 

@@ -8,6 +8,7 @@ fr:
       actions:
         destroy_location: détruire cette localité
         edit_location: modifier la localité
+        view_members: voir les membres
       iso_alpha2: iso alpha2
       iso_alpha3: iso alpha3
       iso_code_a2: iso code a2

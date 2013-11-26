@@ -4,5 +4,7 @@ fr:
     views:
       actions:
         view_members: voir les membres
+        view_members_as_main_language: membre de langue principale
+        view_members_as_secondary_language: membre de langue secondaire
       code: code
       communication_language: langue de communication

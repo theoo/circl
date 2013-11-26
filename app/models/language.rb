@@ -93,4 +93,13 @@ class Language < ActiveRecord::Base
     true
   end
 
+  def as_json(options)
+    h = super(options)
+
+    h[:people_count] = [main_people.count, communication_people.count].join(", ")
+    h[:errors] = errors
+
+    h
+  end
+
 end

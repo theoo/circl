@@ -40,6 +40,7 @@ class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click button[name=settings-location-destroy]': 'destroy'
+    'click a[name=settings-location-view-members]': 'view_members'
 
   constructor: ->
     super
@@ -62,6 +63,10 @@ class Edit extends App.ExtendedController
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
       @destroy_with_notifications @location, @hide
+
+  view_members: (e) ->
+    e.preventDefault()
+    Directory.search(search_string: "location.id:#{@location.id}")
 
 class Index extends App.ExtendedController
   events:
