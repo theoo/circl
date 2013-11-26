@@ -47,7 +47,6 @@ class SearchAttribute < ActiveRecord::Base
   #################
   serialize :mapping
 
-
   ###################
   ### VALIDATIONS ###
   ###################
@@ -58,8 +57,8 @@ class SearchAttribute < ActiveRecord::Base
   # Validate fields of type 'string' length
   validates_length_of :model, :maximum => 255
   validates_length_of :name, :maximum => 255
-  validates_length_of :indexing, :maximum => 255
-  validates_length_of :mapping, :maximum => 255
+  validates_length_of :indexing, :maximum => 65535
+  validates_length_of :mapping, :maximum => 65535
   validates_length_of :group, :maximum => 255
 
   scope :searchable, where("#{table_name}.group <> ''")
