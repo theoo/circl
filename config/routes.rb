@@ -15,7 +15,7 @@ Directory::Application.routes.draw do
   devise_for :people
   resources  :people do
     member do
-      get 'change_password'
+      get 'change_password', 'map'
       post 'update_password'
       put 'update_password'
     end

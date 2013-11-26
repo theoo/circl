@@ -96,7 +96,7 @@ class Person < ActiveRecord::Base
 
   # API key
   before_validation :nilify_authentication_token_if_blank
-  before_save :reset_authentication_token_if_requested, :verify_employee_information
+  before_save :reset_authentication_token_if_requested, :verify_employee_information, :update_geographic_coordinates
 
   # LDAP
   if Rails.configuration.ldap_enabled
@@ -461,6 +461,7 @@ class Person < ActiveRecord::Base
     h[:communication_language_ids] = communication_language_ids
     h[:errors] = errors
     h[:missing_employee_information] = missing_employee_information
+    h[:geographic_coordinates] = geographic_coordinates
     h
   end
 
@@ -492,17 +493,11 @@ class Person < ActiveRecord::Base
   end
 
   def full_address
-    arr = []
-    arr << address unless address.blank?
-    if location
-      if location.postal_code_prefix
-        arr << "#{location.postal_code_prefix} #{location.name}"
-      else
-        arr << location.name
-      end
-      arr << location.country.name unless location.is_country?
-    end
-    arr.join("\n")
+    full_address_helper.join("\n")
+  end
+
+  def full_address_inline
+    full_address_helper.join(", ")
   end
 
   # organization_name plus person name if existing
@@ -518,6 +513,10 @@ class Person < ActiveRecord::Base
 
   def address_for_bvr
     [address_name, full_address].join("\n")
+  end
+
+  def geographic_coordinates
+    [latitude, longitude].join(", ")
   end
 
   # affairs
@@ -600,6 +599,20 @@ class Person < ActiveRecord::Base
   #######################
   private
 
+  def full_address_helper
+    arr = []
+    arr << address unless address.blank?
+    if location
+      if location.postal_code_prefix
+        arr << "#{location.postal_code_prefix} #{location.name}"
+      else
+        arr << location.name
+      end
+      arr << location.country.name unless location.is_country?
+    end
+    arr
+  end
+
   # API key renewal
 
   def nilify_authentication_token_if_blank
@@ -615,6 +628,16 @@ class Person < ActiveRecord::Base
 
     if renew_authentication_token == true
       reset_authentication_token # devise method
+    end
+  end
+
+  def update_geographic_coordinates
+    if (address_changed? or location_id_changed?) or (address and location_id and latitude.nil?)
+      loc = Geokit::Geocoders::OSMGeocoder.geocode full_address_inline
+      if loc.success
+        self.latitude = loc.lat
+        self.longitude = loc.lng
+      end
     end
   end
 

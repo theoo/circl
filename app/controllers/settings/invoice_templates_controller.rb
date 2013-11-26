@@ -61,7 +61,7 @@ class Settings::InvoiceTemplatesController < ApplicationController
   def edit
     respond_to do |format|
       format.json { render :json => @invoice_template }
-      format.html { render :layout => 'template_editor' }
+      format.html { render :layout => 'template_editorminimal' }
     end
   end
 
@@ -79,7 +79,7 @@ class Settings::InvoiceTemplatesController < ApplicationController
         format.json { render :json => @invoice_template.errors, :status => :unprocessable_entity }
         format.html do
           flash[:error] = I18n.t("common.failed_to_update")
-          render 'edit', :layout => 'template_editor'
+          render 'edit', :layout => 'minimal'
         end
       end
     end

@@ -31,9 +31,11 @@ gem 'haml_coffee_assets', '1.1.0'
 
 gem 'sass-rails', '3.1.0'
 gem 'haml-rails', '0.3.4'
-# gem 'jquery-rails', '1.0.19'
 gem 'spine-rails', '0.1.0'
-# gem 'bootstrap-sass-rails', '3.0.0.2'
+
+### maps
+gem 'geoip'
+gem 'geokit'
 
 group :assets do
   # gem 'uglifier'

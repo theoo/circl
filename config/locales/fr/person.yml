@@ -59,6 +59,9 @@ fr:
       report_error_subject: Une erreur critique (500) a eu lieu sur un serveur en production
       subscription_were_merged: les inscriptions ont été fusionnées
       subscription_were_updated: l'inscription à été mise à jour
+    notices:
+      not_enough_information_to_point_this_person_on_a_map: Il n'y a pas assez d'informations pour pointer précisément l'adresse de ce contact sur une carte.
+      not_enough_information_to_render_a_map: Il n'y a pas assez d'informations sur l'adresse de ce contact pour générer une carte.
     views:
       account_settings: paramètres du compte
       activities: Activités
@@ -80,6 +83,7 @@ fr:
       employment_contracts: Contrats d'emploi
       first_name: prénom
       generate_authentication_token: (re)générer
+      geographic_coordinates: coordonnées géographiques
       hidden: caché
       identifier_explanation: ! '<h3>Commencez par un identifiant</h3> L''identifiant doit être composé au moins de l''un des trois éléments suivants: <ul><li>un nom d''organisation</li><li>une paire prénom-nom</li><li>une adresse email</li></ul>'
       is_an_organization: est une organisation

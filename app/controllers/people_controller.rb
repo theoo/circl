@@ -44,6 +44,22 @@ class PeopleController < ApplicationController
     end
   end
 
+  def map
+
+    if @person.latitude and @person.longitude
+      popup = "<b>"
+      popup += @person.name
+      popup += "</b><br />"
+      popup += @person.full_address.split("\n").join("<br />")
+      @markers = [{:latlng => [@person.latitude, @person.longitude], :popup => popup}]
+      @config = Rails.configuration.settings["maps"]
+    end
+
+    respond_to do |format|
+      format.html { render :layout => 'minimal' }
+    end
+  end
+
   def new
     respond_to do |format|
       format.html { render :layout => 'application', :action => 'show' }

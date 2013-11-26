@@ -8,11 +8,11 @@
 
     %title= "CIRCL"
     = favicon_link_tag
-    = stylesheet_link_tag 'main', 'pdf_common', 'custom_fonts', :media => 'all'
+    = stylesheet_link_tag 'main', 'pdf_common', 'custom_fonts', 'leaflet', :media => 'all'
     = javascript_include_tag "i18n.js" # part of i18n-js gem
     = javascript_include_tag "i18n/#{I18n.locale}.js"
     = javascript_include_tag "i18n/datatables/#{I18n.locale}.js"
-    = javascript_include_tag 'application', 'tinymce/tinymce.min.js'
+    = javascript_include_tag 'application', 'tinymce/tinymce.min.js', 'leaflet'
 
     - # optional controller's javascript file (not common)
     - if File.exists? [ Rails.root,

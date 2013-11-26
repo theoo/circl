@@ -24,7 +24,7 @@ $.fn.invoice_template = ->
 
 class New extends App.ExtendedController
   events:
-    'submit form':                        'submit'
+    'submit form': 'submit'
 
   constructor: ->
     super

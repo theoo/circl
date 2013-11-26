@@ -26,6 +26,10 @@ $.fn.item = ->
 class New extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click #person_map': 'open_map'
+
+  open_map: (e) ->
+    e.preventDefault()
 
   constructor: (params) ->
     super
@@ -52,6 +56,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click #person_map': 'open_map'
 
   constructor: (params) ->
     super
@@ -75,6 +80,10 @@ class Edit extends App.ExtendedController
     @person.is_an_organization = data.is_an_organization?
     @person.hidden = data.hidden?
     @save_with_notifications @person, @render
+
+  open_map: (e) ->
+    e.preventDefault()
+    window.open "#{Person.url()}/#{@person.id}/map.html", "person_map"
 
 class App.People extends Spine.Controller
   className: 'person'

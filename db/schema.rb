@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131118151459) do
+ActiveRecord::Schema.define(:version => 20131125214900) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -46,11 +46,11 @@ ActiveRecord::Schema.define(:version => 20131118151459) do
     t.datetime "updated_at"
   end
 
-  add_index "affairs_products_programs", ["affair_id", "product_id", "position"], :name => "affairs_product_variants_unique_position"
-  add_index "affairs_products_programs", ["affair_id"], :name => "index_affairs_product_variants_on_affair_id"
-  add_index "affairs_products_programs", ["parent_id"], :name => "index_affairs_product_variants_on_parent_id"
-  add_index "affairs_products_programs", ["product_id"], :name => "index_affairs_product_variants_on_variant_id"
-  add_index "affairs_products_programs", ["program_id"], :name => "index_affairs_product_variants_on_program_id"
+  add_index "affairs_products_programs", ["affair_id", "product_id", "position"], :name => "affairs_products_programs_unique_position"
+  add_index "affairs_products_programs", ["affair_id"], :name => "index_affairs_products_programs_on_affair_id"
+  add_index "affairs_products_programs", ["parent_id"], :name => "index_affairs_products_programs_on_parent_id"
+  add_index "affairs_products_programs", ["product_id"], :name => "index_affairs_products_programs_on_product_id"
+  add_index "affairs_products_programs", ["program_id"], :name => "index_affairs_products_programs_on_program_id"
 
   create_table "affairs_subscriptions", :id => false, :force => true do |t|
     t.integer "affair_id"
@@ -156,7 +156,6 @@ ActiveRecord::Schema.define(:version => 20131118151459) do
     t.datetime "snapshot_updated_at"
     t.boolean  "show_invoice_value",    :default => true
     t.integer  "language_id",                              :null => false
-    t.text     "bvr"
     t.text     "header"
     t.text     "footer"
   end
@@ -285,6 +284,8 @@ ActiveRecord::Schema.define(:version => 20131118151459) do
     t.boolean  "hidden",                                        :default => false, :null => false
     t.boolean  "gender"
     t.integer  "task_rate_id"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   add_index "people", ["authentication_token"], :name => "index_people_on_authentication_token", :unique => true
@@ -752,7 +753,7 @@ ActiveRecord::Schema.define(:version => 20131118151459) do
   create_table "task_types", :force => true do |t|
     t.string  "title",          :default => "",    :null => false
     t.text    "description",    :default => ""
-    t.float   "ratio"
+    t.float   "ratio",                             :null => false
     t.integer "value_in_cents"
     t.string  "value_currency", :default => "CHF"
     t.boolean "archive",        :default => false

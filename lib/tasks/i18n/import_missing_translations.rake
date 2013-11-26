@@ -31,6 +31,7 @@ module Translator
 
   def handle_entity(scope, values)
     I18n.available_locales.each do |lang|
+      lang = lang.to_s
       hash = { lang => { scope => values } }
 
       filename = "config/locales/#{lang}/#{scope}.yml"

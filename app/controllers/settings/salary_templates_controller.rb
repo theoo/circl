@@ -64,7 +64,7 @@ class Settings::SalaryTemplatesController < ApplicationController
   def edit
     respond_to do |format|
       format.json { render :json => @salary_template }
-      format.html { render :layout => 'template_editor' }
+      format.html { render :layout => 'minimal' }
     end
   end
 

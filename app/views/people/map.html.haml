@@ -1,0 +1,29 @@
+%nav.navbar.navbar-default.navbar-static-top.navbar-inverse{:role => "navigation"}
+  .row
+    .navbar-header.col-md-1
+      %span{:class => 'navbar-brand', :style => 'padding: 0 0 0 15px'}
+        = image_tag 'logo_mini_white.png'
+
+    .navbar-brand.col-md-11
+      %b= @person.name + ","
+      = @person.full_address_inline
+
+.container
+.container
+  .row
+    - if @person.latitude and @person.longitude
+      .col-xs-12
+        #person_map_container
+          %input{:type => 'hidden', :name => 'person_latitude', :value => @person.latitude}
+          %input{:type => 'hidden', :name => 'person_longitude', :value => @person.longitude}
+          %input{:type => 'hidden', :name => 'person_map_markers', :value => @markers.to_json}
+          %input{:type => 'hidden', :name => 'person_map_config', :value => @config.to_json}
+        -# I18n.t("person.notices.not_enough_information_to_point_this_person_on_a_map") 
+
+    - else
+      %br
+      .col-xs-3
+      .col-xs-6
+        .alert.alert-info
+          = I18n.t("person.notices.not_enough_information_to_render_a_map") 
+      .col-xs-3
