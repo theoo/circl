@@ -427,6 +427,7 @@ class Index extends App.ExtendedController
     'click tr button[name=directory-person-destroy]': 'destroy'
     'click tr button[name=directory-person-change-password]': 'change_password'
     'click a[name=directory-export-to-csv]': 'export_to_csv'
+    'click a[name=directory-map]': 'open_map'
 
   constructor: (params) ->
     super
@@ -437,6 +438,8 @@ class Index extends App.ExtendedController
     @render()
 
   render: =>
+    @results_count = $("#directory_results_count").val()
+
     @html @view('directory/search_engine/index')(@)
 
     table = @el.find("#results")
@@ -500,6 +503,10 @@ class Index extends App.ExtendedController
     e.preventDefault()
     id = $(e.target).directory_person_id()
     window.location = '/people/' + id + '/change_password'
+
+  open_map: (e) =>
+    e.preventDefault()
+    window.open '/directory/map.html?query=' + @json_query, 'directory_map'
 
 class App.DirectorySearchEngine extends App.ExtendedController
   constructor: (params) ->

@@ -5,25 +5,30 @@
         = image_tag 'logo_mini_white.png'
 
     .navbar-brand.col-md-11
-      %b= @person.name + ","
-      = @person.full_address_inline
+      != @map[:title]
+
 
 .container
-.container
+  = hidden_field :person, :id
   .row
-    - if @person.latitude and @person.longitude
+    .col-md-3
+    .col-md-6
+      .validation_errors_placeholder
+
+    .col-md-3
+
+  .row
+    - if @map[:markers].size > 0
       .col-xs-12
-        #person_map_container
-          %input{:type => 'hidden', :name => 'person_latitude', :value => @person.latitude}
-          %input{:type => 'hidden', :name => 'person_longitude', :value => @person.longitude}
-          %input{:type => 'hidden', :name => 'person_map_markers', :value => @markers.to_json}
-          %input{:type => 'hidden', :name => 'person_map_config', :value => @config.to_json}
-        -# I18n.t("person.notices.not_enough_information_to_point_this_person_on_a_map") 
+        #map_container
+          %input{:type => 'hidden', :name => 'map_markers', :value => @map[:markers].to_json}
+          %input{:type => 'hidden', :name => 'map_config', :value => @map[:config].to_json}
+        -# I18n.t("person.notices.not_enough_information_to_point_this_person_on_a_map")
 
     - else
       %br
       .col-xs-3
       .col-xs-6
         .alert.alert-info
-          = I18n.t("person.notices.not_enough_information_to_render_a_map") 
+          = I18n.t("person.notices.not_enough_information_to_render_a_map")
       .col-xs-3

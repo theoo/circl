@@ -1,36 +1,44 @@
 $(document).ready ->
 
-  map_container = $("#person_map_container")
+  # action map
+  if $("#map_container").length > 0
+    id = $('#person_id').val()
+    ph = $(".validation_errors_placeholder")
+    save_callback = (latlng) ->
+      settings =
+        url: "#{App.Person.url()}/#{id}",
+        type: 'PUT',
+        data:
+          person:
+            latitude: latlng.lat,
+            longitude: latlng.lng
 
-  # if existing
-  if map_container.length > 0
-    map_height = document.height - 210
-    map_height = 300 if map_height < 300
+      ajax_error = (xhr, statusText, error) =>
+        ph.removeClass "alert-success"
+        ph.addClass "alert alert-danger"
+        ph.html I18n.t("common.failed_to_update")
 
-    map_container.css(height: map_height)
+      ajax_success = (data, textStatus, jqXHR) =>
+        ph.removeClass "alert-danger"
+        ph.addClass "alert alert-success"
+        ph.html I18n.t("common.successfully_updated")
 
-    latitude = $("[name=person_latitude]").val()
-    longitude = $("[name=person_longitude]").val()
-    markers = $.parseJSON $("[name=person_map_markers]").val()
-    config = $.parseJSON $("[name=person_map_config]").val()
+      $.ajax(settings).error(ajax_error).success(ajax_success)
 
-    map = L.map('person_map_container')
-    map.setView([latitude, longitude], config.max_zoom)
-    $(markers).each ->
-      marker = L.marker(@.latlng).addTo(map)
-      marker.bindPopup(@.popup)
-    L.tileLayer(config.tile_url, {attribution: config.attribution, maxZoom: config.max_zoom }).addTo(map)
+    Ui.load_map('map_container', save_callback)
 
-  person_edit = new PersonEdit({id: $('#person_id').val()})
+  # action edit
+  if $('#info_tab').length > 0
+    person_edit = new PersonEdit({id: $('#person_id').val()})
 
-  # add anchor to pagination so the tab remains the same.
-  on_tab_change_callback = ->
-    $("#pagination a").each (index, el) ->
-      anchor = location.hash.split('#')
-      if anchor
-        url = $(el).attr('href').split("#")[0]
-        $(el).attr('href', [url, anchor[1]].join("#"))
+    # add anchor to pagination so the tab remains the same.
+    on_tab_change_callback = ->
+      $("#pagination a").each (index, el) ->
+        anchor = location.hash.split('#')
+        if anchor
+          url = $(el).attr('href').split("#")[0]
+          $(el).attr('href', [url, anchor[1]].join("#"))
 
-  # finally load ui
-  Ui.load_tabs $(document), on_tab_change_callback
-  Ui.load_ui $(document)
+    # finally load ui
+    Ui.load_tabs $(document), on_tab_change_callback
+    Ui.load_ui $(document)

@@ -148,6 +148,7 @@ Directory::Application.routes.draw do
 
   match 'directory' => 'directory#index', :via => [:get, :post]
   match 'directory/mailchimp' => 'directory#mailchimp', :via => :post
+  match 'directory/map' => 'directory#map', :via => :get
   namespace :directory do
     resources :query_presets
   end

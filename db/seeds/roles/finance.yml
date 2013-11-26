@@ -26,16 +26,10 @@
 - subject: Salaries
   action: manage
 
-- subject: Salaries::HtmlTemplate
-  action: manage
-
 - subject: Salaries::SalaryTemplate
   action: manage
 
 - subject: Salaries::Item
-  action: manage
-
-- subject: Salaries::Period
   action: manage
 
 - subject: Salaries::Salary

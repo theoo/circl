@@ -85,20 +85,11 @@ class DirectoryController < ApplicationController
       end
 
       format.xml do
-        people = ElasticSearch::search( @query[:search_string],
-                                        @query[:selected_attributes],
-                                        @query[:attributes_order],
-                                        @current_person)
         people.map!{ |p| p.load }
         render :xml => people.to_xml
       end
 
       format.csv do
-        # TODO make this nicer
-        people = ElasticSearch::search( @query[:search_string],
-                                        @query[:selected_attributes],
-                                        @query[:attributes_order],
-                                        @current_person)
         people = people.map do |p|
           @query[:selected_attributes].each_with_object(OpenStruct.new(p.to_hash)) do |f, o|
             o.send("#{f}=", relation_to_string(o.send(f)))
@@ -122,6 +113,60 @@ class DirectoryController < ApplicationController
     end
     redirect_to directory_path
   end
+
+  def map
+    authorize! :map, Directory
+
+    @query = HashWithIndifferentAccess.new((QueryPreset.count == 0) ? QueryPreset.new.query : QueryPreset.order(:id).first.query)
+
+    person = false
+
+    if params[:query]
+      @query.merge!(HashWithIndifferentAccess.new(JSON.parse(params[:query])))
+      if @query[:selected_attributes] && @query[:selected_attributes].size > 0
+        if ! @query[:search_string].blank?
+          # Check if query returns only one person and set person if so
+          people = ElasticSearch::search( @query[:search_string],
+                                          @query[:selected_attributes],
+                                          @query[:attributes_order],
+                                          @current_person)
+          @results_count = ElasticSearch::count(@query[:search_string])
+        end
+      else
+        raise Tire::Search::SearchRequestFailed, I18n.t('directory.errors.you_need_to_select_at_least_one_attribute_to_display')
+      end
+
+    end
+
+    @map = {}
+
+    latitudes = people.map(&:latitude)
+    latitudes.delete(nil)
+    longitudes = people.map(&:longitude)
+    longitudes.delete(nil)
+
+    @map[:title] = @query[:search_string]
+    if latitudes
+      @map[:markers] = []
+      people.map do |p|
+        if p.latitude
+          popup = "<b>"
+          popup += p.name.to_s
+          popup += "</b><br />"
+          popup += [p.address, p.npa_town, p.country].join("<br />")
+          @map[:markers] << {:latlng => [p.latitude, p.longitude], :popup => popup}
+        end
+      end
+      @map[:config] = Rails.configuration.settings["maps"]
+    end
+
+    respond_to do |format|
+      format.html do
+        render 'people/map' , :layout => 'minimal'
+      end
+    end
+  end
+
 
 
   private

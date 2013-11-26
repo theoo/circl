@@ -2,7 +2,7 @@
   .row
     .col-lg-12
       %h2
-        = $("#directory_results_count").val()
+        = @results_count
         = I18n.t('directory.views.results')
 
 // fake_action is overloaded in DirectorySearchEngine#Index.render() method.
@@ -21,15 +21,22 @@
 
 .panel-footer
   .btn-group
-    %button{:type => 'button',
-            :data-toggle => 'dropdown',
-            :class => 'btn btn-default dropdown-toggle' }
-      .icon-paper-clip
-      = I18n.t("common.export")
-      .caret
+    .btn-group
+      %button{:type => 'button',
+              :data-toggle => 'dropdown',
+              :class => 'btn btn-default dropdown-toggle' }
+        .icon-paper-clip
+        = I18n.t("common.export")
+        .caret
 
-    %ul.dropdown-menu
-      %li
-        %a{:href => '#', :name => 'directory-export-to-csv'}
-          .icon-file-text
-          = I18n.t('common.csv')
+      %ul.dropdown-menu
+        %li
+          %a{:href => '#', :name => 'directory-export-to-csv'}
+            .icon-file-text
+            = I18n.t('common.csv')
+
+    %a{ :href => '#',
+        :name => 'directory-map',
+        :class => 'btn btn-default'}
+      .icon-map-marker
+      = I18n.t('directory.views.show_on_a_map')

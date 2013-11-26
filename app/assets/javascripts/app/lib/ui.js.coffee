@@ -578,6 +578,44 @@ class Ui
         "Rotis Light=Rotis Light;"+
         "Rotis Light Italic=Rotis Light Italic"
 
+  load_map: (container_string, save_callback = undefined) ->
+    map_container = $("#" + container_string)
+    map_height = document.height - 210
+    map_height = 300 if map_height < 300
+
+    map_container.css(height: map_height)
+
+    markers = $($.parseJSON $("[name=map_markers]").val())
+    config = $.parseJSON $("[name=map_config]").val()
+
+    map = L.map(container_string)
+
+    # There is one marker
+    if markers.length == 1
+      marker = markers[0]
+      map.setView(marker.latlng, config.max_zoom)
+      m = L.marker(marker.latlng, {draggable: true}).addTo(map)
+      m.bindPopup(marker.popup)
+      m.openPopup()
+
+      if save_callback
+        m.on 'dragend', (e) ->
+          save_callback(m.getLatLng())
+
+    # There is many markers
+    if markers.length > 1
+      bounds = []
+      markers.each ->
+        marker = L.marker(@.latlng).addTo(map)
+        marker.bindPopup(@.popup)
+        bounds.push @.latlng
+
+      # Adapt viewport to see all markers
+      map.fitBounds(bounds)
+
+    L.tileLayer(config.tile_url, {attribution: config.attribution, maxZoom: config.max_zoom }).addTo(map)
+
+
 #--- fix html input type number precision ---
   load_number_precision: (context) ->
     context.find('input[type="number"]').each ->

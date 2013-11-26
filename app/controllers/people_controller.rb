@@ -46,13 +46,20 @@ class PeopleController < ApplicationController
 
   def map
 
+    @map = {}
+
+    @map[:title] = "<b>"
+    @map[:title] += @person.name
+    @map[:title] += "</b>, "
+    @map[:title] += @person.full_address_inline
+
     if @person.latitude and @person.longitude
       popup = "<b>"
       popup += @person.name
       popup += "</b><br />"
       popup += @person.full_address.split("\n").join("<br />")
-      @markers = [{:latlng => [@person.latitude, @person.longitude], :popup => popup}]
-      @config = Rails.configuration.settings["maps"]
+      @map[:markers] = [{:latlng => [@person.latitude, @person.longitude], :popup => popup}]
+      @map[:config] = Rails.configuration.settings["maps"]
     end
 
     respond_to do |format|
@@ -156,7 +163,7 @@ class PeopleController < ApplicationController
     end
   end
 
-  def paginate 
+  def paginate
     unless params[:query] && params[:query].is_a?(ActiveSupport::HashWithIndifferentAccess)
       params[:query] = HashWithIndifferentAccess.new(JSON.parse(params[:query]))
     end

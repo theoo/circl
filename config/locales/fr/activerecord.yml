@@ -140,11 +140,14 @@ fr:
         last_name: nom de famille
         last_sign_in_at: date de la dernière session
         last_sign_in_ip: adresse ip de la dernière session
+        latitude: latitude
         location_id: id de la localité
         locked_at: date de blockage
+        longitude: longitude
         main_communication_language: langue de communication principale
         main_communication_language_id: id de la langue de communication principale
         mobile: numéro de mobile
+        name: nom complet
         nationality: nationalité
         npa: NPA
         npa_town: NPA et localité

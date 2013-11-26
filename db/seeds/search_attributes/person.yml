@@ -56,6 +56,20 @@
   group: Person
 
 - model: Person
+  name: name
+  indexing: name
+  mapping:
+    type: multi_field
+    fields:
+      last_name:
+        type : string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
   name: hidden
   indexing: hidden
   mapping:
@@ -305,6 +319,30 @@
       sort:
         type: string
         analyzer: string_lowercase
+  group: Person
+
+- model: Person
+  name: latitude
+  indexing: latitude
+  mapping:
+    type: multi_field
+    fields:
+      latitude:
+        type: float
+      sort:
+        type: float
+  group: Person
+
+- model: Person
+  name: longitude
+  indexing: longitude
+  mapping:
+    type: multi_field
+    fields:
+      longitude:
+        type: float
+      sort:
+        type: float
   group: Person
 
 # Relations

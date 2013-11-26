@@ -133,10 +133,13 @@ en:
         last_name: last name
         last_sign_in_at: last sign in at
         last_sign_in_ip: last sign in ip
+        latitude: latitude
         location_id: location id
         locked_at: locked at
+        longitude: longitude
         main_communication_language_id: main communication language id
         mobile: mobile
+        name: full name
         nationality: nationality
         organization_name: organization name
         password_salt: password salt
