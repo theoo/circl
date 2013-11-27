@@ -117,9 +117,9 @@ class Salaries::SalaryTemplate < ActiveRecord::Base
     h = super(options)
 
     h[:thumb_url] = thumb_url
-
-    h[:errors] = errors
+    h[:salaries_count] = salaries.count
     h[:placeholders] = placeholders
+    h[:errors] = errors
 
     h
   end

@@ -3,6 +3,7 @@
     %tr
       %th= I18n.t('salary_template.views.thumb')
       %th= I18n.t('common.title')
+      %th.number= I18n.t('salary_template.views.salaries')
       %th.desc= I18n.t('common.created_at')
   %tbody
     - for salary_template in App.SalaryTemplate.all()
@@ -13,4 +14,5 @@
           - else
             %img{:src => "/assets/missing_thumbnail.png", :alt => 'thumbnail', :class => 'template-thumbnail'}
         %td= salary_template.title
+        %td.number= salary_template.salaries_count
         %td= salary_template.created_at

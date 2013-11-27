@@ -7,6 +7,7 @@ en:
       actions:
         edit_template: edit template
       language: language
+      salaries: salaries
       template:
         person_bank_information: person bank information
         salary_id: salary

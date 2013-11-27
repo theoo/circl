@@ -18,6 +18,7 @@ en:
       bvr_address: bvr address
       footer: footer
       header: header
+      invoices: invoices
       language: language
       language_notice: language notice
       placeholders:

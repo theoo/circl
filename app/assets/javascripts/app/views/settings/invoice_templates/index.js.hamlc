@@ -4,7 +4,7 @@
       %th= I18n.t('invoice_template.views.thumb')
       %th= I18n.t('common.title')
       %th= I18n.t('invoice_template.views.language')
-      %th= I18n.t('invoice_template.views.bvr_account')
+      %th= I18n.t('invoice_template.views.invoices')
       %th.desc= I18n.t('common.created_at')
   %tbody
     - for invoice_template in App.InvoiceTemplate.all()
@@ -17,5 +17,5 @@
 
         %td= invoice_template.title
         %td= invoice_template.language_name
-        %td.number= invoice_template.bvr_account
+        %td.number= invoice_template.invoices_count
         %td= invoice_template.created_at

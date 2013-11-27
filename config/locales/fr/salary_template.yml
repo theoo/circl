@@ -40,5 +40,6 @@ fr:
         tax_data: ! 'Déductions. Options: { attributs | ordre de tri | séparateurs, ''table''}, Attributs: id, salary_id, tax_id, title, position, employer_value, employer_percent, employer_use_percent, employee_value, employee_percent, employee_use_percent, created_at, updated_at'
         taxed_items: ! 'Objet avec déductions. Options: { attributs | ordre de tri | séparateurs, ''table''}, Attributs: id, position, title, value, category, created_at'
         untaxed_items: ! 'Objets sans déductions. Options: { attributs | ordre de tri | séparateurs, ''table''}, Attributs: id, position, title, value, category, created_at'
+      salaries: salaires
       template: modèle
-      thumb: vignette
+      thumb: aperçu

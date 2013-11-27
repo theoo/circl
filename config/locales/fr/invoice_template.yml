@@ -19,6 +19,7 @@ fr:
       bvr_address: adresse figurant sur le BVR
       footer: pied de page
       header: entête
+      invoices: factures
       language: langue du modèle
       language_notice: localisation des attributs
       placeholders:
@@ -83,5 +84,5 @@ fr:
         topage: Le nombre de page du document
         webpage: L'adresse (URL) de la page imprimée
       show_invoice_value: imprimer avec la valeure de la facture
-      thumb: vignette
+      thumb: aperçu
       with_bvr: imprimer le BVR

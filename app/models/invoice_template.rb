@@ -122,8 +122,9 @@ class InvoiceTemplate < ActiveRecord::Base
     h[:thumb_url] = thumb_url
 
     h[:language_name] = language.try(:name)
-    h[:errors] = errors
+    h[:invoices_count] = invoices.count
     h[:placeholders] = placeholders
+    h[:errors] = errors
 
     h
   end

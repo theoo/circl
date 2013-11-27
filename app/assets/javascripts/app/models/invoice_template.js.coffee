@@ -16,7 +16,7 @@
 
 class App.InvoiceTemplate extends Spine.Model
 
-  @configure 'InvoiceTemplate', 'title', 'html', 'with_bvr', 'show_invoice_value', 
+  @configure 'InvoiceTemplate', 'title', 'html', 'with_bvr', 'show_invoice_value',
               'bvr_address', 'bvr_account', 'thumb_url', 'language_id'
 
   @extend Spine.Model.Ajax
