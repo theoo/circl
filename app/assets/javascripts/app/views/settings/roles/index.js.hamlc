@@ -3,11 +3,13 @@
     %tr
       %th= I18n.t('common.id')
       %th.asc= I18n.t('common.name')
-      %th= I18n.t('role.views.members')
+      %th.number= I18n.t('role.views.permissions')
+      %th.number= I18n.t('role.views.members')
 
   %tbody
     - for role in App.Role.all()
       %tr{:data-id => role.id, :class => 'item'}
         %td= role.id
         %td= role.name
+        %td.number= role.permissions_count
         %td.number= role.members_count
