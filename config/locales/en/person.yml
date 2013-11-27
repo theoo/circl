@@ -53,7 +53,9 @@ en:
         directory_id: directory
         directory_name: directory name
         exception_trace: exception trace
+        person: Person
         something_wrong_happened: something wrong happened
+        title: A critical error happened on a production directory
       report_error_subject: report error subject
       subscription_were_merged: subscription were merged
       subscription_were_updated: subscription were updated

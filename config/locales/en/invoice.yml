@@ -19,6 +19,12 @@ en:
       invoice_value: invoice value
       printed_address: printed address
       status: status
-      statuses: statuses
+      statuses:
+        cancelled: cancelled
+        offered: offered
+        open: open
+        overpaid: overpaid
+        paid: paid
+        underpaid: underpaid
       subscription_title: subscription title
       wipe_content_to_update_address: wipe content to update address

@@ -20,5 +20,7 @@ en:
         destroy_background_task: destroy background task
       background_tasks_list_title: background tasks list title
       status: status
-      statuses: statuses
+      statuses:
+        pending: pending
+        running: running
       tasks_pending: tasks pending
