@@ -30,7 +30,7 @@ module Comparator
           locales,
           {locales[0] => h1[n], locales[1] => h2[n]},
           [path,n].join("."))
-      else
+      elsif h1[n].is_a? Hash or h2[n].is_a? Hash
         # if not both keys are hashes, extract which one is a string...
         locale = h1[n].is_a?(String) ? locales[0] : locales[1]
         puts locale.to_s + [path, n].join(".")
