@@ -38,7 +38,7 @@ fr:
       copy_reference_title: Copie du salaire de référence
       employer_account: retenues employeur
       employer_part: part employeur
-      export_interval_explanation: L'intervalle sélectionnée doit correspondre à l'intervalle couverte par les salaires et non à leurs dates de création.
+      export_interval_explanation: L'intervalle sélectionné doit correspondre à l'intervalle couvert par les salaires et non à leurs dates de création.
       gross: brut
       gross_pay: salaire brut
       hundred_percent_equivalent: Salaire équivalent à 100%

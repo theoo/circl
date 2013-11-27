@@ -30,7 +30,6 @@ fr:
         bvr_spaced_reference_number: ligne de référence du BVR séparée par des espaces
         bvr_value: Valeur formatée pour le BVR
         date: La date de génération du document
-        failed_to_substitute_iterator: ERREUR LORS DE LA SUBSTITUTION DE L'ITÉRATEUR "%{iterator}"
         frompage: Le numéro de la première page
         invoice_address: Adresse du destinataire de la facture
         invoice_balance_value: Invoice balance value
