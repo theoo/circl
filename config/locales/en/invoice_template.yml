@@ -6,6 +6,7 @@ en:
       bvr_address_and_bvr_account_are_required_if_with_bvr_is_set: bvr address and bvr account are required if with bvr is set
       can_not_delete_if_invoices_are_subscribed: can not delete if invoices are subscribed
       can_not_delete_if_subscriptions_are_subscribed: can not delete if subscriptions are subscribed
+      failed_to_substitute_iterator: ERROR WHILE SUBSTITUTING PLACEHOLDER "%{iterator}"
     help:
       remove_content_if_you_dont_want_footer: remove content if you dont want footer
       remove_content_if_you_dont_want_header: remove content if you dont want header
@@ -22,11 +23,61 @@ en:
       language: language
       language_notice: language notice
       placeholders:
+        bvr_account: BVR account
+        bvr_address: BVR address
+        bvr_codeline: BVR codeline
+        bvr_reference_number: BVR reference number
+        bvr_spaced_reference_number: human readable BVR reference number
+        bvr_value: BVR value
         date: The current date in system local format
-        failed_to_substitute_iterator: failed to substitute iterator
         frompage: The number of the first page to be printed
+        invoice_address: Invoice printed address
+        invoice_balance_value: Invoice balance value
+        invoice_buyer_first_name: Invoice buyer first name
+        invoice_buyer_full_name: Invoice buyer full name (first name and last name)
+        invoice_buyer_id: Invoice buyer unique ID
+        invoice_buyer_last_name: Invoice buyer last name
+        invoice_buyer_name: Invoice buyer name (organization name if set - or full name)
+        invoice_buyer_organization_name: Invoice buyer organization name
+        invoice_buyer_title: Invoice buyer title
+        invoice_buyer_title_and_full_name: Invoice buyer title and full name
+        invoice_currency: Invoice value currency name
+        invoice_currency_iso_code: Invoice value currency iso code (CHF, EUR, USD, GBP, ...)
+        invoice_currency_symbol: Invoice value currency symbol (F, €, $, £, ...)
+        invoice_date: Invoice date
+        invoice_day_numeric: Invoice day as numeric value
+        invoice_day_word: Invoice day as a word (day of the week)
+        invoice_description: Invoice description
+        invoice_id: Invoice unique ID
+        invoice_month_numeric: Invoice month as numeric value
+        invoice_month_word: Invoice month as a word
+        invoice_overpaid_value: Invoice overpaid value
+        invoice_owner_first_name: Invoice owner first name
+        invoice_owner_full_name: Invoice owner full name (first name and last name)
+        invoice_owner_id: Invoice owner unique ID
+        invoice_owner_last_name: Invoice owner last name
+        invoice_owner_name: Invoice owner name (organization name if set - or full name)
+        invoice_owner_organization_name: Invoice owner organization name
+        invoice_owner_title: Invoice owner title
+        invoice_owner_title_and_full_name: Invoice owner title and full name
+        invoice_receipts_value: Invoice receipts sum value
+        invoice_receiver_first_name: Invoice receiver first name
+        invoice_receiver_full_name: Invoice receiver full name (first name and last name)
+        invoice_receiver_id: Invoice receiver unique ID
+        invoice_receiver_last_name: Invoice receiver last name
+        invoice_receiver_name: Invoice receiver name (organization name if set - or full name)
+        invoice_receiver_organization_name: Invoice receiver organization name
+        invoice_receiver_title: Invoice receiver title
+        invoice_receiver_title_and_full_name: Invoice receiver title and full name
+        invoice_title: Invoice title
+        invoice_value: Invoice value
+        invoice_year_numeric: Invoice year
+        locale: This template language abreviation
         page: The number of the pages currently being printed
+        placeholders: placeholders
+        receipts: ! 'Receipts iterator. Options: { attributes | sort by | separator, ''table''}, Attributes: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
         section: The name of the current section
+        subscriptions: ! 'Subscriptions iterator. Options: { attributes | sort by | separator, ''table''}, Attributes: id, parend_id, title, description, value, interval_starts_on, interval_ends_on, created_at, updated_at'
         subsection: The name of the current subsection
         time: The current time in system local format
         topage: The number of the last page to be printed

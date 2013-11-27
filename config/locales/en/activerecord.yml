@@ -115,10 +115,15 @@ en:
         updated_at: updated_at
       person:
         address: address
+        affairs: affairs
+        affairs_as_buyer: affairs as buyer
+        affairs_as_receiver: affairs as receiver
         authentication_token: authentication token
         avs_number: avs number
         bank_informations: bank informations
         birth_date: birth date
+        communication_languages: communication languages
+        country: country
         created_at: created at
         current_sign_in_at: current sign in at
         current_sign_in_ip: current sign in ip
@@ -128,7 +133,9 @@ en:
         first_name: first name
         hidden: hidden
         id: id
+        invoices: invoices
         is_an_organization: is an organization
+        job: job
         job_id: job id
         last_name: last name
         last_sign_in_at: last sign in at
@@ -137,21 +144,37 @@ en:
         location_id: location id
         locked_at: locked at
         longitude: longitude
+        main_communication_language: main communication language
         main_communication_language_id: main communication language id
         mobile: mobile
         name: full name
         nationality: nationality
+        npa: ZIP
+        npa_town: ZIP city
         organization_name: organization name
+        paid_affairs: paid affairs
+        paid_subscriptions_or_reminders: paid subscriptions or reminders
         password_salt: password salt
         phone: phone
+        private_tags: private tags
+        public_tags: public tags
+        receipts: receipts
         remember_created_at: remember created at
         reset_password_sent_at: reset password sent at
         reset_password_token: reset password token
+        roles: roles
         second_email: second email
         second_phone: second phone
         sign_in_count: sign in count
+        subscriptions: subscriptions
+        subscriptions_as_buyer: subscriptions as buyer
+        subscriptions_as_receiver: subscriptions as receiver
         title: title
+        town: town
+        translation_aptitudes: translation aptitude
         unlock_token: unlock token
+        unpaid_affairs: unpaid affairs
+        unpaid_subscriptions: unpaid subscriptions
         updated_at: updated at
       private_tag:
         id: id
@@ -178,6 +201,7 @@ en:
         created_at: created_at
         description: description
         id: id
+        ldap_query: LDAP query
         name: name
         updated_at: updated_at
       subscription:
@@ -282,11 +306,13 @@ en:
       receipt: Receipt
       role: Role
       salary: salary
+      salary_template: salary_template
       setting: Setting
       subscription: Subscription
       task: Task
       task_preset: Task Preset
       task_type: Task Type
+      tax: tax
       translation_aptitude: Translation Aptitude
   date:
     abbr_day_names:

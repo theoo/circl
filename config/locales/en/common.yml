@@ -2,6 +2,7 @@
 en:
   common:
     a_webapp_developped_by: A webapp developped by
+    action: action
     add: add
     adjust: adjust
     administration: administration
@@ -42,6 +43,7 @@ en:
       please_verify_rights_and_record: please verify rights and record
     export: export
     export_to: export to
+    false: false
     file: file
     from: from
     good: good
@@ -66,6 +68,7 @@ en:
     position: position
     preview: preview
     preview_in_new_tab: preview in new tab
+    quantity: quantity
     released_under: released under
     requires_browser_update: requires browser update
     reset: reset
@@ -85,6 +88,8 @@ en:
     toolbox_import_bank_file: toolbox import bank file
     toolbox_template: toolbox template
     tools: tools
+    total: total
+    true: true
     unpaid: unpaid
     update: update
     updated_at: update at

@@ -20,7 +20,15 @@ en:
       receiver: receiver
       relations: relations
       status: status
-      statuses: statuses
+      statuses:
+        cancelled: cancelled
+        offered: offered
+        open: open
+        overpaid: overpaid
+        paid: paid
+        partially_paid: partially paid
+        to_be_billed: to be billed
+        underpaid: underpaid
       subscriptions: subscriptions
       tasks: tasks
       update_date: update date
