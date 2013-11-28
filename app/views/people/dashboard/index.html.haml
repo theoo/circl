@@ -38,7 +38,8 @@
 
   .row
     .col-lg-6.col-md-6
-      - if can? :read, @person => Person # messages
+      -# if can? :read, @person => Person # messages
+      - if false
         #dashboard_messages.panel.panel-primary
           .panel-heading
             .panel-title
@@ -56,7 +57,7 @@
             .panel-title
               = I18n.t('person.dashboard.panels.open_invoices')
 
-      - if can? :read, @person => Person
+      - if can? :read, @person => Directory
         #dashboard_last_people_added.panel.panel-default
           .panel-heading
             .panel-title

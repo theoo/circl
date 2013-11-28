@@ -12,6 +12,10 @@
         %td= attr.name
         %td= attr.mapping
 
+.panel-body
+  .alert.alert-warning
+    = I18n.t("ldap_attribute.notices.ldap_will_be_inaccessible_during_the_reindexing")
+
 .panel-footer
   %a{ :href => '/settings/ldap_attributes/synchronize',
       'data-method' => 'post',

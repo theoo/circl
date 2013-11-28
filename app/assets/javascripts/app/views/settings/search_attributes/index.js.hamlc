@@ -14,6 +14,10 @@
         %td= attr.name
         %td= attr.group
 
+.panel-body
+  .alert.alert-warning
+    = I18n.t("search_attribute.notices.search_engine_will_be_inaccessible_during_the_reindexing")
+
 .panel-footer
   %a{ :href => '/settings/search_attributes/synchronize',
       'data-method' => 'post',

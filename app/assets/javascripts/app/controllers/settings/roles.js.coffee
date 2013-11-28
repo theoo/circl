@@ -91,6 +91,7 @@ class Index extends App.ExtendedController
   events:
     'click tr.item':      'edit'
     'datatable_redraw': 'table_redraw'
+    'click a[name=settings-roles-reindexing-notice]': "redirect_to_search_attributes"
 
   constructor: (params) ->
     super
@@ -110,6 +111,10 @@ class Index extends App.ExtendedController
       target = $(@el).find("tr[data-id=#{@role.id}]")
 
     @activate_in_list(target)
+
+  redirect_to_search_attributes: (e) ->
+    e.preventDefault()
+    $("a[href=#searchengine_tab]").click()
 
 class App.SettingsRoles extends Spine.Controller
   className: 'roles'
