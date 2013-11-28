@@ -36,6 +36,9 @@ class AvailablePermissionsIndex extends App.ExtendedController
     Permission.bind('refresh', @render)
     RolePermission.bind('refresh', @render)
 
+  active: (params) ->
+    @role_id = params.role_id if params
+
   render: =>
     has_permission = (p) ->
       _.find RolePermission.all(), (rp) ->
@@ -50,13 +53,14 @@ class AvailablePermissionsIndex extends App.ExtendedController
   disabled: =>
     RolePermission.url() == undefined
 
-  add: (e) ->
+  add: (e) =>
     available_permission = $(e.target).available_permission()
     attributes = available_permission.attributes()
     delete attributes.id
 
     permission = new RolePermission(attributes)
-    @save_with_notifications permission
+    @save_with_notifications permission, =>
+      App.Role.fetch(id: @role_id)
 
 class SelectedPermissionsIndex extends App.ExtendedController
   events:
@@ -66,6 +70,9 @@ class SelectedPermissionsIndex extends App.ExtendedController
   constructor: (params) ->
     super
     RolePermission.bind('refresh', @render)
+
+  active: (params) ->
+    @role_id = params.role_id if params
 
   render: =>
     @html @view('settings/roles/permissions/selected_permissions')(@)
@@ -83,9 +90,10 @@ class SelectedPermissionsIndex extends App.ExtendedController
 
     RolePermission.fetch(id: permission.id)
 
-  destroy: (e) ->
+  destroy: (e) =>
     permission = $(e.target).selected_permission()
-    @destroy_with_notifications permission
+    @destroy_with_notifications permission, =>
+      App.Role.fetch(id: @role_id)
 
 class Edit extends App.ExtendedController
   events:
@@ -130,10 +138,19 @@ class App.SettingsRolePermissions extends Spine.Controller
     @available_permissions_index = new AvailablePermissionsIndex
     @selected_permissions_index = new SelectedPermissionsIndex
 
+
     @append @available_permissions_index, $("<hr />"), @edit, @selected_permissions_index
+
+    @selected_permissions_index.render()
+    @available_permissions_index.render()
 
     @selected_permissions_index.bind 'edit', (id) =>
       @edit.active(id: id)
 
   activate: (params) ->
-    @edit.active()
+    if params
+      @edit.active(params.id) # undefined is ok
+
+      if params.role_id
+        @available_permissions_index.active(role_id: params.role_id)
+        @selected_permissions_index.active(role_id: params.role_id)

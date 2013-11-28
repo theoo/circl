@@ -56,6 +56,7 @@ class Edit extends App.ExtendedController
 
   render: =>
     @html @view('settings/roles/form')(@)
+    @show()
 
   submit: (e) ->
     e.preventDefault()
@@ -74,6 +75,9 @@ class Edit extends App.ExtendedController
 
   load_dependencies: ->
     if @id
+      permissions_controller = $("#settings_role_permissions").data("controller")
+      permissions_controller.activate(role_id: @id)
+
       RolePermission.url = =>
        "#{Spine.Model.host}/settings/roles/#{@id}/permissions"
 
@@ -81,6 +85,7 @@ class Edit extends App.ExtendedController
       RolePermission.fetch()
       Permission.refresh([], clear: true)
       Permission.fetch()
+
 
   unload_dependencies: ->
     RolePermission.url = => undefined
