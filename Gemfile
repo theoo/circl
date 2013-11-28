@@ -34,8 +34,8 @@ gem 'haml-rails', '0.3.4'
 gem 'spine-rails', '0.1.0'
 
 ### maps
-gem 'geoip'
-gem 'geokit'
+gem 'geoip', '1.3.3'
+gem 'geokit', '1.7.1'
 
 group :assets do
   # gem 'uglifier'
