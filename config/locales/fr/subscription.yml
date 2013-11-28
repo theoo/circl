@@ -74,6 +74,6 @@ fr:
         unprocessable_request: formulation de la requète incorrect
         wrong_date: format de date incorrect
       values:
-        invoice_template: modèle de facturese
+        invoice_template: modèle de factures
         private_tag: tag privé
       values_title: valeurs associées aux tags privés
