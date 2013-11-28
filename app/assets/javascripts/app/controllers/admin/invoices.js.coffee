@@ -42,7 +42,7 @@ class Index extends App.ExtendedController
 
     Invoice.one 'refresh', =>
       invoice = Invoice.find(id)
-      window.location = "/people/#{invoice.buyer_id}?folding=person_affairs"
+      window.location = "/people/#{invoice.buyer_id}#affairs"
     Invoice.fetch(id: id)
 
   stack_export_window: (e) ->
