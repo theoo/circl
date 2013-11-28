@@ -146,7 +146,7 @@ class Index extends App.ExtendedController
     Receipt.unbind 'refresh'
     Receipt.one 'refresh', =>
       receipt = Receipt.find(id)
-      window.location = "/people/#{receipt.owner_id}?folding=person_affairs"
+      window.location = "/people/#{receipt.owner_id}#affairs"
     Receipt.fetch(id: id)
 
   stack_export_window: (e) ->
