@@ -40,6 +40,7 @@ class Language < ActiveRecord::Base
   #################
   ### CALLBACKS ###
   #################
+  before_destroy :check_is_not_use_as_main_communication_language
 
   #################
   ### RELATIONS ###
@@ -100,6 +101,14 @@ class Language < ActiveRecord::Base
     h[:errors] = errors
 
     h
+  end
+
+  def check_is_not_use_as_main_communication_language
+    if main_people.count > 0
+       errors.add(:base,
+                 I18n.t('language.errors.cannot_destroy_main_communication_language_in_use'))
+      false
+    end
   end
 
 end

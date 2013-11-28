@@ -1,6 +1,8 @@
 ---
 en:
   language:
+    errors:
+      cannot_destroy_main_communication_language_in_use: This language can not be deleted because it is in use.
     views:
       actions:
         view_members: view members
