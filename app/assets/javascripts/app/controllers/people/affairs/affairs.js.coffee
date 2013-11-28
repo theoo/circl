@@ -164,7 +164,7 @@ class Edit extends App.ExtendedController
       @unload_dependencies()
 
   show_owner: (e) ->
-    window.location = "/people/#{@affair.owner_id}?folding=person_affairs"
+    window.location = "/people/#{@affair.owner_id}#affairs"
 
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
