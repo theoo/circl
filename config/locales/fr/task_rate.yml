@@ -3,5 +3,6 @@ fr:
   task_rate:
     views:
       people_count: clients
+      please_select_a_rate: Veuillez sélectionner un tarif
       rate: tarif
       rates: tarifs

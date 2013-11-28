@@ -3,5 +3,6 @@ en:
   task_rate:
     views:
       people_count: customers
+      please_select_a_rate: Please select a rate
       rate: rate
       rates: rates

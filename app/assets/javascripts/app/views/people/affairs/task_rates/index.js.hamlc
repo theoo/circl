@@ -8,11 +8,17 @@
       %select{:id => 'person_affair_task_rate_id',
               :class => 'form-control required',
               :name => 'task_rate_id'}
+
+        - unless @person.task_rate_id
+          %option{:value => 'none', :selected => true}
+            = I18n.t("task_rate.views.please_select_a_rate")
+
         - for r in App.TaskRate.all()
           - if r.id == @person.task_rate_id
             %option{:value => r.id, :selected => true}= r.title
           - else
             %option{:value => r.id}= r.title
+
       %small.help-block.description
 
     .col-lg-4.col-md-4
