@@ -196,7 +196,7 @@ class People::Salaries::SalariesController < ApplicationController
 
           html.gsub!(ph, sub)
         #rescue Exception => e
-        #  error = I18n.t("invoice_template.views.errors.failed_to_substitute_iterator", :iterator => p)
+        #  error = I18n.t("invoice_template.errors.failed_to_substitute_iterator", :iterator => p)
         #  error += "<br />"
         #  error += CGI::escapeHTML(e.inspect)
         #  html.gsub!(ph, error)

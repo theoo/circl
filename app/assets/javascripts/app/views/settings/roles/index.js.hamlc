@@ -3,11 +3,22 @@
     %tr
       %th= I18n.t('common.id')
       %th.asc= I18n.t('common.name')
-      %th= I18n.t('role.views.members')
+      %th.number= I18n.t('role.views.permissions')
+      %th.number= I18n.t('role.views.members')
 
   %tbody
     - for role in App.Role.all()
       %tr{:data-id => role.id, :class => 'item'}
         %td= role.id
         %td= role.name
+        %td.number= role.permissions_count
         %td.number= role.members_count
+
+.panel-body
+  .alert.alert-info
+    = I18n.t("role.notices.you_may_need_to_reindex_search_attributes_after_roles_update") 
+    %br
+    %br
+    .text-right
+      %a{:name => 'settings-roles-reindexing-notice', :class => 'btn btn-info'}
+        = I18n.t("settings.views.search_attributes")

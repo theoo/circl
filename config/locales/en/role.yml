@@ -3,6 +3,8 @@ en:
   role:
     errors:
       cant_delete_if_in_use: cant delete if in use
+    notices:
+      you_may_need_to_reindex_search_attributes_after_roles_update: It is necessary to reindex the search engine after updating a role which defines restricted access to a ressource (using conditions).
     views:
       actions:
         view_role_members: view role members

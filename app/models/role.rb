@@ -97,8 +97,9 @@ class Role < ActiveRecord::Base
   def as_json(options = nil)
     h = super(options)
 
-    h[:members_count] = people.count
-    h[:errors]       = errors
+    h[:permissions_count] = permissions.count
+    h[:members_count]     = people.count
+    h[:errors]            = errors
 
     h
   end

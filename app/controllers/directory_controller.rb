@@ -22,6 +22,7 @@ class DirectoryController < ApplicationController
 
   layout 'application'
 
+  # FIXME this causes stranges persmissions with the name of methods from this helper
   include ApplicationHelper
 
   rescue_from Tire::Search::SearchRequestFailed do |error|
@@ -51,7 +52,13 @@ class DirectoryController < ApplicationController
     person = false
 
     if params[:query]
-      @query.merge!(HashWithIndifferentAccess.new(JSON.parse(params[:query])))
+      if params[:query].is_a? HashWithIndifferentAccess
+        @query.merge!(HashWithIndifferentAccess.new(params[:query]))
+      elsif params[:query].is_a? String
+        @query.merge!(HashWithIndifferentAccess.new(JSON.parse(params[:query])))
+      else
+        raise ArgumentError, "invalid query".inspect
+      end
       if @query[:selected_attributes] && @query[:selected_attributes].size > 0
         if ! @query[:search_string].blank?
           # Check if query returns only one person and set person if so
@@ -82,6 +89,10 @@ class DirectoryController < ApplicationController
 
       format.json do
         render :json => PeopleDatatable.new(view_context, @query, current_person)
+      end
+
+      format.js do
+        render :json => PeopleDatatable.new(view_context, @query, current_person), :callback => params[:callback]
       end
 
       format.xml do
@@ -166,8 +177,6 @@ class DirectoryController < ApplicationController
       end
     end
   end
-
-
 
   private
 

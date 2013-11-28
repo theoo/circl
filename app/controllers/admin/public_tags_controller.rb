@@ -27,6 +27,7 @@ class Admin::PublicTagsController < ApplicationController
   def index
     respond_to do |format|
       format.json { render :json => @public_tags }
+      format.js { render :json => @public_tags, :callback => params[:callback] }
     end
   end
 
