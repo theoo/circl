@@ -24,7 +24,7 @@
         %input{ :type => 'search',
                 :id => 'person_affair_product_program_search',
                 :name => 'program',
-                :class => 'form-control required',
+                :class => 'form-control',
                 :value => @product.program_key,
                 :action => '/settings/product_programs/search'}
         %input{:type => 'hidden',
