@@ -52,9 +52,12 @@ class AdminController < ApplicationController
 
     people = Person.parse_people(session[:people_file_data])[:people]
 
+    # TODO Import without ES indexation and reindex people after transaction
     Person.transaction do
       people.each do |p|
-        p.save!
+        unless p.save
+          raise ArgumentError, p.errors.inspect
+        end
       end
     end
 

@@ -84,7 +84,7 @@ class Location < ActiveRecord::Base
   end
 
   def country
-    is_country? ? self : parent.country
+    is_country? ? self : parent.try(:country)
   end
 
   def is_country?

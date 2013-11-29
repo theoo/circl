@@ -33,11 +33,17 @@ en:
       second_email_should_be_different: second email should be different
       the_required_information_about_this_employee_are_not_satisfied: the required information about this employee are not satisfied
     import:
-      cannot_parse: cannot parse
+      cannot_parse: Cannot parse the file.
       invalid_#{name}: ! 'invalid #{name}'
-      invalid_line: invalid line
-      invalid_location: invalid location
-      invalid_translation_aptitude: invalid translation aptitude
+      invalid_communication_language: Invalid communication language "%{communication_language}"
+      invalid_job: Invalid job "%{job}"
+      invalid_line: Invalid line
+      invalid_location: Invalid location "%{location}"
+      invalid_main_communication_language: Invalid main communication language "%{main_communication_language}"
+      invalid_private_tag: Invalid private tag "%{private_tag}"
+      invalid_public_tag: Invalid public tag "%{public_tag}"
+      invalid_role: Invalid role "%{role}"
+      invalid_translation_aptitude: Invalid translation aptitude "%{translation_aptitude}"
       line: line
     mail:
       background_task_error_report: background task error report

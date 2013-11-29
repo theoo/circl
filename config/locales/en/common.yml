@@ -32,6 +32,7 @@ en:
       date_must_match_format: date must match format
       does_not_point_to_valid_model: does not point to valid model
       end_must_be_after_start: end must be after start
+      error: error
       failed_to_destroy: failed to destroy
       failed_to_retrieve_data: failed to retrieve data
       failed_to_update: failed to update
@@ -43,7 +44,7 @@ en:
       please_verify_rights_and_record: please verify rights and record
     export: export
     export_to: export to
-    false: false
+    "false": false
     file: file
     from: from
     good: good
@@ -89,7 +90,7 @@ en:
     toolbox_template: toolbox template
     tools: tools
     total: total
-    true: true
+    "true": true
     unpaid: unpaid
     update: update
     updated_at: update at

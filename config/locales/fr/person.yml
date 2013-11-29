@@ -35,8 +35,14 @@ fr:
     import:
       cannot_parse: Impossible d'analyser le fichier.
       invalid_#{name}: ! '#{name} est un nom invalide'
+      invalid_communication_language: Langue de communication invalide "%{communication_language}"
+      invalid_job: Métier invalide "%{job}"
       invalid_line: Ligne non valide
       invalid_location: Localité invalide "%{location}"
+      invalid_main_communication_language: Langue principale de communication invalide "%{main_communication_language}"
+      invalid_private_tag: Tag privé invalide "%{private_tag}"
+      invalid_public_tag: Tag public invalide "%{public_tag}"
+      invalid_role: Rôle invalide "%{role}"
       invalid_translation_aptitude: Aptitude de traduction invalide "%{translation_aptitude}"
       line: ligne
     mail:

@@ -32,6 +32,7 @@ fr:
       date_must_match_format: la date doit correspondre au format JJ-MM-AAAA
       does_not_point_to_valid_model: Ne pointe pas vers un modèle valable.
       end_must_be_after_start: La date de fin doit être après la date de début.
+      error: erreur
       failed_to_destroy: Echec lors de la destruction.
       failed_to_retrieve_data: Impossible de récupérer les données.
       failed_to_update: échec lors de la mise à jour.
@@ -43,7 +44,7 @@ fr:
       please_verify_rights_and_record: Veuillez vérifier que vous êtes autorisé à effectuer cette action, et assurez vous que cette action est valable pour cet enregistrement.
     export: exporter
     export_to: exporter vers
-    false: faux
+    "false": faux
     file: fichier
     from: de
     good: bon
@@ -89,7 +90,7 @@ fr:
     toolbox_template: modèle
     tools: outils
     total: total
-    true: vrai
+    "true": vrai
     unpaid: à payé
     update: mettre à jour
     updated_at: mise à jour

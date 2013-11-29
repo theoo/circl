@@ -608,7 +608,7 @@ class Person < ActiveRecord::Base
       else
         arr << location.name
       end
-      arr << location.country.name unless location.is_country?
+      arr << location.country.try(:name) unless location.is_country?
     end
     arr
   end

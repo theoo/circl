@@ -53,14 +53,23 @@ class PeopleController < ApplicationController
     @map[:title] += "</b>, "
     @map[:title] += @person.full_address_inline
 
+    popup = "<b>"
+    popup += @person.name
+    popup += "</b><br />"
+    popup += @person.full_address.split("\n").join("<br />")
+
     if @person.latitude and @person.longitude
-      popup = "<b>"
-      popup += @person.name
-      popup += "</b><br />"
-      popup += @person.full_address.split("\n").join("<br />")
       @map[:markers] = [{:latlng => [@person.latitude, @person.longitude], :popup => popup}]
-      @map[:config] = Rails.configuration.settings["maps"]
+    else
+      @placeholder = Person.find ApplicationSetting.value("me")
+      if @placeholder.latitude
+        latlng = [@placeholder.latitude, @placeholder.longitude]
+      else
+        latlng = [46.1995684109777, 6.13489329814911]
+      end
+      @map[:markers] = [{:latlng => latlng, :popup => popup}]
     end
+    @map[:config] = Rails.configuration.settings["maps"]
 
     respond_to do |format|
       format.html { render :layout => 'minimal' }

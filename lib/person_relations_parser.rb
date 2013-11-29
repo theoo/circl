@@ -22,9 +22,31 @@ class PersonRelationsParser
   end
 
   def parse_location(postal_code_prefix, name)
-    return if postal_code_prefix.blank? || name.blank?
-    @person.location = Location.find_by_postal_code_prefix_and_name(postal_code_prefix, name)
-    @person.errors.add(:location, I18n.t('person.import.invalid_location', :location => "#{postal_code_prefix}, #{name}")) if @person.location.nil?
+    if postal_code_prefix
+      if postal_code_prefix.to_s.match(/^([a-zA-Z]+)/)
+        @person.errors.add(:location, I18n.t('person.import.invalid_location', :location => "#{postal_code_prefix}, #{name}"))
+      end
+      postal_code_prefix = parse_postal_code_prefix(postal_code_prefix.to_s)
+    end
+
+    l = Location.where(:postal_code_prefix => postal_code_prefix)
+    if l.size == 1
+      @person.location = l.first
+    elsif name
+      if l.size > 1
+        regex = name.gsub(/\s/, ".+")
+        l = Location.where("postal_code_prefix = '#{postal_code_prefix}' AND name #{SQL_REGEX_KEYWORD} ?", regex).first
+        @person.location = l
+      else
+        l = Location.where(:name => loc).first
+        @person.location = l
+      end
+    end
+  end
+
+  def parse_postal_code_prefix(string)
+    ary = string.match(/^*\-?\s?+([0-9]+)\s?+$/)
+    ary ? ary[1].strip : nil
   end
 
   def parse_job(job)
@@ -77,9 +99,9 @@ class PersonRelationsParser
     name = name.to_s
     items.split(/\s*,\s*/).each do |item|
       begin
-        @person.send(name.pluralize) << model.find_by_name!(item)
+        @person.send(name.pluralize) << model.find_by_name!(item.strip)
       rescue
-        @person.errors.add(name.pluralize, I18n.t("person.import.invalid_#{name}", name.to_sym => item))
+        @person.errors.add(name.pluralize, I18n.t("person.import.invalid_#{name}", name.to_sym => item.strip))
       end
     end
   end
