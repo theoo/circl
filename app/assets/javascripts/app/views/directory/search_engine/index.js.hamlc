@@ -35,8 +35,9 @@
             .icon-file-text
             = I18n.t('common.csv')
 
-    %a{ :href => '#',
-        :name => 'directory-map',
-        :class => 'btn btn-default'}
-      .icon-map-marker
-      = I18n.t('directory.views.show_on_a_map')
+    - if @query?.search_string and @results_count < 1000
+      %a{ :href => '#',
+          :name => 'directory-map',
+          :class => 'btn btn-default'}
+        .icon-map-marker
+        = I18n.t('directory.views.show_on_a_map')
