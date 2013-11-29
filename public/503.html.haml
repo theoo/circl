@@ -1,10 +1,9 @@
-#content_wrapper{:style => 'margin-left: 0;'}
-  #content{:style => 'background-image: url("/assets/503.jpg");', :class => 'error'}
-    .error_page
-      %h1 Oooops!
-      %br
-      %h1= I18n.t('permission.errors.service_unavailable')
-      = I18n.t('permission.errors.service_unavailable_explanation')
-      %br
-      %br
-      != I18n.t('common.errors.if_you_think_it_s_a_bug')
+.container
+  .error_page{:style => 'background-image: url("/assets/503.jpg");', :class => 'error'}
+    %h1 Oooops!
+    %br
+    %h1= I18n.t('permission.errors.service_unavailable')
+    = I18n.t('permission.errors.service_unavailable_explanation')
+    %br
+    %br
+    != I18n.t('common.errors.if_you_think_it_s_a_bug')
