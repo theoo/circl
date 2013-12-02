@@ -182,7 +182,6 @@ class App.UploadSalaryTaxes extends App.ExtendedController
   send: (e) ->
     e.preventDefault()
 
-
     # jquery.iframe-transport (and this technique) doesn't allows
     # me to trigger error or success event. No matter which status
     # is sent back, the plugin trig the success event.

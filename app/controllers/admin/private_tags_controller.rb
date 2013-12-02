@@ -104,9 +104,16 @@ class Admin::PrivateTagsController < ApplicationController
           redirect_to admin_path(:anchor => 'tags')
         }
       else
-        new_people_array = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order]).map(&:id)
+        new_people_array = ElasticSearch.search(
+            query[:search_string],
+            query[:selected_attributes],
+            query[:attributes_order])
+          .map(&:id)
+
         current_people_array = @private_tag.people.map(&:id)
+
         @private_tag.people = Person.where(:id => [current_people_array, new_people_array].flatten.uniq)
+
         format.json { render :json => {} }
         format.html do
           # TODO improve report

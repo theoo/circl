@@ -26,6 +26,6 @@
           %button{ :type => 'submit',
                   :class => 'btn btn-primary' }
             .icon-cloud-upload
-            = I18n.t('admin.views.upload')
+            = I18n.t('common.upload')
 
       .col-lg-2

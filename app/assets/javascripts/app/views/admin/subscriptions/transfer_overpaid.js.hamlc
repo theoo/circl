@@ -34,5 +34,5 @@
     %button{:type => 'submit',
             :name => 'export',
             :class => 'btn btn-primary'}
-      .icon-cloud-upload
       = I18n.t('common.next')
+      .icon-chevron-right

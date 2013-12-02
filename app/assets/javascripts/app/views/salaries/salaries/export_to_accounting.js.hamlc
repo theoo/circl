@@ -87,8 +87,8 @@
     %button{:type => 'submit',
             :name => 'export',
             :class => 'btn btn-primary'}
-      .icon-cloud-upload
-      = I18n.t('common.export')
+      .icon-cloud-download
+      = I18n.t('common.download')
 
 
 

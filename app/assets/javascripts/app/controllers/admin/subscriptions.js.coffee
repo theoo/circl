@@ -409,7 +409,7 @@ class TransferOverpaidValue extends App.ExtendedController
       @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      $(@el).modal('hide')
+      @el.closest('.modal').modal('hide')
       Subscription.fetch()
 
     Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
@@ -439,7 +439,7 @@ class Merge extends App.ExtendedController
       @renderErrors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
-      $(@el).modal('hide')
+      @el.closest('.modal').modal('hide')
       Subscription.fetch()
 
     Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
@@ -451,7 +451,7 @@ class TagTool extends App.ExtendedController
   constructor: (params) ->
     super
 
-  activate: ->
+  activate: (params)->
     @render()
 
   render: =>
@@ -473,7 +473,7 @@ class TagTool extends App.ExtendedController
     ajax_success = (data, textStatus, jqXHR) =>
       @enable_panel()
       App.PrivateTag.fetch({id: attr.private_tag_id})
-      $(@el).modal('hide')
+      @el.closest('.modal').modal('hide')
 
     Subscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
     @disable_panel()
