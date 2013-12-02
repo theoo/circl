@@ -24,11 +24,3 @@ class App.Job extends Spine.Model
 
   constructor: ->
     super
-
-  validate: ->
-    e = new App.ErrorsList
-
-#    unless @name
-#      e.add name: I18n.t("activerecord.errors.messages.blank")
-
-    return e unless e.is_empty()

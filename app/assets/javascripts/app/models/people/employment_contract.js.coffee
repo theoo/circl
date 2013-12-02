@@ -22,24 +22,3 @@ class App.PersonEmploymentContract extends Spine.Model
 
   constructor: ->
     super
-
-  validate: ->
-    e = new App.ErrorsList
-
-    # TODO: Check it's a valid date.
-#    unless @interval_starts_on
-#      e.add interval_starts_on: I18n.t("activerecord.errors.messages.blank")
-
-#    unless @interval_ends_on
-#      e.add interval_ends_on: I18n.t("activerecord.errors.messages.blank")
-
-#    unless @percentage
-#      e.add percentage: I18n.t("activerecord.errors.messages.blank")
-
-#    unless _.isNumber(parseInt(@percentage))
-#      e.add percentage: I18n.t("activerecord.errors.messages.not_a_number")
-
-#    unless @description
-#      e.add description: I18n.t("activerecord.errors.messages.blank")
-
-    return e unless e.is_empty()

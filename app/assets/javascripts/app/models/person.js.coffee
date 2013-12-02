@@ -31,10 +31,3 @@ class App.Person extends Spine.Model
   constructor: ->
     @is_an_organization = @hidden = false
     super
-
-  validate: ->
-    e = new App.ErrorsList
-
-    # TODO: Spine validation
-
-    return e unless e.is_empty()

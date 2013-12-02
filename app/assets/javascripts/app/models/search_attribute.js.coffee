@@ -46,25 +46,3 @@ class App.SearchAttribute extends Spine.Model
   @groups: ->
     _.uniq(@all().map((sa) -> sa.group))
 
-  validate: ->
-    e = new App.ErrorsList
-
-#    unless @model
-#      e.add model: I18n.t('activerecord.errors.messages.blank')
-
-#    unless @name
-#      e.add name: I18n.t('activerecord.errors.messages.blank')
-
-#    unless @indexing
-#      e.add indexing: I18n.t('activerecord.errors.messages.blank')
-
-#    unless @mapping
-#      e.add mapping: I18n.t('activerecord.errors.messages.blank')
-
-#    if typeof(@mapping) == 'string'
-#      try
-#        @mapping = JSON.parse(@mapping)
-#      catch error
-#        e.add mapping: I18n.t('search_attribute.errors.not_json')
-
-    return e unless e.is_empty()

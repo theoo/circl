@@ -27,10 +27,6 @@ class App.SalaryTax extends Spine.Model
   constructor: ->
     super
 
-  validate: ->
-    e = new App.ErrorsList
-    return e unless e.is_empty()
-
   @fetch_count: ->
     get_callback = (data) =>
       @_count = data

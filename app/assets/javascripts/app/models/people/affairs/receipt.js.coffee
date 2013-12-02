@@ -25,20 +25,3 @@ class App.PersonAffairReceipt extends Spine.Model
 
   constructor: ->
     super
-
-  validate: ->
-    errors = new App.ErrorsList
-
-#    if @invoice_id.length == 0
-#      errors.add ['invoice', I18n.t("activerecord.errors.messages.blank")].to_property()
-
-#    if @value.length == 0
-#      errors.add ['value', I18n.t("activerecord.errors.messages.blank")].to_property()
-
-#    if @value_date.length == 0
-#      errors.add ['value_date', I18n.t("activerecord.errors.messages.blank")].to_property()
-#    else
-#      unless Ui.validate_date_format(@value_date)
-#        errors.add ['value_date', I18n.t('common.errors.date_must_match_format')].to_property()
-
-    return errors unless errors.is_empty()

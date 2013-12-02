@@ -28,20 +28,3 @@ class App.Receipt extends Spine.Model
 
   constructor: ->
     super
-
-  validate: (e) ->
-    # e = new App.ErrorsList
-
-    # unless @owner_id
-    #   e.add owner: I18n.t("receipt.errors.owner_required")
-
-    # if ! @subscription_id and ! @affair_id
-    #   e.add subscription: I18n.t("activerecord.errors.messages.blank")
-
-    # unless @value_date
-    #   e.add value_date: I18n.t("activerecord.errors.messages.blank")
-
-    # unless @value
-    #   e.add value: I18n.t("activerecord.errors.messages.blank")
-
-    #  return e unless e.is_empty()

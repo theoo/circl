@@ -31,14 +31,3 @@ class App.QueryPreset extends Spine.Model
 
   to_params: ->
     "query=#{encodeURIComponent(JSON.stringify(@query))}"
-
-  validate: ->
-    e = new App.ErrorsList
-
-#    unless @name
-#      e.add title: I18n.t("activerecord.errors.messages.blank")
-
-#    unless @query
-#      e.add query: I18n.t("activerecord.errors.messages.blank")
-
-    return e unless e.is_empty()

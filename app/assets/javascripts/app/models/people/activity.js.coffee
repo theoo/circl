@@ -22,8 +22,3 @@ class App.PersonActivity extends Spine.Model
 
   constructor: ->
     super
-
-  validate: ->
-    e = new App.ErrorsList
-
-    return e unless e.is_empty()

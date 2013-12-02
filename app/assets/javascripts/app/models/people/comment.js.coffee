@@ -23,20 +23,3 @@ class App.PersonComment extends Spine.Model
 
   constructor: ->
     super
-
-  validate: ->
-    e = new App.ErrorsList
-
-#    unless @title
-#      e.add title: I18n.t("activerecord.errors.messages.blank")
-
-#    unless @resource_id
-#      e.add resource_id: I18n.t("activerecord.errors.messages.blank")
-
-#    unless @resource_type
-#      e.add resource_type: I18n.t("activerecord.errors.messages.blank")
-
-#    unless @description
-#      e.add description: I18n.t("activerecord.errors.messages.blank")
-
-    return e unless e.is_empty()
