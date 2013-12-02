@@ -91,7 +91,7 @@ class Admin::BankImportHistoriesController < ApplicationController
     else
 
       flash[:error] = I18n.t('receipt.errors.no_receipts_selected')
-      redirect_to admin_path
+      redirect_to admin_path(:anchor => 'finances')
 
     end
 
