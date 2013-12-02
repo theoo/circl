@@ -226,8 +226,16 @@ class App.ExtendedController extends Spine.Controller
     date_str.match(/^[0-3][0-9]-[0-1][0-9]-[0-9]{1,4}$/)
 
   validate_interval: (from_str, to_str) =>
-    from = Date.parse from_str
-    to   = Date.parse to_str
+    # TODO l10n
+
+    localize = (date_str) ->
+      a = date_str.match(/^([0-3][0-9])-([0-1][0-9])-([0-9]{1,4})$/)
+      a.shift()
+      a.reverse().join("-")
+
+    from = Date.parse localize(from_str)
+    to = Date.parse localize(to_str)
+
     from < to
 
   # UI
