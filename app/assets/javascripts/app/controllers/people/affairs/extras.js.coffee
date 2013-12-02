@@ -64,6 +64,7 @@ class Edit extends App.ExtendedController
   render: =>
     return unless PersonAffairExtra.exists(@id) && @can
     @extra = PersonAffairExtra.find(@id)
+    console.log @extra
 
     @html @view('people/affairs/extras/form')(@)
     @show()

@@ -79,8 +79,17 @@ class Admin::PrivateTagsController < ApplicationController
       result = @private_tags.where("private_tags.name #{SQL_REGEX_KEYWORD} ?", param)
     end
 
+    h = result.map do |t|
+      if t.parent
+        name = t.parent.name + " / " + t.name
+      else
+        name = t.name
+      end
+      {:id => t.id, :label => t.name, :desc => name}
+    end
+
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:id => t.id, :label => t.name}}}
+      format.json { render :json => h }
     end
   end
 

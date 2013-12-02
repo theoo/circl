@@ -46,10 +46,10 @@
           %label{:for => 'person_affair_extra_quantity'}
             = I18n.t('common.quantity')
           %input{ :type => 'number',
-                  :step => 1,
+                  :step => 0.1,
                   :id => 'person_affair_extra_quantity',
                   :class => 'required form-control',
-                  :min => 1,
+                  :min => 0.1,
                   :name => 'quantity',
                   :value => @extra.quantity }
 
@@ -58,11 +58,10 @@
         .form-group
           %label{:for => 'person_affair_extra_position'}
             = I18n.t('common.position')
-          %input{ :type => 'number',
-                  :step => 1,
+          %input{ :type => 'text',
+                  :pattern => '\d*',
                   :id => 'person_affair_extra_position',
-                  :class => 'form-control',
-                  :min => 1,
+                  :class => 'form-control number',
                   :name => 'position',
                   :value => @extra.position }
 

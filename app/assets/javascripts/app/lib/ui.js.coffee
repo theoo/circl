@@ -380,6 +380,7 @@ class Ui
 
       select_callback = (event, ui) ->
         hidden_field.attr('value', ui.item.id)
+        text_field.attr('value', ui.item.title) if ui.item.title
 
       keydown_callback = (event) ->
         if $(@).data('autocomplete')
@@ -406,7 +407,7 @@ class Ui
                   if item.title
                     content.append(" <i>#{item.title}</i>")
 
-                  if item.desc
+                  if item.desc and item.desc != item.label
                     content.append("<br/>#{item.desc}")
 
                   $("<li>").append(content).appendTo(ul)

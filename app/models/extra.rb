@@ -49,12 +49,12 @@ class Extra < ActiveRecord::Base
   validates :title, :presence => true
   validates :value, :presence => true,
                     :numericality => { :less_than_or_equal => 99999999.99, :greater_than => 0 }
-  validates :position, :uniqueness => true
+  validates :position, :uniqueness => { :scope => :affair_id }
   validates :quantity, :presence => true
 
   # Validate fields of type 'string' length
   validates_length_of :title, :maximum => 255
-  
+
   # Validate fields of type 'text' length
   validates_length_of :description, :maximum =>  65535
   ########################

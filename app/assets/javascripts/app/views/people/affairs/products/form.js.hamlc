@@ -59,12 +59,11 @@
         - # if @product.has_accessories
         %label{:for => 'person_affair_product_position'}
           = I18n.t('product.views.position')
-        %input{ :type => 'number',
-                :step => 1,
-                :min => 0,
+        %input{ :type => 'text',
+                :pattern => '\d*',
                 :id => 'person_affair_product_position',
                 :name => 'position',
-                :class => 'form-control',
+                :class => 'form-control number',
                 :value => @product.position }
 
     .row
