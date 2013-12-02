@@ -230,7 +230,7 @@ class App.ExportToOcasSalaries extends App.ExtendedController
     errors = new App.ErrorsList
 
     form = $(e.target)
-    year = form.find('#salaries_export_ocas_year').val()
+    year = form.find('#export_ocas_year').val()
 
     if year.length == 0
       errors.add ['year', I18n.t("activerecord.errors.messages.blank")].to_property()
@@ -275,7 +275,7 @@ class App.ExportToELohnausweisSSKSalaries extends App.ExtendedController
     errors = new App.ErrorsList
 
     form = $(e.target)
-    year = form.find('#salaries_export_certificates_year').val()
+    year = form.find('#export_certificates_year').val()
 
     if year.length == 0
       errors.add ['year', I18n.t("activerecord.errors.messages.blank")].to_property()

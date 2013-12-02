@@ -2,7 +2,7 @@
   %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
-    = I18n.t('salary.export')
+    = I18n.t('common.export')
 
 %form{ :method =>'get', :action => '/salaries/salaries/export_accounting' }
   .modal-body
