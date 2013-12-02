@@ -28,7 +28,6 @@ class People::TasksController < ApplicationController
 
   def index
     authorize! :index, ::Task
-
     @tasks = @person.executed_tasks
 
     respond_to do |format|
@@ -42,7 +41,6 @@ class People::TasksController < ApplicationController
 
   def create
     authorize! :create, ::Task
-
     @task = ::Task.new(params[:task])
     @task.executer_id = current_person.id
     @task.value = params[:value] if params[:value]
@@ -58,6 +56,7 @@ class People::TasksController < ApplicationController
 
   def edit
     authorize! :read, ::Task
+    @task = ::Task.find(params[:id])
 
     respond_to do |format|
       format.json { render :json => @task }
@@ -80,6 +79,7 @@ class People::TasksController < ApplicationController
 
   def destroy
     authorize! :destroy, ::Task
+    @task = ::Task.find(params[:id])
 
     respond_to do |format|
       if @task.destroy
