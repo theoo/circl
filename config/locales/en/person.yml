@@ -4,6 +4,7 @@ en:
     dashboard:
       help: help
       panels:
+        background_tasks: Background tasks
         current_affairs: current affairs
         last_comments: last comments
         last_people_added: last people added

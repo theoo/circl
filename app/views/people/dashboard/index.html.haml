@@ -39,11 +39,18 @@
   .row
     .col-lg-6.col-md-6
       -# if can? :read, @person => Person # messages
+      -# TODO
       - if false
         #dashboard_messages.panel.panel-primary
           .panel-heading
             .panel-title
               = I18n.t('person.dashboard.panels.messages')
+
+      - if can? :read, BackgroundTask
+        #dashboard_background_tasks.panel.panel-default
+          .panel-heading
+            .panel-title
+              = I18n.t('person.dashboard.panels.background_tasks')
 
       - if can? :read, @person => Comment
         #dashboard_comments.panel.panel-default

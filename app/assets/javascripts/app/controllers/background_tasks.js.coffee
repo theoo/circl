@@ -21,89 +21,44 @@ $.fn.background_task = ->
   elementID ||= $(@).parents('[data-id]').data('id')
   BackgroundTask.find(elementID)
 
-class Counter extends App.ExtendedController
-  events:
-    'click a': 'list'
-
-  constructor: (params) ->
-    super
-    BackgroundTask.bind('refresh', @check_for_update)
-    setInterval(@fetch_records, App.BackgroundTaskRefreshInterval);
-
-  fetch_records: ->
-    get_callback = (data) =>
-      @records = data
-
-    $.get(BackgroundTask.url(), get_callback, 'json')
-
-    if @records
-      BackgroundTask.refresh(@records, clear: true)
-
-  check_for_update: =>
-    previous_count = @el.find('a').data('count')
-    count = BackgroundTask.all().length
-
-    if previous_count != count
-      @render()
-      BackgroundTask.trigger('refresh-list')
-
-  render: =>
-    count = BackgroundTask.all().length
-    title = count + " " + I18n.t("background_task.views.tasks_pending")
-    button = $("<a href='#' class='button' data-count='#{count}'>&nbsp;#{title}&nbsp;</a>")
-    @el.html(button)
-
-    if count == 0
-      button.button( "option", "disabled", true );
-    else
-      button.button( "option", "disabled", false );
-
-    # button.effect('highlight', {color: "#E2E4FF"})
-    Ui.load_ui(@el)
-
-  list: (e) ->
-    e.preventDefault()
-    @trigger 'dialog'
-
-
-class App.BackgroundTasks extends Spine.Controller
-  className: 'background_tasks'
-
-  constructor: (params) ->
-    super
-
-    @counter = new Counter
-
-    window = Ui.stack_window('background_tasks_list', {width: 800})
-    @index = new Index({el: window})
-    # @index_window = $(window).modal({title: I18n.t('background_task.views.background_tasks_list_title')})
-    @index_window = $(window).modal('hide')
-
-    @append(@counter)
-    BackgroundTask.fetch()
-
-    @counter.bind 'dialog', =>
-      @index_window.modal('show')
-      @index.activate({})
-
-    App.Permissions.get { person_id: params.person_id, can: { background_task: ['read', 'manage'] }}, (data) => @index.activate(can: data)
-
-
 class Index extends App.ExtendedController
   events:
-    'background-task-destroy':      'destroy'
+    'click button[name=background-task-destroy]': 'destroy'
 
   constructor: (params) ->
     super
-    BackgroundTask.bind('refresh-list', @render)
+    BackgroundTask.bind('refresh', @render)
 
   render: =>
     @html @view('background_tasks/index')(@)
 
   destroy: (e) ->
+    e.preventDefault()
     background_task = $(e.target).background_task()
     if confirm(I18n.t("common.are_you_sure"))
       @destroy_with_notifications(background_task)
 
   activate: (params) ->
     @can = params.can if params.can
+
+class App.DashboardBackgroundTasks extends Spine.Controller
+  className: 'background_tasks'
+
+  constructor: (params) ->
+    super
+
+    @person_id = params.person_id
+
+    @index = new Index()
+    @append @index
+
+  activate: (params) ->
+    BackgroundTask.fetch()
+
+    App.Permissions.get {
+      person_id: @person_id,
+      can: {
+        background_task: ['read', 'manage']
+      }
+      }, (data) => @index.activate(can: data)
+

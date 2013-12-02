@@ -4,6 +4,7 @@ fr:
     dashboard:
       help: documentation
       panels:
+        background_tasks: Tâches d'arrière plan
         current_affairs: Affaires en cours
         last_comments: Derniers commentaires
         last_people_added: Dernières personnes ajoutées
