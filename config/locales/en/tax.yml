@@ -8,7 +8,7 @@ en:
       available_years: available years
       employee_account: employee account
       employer_account: employer account
-      example_files_explanation: example files explanation
+      example_files_explanation: More info can be obtain one the <a href='http://tracker.circl.ch/projects/circl/wiki/Panel_salaries_taxes'>CIRCL documentation wiki</a>
       example_files_title: example files title
       exporter_group: exporter group
       generic_tax_example_file_desc: generic tax example file desc

@@ -8,7 +8,7 @@ fr:
       available_years: années disponible
       employee_account: compte retenues employé
       employer_account: compte retenues employeur
-      example_files_explanation: Ci-dessous peuvent être téléchargés trois fichiers d'exemple pour mettre à jour les retenues. D'avantage d'information peut être obtenue sur <a href='http://tracker.circl.ch/projects/circl/wiki/D%C3%A9ductions'>la documentation de CIRCL</a>.
+      example_files_explanation: Ci-dessous peuvent être téléchargés trois fichiers d'exemple pour mettre à jour les retenues. D'avantage d'information peut être obtenue sur <a href='http://tracker.circl.ch/projects/circl/wiki/Panel_salaries_taxes'>la documentation de CIRCL</a>.
       example_files_title: Fichieris d'exemple
       exporter_group: groupe de retenue des certificats
       generic_tax_example_file_desc: Fichier d'exemple pour une retenue générique
