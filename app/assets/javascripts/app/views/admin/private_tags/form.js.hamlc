@@ -20,7 +20,7 @@
             = I18n.t('common.parent')
           %input{ :type => 'search',
                   :id => 'admin_private_tag_parent_id',
-                  :name => 'tag_parent_id',
+                  :name => 'parent',
                   :class => 'form-control',
                   :value => @tag.parent_name,
                   :action => '/admin/private_tags/search' }

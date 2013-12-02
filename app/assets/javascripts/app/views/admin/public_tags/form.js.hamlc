@@ -16,11 +16,11 @@
                   :value => @tag.name }
       .col-lg-6
         .form-group.autocompleted
-          %label{:for => 'tag_parent_id'}
+          %label{:for => 'admin_public_tag_parent_id'}
             = I18n.t('common.parent')
           %input{ :type => 'search',
                   :id => 'admin_public_tag_parent_id',
-                  :name => 'tag_parent_id',
+                  :name => 'parent',
                   :class => 'form-control',
                   :value => @tag.parent_name,
                   :action => '/admin/public_tags/search' }
