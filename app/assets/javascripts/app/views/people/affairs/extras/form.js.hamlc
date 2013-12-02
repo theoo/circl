@@ -12,7 +12,7 @@
           %input{ :type => 'text',
                   :name => 'title',
                   :id => 'person_affair_extra_title',
-                  :value => @extra.name,
+                  :value => @extra.title,
                   :class => 'form-control required' }
       .col-lg-12
         .form-group
