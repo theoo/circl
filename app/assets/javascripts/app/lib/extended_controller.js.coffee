@@ -222,8 +222,13 @@ class App.ExtendedController extends Spine.Controller
     decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null,""])[1].replace(/\+/g, '%20')) || null
 
   # validations
-  validate_date_format: (date) =>
-    Ui.validate_date_format(date)
+  validate_date_format: (date_str) =>
+    date_str.match(/^[0-3][0-9]-[0-1][0-9]-[0-9]{1,4}$/)
+
+  validate_interval: (from_str, to_str) =>
+    from = Date.parse from_str
+    to   = Date.parse to_str
+    from < to
 
   # UI
   activate_in_list: (target) ->

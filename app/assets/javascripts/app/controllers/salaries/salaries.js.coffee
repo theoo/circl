@@ -154,7 +154,13 @@ class App.ExportSalaries extends App.ExtendedController
       unless @validate_date_format(to)
         errors.add ['to', I18n.t('common.errors.date_must_match_format')].to_property()
 
-    unless errors.is_empty()
+    if from.length > 0 and to.length > 0
+      if ! @validate_interval(from, to)
+        errors.add ['from', I18n.t('common.errors.from_should_be_before_to')].to_property()
+
+    if errors.is_empty()
+      @render_success()
+    else
       e.preventDefault()
       @render_errors(errors.errors)
 
@@ -196,7 +202,13 @@ class App.ExportToAccountingSalaries extends App.ExtendedController
       unless @validate_date_format(to)
         errors.add ['to', I18n.t('common.errors.date_must_match_format')].to_property()
 
-    unless errors.is_empty()
+    if from.length > 0 and to.length > 0
+      if ! @validate_interval(from, to)
+        errors.add ['from', I18n.t('common.errors.from_should_be_before_to')].to_property()
+
+    if errors.is_empty()
+      @render_success()
+    else
       e.preventDefault()
       @render_errors(errors.errors)
 
@@ -223,7 +235,9 @@ class App.ExportToOcasSalaries extends App.ExtendedController
     if year.length == 0
       errors.add ['year', I18n.t("activerecord.errors.messages.blank")].to_property()
 
-    unless errors.is_empty()
+    if errors.is_empty()
+      @render_success()
+    else
       e.preventDefault()
       @render_errors(errors.errors)
 
@@ -266,7 +280,9 @@ class App.ExportToELohnausweisSSKSalaries extends App.ExtendedController
     if year.length == 0
       errors.add ['year', I18n.t("activerecord.errors.messages.blank")].to_property()
 
-    unless errors.is_empty()
+    if errors.is_empty()
+      @render_success()
+    else
       e.preventDefault()
       @render_errors(errors.errors)
 

@@ -88,7 +88,7 @@ class ReceiptsDatatable
   end
 
   def sort_column
-    columns = %w{id owner_name affair_title invoices.value value value_date created_at}
+    columns = %w{id owner_name affair_title invoices.value_in_cents value_in_cents value_date created_at}
     columns[params[:iSortCol_0].to_i]
   end
 

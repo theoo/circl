@@ -4,7 +4,7 @@
       %th= I18n.t('common.id')
       %th= I18n.t('receipt.views.owner_name')
       %th= I18n.t('receipt.views.affair_title')
-      %th= I18n.t('receipt.views.invoice_value')
+      %th.number= I18n.t('receipt.views.invoice_value')
       %th.number= I18n.t('common.value')
       %th= I18n.t('receipt.views.value_date')
       %th.desc= I18n.t('common.created_at')

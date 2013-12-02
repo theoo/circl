@@ -525,9 +525,6 @@ class Ui
 
     return(win)
 
-  validate_date_format: (date) ->
-    date.match(/^[0-3][0-9]-[0-1][0-9]-[0-9]{1,4}$/)
-
 #--- wysiwyg ---
   load_wysiwyg: (context) ->
     return if context.find('textarea.wysiwyg').size() <= 0

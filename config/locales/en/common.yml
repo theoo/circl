@@ -36,6 +36,7 @@ en:
       failed_to_destroy: failed to destroy
       failed_to_retrieve_data: failed to retrieve data
       failed_to_update: failed to update
+      from_should_be_before_to: "'from' should be before 'to'"
       if_you_think_it_s_a_bug: if you think it s a bug
       invalid_date: invalid date
       invalid_phone: invalid phone

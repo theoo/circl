@@ -4,7 +4,7 @@
   %h4.modal-title
     = I18n.t('common.export')
 
-%form{ :method =>'get', :action => '/salaries/export' }
+%form{ :method =>'get', :action => '/salaries/salaries/export' }
   .modal-body
     .row
       .col-lg-12

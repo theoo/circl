@@ -216,13 +216,19 @@ class App.ExportReceipts extends App.ExtendedController
       unless @validate_date_format(to)
         errors.add ['to', I18n.t('common.errors.date_must_match_format')].to_property()
 
+    if from.length > 0 and to.length > 0
+      if ! @validate_interval(from, to)
+        errors.add ['from', I18n.t('common.errors.from_should_be_before_to')].to_property()
+
     if account.length == 0
       errors.add ['account', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     if counterpart.length == 0
       errors.add ['counterpart_account', I18n.t("activerecord.errors.messages.blank")].to_property()
 
-    unless errors.is_empty()
+    if errors.is_empty()
+      @render_success()
+    else
       e.preventDefault()
       @render_errors(errors.errors)
 
