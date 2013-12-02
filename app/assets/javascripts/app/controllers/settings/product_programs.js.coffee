@@ -64,6 +64,7 @@ class Edit extends App.ExtendedController
     @save_with_notifications @product_program, @hide
 
   destroy: (e) ->
+    e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
       @destroy_with_notifications @product_program, @hide
 
@@ -80,6 +81,7 @@ class Index extends App.ExtendedController
     @html @view('settings/product_programs/index')(@)
 
   edit: (e) ->
+    e.preventDefault()
     @id = $(e.target).product_program()
     @activate_in_list e.target
     @trigger 'edit', @id

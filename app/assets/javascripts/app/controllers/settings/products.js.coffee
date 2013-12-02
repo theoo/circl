@@ -125,6 +125,7 @@ class Edit extends VariantsController
     @save_with_notifications @product, @hide
 
   destroy: (e) ->
+    e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
       @destroy_with_notifications @product, @hide
 

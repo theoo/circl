@@ -37,6 +37,7 @@ class Index extends App.ExtendedController
     @save_with_notifications @person
 
   update_description: (e) =>
+    # e.preventDefault() -> Uncaught TypeError: Cannot call method 'preventDefault' of undefined 
     id = $("#person_affair_task_rate_id").val()
     task_rate = App.TaskRate.find(id)
     @el.find(".description").html task_rate.description

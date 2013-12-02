@@ -61,6 +61,7 @@ class Edit extends App.ExtendedController
     @save_with_notifications @location.fromForm(e.target), @hide
 
   destroy: (e) ->
+    e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
       @destroy_with_notifications @location, @hide
 

@@ -54,6 +54,7 @@ class AvailablePermissionsIndex extends App.ExtendedController
     RolePermission.url() == undefined
 
   add: (e) =>
+    e.preventDefault()
     available_permission = $(e.target).available_permission()
     attributes = available_permission.attributes()
     delete attributes.id
@@ -83,6 +84,7 @@ class SelectedPermissionsIndex extends App.ExtendedController
     RolePermission.url() == undefined
 
   edit: (e) ->
+    e.preventDefault()
     permission = $(e.target).selected_permission()
 
     RolePermission.one 'refresh', =>
@@ -91,6 +93,7 @@ class SelectedPermissionsIndex extends App.ExtendedController
     RolePermission.fetch(id: permission.id)
 
   destroy: (e) =>
+    e.preventDefault()
     permission = $(e.target).selected_permission()
     @destroy_with_notifications permission, =>
       App.Role.fetch(id: @role_id)

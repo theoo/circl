@@ -140,6 +140,7 @@ class Index extends App.ExtendedController
     @html @view('admin/receipts/index')(@)
 
   edit: (e) ->
+    e.preventDefault()
     id = $(e.target).closest('tr.item').attr('data-id')
 
     # Prevent default behavior (do not reload table)

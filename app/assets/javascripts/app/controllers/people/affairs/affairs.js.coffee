@@ -192,6 +192,7 @@ class Index extends App.ExtendedController
     @html @view('people/affairs/index')(@)
 
   edit: (e) ->
+    e.preventDefault()
     @affair = $(e.target).affair()
     @activate_in_list(e.target)
     @trigger 'edit', @affair.id

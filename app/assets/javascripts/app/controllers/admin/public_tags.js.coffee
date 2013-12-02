@@ -119,6 +119,7 @@ class Index extends App.ExtendedController
     @html @view('admin/public_tags/index')(@)
 
   edit: (e) ->
+    e.preventDefault()
     tag = $(e.target).public_tag()
     @activate_in_list(e.target)
     @trigger 'edit', tag.id

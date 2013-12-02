@@ -137,6 +137,7 @@ class Index extends App.ExtendedController
     PersonAffairReceipt.url() == undefined
 
   edit: (e) ->
+    e.preventDefault()
     receipt = $(e.target).receipt()
     @activate_in_list(e.target)
 

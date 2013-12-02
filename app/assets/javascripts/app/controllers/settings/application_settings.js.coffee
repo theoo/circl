@@ -58,6 +58,7 @@ class Index extends App.ExtendedController
     @html @view('settings/application_settings/index')(@)
 
   edit: (e) ->
+    e.preventDefault()
     @application_setting = $(e.target).application_setting()
     @activate_in_list(e.target)
     @trigger 'edit', @application_setting.id

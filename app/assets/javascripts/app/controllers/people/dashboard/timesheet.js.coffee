@@ -119,6 +119,7 @@ class Index extends App.ExtendedController
     @html @view('people/tasks/index')(@)
 
   edit: (e) ->
+    e.preventDefault()
     @task = $(e.target).task()
     @activate_in_list(e.target)
     @trigger 'edit', @task.id

@@ -78,6 +78,7 @@ class Edit extends App.ExtendedController
     window.open "#{InvoiceTemplate.url()}/#{@invoice_template.id}/edit.html", "invoice_template"
 
   destroy: (e) ->
+    e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
       @destroy_with_notifications @invoice_template, @hide
 
