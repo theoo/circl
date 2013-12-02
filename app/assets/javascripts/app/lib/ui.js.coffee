@@ -581,7 +581,7 @@ class Ui
 
   load_map: (container_string, save_callback = undefined) ->
     map_container = $("#" + container_string)
-    map_height = document.height - 210
+    map_height = $(document).height() - 210
     map_height = 300 if map_height < 300
 
     map_container.css(height: map_height)
