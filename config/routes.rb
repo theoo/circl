@@ -225,9 +225,6 @@ Directory::Application.routes.draw do
     resources :application_settings
 
     resources :invoice_templates do
-      member do
-        get 'bvr'
-      end
       collection do
         get 'placeholders', 'count'
       end

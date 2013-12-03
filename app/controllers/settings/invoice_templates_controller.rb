@@ -111,13 +111,4 @@ class Settings::InvoiceTemplatesController < ApplicationController
       format.json { render :json => {:count => InvoiceTemplate.count} }
     end
   end
-
-  def bvr
-    authorize! :manage, InvoiceTemplate
-    @invoice_template = InvoiceTemplate.find params[:id]
-    respond_to do |format|
-      format.html { render :layout => 'pdf'}
-    end
-  end
-
 end

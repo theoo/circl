@@ -160,7 +160,7 @@ class People::Affairs::InvoicesController < ApplicationController
     # Add bvr if requested
     if invoice.invoice_template.with_bvr
       @invoice_template = invoice.invoice_template
-      html << render_to_string(:action => "bvr")
+      html << render_to_string("bvr")
     end
 
     invoice.placeholders[:simples].each do |p, v|

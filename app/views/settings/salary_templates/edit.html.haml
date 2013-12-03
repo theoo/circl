@@ -1,45 +1,73 @@
-// = I18n.t("salary_template.views.display_placeholders")
 
-// - if @salary_template.placeholders
-//   #salary_template_placeholders_list
-//     %label
-//       = I18n.t('salary_template.views.placeholders')
-//     %dl.placeholders
-//       - @salary_template.placeholders["simples"].each do |p,v|
-//         %dt= "#" + p
-//         %dd= I18n.t('salary_template.views.' + p.downcase)
-
-//     %dl.placeholders
-//       - @salary_template.placeholders["iterators"].each do |p,v|
-//         %dt= "#" + p + "{}"
-//         %dd= I18n.t('salary_template.views.' + p.downcase)
-
-// small header
 %nav.navbar.navbar-default.navbar-static-top.navbar-inverse{:role => "navigation"}
   .row
-    .navbar-header.col-lg-1
+    .navbar-header.col-md-1
       %span{:class => 'navbar-brand', :style => 'padding: 0 0 0 15px'}
         = image_tag 'logo_mini_white.png'
 
-    .navbar-brand.col-lg-11
-      = I18n.t("salary_template.views.actions.edit_template") + ": "
-      %i= @salary_template.title
+    .navbar-brand.col-md-11
+      = I18n.t("template.views.actions.edit_template") + ": "
+      %i= @template.title
 
 .container
-  .row
-    .col-lg-12
-      %br
-      - flash_messages
-      - error_messages_for(@salary_template)
+  = form_for @template,
+    :as => 'template',
+    :url => settings_template_path(@template) do |f|
+    = f.hidden_field :id
+    .row
+      .col-md-3
+        %br
+      .col-md-6
+        %br
+        - flash_messages
+        - error_messages_for(@template)
+      .col-md-3
+        %br
 
-  .row
-    .col-lg-12
-      // Override settings_salary_template default params scope with salary_template
-      = form_for @salary_template,
-        :as => 'salary_template',
-        :url => settings_salary_template_path(@salary_template) do |f|
-        = f.hidden_field :id
+    .row
+      .col-lg-9
+        %label
+          = I18n.t("template.views.header")
+        %small.help-block= I18n.t("template.help.remove_content_if_you_dont_want_header")
+        = f.text_area :header, :rows => 5, :id => "header", :class => 'wysiwyg'
+        %br
+      .col-lg-3
+        %label= I18n.t("template.views.placeholders.placeholders")
+        .wk-placeholders
+          %dl
+            - Rails.configuration.settings["wk_placeholders"].each do |p|
+              %dt= "#" + p.upcase
+              %dd= I18n.t('template.views.placeholders.' + p)
 
-        = f.text_area :html, :rows => 25, :id => "wysiwyg", :class => 'wysiwyg'
+    .row
+      .col-lg-9
+        %label{:class => 'required'}
+          = I18n.t("template.views.body")
+        = f.text_area :html, :rows => 25, :id => "body", :class => 'wysiwyg'
+        %br
+      .col-lg-3
+        %label= I18n.t('template.views.placeholders.placeholders')
+        .pdf-placeholders
+          %dl
+            - @template.placeholders["simples"].each do |p,v|
+              %dt= "#" + p
+              %dd= I18n.t('template.views.placeholders.' + p.downcase)
+          %dl
+            - @template.placeholders["iterators"].each do |p,v|
+              %dt= "#" + p + "{}"
+              %dd= I18n.t('template.views.placeholders.' + p.downcase)
 
-      %br
+    .row
+      .col-lg-9
+        %label
+          = I18n.t("template.views.footer")
+        %small.help-block= I18n.t("template.help.remove_content_if_you_dont_want_footer")
+        = f.text_area :footer, :rows => 5, :id => "footer", :class => 'wysiwyg'
+        %br
+      .col-lg-3
+        %label= I18n.t("template.views.placeholders.placeholders")
+        .wk-placeholders
+          %dl
+            - Rails.configuration.settings["wk_placeholders"].each do |p|
+              %dt= "#" + p.upcase
+              %dd= I18n.t('template.views.placeholders.' + p)
