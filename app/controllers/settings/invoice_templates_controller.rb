@@ -61,7 +61,7 @@ class Settings::InvoiceTemplatesController < ApplicationController
   def edit
     respond_to do |format|
       format.json { render :json => @invoice_template }
-      format.html { render :layout => 'template_editorminimal' }
+      format.html { render :layout => 'minimal' }
     end
   end
 
@@ -109,6 +109,14 @@ class Settings::InvoiceTemplatesController < ApplicationController
   def count
     respond_to do |format|
       format.json { render :json => {:count => InvoiceTemplate.count} }
+    end
+  end
+
+  def bvr
+    authorize! :manage, InvoiceTemplate
+    @invoice_template = InvoiceTemplate.find params[:id]
+    respond_to do |format|
+      format.html { render :layout => 'pdf'}
     end
   end
 

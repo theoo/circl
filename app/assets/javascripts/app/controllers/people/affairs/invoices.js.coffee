@@ -158,7 +158,7 @@ class Edit extends App.ExtendedController
     win.find('.modal-footer').append btn
     btn.on 'click', (e) =>
       e.preventDefault()
-      window.open "#{PersonAffairInvoice.url()}/#{@invoice.id}.html", "_blank"
+      window.open "#{PersonAffairInvoice.url()}/#{@invoice.id}.html", "invoice_preview"
 
     win.modal('show')
 

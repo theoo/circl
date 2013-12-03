@@ -7,8 +7,12 @@
   .bvr_member_address2 #INVOICE_ADDRESS
   .bvr_account1 #BVR_ACCOUNT
   .bvr_account2 #BVR_ACCOUNT
-  .bvr_value1 #BVR_VALUE
-  .bvr_value2 #BVR_VALUE
+  - if @invoice_template.show_invoice_value
+    .bvr_value1 #BVR_VALUE
+    .bvr_value2 #BVR_VALUE
+  - else
+    .bvr_value1
+    .bvr_value2
   .bvr_reference_number1 #BVR_REFERENCE_NUMBER
   .bvr_reference_number2 #BVR_SPACED_REFERENCE_NUMBER
   .bvr_codeline #BVR_CODELINE

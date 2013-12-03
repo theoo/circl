@@ -45,7 +45,7 @@ class New extends App.ExtendedController
     @invoice_template.load(data)
     @invoice_template.with_bvr = data.with_bvr?
     @invoice_template.show_invoice_value = data.show_invoice_value?
-    @save_with_notifications @invoice_template, @close
+    @save_with_notifications @invoice_template
 
 class Edit extends App.ExtendedController
   events:
@@ -71,7 +71,7 @@ class Edit extends App.ExtendedController
     @invoice_template.load(data)
     @invoice_template.with_bvr = data.with_bvr?
     @invoice_template.show_invoice_value = data.show_invoice_value?
-    @save_with_notifications @invoice_template, @close
+    @save_with_notifications @invoice_template, @hide
 
   edit_template: (e) ->
     e.preventDefault()

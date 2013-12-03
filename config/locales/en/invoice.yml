@@ -9,7 +9,7 @@ en:
       account: account
       actions:
         add_receipt: add receipt
-        preview_pdf_in_new_tab: preview pdf in new tab
+        preview_pdf_in_new_tab: preview in new tab
       age: age
       balance_value: balance value
       buyer: buyer

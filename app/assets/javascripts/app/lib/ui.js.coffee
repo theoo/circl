@@ -528,6 +528,10 @@ class Ui
 #--- wysiwyg ---
   load_wysiwyg: (context) ->
     return if context.find('textarea.wysiwyg').size() <= 0
+
+    body_class = ["a4_page"]
+    body_class.push "with_bvr" if $("#invoice_template_with_bvr").val() == "t"
+
     tinyMCE.baseURL = "/assets/tinymce"
     tinyMCE.init
       mode: 'specific_textareas'
@@ -535,7 +539,7 @@ class Ui
       editor_selector: 'wysiwyg'
       valid_children : '+body[style]'
       language: I18n.locale
-      body_class: 'a4_page'
+      body_class: body_class.join(" ")
       content_css: ['/assets/custom_fonts.css', '/assets/pdf_common.css', '/assets/pdf_preview.css']
       plugins: 'fullscreen,table,autolink,lists,spellchecker,pagebreak,layer,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,noneditable,visualblocks,visualchars,nonbreaking,template,anchor,charmap,hr,image,link,emoticons,code,textcolor'
       theme: 'modern'

@@ -68,8 +68,8 @@ fr:
     per_hour: par heure
     person: personne
     position: position
-    preview: pré-visualisation
-    preview_in_new_tab: prévisualiser dans un nouvel onglet
+    preview: aperçu
+    preview_in_new_tab: aperçu dans un nouvel onglet
     quantity: quantité
     released_under: livrée sous la version 3 de la license
     requires_browser_update: Une mise à jour de votre navigateur est requise pour consulter cette page.

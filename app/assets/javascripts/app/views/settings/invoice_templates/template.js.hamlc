@@ -1,4 +1,4 @@
-.header{:style => "width: 190mm; height: 27mm; position: absolute; z-index: 2; top: 0px; left: 0px; padding: 5mm 5mm 5mm 15mm;"}
+.header{:style => "width: 190mm; height: 27mm; z-index: 2; padding: 5mm 5mm 5mm 15mm;"}
   %img{:alt => "CIRCL", :height => "155", :src => "/assets/logo.png", :style => "float: right;", :title => "CIRCL", :width => "180"}/
   %table{:border => "0", :style => "width: 90mm;"}
     %tbody
@@ -23,7 +23,7 @@
         %td
           %span{:style => "font-size: small;"} #INVOICE_DATE
 
-.text{:style => "width: 190mm; height: 135mm; position: absolute; z-index: 0; top: 142px; left: 0px; text-align: justify; padding: 5mm 5mm 5mm 15mm;"}
+.text{:style => "width: 190mm; height: 135mm; z-index: 0; text-align: justify; padding: 5mm 5mm 5mm 15mm;"}
   .address{:style => "width: 87mm; height: 43mm; float: right; padding: 10mm 5mm 5mm 15mm;"} #INVOICE_ADDRESS
   Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
   %br
@@ -34,22 +34,7 @@
   %br
   \#SUBSCRIPTIONS{ title, interval_starts_on, interval_ends_on, value | created_at | table }
 
-.footer{:style => "width: 190mm; height: 5mm; padding-right: 15mm; padding-left: 5mm; position: absolute; top: 184mm; left: 0px; text-align: center;"}
+.footer{:style => "width: 190mm; height: 5mm; padding-right: 15mm; padding-left: 5mm; text-align: center;"}
   %span{:style => "font-size: small;"}
     %strong Company
     | Rue du Paradis-fiscal 7 | 1200 Gen&egrave;ve | T&eacute;l. +41 22 345 67 89 | Email info@company.com
-
-.bvr
-  .bvr_organisation_address1
-    %pre #BVR_ADDRESS
-  .bvr_organisation_address2
-    %pre #BVR_ADDRESS
-  .bvr_member_address1 #INVOICE_ADDRESS
-  .bvr_member_address2 #INVOICE_ADDRESS
-  .bvr_account1 #BVR_ACCOUNT
-  .bvr_account2 #BVR_ACCOUNT
-  .bvr_value1 #BVR_VALUE
-  .bvr_value2 #BVR_VALUE
-  .bvr_reference_number1 #BVR_REFERENCE_NUMBER
-  .bvr_reference_number2 #BVR_SPACED_REFERENCE_NUMBER
-  .bvr_codeline #BVR_CODELINE

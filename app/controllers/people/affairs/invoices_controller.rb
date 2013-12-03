@@ -121,35 +121,30 @@ class People::Affairs::InvoicesController < ApplicationController
     end
   end
 
-  def header
-    html = @invoice.invoice_template.header.dup
+  # def header
+  #   html = @invoice.invoice_template.header.dup
 
-    Rails.configuration.settings["wk_placeholders"].each do |p|
-      html.gsub!("##{p.upcase}", params[p.to_sym]) if html.match("#{p.upcase}")
-    end
+  #   Rails.configuration.settings["wk_placeholders"].each do |p|
+  #     html.gsub!("##{p.upcase}", params[p.to_sym]) if html.match("#{p.upcase}")
+  #   end
 
-    respond_to do |format|
-      format.html { render :inline =>  html }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { render :inline =>  html }
+  #   end
+  # end
 
-  def footer
-    html = @invoice.invoice_template.footer.dup
+  # def footer
+  #   html = @invoice.invoice_template.footer.dup
 
-    Rails.configuration.settings["wk_placeholders"].each do |p|
-      html.gsub!("##{p.upcase}", params[p.to_sym]) if html.match("#{p.upcase}")
-    end
+  #   Rails.configuration.settings["wk_placeholders"].each do |p|
+  #     html.gsub!("##{p.upcase}", params[p.to_sym]) if html.match("#{p.upcase}")
+  #   end
 
-    respond_to do |format|
-      format.html { render :inline => html }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html { render :inline => html }
+  #   end
+  # end
 
-  def bvr
-    respond_to do |format|
-      format.html {}
-    end
-  end
 
   ##
   # PDF generation
@@ -161,6 +156,12 @@ class People::Affairs::InvoicesController < ApplicationController
   #
   def build_from_template(invoice, html = 'html')
     html = invoice.invoice_template.send(html).dup
+
+    # Add bvr if requested
+    if invoice.invoice_template.with_bvr
+      @invoice_template = invoice.invoice_template
+      html << render_to_string(:action => "bvr")
+    end
 
     invoice.placeholders[:simples].each do |p, v|
       html.gsub!("##{p}", v) if html.match("#{p}")
@@ -190,6 +191,7 @@ class People::Affairs::InvoicesController < ApplicationController
          end
       end
     end
+
 
     html
   end
@@ -221,7 +223,7 @@ class People::Affairs::InvoicesController < ApplicationController
                                             :options => options})
     else
       invoice.subscriptions.order(options[:order]).each do |s|
-        fields = options[:fields].map do |f| 
+        fields = options[:fields].map do |f|
           if f == :value
             field = value_for(invoice.buyer)
           else
@@ -263,7 +265,7 @@ class People::Affairs::InvoicesController < ApplicationController
                                             :options => options})
     else
       invoice.receipts.order(options[:order]).each do |s|
-        fields = options[:fields].map do |f| 
+        fields = options[:fields].map do |f|
           field = s.send(f)
           field = field.to_date if field.is_a? Time
           field = field.to_view if field.is_a? Money
