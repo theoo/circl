@@ -632,11 +632,14 @@ class Person < ActiveRecord::Base
   end
 
   def update_geographic_coordinates
-    if (address_changed? or location_id_changed?) or (address and location_id and latitude.nil?)
-      loc = Geokit::Geocoders::OSMGeocoder.geocode full_address_inline
-      if loc.success
-        self.latitude = loc.lat
-        self.longitude = loc.lng
+    # FIXME remove this condition after 20131125214900_add_geolocalization migration
+    if Person.columns.map(&:name).include?("latitude")
+      if (address_changed? or location_id_changed?) or (address and location_id and latitude.nil?)
+        loc = Geokit::Geocoders::OSMGeocoder.geocode full_address_inline
+        if loc.success
+          self.latitude = loc.lat
+          self.longitude = loc.lng
+        end
       end
     end
   end
