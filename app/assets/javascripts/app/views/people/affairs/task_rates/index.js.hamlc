@@ -1,30 +1,46 @@
-%form
+- if App.TaskRate.count() > 0
+
+  %form
+    .panel-body
+      .col-md-2
+
+      .col-md-6.form-group
+        %label{:for => 'person_affair_task_rate_id'}
+          = I18n.t("task_rate.views.rate")
+        %select{:id => 'person_affair_task_rate_id',
+                :class => 'form-control required',
+                :name => 'task_rate_id'}
+
+          - unless @person.task_rate_id
+            %option{:value => 'none', :selected => true}
+              = I18n.t("task_rate.views.please_select_a_rate")
+
+          - for r in App.TaskRate.all()
+            - if r.id == @person.task_rate_id
+              %option{:value => r.id, :selected => true}= r.title
+            - else
+              %option{:value => r.id}= r.title
+
+        %small.help-block.description
+
+      .col-md-4
+        %label &nbsp;
+        .help-block.value
+
+    .panel-footer
+      .text-right
+        != @partial('submit_button')(@person)
+
+- else
+
   .panel-body
-    .col-lg-2.col-md-2
+    .alert.alert-warning
+      = I18n.t("task.notices.no_existing_task_rate_alert")
+      .label.label-warning
+        = I18n.t("common.incomplete")
 
-    .col-lg-6.col-md-6.form-group
-      %label{:for => 'person_affair_task_rate_id'}
-        = I18n.t("task_rate.views.rate")
-      %select{:id => 'person_affair_task_rate_id',
-              :class => 'form-control required',
-              :name => 'task_rate_id'}
-
-        - unless @person.task_rate_id
-          %option{:value => 'none', :selected => true}
-            = I18n.t("task_rate.views.please_select_a_rate")
-
-        - for r in App.TaskRate.all()
-          - if r.id == @person.task_rate_id
-            %option{:value => r.id, :selected => true}= r.title
-          - else
-            %option{:value => r.id}= r.title
-
-      %small.help-block.description
-
-    .col-lg-4.col-md-4
-      %label &nbsp;
-      .help-block.value
-
-  .panel-footer
-    .text-right
-      != @partial('submit_button')(@person)
+      .text-right
+        %br
+        %a{:href => '/settings#affairs', :class => 'btn btn-warning'}
+          = I18n.t("task.notices.no_existing_task_rate_button")
+          .icon-chevron-right

@@ -40,23 +40,35 @@ class New extends App.TimesheetExtention
   active: (params) =>
     if params
       @person_id = params.person_id if params.person_id
+      @person = App.Person.find(@person_id)
       @affair_id = params.affair_id if params.affair_id
       @can = params.can if params.can
     @render()
 
   render: =>
-    @task = new PersonTask
+    if @person.task_rate_id > 0 and App.TaskType.count() > 0 and App.TaskRate.count() > 0
+      @task = new PersonTask
 
-    @task.start_date = (new Date).to_view()
-    @task.start_time = '09:00'
-    @task.end_time = '18:00'
-    @task.duration = 9 * 60
+      @task.start_date = (new Date).to_view()
+      @task.start_time = '09:00'
+      @task.end_time = '18:00'
+      @task.duration = 9 * 60
 
-    super
+      super
 
-    # Disable owner and affair selection which makes sens only
-    # on dashboard page
-    @el.find("#task_owner_affair").css(display: 'none')
+      # Disable owner and affair selection which makes sens only
+      # on dashboard page
+      @el.find("#task_owner_affair").css(display: 'none')
+
+    else
+      if App.TaskType.count() == 0
+        @html @view('people/affairs/tasks/no_task_type')(@)
+
+      if App.TaskRate.count() == 0
+        @html @view('people/affairs/tasks/no_task_rate')(@)
+      else
+        unless @person.task_rate_id
+          @html @view('people/affairs/tasks/no_rate_selected')(@)
 
     if @disabled() then @disable_panel() else @enable_panel()
 

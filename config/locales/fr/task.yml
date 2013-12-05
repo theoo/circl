@@ -7,6 +7,11 @@ fr:
       owner_should_have_a_task_rate: Le client sélectionné n'a pas de tarif défini. Veuillez en sélectionner un avant de poursuivre.
     notices:
       computed_value_is: La valeur calculée est %{value}.
+      no_existing_task_rate_alert: Il n'existe pas de tarif pour les services, veuillez en ajouter ci-dessous avant de poursuivre avec la création de services.
+      no_existing_task_rate_button: Ajouter un tarif
+      no_existing_task_type_alert: Il n'existe pas de type de tâche pour les services, veuillez en ajouter ci-dessous avant de poursuivre avec la création de services.
+      no_existing_task_type_button: Ajouter un type de tâche
+      no_rate_selected_alert: Aucun tarif n'a été sélectionné pour cette personne, veuillez en sélectionner un ci-dessous.
       the_value_is_automaticaly_computed: La valeur est calculée automatiquement à l'enregistrement.
     views:
       affair: affaire

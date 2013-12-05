@@ -215,5 +215,6 @@ class App.TimesheetExtention extends App.ExtendedController
 
   update_task_type_description: (e) ->
     id = @task_type_field.val()
-    task_type = App.TaskType.find(id)
-    @task_type_description_div.html task_type.description
+    if App.TaskType.exists(id)
+      task_type = App.TaskType.find(id)
+      @task_type_description_div.html task_type.description

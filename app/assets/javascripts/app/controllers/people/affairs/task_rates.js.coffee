@@ -34,14 +34,15 @@ class Index extends App.ExtendedController
   submit: (e) ->
     e.preventDefault()
     @person.task_rate_id = $("#person_affair_task_rate_id").val()
-    @save_with_notifications @person
+    @save_with_notifications @person, =>
+      App.PersonTask.fetch() if App.PersonTask.url() != undefined
 
-  update_description: (e) =>
-    # e.preventDefault() -> Uncaught TypeError: Cannot call method 'preventDefault' of undefined 
+  update_description: =>
     id = $("#person_affair_task_rate_id").val()
-    task_rate = App.TaskRate.find(id)
-    @el.find(".description").html task_rate.description
-    @el.find(".value").html task_rate.value + " CHF / " + I18n.t("common.hour")
+    if App.TaskRate.exists(id)
+      task_rate = App.TaskRate.find(id)
+      @el.find(".description").html task_rate.description
+      @el.find(".value").html task_rate.value + " CHF / " + I18n.t("common.hour")
 
 class App.PersonAffairTaskRates extends Spine.Controller
   className: 'person_affair_task_rates'

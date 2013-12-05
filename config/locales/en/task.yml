@@ -7,6 +7,11 @@ en:
       owner_should_have_a_task_rate: owner should have a task rate
     notices:
       computed_value_is: computed value is
+      no_existing_task_rate_alert: No rates exist to create a service, please click below to add one.
+      no_existing_task_rate_button: Add a rate
+      no_existing_task_type_alert: No task types exist to create a service, please click below to add one.
+      no_existing_task_type_button: Add a task type
+      no_rate_selected_alert: No rate selected, please select one below.
       the_value_is_automaticaly_computed: the value is automaticaly computed
     views:
       affair: affair

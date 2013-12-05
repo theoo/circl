@@ -1,0 +1,5 @@
+.panel-body
+  .alert.alert-warning
+    = I18n.t("task.notices.no_rate_selected_alert")
+    .label.label-warning
+      = I18n.t("common.incomplete")

@@ -70,7 +70,7 @@ class TaskType < ActiveRecord::Base
   private
 
   def should_have_a_ratio_or_a_value
-    if ratio.blank? and value_in_cents.blank?
+    if ratio.blank? and value_in_cents == 0
       errors.add(:base, I18n.t('task_type.errors.should_have_a_ratio_or_a_title'))
       return false
     end

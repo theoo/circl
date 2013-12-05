@@ -1,0 +1,11 @@
+.panel-body
+  .alert.alert-warning
+    = I18n.t("task.notices.no_existing_task_rate_alert")
+    .label.label-warning
+      = I18n.t("common.incomplete")
+
+    .text-right
+      %br
+      %a{:href => '/settings#affairs', :class => 'btn btn-warning'}
+        = I18n.t("task.notices.no_existing_task_rate_button")
+        .icon-chevron-right

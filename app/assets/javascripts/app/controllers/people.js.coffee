@@ -50,8 +50,18 @@ class New extends App.ExtendedController
     @person.load(data)
     @person.is_an_organization = data.is_an_organization?
     @person.hidden = data.hidden?
-    @save_with_notifications @person, (id) =>
-      window.location = id
+
+    # Custom @save_with_notifications @person
+    @person.bind 'ajaxSuccess', (newrecord, data, statusText, xhr) =>
+      window.location = [Person.url(), data.id].join("/")
+
+    @person.bind 'ajaxError', (unused, xhr, statusText, error) =>
+      # On error, destroy the record that was inserted by Spine
+      @person.unbind(@)
+      @person.destroy ajax: false
+      @render_errors $.parseJSON(xhr.responseText)
+
+    @person.save()
 
 class Edit extends App.ExtendedController
   events:
