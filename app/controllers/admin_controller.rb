@@ -55,9 +55,7 @@ class AdminController < ApplicationController
     # TODO Import without ES indexation and reindex people after transaction
     Person.transaction do
       people.each do |p|
-        unless p.save
-          raise ArgumentError, p.errors.inspect
-        end
+        p.save
       end
     end
 
