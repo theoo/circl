@@ -81,7 +81,7 @@
           %button{:type => 'button',
                   :class => 'btn btn-danger',
                   :name => 'person-affair-product-destroy'}
-            .icon-minus
+            .icon-remove
             = I18n.t("common.destroy")
 - else
   .panel-body
