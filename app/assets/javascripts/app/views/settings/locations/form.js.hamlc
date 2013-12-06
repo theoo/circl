@@ -10,7 +10,7 @@
           %label{:for => 'settings_location_parent_name'}
             = I18n.t('common.parent')
           %input{ :type => 'search',
-                  :name => 'parent_name',
+                  :name => 'parent',
                   :id => 'setting_location_parent_name',
                   :value => @location.parent_name,
                   :action => '/settings/locations/search',
