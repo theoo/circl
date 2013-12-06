@@ -52,6 +52,7 @@ class DirectoryController < ApplicationController
     person = false
 
     if params[:query]
+
       if params[:query].is_a? HashWithIndifferentAccess
         @query.merge!(HashWithIndifferentAccess.new(params[:query]))
       elsif params[:query].is_a? String
@@ -59,13 +60,15 @@ class DirectoryController < ApplicationController
       else
         raise ArgumentError, "invalid query".inspect
       end
-      if @query[:selected_attributes] && @query[:selected_attributes].size > 0
+
+      if @query[:selected_attributes] and @query[:selected_attributes].size > 0
         if ! @query[:search_string].blank?
-          # Check if query returns only one person and set person if so
           people = ElasticSearch::search( @query[:search_string],
                                           @query[:selected_attributes],
                                           @query[:attributes_order],
                                           @current_person)
+
+          # Check if query returns only one person and set person if so
           if people.size == 1
             person = people.first.load
           end

@@ -434,6 +434,18 @@ class Index extends App.ExtendedController
     super
     @json_query = $('#directory_json_query').val()
     @query = $.parseJSON(@json_query)
+    # defaults, if no query presets exists
+    if @query = {}
+      @query =
+        selected_attributes:
+          [ 'organization_name',
+            'first_name',
+            'last_name',
+            'email',
+            'address',
+            'phone' ]
+        attribues_order:
+          [ 'created_at' ]
 
   active: (params) ->
     @render()
