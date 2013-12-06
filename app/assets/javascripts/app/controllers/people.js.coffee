@@ -67,6 +67,9 @@ class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click #person_map': 'open_map'
+    'click a[name=person_email_button]': 'mail_to'
+    'click a[name=person_second_email_button]': 'mail_to'
+    'click a[name=person_phone_button]': 'call_to'
 
   constructor: (params) ->
     super
@@ -82,6 +85,11 @@ class Edit extends App.ExtendedController
     @show()
     @person = Person.find(@id)
     @html @view('people/form')(@)
+    $("a[name=person_email_button]").attr(disabled: true)         unless @person.email
+    $("a[name=person_second_email_button]").attr(disabled: true)  unless @person.second_email
+    $("a[name=person_phone_button]").attr(disabled: true)         unless @person.phone
+    $("a[name=person_second_phone_button]").attr(disabled: true)  unless @person.second_phone
+    $("a[name=person_mobile_button]").attr(disabled: true)        unless @person.mobile
 
   submit: (e) ->
     e.preventDefault()
@@ -94,6 +102,16 @@ class Edit extends App.ExtendedController
   open_map: (e) ->
     e.preventDefault()
     window.open "#{Person.url()}/#{@person.id}/map.html", "person_map"
+
+  mail_to: (e) ->
+    e.preventDefault()
+    email = $(e.target).closest(".input-group").find("input").val()
+    window.location = "mailto:#{email}"
+
+  call_to: (e) ->
+    e.preventDefault()
+    phone = $(e.target).closest(".input-group").find("input").val()
+    window.location = "callto:#{phone}"
 
 class App.People extends Spine.Controller
   className: 'person'

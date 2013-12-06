@@ -80,20 +80,28 @@
           .col-sm-6.form-group
             %label{:for => 'person_email', :class => 'control-label'}
               = I18n.t('person.views.email')
-            %input{ :type => 'email',
-                    :id => 'person_email',
-                    :name => 'email',
-                    :class => 'form-control',
-                    :value => @person.email}
+            .input-group
+              %input{ :type => 'email',
+                      :id => 'person_email',
+                      :name => 'email',
+                      :class => 'form-control',
+                      :value => @person.email}
+              .input-group-btn
+                %a{:name => 'person_email_button', :class => 'btn btn-default'}
+                  .icon-envelope
 
           .col-sm-6.form-group
             %label{:for => 'person_second_email', :class => 'control-label'}
               = I18n.t('person.views.second_email')
-            %input{ :type => 'email',
-                    :id => 'person_second_email',
-                    :name => 'second_email',
-                    :class => 'form-control',
-                    :value => @person.second_email}
+            .input-group
+              %input{ :type => 'email',
+                      :id => 'person_second_email',
+                      :name => 'second_email',
+                      :class => 'form-control',
+                      :value => @person.second_email}
+              .input-group-btn
+                %a{:name => 'person_second_email_button', :class => 'btn btn-default'}
+                  .icon-envelope
 
       .col-md-6
         .row
@@ -138,30 +146,42 @@
           .col-sm-6.form-group
             %label{:for => 'person_phone', :class => 'control-label'}
               = I18n.t('person.views.phone')
-            %input{ :type => 'tel',
-                    :id => 'person_phone',
-                    :class => 'form-control',
-                    :name => 'phone',
-                    :value => @person.phone }
+            .input-group
+              %input{ :type => 'tel',
+                      :id => 'person_phone',
+                      :class => 'form-control',
+                      :name => 'phone',
+                      :value => @person.phone }
+              .input-group-btn
+                %a{:name => 'person_phone_button', :class => 'btn btn-default'}
+                  .icon-phone
 
           .col-sm-6.form-group
             %label{:for => 'person_second_phone', :class => 'control-label'}
               = I18n.t('person.views.second_phone')
-            %input{ :type => 'tel',
-                    :id => 'person_second_phone',
-                    :class => 'form-control',
-                    :name => 'second_phone',
-                    :value => @person.second_phone }
+            .input-group
+              %input{ :type => 'tel',
+                      :id => 'person_second_phone',
+                      :class => 'form-control',
+                      :name => 'second_phone',
+                      :value => @person.second_phone }
+              .input-group-btn
+                %a{:name => 'person_second_phone_button', :class => 'btn btn-default'}
+                  .icon-phone
 
         .row
           .col-sm-6.form-group
             %label{:for => 'person_mobile', :class => 'control-label'}
               = I18n.t('person.views.mobile')
-            %input{ :type => 'tel',
-                    :id => 'person_mobile',
-                    :class => 'form-control',
-                    :name => 'mobile',
-                    :value => @person.mobile }
+            .input-group
+              %input{ :type => 'tel',
+                      :id => 'person_mobile',
+                      :class => 'form-control',
+                      :name => 'mobile',
+                      :value => @person.mobile }
+              .input-group-btn
+                %a{:name => 'person_mobile_button', :class => 'btn btn-default'}
+                  .icon-phone
 
           .col-sm-6.form-group
             %label{:for => 'person_communication_language', :class => 'control-label'}
