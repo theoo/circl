@@ -13,7 +13,7 @@
         - for tax in App.SalaryTax.all()
           %th= tax.title
         %th= I18n.t('item.views.category')
-        %th{:style => 'min-width: 230px'}= I18n.t('common.actions')
+        %th{:style => 'min-width: 130px', :class => 'ignore-click'}= I18n.t('common.actions')
 
     %tbody
       - for item, index in @items
@@ -47,18 +47,18 @@
                     :class => 'form-control',
                     :value => item.category }
           %td.text-right
-            .btn-group
-              %button{:type => 'button',
-                      :name => 'destroy-item',
-                      :class => 'btn btn-danger' }
-                .icon-remove
+            -# .btn-group
+            %button{:type => 'button',
+                    :name => 'destroy-item',
+                    :class => 'btn btn-danger' }
+              .icon-remove
 
-                = I18n.t("common.destroy")
-              %button{:type => 'button',
-                      :name => 'adjust-item',
-                      :class => 'btn btn-default' }
-                .icon-cog
-                = I18n.t("common.adjust")
+              = I18n.t("common.destroy")
+            -# %button{:type => 'button',
+            -#         :name => 'adjust-item',
+            -#         :class => 'btn btn-default' }
+            -#   .icon-cog
+            -#   = I18n.t("common.adjust")
 
       / New item
       - unique_id = @items.length + 1

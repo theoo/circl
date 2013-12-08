@@ -488,7 +488,8 @@ class Salaries::Salary < ActiveRecord::Base
 
     h[:married] = married?
     h[:yearly_salary] = yearly_salary.to_f
-    h[:children_count] = children_count
+    h[:children_count] = children_count # number of kids
+    h[:salaries_count] = children.count # salaries that use this reference
 
     h[:gross_pay]   = gross_pay.to_f
     h[:net_salary]  = net_salary.to_f

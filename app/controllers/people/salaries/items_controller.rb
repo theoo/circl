@@ -38,25 +38,22 @@ class People::Salaries::ItemsController < ApplicationController
     # TODO refactor this into a generic lib and use that
 
     @item = Salaries::Item.find(params[:id])
-    target = params[:target].to_f
+    target = params[:target].to_money
 
-    item_reference  = @item.is_reference? ? @item : @item.reference
-    existing_items = item_reference.reference
-    unless @item.salary.is_reference?
-      existing_items.reject!{ |i| i.id == @item.id }
-    end
+    reference  = @item.is_reference? ? @item : @item.reference
+    siblings = reference.siblings
 
-    existing_items_count = existing_items.count
-    existing_items_sum   = existing_items.map(&:value).sum.to_f
+    siblings_count = siblings.count
+    siblings_sum   = siblings.map(&:value).sum
 
     salary_reference    = @salary.is_reference ? @salary : @salary.reference
-    future_items_count = salary_reference.yearly_salary_count - existing_items_count
+    future_items_count = salary_reference.yearly_salary_count - siblings_count
     yearly_items_sum   = (target * salary_reference.yearly_salary_count)
 
-    value = (yearly_items_sum - existing_items_sum) / future_items_count.to_f
+    value = (yearly_items_sum - siblings_sum) / future_items_count
 
     respond_to do |format|
-      format.json { render :json => { :value => value } }
+      format.json { render :json => { :value => value.to_f } }
     end
   end
 
@@ -65,23 +62,20 @@ class People::Salaries::ItemsController < ApplicationController
 
     @item = Salaries::Item.find(params[:id])
 
-    item_reference  = @item.is_reference? ? @item : @item.reference
-    existing_items = item_reference.reference
-    unless @item.is_reference?
-      existing_items.reject!{ |i| i.id == @item.id }
-    end
+    reference  = @item.is_reference? ? @item : @item.reference
+    siblings = reference.siblings
 
-    existing_items_count = existing_items.size
-    existing_items_sum   = existing_items.map(&:value).sum.to_f
+    siblings_count = siblings.size
+    siblings_sum   = siblings.map(&:value).sum
 
     salary_reference    = @salary.is_reference ? @salary : @salary.reference
-    future_items_count = salary_reference.yearly_salary_count - existing_items_count - 1
+    future_items_count = salary_reference.yearly_salary_count - siblings_count - 1
 
-    yearly_items_sum   = (item_reference.value.to_f * salary_reference.yearly_salary_count)
-    value = yearly_items_sum - (existing_items_sum + (future_items_count * item_reference.value.to_f))
+    yearly_items_sum   = (reference.value * salary_reference.yearly_salary_count)
+    value = yearly_items_sum - (siblings_sum + (reference.value * future_items_count))
 
     respond_to do |format|
-      format.json { render :json => { :value => value } }
+      format.json { render :json => { :value => value.to_f } }
     end
   end
 

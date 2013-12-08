@@ -123,4 +123,15 @@ class Salaries::Item < ActiveRecord::Base
     reference.nil? == false
   end
 
+  # tree methods, for references
+  def children
+    Salaries::Item.where(:parent_id => id)
+  end
+
+  # tree methods, for items
+  def siblings
+    Salaries::Item.where(:parent_id => parent_id)
+                  .where("id != ?", id)
+  end
+
 end

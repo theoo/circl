@@ -53,6 +53,7 @@ en:
       reference_title: reference title
       references: references
       salaries: salaries
+      salaries_count: salaries
       salary_template: salary template
       salary_templates: salary templates
       summary: summary

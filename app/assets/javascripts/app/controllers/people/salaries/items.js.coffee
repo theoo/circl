@@ -24,8 +24,8 @@ class App.PersonSalaryItems extends App.ExtendedController
 
   events:
     'submit form'    : 'submit'
-    'click button[name=adjust-item]'  : 'adjust'
-    'click button[name=destroy-item]'  : 'destroy'
+    'click button[name=adjust-item]': 'adjust'
+    'click button[name=destroy-item]': 'destroy'
 
   constructor: (params) ->
     super
@@ -96,6 +96,7 @@ class App.PersonSalaryItems extends App.ExtendedController
 
     ajax_success = (data, textStatus, jqXHR) =>
       for key, value of data
+        console.log value
         field = row.find('input').filter(@name_filter(key))
         field.attr('value', value)
 

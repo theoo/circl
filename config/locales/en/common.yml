@@ -3,6 +3,7 @@ en:
   common:
     a_webapp_developped_by: A webapp developped by
     action: action
+    actions: actions
     add: add
     adjust: adjust
     administration: administration

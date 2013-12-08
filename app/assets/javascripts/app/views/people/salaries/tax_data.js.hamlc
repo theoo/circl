@@ -13,7 +13,7 @@
         %th= I18n.t('tax_data.views.taxed_value')
         %th= I18n.t('tax_data.views.employer_value')
         %th= I18n.t('tax_data.views.employee_value')
-        %th{:style => 'min-width: 230px'}= I18n.t('tax_data.views.actions')
+        %th{:style => 'min-width: 130px'}= I18n.t('tax_data.views.actions')
 
     %tbody
       - for data, tax_id in @tax_data
@@ -99,17 +99,17 @@
                         :value => data.employee_value }
                 .input-group-addon CHF
           %td.text-right
-            .btn-group
-              %button{:type => 'button',
-                      :name => 'reset-tax-data',
-                      :class => 'btn btn-warning' }
-                .icon-refresh
-                = I18n.t("common.reset")
-              %button{:type => 'button',
-                      :name => 'adjust-tax-data',
-                      :class => 'btn btn-default' }
-                .icon-cog
-                = I18n.t("common.adjust")
+            -# .btn-group
+            %button{:type => 'button',
+                    :name => 'reset-tax-data',
+                    :class => 'btn btn-warning' }
+              .icon-refresh
+              = I18n.t("common.reset")
+            -# %button{:type => 'button',
+            -#         :name => 'adjust-tax-data',
+            -#         :class => 'btn btn-default' }
+            -#   .icon-cog
+            -#   = I18n.t("common.adjust")
 
       %tr
         %td

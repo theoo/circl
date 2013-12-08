@@ -53,6 +53,7 @@ fr:
       reference_title: titre de la référence
       references: Références
       salaries: Salaires
+      salaries_count: Salaires
       salary_template: modèle de salaire
       salary_templates: Modèles de salaire
       summary: Résumé
