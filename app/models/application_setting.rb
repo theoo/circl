@@ -38,7 +38,6 @@ class ApplicationSetting < ActiveRecord::Base
 
   include ChangesTracker
 
-
   ###################
   ### VALIDATIONS ###
   ###################
@@ -51,7 +50,6 @@ class ApplicationSetting < ActiveRecord::Base
   validates_length_of :key, :maximum => 255
   # value is a text field: length unlimited says postgresql...
   validate :length_of_value_if_mandatory
-
 
   #####################
   ### CLASS METHODS ###
@@ -94,7 +92,7 @@ class ApplicationSetting < ActiveRecord::Base
   end
 
   def length_of_value_if_mandatory
-    if self.class.mandatory_fields.index(self.key.to_sym)
+    if self.class.mandatory_fields.index(self.key.to_sym) and value.blank?
       errors.add(:value, I18n.t("activerecord.errors.messages.blank"))
       false
     end
