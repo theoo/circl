@@ -2,6 +2,7 @@
 fr:
   task_type:
     errors:
+      cannot_destroy_if_task_present: Il n'est pas possible de détruire un type de tâche si des tâches y sont associé.
       should_have_a_ratio_or_a_title: Doit avoir un ratio ou un titre
     views:
       ratio: ratio

@@ -2,9 +2,9 @@
 en:
   task:
     errors:
-      duration_is_required_if_selected_task_type_have_a_ratio: duration is required if selected task type have a ratio
-      duration_must_be_positive: duration must be positive
-      owner_should_have_a_task_rate: owner should have a task rate
+      duration_is_required_if_selected_task_type_have_a_ratio: The duration is required if selected task type have a ratio
+      duration_must_be_positive: The duration must be positive
+      owner_should_have_a_task_rate: The owner should have a task rate
     notices:
       computed_value_is: computed value is
       no_existing_task_rate_alert: No rates exist to create a service, please click below to add one.

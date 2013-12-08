@@ -41,6 +41,8 @@ class TaskType < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
+  before_destroy :prevent_if_task_present
+
   #################
   ### RELATIONS ###
   #################
@@ -72,6 +74,13 @@ class TaskType < ActiveRecord::Base
   def should_have_a_ratio_or_a_value
     if ratio.blank? and value_in_cents == 0
       errors.add(:base, I18n.t('task_type.errors.should_have_a_ratio_or_a_title'))
+      return false
+    end
+  end
+
+  def prevent_if_task_present
+    if tasks.count > 0
+      errors.add(:base, I18n.t('task_type.errors.cannot_destroy_if_task_present'))
       return false
     end
   end

@@ -1,6 +1,8 @@
 ---
 fr:
   task_rate:
+    errors:
+      cannot_destroy_if_client_present: Il n'est pas possible de détruire un tarif si des clients y sont associé.
     views:
       people_count: clients
       please_select_a_rate: Veuillez sélectionner un tarif

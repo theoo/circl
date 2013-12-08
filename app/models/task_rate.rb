@@ -29,6 +29,8 @@ class TaskRate < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
+  before_destroy :prevent_if_client_present
+
   #################
   ### RELATIONS ###
   #################
@@ -63,6 +65,15 @@ class TaskRate < ActiveRecord::Base
     h[:people_count] = people.count
     h[:errors]       = errors
     h
+  end
+
+  private
+
+  def prevent_if_client_present
+    if people.count > 0
+      errors.add(:base, I18n.t('task_rate.errors.cannot_destroy_if_client_present'))
+      return false
+    end
   end
 
 end
