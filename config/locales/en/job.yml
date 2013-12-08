@@ -2,7 +2,7 @@
 en:
   job:
     errors:
-      cannot_contain_comma: Cannot contain a comma
+      cannot_contain_comma: The name cannot contain a comma
     views:
       actions:
         view_members: view members
