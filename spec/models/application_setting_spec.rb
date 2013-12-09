@@ -8,7 +8,9 @@ describe ApplicationSetting, 'validations' do
     subject.should have(1).error_on(:key)
   end
 
-  it 'should have a value' do
+  it 'should have a value if mandatory' do
+    subject.key = 'application_id'
+    subject.value = nil
     subject.should have(1).error_on(:value)
   end
 
@@ -25,6 +27,5 @@ describe ApplicationSetting, 'validations' do
   end
 
   generate_length_tests_for :key, :maximum => 255
-  generate_length_tests_for :value, :maximum => 255
 
 end

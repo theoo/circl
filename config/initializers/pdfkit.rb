@@ -39,9 +39,11 @@ end
 
 # FIXME using "me" to authenticate wkhtmltopdf.
 # NOTE me always has admin role
-admin = Person.find ApplicationSetting.value(:me)
-if admin.authentication_token.nil?
-  admin.update_attributes(:renew_authentication_token => true)
+unless Rails.env == 'test'
+  admin = Person.find ApplicationSetting.value(:me)
+  if admin.authentication_token.nil?
+    admin.update_attributes(:renew_authentication_token => true)
+  end
 end
 
 # Placeholders

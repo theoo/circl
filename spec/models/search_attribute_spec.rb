@@ -14,6 +14,6 @@ describe SearchAttribute, 'validations' do
     subject.should have(1).error_on(:indexing)
   end
 
-  generate_length_tests_for :model, :name, :indexing, :mapping, :group, :maximum => 255
-
+  generate_length_tests_for :model, :name, :group, :maximum => 255
+  generate_length_tests_for :indexing, :mapping, :maximum => 65535
 end
