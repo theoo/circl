@@ -170,7 +170,7 @@ class People::Salaries::SalariesController < ApplicationController
   # with its placeholders substituted.
   #
   def build_from_template(salary)
-    html = salary.salary_template.html.dup
+    html = salary.template.html.dup
 
     salary.placeholders[:simples].each { |p, v| html.gsub!("##{p}", v) }
 

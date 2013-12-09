@@ -185,7 +185,7 @@ class @Settings extends App
     @subapp($('#settings_jobs'), 'SettingsJobs')
 
     @subapp($('#settings_invoice_templates'), 'SettingsInvoiceTemplates')
-    @subapp($('#settings_salary_templates'), 'SettingsSalariesTemplates')
+    @subapp($('#settings_generic_templates'), 'SettingsGenericTemplates')
 
     @subapp($('#settings_search_attributes'), 'SettingsSearchAttributes')
     @subapp($('#settings_ldap_attributes'), 'SettingsLdapAttributes')

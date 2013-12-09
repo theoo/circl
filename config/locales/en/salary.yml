@@ -16,7 +16,7 @@ en:
       export_to_ocas: export to ocas
     notices:
       no_existing_salary_taxes_alert: no existing salary taxes alert
-      no_existing_salary_template_alert: no existing salary template alert
+      no_existing_template_alert: no existing salary template alert
       please_try_again: please try again
       reference_were_copied: reference were copied
     template_item_category: template item category
@@ -54,8 +54,8 @@ en:
       references: references
       salaries: salaries
       salaries_count: salaries
-      salary_template: salary template
-      salary_templates: salary templates
+      template: salary template
+      templates: salary templates
       summary: summary
       tax_data: tax data
       taxes: taxes

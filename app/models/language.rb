@@ -51,7 +51,7 @@ class Language < ActiveRecord::Base
            :foreign_key => :main_communication_language_id
   has_many  :translation_aptitudes
   has_many  :invoice_templates
-  has_many  :salaries_salary_templates
+  has_many  :salaries_templates
 
   has_and_belongs_to_many :communication_people, #communication_languages
                           :class_name => 'Person',

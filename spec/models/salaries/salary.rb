@@ -27,9 +27,9 @@ describe Salaries::Salary do
       salary.should have(1).error_on(:children_count)
     end
 
-    it "should have a salary template" do
-      salary.salary_template_id = nil
-      salary.should have(1).error_on(:salary_template_id)
+    it "should have a salary generic template" do
+      salary.generic_template_id = nil
+      salary.should have(1).error_on(:generic_template_id)
     end
 
     it "should have an employee" do

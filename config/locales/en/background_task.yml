@@ -9,7 +9,7 @@ en:
       generate_invoice_pdf: generate invoice pdf
       generate_invoice_template_jpg: generate invoice template jpg
       generate_salary_pdf: generate salary pdf
-      generate_salary_template_jpg: generate salary template jpg
+      generate_template_jpg: generate salary template jpg
       merge_subscriptions: merge subscriptions
       prepare_subscription_pdf_and_email: prepare subscription pdf and email
       run_rake_task: run rake task

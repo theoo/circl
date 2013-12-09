@@ -7,23 +7,23 @@
     .row
       .col-lg-8
         .form-group
-          %label{:for => 'settings_salary_template_title'}
+          %label{:for => 'settings_template_title'}
             = I18n.t('common.title')
           %input{ :type => 'text',
                   :name => 'title',
-                  :id => 'settings_salary_template_title',
+                  :id => 'settings_template_title',
                   :class => 'form-control',
-                  :value => @salary_template.title }
+                  :value => @template.title }
 
       .col-lg-4
         .form-group
-          %label{:for => 'settings_salary_template_language'}
-            = I18n.t('salary_template.views.language')
+          %label{:for => 'settings_template_language'}
+            = I18n.t('template.views.language')
           %select{:name => 'language_id',
-                  :id => 'settings_salary_template_language',
+                  :id => 'settings_template_language',
                   :class => 'required form-control'}
             - for l in App.Language.all()
-              - if @salary_template.language_id == l.id
+              - if @template.language_id == l.id
                 %option{:value => l.id, :selected => true}= l.name
               - else
                 %option{:value => l.id}= l.name
@@ -34,20 +34,20 @@
           %button{:type => 'submit',
                   :class => 'btn btn-primary'}
             .icon-download-alt
-            - if @salary_template.isNew()
+            - if @template.isNew()
               = I18n.t("common.create")
             - else
               = I18n.t("common.update")
 
-        - unless @salary_template.isNew()
+        - unless @template.isNew()
           .btn-group
             %button{:type => 'button',
-                    :name => 'settings-salary-template-destroy',
+                    :name => 'settings-template-destroy',
                     :class => 'btn btn-danger'}
               .icon-remove
               = I18n.t("common.destroy")
             %button{:type => 'button',
-                    :name => 'settings-salary-template-edit',
+                    :name => 'settings-template-edit',
                     :class => 'btn btn-default'}
               .icon-file
-              = I18n.t("salary_template.views.actions.edit_template")
+              = I18n.t("template.views.actions.edit_template")

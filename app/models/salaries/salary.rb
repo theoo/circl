@@ -33,7 +33,7 @@
 # *yearly_salary_count*::                         <tt>integer</tt>
 # *created_at*::                                  <tt>datetime</tt>
 # *updated_at*::                                  <tt>datetime</tt>
-# *salary_template_id*::                          <tt>integer, not null</tt>
+# *template_id*::                          <tt>integer, not null</tt>
 # *pdf_file_name*::                               <tt>string(255)</tt>
 # *pdf_content_type*::                            <tt>string(255)</tt>
 # *pdf_file_size*::                               <tt>integer</tt>
@@ -136,8 +136,7 @@ class Salaries::Salary < ActiveRecord::Base
   # paperclip
   has_attached_file :pdf
 
-  belongs_to :salary_template,
-             :class_name => 'Salaries::SalaryTemplate'
+  belongs_to :generic_template
 
   belongs_to :person
   has_many   :items,
@@ -203,7 +202,7 @@ class Salaries::Salary < ActiveRecord::Base
   validates_presence_of :to
   validates_presence_of :children_count
   validates_presence_of :person_id
-  validates_presence_of :salary_template_id
+  validates_presence_of :generic_template_id
   validates_presence_of :yearly_salary_count, :if => :is_reference
   validate :ensure_person_have_required_fields, :if => :person
   validate :ensure_interval_dates_are_for_the_same_year, :if => [:from, :to]
@@ -246,7 +245,7 @@ class Salaries::Salary < ActiveRecord::Base
     return false if updated_at > pdf_updated_at.to_datetime
 
     # Check if pdf requires an update because its template is newer
-    salary_template.updated_at < pdf_updated_at.to_datetime
+    generic_template.updated_at < pdf_updated_at.to_datetime
   end
 
   def update_pdf
@@ -256,7 +255,7 @@ class Salaries::Salary < ActiveRecord::Base
   # Returns a hash of placeholders and values.
   def placeholders
     # internationlize dates
-    I18n.locale = salary_template.language.symbol
+    I18n.locale = generic_template.language.symbol
 
     h = {}
     # NOTE don't forget to add translation manualy. rake i18n:import_missing_translations won't parse this code.
@@ -281,7 +280,7 @@ class Salaries::Salary < ActiveRecord::Base
                       'SALARY_YEARLY_SALARY_COUNT' => (reference ? reference.yearly_salary_count.to_s : yearly_salary_count.to_s),
                       'SALARY_YEARLY_SALARY'       => (reference ? reference.yearly_salary.to_view : yearly_salary.to_view),
                       'SALARY_REFERENCE_TITLE'     => (reference ? reference.title : ''),
-                      'SALARY_TEMPLATE_TITLE'      => salary_template.title,
+                      'SALARY_TEMPLATE_TITLE'      => generic_template.title,
                       'GROSS_PAY'                  => gross_pay.to_view,
                       'NET_SALARY'                 => net_salary.to_view,
                       'PERSON_NAME'                => person.name,
@@ -306,7 +305,7 @@ class Salaries::Salary < ActiveRecord::Base
 
   def init_details_from_reference
     self.is_reference    = false
-    self.salary_template = reference.salary_template
+    self.generic_template = reference.generic_template
     self.married        = reference.married
     self.children_count = reference.children_count
   end
@@ -314,8 +313,8 @@ class Salaries::Salary < ActiveRecord::Base
   def init_items
     wage = yearly_salary && yearly_salary_count ? self.yearly_salary / self.yearly_salary_count : 1000.to_money
     taxes = Salaries::Tax.all
-    item = Salaries::Item.new(:title => I18n.t("salary.template_item_title"),
-                              :category => I18n.t("salary.template_item_category"), 
+    item = Salaries::Item.new(:title => I18n.t("salary.generic_template_item_title"),
+                              :category => I18n.t("salary.generic_template_item_category"), 
                               :position => 0,
                               :value => wage,
                               :taxes => taxes)

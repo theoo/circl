@@ -14,13 +14,13 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-SalaryTemplate = App.SalaryTemplate
+GenericTemplate = App.GenericTemplate
 Language = App.Language
 
-$.fn.salary_template = ->
+$.fn.template = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
-  SalaryTemplate.find(elementID)
+  GenericTemplate.find(elementID)
 
 class New extends App.ExtendedController
   events:
@@ -33,47 +33,49 @@ class New extends App.ExtendedController
     @render()
 
   render: ->
-    @salary_template = new SalaryTemplate
-    @salary_template.html = @view('settings/salary_templates/template')
-    @html @view('settings/salary_templates/form')(@)
+    @template = new GenericTemplate
+    # TODO add header/footer
+    @html @view('settings/generic_templates/form')(@)
 
   submit: (e) ->
     e.preventDefault()
     data = $(e.target).serializeObject()
-    @salary_template.load(data)
-    @save_with_notifications @salary_template, (id) =>
+    @template.load(data)
+    @template.body = @view('settings/generic_templates/template')()
+    @save_with_notifications @template, (id) =>
       @trigger 'edit', id
 
 class Edit extends App.ExtendedController
   events:
     'submit form' : 'submit'
-    'click button[name=settings-salary-template-destroy]': 'destroy'
-    'click button[name=settings-salary-template-edit]': 'edit_template'
+    'click button[name=settings-template-destroy]': 'destroy'
+    'click button[name=settings-template-edit]': 'edit_template'
 
   active: (params) ->
     @id = params.id if params.id
     @render()
 
   render: =>
-    return unless SalaryTemplate.exists(@id)
+    return unless GenericTemplate.exists(@id)
     @show()
-    @salary_template = SalaryTemplate.find(@id)
-    @html @view('settings/salary_templates/form')(@)
+    @template = GenericTemplate.find(@id)
+    @html @view('settings/generic_templates/form')(@)
 
   submit: (e) =>
     e.preventDefault()
     data = $(e.target).serializeObject()
-    @salary_template.load(data)
-    @save_with_notifications @salary_template, @hide
+    @template.load(data)
+    @save_with_notifications @template, @hide
 
   edit_template: (e) ->
     e.preventDefault()
-    window.open "#{SalaryTemplate.url()}/#{@salary_template.id}/edit.html", "salary_template"
+    console.log "#{GenericTemplate.url()}/#{@template.id}/edit.html"
+    window.open "#{GenericTemplate.url()}/#{@template.id}/edit.html", "template"
 
   destroy: (e) ->
     e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications @salary_template, @hide
+      @destroy_with_notifications @template, @hide
 
 class Index extends App.ExtendedController
   events:
@@ -82,27 +84,27 @@ class Index extends App.ExtendedController
 
   constructor: (params) ->
     super
-    SalaryTemplate.bind('refresh', @render)
+    GenericTemplate.bind('refresh', @render)
 
   render: =>
-    @html @view('settings/salary_templates/index')(@)
+    @html @view('settings/generic_templates/index')(@)
 
   new: (e) ->
     @trigger 'new'
 
   edit: (e) ->
-    salary_template = $(e.target).salary_template()
+    template = $(e.target).template()
     @activate_in_list(e.target)
-    @trigger 'edit', salary_template.id
+    @trigger 'edit', template.id
 
   table_redraw: =>
-    if @salary_template
-      target = $(@el).find("tr[data-id=#{@salary_template.id}]")
+    if @template
+      target = $(@el).find("tr[data-id=#{@template.id}]")
 
     @activate_in_list(target)
 
-class App.SettingsSalariesTemplates extends Spine.Controller
-  className: 'settings_salary_templates'
+class App.SettingsGenericTemplates extends Spine.Controller
+  className: 'settings_templates'
 
   constructor: (params) ->
     super
@@ -128,6 +130,6 @@ class App.SettingsSalariesTemplates extends Spine.Controller
   activate: ->
     super
     Language.one "refresh", =>
-      SalaryTemplate.fetch()
+      GenericTemplate.fetch()
       @new.render()
     Language.fetch()

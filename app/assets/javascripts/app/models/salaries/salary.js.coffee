@@ -16,7 +16,7 @@
 
 class App.Salary extends Spine.Model
 
-  @configure 'Salary', 'parent_id', 'person_id', 'salary_template_id',
+  @configure 'Salary', 'parent_id', 'person_id', 'template_id',
             'activity_rate', 'from', 'to', 'title', 'is_reference',
             'married', 'children_count', 'yearly_salary', 'yearly_salary_count',
             'paid', 'brut_account', 'net_account', 'employer_account', 'created_at'

@@ -230,7 +230,7 @@ Directory::Application.routes.draw do
       end
     end
 
-    resources :salary_templates do
+    resources :generic_templates do
       collection do
         get 'placeholders', 'count'
       end

@@ -306,7 +306,7 @@ en:
       receipt: Receipt
       role: Role
       salary: salary
-      salary_template: salary_template
+      template: template
       setting: Setting
       subscription: Subscription
       task: Task

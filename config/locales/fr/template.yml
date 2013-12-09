@@ -1,0 +1,59 @@
+---
+fr:
+  template:
+    errors:
+      unable_to_destroy_a_template_which_has_salaries: Il est impossible de détruire un modèle dont des salaires dépendent.
+    help:
+      remove_content_if_you_dont_want_footer: Supprimer le contenu pour ne pas afficher de pied de page.
+      remove_content_if_you_dont_want_header: Supprimer le contenu pour ne pas afficher d'entête.
+    views:
+      footer: Pied de page
+      header: Entête
+      body: Corps du texte
+      actions:
+        edit_template: modifier le modèle
+      language: langue
+      placeholders:
+        employee_percent_total: total des pourcentages déduits de l'employé
+        employee_value_total: total des valeurs déduites de l'employé
+        employer_percent_total: total des pourcentages déduits de l'employeur
+        employer_value_total: total des valeurs déduites de l'employeur
+        gross_pay: salaire brut
+        locale: symbole de la langue
+        net_salary: salaire net
+        person_address: adresse de l'employé
+        person_bank_information: informations bancaires de l'employé
+        person_name: nom de l'employé
+        placeholders: substituants
+        salary_children_count: nombre d'enfants
+        salary_created_at: date de création
+        salary_day_numeric: jour de la date de création au format numérique
+        salary_day_word: jour de la date de création en toutes lettres
+        salary_from: date de début de l'intervalle
+        salary_id: identifiant unique du salaire
+        salary_interval_in_days: intervalle en jours
+        salary_married: état civil de l'employé
+        salary_month_numeric: mois de la date de création au format numérique
+        salary_month_word: mois de la date de création en toutes lettres
+        salary_reference_title: titre du salaire de référence
+        template_title: titre du modèle de salaire
+        salary_title: titre du salaire
+        salary_to: date de fin de l'intervalle
+        salary_year_numeric: année de la date de création
+        salary_yearly_salary: valeur annuelle des salaires
+        salary_yearly_salary_count: nombre de salaires par an
+        summary: ! 'Résumé - Options: { } - Sans options, mais les accolades sont requises.'
+        tax_data: ! 'Déductions. Options: { attributs | ordre de tri | séparateurs, ''table''}, Attributs: id, salary_id, tax_id, title, position, employer_value, employer_percent, employer_use_percent, employee_value, employee_percent, employee_use_percent, created_at, updated_at'
+        taxed_items: ! 'Objet avec déductions. Options: { attributs | ordre de tri | séparateurs, ''table''}, Attributs: id, position, title, value, category, created_at'
+        untaxed_items: ! 'Objets sans déductions. Options: { attributs | ordre de tri | séparateurs, ''table''}, Attributs: id, position, title, value, category, created_at'
+        subsection: La sous-section de la page
+        section: La section de la page
+        date: La date de génération du document
+        frompage: Le numéro de la première page
+        page: Le numéro de la page actuelle
+        time: La date et l'heure de la génération du document
+        topage: Le nombre de page du document
+        webpage: L'adresse (URL) de la page imprimée
+      salaries: salaires
+      template: modèle
+      thumb: aperçu

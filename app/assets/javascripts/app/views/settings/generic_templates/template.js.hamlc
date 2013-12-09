@@ -52,20 +52,20 @@
   #salary_infos
     %table
       %tr
-        %td= I18n.t("salary_template.views.template.salary_id")
+        %td= I18n.t("template.views.template.salary_id")
         %td= "#SALARY_ID"
       %tr
-        %td= I18n.t("salary_template.views.template.salary_interval")
+        %td= I18n.t("template.views.template.salary_interval")
         %td
           = I18n.t("common.from")
           = "#SALARY_FROM"
           = I18n.t("common.to")
           = "#SALARY_TO"
       %tr
-        %td= I18n.t("salary_template.views.template.salary_yearly_salary")
+        %td= I18n.t("template.views.template.salary_yearly_salary")
         %td= "#SALARY_YEARLY_SALARY"
       %tr
-        %td= I18n.t("salary_template.views.template.person_bank_information")
+        %td= I18n.t("template.views.template.person_bank_information")
         %td= "#PERSON_BANK_INFORMATION"
 
 #details

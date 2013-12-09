@@ -18,7 +18,7 @@
 
 # == Schema Information
 #
-# Table name: salaries_salary_templates
+# Table name: salaries_templates
 #
 # *id*::                    <tt>integer, not null, primary key</tt>
 # *title*::                 <tt>string(255), not null</tt>
@@ -33,14 +33,16 @@
 # == Schema Information End
 #++
 
-class Salaries::SalaryTemplate < ActiveRecord::Base
+class GenericTemplate < ActiveRecord::Base
+
+  # templates table name is a reserved words
+  set_table_name 'generic_templates'
 
   ###################
   ### CALLBACKS #####
   ###################
 
   before_destroy :ensure_template_has_no_salaries
-
 
   ################
   ### INCLUDES ###
@@ -49,7 +51,6 @@ class Salaries::SalaryTemplate < ActiveRecord::Base
   include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
-
 
   #################
   ### RELATIONS ###
@@ -65,20 +66,18 @@ class Salaries::SalaryTemplate < ActiveRecord::Base
                     :use_timestamp => true,
                     :styles => {:medium => "420x594>",:thumb => "105x147>"}
 
-
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates_presence_of :title, :html, :language_id
+  validates_presence_of :title, :body, :language_id
   validates_uniqueness_of :title
 
   # Validate fields of type 'string' length
   validates_length_of :title, :maximum => 255
 
   # Validate fields of type 'text' length
-  validates_length_of :html, :maximum => 65536
-
+  validates_length_of :body, :maximum => 65536
 
   ########################
   ### INSTANCE METHODS ###
@@ -87,7 +86,7 @@ class Salaries::SalaryTemplate < ActiveRecord::Base
   # Returns a list of all available placeholders for a salary.
   def placeholders
     # Stub
-    s = Salaries::Salary.new( :salary_template => self,
+    s = Salaries::Salary.new( :generic_template => self,
                               :person => Person.new,
                               :from => Time.now.beginning_of_year,
                               :to => Time.now.end_of_year,
@@ -129,7 +128,7 @@ class Salaries::SalaryTemplate < ActiveRecord::Base
   def ensure_template_has_no_salaries
     if salaries.count > 0
       errors.add(:base,
-                 I18n.t('salary_template.errors.unable_to_destroy_a_template_which_has_salaries'))
+                 I18n.t('template.errors.unable_to_destroy_a_template_which_has_salaries'))
       false
     end
   end

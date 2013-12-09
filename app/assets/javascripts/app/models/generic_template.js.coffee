@@ -14,13 +14,13 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class App.SalaryTemplate extends Spine.Model
+class App.GenericTemplate extends Spine.Model
 
-  @configure 'SalaryTemplate', 'title', 'language_id', 'html', 'thumb_url'
+  @configure 'GenericTemplate', 'title', 'language_id', 'html', 'thumb_url'
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/settings/salary_templates"
+    "#{Spine.Model.host}/settings/generic_templates"
 
   constructor: ->
     super

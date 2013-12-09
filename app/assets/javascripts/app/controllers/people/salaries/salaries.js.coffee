@@ -24,7 +24,7 @@ Person = App.Person
 PersonSalary = App.PersonSalary
 PersonSalaryItem = App.PersonSalaryItem
 PersonSalaryTaxData = App.PersonSalaryTaxData
-SalaryTemplate = App.SalaryTemplate
+Template = App.Template
 
 $.fn.person_salary = ->
   elementID   = $(@).data('id')
@@ -76,7 +76,7 @@ class New extends App.ExtendedController
     else
       # copy reference in this new salary
       reference = PersonSalary.find(@get_reference_id())
-      @salary.salary_template_id = reference.salary_template_id
+      @salary.template_id = reference.template_id
       @salary.activity_rate      = reference.activity_rate
       @salary.children_count     = reference.children_count
       @salary.married            = reference.married
@@ -280,13 +280,13 @@ class App.PersonSalaries extends Spine.Controller
   activate: ->
     super
 
-    SalaryTemplate.one 'count_fetched', =>
+    Template.one 'count_fetched', =>
       App.SalaryTax.one 'count_fetched', =>
-        SalaryTemplate.one 'refresh', =>
+        Template.one 'refresh', =>
           PersonSalary.fetch()
 
-        SalaryTemplate.fetch()
+        Template.fetch()
 
       App.SalaryTax.fetch_count()
 
-    SalaryTemplate.fetch_count()
+    Template.fetch_count()

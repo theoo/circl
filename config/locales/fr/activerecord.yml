@@ -306,7 +306,7 @@ fr:
       receipt: Reçu
       role: Rôle
       salary: Salaire
-      salary_template: Modèle de Salaire
+      template: Modèle de Salaire
       setting: Configuration
       subscription: Inscription
       task: Tâche

@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 FactoryGirl.define do
-  factory :salary_template, :class => Salaries::SalaryTemplate do
+  factory :generic_template, :class => Template do
     sequence(:title) { |n| "Title #{n}" }
     html 'foo'
     language_id 1
@@ -213,7 +213,7 @@ FactoryGirl.define do
     association :reference, :factory => :reference_salary
 
     sequence(:title) {|n| "Salary #{n}"}
-    salary_template
+    generic_template
     from Date.new(2013, 1, 1)
     to Date.new(2013, 1, 31)
     is_reference false
@@ -233,7 +233,7 @@ FactoryGirl.define do
                                               :birth_date => '01-01-2013'
 
     sequence(:title) {|n| "Reference Salary #{n}"}
-    salary_template
+    generic_template
     from Date.new(2013, 1, 1)
     to Date.new(2013, 1, 31)
     is_reference true
