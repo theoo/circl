@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 FactoryGirl.define do
-  factory :generic_template, :class => Template do
+  factory :generic_template, :class => GenericTemplate do
     sequence(:title) { |n| "Title #{n}" }
     html 'foo'
     language_id 1

@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  TEMPLATES_PLACEHOLDER_OPTIONS_REGEX = "\{([a-zA-Z0-9,\(\) |_]+)\}"
+  TEMPLATES_PLACEHOLDER_OPTIONS_REGEX = "\{([a-zA-Z0-9,.\(\) |_]+)\}"
 
   def self.model
     name = to_s.sub('Controller', '').underscore.split('/').last.singularize.camelize

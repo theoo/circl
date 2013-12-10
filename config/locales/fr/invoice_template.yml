@@ -68,6 +68,9 @@ fr:
         placeholders: substituants
         receipts: ! 'Itérateur des reçus. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
         subscriptions: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, parend_id, title, description, value, interval_starts_on, interval_ends_on, created_at, updated_at'
+        tasks: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, executer_name, description, duration, start_date, created_at, updated_at, task_type_title, task_type_description, task_type_ratio, task_type_value, value, value_in_cents, value_currency, position'
+        product_items: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, parent_id, created_at, updated_at, key, title, description, category, quantity, value, value_in_cents, value_currency'
+        extras: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, title, description, value, value_in_cents, value_currency, quantity, quantity, position, created_at, updated_at'
       show_invoice_value: imprimer avec la valeure de la facture
       thumb: aperçu
       with_bvr: imprimer le BVR

@@ -95,6 +95,12 @@ class AffairsProductsProgram < ActiveRecord::Base
     end
   end
 
+  # Proxy, mostly used for placeholders substitutions
+  %w(key title description).each do |m|
+    define_method(m){ product.send(m) }
+  end
+
+
   private
 
   def set_position_if_none_given

@@ -3,3 +3,14 @@ fr:
   extra:
     views:
       extra_list_pdf_title: extra list pdf title
+    pdf:
+      id: id
+      title: titre
+      description: description
+      value: valeur
+      value_in_cents: valeur en centimes
+      value_currency: devise
+      quantity: qt.
+      position: pos.
+      created_at: date de saisie
+      updated_at: date de mise à jour

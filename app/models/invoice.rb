@@ -84,6 +84,9 @@ class Invoice < ActiveRecord::Base
   has_one     :buyer, :through => :affair
   has_one     :receiver, :through => :affair
   has_many    :subscriptions, :through => :affair, :uniq => true
+  has_many    :tasks,         :through => :affair, :uniq => true
+  has_many    :product_items, :through => :affair, :uniq => true
+  has_many    :extras,        :through => :affair, :uniq => true
 
   # paperclip
   has_attached_file :pdf
@@ -222,8 +225,11 @@ class Invoice < ActiveRecord::Base
                     }
 
     h[:iterators] = {
+                      'EXTRAS'                            => extras,
+                      'PRODUCT_ITEMS'                     => product_items,
+                      'RECEIPTS'                          => receipts,
                       'SUBSCRIPTIONS'                     => subscriptions,
-                      'RECEIPTS'                          => receipts
+                      'TASKS'                             => tasks
                     }
 
     # BVR stuff, if requested

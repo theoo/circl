@@ -241,6 +241,66 @@ class People::Affairs::InvoicesController < ApplicationController
   end
 
   ##
+  # Returns services as an HTML fragment build from the given options.
+  #
+  # Available options:
+  #
+  # TODO
+  #
+  # available = ['id', 'executer_name', 'description', 'duration', 'start_date', 'created_at', 'updated_at', 'task_type_title', 'task_type_description', 'task_type_ratio', 'task_type_value', 'value', 'value_in_cents', 'value_currency', 'position']
+  def build_tasks_list(invoice, options = {})
+    defaults = {:fields => ['executer_name', 'task_type_title', 'description', 'start_date', 'duration', 'value'],
+                :order  => 'start_date ASC',
+                :join  => :table }
+
+    defaults.each{|k,v| options[k] = v if options[k].blank? }
+
+    html = ""
+    html << build_join_for(invoice, 'tasks', options)
+    html
+  end
+
+  ##
+  # Returns products as an HTML fragment build from the given options.
+  #
+  # Available options:
+  #
+  # TODO
+  #
+  # available = ['id', 'parent_id', 'created_at', 'updated_at', 'key', 'title', 'description', 'category', 'quantity', 'value', 'value_in_cents', 'value_currency']
+  def build_product_items_list(invoice, options = {})
+    defaults = {:fields => ['key', 'title', 'description', 'quantity', 'value'],
+                :order  => 'position ASC',
+                :join  => :table }
+
+    defaults.each{|k,v| options[k] = v if options[k].blank? }
+
+    html = ""
+    html << build_join_for(invoice, 'product_items', options)
+    html
+  end
+
+  ##
+  # Returns extras as an HTML fragment build from the given options.
+  #
+  # Available options:
+  #
+  # TODO
+  #
+  # available = ['id', 'title', 'description', 'value', 'value_in_cents', 'value_currency', 'quantity', 'position', 'created_at', 'updated_at']
+  def build_extras_list(invoice, options = {})
+    defaults = {:fields => ['title', 'description', 'quantity', 'value'],
+                :order  => 'position ASC',
+                :join  => :table }
+
+    defaults.each{|k,v| options[k] = v if options[k].blank? }
+
+    html = ""
+    html << build_join_for(invoice, 'extras', options)
+    html
+  end
+
+  ##
   # Returns receipts as an HTML fragment build from the given options.
   #
   # Available options:
@@ -258,13 +318,34 @@ class People::Affairs::InvoicesController < ApplicationController
     defaults.each{|k,v| options[k] = v if options[k].blank? }
 
     html = ""
+    html << build_join_for(invoice, 'receipts', options)
+    html
+  end
 
+  private
+
+  def build_join_for(invoice, object_name, options)
+
+    raise ArgumentError, "An invoice is required as first parameter." unless invoice.is_a? Invoice
+
+    [:order, :fields, :join].each do |opt|
+      raise ArgumentError, "options[:#{opt}] is required." unless options[opt]
+    end
+
+    begin
+      objects = invoice.send(object_name)
+    rescue Exception => e
+      raise ArgumentError, "object name: #{object_name} is not a valid method."
+    end
+
+    html = ""
     if options[:join].to_s.strip == 'table'
-      html << render_to_string( :partial => 'receipts.html',
-                                :locals => {:receipts => invoice.receipts,
+      html << render_to_string( :partial => "generic",
+                                :locals => {:objects => objects,
+                                            :object_name => object_name,
                                             :options => options})
     else
-      invoice.receipts.order(options[:order]).each do |s|
+      objects.order(options[:order]).each do |s|
         fields = options[:fields].map do |f|
           field = s.send(f)
           field = field.to_date if field.is_a? Time
@@ -276,5 +357,7 @@ class People::Affairs::InvoicesController < ApplicationController
     end
 
     html
+
   end
+
 end

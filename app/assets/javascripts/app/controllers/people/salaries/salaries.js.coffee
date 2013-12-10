@@ -24,7 +24,7 @@ Person = App.Person
 PersonSalary = App.PersonSalary
 PersonSalaryItem = App.PersonSalaryItem
 PersonSalaryTaxData = App.PersonSalaryTaxData
-Template = App.Template
+Template = App.GenericTemplate
 
 $.fn.person_salary = ->
   elementID   = $(@).data('id')

@@ -1,0 +1,15 @@
+%table{:class => object_name}
+  %tr
+    - options[:fields].each do |field|
+      %th= I18n.t("#{object_name.singularize}.pdf." + field.to_s)
+
+  - objects.order(options[:order]).each do |s|
+    %tr
+      - options[:fields].each do |f|
+        - field = s.send(f)
+        - if field.is_a? Time
+          %td= field.to_date.to_s
+        - elsif field.is_a? Money
+          %td.number= field.to_view
+        - else
+          %td= field.to_s

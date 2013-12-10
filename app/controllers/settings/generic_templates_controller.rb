@@ -97,9 +97,9 @@ class Settings::GenericTemplatesController < ApplicationController
   end
 
   def placeholders
-    authorize! :manage, Template
+    authorize! :manage, GenericTemplate
 
-    st = Template.new(:language => @current_person.main_communication_language)
+    st = GenericTemplate.new(:language => @current_person.main_communication_language)
     placeholders = st.placeholders
 
     respond_to do |format|
@@ -109,7 +109,7 @@ class Settings::GenericTemplatesController < ApplicationController
 
   def count
     respond_to do |format|
-      format.json { render :json => {:count => Template.count} }
+      format.json { render :json => {:count => GenericTemplate.count} }
     end
   end
 

@@ -1,0 +1,16 @@
+---
+fr:
+  product_item:
+    pdf:
+      id: id
+      parent_id: id parent
+      created_at: date de saisie
+      updated_at: date de mise à jour
+      key: clé
+      title: titre
+      description: description
+      category: catégorie
+      quantity: qt.
+      value: valeur
+      value_in_cents: valeur en centimes
+      value_currency: devise

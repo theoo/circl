@@ -28,3 +28,19 @@ en:
       task_types: task types
       tasks_list_pdf_title: Task list for affair %{affair_title}
       times_help: times help
+    pdf:
+      id: id
+      executer_name: performer
+      description: description
+      duration: duration (min)
+      start_date: start date
+      created_at: creation date
+      updated_at: update date
+      task_type_title: task type
+      task_type_description: task type description
+      task_type_ratio: task type ratio
+      task_type_value: task type value
+      value: value
+      value_in_cents: value in cents
+      value_currency: currency
+      position: pos.
