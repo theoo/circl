@@ -339,20 +339,24 @@ class People::Affairs::InvoicesController < ApplicationController
     end
 
     html = ""
-    if options[:join].to_s.strip == 'table'
-      html << render_to_string( :partial => "generic",
-                                :locals => {:objects => objects,
-                                            :object_name => object_name,
-                                            :options => options})
-    else
-      objects.order(options[:order]).each do |s|
-        fields = options[:fields].map do |f|
-          field = s.send(f)
-          field = field.to_date if field.is_a? Time
-          field = field.to_view if field.is_a? Money
-          field.to_s
-        end
-        html << fields.join(options[:join]) + "<br />"
+
+    # print table or join only if there is objects
+    if objects.size > 0
+      if options[:join].to_s.strip == 'table'
+        html << render_to_string( :partial => "generic",
+                                  :locals => {:objects => objects,
+                                              :object_name => object_name,
+                                              :options => options})
+      else
+          objects.order(options[:order]).each do |s|
+            fields = options[:fields].map do |f|
+              field = s.send(f)
+              field = field.to_date if field.is_a? Time
+              field = field.to_view if field.is_a? Money
+              field.to_s
+            end
+            html << fields.join(options[:join]) + "<br />"
+          end
       end
     end
 

@@ -1,11 +1,11 @@
 .panel-body
   %form
     .row
-      .col-lg-12
+      .col-md-12
         .validation_errors_placeholder
 
     .row
-      .col-lg-8
+      .col-md-8
         .form-group
           %label{:for => 'settings_template_title'}
             = I18n.t('common.title')
@@ -15,7 +15,7 @@
                   :class => 'form-control',
                   :value => @template.title }
 
-      .col-lg-4
+      .col-md-4
         .form-group
           %label{:for => 'settings_template_language'}
             = I18n.t('template.views.language')
@@ -29,7 +29,23 @@
                 %option{:value => l.id}= l.name
 
     .row
-      .col-lg-12
+      .col-md-6
+        .form-group
+          %label{:for => 'settings_template_class_name'}
+            = I18n.t('template.views.class_name')
+          %select{:name => 'class_name',
+                  :id => 'settings_template_class_name',
+                  :class => 'required form-control'}
+            - for mod,trad of @class_names
+              - if @template.class_name == mod
+                %option{:value => mod, :selected => true}= trad
+              - else
+                %option{:value => mod}= trad
+
+      .col-md-6
+
+    .row
+      .col-md-12
         .pull-right
           %button{:type => 'submit',
                   :class => 'btn btn-primary'}
@@ -46,8 +62,18 @@
                     :class => 'btn btn-danger'}
               .icon-remove
               = I18n.t("common.destroy")
-            %button{:type => 'button',
-                    :name => 'settings-template-edit',
-                    :class => 'btn btn-default'}
-              .icon-file
-              = I18n.t("template.views.actions.edit_template")
+
+            - classes = ['btn', 'btn-default']
+            %a{ :class => classes.join(" "),
+                :id => 'settings_template_download',
+                :href => @template.odt_url,
+                :title => I18n.t("template.views.download_current_template")}
+              .icon-cloud-download
+              = I18n.t("common.download")
+
+            %a{ :class => classes.join(" "),
+                :id => 'settings_template_upload',
+                :title => I18n.t("template.views.upload_new_template")}
+              .icon-cloud-upload
+              = I18n.t("common.upload")
+

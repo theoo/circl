@@ -39,6 +39,8 @@ en:
       employer_account: employer account
       employer_part: employer part
       export_interval_explanation: export interval explanation
+      generic_template_item_category: Revenues
+      generic_template_item_title: Salary
       gross: gross
       gross_pay: gross pay
       hundred_percent_equivalent: hundred percent equivalent
@@ -54,8 +56,8 @@ en:
       references: references
       salaries: salaries
       salaries_count: salaries
-      template: salary template
-      templates: salary templates
       summary: summary
       tax_data: tax data
       taxes: taxes
+      template: salary template
+      templates: salary templates

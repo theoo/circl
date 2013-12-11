@@ -39,6 +39,8 @@ fr:
       employer_account: retenues employeur
       employer_part: part employeur
       export_interval_explanation: L'intervalle sélectionné doit correspondre à l'intervalle couvert par les salaires et non à leurs dates de création.
+      generic_template_item_category: Revenus
+      generic_template_item_title: Salaire
       gross: brut
       gross_pay: salaire brut
       hundred_percent_equivalent: Salaire équivalent à 100%
@@ -54,8 +56,8 @@ fr:
       references: Références
       salaries: Salaires
       salaries_count: Salaires
-      template: modèle de salaire
-      templates: Modèles de salaire
       summary: Résumé
       tax_data: données de retenue
       taxes: Déductions
+      template: modèle de salaire
+      templates: Modèles de salaire

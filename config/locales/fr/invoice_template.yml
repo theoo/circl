@@ -10,6 +10,7 @@ fr:
     views:
       actions:
         edit_template: modifier le modèle
+      body: body
       bvr_account: compte BVR
       bvr_account_number: numéro de compte BVR
       bvr_address: adresse figurant sur le BVR
@@ -23,6 +24,7 @@ fr:
         bvr_reference_number: ligne de référence du BVR
         bvr_spaced_reference_number: ligne de référence du BVR séparée par des espaces
         bvr_value: Valeur formatée pour le BVR
+        extras: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, title, description, value, value_in_cents, value_currency, quantity, quantity, position, created_at, updated_at'
         invoice_address: Adresse du destinataire de la facture
         invoice_balance_value: Invoice balance value
         invoice_buyer_first_name: Prénom du payeur de la facture
@@ -66,11 +68,10 @@ fr:
         invoice_year_numeric: Année d'émission de la facture
         locale: Code de la langue du modèle
         placeholders: substituants
+        product_items: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, parent_id, created_at, updated_at, key, title, description, category, quantity, value, value_in_cents, value_currency'
         receipts: ! 'Itérateur des reçus. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
         subscriptions: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, parend_id, title, description, value, interval_starts_on, interval_ends_on, created_at, updated_at'
         tasks: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, executer_name, description, duration, start_date, created_at, updated_at, task_type_title, task_type_description, task_type_ratio, task_type_value, value, value_in_cents, value_currency, position'
-        product_items: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, parent_id, created_at, updated_at, key, title, description, category, quantity, value, value_in_cents, value_currency'
-        extras: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, title, description, value, value_in_cents, value_currency, quantity, quantity, position, created_at, updated_at'
       show_invoice_value: imprimer avec la valeure de la facture
       thumb: aperçu
       with_bvr: imprimer le BVR

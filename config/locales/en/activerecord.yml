@@ -306,13 +306,13 @@ en:
       receipt: Receipt
       role: Role
       salary: salary
-      template: template
       setting: Setting
       subscription: Subscription
       task: Task
       task_preset: Task Preset
       task_type: Task Type
       tax: tax
+      template: template
       translation_aptitude: Translation Aptitude
   date:
     abbr_day_names:

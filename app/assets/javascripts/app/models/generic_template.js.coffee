@@ -16,7 +16,7 @@
 
 class App.GenericTemplate extends Spine.Model
 
-  @configure 'GenericTemplate', 'title', 'language_id', 'html', 'thumb_url'
+  @configure 'GenericTemplate', 'title', 'language_id', 'class_name', 'odt'
 
   @extend Spine.Model.Ajax
   @url: ->

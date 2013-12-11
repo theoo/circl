@@ -6,6 +6,7 @@ fr:
       affairs: Affaires
       application_settings: Paramètres de l'application
       attributes: Attributs
+      generic_templates: Modèles Génériques
       invoice_templates: Modèles de facture
       jobs: Métiers
       languages: Langues
@@ -20,4 +21,3 @@ fr:
       task_rates: Tarifs
       task_types: Type de tâches
       templates: Modèles
-      generic_templates: Modèles Génériques

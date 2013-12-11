@@ -7,28 +7,25 @@ en:
       remove_content_if_you_dont_want_footer: remove content if you dont want footer
       remove_content_if_you_dont_want_header: remove content if you dont want header
     views:
-      body: body
-      footer: footer
-      header: header
       actions:
         edit_template: edit template
+      body: body
+      class_name: ressource
+      download_current_template: download the current template
+      footer: footer
+      header: header
       language: language
       placeholders:
         date: The current date in system local format
-        page: The number of the pages currently being printed
-        time: The current time in system local format
-        topage: The number of the last page to be printed
-        webpage: The URL of the page being printed
-        frompage: The number of the first page to be printed
-        section: The name of the current section
-        subsection: The name of the current subsection
         employee_percent_total: employee percent total
         employee_value_total: employee value total
         employer_percent_total: employer percent total
         employer_value_total: employer value total
+        frompage: The number of the first page to be printed
         gross_pay: gross pay
         locale: locale
         net_salary: net salary
+        page: The number of the pages currently being printed
         person_address: person address
         person_bank_information: person bank information
         person_name: person name
@@ -44,16 +41,22 @@ en:
         salary_month_numeric: creation month in numeric
         salary_month_word: creation month in word
         salary_reference_title: reference salary title
-        template_title: template page title
         salary_title: title
         salary_to: to date
         salary_year_numeric: creation year in numeric
         salary_yearly_salary: yearly salary value
         salary_yearly_salary_count: count of salaries in a year
+        section: The name of the current section
+        subsection: The name of the current subsection
         summary: ! 'Summary - Options: { } - None but requires the brackets.'
         tax_data: ! 'Tax data. Options: { attributes | sort by | separator, ''table''}, Attributes: id, salary_id, tax_id, title, position, employer_value, employer_percent, employer_use_percent, employee_value, employee_percent, employee_use_percent, created_at, updated_at'
         taxed_items: ! 'Taxed items. Options: { attributes | sort by | separator, ''table''}, Attributes: id, position, title, value, category, created_at'
+        template_title: template page title
+        time: The current time in system local format
+        topage: The number of the last page to be printed
         untaxed_items: ! 'Unaxed items. Options: { attributes | sort by | separator, ''table''}, Attributes: id, position, title, value, category, created_at'
-      salaries: salaries
+        webpage: The URL of the page being printed
+      associations: associations
       template: template
       thumb: thumb
+      upload_new_template: upload the new template (odt)

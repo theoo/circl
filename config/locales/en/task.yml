@@ -13,6 +13,22 @@ en:
       no_existing_task_type_button: Add a task type
       no_rate_selected_alert: No rate selected, please select one below.
       the_value_is_automaticaly_computed: the value is automaticaly computed
+    pdf:
+      created_at: creation date
+      description: description
+      duration: duration (min)
+      executer_name: performer
+      id: id
+      position: pos.
+      start_date: start date
+      task_type_description: task type description
+      task_type_ratio: task type ratio
+      task_type_title: task type
+      task_type_value: task type value
+      updated_at: update date
+      value: value
+      value_currency: currency
+      value_in_cents: value in cents
     views:
       affair: affair
       duration: duration
@@ -28,19 +44,3 @@ en:
       task_types: task types
       tasks_list_pdf_title: Task list for affair %{affair_title}
       times_help: times help
-    pdf:
-      id: id
-      executer_name: performer
-      description: description
-      duration: duration (min)
-      start_date: start date
-      created_at: creation date
-      updated_at: update date
-      task_type_title: task type
-      task_type_description: task type description
-      task_type_ratio: task type ratio
-      task_type_value: task type value
-      value: value
-      value_in_cents: value in cents
-      value_currency: currency
-      position: pos.

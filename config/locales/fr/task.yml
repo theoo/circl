@@ -13,6 +13,22 @@ fr:
       no_existing_task_type_button: Ajouter un type de tâche
       no_rate_selected_alert: Aucun tarif n'a été sélectionné pour cette personne, veuillez en sélectionner un ci-dessous.
       the_value_is_automaticaly_computed: La valeur est calculée automatiquement à l'enregistrement.
+    pdf:
+      created_at: date de saisie
+      description: description
+      duration: durée (min)
+      executer_name: executant
+      id: id
+      position: pos.
+      start_date: date
+      task_type_description: description du type de tâche
+      task_type_ratio: ratio du type de tâche
+      task_type_title: type de tâche
+      task_type_value: valeur du type de tâche
+      updated_at: date de mise à jour
+      value: valeur
+      value_currency: devise
+      value_in_cents: valeur en centimes
     views:
       affair: affaire
       duration: durée
@@ -28,19 +44,3 @@ fr:
       task_types: types de tâche
       tasks_list_pdf_title: List des tâches pour l'affaire <i>%{affair_title}</i>
       times_help: ! 'Par ex: 9:15, 915, 9'
-    pdf:
-      id: id
-      executer_name: executant
-      description: description
-      duration: durée (min)
-      start_date: date
-      created_at: date de saisie
-      updated_at: date de mise à jour
-      task_type_title: type de tâche
-      task_type_description: description du type de tâche
-      task_type_ratio: ratio du type de tâche
-      task_type_value: valeur du type de tâche
-      value: valeur
-      value_in_cents: valeur en centimes
-      value_currency: devise
-      position: pos.

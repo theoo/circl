@@ -18,6 +18,7 @@ gem 'net-ldap', :git => 'git://github.com/ruby-ldap/ruby-net-ldap.git'
 gem 'pdfkit', '0.5.2'
 gem 'imgkit', '1.3.6'
 gem 'paperclip', '3.3.1'
+gem 'serenity-odt', '0.2.1'
 
 # password validation
 gem 'password_strength', '0.3.2'

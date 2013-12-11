@@ -6,6 +6,7 @@ en:
       affairs: Affairs
       application_settings: Application settings
       attributes: Attributes
+      generic_templates: Generic Templates
       invoice_templates: Invoice templates
       jobs: Jobs
       languages: Languages
@@ -20,4 +21,3 @@ en:
       task_rates: Task rates
       task_types: Task types
       templates: Templates
-      generic_templates: Generic Templates

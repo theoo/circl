@@ -141,7 +141,6 @@ class App.SettingsRolePermissions extends Spine.Controller
     @available_permissions_index = new AvailablePermissionsIndex
     @selected_permissions_index = new SelectedPermissionsIndex
 
-
     @append @available_permissions_index, $("<hr />"), @edit, @selected_permissions_index
 
     @selected_permissions_index.render()

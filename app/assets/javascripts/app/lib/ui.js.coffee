@@ -540,7 +540,7 @@ class Ui
       valid_children : '+body[style]'
       language: I18n.locale
       body_class: body_class.join(" ")
-      content_css: ['/assets/custom_fonts.css', '/assets/pdf_common.css', '/assets/pdf_preview.css']
+      content_css: ['/assets/custom_fonts.css', '/assets/pdf_common.css', '/assets/pdf_edit.css']
       plugins: 'fullscreen,table,autolink,lists,spellchecker,pagebreak,layer,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,noneditable,visualblocks,visualchars,nonbreaking,template,anchor,charmap,hr,image,link,emoticons,code,textcolor'
       theme: 'modern'
       browser_spellcheck : true

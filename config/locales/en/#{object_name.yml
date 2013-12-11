@@ -1,0 +1,5 @@
+---
+en:
+  ! '#{object_name':
+    singularize}:
+      pdf: pdf

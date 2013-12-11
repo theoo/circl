@@ -1,16 +1,16 @@
 ---
 fr:
   extra:
-    views:
-      extra_list_pdf_title: extra list pdf title
     pdf:
-      id: id
-      title: titre
-      description: description
-      value: valeur
-      value_in_cents: valeur en centimes
-      value_currency: devise
-      quantity: qt.
-      position: pos.
       created_at: date de saisie
+      description: description
+      id: id
+      position: pos.
+      quantity: qt.
+      title: titre
       updated_at: date de mise à jour
+      value: valeur
+      value_currency: devise
+      value_in_cents: valeur en centimes
+    views:
+      extra_list_pdf_title: Liste des extras pour l'affair %{affair_title}

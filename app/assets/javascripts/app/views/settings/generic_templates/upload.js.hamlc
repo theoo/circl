@@ -1,0 +1,48 @@
+.modal-header
+  %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+    &times;
+  %h4.modal-title
+    = I18n.t('template.views.upload_template') + ": " + @template.title
+
+%form
+  .modal-body
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
+
+    .row
+      .col-lg-12
+        %h3= I18n.t("template.views.example_files_title")
+        != I18n.t("template.views.example_files_explanation")
+        %br
+        %br
+
+        %ol
+          %li 1.
+            %a{:href => 'assets/template_generic.csv'}
+              = I18n.t("template.views.generic_template_example_file_desc")
+
+        %input{ :type => 'hidden', :name => 'template_id', :value => @template.id }
+        %br
+        %br
+
+    .row
+      .col-lg-12
+        .form-group
+          %label{:for => 'template_upload_file'}
+            = I18n.t('admin.views.select_file')
+          %input{ :type => 'file',
+                  :name => 'odt',
+                  :id => 'template_upload_file'}
+
+  .modal-footer
+    %button{:type => 'button',
+            :class => 'btn btn-default',
+            :data-dismiss => 'modal'}
+      .icon-chevron-left
+      = I18n.t("common.close")
+
+    %button{:type => 'submit',
+            :class => 'btn btn-primary' }
+      .icon-cloud-upload
+      = I18n.t('common.upload')

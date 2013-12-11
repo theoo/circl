@@ -60,6 +60,7 @@ class GenericTemplate < ActiveRecord::Base
   has_many :salaries,
            :class_name => 'Salaries::Salary'
 
+  has_attached_file :odt
   has_attached_file :snapshot,
                     :default_url => '/images/missing_thumbnail.png',
                     :default_style => :thumb,
@@ -70,14 +71,11 @@ class GenericTemplate < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
-  validates_presence_of :title, :body, :language_id
+  validates_presence_of :title, :class_name, :language_id
   validates_uniqueness_of :title
 
   # Validate fields of type 'string' length
   validates_length_of :title, :maximum => 255
-
-  # Validate fields of type 'text' length
-  validates_length_of :body, :maximum => 65536
 
   ########################
   ### INSTANCE METHODS ###
@@ -86,11 +84,12 @@ class GenericTemplate < ActiveRecord::Base
   # Returns a list of all available placeholders for a salary.
   def placeholders
     # Stub
-    s = Salaries::Salary.new( :generic_template => self,
-                              :person => Person.new,
-                              :from => Time.now.beginning_of_year,
-                              :to => Time.now.end_of_year,
-                              :created_at => Time.now)
+    #TODO, generic arguments
+    s = class_name.constantize.new( :generic_template => self,
+                                    :person => Person.new,
+                                    :from => Time.now.beginning_of_year,
+                                    :to => Time.now.end_of_year,
+                                    :created_at => Time.now)
     ph = s.placeholders
     h = {}
     %w(simples iterators).each { |i| h[i] = ph[i.to_sym].keys.sort }
@@ -102,6 +101,7 @@ class GenericTemplate < ActiveRecord::Base
   end
 
   def take_snapshot(html)
+    # TODO update
     kit = IMGKit.new(html).to_jpg
     file = Tempfile.new(["snapshot_#{self.id.to_s}", 'jpg'], 'tmp', :encoding => 'ascii-8bit')
     file.binmode
@@ -116,7 +116,11 @@ class GenericTemplate < ActiveRecord::Base
     h = super(options)
 
     h[:thumb_url] = thumb_url
-    h[:salaries_count] = salaries.count
+    h[:odt_url] = odt.url
+
+    assoc = class_name.split("::").last.downcase.pluralize
+    h[:association_count] = self.send(assoc).count
+
     h[:placeholders] = placeholders
     h[:errors] = errors
 

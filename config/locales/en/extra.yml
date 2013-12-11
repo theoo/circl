@@ -1,16 +1,16 @@
 ---
 en:
   extra:
-    views:
-      extra_list_pdf_title: extra list pdf title
     pdf:
-      id: id
-      title: title
-      description: description
-      value: value
-      value_in_cents: value in cents
-      value_currency: currency
-      quantity: qt.
-      position: pos.
       created_at: creation date
+      description: description
+      id: id
+      position: pos.
+      quantity: qt.
+      title: title
       updated_at: update date
+      value: value
+      value_currency: currency
+      value_in_cents: value in cents
+    views:
+      extra_list_pdf_title: Extra list for affair %{affair_title}

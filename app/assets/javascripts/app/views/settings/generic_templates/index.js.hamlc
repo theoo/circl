@@ -2,9 +2,10 @@
   %thead
     %tr
       %th= I18n.t('template.views.thumb')
+      %th= I18n.t('template.views.class_name')
       %th= I18n.t('common.title')
-      %th.number= I18n.t('template.views.salaries')
-      %th.desc= I18n.t('common.created_at')
+      %th.number= I18n.t('template.views.associations')
+      %th.desc= I18n.t('common.updated_at')
   %tbody
     - for template in App.GenericTemplate.all()
       %tr{:data-id => template.id, :class => 'item' }
@@ -13,6 +14,7 @@
             %img{:src => template.thumb_url, :alt => 'thumbnail', :class => 'template-thumbnail'}
           - else
             %img{:src => "/assets/missing_thumbnail.png", :alt => 'thumbnail', :class => 'template-thumbnail'}
+        %td= @class_names[template.class_name]
         %td= template.title
-        %td.number= template.salaries_count
+        %td.number= template.association_count
         %td= template.created_at

@@ -306,13 +306,13 @@ fr:
       receipt: Reçu
       role: Rôle
       salary: Salaire
-      template: Modèle de Salaire
       setting: Configuration
       subscription: Inscription
       task: Tâche
       task_preset: Pré-réglage de tâche
       task_type: Type de tâche
       tax: Déduction
+      template: Modèle de Salaire
       translation_aptitude: Aptitude de traduction
   date:
     abbr_day_names:

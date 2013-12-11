@@ -234,6 +234,9 @@ Directory::Application.routes.draw do
       collection do
         get 'placeholders', 'count'
       end
+      member do
+        post 'upload_odt'
+      end
     end
 
     resources :jobs do
