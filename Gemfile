@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.1.1'
+gem 'tilt', '1.3.7'
 
 ### database
 gem 'pg', '0.14.0'
