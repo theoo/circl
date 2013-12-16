@@ -60,12 +60,15 @@ class GenericTemplate < ActiveRecord::Base
   has_many :salaries,
            :class_name => 'Salaries::Salary'
 
-  has_attached_file :odt
+  has_attached_file :odt,
+                    :default_url => '/assets/generic_template.odt',
+                    :use_timestamp => true
+
   has_attached_file :snapshot,
                     :default_url => '/images/missing_thumbnail.png',
                     :default_style => :thumb,
                     :use_timestamp => true,
-                    :styles => {:medium => "420x594>",:thumb => "105x147>"}
+                    :styles => {:medium => ["420x594>", :png], :thumb => ["105x147>", :png]}
 
   ###################
   ### VALIDATIONS ###
@@ -76,6 +79,10 @@ class GenericTemplate < ActiveRecord::Base
 
   # Validate fields of type 'string' length
   validates_length_of :title, :maximum => 255
+
+  validates_attachment :odt, :content_type => { :content_type => "application/vnd.oasis.opendocument.text" },
+                              :size => { :in => 0..1.megabytes }
+
 
   ########################
   ### INSTANCE METHODS ###
@@ -100,16 +107,18 @@ class GenericTemplate < ActiveRecord::Base
     snapshot.url(:thumb) if snapshot_file_name
   end
 
-  def take_snapshot(html)
-    # TODO update
-    kit = IMGKit.new(html).to_jpg
-    file = Tempfile.new(["snapshot_#{self.id.to_s}", 'jpg'], 'tmp', :encoding => 'ascii-8bit')
-    file.binmode
-    file.write(kit)
-    file.flush
-    self.snapshot = file
+  def take_snapshot
+    # TODO move to AttachmentGenerator
+    # Convert to PDF in the same dir
+    system("lowriter --headless --convert-to pdf #{odt.path} --outdir #{odt.path.gsub(/([^\/]+.odt)$/, "")}")
+
+    # Open new file
+    pdf_path = odt.path.gsub(/\.odt$/,".pdf")
+    pdf_file = File.open(pdf_path, "r")
+
+    # will be converted in png when calling :thump
+    self.snapshot = pdf_file
     self.save
-    file.unlink
   end
 
   def as_json(options = nil)

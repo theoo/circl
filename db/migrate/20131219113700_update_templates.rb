@@ -10,6 +10,8 @@ class UpdateTemplates < ActiveRecord::Migration
     remove_column :generic_templates, :html
 
     rename_column :salaries, :salary_template_id, :generic_template_id
-    GenericTemplate.destroy_all # bye bye
+    GenericTemplate.all.each do |gt|
+      gt.update_attributes(:class_name => 'Salaries::Salary')
+    end
   end
 end

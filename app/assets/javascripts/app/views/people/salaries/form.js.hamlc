@@ -1,4 +1,4 @@
-- if App.SalaryTax.count() > 0 and App.Template.count() > 0
+- if App.SalaryTax.count() > 0 and App.GenericTemplate.count() > 0
   .panel-body
     -if @person.missing_employee_information
       - if @person.missing_employee_information.length > 0
@@ -45,11 +45,11 @@
               .form-group
                 %label{:for => 'person_template'}
                   = I18n.t('salary.views.template')
-                %select{:name => 'template_id',
+                %select{:name => 'generic_template_id',
                         :id => 'person_template',
                         :class => 'form-control required'}
-                  - for h in App.Template.all()
-                    - if @salary.template_id == h.id
+                  - for h in App.GenericTemplate.all()
+                    - if @salary.generic_template_id == h.id
                       %option{:value => h.id, :selected => true}= h.title
                     - else
                       %option{:value => h.id}= h.title
@@ -241,7 +241,7 @@
                             :type => 'button',
                             :class => 'btn btn-default dropdown-toggle' }
                       .icon-paper-clip
-                      = I18n.t('common.pdf')
+                      = I18n.t("common.documents")
                       .caret
 
                     %ul.dropdown-menu
@@ -252,7 +252,11 @@
                       %li
                         %a{:href => '#', :name => 'salary-download-pdf'}
                           .icon-download-alt
-                          = I18n.t('common.download')
+                          = I18n.t('common.pdf')
+                      %li
+                        %a{:href => '#', :name => 'salary-download-odt'}
+                          .icon-download-alt
+                          = I18n.t('common.odt')
 
 - else
   .panel-body
@@ -260,5 +264,5 @@
       - if ! App.SalaryTax.count() > 0
         = I18n.t("salary.notices.no_existing_salary_taxes_alert")
 
-      - if ! App.Template.count() > 0
+      - if ! App.GenericTemplate.count() > 0
         = I18n.t("salary.notices.no_existing_template_alert")

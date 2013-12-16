@@ -2,7 +2,7 @@
   %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
-    = I18n.t('template.views.upload_template') + ": " + @template.title
+    = I18n.t('template.views.upload_new_template') + ": " + @template.title
 
 %form
   .modal-body
@@ -18,9 +18,9 @@
         %br
 
         %ol
-          %li 1.
+          %li
             %a{:href => 'assets/template_generic.csv'}
-              = I18n.t("template.views.generic_template_example_file_desc")
+              = I18n.t("template.views.salary_template_file")
 
         %input{ :type => 'hidden', :name => 'template_id', :value => @template.id }
         %br

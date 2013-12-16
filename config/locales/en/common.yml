@@ -21,6 +21,7 @@ en:
     created_at: created at
     css: CSS
     csv: CSV (Spreadsheet)
+    documents: documents
     dashboard: dashboard
     date: date
     description: description
@@ -63,6 +64,7 @@ en:
       successfully_destroyed: successfully destroyed
       successfully_updated: successfully updated
       synchronization_started: synchronization started
+    odt: ODT
     paid: paid
     parent: parent
     pdf: pdf

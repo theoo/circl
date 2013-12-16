@@ -190,14 +190,12 @@ class App.UploadSalaryTaxes extends App.ExtendedController
       response = JSON.parse(xhr.responseText)
       # error
       if Object.keys(response.errors).length > 0
-        text = I18n.t('common.errors.failed_to_update')
         @render_errors(response.errors)
 
       # success
       else
         # if a validation failed, remove it's explanation
         @el.find('.validation_errors_placeholder').css('display', 'none')
-        text = I18n.t('common.successfully_updated')
 
         # update tax item on tax widget/list
         SalaryTax.fetch(id: tax.tax_id)

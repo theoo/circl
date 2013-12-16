@@ -139,6 +139,7 @@ class App.UploadOdt extends App.ExtendedController
 
   send: (e) ->
     e.preventDefault()
+    template = $(e.target).serializeObject()
 
     # jquery.iframe-transport (and this technique) doesn't allows
     # me to trigger error or success event. No matter which status
@@ -153,15 +154,14 @@ class App.UploadOdt extends App.ExtendedController
 
       # success
       else
-        # if a validation failed, remove it's explanation
+        # if a validation failed before, remove it's explanation
         @el.find('.validation_errors_placeholder').css('display', 'none')
         text = I18n.t('common.successfully_updated')
 
         # update template item on template widget/list
-        SalaryTax.fetch(id: template.template_id)
+        GenericTemplate.fetch(id: template.template_id)
         @el.closest(".modal").modal('hide')
 
-    template = $(e.target).serializeObject()
 
     settings =
       url: "/settings/generic_templates/#{@template.id}/upload_odt.json"

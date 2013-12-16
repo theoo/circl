@@ -38,14 +38,6 @@ class BackgroundTasks::GenerateGenericTemplateJpg < BackgroundTask
 
   def process!
     generic_template = GenericTemplate.find(options[:generic_template_id])
-
-    controller = Settings::GenericTemplatesController.new
-    html = controller.render_to_string :inline => generic_template.body,
-      :layout => 'preview.html.haml',
-      :formats => [:jpg]
-
-    html.assets_to_full_path!
-
-    generic_template.take_snapshot(html)
+    generic_template.take_snapshot
   end
 end

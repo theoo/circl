@@ -27,6 +27,7 @@ fr:
         check_as_paid: marquer comme payé
         copy_reference: copier la référence vers un groupe de personnes
         new_reference: Nouvelle référence
+        preview_in_new_tab: aperçu dans un nouvel onglet
       activity_rate: taux d'occupation
       annual_earning_total: revenu annuel total
       annual_salary: Salaire annuel

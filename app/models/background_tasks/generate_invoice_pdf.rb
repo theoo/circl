@@ -52,21 +52,6 @@ class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
     file = Tempfile.new(['invoice', '.pdf'], :encoding => 'ascii-8bit')
     file.binmode
 
-    # token = Person.find(ApplicationSetting.value(:me)).authentication_token
-    # options = {}
-    # if invoice.invoice_template.header
-    #   options[:header_html] =
-    #     Rails.configuration.settings['directory_url'] +
-    #       header_person_affair_invoice_path(person, affair, invoice, :auth_token => token)
-    # end
-
-    # if invoice.invoice_template.footer
-    #   options[:footer_html] =
-    #     Rails.configuration.settings['directory_url'] +
-    #       footer_person_affair_invoice_path(person, affair, invoice, :auth_token => token)
-    # end
-    # kit = PDFKit.new(html, options)
-
     # Using path instead of url so it works in dev mode too.
     kit = PDFKit.new(html)
 

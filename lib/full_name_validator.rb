@@ -18,7 +18,6 @@
 
 class FullNameValidator < ActiveModel::Validator
 
-
   def validate(record)
     return if record.first_name.blank? && record.last_name.blank?
 
@@ -31,7 +30,6 @@ class FullNameValidator < ActiveModel::Validator
     end
 
   end
-
 
 private
   def first_name_valid_for(record)

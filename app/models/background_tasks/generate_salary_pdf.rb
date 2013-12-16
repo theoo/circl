@@ -30,6 +30,7 @@
 
 # Options are: salary_id, :person
 class BackgroundTasks::GenerateSalaryPdf < BackgroundTask
+
   def self.generate_title(options)
     I18n.t("background_task.tasks.generate_salary_pdf",
       :salary_id => options[:salary_id],
@@ -37,24 +38,15 @@ class BackgroundTasks::GenerateSalaryPdf < BackgroundTask
   end
 
   def process!
-    salary = Salaries::Salary.find(options[:salary_id])
+    @salary = Salaries::Salary.find(options[:salary_id])
 
-    controller = People::Salaries::SalariesController.new
-    html = controller.render_to_string( :inline => controller.build_from_template(salary),
-                                        :layout => 'pdf.html.haml' )
+    generator = AttachmentGenerator.new(@salary)
+    generator.pdf do |o, pdf|
+      o.update_attributes :pdf => pdf
 
-    html.assets_to_full_path!
+      # this won't touch updated_at column and thereby set PDF as uptodate
+      o.update_column(:pdf_updated_at, Time.now)
+    end
 
-    file = Tempfile.new(['salary', '.pdf'], :encoding => 'ascii-8bit')
-    file.binmode
-    file.write(PDFKit.new(html).to_pdf)
-    file.flush
-    salary.pdf = file
-    salary.save
-
-    # this won't touch updated_at column
-    salary.update_column(:pdf_updated_at, Time.now)
-
-    file.unlink
   end
 end

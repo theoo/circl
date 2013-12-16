@@ -27,6 +27,7 @@ en:
         check_as_paid: check as paid
         copy_reference: copy reference
         new_reference: new reference
+        preview_in_new_tab: preview in new tab
       activity_rate: activity rate
       annual_earning_total: annual earning total
       annual_salary: annual salary

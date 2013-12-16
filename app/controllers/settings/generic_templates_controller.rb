@@ -41,7 +41,7 @@ class Settings::GenericTemplatesController < ApplicationController
       end
       format.jpg do
         unless @generic_template.snapshot.path and File.exists? @generic_template.snapshot.path
-          # BackgroundTasks::GenerateGenericTemplateJpg.process!(:generic_template_id => @generic_template.id)
+          @generic_template.take_snapshot
           @generic_template.reload
         end
         redirect_to @generic_template.snapshot.url
@@ -52,7 +52,6 @@ class Settings::GenericTemplatesController < ApplicationController
   def create
     respond_to do |format|
       if @generic_template.save
-        # BackgroundTasks::GenerateGenericTemplateJpg.process!(:generic_template_id => @generic_template.id)
         format.json { render :json => @generic_template }
       else
         format.json { render :json => @generic_template.errors, :status => :unprocessable_entity }
@@ -70,7 +69,6 @@ class Settings::GenericTemplatesController < ApplicationController
   def update
     respond_to do |format|
       if @generic_template.update_attributes(params[:generic_template])
-         # BackgroundTasks::GenerateGenericTemplateJpg.process!(:generic_template_id => @generic_template.id)
         format.json { render :json => @generic_template }
         format.html do
           flash[:notice] = I18n.t("common.notices.successfully_updated")
@@ -97,7 +95,19 @@ class Settings::GenericTemplatesController < ApplicationController
   end
 
   def upload_odt
-    raise ArgumentError, params.inspect
+    authorize! :manage, GenericTemplate
+
+    @generic_template = GenericTemplate.find params[:id]
+    @generic_template.odt = params[:odt]
+
+    respond_to do |format|
+      if @generic_template.save
+        @generic_template.take_snapshot
+        format.json { render :json => @generic_template }
+      else
+        format.json { render :json => {:errors => @generic_template.errors}, :status => :unprocessable_entity }
+      end
+    end
   end
 
   def placeholders

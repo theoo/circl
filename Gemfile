@@ -20,6 +20,8 @@ gem 'pdfkit', '0.5.2'
 gem 'imgkit', '1.3.6'
 gem 'paperclip', '3.3.1'
 gem 'serenity-odt', '0.2.1'
+gem 'zip', '2.0.2'
+gem 'recursive-open-struct', '0.4.5'
 
 # password validation
 gem 'password_strength', '0.3.2'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131125214900) do
+ActiveRecord::Schema.define(:version => 20131219113700) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -141,6 +141,25 @@ ActiveRecord::Schema.define(:version => 20131125214900) do
   add_index "extras", ["position"], :name => "index_extras_on_position"
   add_index "extras", ["quantity"], :name => "index_extras_on_quantity"
   add_index "extras", ["value_in_cents"], :name => "index_extras_on_value_in_cents"
+
+  create_table "generic_templates", :force => true do |t|
+    t.string   "title",                 :null => false
+    t.string   "snapshot_file_name"
+    t.string   "snapshot_content_type"
+    t.integer  "snapshot_file_size"
+    t.datetime "snapshot_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "language_id",           :null => false
+    t.string   "class_name"
+    t.string   "odt_file_name"
+    t.string   "odt_content_type"
+    t.integer  "odt_file_size"
+    t.datetime "odt_updated_at"
+  end
+
+  add_index "generic_templates", ["language_id"], :name => "index_salaries_salary_templates_on_language_id"
+  add_index "generic_templates", ["odt_updated_at"], :name => "index_generic_templates_on_odt_updated_at"
 
   create_table "invoice_templates", :force => true do |t|
     t.string   "title",                 :default => "",    :null => false
@@ -286,6 +305,7 @@ ActiveRecord::Schema.define(:version => 20131125214900) do
     t.integer  "task_rate_id"
     t.float    "latitude"
     t.float    "longitude"
+    t.boolean  "force_geographic_coordinates",                  :default => false, :null => false
   end
 
   add_index "people", ["authentication_token"], :name => "index_people_on_authentication_token", :unique => true
@@ -471,7 +491,7 @@ ActiveRecord::Schema.define(:version => 20131125214900) do
     t.integer  "yearly_salary_count"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "salary_template_id",                                                          :null => false
+    t.integer  "generic_template_id",                                                         :null => false
     t.string   "pdf_file_name"
     t.string   "pdf_content_type"
     t.integer  "pdf_file_size"
@@ -558,20 +578,6 @@ ActiveRecord::Schema.define(:version => 20131125214900) do
 
   add_index "salaries_items_taxes", ["item_id"], :name => "index_salaries_items_taxes_on_item_id"
   add_index "salaries_items_taxes", ["tax_id"], :name => "index_salaries_items_taxes_on_tax_id"
-
-  create_table "salaries_salary_templates", :force => true do |t|
-    t.string   "title",                 :null => false
-    t.text     "html",                  :null => false
-    t.string   "snapshot_file_name"
-    t.string   "snapshot_content_type"
-    t.integer  "snapshot_file_size"
-    t.datetime "snapshot_updated_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "language_id",           :null => false
-  end
-
-  add_index "salaries_salary_templates", ["language_id"], :name => "index_salaries_salary_templates_on_language_id"
 
   create_table "salaries_tax_data", :force => true do |t|
     t.integer  "salary_id",                                                          :null => false
@@ -666,8 +672,8 @@ ActiveRecord::Schema.define(:version => 20131125214900) do
   create_table "search_attributes", :force => true do |t|
     t.string "model",    :default => "", :null => false
     t.string "name",     :default => "", :null => false
-    t.string "indexing", :default => ""
-    t.string "mapping",  :default => ""
+    t.text   "indexing", :default => "", :null => false
+    t.text   "mapping",  :default => "", :null => false
     t.string "group",    :default => ""
   end
 

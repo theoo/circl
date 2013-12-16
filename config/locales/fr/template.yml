@@ -9,9 +9,12 @@ fr:
     views:
       actions:
         edit_template: modifier le modèle
+      associations: associations
       body: Corps du texte
       class_name: ressource
       download_current_template: télécharger le modèle actuel
+      example_files_explanation: Vous trouverez ci-dessous une liste de fichier exemple pour l'adaptation des modèles. Veuillez consulter <a href='https://doc.circl.ch' target='_blank'>https://doc.circl.ch</a> pour plus d'informations.
+      example_files_title: Fichier d'exemple
       footer: Pied de page
       header: Entête
       language: langue
@@ -56,7 +59,7 @@ fr:
         topage: Le nombre de page du document
         untaxed_items: ! 'Objets sans déductions. Options: { attributs | ordre de tri | séparateurs, ''table''}, Attributs: id, position, title, value, category, created_at'
         webpage: L'adresse (URL) de la page imprimée
-      associations: associations
+      salary_template_file: Modèle de salaire exemple
       template: modèle
       thumb: aperçu
       upload_new_template: téléverser un nouveau modèle

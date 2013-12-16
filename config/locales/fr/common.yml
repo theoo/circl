@@ -21,6 +21,7 @@ fr:
     created_at: création
     css: CSS
     csv: CSV (Tableur)
+    documents: documents
     dashboard: Tableau de bord
     date: date
     description: description
@@ -63,6 +64,7 @@ fr:
       successfully_destroyed: destruction réussie
       successfully_updated: mise à jour réussie
       synchronization_started: La synchronisation a démarrée.
+    odt: ODT
     paid: payé
     parent: parent
     pdf: PDF

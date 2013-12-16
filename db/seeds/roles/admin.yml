@@ -5,6 +5,9 @@
 - subject: InvoiceTemplate
   action: manage
 
+- subject: GenericTemplate
+  action: manage
+
 - subject: Job
   action: manage
 
