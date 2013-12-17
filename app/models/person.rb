@@ -566,6 +566,10 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def age
+    age_at(Time.now.to_date)
+  end
+
   def male?
     # this is unfair but not beeing a male means beeing a female in this world.
     # database allow undefined gender

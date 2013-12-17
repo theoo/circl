@@ -240,6 +240,7 @@ class Salaries::Salary < ActiveRecord::Base
   end
 
   def pdf_up_to_date?
+    return false
     return false unless pdf_updated_at
 
     # Check if pdf requires an update because salary is newer
@@ -387,26 +388,31 @@ class Salaries::Salary < ActiveRecord::Base
 
   def summary
     h = {}
+    h[:taxed_categories] = taxed_categories.as_json
+    h[:tax_data] = employee_value_total
+    h[:untaxed_categories] = untaxed_categories.as_json
+    h[:net_salary] = net_salary
+    h
+  end
 
-    h[:taxed_categories] = {}
+  def taxed_categories
+    h = {}
     taxed_items.each do |i|
       next if i.value <= 0
-      h[:taxed_categories][i.category] ||= 0.to_money
-      h[:taxed_categories][i.category] += i.value
+      h[i.category] ||= 0.to_money
+      h[i.category] += i.value
     end
+    h.dup
+  end
 
-    h[:tax_data] = employee_value_total
-
-    h[:untaxed_categories] = {}
+  def untaxed_categories
+    h = {}
     untaxed_items.each do |i|
       next if i.value <= 0
-      h[:untaxed_categories][i.category] ||= 0.to_money
-      h[:untaxed_categories][i.category] += i.value
+      h[i.category] ||= 0.to_money
+      h[i.category] += i.value
     end
-
-    h[:net_salary] = net_salary
-
-    h
+    h.dup
   end
 
   def summary_json
@@ -498,6 +504,7 @@ class Salaries::Salary < ActiveRecord::Base
     h[:items] = items.map(&:as_json)
     h[:tax_data] = selected_tax_data.map(&:as_json)
 
+
     h[:employer_value_total]   = employer_value_total.to_f
     h[:employer_percent_total] = employer_percent_total.to_f
     h[:employee_value_total]   = employee_value_total.to_f
@@ -507,7 +514,11 @@ class Salaries::Salary < ActiveRecord::Base
     h[:net_account]       = net_account
     h[:employer_account]  = employer_account
 
-    h[:summary] = summary_json
+    # PDF generation
+    # h[:taxed_items] = taxed_items.as_json
+    # h[:untaxed_items] = untaxed_items.as_json
+    # h[:selected_tax_data] = selected_tax_data.as_json
+    # h[:summary] = summary_json
 
     h[:errors] = errors
     h
