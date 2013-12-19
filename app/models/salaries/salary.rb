@@ -254,53 +254,6 @@ class Salaries::Salary < ActiveRecord::Base
     BackgroundTasks::GenerateSalaryPdf.schedule(:invoice_id => self.id)
   end
 
-  # Returns a hash of placeholders and values.
-  def placeholders
-    # internationlize dates
-    I18n.locale = generic_template.language.symbol
-
-    h = {}
-    # NOTE don't forget to add translation manualy. rake i18n:import_missing_translations won't parse this code.
-    h[:simples] =   {
-                      'LOCALE'                     => I18n.locale.to_s,
-                      'PERSON_ADDRESS'             => simple_format(person.full_address),
-                      'PERSON_BANK_INFORMATION'    => person.bank_informations,
-                      'PERSON_NAME'                => person.name,
-                      'SALARY_TITLE'               => title,
-                      'SALARY_ID'                  => id.to_s,
-                      'SALARY_FROM'                => from.to_s,
-                      'SALARY_TO'                  => to.to_s,
-                      'SALARY_MARRIED'             => I18n.t("common." + married.to_s),
-                      'SALARY_CHILDREN_COUNT'      => children_count.to_s,
-                      'SALARY_INTERVAL_IN_DAYS'    => interval_in_days.to_s,
-                      'SALARY_CREATED_AT'          => created_at.to_s,
-                      'SALARY_DAY_NUMERIC'         => I18n.l(created_at, :format => "%d"),
-                      'SALARY_MONTH_NUMERIC'       => created_at.strftime("%m"),
-                      'SALARY_YEAR_NUMERIC'        => created_at.strftime("%Y"),
-                      'SALARY_DAY_WORD'            => I18n.l(created_at, :format => "%A"),
-                      'SALARY_MONTH_WORD'          => I18n.l(created_at, :format => "%B"),
-                      'SALARY_YEARLY_SALARY_COUNT' => (reference ? reference.yearly_salary_count.to_s : yearly_salary_count.to_s),
-                      'SALARY_YEARLY_SALARY'       => (reference ? reference.yearly_salary.to_view : yearly_salary.to_view),
-                      'SALARY_REFERENCE_TITLE'     => (reference ? reference.title : ''),
-                      'SALARY_TEMPLATE_TITLE'      => generic_template.title,
-                      'GROSS_PAY'                  => gross_pay.to_view,
-                      'NET_SALARY'                 => net_salary.to_view,
-                      'PERSON_NAME'                => person.name,
-                      'EMPLOYER_VALUE_TOTAL'       => employer_value_total.to_view,
-                      'EMPLOYER_PERCENT_TOTAL'     => employer_percent_total.to_f.to_s,
-                      'EMPLOYEE_VALUE_TOTAL'       => employee_value_total.to_view,
-                      'EMPLOYEE_PERCENT_TOTAL'     => employee_percent_total.to_f.to_s
-                    }
-
-    h[:iterators] = {
-                      'TAXED_ITEMS'   => taxed_items,
-                      'TAX_DATA'      => selected_tax_data,
-                      'UNTAXED_ITEMS' => untaxed_items,
-                      'SUMMARY'       => summary
-                    }
-    h
-  end
-
   def has_reference?
     reference.nil? == false
   end

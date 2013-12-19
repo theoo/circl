@@ -88,21 +88,6 @@ class GenericTemplate < ActiveRecord::Base
   ### INSTANCE METHODS ###
   ########################
 
-  # Returns a list of all available placeholders for a salary.
-  def placeholders
-    # Stub
-    #TODO, generic arguments
-    s = class_name.constantize.new( :generic_template => self,
-                                    :person => Person.new,
-                                    :from => Time.now.beginning_of_year,
-                                    :to => Time.now.end_of_year,
-                                    :created_at => Time.now)
-    ph = s.placeholders
-    h = {}
-    %w(simples iterators).each { |i| h[i] = ph[i.to_sym].keys.sort }
-    h
-  end
-
   def thumb_url
     snapshot.url(:thumb) if snapshot_file_name
   end
@@ -130,7 +115,6 @@ class GenericTemplate < ActiveRecord::Base
     assoc = class_name.split("::").last.downcase.pluralize
     h[:association_count] = self.send(assoc).count
 
-    h[:placeholders] = placeholders
     h[:errors] = errors
 
     h

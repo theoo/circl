@@ -232,7 +232,7 @@ Directory::Application.routes.draw do
 
     resources :generic_templates do
       collection do
-        get 'placeholders', 'count'
+        get 'count'
       end
       member do
         post 'upload_odt'
