@@ -9,7 +9,7 @@ fr:
     administration: Administration
     apply: appliquer
     archive: archive
-    are_you_sure: en êtes-vous sur?
+    are_you_sure: En êtes-vous sur?
     browser:
       a_modern_browser_is_required: Un navigateur moderne et compatible avec HTML5/JS/CSS3 est requis.
       currently_supported_browser_are: CIRCL supporte actuellement ces navigateurs
@@ -41,7 +41,7 @@ fr:
       from_should_be_before_to: ! '''de'' devrait être avant ''à'''
       if_you_think_it_s_a_bug: ! 'Si vous pensez qu''il s''agit d''un bug, veuillez nous écire par email à l''adresse: <a href=''mailto:support@circl.ch''>support@circl.ch</a>'
       invalid_date: La date n'est pas valide.
-      invalid_phone: Le format n'est pas valide, vous devez utiliser un format comme "+11 22 333 44 55" (entre 7 et 18 numéros).
+      invalid_phone: Le format n'est pas valide, vous devez utiliser un format comme "+11 22 333 44 55" (entre 7 et 18 chiffres).
       must_provide_first_name_if_last_name: Il doit y avoir un prénom s'il y a un nom de famille.
       must_provide_last_name_if_first_name: Il doit y avoir un nom de famille s'il y a un prénom.
       please_verify_rights_and_record: Veuillez vérifier que vous êtes autorisé à effectuer cette action, et assurez vous que cette action est valable pour cet enregistrement.
@@ -80,11 +80,11 @@ fr:
     salaries: Salaires
     settings: Configuration
     strong: fort
-    successfully_updated: successfully updated
+    successfully_updated: mise à jour réussie
     synchronize: Synchroniser
     table:
       position: pos.
-      quantity: qt.
+      quantity: qte.
     template: modèle
     this_application_unique_id: L'identifiant unique de cette application est
     title: titre

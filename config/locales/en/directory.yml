@@ -2,31 +2,31 @@
 en:
   directory:
     errors:
-      query_empty: query empty
-      query_invalid: query invalid
-      search_error: search error
-      you_need_to_select_at_least_one_attribute_to_display: you need to select at least one attribute to display
+      query_empty: The search query was empty, type a query and try again.
+      query_invalid: The query "%{query}" was invalid
+      search_error: Search error -> %{error}
+      you_need_to_select_at_least_one_attribute_to_display: You need to select at least one attribute to display
     notices:
-      result_return_only_one_person: result return only one person
+      result_return_only_one_person: As only one person matched to your search, you have been redirected to the edition page.
     views:
       actions:
-        change_person_password: change person password
-      add_person: add person
-      custom_action_introduction: custom action introduction
-      custom_action_warning: custom action warning
-      edit_preset_filters: edit preset filters
+        change_person_password: Reset the person's password
+      add_person: Add a person
+      custom_action_introduction: You have been redirected to the search page in order to perform a special action.
+      custom_action_warning: You can search the directory as usual, when the search results are as you expected, click 'Continue' to proceed.
+      edit_preset_filters: Edit preset filters
       fields:
-        available_attributes: available attributes
-        drag_and_drop_me: drag and drop me
-        presets: presets
-        selected_attributes: selected attributes
-        sorting_order: sorting order
-      new_preset: new preset
-      query_preset_explanation: query preset explanation
-      query_preset_name: query preset name
-      quick_search_placeholder: quick search placeholder
+        available_attributes: Available attributes
+        drag_and_drop_me: Drag and drop elements here
+        presets: Presets
+        selected_attributes: Selected attributes
+        sorting_order: Sorting order
+      new_preset: New preset
+      query_preset_explanation: You can drag attributes from the lists of selected attributes and sorting order.
+      query_preset_name: Preset name
+      quick_search_placeholder: Quick search
       results: Results
       score: score
-      search_the_directory: search the directory
-      show_on_a_map: show on a map
-      sync_mailchimp: sync mailchimp
+      search_the_directory: Search the directory
+      show_on_a_map: Show on a map
+      sync_mailchimp: Synchronize Mailchimp

@@ -2,39 +2,39 @@
 en:
   admin:
     errors:
-      no_file_submitted: no file submitted
-      wrong_file_format: wrong file format
+      no_file_submitted: Please select a file
+      wrong_file_format: Wrong file format
     import:
       main_communication_language: main communication language
       row: row
     notices:
-      add_members_email_will_be_sent: add members email will be sent
-      pdf_will_be_sent: pdf will be sent
-      people_imported: people imported
-      receipts_imported: receipts imported
+      add_members_email_will_be_sent: The member import process has started, a report will be sent to you at %{email} upon completion.
+      pdf_will_be_sent: You will receive an email at %{email} containing a link to the PDF when it will be ready.
+      people_imported: The selected persons have been imported, a report has been sent to you at %{email}.
+      receipts_imported: The receipts have been imported, a report has been sent to you at %{email}.
     views:
-      affairs: affairs
-      finances: finances
+      affairs: Affairs
+      finances: Finances
       import: import
-      import_people: import people
+      import_people: Import people
       invoice_date: invoice date
       invoice_title: invoice title
       invoice_value: invoice value
-      invoices: invoices
-      people_example_file: people example file
-      people_file_errors: people file errors
-      people_found_in_file: people found in file
-      people_import_help: people import help
-      private_tags: private tags
+      invoices: Invoices
+      people_example_file: example file
+      people_file_errors: error(s) in the file
+      people_found_in_file: persons found in the file
+      people_import_help: These persons were found in the file.<br>Please, verify the correctness of this information and click on 'next' to proceed with the import.<br><br>Incorrect records will be colored red and you will have to restart the process with a corected file.<br>By hovering a red record, you will be able to get more information about the error.
+      private_tags: Private tags
       proceed_with_import: proceed with import
       public_tags: public tags
       receipt_date: receipt date
       receipt_value: receipt value
-      receipts: receipts
-      receipts_file_errors: receipts file errors
+      receipts: Receipts
+      receipts_file_errors: error(s) in the file
       receipts_found_in_file: receipts found in file
-      receipts_import_help: receipts import help
-      select_file: select file
-      subscriptions: subscriptions
-      tags: tags
-      tools: tools
+      receipts_import_help: These receipts were found in the file.<br>Please, verify the correctness of this information and click on 'next' to proceed with the import.<br><br>Receipts that have already been imported will be colored yellow and the corrections made by PostFinance blue.<br><br>Receipts to import can be selected using the checkboxes.
+      select_file: Please select a file
+      subscriptions: Subscriptions
+      tags: Tags
+      tools: Tools

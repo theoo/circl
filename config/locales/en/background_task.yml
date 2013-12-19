@@ -2,23 +2,23 @@
 en:
   background_task:
     mail:
-      error_report_title: error report title
+      error_report_title: Error report
     tasks:
-      add_people_to_subscription_and_email: add people to subscription and email
-      concat_and_email_subscription_pdf: concat and email subscription pdf
-      generate_invoice_pdf: generate invoice pdf
-      generate_invoice_template_jpg: generate invoice template jpg
-      generate_salary_pdf: generate salary pdf
-      generate_template_jpg: generate salary template jpg
-      merge_subscriptions: merge subscriptions
-      prepare_subscription_pdf_and_email: prepare subscription pdf and email
-      run_rake_task: run rake task
-      update_index_for_people: update index for people
-      update_subscription_invoices_and_email: update subscription invoices and email
+      add_people_to_subscription_and_email: Adding %{people_count} person(s) to the subscription %{subscription_id} - %{subscription_title}
+      concat_and_email_subscription_pdf: Generating a file combining invoices from %{people_count} person(s) for the subscription %{subscription_id} - %{subscription_title}
+      generate_invoice_pdf: Generating PDF for invoice %{invoice_id} - %{invoice_title}
+      generate_invoice_template_jpg: Generating thumbnail for invoice template %{invoice_template_id} - %{invoice_template_title}
+      generate_salary_pdf: Generating PDF for salary %{salary_id} - %{salary_title}
+      generate_template_jpg: Generating thumbnail for salary template %{template_id} - %{template_title}
+      merge_subscriptions: Merging subscription %{source_subscription_id} into %{destination_subscription_id}
+      prepare_subscription_pdf_and_email: Generating PDFs of invoices for %{people_count} person(s) for the subscription %{subscription_id} - %{subscription_title}
+      run_rake_task: Running an unsual task - %{name}
+      update_index_for_people: Updating search index for %{people_count} person(s)
+      update_subscription_invoices_and_email: Updating indexes and invoices for subscription %{subscription_id} - %{subscription_title}
     views:
       actions:
         destroy_background_task: destroy background task
-      background_tasks_list_title: background tasks list title
+      background_tasks_list_title: Background tasklist
       status: status
       statuses:
         pending: pending

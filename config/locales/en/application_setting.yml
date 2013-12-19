@@ -2,7 +2,7 @@
 en:
   application_setting:
     errors:
-      cant_change_key: cant change key
-      missing_attribute: missing attribute
+      cant_change_key: The key cannot be modified.
+      missing_attribute: The following key is not defined '%{key}'
     views:
       key: key

@@ -77,7 +77,7 @@ en:
       api: api
       autentication_token: autentication token
       avs_number: avs number
-      bank_informations: bank informations
+      bank_informations: bank information
       birth_date: birth date
       change_password: change password
       change_password_for: change password for

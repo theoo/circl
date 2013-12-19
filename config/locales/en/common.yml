@@ -6,15 +6,15 @@ en:
     actions: actions
     add: add
     adjust: adjust
-    administration: administration
+    administration: Administration
     apply: apply
     archive: archive
-    are_you_sure: are you sure
+    are_you_sure: Are you sure?
     browser:
-      a_modern_browser_is_required: a modern browser is required
-      currently_supported_browser_are: currently supported browser are
+      a_modern_browser_is_required: A modern HTML5/JS/CSS3-compatible browser is required.
+      currently_supported_browser_are: CIRCL currently accepts these browsers
       mobile_browsers: mobile browsers
-      multiplateform_browsers: multiplateform browsers
+      multiplateform_browsers: crossform browsers
     cancel: cancel
     close: close
     create: create
@@ -22,29 +22,29 @@ en:
     css: CSS
     csv: CSV (Spreadsheet)
     documents: documents
-    dashboard: dashboard
+    dashboard: Dashboard
     date: date
     description: description
     destroy: destroy
-    directory: directory
+    directory: Directory
     download: download
     errors:
-      absence_of_identifier: absence of identifier
-      already_synchronizing: already synchronizing
-      date_must_match_format: date must match format
-      does_not_point_to_valid_model: does not point to valid model
-      end_must_be_after_start: end must be after start
+      absence_of_identifier: Identifier missing
+      already_synchronizing: A synchronization is already running.
+      date_must_match_format: The date must match this format DD-MM-YYYY
+      does_not_point_to_valid_model: Not pointing to a valid model.
+      end_must_be_after_start: Interval cannot end before it starts.
       error: error
-      failed_to_destroy: failed to destroy
-      failed_to_retrieve_data: failed to retrieve data
-      failed_to_update: failed to update
+      failed_to_destroy: Failed to destroy.
+      failed_to_retrieve_data: Failed to retrieve data.
+      failed_to_update: Failed to update.
       from_should_be_before_to: ! '''from'' should be before ''to'''
-      if_you_think_it_s_a_bug: if you think it s a bug
+      if_you_think_it_s_a_bug: ! 'If you think it is a bug, please contact us at <a href=''mailto:support@circl.ch''>support@circl.ch</a>'
       invalid_date: invalid date
-      invalid_phone: invalid phone
-      must_provide_first_name_if_last_name: must provide first name if last name
-      must_provide_last_name_if_first_name: must provide last name if first name
-      please_verify_rights_and_record: please verify rights and record
+      invalid_phone: Invalid phone number format, you must use the following "+11 22 333 44 55" (7 to 18 digits).
+      must_provide_first_name_if_last_name: By providing a last name, you must provide a first name along with it.
+      must_provide_last_name_if_first_name: By providing a first name, you must provide a last name along with it.
+      please_verify_rights_and_record: Please verify that you have the required privileges to perform this action and that this action can be performed on this record.
     export: export
     export_to: export to
     'false': false
@@ -52,7 +52,7 @@ en:
     from: from
     good: good
     hour: hour
-    id: id
+    id: ID
     incomplete: incomplete
     info: info
     key: key
@@ -63,43 +63,43 @@ en:
     notices:
       successfully_destroyed: successfully destroyed
       successfully_updated: successfully updated
-      synchronization_started: synchronization started
+      synchronization_started: Synchronization started
     odt: ODT
     paid: paid
     parent: parent
-    pdf: pdf
+    pdf: PDF
     per_hour: per hour
     person: person
     position: position
     preview: preview
-    preview_in_new_tab: preview in new tab
+    preview_in_new_tab: preview in a new tab
     quantity: quantity
-    released_under: released under
-    requires_browser_update: requires browser update
+    released_under: released under the version 3
+    requires_browser_update: Your browser must be updated to see this page.
     reset: reset
-    salaries: salaries
-    settings: settings
+    salaries: Salaries
+    settings: Settings
     strong: strong
     successfully_updated: successfully updated
-    synchronize: synchronize
+    synchronize: Synchronize
     table:
       position: pos.
-      quantity: qt.
+      quantity: qty.
     template: template
-    this_application_unique_id: this application unique id
+    this_application_unique_id: This application unique ID is
     title: title
     to: to
-    toolbox_export: toolbox export
-    toolbox_import_bank_file: toolbox import bank file
-    toolbox_template: toolbox template
+    toolbox_export: Export
+    toolbox_import_bank_file: Import a bank file
+    toolbox_template: memplate
     tools: tools
     total: total
     'true': true
     unpaid: unpaid
     update: update
-    updated_at: update at
+    updated_at: last update
     upload: upload
-    use_right_click_save_as: use right click save as
+    use_right_click_save_as: right-click and select 'Save as...'
     value: value
     weak: weak
     year: year
