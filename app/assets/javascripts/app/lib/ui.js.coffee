@@ -582,40 +582,51 @@ class Ui
 
   load_map: (container_string, save_callback = undefined) ->
     map_container = $("#" + container_string)
-    map_height = $(document).height() - 210
+    map_height = $(document).height() - 265
     map_height = 300 if map_height < 300
 
     map_container.css(height: map_height)
 
-    markers = $($.parseJSON $("[name=map_markers]").val())
+    coordinates = $($.parseJSON $("[name=map_markers]").val())
     config = $.parseJSON $("[name=map_config]").val()
 
     map = L.map(container_string)
+    markers = []
 
     # There is one marker
-    if markers.length == 1
-      marker = markers[0]
+    if coordinates.length == 1
+      marker = coordinates[0]
       map.setView(marker.latlng, config.max_zoom)
       m = L.marker(marker.latlng, {draggable: true}).addTo(map)
       m.bindPopup(marker.popup)
       m.openPopup()
 
-      if save_callback
-        m.on 'dragend', (e) ->
-          save_callback(m.getLatLng())
+      m.on 'dragend', (e) ->
+        latlng = m.getLatLng()
+        latlng_string =[latlng.lat, latlng.lng].join(", ")
 
-    # There is many markers
-    if markers.length > 1
+        # update latlng input field
+        $("#person_geographic_coordinates").val latlng_string
+
+        save_callback(latlng) if save_callback
+
+      markers.push m
+
+    # There is many coordinates
+    if coordinates.length > 1
       bounds = []
-      markers.each ->
-        marker = L.marker(@.latlng).addTo(map)
-        marker.bindPopup(@.popup)
+      coordinates.each ->
+        m = L.marker(@.latlng).addTo(map)
+        m.bindPopup(@.popup)
+        markers.push m
         bounds.push @.latlng
 
-      # Adapt viewport to see all markers
+      # Adapt viewport to see all coordinates
       map.fitBounds(bounds)
 
     L.tileLayer(config.tile_url, {attribution: config.attribution, maxZoom: config.max_zoom }).addTo(map)
+
+    [map, markers]
 
 
 #--- fix html input type number precision ---

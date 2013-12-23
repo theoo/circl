@@ -24,7 +24,7 @@
               :data-toggle => 'dropdown',
               :class => 'btn btn-default dropdown-toggle' }
         .icon-paper-clip
-        = I18n.t("common.export")
+        = I18n.t("common.documents")
         .caret
 
       %ul.dropdown-menu

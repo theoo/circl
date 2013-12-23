@@ -25,7 +25,27 @@ $(document).ready ->
 
       $.ajax(settings).error(ajax_error).success(ajax_success)
 
-    Ui.load_map('map_container', save_callback)
+    [map, markers] = Ui.load_map('map_container', save_callback)
+
+    # Override geographic location update form
+    $('form').on 'submit', (e) =>
+      e.preventDefault()
+      geo = $("#person_geographic_coordinates").val().split(",")
+
+      # update hidden input
+      markers_input = $("input[name=map_markers]")
+      new_marker = JSON.parse(markers_input.val())
+      new_marker[0].latlng = geo
+      markers_input.val JSON.stringify(new_marker)
+
+      # reload marker
+      markers[0].setLatLng(geo)
+
+      # fake latlng object
+      latlng = { lat: geo[0], lng: geo[1] }
+
+      # save
+      save_callback(latlng)
 
   # action edit
   if $('#info_tab').length > 0
