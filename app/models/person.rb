@@ -613,8 +613,11 @@ class Person < ActiveRecord::Base
         arr << location.name
       end
       country = location.country.try(:name)
-      if Person.find(ApplicationSetting.value("me")).location.country.try(:name) != country and !location.is_country?
-        arr << location.country.try(:name)
+      me = Person.find(ApplicationSetting.value("me"))
+      if me.location
+        if me.location.country.try(:name) != country and !location.is_country?
+          arr << location.country.try(:name)
+        end
       end
     end
     arr
