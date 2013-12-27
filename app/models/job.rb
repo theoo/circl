@@ -53,7 +53,8 @@ class Job < ActiveRecord::Base
   validates_format_of :name,
                       :with => /\A[^,]+\z/i,
                       :allow_blank => true,
-                      :message => I18n.t("job.errors.cannot_contain_comma")
+                      :message => :cannot_contain_comma
+                      # :message => I18n.t("job.errors.cannot_contain_comma")
 
   # Validate fields of type 'string' length
   validates_length_of :name, :maximum => 255

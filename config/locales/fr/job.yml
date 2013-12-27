@@ -1,8 +1,6 @@
 ---
 fr:
   job:
-    errors:
-      cannot_contain_comma: Le nom ne peut pas contenir de virgules.
     views:
       actions:
         view_members: voir les membres

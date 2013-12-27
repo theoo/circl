@@ -285,6 +285,11 @@ fr:
         header:
           one: ! 'Une erreur a empêché l''enregistrement du formulaire:'
           other: ! '%{count} erreurs ont empêché l''enregistrement du formulaire:'
+      models:
+        job:
+          attributes:
+            name:
+              cannot_contain_comma: Ne peut pas contenir de virgule
     models:
       activity: Activité
       affair: Affaire

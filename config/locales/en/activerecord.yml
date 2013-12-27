@@ -285,6 +285,11 @@ en:
         header:
           one: 1 error has prohibited this form from being saved
           other: ! '%{count} errors has prohibited this form from being saved'
+      models:
+        job:
+          attributes:
+            name:
+              cannot_contain_comma: Cannot contain comma
     models:
       activity: Activity
       affair: Affair
