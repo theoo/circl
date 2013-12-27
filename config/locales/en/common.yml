@@ -47,7 +47,7 @@ en:
       please_verify_rights_and_record: Please verify that you have the required privileges to perform this action and that this action can be performed on this record.
     export: export
     export_to: export to
-    'false': false
+    'false': "false"
     file: file
     from: from
     good: good
@@ -94,7 +94,7 @@ en:
     toolbox_template: memplate
     tools: tools
     total: total
-    'true': true
+    'true': "true"
     unpaid: unpaid
     update: update
     updated_at: last update

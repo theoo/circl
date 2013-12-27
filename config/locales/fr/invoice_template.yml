@@ -10,7 +10,7 @@ fr:
     views:
       actions:
         edit_template: modifier le modèle
-      body: body
+      body: corps du texte
       bvr_account: compte BVR
       bvr_account_number: numéro de compte BVR
       bvr_address: adresse figurant sur le BVR

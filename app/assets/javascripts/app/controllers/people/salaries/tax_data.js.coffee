@@ -148,8 +148,12 @@ class App.PersonSalaryTaxDatas extends App.ExtendedController
 
     ajax_success = (data, textStatus, jqXHR) =>
       @render_success()
+      # Retrive salary totals (which are computed Rails side)
+      PersonSalary.one 'refresh', =>
+        @salary = PersonSalary.find @salary.id
+        # Then refresh tax_data
+        PersonSalaryTaxData.refresh(data.tax_data)
       PersonSalary.refresh(data)
-      PersonSalaryTaxData.refresh(data.tax_data)
 
     settings =
       url: "#{PersonSalary.url()}/#{@salary.id}/update_tax_data",
