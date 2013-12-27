@@ -19,7 +19,7 @@
 
         %ol
           %li
-            %a{:href => 'assets/template_generic.csv'}
+            %a{:href => '/assets/salary.odt'}
               = I18n.t("template.views.salary_template_file")
 
         %input{ :type => 'hidden', :name => 'template_id', :value => @template.id }
