@@ -151,6 +151,8 @@ ActiveRecord::Schema.define(:version => 20131219113700) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "language_id",           :null => false
+    t.text     "header"
+    t.text     "footer"
     t.string   "class_name"
     t.string   "odt_file_name"
     t.string   "odt_content_type"
@@ -175,8 +177,6 @@ ActiveRecord::Schema.define(:version => 20131219113700) do
     t.datetime "snapshot_updated_at"
     t.boolean  "show_invoice_value",    :default => true
     t.integer  "language_id",                              :null => false
-    t.text     "header"
-    t.text     "footer"
   end
 
   add_index "invoice_templates", ["language_id"], :name => "index_invoice_templates_on_language_id"
@@ -305,7 +305,6 @@ ActiveRecord::Schema.define(:version => 20131219113700) do
     t.integer  "task_rate_id"
     t.float    "latitude"
     t.float    "longitude"
-    t.boolean  "force_geographic_coordinates",                  :default => false, :null => false
   end
 
   add_index "people", ["authentication_token"], :name => "index_people_on_authentication_token", :unique => true
@@ -422,6 +421,7 @@ ActiveRecord::Schema.define(:version => 20131219113700) do
     t.integer  "after_sale_id"
     t.string   "key",                                :null => false
     t.string   "title"
+    t.string   "category"
     t.text     "description"
     t.boolean  "has_accessories", :default => false, :null => false
     t.boolean  "archive",         :default => false, :null => false
@@ -430,6 +430,7 @@ ActiveRecord::Schema.define(:version => 20131219113700) do
   end
 
   add_index "products", ["after_sale_id"], :name => "index_products_on_after_sale_id"
+  add_index "products", ["category"], :name => "index_products_on_category"
   add_index "products", ["has_accessories"], :name => "index_products_on_has_accessories"
   add_index "products", ["key"], :name => "index_products_on_key"
   add_index "products", ["provider_id"], :name => "index_products_on_provider_id"

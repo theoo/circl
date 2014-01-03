@@ -9,6 +9,7 @@ tasks = %w{languages
            ldap_attributes
            search_attributes
            salary_templates
+           generic_templates
            invoice_templates
            task_types
            task_rates}
@@ -21,3 +22,4 @@ end
 # *after* the server has started, otherwise it cannot serve assets
 # needed for the snapshot creation
 BackgroundTasks::RunRakeTask.create!(:options => { :name => 'db:seed:invoice_templates:snapshots:reset' })
+BackgroundTasks::RunRakeTask.create!(:options => { :name => 'db:seed:generic_templates:snapshots:reset' })

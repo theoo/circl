@@ -27,3 +27,12 @@
 
 - subject: Extra
   action: manage
+
+- subject: GenericTemplate
+  action: index
+
+- subject: GenericTemplate
+  action: placeholders
+
+- subject: GenericTemplate
+  action: count

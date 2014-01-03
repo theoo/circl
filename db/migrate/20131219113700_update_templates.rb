@@ -8,6 +8,8 @@ class UpdateTemplates < ActiveRecord::Migration
     add_index :generic_templates, :odt_updated_at
 
     remove_column :generic_templates, :html
+    remove_column :generic_templates, :header
+    remove_column :generic_templates, :footer
 
     rename_column :salaries, :salary_template_id, :generic_template_id
     GenericTemplate.all.each do |gt|

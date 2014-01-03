@@ -1,0 +1,5 @@
+---
+- title: Salary template example
+  language_id: 1
+  class_name: Salaries::Salary
+  odt: app/assets/odt/salary.odt
