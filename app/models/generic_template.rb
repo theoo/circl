@@ -113,7 +113,11 @@ class GenericTemplate < ActiveRecord::Base
     h[:odt_url] = odt.url
 
     assoc = class_name.split("::").last.downcase.pluralize
-    h[:association_count] = self.send(assoc).count
+    if self.respond_to? assoc
+      h[:association_count] = self.send(assoc).count
+    else
+      h[:association_count] = 'Virtual relation'
+    end
 
     h[:errors] = errors
 

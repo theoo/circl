@@ -16,16 +16,17 @@
 
       - classes = ['item']
       - if affair.owner_id != @person_id
-        - classes << 'warning'
+        - classes.push 'warning'
 
-      - relations =  I18n.t("affair.views.owner")  + ": " + affair.owner_name + "\n"
-      - relations << I18n.t("affair.views.buyer")  + ": " + affair.buyer_name + "\n"
-      - relations << I18n.t("affair.views.receiver") + ": " + affair.receiver_name
+      - relations = []
+      - relations.push I18n.t("affair.views.owner")  + ": " + affair.owner_name
+      - relations.push I18n.t("affair.views.buyer")  + ": " + affair.buyer_name
+      - relations.push I18n.t("affair.views.receiver") + ": " + affair.receiver_name
 
       %tr{:data-id => affair.id,
           :class => classes.join(" "),
           :data-title => I18n.t("affair.views.relations"),
-          :data-content => relations,
+          :data-content => relations.join(", "),
           :data-placement => 'auto bottom',
           :data-trigger => 'hover'}
 
@@ -36,3 +37,23 @@
         %td.number= affair.receipts_value.to_view()
         %td= affair.statuses
         %td= affair.created_at
+
+- if App.PersonAffair.all().length > 0
+  .panel-footer
+    .btn-group
+      %button{:type => 'button',
+              :data-toggle => 'dropdown',
+              :class => 'btn btn-default dropdown-toggle' }
+        .icon-paper-clip
+        = I18n.t("common.documents")
+        .caret
+
+      %ul.dropdown-menu
+        %li
+          %a{:href => '#', :name => 'affairs-csv'}
+            .icon-file-text
+            = I18n.t('common.csv')
+        %li
+          %a{:href => '#', :name => 'affairs-pdf'}
+            .icon-file
+            = I18n.t('common.pdf')

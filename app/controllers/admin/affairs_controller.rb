@@ -48,4 +48,16 @@ class Admin::AffairsController < ApplicationController
     end
   end
 
+  def available_statuses
+    a = Affair.available_statuses
+    a.delete(nil)
+    statuses = a.each_with_object({}) do |s, h|
+      h[Affair.statuses_value_for(s).to_s] = s
+    end
+
+    respond_to do |format|
+      format.json { render :json => statuses }
+    end
+  end
+
 end

@@ -159,7 +159,7 @@ Directory::Application.routes.draw do
   namespace :admin do
     resources :affairs do
       collection do
-        get 'search'
+        get 'search', 'available_statuses'
       end
     end
 

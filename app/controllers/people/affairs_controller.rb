@@ -27,10 +27,62 @@ class People::AffairsController < ApplicationController
 
   def index
 
-    @affairs = Affair.where("owner_id = ? OR buyer_id = ? OR receiver_id = ?", *([@person.id]*3)).uniq
-
     respond_to do |format|
-      format.json { render :json => @affairs }
+      format.json do
+        render :json => @affairs
+        @affairs = Affair.where("owner_id = ? OR buyer_id = ? OR receiver_id = ?", *([@person.id]*3)).uniq
+      end
+      format.pdf do
+        errors = {}
+
+        # pseudo validation
+        if validate_date_format(params[:from])
+          from = Date.parse params[:from]
+        else
+          errors[:from] = I18n.t("affair.errors.wrong_date")
+        end
+
+        if validate_date_format(params[:to])
+          to = Date.parse params[:to]
+        else
+          errors[:to] = I18n.t("affair.errors.wrong_date")
+        end
+
+        # fetch affairs corresponding to selected statuses and interval
+        if params[:statuses]
+          mask = params[:statuses].map(&:to_i).sum
+          affairs = @person.get_affairs_from_status_values(mask)
+        else
+          affairs = @person.affairs
+        end
+
+        if from and to
+          affairs = affairs.joins(:receipts)
+            .where("receipts.value_date BETWEEN ? AND ?", from, to)
+        end
+
+        # exclude affairs which are below threshold
+        affairs = affairs.reject{|a| a.overpaid_value < params[:value]}
+
+        # generate a pdf using selected generic template
+        fake_object = OpenStruct.new
+        fake_object.generic_template = GenericTemplate.find params[:generic_template_id]
+        fake_object.person = @person
+        fake_object.affairs = affairs
+
+        generator = AttachmentGenerator.new(fake_object, nil)
+
+        file = Tempfile.new(['affairs_export', '.odt'], :encoding => 'ascii-8bit')
+        file.binmode
+        generator.pdf {|o, pdf| file.write pdf.read}
+        file.flush
+
+        send_data File.read(file),
+          :filename => "person_#{@person.id}_affairs.pdf",
+          :type => 'application/pdf'
+
+        file.unlink
+      end
     end
   end
 

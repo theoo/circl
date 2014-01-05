@@ -521,13 +521,29 @@ class Person < ActiveRecord::Base
 
   # affairs
   def paid_affairs
-    mask = Affair.statuses_value_for(:paid)
-    affairs.where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+    get_affairs_from_status_names(:paid)
   end
 
   def unpaid_affairs
-    mask = Affair.statuses_value_for(:open)
+    get_affairs_from_status_names(:open)
+  end
+
+  def get_affairs_from_status_values(mask)
     affairs.where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+  end
+
+  def get_affairs_from_status_names(statuses)
+    mask = Affair.statuses_value_for(statuses)
+    get_affairs_from_status_values(mask)
+  end
+
+  def get_invoices_from_status_values(mask)
+    invoices.where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+  end
+
+  def get_invoices_from_status_names(statuses)
+    mask = Invoice.statuses_value_for(statuses)
+    get_invoices_from_status_values(statuses)
   end
 
   # subscriptions

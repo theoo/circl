@@ -176,6 +176,8 @@ class Index extends App.ExtendedController
   events:
     'click tr.item': 'edit'
     'datatable_redraw': 'table_redraw'
+    'click a[name=affairs-csv]': 'csv'
+    'click a[name=affairs-pdf]': 'pdf'
 
   constructor: (params) ->
     super
@@ -190,6 +192,7 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('people/affairs/index')(@)
+    @el.find("tr.warning").popover()
 
   edit: (e) ->
     e.preventDefault()
@@ -202,6 +205,23 @@ class Index extends App.ExtendedController
       target = $(@el).find("tr[data-id=#{@affair.id}]")
 
     @activate_in_list(target)
+
+  csv: (e) ->
+    e.preventDefault()
+    window.location = PersonAffair.url() + ".csv"
+
+  pdf: (e) ->
+    e.preventDefault()
+
+    win = $("<div class='modal fade' id='affairs-pdf-export-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    controller = new PdfExport({el: win.find('.modal-content')})
+    win.modal('show')
+    controller.activate()
 
 class Balance extends App.ExtendedController
   constructor: (params) ->
@@ -232,6 +252,43 @@ class Balance extends App.ExtendedController
 
   render: =>
     @html @view('people/affairs/balance')(@)
+
+class PdfExport extends App.ExtendedController
+  events:
+    'submit form': 'submit'
+
+  constructor: (params) ->
+    super
+
+  activate: (params)->
+    App.Affair.fetch_statuses()
+    App.Affair.one 'statuses_fetched', =>
+      @render()
+
+  render: =>
+    @html @view('people/affairs/pdf_export')(@)
+
+  submit: (e) ->
+    e.preventDefault()
+    attr = $(e.target).serializeObject()
+
+    settings =
+      url: "#{PersonAffair.url()}.pdf",
+      type: 'GET',
+      data: attr
+
+    ajax_error = (xhr, statusText, error) =>
+      @enable_panel()
+      @render_errors $.parseJSON(xhr.responseText)
+
+    ajax_success = (data, textStatus, jqXHR) =>
+      @enable_panel()
+      App.PrivateTag.fetch({id: attr.private_tag_id})
+      @el.closest('.modal').modal('hide')
+
+    $.ajax(settings).error(ajax_error).success(ajax_success)
+    @disable_panel()
+
 
 class App.PersonAffairs extends Spine.Controller
   className: 'affairs'

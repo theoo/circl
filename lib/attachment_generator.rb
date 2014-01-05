@@ -23,8 +23,6 @@ class AttachmentGenerator
   include Serenity::Generator
 
   def initialize(object, relations = [])
-    @object = object
-    @o = object
     # TODO convert to OpenStruct
     # o = @object.as_json
     # relations.each do |r|
@@ -32,6 +30,8 @@ class AttachmentGenerator
     # end
 
     # @o = RecursiveOpenStruct.new o
+
+    @object = object
   end
 
   def pdf
@@ -91,7 +91,6 @@ class AttachmentGenerator
   def prepare
     @tmp_file = Tempfile.new(['pdf_generation' + @object.id.to_s, '.odt'], :encoding => 'ascii-8bit')
     @tmp_file.binmode
-    @title = "WTF"
     render_odt @object.generic_template.odt.path, @tmp_file.path
   end
 

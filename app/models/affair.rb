@@ -110,7 +110,7 @@ class Affair < ActiveRecord::Base
   def self.available_statuses
     [
                       # under bit weight 256 (bits 0-7),
-                      # invoice is not (fully) paid
+                      # invoices are not (fully) paid
      :open,           # 0
      :underpaid,      # 1
      :partially_paid, # 2
@@ -121,7 +121,7 @@ class Affair < ActiveRecord::Base
      :cancelled,      # 7
 
                       # starting from 256 (bit 8-15),
-                      # invoice is paid
+                      # invoices are paid
      :paid,           # 8
      :overpaid,       # 9
      nil,             # 10

@@ -369,7 +369,7 @@ class Index extends App.ExtendedController
   tag_tool: (e) ->
     e.preventDefault()
 
-    win = $("<div class='modal fade' id='salaries-tag-tool-modal' tabindex='-1' role='dialog' />")
+    win = $("<div class='modal fade' id='subscriptions-tag-tool-modal' tabindex='-1' role='dialog' />")
     # render partial to modal
     modal = JST["app/views/helpers/modal"]()
     win.append modal
