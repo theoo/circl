@@ -32,7 +32,6 @@ class ProductsDatatable
     }
   end
 
-
   private
 
   def data
@@ -80,7 +79,7 @@ class ProductsDatatable
   end
 
   def sort_column
-    columns = %w{id key description variants accessories updated_at}
+    columns = %w{id key description variants updated_at}
     columns[params[:iSortCol_0].to_i]
   end
 
