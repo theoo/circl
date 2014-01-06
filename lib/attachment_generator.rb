@@ -31,7 +31,8 @@ class AttachmentGenerator
 
     # @o = RecursiveOpenStruct.new o
 
-    @object = object
+    @object = object # Object used in block
+    @o = @object # Object used in document as placeholder
   end
 
   def pdf

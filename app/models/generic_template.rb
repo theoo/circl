@@ -116,7 +116,7 @@ class GenericTemplate < ActiveRecord::Base
     if self.respond_to? assoc
       h[:association_count] = self.send(assoc).count
     else
-      h[:association_count] = 'Virtual relation'
+      h[:association_count] = I18n.t("common.none")
     end
 
     h[:errors] = errors

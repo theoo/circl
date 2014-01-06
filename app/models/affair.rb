@@ -191,7 +191,7 @@ class Affair < ActiveRecord::Base
   end
 
   def overpaid_value
-    (balance_value > 0) ? balance_value : 0
+    (balance_value > 0) ? balance_value : 0.to_money
   end
 
   # Workflows and statuses

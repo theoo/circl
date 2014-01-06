@@ -22,3 +22,5 @@ fr:
       template: modèle
       thumb: aperçu
       upload_new_template: téléverser un nouveau modèle
+    models:
+      donation: Attestation de don

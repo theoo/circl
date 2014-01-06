@@ -22,3 +22,5 @@ en:
       template: template
       thumb: thumb
       upload_new_template: upload the new template (odt)
+    models:
+      donation: Donation Certificates

@@ -255,7 +255,7 @@ class Balance extends App.ExtendedController
 
 class PdfExport extends App.ExtendedController
   events:
-    'submit form': 'submit'
+    'submit form': 'validate'
 
   constructor: (params) ->
     super
@@ -268,26 +268,14 @@ class PdfExport extends App.ExtendedController
   render: =>
     @html @view('people/affairs/pdf_export')(@)
 
-  submit: (e) ->
-    e.preventDefault()
-    attr = $(e.target).serializeObject()
+  validate: (e) ->
+    errors = new App.ErrorsList
 
-    settings =
-      url: "#{PersonAffair.url()}.pdf",
-      type: 'GET',
-      data: attr
-
-    ajax_error = (xhr, statusText, error) =>
-      @enable_panel()
-      @render_errors $.parseJSON(xhr.responseText)
-
-    ajax_success = (data, textStatus, jqXHR) =>
-      @enable_panel()
-      App.PrivateTag.fetch({id: attr.private_tag_id})
-      @el.closest('.modal').modal('hide')
-
-    $.ajax(settings).error(ajax_error).success(ajax_success)
-    @disable_panel()
+    if errors.is_empty()
+      # @render_success()
+    else
+      e.preventDefault()
+      @render_errors(errors.errors)
 
 
 class App.PersonAffairs extends Spine.Controller

@@ -57,21 +57,21 @@
 
     .row
       .col-lg-12
-        - unless @affair.isNew?()
-          - if parseInt(@person_id) == parseInt(@affair.owner_id)
+        - if parseInt(@person_id) == parseInt(@affair.owner_id) or @affair.isNew?()
+          - unless @affair.isNew?()
             %button{:name => "affair-destroy",
                     :class => 'btn btn-danger' }
               .icon-remove
               = I18n.t('common.destroy')
 
-            .pull-right
-              != @partial('submit_button')(@affair)
+          .pull-right
+            != @partial('submit_button')(@affair)
 
-          - else
-            .pull-right
-              %button{:name => "affair-show-owner",
-                      :class => 'btn btn-primary' }
-                .icon-eye-open
-                = I18n.t('affair.views.actions.show_owner')
+        - else
+          .pull-right
+            %button{:name => "affair-show-owner",
+                    :class => 'btn btn-primary' }
+              .icon-eye-open
+              = I18n.t('affair.views.actions.show_owner')
 
 
