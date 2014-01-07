@@ -25,6 +25,8 @@ class Admin::PrivateTagsController < ApplicationController
   monitor_changes :@private_tag
 
   def index
+    @private_tags = @private_tags.order(:name)
+
     respond_to do |format|
       format.json { render :json => @private_tags }
       format.js { render :json => @private_tag, :callback => params[:callback] }

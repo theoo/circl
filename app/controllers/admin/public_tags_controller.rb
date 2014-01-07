@@ -25,6 +25,8 @@ class Admin::PublicTagsController < ApplicationController
   monitor_changes :@public_tag
 
   def index
+    @public_tags = @public_tags.order(:name)
+
     respond_to do |format|
       format.json { render :json => @public_tags }
       format.js { render :json => @public_tags, :callback => params[:callback] }
