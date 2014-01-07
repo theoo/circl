@@ -85,12 +85,15 @@ module ElasticSearch
         create_mapping = proc do
           return if Rails.configuration.settings['elasticsearch']['enable_indexing'] == false
           SearchAttribute.where(:model => base.to_s).each do |attr|
-            h = attr.mapping.symbolize_keys
-            # TODO recurse into hash and change all :properties
-            if h[:type] == 'object' && !h[:properties].is_a?(Hash)
-              h[:properties] = eval(h[:properties])
+            # Should be a hash in order to work. But mappings are editable through the user's iface.
+            if attr.mapping.is_a? Hash
+              h = attr.mapping.symbolize_keys
+              # TODO recurse into hash and change all :properties
+              if h[:type] == 'object' && !h[:properties].is_a?(Hash)
+                h[:properties] = eval(h[:properties])
+              end
+              indexes attr.name, h
             end
-            indexes attr.name, h
           end
         end
 

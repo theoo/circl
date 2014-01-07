@@ -45,6 +45,8 @@ class SearchAttribute < ActiveRecord::Base
   ### CALLBACK  ###
   #################
 
+  # homemade serialization
+  before_save :ensure_mapping_is_a_hash
   serialize :mapping, Hash
 
   #################
@@ -68,7 +70,6 @@ class SearchAttribute < ActiveRecord::Base
   scope :searchable, where("#{table_name}.group <> ''")
   scope :orderable, searchable.where("#{table_name}.mapping NOT LIKE '%object%'")
 
-
   ########################
   ### INSTANCE METHODS ###
   ########################
@@ -80,5 +81,18 @@ class SearchAttribute < ActiveRecord::Base
     h
   end
 
+  private
+
+  def ensure_mapping_is_a_hash
+    # In some case mapping is not hash. On creation for instance.
+    unless mapping.is_a? Hash
+      begin
+        self.mapping = YAML.load(mapping)
+      rescue Exception => e
+        errors.add(:mapping, I18n.t("search_attribute.errors.mapping_doesnt_look_like_a_hash"))
+        return false
+      end
+    end
+  end
 
 end
