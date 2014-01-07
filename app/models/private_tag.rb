@@ -48,6 +48,8 @@ class PrivateTag < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
+  default_scope order('name ASC')
+
   acts_as_tree
 
   has_and_belongs_to_many :people,
