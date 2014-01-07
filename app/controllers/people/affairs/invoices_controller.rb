@@ -121,31 +121,6 @@ class People::Affairs::InvoicesController < ApplicationController
     end
   end
 
-  # def header
-  #   html = @invoice.invoice_template.header.dup
-
-  #   Rails.configuration.settings["wk_placeholders"].each do |p|
-  #     html.gsub!("##{p.upcase}", params[p.to_sym]) if html.match("#{p.upcase}")
-  #   end
-
-  #   respond_to do |format|
-  #     format.html { render :inline =>  html }
-  #   end
-  # end
-
-  # def footer
-  #   html = @invoice.invoice_template.footer.dup
-
-  #   Rails.configuration.settings["wk_placeholders"].each do |p|
-  #     html.gsub!("##{p.upcase}", params[p.to_sym]) if html.match("#{p.upcase}")
-  #   end
-
-  #   respond_to do |format|
-  #     format.html { render :inline => html }
-  #   end
-  # end
-
-
   ##
   # PDF generation
   #
