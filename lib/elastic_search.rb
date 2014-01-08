@@ -16,6 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
+
 module ElasticSearch
 
   def self.search(search_string, selected_attributes, attributes_order, current_person = nil)
@@ -77,7 +78,9 @@ module ElasticSearch
   end
 
   module Mapping
+
     def self.included(base)
+
       base.class_eval { include Tire::Model::Search }
       return unless base.table_exists? && SearchAttribute.table_exists?
 
@@ -85,14 +88,22 @@ module ElasticSearch
         create_mapping = proc do
           return if Rails.configuration.settings['elasticsearch']['enable_indexing'] == false
           SearchAttribute.where(:model => base.to_s).each do |attr|
-            # Should be a hash in order to work. But mappings are editable through the user's iface.
-            if attr.mapping.is_a? Hash
-              h = attr.mapping.symbolize_keys
-              # TODO recurse into hash and change all :properties
-              if h[:type] == 'object' && !h[:properties].is_a?(Hash)
-                h[:properties] = eval(h[:properties])
+            begin
+              # Should be a hash in order to work. But mappings are editable through the user's iface.
+              if attr.mapping.is_a? Hash
+                h = attr.mapping.symbolize_keys
+                # TODO recurse into hash and change all :properties
+                if h[:type] == 'object' and !h[:properties].is_a?(Hash)
+                  h[:properties] = eval(h[:properties])
+                end
+                indexes attr.name, h
               end
-              indexes attr.name, h
+            rescue Exception => e
+              extend ColorizedOutput
+
+              msg = "Failed to index #{attr.inspect}, error raised: #{e.inspect}"
+              puts red(msg)
+              logger.warn msg
             end
           end
         end
