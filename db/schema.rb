@@ -151,8 +151,6 @@ ActiveRecord::Schema.define(:version => 20131219113700) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "language_id",           :null => false
-    t.text     "header"
-    t.text     "footer"
     t.string   "class_name"
     t.string   "odt_file_name"
     t.string   "odt_content_type"
