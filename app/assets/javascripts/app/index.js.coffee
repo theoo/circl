@@ -100,21 +100,26 @@ class @PersonEdit extends App
       @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
       @subapp($('#person_private_tags'), 'PersonPrivateTags')
       @subapp($('#person_public_tags'), 'PersonPublicTags')
-      @subapp($('#person_affairs'), 'PersonAffairs')
-      @subapp($('#person_affair_task_rates'), 'PersonAffairTaskRates')
-      @subapp($('#person_affair_tasks'), 'PersonAffairTasks')
-      @subapp($('#person_affair_products'), 'PersonAffairProducts')
-      @subapp($('#person_affair_extras'), 'PersonAffairExtras')
-      @subapp($('#person_affair_subscriptions'), 'PersonAffairSubscriptions')
-      @subapp($('#person_affair_invoices'), 'PersonAffairInvoices')
-      @subapp($('#person_affair_receipts'), 'PersonAffairReceipts')
       @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
-      @subapp($('#person_salaries'), 'PersonSalaries')
-      @subapp($('#person_salary_items'), 'PersonSalaryItems')
-      @subapp($('#person_salary_tax_datas'), 'PersonSalaryTaxDatas')
       @subapp($('#person_roles'), 'PersonRoles')
       @subapp($('#person_comments'), 'PersonComments')
       @subapp($('#person_activities'), 'PersonActivities')
+
+      App.GenericTemplate.one 'refresh', =>
+        @subapp($('#person_affairs'), 'PersonAffairs')
+        @subapp($('#person_affair_task_rates'), 'PersonAffairTaskRates')
+        @subapp($('#person_affair_tasks'), 'PersonAffairTasks')
+        @subapp($('#person_affair_products'), 'PersonAffairProducts')
+        @subapp($('#person_affair_extras'), 'PersonAffairExtras')
+        @subapp($('#person_affair_subscriptions'), 'PersonAffairSubscriptions')
+        @subapp($('#person_affair_invoices'), 'PersonAffairInvoices')
+        @subapp($('#person_affair_receipts'), 'PersonAffairReceipts')
+
+        @subapp($('#person_salaries'), 'PersonSalaries')
+        @subapp($('#person_salary_items'), 'PersonSalaryItems')
+        @subapp($('#person_salary_tax_datas'), 'PersonSalaryTaxDatas')
+
+      App.GenericTemplate.fetch()
 
 class @Directory extends App
   constructor: (params) ->

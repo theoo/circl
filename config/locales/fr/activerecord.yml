@@ -280,16 +280,16 @@ fr:
         wrong_length:
           one: ne fait pas la bonne longueur (doit comporter un seul caractère)
           other: ne fait pas la bonne longueur (doit comporter %{count} caractères)
-      template:
-        body: ! 'Veuillez vérifier les champs suivants : '
-        header:
-          one: ! 'Une erreur a empêché l''enregistrement du formulaire:'
-          other: ! '%{count} erreurs ont empêché l''enregistrement du formulaire:'
       models:
         job:
           attributes:
             name:
               cannot_contain_comma: Ne peut pas contenir de virgule
+      template:
+        body: ! 'Veuillez vérifier les champs suivants : '
+        header:
+          one: ! 'Une erreur a empêché l''enregistrement du formulaire:'
+          other: ! '%{count} erreurs ont empêché l''enregistrement du formulaire:'
     models:
       activity: Activité
       affair: Affaire

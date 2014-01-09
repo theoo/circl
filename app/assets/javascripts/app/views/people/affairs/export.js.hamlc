@@ -1,0 +1,178 @@
+.modal-header
+  %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+    &times;
+  %h4.modal-title
+    = I18n.t("affair.views.pdf_export")
+
+%form{ :method =>'get', :action => @form_url + "." + @format }
+  .modal-body
+    .row
+      .col-md-12
+        .validation_errors_placeholder
+
+    .row
+      .col-md-12
+        .alert.alert-info
+          %h3= I18n.t("affair.views.pdf_export_explanation_title")
+          = I18n.t("affair.views.pdf_export_explanation")
+
+    - # payment dates interval
+    .row
+      .col-md-12
+        %h3= I18n.t("affair.views.select_payment_interval")
+
+    .row
+      .col-md-6
+        .form-group
+          %label{:for => "person_affairs_pdf_export_from"}
+            = I18n.t('common.from')
+          %input{ :type => 'text',
+                  :id => 'person_affairs_pdf_export_from',
+                  :name => 'from',
+                  :class => 'datepicker form-control',
+                  :value => '' }
+      .col-md-6
+        .form-group
+          %label{:for => "person_affairs_pdf_export_to"}
+            = I18n.t('common.to')
+          %input{ :type => 'text',
+                  :id => 'person_affairs_pdf_export_to',
+                  :name => 'to',
+                  :class => 'datepicker form-control',
+                  :value => '' }
+
+    - # Thresholds
+    .row
+      .col-md-12
+        %h3= I18n.t("affair.views.select_thresholds")
+
+    .row
+      - # value threshold
+      .col-md-6
+        .form-group
+          %label{:for => 'person_affairs_pdf_export_threshold_value_unit'}
+            = I18n.t('affair.views.threshold_value_unit')
+          .input-group
+            %input{ :type => 'number',
+                    :step => 0.01,
+                    :id => 'person_affairs_pdf_export_threshold_value_unit',
+                    :class => 'form-control',
+                    :min => 0,
+                    :max => 99999999.99,
+                    :name => 'unit_value' }
+            .input-group-addon
+              CHF
+
+      .col-md-6
+        .form-group
+          %label{:for => 'person_affairs_pdf_export_threshold_value_global'}
+            = I18n.t('affair.views.threshold_value_global')
+          .input-group
+            %input{ :type => 'number',
+                    :step => 0.01,
+                    :id => 'person_affairs_pdf_export_threshold_value_global',
+                    :class => 'form-control',
+                    :min => 0,
+                    :max => 99999999.99,
+                    :name => 'global_value' }
+            .input-group-addon
+              CHF
+
+    .row
+      - # overpaid/underpaid threshold
+      .col-md-6
+        .form-group
+          %label{:for => 'person_affairs_pdf_export_threshold_overpaid_unit'}
+            = I18n.t('affair.views.threshold_overpaid_unit')
+          .input-group
+            %input{ :type => 'number',
+                    :step => 0.01,
+                    :id => 'person_affairs_pdf_export_threshold_overpaid_unit',
+                    :class => 'form-control',
+                    :min => 0,
+                    :max => 99999999.99,
+                    :name => 'unit_overpaid' }
+            .input-group-addon
+              CHF
+
+      .col-md-6
+        .form-group
+          %label{:for => 'person_affairs_pdf_export_threshold_overpaid_global'}
+            = I18n.t('affair.views.threshold_overpaid_global')
+          .input-group
+            %input{ :type => 'number',
+                    :step => 0.01,
+                    :id => 'person_affairs_pdf_export_threshold_overpaid_global',
+                    :class => 'form-control',
+                    :min => 0,
+                    :max => 99999999.99,
+                    :name => 'global_overpaid' }
+            .input-group-addon
+              CHF
+
+    .row
+      .col-md-12
+        %small.help-block
+          = I18n.t('affair.notices.will_match_all_defined_thresholds')
+
+    .row
+      - # affair status
+      .col-md-6
+        - if App.Affair.statuses() and @content == 'affairs'
+          .form-group
+            %label{:for => "person_affairs_pdf_export_statuses"}
+              = I18n.t('affair.views.available_statuses')
+            %select{:multiple => true,
+                    :id => 'person_affairs_pdf_export_statuses',
+                    :name => 'statuses[]',
+                    :class => 'form-control'}
+              - for v,s of App.Affair.statuses()
+                %option{:value => v}= I18n.t("affair.views.statuses." + s)
+            %small.help-block
+              = I18n.t('affair.notices.will_match_all_selected_statuses')
+
+        - if App.Invoice.statuses() and @content == 'invoices'
+          .form-group
+            %label{:for => "person_affairs_pdf_export_statuses"}
+              = I18n.t('affair.views.available_statuses')
+            %select{:multiple => true,
+                    :id => 'person_affairs_pdf_export_statuses',
+                    :name => 'statuses[]',
+                    :class => 'form-control'}
+              - for v,s of App.Invoice.statuses()
+                %option{:value => v}= I18n.t("affair.views.statuses." + s)
+            %small.help-block
+              = I18n.t('affair.notices.will_match_all_selected_statuses')
+
+
+      - # template
+      .col-md-6
+        .form-group
+          %label{:for => 'person_affairs_pdf_export_template'}
+            = I18n.t('affair.views.template')
+          %select{:name => 'generic_template_id',
+                  :id => 'person_affairs_pdf_export_template',
+                  :class => 'form-control required'}
+            - for h in App.GenericTemplate.category(@template_class)
+              %option{:value => h.id}= h.title
+
+        .form-group
+          %label{:for => "person_affairs_pdf_export_format"}
+            = I18n.t('affair.views.format')
+          %select{:id => 'person_affairs_pdf_export_format',
+                  :name => 'statuses[]',
+                  :class => 'form-control'}
+            - for f in ['csv', 'pdf', 'odt']
+              %option{:value => f, :selected => (f == @format)}= I18n.t("common." + f)
+
+  .modal-footer
+    %button{:type => 'button',
+            :class => 'btn btn-default',
+            :data-dismiss => 'modal'}
+      .icon-chevron-left
+      = I18n.t("common.close")
+
+    %button{:type => 'submit',
+            :class => 'btn btn-primary'}
+      = I18n.t('common.next')
+      .icon-chevron-right

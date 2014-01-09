@@ -26,3 +26,13 @@ class App.Invoice extends Spine.Model
 
   constructor: ->
     super
+
+  @fetch_statuses: ->
+    get_callback = (data) =>
+      @_statuses = data
+      @trigger "statuses_fetched"
+
+    $.get(@url() + "/available_statuses", get_callback, 'json')
+
+  @statuses: ->
+    @_statuses if @_statuses

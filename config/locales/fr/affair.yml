@@ -3,22 +3,34 @@ fr:
   affair:
     errors:
       cant_delete_affair_who_has_invoices: Il est impossible de détruire une affaire dont dépend une facture.
+      wrong_date: wrong date
+    notices:
+      affairs_must_match_all_selected_statuses: affairs must match all selected statuses
+      will_match_all_defined_thresholds: will match all defined thresholds
+      will_match_all_selected_statuses: will match all selected statuses
     views:
       actions:
         edit_affair: modifier l'affaire
         show_owner: consulter la page du propriétaire
+      available_statuses: available statuses
       buyer: payeur
       extras: Extras
+      format: format
       invoices: Factures
       invoices_count: nombre de factures
       invoices_value: valeur des factures
       owner: propriétaire
+      pdf_export: pdf export
+      pdf_export_explanation: pdf export explanation
+      pdf_export_explanation_title: pdf export explanation title
       products: Produits
       receipts: Reçus
       receipts_count: nombre de reçus
       receipts_value: valeur des reçus
       receiver: receveur
       relations: relations
+      select_payment_interval: select payment interval
+      select_thresholds: select thresholds
       status: statut
       statuses:
         cancelled: annulée
@@ -31,4 +43,9 @@ fr:
         underpaid: sous-payée
       subscriptions: Inscriptions
       tasks: Services
+      template: template
+      threshold_overpaid_global: threshold overpaid global
+      threshold_overpaid_unit: threshold overpaid unit
+      threshold_value_global: threshold value global
+      threshold_value_unit: threshold value unit
       update_date: dernière mise à jour

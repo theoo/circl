@@ -68,6 +68,7 @@ en:
       line: line
       means_of_payment: means of payment
       media_date: media date
+      overpaid_value: overpayment
       owner: owner
       owner_name: owner name
       receipts_count: receipts count

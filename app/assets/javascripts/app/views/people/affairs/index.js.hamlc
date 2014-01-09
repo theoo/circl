@@ -50,10 +50,14 @@
 
       %ul.dropdown-menu
         %li
-          %a{:href => '#', :name => 'affairs-csv'}
-            .icon-file-text
-            = I18n.t('common.csv')
+          %a{:href => '#', :name => 'export-affairs'}
+            .icon-cloud-download
+            = I18n.t('person.views.affairs')
         %li
-          %a{:href => '#', :name => 'affairs-pdf'}
-            .icon-file
-            = I18n.t('common.pdf')
+          %a{:href => '#', :name => 'export-invoices'}
+            .icon-cloud-download
+            = I18n.t('affair.views.invoices')
+        %li
+          %a{:href => '#', :name => 'export-receipts'}
+            .icon-cloud-download
+            = I18n.t('affair.views.receipts')

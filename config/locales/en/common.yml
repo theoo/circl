@@ -21,12 +21,12 @@ en:
     created_at: created at
     css: CSS
     csv: CSV (Spreadsheet)
-    documents: documents
     dashboard: Dashboard
     date: date
     description: description
     destroy: destroy
     directory: Directory
+    documents: documents
     download: download
     errors:
       absence_of_identifier: Identifier missing
@@ -39,7 +39,7 @@ en:
       failed_to_retrieve_data: Failed to retrieve data.
       failed_to_update: Failed to update.
       from_should_be_before_to: ! '''from'' should be before ''to'''
-      if_you_think_it_s_a_bug: ! 'If you think it is a bug, please contact us at <a href=''mailto:support@circl.ch''>support@circl.ch</a>'
+      if_you_think_it_s_a_bug: If you think it is a bug, please contact us at <a href='mailto:support@circl.ch'>support@circl.ch</a>
       invalid_date: invalid date
       invalid_phone: Invalid phone number format, you must use the following "+11 22 333 44 55" (7 to 18 digits).
       must_provide_first_name_if_last_name: By providing a last name, you must provide a first name along with it.
@@ -47,7 +47,7 @@ en:
       please_verify_rights_and_record: Please verify that you have the required privileges to perform this action and that this action can be performed on this record.
     export: export
     export_to: export to
-    'false': "false"
+    'false': 'false'
     file: file
     from: from
     good: good
@@ -94,7 +94,7 @@ en:
     toolbox_template: memplate
     tools: tools
     total: total
-    'true': "true"
+    'true': 'true'
     unpaid: unpaid
     update: update
     updated_at: last update

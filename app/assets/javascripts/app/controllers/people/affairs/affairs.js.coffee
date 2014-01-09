@@ -176,8 +176,9 @@ class Index extends App.ExtendedController
   events:
     'click tr.item': 'edit'
     'datatable_redraw': 'table_redraw'
-    'click a[name=affairs-csv]': 'csv'
-    'click a[name=affairs-pdf]': 'pdf'
+    'click a[name=export-affairs]': 'export_affairs'
+    'click a[name=export-invoices]': 'export_invoices'
+    'click a[name=export-receipts]': 'export_receipts'
 
   constructor: (params) ->
     super
@@ -206,20 +207,26 @@ class Index extends App.ExtendedController
 
     @activate_in_list(target)
 
-  csv: (e) ->
+  export_affairs: (e) ->
     e.preventDefault()
-    window.location = PersonAffair.url() + ".csv"
+    @export_machine('affairs')
 
-  pdf: (e) ->
+  export_invoices: (e) ->
     e.preventDefault()
+    @export_machine('invoices')
 
+  export_receipts: (e) ->
+    e.preventDefault()
+    @export_machine('receipts')
+
+  export_machine: (content) ->
     win = $("<div class='modal fade' id='affairs-pdf-export-modal' tabindex='-1' role='dialog' />")
     # render partial to modal
     modal = JST["app/views/helpers/modal"]()
     win.append modal
     win.modal(keyboard: true, show: false)
 
-    controller = new PdfExport({el: win.find('.modal-content')})
+    controller = new Export({el: win.find('.modal-content'), content: content})
     win.modal('show')
     controller.activate()
 
@@ -253,29 +260,63 @@ class Balance extends App.ExtendedController
   render: =>
     @html @view('people/affairs/balance')(@)
 
-class PdfExport extends App.ExtendedController
+class Export extends App.ExtendedController
   events:
     'submit form': 'validate'
+    'change #person_affairs_pdf_export_format': 'format_changed'
 
   constructor: (params) ->
     super
+    @content = params.content
+    # window.location = PersonAffair.url() + ".csv"
 
   activate: (params)->
-    App.Affair.fetch_statuses()
-    App.Affair.one 'statuses_fetched', =>
-      @render()
+    @format = 'pdf' # default format
+    if @content == 'affairs'
+      @form_url = App.PersonAffair.url() + "/export"
+    else
+      @form_url = App.PersonAffair.url() + "/" + @content
+
+    switch @content
+      when 'affairs'
+        @template_class = 'Affair'
+        App.Affair.fetch_statuses()
+        App.Affair.one 'statuses_fetched', =>
+          @render()
+
+      when 'invoices'
+        @template_class = 'Invoice'
+        App.Invoice.fetch_statuses()
+        App.Invoice.one 'statuses_fetched', =>
+          @render()
+
+      when 'receipts'
+        @template_class = 'Receipt'
+        @render()
 
   render: =>
-    @html @view('people/affairs/pdf_export')(@)
+    @html @view('people/affairs/export')(@)
+
+    switch @content
+      when 'affairs'
+        @el.find("#person_affairs_pdf_export_threshold_value_global").attr(disabled: true)
+        @el.find("#person_affairs_pdf_export_threshold_overpaid_global").attr(disabled: true)
 
   validate: (e) ->
     errors = new App.ErrorsList
 
+    if @el.find("#person_affairs_pdf_export_template").val() == undefined
+      errors.add ['generic_template_id', I18n.t("activerecord.errors.messages.blank")].to_property()
+
     if errors.is_empty()
-      # @render_success()
+      # @render_success() # do nothing...
     else
       e.preventDefault()
       @render_errors(errors.errors)
+
+  format_changed: (e) ->
+    @format = $(e.target).val()
+    @el.find("form").attr('action', @form_url + "." + @format)
 
 
 class App.PersonAffairs extends Spine.Controller

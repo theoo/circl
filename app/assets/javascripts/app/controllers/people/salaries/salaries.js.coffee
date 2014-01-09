@@ -318,10 +318,7 @@ class App.PersonSalaries extends Spine.Controller
 
     Template.one 'count_fetched', =>
       App.SalaryTax.one 'count_fetched', =>
-        Template.one 'refresh', =>
-          PersonSalary.fetch()
-
-        Template.fetch()
+        PersonSalary.fetch()
 
       App.SalaryTax.fetch_count()
 

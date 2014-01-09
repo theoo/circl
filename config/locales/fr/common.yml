@@ -21,12 +21,12 @@ fr:
     created_at: création
     css: CSS
     csv: CSV (Tableur)
-    documents: documents
     dashboard: Tableau de bord
     date: date
     description: description
     destroy: détruire
     directory: Annuaire
+    documents: documents
     download: télécharger
     errors:
       absence_of_identifier: Identifiant manquant

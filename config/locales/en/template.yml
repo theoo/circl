@@ -6,6 +6,8 @@ en:
     help:
       remove_content_if_you_dont_want_footer: remove content if you dont want footer
       remove_content_if_you_dont_want_header: remove content if you dont want header
+    models:
+      donation: Donation Certificates
     views:
       actions:
         edit_template: edit template
@@ -22,5 +24,3 @@ en:
       template: template
       thumb: thumb
       upload_new_template: upload the new template (odt)
-    models:
-      donation: Donation Certificates

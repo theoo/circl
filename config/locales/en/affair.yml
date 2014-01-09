@@ -3,22 +3,34 @@ en:
   affair:
     errors:
       cant_delete_affair_who_has_invoices: An affair with an invoice linked to it cannot be deleted.
+      wrong_date: wrong date
+    notices:
+      affairs_must_match_all_selected_statuses: affairs must match all selected statuses
+      will_match_all_defined_thresholds: will match all defined thresholds
+      will_match_all_selected_statuses: will match all selected statuses
     views:
       actions:
         edit_affair: edit affair
         show_owner: show owner's page
+      available_statuses: available statuses
       buyer: buyer
       extras: Extras
+      format: format
       invoices: Invoices
       invoices_count: invoice count
       invoices_value: values of invoices
       owner: owner
+      pdf_export: pdf export
+      pdf_export_explanation: pdf export explanation
+      pdf_export_explanation_title: pdf export explanation title
       products: Products
       receipts: Receipts
       receipts_count: receipt count
       receipts_value: values of receipts
       receiver: receiver
       relations: relations
+      select_payment_interval: select payment interval
+      select_thresholds: select thresholds
       status: status
       statuses:
         cancelled: cancelled
@@ -31,4 +43,9 @@ en:
         underpaid: underpaid
       subscriptions: subscriptions
       tasks: Services
+      template: template
+      threshold_overpaid_global: threshold overpaid global
+      threshold_overpaid_unit: threshold overpaid unit
+      threshold_value_global: threshold value global
+      threshold_value_unit: threshold value unit
       update_date: last update

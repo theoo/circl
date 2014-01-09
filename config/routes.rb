@@ -34,13 +34,9 @@ Directory::Application.routes.draw do
     resources :activities, :controller => 'people/activities'
     resources :histories, :controller => 'people/histories'
 
-    # TODO
-    # I think this is a bad idea (see http://weblog.jamisbuck.org/2007/2/5/nesting-resources),
-    # but because we want namescoped controllers, we are kinda forced to do it.
-    # IMHO a better solution would be to remove the namescoped controllers to have smth much more flat.
     resources :affairs, :controller => 'people/affairs' do
       collection do
-        get 'search'
+        get 'search', 'export', 'invoices', 'receipts'
       end
 
       resources :extras, :controller => 'people/affairs/extras' do
@@ -53,9 +49,6 @@ Directory::Application.routes.draw do
         collection do
           get 'search'
         end
-        #member do
-        #  get 'bvr'
-        #end
       end
 
       resources :products, :controller => 'people/affairs/products' do
@@ -172,7 +165,7 @@ Directory::Application.routes.draw do
 
     resources :invoices do
       collection do
-        get 'export'
+        get 'export', 'available_statuses'
       end
     end
 

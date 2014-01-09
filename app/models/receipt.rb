@@ -89,6 +89,37 @@ class Receipt < ActiveRecord::Base
     where(:invoice_id => nil)
   end
 
+  # Complicated method to extract overpaid value of the last receipts, if existing
+  def overpaid_value
+    if invoice.overpaid_value > 0
+      receipts = invoice.receipts.order(:value_date, :id)
+      paying_receipts = []
+
+      sum = 0.to_money
+      receipts.each do |r|
+        if sum < invoice.value
+          paying_receipts << r
+          sum += r.value
+        else
+          break
+        end
+      end
+
+      if paying_receipts.index(self)
+        return sum - invoice.value if paying_receipts.last == self
+      else
+        return self.value
+      end
+    end
+
+    0.to_money
+  end
+
+  # Used when generating pdf (odt/serenity)
+  def first_payment?
+    invoice.receipts.order(:value_date, :id).first == self
+  end
+
   ########################
   ### INSTANCE METHODS ###
   ########################
@@ -97,19 +128,20 @@ class Receipt < ActiveRecord::Base
     h = super(options)
 
     # add relation description to save a request
-    h[:invoice_id]    = invoice_id
-    h[:invoice_value] = invoice.try(:value).try(:to_f)
-    h[:invoice_title] = invoice.try(:title)
+    h[:invoice_id]     = invoice_id
+    h[:invoice_value]  = invoice.try(:value).try(:to_f)
+    h[:invoice_title]  = invoice.try(:title)
 
-    h[:affair_id]     = invoice.try(:affair_id)
-    h[:affair_title]  = invoice.try(:affair).try(:title)
+    h[:affair_id]      = invoice.try(:affair_id)
+    h[:affair_title]   = invoice.try(:affair).try(:title)
 
-    h[:owner_id]      = invoice.try(:owner).try(:id)
-    h[:owner_name]    = invoice.try(:owner).try(:name)
+    h[:owner_id]       = invoice.try(:owner).try(:id)
+    h[:owner_name]     = invoice.try(:owner).try(:name)
 
-    h[:value]         = value.try(:to_f)
+    h[:value]          = value.try(:to_f)
+    h[:overpaid_value] = overpaid_value.try(:to_f)
 
-    h[:errors]        = errors
+    h[:errors]         = errors
     h
   end
 

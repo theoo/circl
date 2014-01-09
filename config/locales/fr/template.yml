@@ -6,6 +6,8 @@ fr:
     help:
       remove_content_if_you_dont_want_footer: Supprimer le contenu pour ne pas afficher de pied de page.
       remove_content_if_you_dont_want_header: Supprimer le contenu pour ne pas afficher d'entête.
+    models:
+      donation: Attestation de don
     views:
       actions:
         edit_template: modifier le modèle
@@ -22,5 +24,3 @@ fr:
       template: modèle
       thumb: aperçu
       upload_new_template: téléverser un nouveau modèle
-    models:
-      donation: Attestation de don

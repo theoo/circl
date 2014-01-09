@@ -68,6 +68,7 @@ fr:
       line: ligne
       means_of_payment: moyen de règlement
       media_date: date du fichier
+      overpaid_value: surpaiement
       owner: propriétaire
       owner_name: propriétaire
       receipts_count: reçus

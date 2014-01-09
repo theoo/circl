@@ -1,4 +1,4 @@
-- if App.SalaryTax.count() > 0 and App.GenericTemplate.count() > 0
+- if App.SalaryTax.count() > 0 and App.GenericTemplate.count_category('Salaries::Salary') > 0
   .panel-body
     -if @person.missing_employee_information
       - if @person.missing_employee_information.length > 0
@@ -48,7 +48,7 @@
                 %select{:name => 'generic_template_id',
                         :id => 'person_template',
                         :class => 'form-control required'}
-                  - for h in App.GenericTemplate.all()
+                  - for h in App.GenericTemplate.category('Salaries::Salary')
                     - if @salary.generic_template_id == h.id
                       %option{:value => h.id, :selected => true}= h.title
                     - else
@@ -264,5 +264,5 @@
       - if ! App.SalaryTax.count() > 0
         = I18n.t("salary.notices.no_existing_salary_taxes_alert")
 
-      - if ! App.GenericTemplate.count() > 0
+      - if ! App.GenericTemplate.count_category('Salaries::Salary') > 0
         = I18n.t("salary.notices.no_existing_template_alert")

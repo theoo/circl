@@ -1,6 +1,8 @@
 ---
 fr:
   job:
+    errors:
+      cannot_contain_comma: cannot contain comma
     views:
       actions:
         view_members: voir les membres

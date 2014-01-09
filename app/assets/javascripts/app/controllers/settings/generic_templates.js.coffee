@@ -28,8 +28,9 @@ class ClassNamesExtention extends App.ExtendedController
     super
     @class_names = {}
     @class_names['Salaries::Salary'] = I18n.t("activerecord.models.salary")
-    @class_names['Donation']         = I18n.t("template.models.donation")
-    # @class_names['Affair']           = I18n.t("activerecord.models.affair")
+    @class_names['Affair']           = I18n.t("activerecord.models.affair")
+    @class_names['Invoice']          = I18n.t("activerecord.models.invoice")
+    @class_names['Receipt']          = I18n.t("activerecord.models.receipt")
 
 class New extends ClassNamesExtention
   events:

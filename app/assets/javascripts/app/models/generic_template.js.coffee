@@ -25,6 +25,14 @@ class App.GenericTemplate extends Spine.Model
   constructor: ->
     super
 
+  @category: (cat) ->
+    _.filter @all(), (gt) ->
+      gt.class_name == cat
+
+  @count_category: (cat) ->
+    ary = @category(cat)
+    ary.length
+
   @fetch_count: ->
     get_callback = (data) =>
       @_count = data
