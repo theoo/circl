@@ -6,8 +6,6 @@ en:
     help:
       remove_content_if_you_dont_want_footer: remove content if you dont want footer
       remove_content_if_you_dont_want_header: remove content if you dont want header
-    models:
-      donation: Donation Certificates
     views:
       actions:
         edit_template: edit template
@@ -21,6 +19,9 @@ en:
       header: header
       language: language
       salary_template_file: Salary template example
+      projects_template_file: (Affairs) Projects template example
+      statement_template_file: (Invoices) Statement of a project template example
+      donation_template_file: (Receipts) Donation certificate example
       template: template
       thumb: thumb
       upload_new_template: upload the new template (odt)

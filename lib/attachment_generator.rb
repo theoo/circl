@@ -92,7 +92,13 @@ class AttachmentGenerator
   def prepare
     @tmp_file = Tempfile.new(['pdf_generation' + @object.id.to_s, '.odt'], :encoding => 'ascii-8bit')
     @tmp_file.binmode
-    render_odt @object.generic_template.odt.path, @tmp_file.path
+
+    begin
+      render_odt @object.generic_template.odt.path, @tmp_file.path
+    rescue Exception => @e
+      render_odt [Rails.root, "app/assets/odt/error.odt"].join("/"), @tmp_file.path
+    end
+
   end
 
   def cleanup

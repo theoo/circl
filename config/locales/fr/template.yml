@@ -6,8 +6,6 @@ fr:
     help:
       remove_content_if_you_dont_want_footer: Supprimer le contenu pour ne pas afficher de pied de page.
       remove_content_if_you_dont_want_header: Supprimer le contenu pour ne pas afficher d'entête.
-    models:
-      donation: Attestation de don
     views:
       actions:
         edit_template: modifier le modèle
@@ -20,7 +18,10 @@ fr:
       footer: Pied de page
       header: Entête
       language: langue
-      salary_template_file: Modèle de salaire exemple
+      salary_template_file: Modèle de salaire pour exemple
+      projects_template_file: Modèle de projets (affairs) pour exemple
+      statement_template_file: Modèle de relevé de compte (factures) pour exemple
+      donation_template_file: Modèle de certifiat de dons (reçus) pour exemple
       template: modèle
       thumb: aperçu
       upload_new_template: téléverser un nouveau modèle

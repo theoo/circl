@@ -21,6 +21,15 @@
           %li
             %a{:href => '/assets/salary.odt'}
               = I18n.t("template.views.salary_template_file")
+          %li
+            %a{:href => '/assets/projects.odt'}
+              = I18n.t("template.views.projects_template_file")
+          %li
+            %a{:href => '/assets/statement.odt'}
+              = I18n.t("template.views.statement_template_file")
+          %li
+            %a{:href => '/assets/donation.odt'}
+              = I18n.t("template.views.donation_template_file")
 
         %input{ :type => 'hidden', :name => 'template_id', :value => @template.id }
         %br

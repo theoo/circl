@@ -305,8 +305,9 @@ class Export extends App.ExtendedController
   validate: (e) ->
     errors = new App.ErrorsList
 
-    if @el.find("#person_affairs_pdf_export_template").val() == undefined
-      errors.add ['generic_template_id', I18n.t("activerecord.errors.messages.blank")].to_property()
+    if @el.find("#person_affairs_pdf_export_format").val() != 'csv'
+      unless @el.find("#person_affairs_pdf_export_template").val()
+        errors.add ['generic_template_id', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     if errors.is_empty()
       # @render_success() # do nothing...

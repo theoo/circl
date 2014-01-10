@@ -156,8 +156,12 @@ class Affair < ActiveRecord::Base
     h[:extras_count]        = extras.count
     h[:extras_value]        = extras_value.to_f
     h[:value]               = value.try(:to_f)
-    h[:statuses]            = get_statuses.map{|s| I18n.t("affair.views.statuses." + s.to_s)}.join(", ")
+    h[:statuses]            = translated_statuses 
     h
+  end
+
+  def translated_statuses
+    get_statuses.map{|s| I18n.t("affair.views.statuses." + s.to_s)}.join(", ")
   end
 
   def invoices_value

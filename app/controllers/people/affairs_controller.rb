@@ -354,7 +354,7 @@ class People::AffairsController < ApplicationController
 
         format.odt do
           send_data generator.odt,
-            :filename => "person_#{@person.id}_invoices.odt",
+            :filename => "person_#{@person.id}_receipts.odt",
             :type => 'application/vnd.oasis.opendocument.text'
         end
 
@@ -391,8 +391,10 @@ class People::AffairsController < ApplicationController
       errors[:from] = I18n.t("salary.errors.from_date_should_be_before_to_date")
     end
 
-    unless params[:generic_template_id]
-      errors[:generic_template_id] = I18n.t("activerecord.errors.messages.blank")
+    if params[:format] != 'csv'
+      unless params[:generic_template_id]
+        errors[:generic_template_id] = I18n.t("activerecord.errors.messages.blank")
+      end
     end
 
     [errors, from, to]
