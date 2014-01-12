@@ -36,7 +36,7 @@ Directory::Application.routes.draw do
 
     resources :affairs, :controller => 'people/affairs' do
       collection do
-        get 'search', 'export', 'invoices', 'receipts'
+        get 'search', 'affairs', 'invoices', 'receipts'
       end
 
       resources :extras, :controller => 'people/affairs/extras' do

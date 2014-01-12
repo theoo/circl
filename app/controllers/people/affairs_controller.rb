@@ -88,7 +88,7 @@ class People::AffairsController < ApplicationController
     end
   end
 
-  def export
+  def affairs
 
     errors, from, to = validate_export_input(params)
 

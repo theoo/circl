@@ -3,18 +3,19 @@ namespace :db do
     namespace :generic_templates do |ns|
       task :create => :environment do
         print "Creating generic templates:... "
-        h = YAML.load_file([Rails.root, 'db/seeds/generic_templates.yml'].join("/")).first
-        file_path = h.delete('odt')
-        gt = GenericTemplate.new(h)
-        gt.odt = File.open([Rails.root, file_path].join("/"))
-        gt.save!
+        YAML.load_file([Rails.root, 'db/seeds/generic_templates.yml'].join("/")).each do |h|
+          file_path = h.delete('odt')
+          gt = GenericTemplate.new(h)
+          gt.odt = File.open([Rails.root, file_path].join("/"))
+          gt.save!
+        end
         puts 'done!'
       end
 
       task :destroy => :environment do
         print "Destroying generic templates:... "
         h = YAML.load_file([Rails.root, 'db/seeds/generic_templates.yml'].join("/")).first
-        GenericTemplate.where(:title => h['title']).destroy
+        GenericTemplate.where(:title => h['title']).each{|t|t.destroy}
         puts 'done!'
       end
 

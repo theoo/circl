@@ -3,3 +3,15 @@
   language_id: 1
   class_name: Salaries::Salary
   odt: app/assets/odt/salary.odt
+- title: Person's projects (affairs) template example
+  language_id: 1
+  class_name: Affair
+  odt: app/assets/odt/projects.odt
+- title: Person's statement (invoices) template example
+  language_id: 1
+  class_name: Invoice
+  odt: app/assets/odt/statement.odt
+- title: Person's donation certificate (receipts) template example
+  language_id: 1
+  class_name: Receipt
+  odt: app/assets/odt/donation.odt

@@ -176,9 +176,9 @@ class Index extends App.ExtendedController
   events:
     'click tr.item': 'edit'
     'datatable_redraw': 'table_redraw'
-    'click a[name=export-affairs]': 'export_affairs'
-    'click a[name=export-invoices]': 'export_invoices'
-    'click a[name=export-receipts]': 'export_receipts'
+    'click a[name=people-affairs-documents-affairs]':  'documents_affairs'
+    'click a[name=people-affairs-documents-invoices]': 'documents_invoices'
+    'click a[name=people-affairs-documents-receipts]': 'documents_receipts'
 
   constructor: (params) ->
     super
@@ -207,26 +207,26 @@ class Index extends App.ExtendedController
 
     @activate_in_list(target)
 
-  export_affairs: (e) ->
+  documents_affairs: (e) ->
     e.preventDefault()
-    @export_machine('affairs')
+    @documents_machine('affairs')
 
-  export_invoices: (e) ->
+  documents_invoices: (e) ->
     e.preventDefault()
-    @export_machine('invoices')
+    @documents_machine('invoices')
 
-  export_receipts: (e) ->
+  documents_receipts: (e) ->
     e.preventDefault()
-    @export_machine('receipts')
+    @documents_machine('receipts')
 
-  export_machine: (content) ->
+  documents_machine: (content) ->
     win = $("<div class='modal fade' id='affairs-pdf-export-modal' tabindex='-1' role='dialog' />")
     # render partial to modal
     modal = JST["app/views/helpers/modal"]()
     win.append modal
     win.modal(keyboard: true, show: false)
 
-    controller = new Export({el: win.find('.modal-content'), content: content})
+    controller = new DocumentsMachine({el: win.find('.modal-content'), content: content})
     win.modal('show')
     controller.activate()
 
@@ -260,7 +260,7 @@ class Balance extends App.ExtendedController
   render: =>
     @html @view('people/affairs/balance')(@)
 
-class Export extends App.ExtendedController
+class DocumentsMachine extends App.ExtendedController
   events:
     'submit form': 'validate'
     'change #person_affairs_pdf_export_format': 'format_changed'
@@ -272,10 +272,7 @@ class Export extends App.ExtendedController
 
   activate: (params)->
     @format = 'pdf' # default format
-    if @content == 'affairs'
-      @form_url = App.PersonAffair.url() + "/export"
-    else
-      @form_url = App.PersonAffair.url() + "/" + @content
+    @form_url = App.PersonAffair.url() + "/" + @content
 
     switch @content
       when 'affairs'
@@ -295,7 +292,7 @@ class Export extends App.ExtendedController
         @render()
 
   render: =>
-    @html @view('people/affairs/export')(@)
+    @html @view('people/affairs/documents')(@)
 
     switch @content
       when 'affairs'
@@ -318,7 +315,6 @@ class Export extends App.ExtendedController
   format_changed: (e) ->
     @format = $(e.target).val()
     @el.find("form").attr('action', @form_url + "." + @format)
-
 
 class App.PersonAffairs extends Spine.Controller
   className: 'affairs'

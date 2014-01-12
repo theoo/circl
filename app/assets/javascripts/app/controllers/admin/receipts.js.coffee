@@ -131,6 +131,7 @@ class Index extends App.ExtendedController
     'click tr.item': 'edit'
     'click button[name="admin-receipts-export"]':  'stack_export_window'
     'click button[name="admin-receipts-import"]':  'stack_import_window'
+    'click button[name="admin-receipts-import"]':  'stack_import_window'
 
   constructor: (params) ->
     super
@@ -238,6 +239,66 @@ class App.ExportReceipts extends App.ExtendedController
   activate: ->
     super
     @render()
+
+class Export extends App.ExtendedController
+  events:
+    'submit form': 'validate'
+    'change #person_affairs_pdf_export_format': 'format_changed'
+
+  constructor: (params) ->
+    super
+    @content = params.content
+    # window.location = PersonAffair.url() + ".csv"
+
+  activate: (params)->
+    @format = 'pdf' # default format
+    if @content == 'affairs'
+      @form_url = App.PersonAffair.url() + "/export"
+    else
+      @form_url = App.PersonAffair.url() + "/" + @content
+
+    switch @content
+      when 'affairs'
+        @template_class = 'Affair'
+        App.Affair.fetch_statuses()
+        App.Affair.one 'statuses_fetched', =>
+          @render()
+
+      when 'invoices'
+        @template_class = 'Invoice'
+        App.Invoice.fetch_statuses()
+        App.Invoice.one 'statuses_fetched', =>
+          @render()
+
+      when 'receipts'
+        @template_class = 'Receipt'
+        @render()
+
+  render: =>
+    @html @view('people/affairs/export')(@)
+
+    switch @content
+      when 'affairs'
+        @el.find("#person_affairs_pdf_export_threshold_value_global").attr(disabled: true)
+        @el.find("#person_affairs_pdf_export_threshold_overpaid_global").attr(disabled: true)
+
+  validate: (e) ->
+    errors = new App.ErrorsList
+
+    if @el.find("#person_affairs_pdf_export_format").val() != 'csv'
+      unless @el.find("#person_affairs_pdf_export_template").val()
+        errors.add ['generic_template_id', I18n.t("activerecord.errors.messages.blank")].to_property()
+
+    if errors.is_empty()
+      # @render_success() # do nothing...
+    else
+      e.preventDefault()
+      @render_errors(errors.errors)
+
+  format_changed: (e) ->
+    @format = $(e.target).val()
+    @el.find("form").attr('action', @form_url + "." + @format)
+
 
 class App.AdminReceipts extends Spine.Controller
   className: 'adminReceipts'
