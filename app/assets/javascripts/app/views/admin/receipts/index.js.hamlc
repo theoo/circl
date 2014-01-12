@@ -22,16 +22,8 @@
       .icon-cloud-download
       = I18n.t('common.toolbox_import_bank_file')
 
-    .btn-group
-      %button{:type => 'button',
-              :data-toggle => 'dropdown',
-              :class => 'btn btn-default dropdown-toggle' }
-        .icon-paper-clip
-        = I18n.t("common.documents")
-        .caret
-
-      %ul.dropdown-menu
-        %li
-          %a{:href => '#', :name => 'admin-receipts-documents'}
-            .icon-cloud-download
-            = I18n.t('affair.views.receipts')
+    %button{:type => 'button',
+            :name => 'admin-receipts-documents-receipts',
+            :class => 'btn btn-default dropdown-toggle' }
+      .icon-paper-clip
+      = I18n.t("common.documents")

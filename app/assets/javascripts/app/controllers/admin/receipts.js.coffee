@@ -131,7 +131,7 @@ class Index extends App.ExtendedController
     'click tr.item': 'edit'
     'click button[name="admin-receipts-export"]':  'stack_export_window'
     'click button[name="admin-receipts-import"]':  'stack_import_window'
-    'click button[name="admin-receipts-import"]':  'stack_import_window'
+    'click button[name="admin-receipts-documents-receipts"]':  'documents_receipts'
 
   constructor: (params) ->
     super
@@ -187,6 +187,9 @@ class Index extends App.ExtendedController
     win.modal('show')
     controller.activate()
 
+  documents_receipts: (e) ->
+    e.preventDefault()
+
 class App.ExportReceipts extends App.ExtendedController
   events:
     'submit form': 'validate'
@@ -240,7 +243,7 @@ class App.ExportReceipts extends App.ExtendedController
     super
     @render()
 
-class Export extends App.ExtendedController
+class DocumentsMachine extends App.ExtendedController
   events:
     'submit form': 'validate'
     'change #person_affairs_pdf_export_format': 'format_changed'
@@ -275,7 +278,7 @@ class Export extends App.ExtendedController
         @render()
 
   render: =>
-    @html @view('people/affairs/export')(@)
+    @html @view('admin/receipts/documents')(@)
 
     switch @content
       when 'affairs'
