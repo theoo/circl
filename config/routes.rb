@@ -189,7 +189,7 @@ Directory::Application.routes.draw do
 
     resources :receipts do
       collection do
-        get 'export', 'means_of_payments'
+        get 'export', 'means_of_payments', 'documents'
       end
     end
 

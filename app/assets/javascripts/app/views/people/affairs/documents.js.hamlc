@@ -160,7 +160,7 @@
           %label{:for => "person_affairs_pdf_export_format"}
             = I18n.t('affair.views.format')
           %select{:id => 'person_affairs_pdf_export_format',
-                  :name => 'statuses[]',
+                  :name => 'format',
                   :class => 'form-control'}
             - for f in ['csv', 'pdf', 'odt']
               %option{:value => f, :selected => (f == @format)}= I18n.t("common." + f)

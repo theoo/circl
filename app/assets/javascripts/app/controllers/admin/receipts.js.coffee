@@ -190,6 +190,16 @@ class Index extends App.ExtendedController
   documents_receipts: (e) ->
     e.preventDefault()
 
+    win = $("<div class='modal fade' id='admin-receipts-documents-receipts-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    controller = new DocumentsMachine({el: win.find('.modal-content')})
+    win.modal('show')
+    controller.activate()
+
 class App.ExportReceipts extends App.ExtendedController
   events:
     'submit form': 'validate'
@@ -245,57 +255,45 @@ class App.ExportReceipts extends App.ExtendedController
 
 class DocumentsMachine extends App.ExtendedController
   events:
-    'submit form': 'validate'
-    'change #person_affairs_pdf_export_format': 'format_changed'
+    'submit form': 'submit'
+    'change #admin_receipts_documents_format': 'format_changed'
 
   constructor: (params) ->
     super
-    @content = params.content
-    # window.location = PersonAffair.url() + ".csv"
 
   activate: (params)->
     @format = 'pdf' # default format
-    if @content == 'affairs'
-      @form_url = App.PersonAffair.url() + "/export"
-    else
-      @form_url = App.PersonAffair.url() + "/" + @content
-
-    switch @content
-      when 'affairs'
-        @template_class = 'Affair'
-        App.Affair.fetch_statuses()
-        App.Affair.one 'statuses_fetched', =>
-          @render()
-
-      when 'invoices'
-        @template_class = 'Invoice'
-        App.Invoice.fetch_statuses()
-        App.Invoice.one 'statuses_fetched', =>
-          @render()
-
-      when 'receipts'
-        @template_class = 'Receipt'
-        @render()
+    @template_class = 'Receipt'
+    @render()
 
   render: =>
     @html @view('admin/receipts/documents')(@)
 
-    switch @content
-      when 'affairs'
-        @el.find("#person_affairs_pdf_export_threshold_value_global").attr(disabled: true)
-        @el.find("#person_affairs_pdf_export_threshold_overpaid_global").attr(disabled: true)
-
-  validate: (e) ->
+  submit: (e) ->
+    e.preventDefault()
     errors = new App.ErrorsList
 
-    if @el.find("#person_affairs_pdf_export_format").val() != 'csv'
-      unless @el.find("#person_affairs_pdf_export_template").val()
+    if @el.find("#admin_receipts_documents_format").val() != 'csv'
+      unless @el.find("#admin_receipts_documents_template").val()
         errors.add ['generic_template_id', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     if errors.is_empty()
-      # @render_success() # do nothing...
+      form = $(e.target).serializeObject()
+      console.log form
+      return
+      query       = {search_string: ""}
+      url         = "#{Receipt.url()}/documents." + @format + "?" + args
+      title       = I18n.t('receipt.views.sort_people_for_pdf_generation')
+      message     = I18n.t('receipt.views.sort_people_message')
+      disabled    = 'selected_attributes'
+
+      Directory.search_with_custom_action query,
+        url: url
+        title: title
+        message: message
+        disabled: disabled
+
     else
-      e.preventDefault()
       @render_errors(errors.errors)
 
   format_changed: (e) ->

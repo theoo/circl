@@ -268,7 +268,6 @@ class DocumentsMachine extends App.ExtendedController
   constructor: (params) ->
     super
     @content = params.content
-    # window.location = PersonAffair.url() + ".csv"
 
   activate: (params)->
     @format = 'pdf' # default format
