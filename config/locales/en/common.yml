@@ -21,7 +21,7 @@ en:
     created_at: created at
     css: CSS
     csv: CSV (Spreadsheet)
-    dashboard: Dashboard
+    dashboard: dashboard
     date: date
     description: description
     destroy: destroy
@@ -87,6 +87,7 @@ en:
       quantity: qty.
     template: template
     this_application_unique_id: This application unique ID is
+    this_document_will_be_accessible_for_this_duration: This document will be accessible during %{duration}.
     title: title
     to: to
     toolbox_export: Export

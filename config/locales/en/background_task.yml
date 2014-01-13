@@ -8,6 +8,7 @@ en:
       concat_and_email_subscription_pdf: Generating a file combining invoices from %{people_count} person(s) for the subscription %{subscription_id} - %{subscription_title}
       generate_invoice_pdf: Generating PDF for invoice %{invoice_id} - %{invoice_title}
       generate_invoice_template_jpg: Generating thumbnail for invoice template %{invoice_template_id} - %{invoice_template_title}
+      generate_receipts_document_and_email: Generating receipt documents for %{people_count} people.
       generate_salary_pdf: Generating PDF for salary %{salary_id} - %{salary_title}
       generate_template_jpg: Generating thumbnail for salary template %{template_id} - %{template_title}
       merge_subscriptions: Merging subscription %{source_subscription_id} into %{destination_subscription_id}

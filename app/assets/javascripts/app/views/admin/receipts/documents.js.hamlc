@@ -2,7 +2,9 @@
   %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
-    = I18n.t("affair.views.pdf_export")
+    = I18n.t("affair.views.document_export")
+    \/
+    = I18n.t("activerecord.models.receipt")
 
 %form
   .modal-body
@@ -13,8 +15,8 @@
     .row
       .col-md-12
         .alert.alert-info
-          %h3= I18n.t("affair.views.pdf_export_explanation_title")
-          = I18n.t("affair.views.pdf_export_explanation")
+          %h3= I18n.t("affair.views.document_export_explanation_title")
+          = I18n.t("affair.views.document_export_explanation")
 
     - # payment dates interval
     .row
@@ -134,7 +136,7 @@
           %select{:id => 'admin_receipts_documents_format',
                   :name => 'format',
                   :class => 'form-control'}
-            - for f in ['csv', 'pdf', 'odt']
+            - for f in ['csv', 'pdf']
               %option{:value => f, :selected => (f == @format)}= I18n.t("common." + f)
 
   .modal-footer

@@ -348,7 +348,7 @@ class People::AffairsController < ApplicationController
 
         format.pdf do
           send_data generator.pdf,
-            :filename => "person_#{@person.id}_invoices.pdf",
+            :filename => "person_#{@person.id}_receipts.pdf",
             :type => 'application/pdf'
         end
 

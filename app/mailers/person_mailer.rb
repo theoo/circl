@@ -97,6 +97,13 @@ class PersonMailer < ActionMailer::Base
           :title => @subscription.title))
   end
 
+  def send_receipts_document_link(person, cached_doc)
+    @document = cached_doc
+    I18n.locale = person.main_communication_language.symbol
+    mail(:to => person.email,
+      :subject => I18n.t('person.mail.admin_receipts_were_generated'))
+  end
+
   def send_report_error_to_admin(current_person, exception)
     # No locale is set as there is no user involved, only email address from configuration.yml
     @exception = exception

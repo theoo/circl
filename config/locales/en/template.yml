@@ -12,16 +12,16 @@ en:
       associations: associations
       body: body
       class_name: ressource
+      donation_template_file: (Receipts) Donation certificate example
       download_current_template: download the current template
       example_files_explanation: Below is a list of example files to adapt at your needs. Please have a look at <a href='https://doc.circl.ch' target='_blank'>https://doc.circl.ch</a> for more information.
       example_files_title: Example files
       footer: footer
       header: header
       language: language
-      salary_template_file: Salary template example
       projects_template_file: (Affairs) Projects template example
+      salary_template_file: Salary template example
       statement_template_file: (Invoices) Statement of a project template example
-      donation_template_file: (Receipts) Donation certificate example
       template: template
       thumb: thumb
       upload_new_template: upload the new template (odt)

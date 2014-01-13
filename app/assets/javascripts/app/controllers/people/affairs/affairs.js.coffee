@@ -263,7 +263,7 @@ class Balance extends App.ExtendedController
 class DocumentsMachine extends App.ExtendedController
   events:
     'submit form': 'validate'
-    'change #person_affairs_pdf_export_format': 'format_changed'
+    'change #person_affairs_document_export_format': 'format_changed'
 
   constructor: (params) ->
     super
@@ -295,14 +295,14 @@ class DocumentsMachine extends App.ExtendedController
 
     switch @content
       when 'affairs'
-        @el.find("#person_affairs_pdf_export_threshold_value_global").attr(disabled: true)
-        @el.find("#person_affairs_pdf_export_threshold_overpaid_global").attr(disabled: true)
+        @el.find("#person_affairs_document_export_threshold_value_global").attr(disabled: true)
+        @el.find("#person_affairs_document_export_threshold_overpaid_global").attr(disabled: true)
 
   validate: (e) ->
     errors = new App.ErrorsList
 
-    if @el.find("#person_affairs_pdf_export_format").val() != 'csv'
-      unless @el.find("#person_affairs_pdf_export_template").val()
+    if @el.find("#person_affairs_document_export_format").val() != 'csv'
+      unless @el.find("#person_affairs_document_export_template").val()
         errors.add ['generic_template_id', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     if errors.is_empty()

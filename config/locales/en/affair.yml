@@ -14,23 +14,23 @@ en:
         show_owner: show owner's page
       available_statuses: available statuses
       buyer: buyer
+      document_export: Documents generation
+      document_export_explanation: Please select sorting criterias for the generation.
+      document_export_explanation_title: Documents generation
       extras: Extras
       format: format
       invoices: Invoices
       invoices_count: invoice count
       invoices_value: values of invoices
       owner: owner
-      pdf_export: pdf export
-      pdf_export_explanation: pdf export explanation
-      pdf_export_explanation_title: pdf export explanation title
       products: Products
       receipts: Receipts
       receipts_count: receipt count
       receipts_value: values of receipts
       receiver: receiver
       relations: relations
-      select_payment_interval: select payment interval
-      select_thresholds: select thresholds
+      select_payment_interval: Select extraction interval
+      select_thresholds: Select minimum threshold
       status: status
       statuses:
         cancelled: cancelled
@@ -44,8 +44,8 @@ en:
       subscriptions: subscriptions
       tasks: Services
       template: template
-      threshold_overpaid_global: threshold overpaid global
-      threshold_overpaid_unit: threshold overpaid unit
-      threshold_value_global: threshold value global
-      threshold_value_unit: threshold value unit
+      threshold_overpaid_global: overpaid sum threshold
+      threshold_overpaid_unit: overpaid threshold
+      threshold_value_global: value sum threshold
+      threshold_value_unit: value threshold
       update_date: last update

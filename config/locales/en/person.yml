@@ -47,14 +47,17 @@ en:
       invalid_translation_aptitude: Invalid translation aptitude "%{translation_aptitude}"
       line: line
     mail:
-      background_task_error_report: background task error report
-      imported_people: imported people
+      admin_receipts_were_generated: Receipt documents generation
+      admin_receipts_were_generated_explanation: You can download the requested file by clicking the following link
+      admin_receipts_were_generated_title: Receipt documents generation succeed
+      background_task_error_report: Background tasks error report
+      imported_people: Imported people
       mailchimp_synchronisation_report: mailchimp synchronisation report
       members_were_added_to_subscription: members were added to subscription
       pdf_for_subscription: pdf for subscription
-      people_import_report: people import report
-      people_import_report_title: people import report title
-      receipts_import_report: receipts import report
+      people_import_report: People import report
+      people_import_report_title: People import report
+      receipts_import_report: Receipts import report
       report_error:
         datetime: datetime
         directory_id: directory

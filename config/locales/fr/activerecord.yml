@@ -291,6 +291,8 @@ fr:
           one: ! 'Une erreur a empêché l''enregistrement du formulaire:'
           other: ! '%{count} erreurs ont empêché l''enregistrement du formulaire:'
     models:
+      ! '#{@template_class':
+        toLowerCase()}: tolowercase()}
       activity: Activité
       affair: Affaire
       application_setting: Configuration de l'application

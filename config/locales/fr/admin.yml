@@ -11,6 +11,7 @@ fr:
       add_members_email_will_be_sent: Le processus d'import des membres à commencé, un rapport sera envoyé par email à %{email} lorsqu'il sera fini.
       pdf_will_be_sent: Un lien vers le PDF sera envoyé à %{email} lorsque la fusion sera terminée.
       people_imported: Les personnes ont été importées, un rapport a été envoyé par email à %{email}.
+      receipts_generation_started: La génération des documents de reçu a commancé pour %{members_count} personnes, un email sera envoyé à %{email} lorsque le processus sera terminé.
       receipts_imported: Les reçus ont été importés, un rapport a été envoyé par email à %{email}.
     views:
       affairs: Affaires

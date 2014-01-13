@@ -47,6 +47,9 @@ fr:
       invalid_translation_aptitude: Aptitude de traduction invalide "%{translation_aptitude}"
       line: ligne
     mail:
+      admin_receipts_were_generated: Génération des documents de reçus
+      admin_receipts_were_generated_explanation: Vous pouvez télécharger le document généré à l'adresse suivante
+      admin_receipts_were_generated_title: Génération des documents terminée
       background_task_error_report: Rapport d'erreur de la tâche d'arrière plan
       imported_people: Personnes importées
       mailchimp_synchronisation_report: Rapport de synchronisation Mailchimp

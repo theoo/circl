@@ -11,6 +11,7 @@ en:
       add_members_email_will_be_sent: The member import process has started, a report will be sent to you at %{email} upon completion.
       pdf_will_be_sent: You will receive an email at %{email} containing a link to the PDF when it will be ready.
       people_imported: The selected persons have been imported, a report has been sent to you at %{email}.
+      receipts_generation_started: Receipt documents generation for %{members_count} people has started, an email will be sent to you at %{email} upon completion.
       receipts_imported: The receipts have been imported, a report has been sent to you at %{email}.
     views:
       affairs: Affairs

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131219113700) do
+ActiveRecord::Schema.define(:version => 20140113125819) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -90,6 +90,18 @@ ActiveRecord::Schema.define(:version => 20131219113700) do
   end
 
   add_index "bank_import_histories", ["media_date"], :name => "index_bank_import_histories_on_media_date"
+
+  create_table "cached_documents", :force => true do |t|
+    t.integer  "validity_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
+
+  add_index "cached_documents", ["created_at"], :name => "index_cached_documents_on_created_at"
 
   create_table "comments", :force => true do |t|
     t.integer  "person_id"

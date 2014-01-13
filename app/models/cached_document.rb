@@ -16,17 +16,24 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Ensure all required key exists in ApplicationSetting
-extend ColorizedOutput
+class CachedDocument < ActiveRecord::Base
 
-required_binaries = %w{ wkhtmltopdf wkhtmltoimage lowriter convert pdftk }
+  has_attached_file :document, :use_timestamp => true
 
-print "Verifing Externalities: "
-required_binaries.each do |b|
-  unless system("which #{b} > /dev/null 2>&1")
-    message = "Binary '#{b}' not found!"
-    puts red(message)
-    raise ArgumentError, message
+  before_save do
+    self.validity_time = 1.day.seconds
   end
+
+  def self.outdated_documents
+    where("created_at::time < (now()::time - ('123'||' seconds')::interval)")
+  end
+
+  def self.erase_outdated_documents
+    self.outdated_documents.destroy_all
+  end
+
+  def public_url
+    Rails.configuration.settings["directory_url"] + document.url
+  end
+
 end
-puts green("done") + "."

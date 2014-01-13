@@ -12,16 +12,16 @@ fr:
       associations: associations
       body: Corps du texte
       class_name: ressource
+      donation_template_file: Modèle de certifiat de dons (reçus) pour exemple
       download_current_template: télécharger le modèle actuel
       example_files_explanation: Vous trouverez ci-dessous une liste de fichier exemple pour l'adaptation des modèles. Veuillez consulter <a href='https://doc.circl.ch' target='_blank'>https://doc.circl.ch</a> pour plus d'informations.
       example_files_title: Fichier d'exemple
       footer: Pied de page
       header: Entête
       language: langue
-      salary_template_file: Modèle de salaire pour exemple
       projects_template_file: Modèle de projets (affairs) pour exemple
+      salary_template_file: Modèle de salaire pour exemple
       statement_template_file: Modèle de relevé de compte (factures) pour exemple
-      donation_template_file: Modèle de certifiat de dons (reçus) pour exemple
       template: modèle
       thumb: aperçu
       upload_new_template: téléverser un nouveau modèle

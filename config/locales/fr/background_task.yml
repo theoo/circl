@@ -8,6 +8,7 @@ fr:
       concat_and_email_subscription_pdf: Fusion dans un fichier des factures de %{people_count} personne(s) pour l'inscription %{subscription_id} - %{subscription_title}
       generate_invoice_pdf: Génération du PDF de la facture %{invoice_id} - %{invoice_title}
       generate_invoice_template_jpg: Génération de la vignette pour le modèle de facture %{invoice_template_id} - %{invoice_template_title}
+      generate_receipts_document_and_email: Génération des documents de reçu pour %{people_count} personnes et expédition.
       generate_salary_pdf: Génération du PDF du salaire %{salary_id} - %{salary_title}
       generate_template_jpg: Génération de la vignette pour le modèle de salaire %{template_id} - %{template_title}
       merge_subscriptions: Fusion de l'inscription %{source_subscription_id} dans %{destination_subscription_id}

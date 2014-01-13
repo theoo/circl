@@ -72,6 +72,8 @@ en:
       owner: owner
       owner_name: owner name
       receipts_count: receipts count
+      sort_people_for_pdf_generation: Receipt documents generation
+      sort_people_message: Please select and sort the appropriate group of people for which receipt documents will be generated.
       subscription_title: subscription title
       value_date: value date
       value_total: value total
