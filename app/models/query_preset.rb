@@ -34,7 +34,7 @@ class QueryPreset < ActiveRecord::Base
   ################
 
   include ChangesTracker
-  
+
   #################
   ### CALLBACKS ###
   #################
@@ -45,8 +45,8 @@ class QueryPreset < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
+  default_scope order('name ASC')
   serialize :query
-
 
   ###################
   ### VALIDATIONS ###
@@ -62,7 +62,8 @@ class QueryPreset < ActiveRecord::Base
 
   private
 
-    def set_default_query
-      self.query ||= { :selected_attributes => [], :attributes_order => [] }
-    end
+  def set_default_query
+    self.query ||= { :selected_attributes => [], :attributes_order => [] }
+  end
+
 end
