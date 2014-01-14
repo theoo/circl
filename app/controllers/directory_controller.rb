@@ -181,6 +181,49 @@ class DirectoryController < ApplicationController
     end
   end
 
+  def confirm_people
+    authorize! :confirm_people, Directory
+
+    unless params[:people_file]
+      flash[:alert] = I18n.t('directory.errors.no_file_submitted')
+      redirect_to admin_path
+      return
+    end
+
+    session[:people_file_data] = params[:people_file].read
+    @infos = Person.parse_people(session[:people_file_data])
+
+    respond_to do |format|
+      format.html { render }
+    end
+  end
+
+  def import_people
+    authorize! :import_people, Directory
+
+    people = Person.parse_people(session[:people_file_data])[:people]
+
+    # TODO Import without ES indexation and reindex people after transaction
+    Person.transaction do
+      people.each do |p|
+        p.save
+      end
+    end
+
+    # In rails 3.1, session is a normal Hash
+    # In rails 3.2, session is a CGI::Session
+    begin
+      session.delete(:people_file_data) # Rails 3.1
+      session.data.delete(:people_file_data) # Rails 3.2
+    rescue
+    end
+
+    PersonMailer.send_people_import_report(current_person, people).deliver
+    flash[:notice] = I18n.t('directory.notices.people_imported', :email => current_person.email)
+    Activity.create!(:person => current_person, :resource_type => 'Admin', :resource_id => '0', :action => 'info', :data => { :people => "imported at #{Time.now}" })
+    redirect_to directory_path
+  end
+
   private
 
   def mailchimp_synchronizing?

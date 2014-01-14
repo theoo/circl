@@ -1,7 +1,12 @@
 - # We use person.errors.empty? instead of person.valid? because it
 - # resets the errors array every time and we filled it manually
 
-= render :partial => 'header'
+#secondary_navbar.navbar.navbar-default.navbar-static-top
+
+  .container
+    #secondary_navigation.collapse.navbar-collapse
+      .navbar-brand
+        = I18n.t("directory.views.import_people")
 
 .container
   .row
@@ -9,16 +14,16 @@
       .panel.panel-default
         .panel-heading
           .panel-title
-            = I18n.t('admin.views.people_found_in_file')
+            = I18n.t('directory.views.people_found_in_file')
 
         .panel-body
-          != I18n.t('admin.views.people_import_help')
+          != I18n.t('directory.views.people_import_help')
 
         - if @infos[:people].size > 0
           %table.datatable
             %thead
               %tr
-                %th= I18n.t('admin.import.row')
+                %th= I18n.t('directory.import.row')
                 %th= I18n.t('person.views.first_name')
                 %th= I18n.t('person.views.last_name')
                 %th= I18n.t('common.title')
@@ -37,7 +42,7 @@
                 %th= I18n.t('person.views.avs_number')
                 %th= I18n.t('person.views.bank_informations')
                 %th= I18n.t('person.views.roles')
-                %th= I18n.t('admin.import.main_communication_language')
+                %th= I18n.t('directory.import.main_communication_language')
                 %th= I18n.t('person.views.communication_languages')
                 %th= I18n.t('person.views.translation_aptitudes')
                 %th= I18n.t('person.views.private_tags')
@@ -89,7 +94,7 @@
                   %td= I18n.t('common.' + person.hidden.to_s)
 
           - if ! @infos[:errors].empty?
-            %h3= I18n.t('admin.views.people_file_errors')
+            %h3= I18n.t('directory.views.people_file_errors')
 
             .alert.alert-danger
               - @infos[:errors].each do |line|
@@ -98,6 +103,6 @@
         - if @infos[:errors].empty?
           .panel-footer
             .text-right
-              = form_tag(admin_import_people_path, :method => :post) do
-                = submit_tag I18n.t('admin.views.proceed_with_import'), :class => 'btn btn-primary'
+              = form_tag(directory_import_people_path, :method => :post) do
+                = submit_tag I18n.t('directory.views.proceed_with_import'), :class => 'btn btn-primary'
 

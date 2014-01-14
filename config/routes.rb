@@ -142,13 +142,13 @@ Directory::Application.routes.draw do
   match 'directory' => 'directory#index', :via => [:get, :post]
   match 'directory/mailchimp' => 'directory#mailchimp', :via => :post
   match 'directory/map' => 'directory#map', :via => :get
+  match 'directory/confirm_people' => 'directory#confirm_people', :via => :post
+  match 'directory/import_people' => 'directory#import_people', :via => :post
   namespace :directory do
     resources :query_presets
   end
 
   match 'admin' => 'admin#index'
-  match 'admin/confirm_people' => 'admin#confirm_people', :via => :post
-  match 'admin/import_people' => 'admin#import_people', :via => :post
   namespace :admin do
     resources :affairs do
       collection do

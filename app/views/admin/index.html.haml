@@ -58,39 +58,3 @@
               .panel-heading
                 .panel-title
                   = I18n.t('admin.views.invoices')
-
-    #tools_tab.tab-pane
-      .row
-        .col-lg-6
-          - if can? :create, Person
-            #admin_import_people.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('admin.views.import_people')
-
-              = form_tag(admin_confirm_people_path, :multipart => true) do
-                .panel-body
-                  .row
-                    .col-lg-12
-                      = link_to I18n.t('admin.views.people_example_file'), asset_path('people_example.csv')
-                      = '(' + I18n.t('common.use_right_click_save_as') + ')'
-                      %br
-                      %br
-
-                  .row
-                    .col-lg-6
-                      .form-group
-                        %label{:for => 'admin_import_people'}
-                          = I18n.t('admin.views.select_file')
-                        %input{:type => :file, :id => 'admin_import_people', :name => :people_file}
-
-                .panel-footer
-                  .row
-                    .col-lg-12
-                      .pull-right
-                        %button{:type => :submit,
-                              :class => 'btn btn-primary'}
-                          .glyphicon.glyphicon-cloud-upload
-                          = I18n.t('common.upload')
-
-        .col-lg-6

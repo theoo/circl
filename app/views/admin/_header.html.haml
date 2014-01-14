@@ -28,8 +28,3 @@
           %li
             %a{:href => '#finances_tab'}
               = I18n.t('admin.views.finances')
-
-        - if can? :create, Person
-          %li
-            %a{:href => '#tools_tab'}
-              = I18n.t('admin.views.tools')

@@ -55,7 +55,7 @@ fr:
       mailchimp_synchronisation_report: Rapport de synchronisation Mailchimp
       members_were_added_to_subscription: Des membres ont été ajouté à l'inscription
       pdf_for_subscription: PDF de l'inscription
-      people_import_report: apport d'importation des personnes
+      people_import_report: Rapport d'importation des personnes
       people_import_report_title: Rapport de l'import de personnes
       receipts_import_report: Rapport d'importation des reçus
       report_error:

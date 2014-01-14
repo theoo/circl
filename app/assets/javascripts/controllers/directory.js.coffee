@@ -6,3 +6,9 @@ $(document).ready ->
 
   if $('#directory_json_query').length > 0
     directory = new Directory
+
+  Ui.load_tabs $(document)
+  Ui.load_ui $(document)
+
+  # Import people report, add popover on errors
+  $("table.table tr.danger").popover()

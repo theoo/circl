@@ -1,12 +1,19 @@
 ---
 fr:
   directory:
+    import:
+      main_communication_language: langue de communication principale
+      row: ligne
     errors:
+      no_file_submitted: Veuillez sélectionner un fichier
+      wrong_file_format: Mauvais format de fichier
       query_empty: Aucune requête transmise, veuillez en fournir une et recommancer.
       query_invalid: requête "%{query}" invalide
       search_error: erreur lors de la recherche -> %{error}
       you_need_to_select_at_least_one_attribute_to_display: Au moins un attributs à afficher doit être sélectionné.
     notices:
+      add_members_email_will_be_sent: Le processus d'import des membres à commencé, un rapport sera envoyé par email à %{email} lorsqu'il sera fini.
+      people_imported: Les personnes ont été importées, un rapport a été envoyé par email à %{email}.
       result_return_only_one_person: Le résultat ne retournant qu'une personne votre requête à été redirigée vers l'édition.
     views:
       actions:
@@ -21,12 +28,20 @@ fr:
         presets: Pré-réglages
         selected_attributes: Attributs sélectionnés
         sorting_order: Ordre de tri
+      import_people: Importer des personnes
       new_preset: Nouveau pré-réglage
+      people_example_file: fichier d'exemple
+      people_file_errors: erreur(s) dans le fichier
+      people_found_in_file: personne(s) trouvée(s) dans le fichier
+      people_import_help: Voici les personnes qui ont été trouvées dans le fichier.<br> Verifiez l'exactitude des informations, puis cliquez sur le bouton 'suivant' pour confirmer l'import.<br><br> Si la validation des lignes échoue, les lignes concernées seront colorées en rouge et vous devrez recommencer le processus avec un fichier corrigé.<br>En passant la souris sur une ligne rouge vous pourrez obtenir plus d'information sur l'erreur.
+      proceed_with_import: continuer avec l'importation
       query_preset_explanation: Vous pouvez glisser les attributs disponibles dans la liste des attributs sélectionnés ou l'ordre de tri.
       query_preset_name: Nom du pré-réglage
       quick_search_placeholder: Recherche rapide
       results: Résultats
       score: score
       search_the_directory: Rechercher dans CIRCL
+      select_file: Veuillez choisir un fichier
       show_on_a_map: afficher sur une carte
       sync_mailchimp: synchroniser mailchimp
+      tools: Outils
