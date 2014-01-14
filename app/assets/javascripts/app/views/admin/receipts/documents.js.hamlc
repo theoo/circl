@@ -15,8 +15,10 @@
     .row
       .col-md-12
         .alert.alert-info
-          %h3= I18n.t("affair.views.document_export_explanation_title")
-          = I18n.t("affair.views.document_export_explanation")
+          %h3= I18n.t("affair.notices.document_export_explanation_title")
+          = I18n.t("affair.notices.document_export_explanation")
+          %br
+          = I18n.t("affair.notices.document_export_process")
 
     - # payment dates interval
     .row
@@ -47,6 +49,8 @@
     .row
       .col-md-12
         %h3= I18n.t("affair.views.select_thresholds")
+        %small.help-block
+          = I18n.t('affair.notices.will_match_all_defined_thresholds')
 
     .row
       - # value threshold
@@ -113,9 +117,24 @@
               CHF
 
     .row
-      .col-md-12
-        %small.help-block
-          = I18n.t('affair.notices.will_match_all_defined_thresholds')
+      .col-lg-12
+        .form-group
+          %label{:for => 'admin_receipts_documents_invoices_filter'}
+            = I18n.t('affair.views.invoice_names_filter')
+          %input{:type => 'text',
+                 :name => 'invoices_filter',
+                 :id => 'admin_receipts_documents_invoices_filter',
+                 :class => 'form-control'}
+          %small.help-block
+            = I18n.t('affair.notices.regexp')
+
+            - if I18n.locale == 'fr'
+              - url = "http://fr.wikipedia.org/wiki/Expression_rationnelle"
+            - else
+              - url = "http://en.wikipedia.org/wiki/Regular_expression"
+
+            %a{:href => url, :target => '_blank'}
+              .icon-question
 
     .row
       .col-md-6

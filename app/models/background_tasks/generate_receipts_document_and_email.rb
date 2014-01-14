@@ -50,6 +50,12 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
 
       receipts = person.receipts.order(:invoice_id, :value_date)
 
+      if options[:invoices_filter]
+        begin # Postgresql may trow an error if regexp is not correct
+          receipts = receipts.joins(:invoice).where("invoices.title ~ ?", options[:invoices_filter])
+        end
+      end
+
       if options[:from] and options[:to]
         receipts = receipts.where("value_date BETWEEN ? AND ?", options[:from], options[:to])
       end

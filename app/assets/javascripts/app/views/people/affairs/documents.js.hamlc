@@ -15,8 +15,8 @@
     .row
       .col-md-12
         .alert.alert-info
-          %h3= I18n.t("affair.views.document_export_explanation_title")
-          = I18n.t("affair.views.document_export_explanation")
+          %h3= I18n.t("affair.notices.document_export_explanation_title")
+          = I18n.t("affair.notices.document_export_explanation")
 
     - # payment dates interval
     .row

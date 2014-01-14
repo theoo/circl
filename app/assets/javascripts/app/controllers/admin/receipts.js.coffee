@@ -283,8 +283,8 @@ class DocumentsMachine extends App.ExtendedController
 
       query       = {search_string: "*"}
       url         = "#{Receipt.url()}/documents?" + params
-      title       = I18n.t('receipt.views.sort_people_for_pdf_generation')
-      message     = I18n.t('receipt.views.sort_people_message')
+      title       = I18n.t('receipt.notices.sort_people_for_pdf_generation')
+      message     = I18n.t('receipt.notices.sort_people_message')
       disabled    = 'selected_attributes'
 
       Directory.search_with_custom_action query,

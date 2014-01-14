@@ -52,7 +52,9 @@ fr:
       selected: sélectionné
       should_be_two_zeros: evrait être deux zéros (00)
       type: type
-    pdf: pdf
+    notices:
+      sort_people_for_pdf_generation: Génération des documents de reçu
+      sort_people_message: Veuillez sélectionner le groupe de personne et l'ordre de tri pour lequel générer les documents de reçu.
     views:
       actions:
         edit_receipt: modifier le reçu
@@ -72,8 +74,6 @@ fr:
       owner: propriétaire
       owner_name: propriétaire
       receipts_count: reçus
-      sort_people_for_pdf_generation: Génération des documents de reçu
-      sort_people_message: Veuillez sélectionner le groupe de personne et l'ordre de tri pour lequel générer les documents de reçu.
       subscription_title: titre de l'inscription
       value_date: date de valeur
       value_total: valeur totale
