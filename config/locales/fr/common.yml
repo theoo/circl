@@ -80,6 +80,7 @@ fr:
     requires_browser_update: Une mise à jour de votre navigateur est requise pour consulter cette page.
     reset: réinitialiser
     salaries: Salaires
+    select_file: Veuillez choisir un fichier
     settings: Configuration
     strong: fort
     successfully_updated: mise à jour réussie

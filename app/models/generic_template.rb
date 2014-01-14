@@ -95,7 +95,8 @@ class GenericTemplate < ActiveRecord::Base
   def take_snapshot
     # TODO move to AttachmentGenerator
     # Convert to PDF in the same dir
-    system("lowriter --headless --convert-to pdf #{odt.path} --outdir #{odt.path.gsub(/([^\/]+.odt)$/, "")}")
+
+    system("lowriter --headless --convert-to pdf \"#{odt.path}\" --outdir \"#{odt.path.gsub(/([^\/]+.odt)$/, "")}\"")
 
     # Open new file
     pdf_path = odt.path.gsub(/\.odt$/,".pdf")

@@ -39,7 +39,7 @@
       .col-lg-12
         .form-group
           %label{:for => 'template_upload_file'}
-            = I18n.t('admin.views.select_file')
+            = I18n.t('common.select_file')
           %input{ :type => 'file',
                   :name => 'odt',
                   :id => 'template_upload_file'}

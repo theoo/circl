@@ -20,7 +20,7 @@ en:
       document_export: Documents generation
       extras: Extras
       format: format
-      invoice_names_filter: Invoice names filter
+      invoice_names_filter: invoice names filter
       invoices: Invoices
       invoices_count: invoice count
       invoices_value: values of invoices
