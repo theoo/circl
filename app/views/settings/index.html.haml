@@ -128,7 +128,7 @@
 
     #affairs_tab.tab-pane.fade
       .row
-        .col-lg-6
+        .col-md-6
           - if can? :manage, TaskType
             #settings_task_types.panel.panel-default
               .panel-heading
@@ -141,7 +141,7 @@
                 .panel-title
                   = I18n.t('settings.views.task_rates')
 
-        .col-lg-6
+        .col-md-6
           - if can? :manage, Product
             #settings_products.panel.panel-default
               .panel-heading

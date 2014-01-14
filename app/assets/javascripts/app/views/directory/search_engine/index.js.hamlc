@@ -35,7 +35,7 @@
             .icon-file-text
             = I18n.t('common.csv')
 
-    - if @query?.search_string and @results_count < 1000
+    - if @query?.search_string and @results_count < 5000
       %a{ :href => '#',
           :name => 'directory-map',
           :class => 'btn btn-default'}

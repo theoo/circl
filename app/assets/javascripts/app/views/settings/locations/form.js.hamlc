@@ -30,7 +30,7 @@
                   :class => 'form-control required' }
 
     .row
-      .col-lg-6
+      .col-sm-6
         .form-group
           %label{:for => 'settings_location_post_code_or_zip'}
             = I18n.t('location.views.post_code_or_zip')
@@ -39,7 +39,7 @@
                   :id => 'settings_location_postal_code_prefix',
                   :value => @location.postal_code_prefix,
                   :class => 'form-control' }
-      .col-lg-6
+      .col-sm-6
         .form-group
           %label{:for => 'settings_location_phone_prefix'}
             = I18n.t('location.views.phone_prefix')
@@ -50,7 +50,7 @@
                   :class => 'form-control' }
 
     .row
-      .col-lg-4
+      .col-sm-4
         .form-group
           %label{:for => 'settings_location_iso_code_a2'}
             = I18n.t('location.views.iso_alpha2')
@@ -59,7 +59,7 @@
                   :id => 'settings_location_iso_code_a2',
                   :value => @location.iso_code_a2,
                   :class => 'form-control' }
-      .col-lg-4
+      .col-sm-4
         .form-group
           %label{:for => 'settings_location_iso_code_a3'}
             = I18n.t('location.views.iso_alpha3')
@@ -69,7 +69,7 @@
                   :value => @location.iso_code_a3,
                   :class => 'form-control' }
 
-      .col-lg-4
+      .col-sm-4
         .form-group
           %label{:for => 'settings_location_iso_code_num'}
             = I18n.t('location.views.iso_numerical')

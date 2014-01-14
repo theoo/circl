@@ -5,7 +5,7 @@
         .validation_errors_placeholder
 
     .row
-      .col-lg-3
+      .col-lg-3.col-sm-6
         .form-group
           %label{:for => 'tax_title'}
             %br
@@ -16,7 +16,7 @@
                   :value => @tax.title,
                   :class => 'form-control' }
 
-      .col-lg-3
+      .col-lg-3.col-sm-6
         .form-group
           %label{:for => 'tax_model'}
             %br
@@ -30,7 +30,7 @@
               - else
                 %option{:value => model}= model
 
-      .col-lg-2
+      .col-lg-2.col-sm-4
         .form-group
           %label{:for => 'tax_employee_account'}
             = I18n.t('tax.views.employee_account')
@@ -39,7 +39,7 @@
                   :id => 'tax_employee_account',
                   :value => @tax.employee_account,
                   :class => 'form-control' }
-      .col-lg-2
+      .col-lg-2.col-sm-4
         .form-group
           %label{:for => 'tax_employer_account'}
             = I18n.t('tax.views.employer_account')
@@ -49,7 +49,7 @@
                   :value => @tax.employer_account,
                   :class => 'form-control' }
 
-      .col-lg-2
+      .col-lg-2.col-sm-4
         .form-group
           %label{:for => 'tax_exporter_group'}
             = I18n.t('tax.views.exporter_group')

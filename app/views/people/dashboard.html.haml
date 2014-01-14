@@ -30,16 +30,9 @@
 
   .row
     .col-lg-12
-      %h1= I18n.t('person.dashboard.welcome');
+      %h1= I18n.t('person.dashboard.welcome')
 
   .row
-    .col-lg-6
-      - if can? :read, @person => Person # messages
-        #dashboard_messages.panel.panel-primary
-          .panel-heading
-            .panel-title
-              = I18n.t('person.dashboard.panels.messages')
-
     .col-lg-6
       - if can? :manage, @person => ::Task
         #dashboard_timesheet.panel.panel-default
@@ -47,22 +40,24 @@
             .panel-title
               = I18n.t('person.dashboard.panels.timesheet')
 
-  .row
-    .col-lg-6
+      - if can? :read, @person => Person # messages
+        #dashboard_messages.panel.panel-primary
+          .panel-heading
+            .panel-title
+              = I18n.t('person.dashboard.panels.messages')
+
       - if can? :read, @person => Comment
         #dashboard_comments.panel.panel-default
           .panel-heading
             .panel-title
               = I18n.t('person.dashboard.panels.last_comments')
 
-    .col-lg-6
       - if can? :read, @person => Activity
         #dashboard_activity.panel.panel-default
           .panel-heading
             .panel-title
               = I18n.t('person.dashboard.panels.your_activity')
 
-  .row
     .col-lg-6
       - if can? :read, @person => Invoice
         #dashboard_open_invoices.panel.panel-default
@@ -70,29 +65,24 @@
             .panel-title
               = I18n.t('person.dashboard.panels.open_invoices')
 
-    .col-lg-6
       - if can? :read, @person => Affair
         #dashboard_current_affairs.panel.panel-default
           .panel-heading
             .panel-title
               = I18n.t('person.dashboard.panels.current_affairs')
-  .row
-    .col-lg-6
+
       - if can? :read, @person => Person
         #dashboard_last_people_added.panel.panel-default
           .panel-heading
             .panel-title
               = I18n.t('person.dashboard.panels.last_people_added')
 
-    .col-lg-6
       - if can? :read, @person => Salaries::Salary
         #dashboard_open_salaries.panel.panel-default
           .panel-heading
             .panel-title
               = I18n.t('person.dashboard.panels.open_salaries')
 
-  .row
-    .col-lg-6
       - if can? :statistics, @person
         #dashboard_statistics.panel.panel-default
           .panel-heading

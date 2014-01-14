@@ -6,6 +6,7 @@ fr:
     actions: actions
     add: ajouter
     adjust: ajuster
+    admin: Administration
     administration: Administration
     apply: appliquer
     archive: archive
@@ -70,6 +71,7 @@ fr:
     pdf: PDF
     per_hour: par heure
     person: personne
+    people: Personnes
     position: position
     preview: aperçu
     preview_in_new_tab: aperçu dans un nouvel onglet

@@ -5,7 +5,7 @@
         .validation_errors_placeholder
 
     .row
-      .col-lg-6.col-md-6
+      .col-md-6
         .form-group
           %label{:for => 'settings_task_type_title'}
             = I18n.t('common.title')
@@ -14,10 +14,10 @@
                   :id => 'settings_task_type_title',
                   :value => @task_type.title,
                   :class => 'form-control required' }
-      .col-lg-6.col-md-6
+      .col-md-6
 
     .row
-      .col-lg-6.col-md-6.form-group
+      .col-sm-6.form-group
         %label{:for => 'settings_task_type_value'}
           = I18n.t('common.value')
         .input-group
@@ -32,7 +32,7 @@
           .input-group-addon
             CHF
 
-      .col-lg-6.col-md-6.form-goup
+      .col-sm-6.form-goup
         %label{:for => 'settings_task_type_ratio'}
           = I18n.t('task_type.views.ratio')
         .input-group

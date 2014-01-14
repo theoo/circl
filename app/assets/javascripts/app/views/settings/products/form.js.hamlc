@@ -6,7 +6,7 @@
           .validation_errors_placeholder
 
       .row
-        .col-lg-3.col-md-3
+        .col-sm-3
           .form-group
             %label{:for => 'settings_product_key'}
               = I18n.t('common.key')
@@ -16,7 +16,7 @@
                    :class => 'form-control required',
                    :value => @product.key}
 
-        .col-lg-9.col-md-9
+        .col-sm-9
           .form-group
             %label{:for => 'settings_product_title'}
               = I18n.t('common.title')
@@ -37,7 +37,7 @@
                       :class => 'form-control'}
               = @product.description
       .row
-        .col-lg-6
+        .col-sm-6
           .autocompleted.form-group
             %label{:for => 'settings_product_provider_id'}
               = I18n.t('product.views.provider')
@@ -51,7 +51,7 @@
                    :name => 'provider_id',
                    :value => @product.provider_id}
 
-        .col-lg-6
+        .col-sm-6
           .autocompleted.form-group
             %label{:for => 'settings_product_after_sale_id'}
               = I18n.t('product.views.after_sale')
@@ -66,7 +66,7 @@
                    :value => @product.after_sale_id}
 
       .row
-        .col-lg-6.col-md-6
+        .col-md-6
           .checkbox
             %label.control-label
               %input{ :type => 'checkbox',
@@ -76,7 +76,7 @@
                       :value => 1 }
               = I18n.t('common.archive')
 
-        .col-lg-6.col-md-6
+        .col-md-6
           .checkbox
             %label.control-label
               %input{ :type => 'checkbox',

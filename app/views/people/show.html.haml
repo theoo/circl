@@ -4,7 +4,7 @@
     .container
       .row
         .col-sm-1.col-xs-1.visible-sm.visible-xs
-        .col-lg-4.col-md-4.col-sm-3.col-xs-3
+        .col-md-4.col-sm-3.col-xs-3
           - if @before
             .nav.navbar-nav.navbar-text
 
@@ -17,7 +17,7 @@
                 .icon-angle-left.icon-3x
                 -# = @before.try(:name)
 
-        .col-lg-4.col-md-4.col-sm-4.col-xs-4.text-center
+        .col-md-4.col-sm-4.col-xs-4.text-center
           .hidden-sm.hidden-xs
             %h2{:style => 'margin: 8px 0 0 0;'}= @person.name
           .visible-sm.visible-xs
@@ -25,7 +25,7 @@
 
           %h4{:style => 'margin: 0 0 8px 0;'}= "#{@index + 1} / #{@total_entries}"
 
-        .col-lg-4.col-md-4.col-sm-3.col-xs-3
+        .col-md-4.col-sm-3.col-xs-3
           - if @after
             .pull-right.nav.navbar-nav.navbar-text
               = link_to paginate_people_path(:query => @query.to_json, :index => @index + 1) do
@@ -44,7 +44,7 @@
 .container
   .row
     .col-lg-3
-    .col-lg-6.col-md-6
+    .col-md-6
       - if flash[:error] or flash[:alert] or flash[:notice]
         - flash_messages
       - error_messages_for(@person)
@@ -56,7 +56,7 @@
   .tab-content
     #info_tab.tab-pane
       .row
-        .col-lg-12.col-md-12
+        .col-md-12
           - if can? :read, @person
             #person{:class => 'panel panel-primary', 'data-primary_panel' => "true"}
               .panel-heading
@@ -64,14 +64,14 @@
                   = I18n.t('person.views.personal_information')
 
       .row
-        .col-lg-4.col-md-4
+        .col-md-4
           - if can? :read, @person => PeopleCommunicationLanguage
             #person_communication_languages.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.communication_languages')
 
-        .col-lg-4.col-md-4
+        .col-md-4
           - if can? :read, @person => PeoplePrivateTag
             - if PrivateTag.count > 0
               #person_private_tags.panel.panel-default
@@ -79,7 +79,7 @@
                   .panel-title
                     = I18n.t('person.views.private_tags')
 
-        .col-lg-4.col-md-4
+        .col-md-4
           - if can? :read, @person => PeoplePublicTag
             - if PublicTag.count > 0
               #person_public_tags.panel.panel-default
@@ -95,7 +95,7 @@
 
     #affairs_tab.tab-pane
       .row
-        .col-lg-6.col-md-6
+        .col-md-6
           - # TODO Adjust access to every panel
           - if can? :read, @person => Affair
             #person_affairs{:class => 'panel panel-primary', 'data-primary_panel' => "true"}
@@ -115,7 +115,7 @@
                 .panel-title
                   = I18n.t('task_rate.views.rates')
 
-        .col-lg-6.col-md-6
+        .col-md-6
           - if can? :read, @person => Affair
             #person_affair_tasks.panel.panel-default
               .panel-heading
@@ -138,14 +138,14 @@
         #balance
 
       .row
-        .col-lg-6.col-md-6
+        .col-md-6
           - if can? :read, @person => Invoice
             #person_affair_invoices.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('affair.views.invoices')
 
-        .col-lg-6.col-md-6
+        .col-md-6
           - if can? :read, @person => Affair
             #person_affair_receipts.panel.panel-default
               .panel-heading
@@ -154,14 +154,14 @@
 
     #salaries_tab.tab-pane
       .row
-        .col-lg-6.col-md-6
+        .col-md-6
           - if can? :read, @person => Salaries::Salary
             #person_salaries.panel.panel-primary
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.salaries')
 
-        .col-lg-6.col-md-6
+        .col-md-6
           - if can? :read, @person => EmploymentContract
             #person_employment_contracts.panel.panel-default
               .panel-heading
@@ -187,24 +187,24 @@
 
     #permissions_tab.tab-pane
       .row
-        .col-lg-6.col-md-6
+        .col-md-6
           - if can? :read, @person => PeopleRole
             #person_roles.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.roles')
-        .col-lg-6.col-md-6
+        .col-md-6
 
     #activities_tab.tab-pane
       .row
-        .col-lg-6.col-md-6
+        .col-md-6
           - if can? :read, @person => Comment
             #person_comments.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.comments')
 
-        .col-lg-6.col-md-6
+        .col-md-6
           - if can? :read, @person => Activity
             #person_activities.panel.panel-default
               .panel-heading

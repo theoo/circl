@@ -2,13 +2,13 @@
   .panel-body
     %form
       .row
-        .col-lg-12
+        .col-md-12
           .validation_errors_placeholder
 
       .row
         .col-lg-6
           .row
-            .col-lg-6
+            .col-md-6
               .form-group
                 %label{:for => 'admin_subscription_title'}
                   = I18n.t('common.title')
@@ -18,7 +18,7 @@
                        :class => 'required form-control',
                        :value => @subscription.title}
 
-            .col-lg-6
+            .col-md-6
               .form-group.autocompleted
                 %label{:for => 'admin_subscription_parent'}
                   = I18n.t('common.parent')
@@ -38,7 +38,7 @@
                         :value => @status }
 
           .row
-            .col-lg-12
+            .col-md-12
               .form-group
                 %label{:for => 'admin_subscription_description'}
                   = I18n.t('common.description')
@@ -51,7 +51,7 @@
 
           %h3= I18n.t('subscription.views.interval_title')
           .row
-            .col-lg-6
+            .col-sm-6
               .form-group
                 %label{:for => 'admin_subscription_interval_starts_on'}
                   = I18n.t('common.from')
@@ -61,7 +61,7 @@
                        :class => 'datepicker form-control',
                        :value => @subscription.interval_starts_on }
 
-            .col-lg-6
+            .col-sm-6
               .form-group
                 %label{:for => 'admin_subscription_interval_ends_on'}
                   = I18n.t('common.to')
@@ -173,7 +173,7 @@
                           :class => 'btn btn-default'}
                     .icon-plus
       .row
-        .col-lg-12
+        .col-md-12
           .pull-right
             != @partial('submit_button')(@subscription)
 

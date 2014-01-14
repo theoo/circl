@@ -156,7 +156,7 @@ class Ui
       bJQueryUI: false # We'll use bootstrap only, not the ui-state-default classes mess
       sPaginationType: 'bootstrap'
       fnDrawCallback: (oSettings) -> @trigger('datatable_redraw'), # Catch this in Spine!
-      sDom: "<'row'<'col-lg-6 form-inline'lr><'col-lg-6'f>><'datatable_wrapper't><'panel-body'<'row'<'col-lg-12 pagination-footer'pi>>"
+      sDom: "<'row'<'col-xs-3 col-lg-5 form-inline'lr><'col-xs-9 col-lg-7'f>><'datatable_wrapper't><'panel-body'<'row'<'col-md-12 pagination-footer'pi>>"
 
     action = table.attr('action')
     if action

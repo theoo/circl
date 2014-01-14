@@ -7,7 +7,7 @@
       .col-lg-3
 
     .row
-      .col-lg-3
+      .col-lg-3.col-md-6
         .form-group.autocompleted
           %label{:for => 'admin_receipts_owner_name'}
             = I18n.t('receipt.views.owner')
@@ -21,7 +21,8 @@
           %input{ :type => 'hidden',
                   :name => 'owner_id',
                   :value => @receipt.owner_id}
-      .col-lg-2
+
+      .col-lg-2.col-md-3
         .form-group
           %label{:for => 'admin_receipts_value_date'}
             = I18n.t('receipt.views.value_date')
@@ -30,7 +31,8 @@
                  :id => 'admin_receipts_value_date',
                  :class => 'form-control datepicker required',
                  :value => @receipt.value_date }
-      .col-lg-2
+
+      .col-lg-2.col-md-3
         .form-group
           %label{:for => 'admin_receipts_value'}
             = I18n.t('common.value')
@@ -42,7 +44,8 @@
                   :id => 'admin_receipts_value',
                   :value => @receipt.value,
                   :class => 'form-control required'}
-      .col-lg-2
+
+      .col-lg-2.col-md-3
         .form-group
           %label{:for => 'admin_receipts_means_of_payment'}
             = I18n.t('receipt.views.means_of_payment')
@@ -51,7 +54,8 @@
                  :id => 'admin_receipts_means_of_payment',
                  :class => 'form-control',
                  :value => @receipt.means_of_payment }
-      .col-lg-3
+
+      .col-lg-3.col-md-3
         .form-group
           %label{:for => 'admin_invoices_template_id'}
             = I18n.t('receipt.views.invoice_template')
@@ -62,7 +66,7 @@
               %option{:value => invoice_template.id}= invoice_template.title
 
     .row
-      .col-lg-3
+      .col-lg-3.col-md-6
         .form-group.autocompleted
           %label{:for => 'admin_receipts_subscription_title'}
             = I18n.t('receipt.views.subscription_title')
@@ -75,7 +79,7 @@
           %input{:type => 'hidden',
                  :name => 'subscription_id',
                  :value => @receipt.subscription_id}
-      .col-lg-3
+      .col-lg-3.col-md-6
         .form-group.autocompleted
           %label{:for => 'admin_receipts_affair_title'}
             = I18n.t('receipt.views.affair_title')
@@ -89,7 +93,7 @@
           %input{:type => 'hidden',
                  :name => 'affair_id',
                  :value => @receipt.affair_id}
-      .col-lg-3
+      .col-lg-3.col-md-6
         .form-group.autocompleted
           %label{:for => 'admin_receipts_invoice_title'}
             = I18n.t('receipt.views.invoice_title')

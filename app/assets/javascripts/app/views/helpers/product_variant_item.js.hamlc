@@ -13,7 +13,7 @@
     %input{ :name => "variants[][id]", :type => 'hidden', :value => @id }
 
     .row
-      .col-md-8
+      .col-sm-8
         .form-group
           %label{:for => "product_variant_title_" + @id}
             = I18n.t("common.title")
@@ -23,7 +23,7 @@
                   :name => "variants[][title]",
                   :value => @title }
 
-      .col-md-4
+      .col-sm-4
         .form-group
           %label{:for => "product_variant_program_name_" + @id}
             = I18n.t("product_variant.views.program_group")
@@ -38,7 +38,7 @@
                   %option{:value => name}= name
 
     .row
-      .col-md-4
+      .col-xs-4
         .form-group
           %label{:for => "product_variant_buying_price_" + @id}
             = I18n.t("product_variant.views.buying_price")
@@ -51,7 +51,7 @@
                   :name => "variants[][buying_price]",
                   :value => @buying_price }
 
-      .col-md-4
+      .col-xs-4
         .form-group
           %label{:for => "product_variant_selling_price_" + @id}
             = I18n.t("product_variant.views.selling_price")
@@ -64,7 +64,7 @@
                   :name => "variants[][selling_price]",
                   :value => @selling_price }
 
-      .col-md-4
+      .col-xs-4
         .form-group
           %label{:for => "product_variant_art_" + @id}
             = I18n.t("product_variant.views.art")

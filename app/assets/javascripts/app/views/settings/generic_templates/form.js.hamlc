@@ -5,7 +5,7 @@
         .validation_errors_placeholder
 
     .row
-      .col-md-8
+      .col-lg-12
         .form-group
           %label{:for => 'settings_template_title'}
             = I18n.t('common.title')
@@ -15,7 +15,8 @@
                   :class => 'form-control',
                   :value => @template.title }
 
-      .col-md-4
+    .row
+      .col-sm-6
         .form-group
           %label{:for => 'settings_template_language'}
             = I18n.t('template.views.language')
@@ -28,8 +29,7 @@
               - else
                 %option{:value => l.id}= l.name
 
-    .row
-      .col-md-6
+      .col-sm-6
         .form-group
           %label{:for => 'settings_template_class_name'}
             = I18n.t('template.views.class_name')
@@ -41,8 +41,6 @@
                 %option{:value => mod, :selected => true}= trad
               - else
                 %option{:value => mod}= trad
-
-      .col-md-6
 
     .row
       .col-md-12
