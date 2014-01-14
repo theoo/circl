@@ -68,9 +68,9 @@ class ReceiptsDatatable
       if param.is_i?
         receipts = receipts.where("receipts.id = ?", param)
       else
-        receipts = receipts.where("people.last_name #{SQL_REGEX_KEYWORD} ? OR
-                                   people.first_name #{SQL_REGEX_KEYWORD} ? OR
-                                   affairs.title #{SQL_REGEX_KEYWORD} ?",
+        receipts = receipts.where("people.last_name ~* ? OR
+                                   people.first_name ~* ? OR
+                                   affairs.title ~* ?",
                                    *([param] * 3))
       end
     end

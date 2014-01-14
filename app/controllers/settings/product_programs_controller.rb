@@ -83,7 +83,7 @@ class Settings::ProductProgramsController < ApplicationController
     if params[:term].blank?
       result = []
     else
-      result = @product_programs.where("product_programs.program_group #{SQL_REGEX_KEYWORD} ?", params[:term])
+      result = @product_programs.where("product_programs.program_group ~* ?", params[:term])
         .select("DISTINCT(product_programs.program_group)")
     end
 
@@ -105,7 +105,7 @@ class Settings::ProductProgramsController < ApplicationController
       result = []
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @product_programs.where("product_programs.key #{SQL_REGEX_KEYWORD} ? OR product_programs.title #{SQL_REGEX_KEYWORD} ?", param, param)
+      result = @product_programs.where("product_programs.key ~* ? OR product_programs.title ~* ?", param, param)
     end
 
     respond_to do |format|

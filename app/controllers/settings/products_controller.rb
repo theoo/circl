@@ -140,7 +140,7 @@ class Settings::ProductsController < ApplicationController
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       result = @products
-        .where("products.key #{SQL_REGEX_KEYWORD} ? OR products.title #{SQL_REGEX_KEYWORD} ?", param, param)
+        .where("products.key ~* ? OR products.title ~* ?", param, param)
         .limit(10)
     end
 
@@ -161,7 +161,7 @@ class Settings::ProductsController < ApplicationController
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       result = @product
         .programs
-        .where("product_programs.key #{SQL_REGEX_KEYWORD} ? OR product_programs.title #{SQL_REGEX_KEYWORD} ?", param, param)
+        .where("product_programs.key ~* ? OR product_programs.title ~* ?", param, param)
         .limit(10)
     end
 

@@ -76,8 +76,8 @@ class Settings::LocationsController < ApplicationController
     unless params[:term].blank?
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       param = "^#{param}"
-      result = @locations.where("locations.postal_code_prefix #{SQL_REGEX_KEYWORD} ? OR
-                                 locations.name #{SQL_REGEX_KEYWORD} ?",
+      result = @locations.where("locations.postal_code_prefix ~* ? OR
+                                 locations.name ~* ?",
                                  *([param] * 2)).limit(50)
     end
 

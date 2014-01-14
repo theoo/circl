@@ -76,9 +76,9 @@ class AffairsDatatable
       if param.is_i?
         affairs = affairs.where("affairs.id = ?", param)
       else
-        affairs = affairs.where("affairs.title #{SQL_REGEX_KEYWORD} ?
-                                 OR people.first_name #{SQL_REGEX_KEYWORD} ?
-                                 OR people.last_name #{SQL_REGEX_KEYWORD} ?", *([param] * 3))
+        affairs = affairs.where("affairs.title ~* ?
+                                 OR people.first_name ~* ?
+                                 OR people.last_name ~* ?", *([param] * 3))
       end
     end
     affairs = affairs.page(page).per_page(per_page)

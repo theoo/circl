@@ -322,7 +322,7 @@ class Admin::SubscriptionsController < ApplicationController
       if param.is_i?
         result = @subscriptions.where("subscriptions.id = ? OR subscriptions.parent_id = ?", param, param)
       else
-        result = @subscriptions.where("subscriptions.title #{SQL_REGEX_KEYWORD} ?", param)
+        result = @subscriptions.where("subscriptions.title ~* ?", param)
       end
     end
 

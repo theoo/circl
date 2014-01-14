@@ -203,7 +203,7 @@ class Admin::ReceiptsController < ApplicationController
       result = []
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @receipts.select('DISTINCT means_of_payment').where("receipts.means_of_payment #{SQL_REGEX_KEYWORD} ?", param)
+      result = @receipts.select('DISTINCT means_of_payment').where("receipts.means_of_payment ~* ?", param)
     end
 
     respond_to do |format|
@@ -228,6 +228,7 @@ class Admin::ReceiptsController < ApplicationController
                                                                    :to => to,
                                                                    :format => params[:format],
                                                                    :generic_template_id => params[:generic_template_id],
+                                                                   :invoices_filter => params[:invoices_filter],
                                                                    :unit_value => params[:unit_value],
                                                                    :global_value => params[:global_value],
                                                                    :unit_overpaid => params[:unit_overpaid],

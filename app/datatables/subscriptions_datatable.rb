@@ -90,7 +90,7 @@ class SubscriptionsDatatable
       if param.is_i?
         subscriptions = subscriptions.where("s.id = ? OR s.parent_id = ?", param, param)
       else
-        subscriptions = subscriptions.where("s.title #{SQL_REGEX_KEYWORD} ?", param)
+        subscriptions = subscriptions.where("s.title ~* ?", param)
       end
     end
 

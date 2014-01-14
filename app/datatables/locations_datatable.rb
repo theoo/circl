@@ -58,8 +58,8 @@ class LocationsDatatable
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       param = "^#{param}"
       locations = locations
-        .where("locations.postal_code_prefix #{SQL_REGEX_KEYWORD} ? OR
-          locations.name #{SQL_REGEX_KEYWORD} ?",
+        .where("locations.postal_code_prefix ~* ? OR
+          locations.name ~* ?",
           *([param]*2))
 
     end

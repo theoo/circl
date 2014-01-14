@@ -138,7 +138,7 @@ class People::Affairs::ProductsController < ApplicationController
       result = Product
         .joins(:product_items)
         .where("affairs_products_programs.affair_id = ?", @affair.id)
-        .where("products.key #{SQL_REGEX_KEYWORD} ? OR products.title #{SQL_REGEX_KEYWORD} ?", param, param)
+        .where("products.key ~* ? OR products.title ~* ?", param, param)
       hash = result.map{ |t| { :id => t.id, :label => t.key, :title => t.title, :desc => t.description }} if result
     end
 

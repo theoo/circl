@@ -67,8 +67,8 @@ class BankImportHistoriesDatatable
     bih = BankImportHistory.order("#{sort_column} #{sort_direction}")
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      bih = bih.where("bank_import_histories.reference_line #{SQL_REGEX_KEYWORD} ?
-                       OR bank_import_histories.file_name #{SQL_REGEX_KEYWORD} ?", *([param] * 2))
+      bih = bih.where("bank_import_histories.reference_line ~* ?
+                       OR bank_import_histories.file_name ~* ?", *([param] * 2))
     end
     bih = bih.page(page).per_page(per_page)
     bih

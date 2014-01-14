@@ -421,7 +421,7 @@ class Salaries::Salary < ActiveRecord::Base
 
   def tax(name)
     # name could be a regex
-    tax_data.joins(:tax).where("salaries_taxes.title #{SQL_REGEX_KEYWORD} ?", name).first
+    tax_data.joins(:tax).where("salaries_taxes.title ~* ?", name).first
   end
 
   # elohnausweisssk certificates helpers

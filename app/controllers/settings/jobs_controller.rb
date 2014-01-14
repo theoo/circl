@@ -75,7 +75,7 @@ class Settings::JobsController < ApplicationController
       result = []
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @jobs.where("jobs.name #{SQL_REGEX_KEYWORD} ?", param)
+      result = @jobs.where("jobs.name ~* ?", param)
     end
 
     respond_to do |format|

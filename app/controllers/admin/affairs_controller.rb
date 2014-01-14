@@ -40,7 +40,7 @@ class Admin::AffairsController < ApplicationController
       result = []
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @affairs.where("affairs.title #{SQL_REGEX_KEYWORD} ?", param)
+      result = @affairs.where("affairs.title ~* ?", param)
     end
 
     respond_to do |format|

@@ -61,9 +61,9 @@ class ProductsDatatable
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       param = "^#{param}"
-      products = products.where( "products.key #{SQL_REGEX_KEYWORD} ? OR
-                                  products.title #{SQL_REGEX_KEYWORD} ? OR
-                                  products.description #{SQL_REGEX_KEYWORD} ?",
+      products = products.where( "products.key ~* ? OR
+                                  products.title ~* ? OR
+                                  products.description ~* ?",
                                   *([param]*3))
     end
     products = products.page(page).per_page(per_page)

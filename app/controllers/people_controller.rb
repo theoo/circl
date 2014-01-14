@@ -204,9 +204,9 @@ class PeopleController < ApplicationController
       results = []
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      results = @people.where("people.first_name #{SQL_REGEX_KEYWORD} ? OR
-                              people.last_name #{SQL_REGEX_KEYWORD} ? OR
-                              people.organization_name #{SQL_REGEX_KEYWORD} ?",
+      results = @people.where("people.first_name ~* ? OR
+                              people.last_name ~* ? OR
+                              people.organization_name ~* ?",
                               *([param] * 3)).limit(50)
     end
 
@@ -219,7 +219,7 @@ class PeopleController < ApplicationController
     if params[:term].blank?
       result = []
     else
-      result = @people.where("people.title #{SQL_REGEX_KEYWORD} ?", params[:term])
+      result = @people.where("people.title ~* ?", params[:term])
         .select("DISTINCT(people.title)")
     end
 
@@ -232,7 +232,7 @@ class PeopleController < ApplicationController
     if params[:term].blank?
       result = []
     else
-      result = @people.where("people.nationality #{SQL_REGEX_KEYWORD} ?", params[:term]).map{ |p| p.nationality }.uniq
+      result = @people.where("people.nationality ~* ?", params[:term]).map{ |p| p.nationality }.uniq
     end
 
     respond_to do |format|

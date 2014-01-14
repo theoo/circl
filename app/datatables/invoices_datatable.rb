@@ -63,9 +63,9 @@ class InvoicesDatatable
       if param.is_i?
         invoices = invoices.where("invoices.id = ?", param)
       else
-        invoices = invoices.where("people.last_name #{SQL_REGEX_KEYWORD} ? OR
-                                   people.first_name #{SQL_REGEX_KEYWORD} ? OR
-                                   affairs.title #{SQL_REGEX_KEYWORD} ?",
+        invoices = invoices.where("people.last_name ~* ? OR
+                                   people.first_name ~* ? OR
+                                   affairs.title ~* ?",
                                    *([param] * 3))
       end
     end

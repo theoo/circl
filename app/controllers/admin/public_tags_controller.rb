@@ -76,7 +76,7 @@ class Admin::PublicTagsController < ApplicationController
       result = []
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @public_tags.where("public_tags.name #{SQL_REGEX_KEYWORD} ?", param)
+      result = @public_tags.where("public_tags.name ~* ?", param)
     end
 
     h = result.map do |t|
