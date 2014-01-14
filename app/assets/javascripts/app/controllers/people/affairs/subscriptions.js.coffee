@@ -49,7 +49,8 @@ class New extends App.ExtendedController
   on_successfull_submit: ->
     # Refresh affairs
     App.PersonAffair.fetch()
-    @render
+    # Refetch subscription so it get the correct value (different URL)
+    PersonAffairSubscription.fetch()
 
 class Index extends App.ExtendedController
   events:

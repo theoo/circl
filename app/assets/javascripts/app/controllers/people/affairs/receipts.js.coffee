@@ -31,6 +31,7 @@ class New extends App.ExtendedController
 
   constructor: (params) ->
     super
+    PersonAffair.bind('refresh', @active)
     PersonAffairInvoice.bind('refresh', @active)
     PersonAffairReceipt.bind('refresh', @active)
 
