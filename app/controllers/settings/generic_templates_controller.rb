@@ -33,12 +33,6 @@ class Settings::GenericTemplatesController < ApplicationController
   def show
     respond_to do |format|
       format.json { render :json => @generic_template }
-      format.html do
-        html =  @generic_template.header
-        html << @generic_template.body
-        html << @generic_template.footer
-        render :inline => html, :layout => 'preview.html.haml'
-      end
       format.jpg do
         unless @generic_template.snapshot.path and File.exists? @generic_template.snapshot.path
           @generic_template.take_snapshot

@@ -31,9 +31,8 @@ describe SubscriptionValue, 'validations' do
   end
 
   it "should have a position" do
-    subject.should have(2).error_on(:position)
-    subject.errors[:position].should include(I18n.t 'activerecord.errors.messages.empty')
-    subject.errors[:position].should include(I18n.t 'activerecord.errors.messages.not_a_number')
+    subject.save
+    subject.position.should >= 0
   end
 
 end

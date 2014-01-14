@@ -3,7 +3,6 @@
 FactoryGirl.define do
   factory :generic_template, :class => GenericTemplate do
     sequence(:title) { |n| "Title #{n}" }
-    html 'foo'
     language_id 1
   end
 
