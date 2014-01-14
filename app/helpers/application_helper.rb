@@ -22,12 +22,18 @@ module ApplicationHelper
   def flash_messages
     if flash[:notice]
       haml_tag :div, :class => 'alert alert-info' do
+        haml_tag :button, :class => 'close', "data-dismiss" => "alert", "aria-hidden" => true do
+          haml_concat "&times;"
+        end
         haml_concat flash[:notice]
       end
     end
 
     if flash[:error] or flash[:alert]
       haml_tag :div, :class => 'alert alert-danger' do
+        haml_tag :button, :class => 'close', "data-dismiss" => "alert", "aria-hidden" => true do
+          haml_concat "&times;"
+        end
         haml_concat flash[:alert]
         haml_concat flash[:error]
       end
