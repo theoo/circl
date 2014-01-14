@@ -59,7 +59,7 @@ $(document).ready ->
     if(search_string.match(/^\d+$/g) != null)
       window.location = '/people/' + search_string
     else
-    Directory.search({ search_string: search_string })
+      Directory.search({ search_string: search_string })
 
   # This overrides HTML5 behavior which doesn't clear inputs on focus but when typing
   $("#quick_search input[type='search']").on 'focus', (e) ->
