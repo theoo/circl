@@ -1,3 +1,4 @@
+# Mind db:seed:upgrade if the task have if (lib/tasks/utils/upgrade.rake)
 tasks = %w{languages
            private_tags
            public_tags
