@@ -65,10 +65,15 @@ class Extra < ActiveRecord::Base
   def as_json(options = nil)
     h = super(options)
 
+    h[:total_value] = total_value.to_f
     h[:value]  = value.to_f
     h[:errors] = errors
 
     h
+  end
+
+  def total_value
+    value * quantity
   end
 
   ########################

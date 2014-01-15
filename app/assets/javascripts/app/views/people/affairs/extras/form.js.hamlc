@@ -28,7 +28,7 @@
       .col-md-6
         .form-group
           %label{:for => 'person_affair_extra_value'}
-            = I18n.t('common.value')
+            = I18n.t('common.unit_value')
           .input-group
             %input{ :type => 'number',
                     :step => 0.01,
@@ -58,8 +58,8 @@
         .form-group
           %label{:for => 'person_affair_extra_position'}
             = I18n.t('common.position')
-          %input{ :type => 'text',
-                  :pattern => '\d*',
+          %input{ :type => 'number',
+                  :step => 1,
                   :id => 'person_affair_extra_position',
                   :class => 'form-control number',
                   :name => 'position',
