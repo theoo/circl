@@ -48,8 +48,7 @@
         %label{:for => 'person_affair_product_quantity'}
           = I18n.t('product.views.quantity')
         %input{ :type => 'number',
-                :step => 1,
-                :min => 0,
+                :step => 0.001,
                 :id => 'person_affair_product_quantity',
                 :name => 'quantity',
                 :class => 'form-control required',
@@ -59,8 +58,8 @@
         - # if @product.has_accessories
         %label{:for => 'person_affair_product_position'}
           = I18n.t('product.views.position')
-        %input{ :type => 'text',
-                :pattern => '\d*',
+        %input{ :type => 'number',
+                :step => 1,
                 :id => 'person_affair_product_position',
                 :name => 'position',
                 :class => 'form-control number',

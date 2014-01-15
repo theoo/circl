@@ -1,0 +1,6 @@
+---
+- key: UNIT
+  program_group: UNIT
+  title: Unit price
+  description: Price for one unit
+  archive: false

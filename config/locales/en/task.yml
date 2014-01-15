@@ -6,7 +6,7 @@ en:
       duration_must_be_positive: The duration must be positive
       owner_should_have_a_task_rate: The owner should have a task rate
     notices:
-      computed_value_is: computed value is
+      computed_value_is: Computed value is %{value}
       no_existing_task_rate_alert: No rates exist to create a service, please click below to add one.
       no_existing_task_rate_button: Add a rate
       no_existing_task_type_alert: No task types exist to create a service, please click below to add one.

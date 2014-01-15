@@ -66,7 +66,7 @@ class Products < ActiveRecord::Migration
       t.integer :product_id
       t.integer :program_id
       t.integer :position
-      t.integer :quantity
+      t.float   :quantity
 
       t.timestamps
     end

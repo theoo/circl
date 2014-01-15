@@ -92,6 +92,7 @@ class People::Affairs::TasksController < ApplicationController
     authorize! :update, ::Task
 
     @task = ::Task.find(params[:id])
+    @task.value = params[:value]
 
     respond_to do |format|
       if @task.update_attributes(params[:task])

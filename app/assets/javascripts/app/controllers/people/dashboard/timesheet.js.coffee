@@ -97,7 +97,7 @@ class Edit extends App.TimesheetExtention
     if confirm(I18n.t("common.are_you_sure"))
       @destroy_with_notifications @task, @hide
 
-  reset_value: () ->
+  reset_value: (e) ->
     e.preventDefault()
     @value_field.val @task.computed_value
 

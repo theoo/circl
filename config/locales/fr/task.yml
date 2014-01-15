@@ -6,7 +6,7 @@ fr:
       duration_must_be_positive: La durée doit être positive.
       owner_should_have_a_task_rate: Le client sélectionné n'a pas de tarif défini. Veuillez en sélectionner un avant de poursuivre.
     notices:
-      computed_value_is: La valeur calculée est %{value}.
+      computed_value_is: La valeur calculée est %{value}
       no_existing_task_rate_alert: Il n'existe pas de tarif pour les services, veuillez en ajouter ci-dessous avant de poursuivre avec la création de services.
       no_existing_task_rate_button: Ajouter un tarif
       no_existing_task_type_alert: Il n'existe pas de type de tâche pour les services, veuillez en ajouter ci-dessous avant de poursuivre avec la création de services.
