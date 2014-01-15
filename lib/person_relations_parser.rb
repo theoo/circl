@@ -16,6 +16,9 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
+
+
+
 class PersonRelationsParser
   def initialize(person)
     @person = person
@@ -35,10 +38,10 @@ class PersonRelationsParser
     elsif name
       if l.size > 1
         regex = name.gsub(/\s/, ".+")
-        l = Location.where("postal_code_prefix = '#{postal_code_prefix}' AND name #{SQL_REGEX_KEYWORD} ?", regex).first
+        l = Location.where("postal_code_prefix = '#{postal_code_prefix}' AND name ~* ?", regex).first
         @person.location = l
       else
-        l = Location.where(:name => loc).first
+        l = Location.where(:name => name).first
         @person.location = l
       end
     end
@@ -78,13 +81,12 @@ class PersonRelationsParser
   end
 
   def parse_private_tags(private_tags)
-    parse_multiple_items(private_tags, PrivateTag)
+    parse_multiple_tags(private_tags, PrivateTag)
   end
 
   def parse_public_tags(public_tags)
-    parse_multiple_items(public_tags, PublicTag)
+    parse_multiple_tags(public_tags, PublicTag)
   end
-
 
   protected
 
@@ -104,6 +106,25 @@ class PersonRelationsParser
         @person.errors.add(name.pluralize, I18n.t("person.import.invalid_#{name}", name.to_sym => item.strip))
       end
     end
+  end
+
+  def parse_multiple_tags(items, model)
+    relation = model.to_s.underscore.pluralize
+
+    new_tags = []
+
+    items.split(/\s*,\s*/).each do |item|
+      tag = model.where(:name => item.strip)
+      if tag.count > 0
+        @person.send(relation) << tag.first
+      else
+        @person.notices.add(relation.to_sym, I18n.t("person.import.not_existing_#{relation.singularize}", :tag => item.strip))
+        new_tags << item.strip
+      end
+    end
+
+    new_tags
+
   end
 
 end

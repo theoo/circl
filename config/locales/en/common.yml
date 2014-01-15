@@ -99,6 +99,7 @@ en:
     tools: tools
     total: total
     'true': 'true'
+    unit_value: unit value
     unpaid: unpaid
     update: update
     updated_at: last update

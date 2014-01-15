@@ -201,11 +201,19 @@ class DirectoryController < ApplicationController
   def import_people
     authorize! :import_people, Directory
 
-    people = Person.parse_people(session[:people_file_data])[:people]
+    report = Person.parse_people(session[:people_file_data])
 
     # TODO Import without ES indexation and reindex people after transaction
     Person.transaction do
-      people.each do |p|
+      report[:private_tags].each do |tag|
+        PrivateTag.create(:name => tag)
+      end
+
+      report[:public_tags].each do |tag|
+        PublicTag.create(:name => tag)
+      end
+
+      report[:people].each do |p|
         p.save
       end
     end
@@ -218,7 +226,7 @@ class DirectoryController < ApplicationController
     rescue
     end
 
-    PersonMailer.send_people_import_report(current_person, people).deliver
+    PersonMailer.send_people_import_report(current_person, report[:people]).deliver
     flash[:notice] = I18n.t('directory.notices.people_imported', :email => current_person.email)
     Activity.create!(:person => current_person, :resource_type => 'Admin', :resource_id => '0', :action => 'info', :data => { :people => "imported at #{Time.now}" })
     redirect_to directory_path

@@ -55,11 +55,23 @@
                 - person.errors.messages.each do |k,a|
                   - error_msg << a.join(", ")
 
-                %tr{:class => (person.errors.empty? ? 'success' : 'danger'),
+                - person.notices.messages.each do |k,a|
+                  - error_msg << a.join(", ")
+
+                - classes = []
+                - if person.errors.empty?
+                  - if person.notices.empty?
+                    - classes << 'success'
+                  - else
+                    - classes << 'warning'
+                - else
+                  - classes << 'danger'
+
+                %tr{:class => classes.join(" "),
                   'data-trigger' => 'click',
                   'data-title' => (person.errors.size.to_s + " " + I18n.t("common.errors.error") + "(s)"),
                   'data-html' => true,
-                  'data-placement' => 'auto top',
+                  'data-placement' => 'auto right',
                   'data-content' => raw(error_msg.join(" | "))}
 
                   %td
@@ -93,12 +105,14 @@
                   %td= relation_to_string(person.public_tags)
                   %td= I18n.t('common.' + person.hidden.to_s)
 
-          - if ! @infos[:errors].empty?
+        - if ! @infos[:errors].empty?
+          .panel-body
             %h3= I18n.t('directory.views.people_file_errors')
 
             .alert.alert-danger
               - @infos[:errors].each do |line|
                 = line
+                %br
 
         - if @infos[:errors].empty?
           .panel-footer

@@ -46,6 +46,8 @@ en:
       invalid_role: Invalid role "%{role}"
       invalid_translation_aptitude: Invalid translation aptitude "%{translation_aptitude}"
       line: line
+      not_existing_private_tag: The private tag "%{tag}" will be created.
+      not_existing_public_tag: The public tag "%{tag}" will be created.
     mail:
       admin_receipts_were_generated: Receipt documents generation
       admin_receipts_were_generated_explanation: You can download the requested file by clicking the following link

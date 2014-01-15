@@ -61,6 +61,7 @@
 # == Schema Information End
 #++
 
+
 class Person < ActiveRecord::Base
 
   ################
@@ -72,6 +73,13 @@ class Person < ActiveRecord::Base
   include Tire::Model::Callbacks
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
+
+  attr_accessor :notices
+
+  def initialize(params = nil)
+    super(params)
+    @notices = ActiveModel::Errors.new(self)
+  end
 
   #################
   ### CALLBACKS ###
@@ -310,8 +318,18 @@ class Person < ActiveRecord::Base
   RESTRICTED_ATTRIBUTES = %w{ bank_informations avs_number  }
 
 
+  # TODO redo this in a lib with:
+  # - process tracking
+  # - reindexation after insertion
+  # - create all missing attributes around person, more than just private/public tags
+  # - compare double entries within the file
+  # - merge data with existing entries
+
   def self.parse_people(data)
     infos = Hash.new { |h,k| h[k]=[] }
+
+    infos[:private_tags] = []
+    infos[:public_tags]  = []
 
     begin
       CSV.parse(data, :encoding => 'UTF-8')[1..-1].each_with_index do |row, i|
@@ -350,15 +368,21 @@ class Person < ActiveRecord::Base
         parser.parse_main_communication_language(row[19])
         parser.parse_communication_languages(row[20])
         parser.parse_translation_aptitudes(row[21])
-        parser.parse_private_tags(row[22])
-        parser.parse_public_tags(row[23])
+        infos[:private_tags] << parser.parse_private_tags(row[22])
+        infos[:public_tags]  << parser.parse_public_tags(row[23])
 
         infos[:people] << p
       end
     rescue Exception => e
       infos[:errors] << I18n.t('person.import.cannot_parse')
+      infos[:errors] << e.inspect
     end
+
+    infos[:private_tags].flatten!.uniq!
+    infos[:public_tags].flatten!.uniq!
+
     infos
+
   end
 
   ############
