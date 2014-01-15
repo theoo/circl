@@ -85,7 +85,7 @@ class Settings::SearchAttributesController < ApplicationController
       flash[:alert] = I18n.t('common.errors.already_synchronizing')
     end
 
-    redirect_to settings_path
+    redirect_to settings_path, :anchor => 'searchengine'
   end
 
 end
