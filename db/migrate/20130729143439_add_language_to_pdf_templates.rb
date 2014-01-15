@@ -10,9 +10,6 @@ class AddLanguageToPdfTemplates < ActiveRecord::Migration
   	InvoiceTemplate.all.each do |it|
   		it.update_attribute :language_id, first_language.id
   	end
-  	Salaries::SalaryTemplate.all.each do |s|
-  		s.update_attribute :language_id, first_language.id
-  	end
 
   	change_column :invoice_templates, :language_id, :integer, :null => false
   	change_column :salaries_salary_templates, :language_id, :integer, :null => false

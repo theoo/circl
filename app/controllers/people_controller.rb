@@ -172,6 +172,7 @@ class PeopleController < ApplicationController
     end
   end
 
+  # TODO do not redirect to show view if @person doesn't exists!
   def paginate
     unless params[:query] && params[:query].is_a?(ActiveSupport::HashWithIndifferentAccess)
       params[:query] = HashWithIndifferentAccess.new(JSON.parse(params[:query]))
