@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(:version => 20140113125819) do
     t.text     "description"
     t.integer  "value_in_cents"
     t.string   "value_currency"
-    t.integer  "quantity"
+    t.float    "quantity"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"

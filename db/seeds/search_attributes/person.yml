@@ -410,6 +410,15 @@
   group: Relations
 
 - model: Person
+  name: location
+  indexing: location.try(:as_indexed_json)
+  mapping:
+    type: object
+    properties: Location.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
   name: subscriptions
   indexing: subscriptions.map(&:as_indexed_json)
   mapping:

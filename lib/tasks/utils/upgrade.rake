@@ -14,14 +14,23 @@ tasks = %w{languages
 namespace :db do
   desc "update CIRCL database with all required tasks"
   task :upgrade => [
+                    'db:upgrade_helper',
                     'db:migrate',
                     'db:stored_procedures:load',
   									'db:seed:application_settings:upgrade',
   									'db:seed:search_attributes:upgrade',
   									'db:seed:roles:upgrade',
                     'db:seed:invoice_templates:snapshots:reset',
-                    'db:seed:generic_templates:snapshots:reset'
+                    'db:seed:generic_templates:snapshots:reset',
+                    'db:seed:upgrade'
                   ]
+
+  task :upgrade_helper => :environment do
+    s = ApplicationSetting.where(:key => 'me')
+    if s.count == 0
+      ApplicationSetting.create!(:key => 'me', :value => '1')
+    end
+  end
 
   namespace :seed do
     desc "upgrade seeds"
