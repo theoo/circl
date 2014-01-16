@@ -250,6 +250,7 @@ class Edit extends ValueItemsController
     if confirm(I18n.t('common.are_you_sure'))
       Subscription.one 'refresh', =>
         @destroy_with_notifications @subscription
+      Subscription.fetch(id: @id)
 
   view_members: (e) ->
     e.preventDefault()
