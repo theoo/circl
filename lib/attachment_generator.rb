@@ -39,7 +39,7 @@ class AttachmentGenerator
     prepare
 
     # Convert to PDF in the same dir of odt
-    system("lowriter --headless --convert-to pdf #{@tmp_file.path} --outdir #{@tmp_file.path.gsub(/([^\/]+.odt)$/, "")}")
+    system("lowriter --headless --convert-to pdf \"#{@tmp_file.path}\" --outdir \"#{@tmp_file.path.gsub(/([^\/]+.odt)$/, "")}\"")
     @pdf_path = @tmp_file.path.gsub(/\.odt$/,".pdf")
     @pdf_file = File.open(@pdf_path, "r")
     if block_given?
@@ -56,7 +56,7 @@ class AttachmentGenerator
     prepare
 
     # Convert to PDF in the same dir of odt
-    system("lowriter --headless --convert-to html #{@tmp_file.path} --outdir #{@tmp_file.path.gsub(/([^\/]+.odt)$/, "")}")
+    system("lowriter --headless --convert-to html \"#{@tmp_file.path}\" --outdir \"#{@tmp_file.path.gsub(/([^\/]+.odt)$/, "")}\"")
     @html_path = @tmp_file.path.gsub(/\.odt$/,".html")
     @html_file = File.open(@html_path, "r")
     if block_given?
