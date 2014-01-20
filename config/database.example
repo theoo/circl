@@ -45,3 +45,12 @@ production:
   encoding: utf8
   database: directory_prod
   username: directory
+
+exception_database:
+  adapter: postgresql
+  encoding: utf8
+  database: circl_exceptions
+  host: localhost
+  username:
+  password:
+  pool: 5

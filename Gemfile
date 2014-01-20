@@ -69,6 +69,9 @@ gem 'hominid', '3.0.4'
 gem 'rake-progressbar', '0.0.5'
 gem 'rake', '10.1.0'
 
+# Monitoring
+gem 'rails_exception_handler', "~> 2"
+
 ### custom gem
 # gem 'plugin', :path => 'path/to/circl/plugin'
 # gem 'choisir', :path => '/home/to/Code/rails/circl_plugins/choisir'

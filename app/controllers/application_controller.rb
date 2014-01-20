@@ -48,10 +48,12 @@ class ApplicationController < ActionController::Base
   # fail gracefully when error happen
   unless Rails.configuration.consider_all_requests_local
     # Order matter, StandardError must be first!
-    rescue_from StandardError do |exception|
-      PersonMailer.send_report_error_to_admin(current_person, exception).deliver
-      raise exception
-    end
+
+    # Simple method to collect error messages on email admin.
+    # rescue_from StandardError do |exception|
+    #   PersonMailer.send_report_error_to_admin(current_person, exception).deliver
+    #   raise exception
+    # end
 
     rescue_from CanCan::AccessDenied do |exception|
       respond_to do |format|
