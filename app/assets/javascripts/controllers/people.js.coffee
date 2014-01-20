@@ -59,6 +59,6 @@ $(document).ready ->
           url = $(el).attr('href').split("#")[0]
           $(el).attr('href', [url, anchor[1]].join("#"))
 
-    # finally load ui
-    Ui.load_tabs $(document), on_tab_change_callback
-    Ui.load_ui $(document)
+  # finally load ui
+  Ui.load_tabs $(document), on_tab_change_callback
+  Ui.load_ui $(document)

@@ -1,3 +1,12 @@
+%nav.navbar.navbar-default.navbar-static-top.navbar-inverse{:role => "navigation"}
+  .row
+    .navbar-header.col-md-1
+      %span{:class => 'navbar-brand', :style => 'padding: 0 0 0 15px'}
+        = image_tag 'logo_mini_white.png'
+
+    .navbar-brand.col-md-11
+      = I18n.t('person.views.change_password')
+
 .container
   .panel.panel-default
     .panel-heading
@@ -6,27 +15,28 @@
 
     .panel-body
       = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
-      .row
-        .col-lg-12
-          - devise_error_messages!
-          = f.hidden_field :reset_password_token
+        .row
+          .col-lg-3
+          .col-lg-6
+            - error_messages_for(resource)
+            - flash_messages
+            = f.hidden_field :reset_password_token
+          .col-lg-3
 
+        .row
+          .col-lg-3
+          .col-lg-6
+            .form-group
+              = f.label I18n.t('devise.views.new_password'), :for => 'person_password'
+              .pull-right
+                #password_strength.label
+              = f.password_field :password, :class => "strong_password form-control"
 
-      .row
-        .col-lg-2
-        .col-lg-8
-          .form-group
-            = f.label I18n.t('devise.views.new_password'), :for => 'person_password'
+            .form-group
+              = f.label I18n.t('devise.views.confirm_new_password'), :for => 'person_password_confirmation'
+              = f.password_field :password_confirmation, :class => 'form-control'
+
             .pull-right
-              #password_strength
-            = f.password_field :password, :style => 'width: 80%', :class => "form-control"
+              = f.submit I18n.t('devise.views.change_my_password'), :class => 'btn btn-primary'
 
-          .form-group
-            = f.label I18n.t('devise.views.confirm_new_password'), :for => 'person_password_confirmation'
-            = f.password_field :password_confirmation, :class => 'form-control'
-
-          .pull-right
-            = f.submit I18n.t('devise.views.change_my_password'), :class => 'btn btn-default'
-
-          = render :partial => 'devise/shared/links'
-        .col-lg-2
+          .col-lg-3
