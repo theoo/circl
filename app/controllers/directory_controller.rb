@@ -201,18 +201,24 @@ class DirectoryController < ApplicationController
   def import_people
     authorize! :import_people, Directory
 
-    report = Person.parse_people(session[:people_file_data])
+    report = {}
 
-    # TODO Import without ES indexation and reindex people after transaction
     Person.transaction do
-      report[:private_tags].each do |tag|
-        PrivateTag.create(:name => tag)
+      # Create tags first
+      if params[:private_tags]
+        params[:private_tags].each do |tag|
+          PrivateTag.create(:name => tag)
+        end
+      end
+      if params[:public_tags]
+        params[:public_tags].each do |tag|
+          PublicTag.create(:name => tag)
+        end
       end
 
-      report[:public_tags].each do |tag|
-        PublicTag.create(:name => tag)
-      end
-
+      # Then re-parse file and import people
+      report = Person.parse_people(session[:people_file_data])
+      # TODO Import without ES indexation and reindex people after transaction
       report[:people].each do |p|
         p.save
       end

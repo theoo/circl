@@ -118,5 +118,11 @@
           .panel-footer
             .text-right
               = form_tag(directory_import_people_path, :method => :post) do
+                - @infos[:private_tags].each do |t|
+                  = hidden_field_tag 'private_tags[]', t
+
+                - @infos[:public_tags].each do |t|
+                  = hidden_field_tag 'public_tags[]', t
+
                 = submit_tag I18n.t('directory.views.proceed_with_import'), :class => 'btn btn-primary'
 
