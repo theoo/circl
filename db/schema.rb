@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140113125819) do
+ActiveRecord::Schema.define(:version => 20140121131809) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -24,6 +24,10 @@ ActiveRecord::Schema.define(:version => 20140113125819) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "status",                      :default => 0,     :null => false
+    t.boolean  "estimate",                    :default => false, :null => false
+    t.integer  "parent_id"
+    t.text     "footer"
+    t.integer  "seller_id",                   :default => 1,     :null => false
   end
 
   add_index "affairs", ["buyer_id"], :name => "index_affairs_on_buyer_id"
@@ -41,7 +45,7 @@ ActiveRecord::Schema.define(:version => 20140113125819) do
     t.integer  "product_id"
     t.integer  "program_id"
     t.integer  "position"
-    t.integer  "quantity"
+    t.float    "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -147,6 +151,9 @@ ActiveRecord::Schema.define(:version => 20140113125819) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "vat_in_cents",    :default => 0, :null => false
+    t.string   "vat_currency"
+    t.integer  "vat_perthousand"
   end
 
   add_index "extras", ["affair_id"], :name => "index_extras_on_affair_id"
@@ -208,6 +215,9 @@ ActiveRecord::Schema.define(:version => 20140113125819) do
     t.integer  "status",                           :default => 0,     :null => false
     t.boolean  "cancelled",                        :default => false, :null => false
     t.boolean  "offered",                          :default => false, :null => false
+    t.integer  "vat_in_cents",                     :default => 0,     :null => false
+    t.string   "vat_currency"
+    t.integer  "vat_perthousand"
   end
 
   add_index "invoices", ["affair_id"], :name => "index_invoices_on_affair_id"
@@ -437,6 +447,9 @@ ActiveRecord::Schema.define(:version => 20140113125819) do
     t.boolean  "archive",         :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "vat_in_cents",    :default => 0,     :null => false
+    t.string   "vat_currency"
+    t.integer  "vat_perthousand"
   end
 
   add_index "products", ["after_sale_id"], :name => "index_products_on_after_sale_id"

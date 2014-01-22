@@ -41,3 +41,11 @@
   value: employer deductions
 - key: banana_accounting_headers_mapping
   value: '{"id": "id", "date": "Date", "title": "Title", "description": "Description", "value": "Amount", "value_currency": "AmountCurrency", "account": "AccountDebit", "counterpart_account": "AccountCredit", "vat_code": "VatCode", "vat_rate": "VatPercentNonDeductible", "person_id": "PersonID", "person_name": "PersonName", "document_type": "Document" }'
+- key: service_vat_perthousand
+  value: '80'
+- key: service_vat_number
+  value: 'CHE-123.456.789 TVA'
+- key: use_service_vat
+  value: 'true'
+- key: default_currency
+  value: 'CHF'

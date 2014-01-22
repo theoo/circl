@@ -683,7 +683,8 @@ class Person < ActiveRecord::Base
 
   def update_geographic_coordinates
     # FIXME remove this condition after 20131125214900_add_geolocalization migration
-    if Person.columns.map(&:name).include?("latitude")
+    if Person.columns.map(&:name).include?("latitude") \
+      and Rails.configuration.settings['maps']['enable_geolocalization']
       if (address_changed? or location_id_changed?) or (address and location_id and latitude.nil?)
         loc = Geokit::Geocoders::OSMGeocoder.geocode full_address_inline
         if loc.success

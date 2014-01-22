@@ -49,7 +49,7 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   validates :affair_id, :presence => true
   validates :product_id, :presence => true
-  validates :position, :presence => true, :uniqueness => true
+  validates :position, :presence => true, :uniqueness => { :scope => :affair_id }
   validates :quantity, :presence => true
   # TODO: edit if this validation should exists in application settings.
   # validate :uniquness_of_jointure, :if => Proc.new {|i| i.new_record?}

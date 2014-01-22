@@ -89,6 +89,7 @@ permissions:
 
 # maps
 maps:
+  enable_geolocalization: true
   tile_url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
   attribution: CIRCL
   max_zoom: 18
