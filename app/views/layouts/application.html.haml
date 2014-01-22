@@ -5,6 +5,7 @@
 
     // SOURCE http://getbootstrap.com/css/
     %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
+    %meta{:name => 'current_user', :content => @current_person.to_json}
 
     %title= "CIRCL"
     = favicon_link_tag

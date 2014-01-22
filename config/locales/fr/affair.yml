@@ -5,12 +5,12 @@ fr:
       cant_delete_affair_who_has_invoices: Il est impossible de détruire une affaire dont dépend une facture.
       wrong_date: wrong date
     notices:
+      document_export_explanation: Veuillez sélectionner ci-dessous les critères de tri pour la génération du document.
+      document_export_explanation_title: Génération de documents
+      document_export_process: Le processus de sélection des personnes suivra cette étape.
+      regexp: Une expression rationnelle est attendue.
       will_match_all_defined_thresholds: Toutes les limites définies seront employées pour le tri.
       will_match_all_selected_statuses: Tous les status sélectionnés seront employés pour le tri.
-      document_export_explanation: Veuillez sélectionner ci-dessous les critères de tri pour la génération du document.
-      document_export_process: Le processus de sélection des personnes suivra cette étape.
-      document_export_explanation_title: Génération de documents
-      regexp: Une expression rationnelle est attendue.
     views:
       actions:
         edit_affair: modifier l'affaire
@@ -18,7 +18,9 @@ fr:
       available_statuses: status disponibles
       buyer: payeur
       document_export: Génération de documents
+      estimate: devis
       extras: Extras
+      footer: pied de page
       format: format
       invoice_names_filter: filtre pour le nom des factures
       invoices: Factures
@@ -33,6 +35,7 @@ fr:
       relations: relations
       select_payment_interval: Sélection de l'intervale à extraire
       select_thresholds: Sélection des limites minimales
+      seller: vendeur
       status: statut
       statuses:
         cancelled: annulée

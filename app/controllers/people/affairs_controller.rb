@@ -84,7 +84,19 @@ class People::AffairsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:id => t.id, :label => t.title}}}
+      format.json do
+        render :json => result.map{|t|
+          desc = " "
+          if t.estimate
+            desc += "<i>" + I18n.t("affair.views.estimate") + "</i>"
+            desc += " - " + t.description unless t.description.empty?
+          else
+            desc += t.description
+          end
+          { :id => t.id,
+            :label => t.title,
+            :desc => desc }}
+      end
     end
   end
 

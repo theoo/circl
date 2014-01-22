@@ -63,6 +63,10 @@ class Affair < ActiveRecord::Base
   belongs_to  :owner, :class_name => 'Person', :foreign_key => 'owner_id'
   belongs_to  :buyer, :class_name => 'Person', :foreign_key => 'buyer_id'
   belongs_to  :receiver, :class_name => 'Person', :foreign_key => 'receiver_id'
+  belongs_to  :seller, :class_name => 'Person', :foreign_key => 'seller_id'
+
+  has_one     :parent, :class_name => 'Affair', :primary_key => 'parent_id', :foreign_key => 'id'
+  has_many    :children, :class_name => 'Affair', :foreign_key => 'parent_id'
 
   has_many    :invoices, :dependent => :destroy
   has_many    :receipts, :through => :invoices, :uniq => true
@@ -140,8 +144,10 @@ class Affair < ActiveRecord::Base
   # attributes overridden - JSON API
   def as_json(options = nil)
     h = super(options)
+    h[:parent_title]        = parent.try(:title)
     h[:owner_name]          = owner.try(:name)
     h[:buyer_name]          = buyer.try(:name)
+    h[:seller_name]         = seller.try(:name)
     h[:receiver_name]       = receiver.try(:name)
     h[:invoices_count]      = invoices.count
     h[:invoices_value]      = invoices_value.to_f

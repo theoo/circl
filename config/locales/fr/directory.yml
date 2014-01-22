@@ -1,16 +1,16 @@
 ---
 fr:
   directory:
-    import:
-      main_communication_language: langue de communication principale
-      row: ligne
     errors:
       no_file_submitted: Veuillez sélectionner un fichier
-      wrong_file_format: Mauvais format de fichier
       query_empty: Aucune requête transmise, veuillez en fournir une et recommancer.
       query_invalid: requête "%{query}" invalide
       search_error: erreur lors de la recherche -> %{error}
+      wrong_file_format: Mauvais format de fichier
       you_need_to_select_at_least_one_attribute_to_display: Au moins un attributs à afficher doit être sélectionné.
+    import:
+      main_communication_language: langue de communication principale
+      row: ligne
     notices:
       add_members_email_will_be_sent: Le processus d'import des membres à commencé, un rapport sera envoyé par email à %{email} lorsqu'il sera fini.
       people_imported: Les personnes ont été importées, un rapport a été envoyé par email à %{email}.

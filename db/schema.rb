@@ -218,6 +218,7 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
     t.integer  "vat_in_cents",                     :default => 0,     :null => false
     t.string   "vat_currency"
     t.integer  "vat_perthousand"
+    t.text     "conditions"
   end
 
   add_index "invoices", ["affair_id"], :name => "index_invoices_on_affair_id"
@@ -428,6 +429,9 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
     t.string   "art_currency",           :default => "CHF"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "vat_in_cents",           :default => 0,     :null => false
+    t.string   "vat_currency"
+    t.integer  "vat_perthousand"
   end
 
   add_index "product_variants", ["art_in_cents"], :name => "index_product_variants_on_art_in_cents"
@@ -447,9 +451,6 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
     t.boolean  "archive",         :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "vat_in_cents",    :default => 0,     :null => false
-    t.string   "vat_currency"
-    t.integer  "vat_perthousand"
   end
 
   add_index "products", ["after_sale_id"], :name => "index_products_on_after_sale_id"

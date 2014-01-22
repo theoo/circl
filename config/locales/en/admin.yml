@@ -1,7 +1,11 @@
 ---
 en:
   admin:
+    errors:
+      no_file_submitted: no file submitted
+      wrong_file_format: wrong file format
     notices:
+      add_members_email_will_be_sent: add members email will be sent
       pdf_will_be_sent: You will receive an email at %{email} containing a link to the PDF when it will be ready.
       receipts_generation_started: Receipt documents generation for %{members_count} people has started, an email will be sent to you at %{email} upon completion.
       receipts_imported: The receipts have been imported, a report has been sent to you at %{email}.
@@ -14,6 +18,7 @@ en:
       invoice_value: invoice value
       invoices: Invoices
       private_tags: Private tags
+      proceed_with_import: proceed with import
       public_tags: public tags
       receipt_date: receipt date
       receipt_value: receipt value

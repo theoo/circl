@@ -46,6 +46,11 @@ class New extends App.ExtendedController
     @affair = new PersonAffair()
     @affair.owner_id = @affair.buyer_id = @affair.receiver_id = @person.id
     @affair.owner_name = @affair.buyer_name = @affair.receiver_name = @person.name
+
+    @current_user = App.current_user()
+    @affair.seller_id = @current_user.id
+    @affair.seller_name = @current_user.name
+
     @html @view('people/affairs/form')(@)
 
   submit: (e) =>
@@ -60,7 +65,7 @@ class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click button[name="affair-show-owner"]': 'show_owner'
-    'click button[name="affair-destroy"]': 'destroy'
+    'click a[name="affair-destroy"]': 'destroy'
 
   constructor: ->
     super

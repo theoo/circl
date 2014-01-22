@@ -39,11 +39,6 @@ class @App extends Spine.Controller
     # Don't display the hash fragment
     Spine.Route.setup(shim: true)
 
-
-    # Start background tasks on every pages
-    # App.BackgroundTaskRefreshInterval = 5000
-    # background_tasks = new App.BackgroundTasks(el: "#background_tasks_counter", person_id: @person_id)
-
   subapp: (element, class_name, extra_params = {}) ->
     # TODO Raise a message if application controller cannot be found.
     # console.log "App." + class_name + " does not exist." unless "App." + class_name
@@ -55,6 +50,14 @@ class @App extends Spine.Controller
     instance.activate()
 
   @authenticity_token: -> $('meta[name="csrf-token"]').attr('content')
+
+  # Named user here to prevent confusion with person, which is the current
+  # edited person.
+  # @set_current_user = ->
+  # sessionStorage.setItem("current_user", JSON.stringify(person))
+
+  @current_user = -> JSON.parse($('meta[name="current_user"]').attr('content'))
+  # return JSON.parse(sessionStorage.getItem("current_user"))
 
 class @Dashboard extends App
 

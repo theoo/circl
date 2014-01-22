@@ -18,6 +18,9 @@
       - if affair.owner_id != @person_id
         - classes.push 'warning'
 
+      - unless affair.estimate
+        - classes.push 'success'
+
       - relations = []
       - relations.push I18n.t("affair.views.owner")  + ": " + affair.owner_name
       - relations.push I18n.t("affair.views.buyer")  + ": " + affair.buyer_name

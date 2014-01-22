@@ -5,12 +5,12 @@ en:
       cant_delete_affair_who_has_invoices: An affair with an invoice linked to it cannot be deleted.
       wrong_date: wrong date
     notices:
+      document_export_explanation: Please select sorting criterias for the generation.
+      document_export_explanation_title: Documents generation
+      document_export_process: The process of selecting people will follow this step.
+      regexp: A regular expression is expected.
       will_match_all_defined_thresholds: will match all defined thresholds
       will_match_all_selected_statuses: will match all selected statuses
-      document_export_explanation: Please select sorting criterias for the generation.
-      document_export_process: The process of selecting people will follow this step.
-      document_export_explanation_title: Documents generation
-      regexp: A regular expression is expected.
     views:
       actions:
         edit_affair: edit affair
@@ -18,7 +18,9 @@ en:
       available_statuses: available statuses
       buyer: buyer
       document_export: Documents generation
+      estimate: estimate
       extras: Extras
+      footer: footer
       format: format
       invoice_names_filter: invoice names filter
       invoices: Invoices
@@ -33,6 +35,7 @@ en:
       relations: relations
       select_payment_interval: Select extraction interval
       select_thresholds: Select minimum threshold
+      seller: seller
       status: status
       statuses:
         cancelled: cancelled

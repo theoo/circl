@@ -17,6 +17,22 @@
 
     .row
       .col-lg-12
+        .form-group.autocompleted
+          %label{:for => 'affair_parent'}
+            = I18n.t('common.parent')
+          %input{ :type => 'search',
+                  :name => 'parent',
+                  :id => 'affair_parent',
+                  :class => 'form-control',
+                  :value => @affair.parent_title,
+                  :action => "/people/#{@person_id}/affairs/search"}
+
+          %input{ :type => 'hidden',
+                  :name => 'parent_id',
+                  :value => @affair.parent_id }
+
+    .row
+      .col-lg-12
         .form-group
           %label{:for => 'affair_description'}
             = I18n.t('common.description')
@@ -27,7 +43,18 @@
             = @affair.description
 
     .row
-      .col-lg-6
+      .col-lg-12
+        .form-group
+          %label{:for => 'affair_footer'}
+            = I18n.t('affair.views.footer')
+          %textarea{:name => 'footer',
+                    :rows => 4,
+                    :id => 'affair_footer',
+                    :class => 'form-control'}
+            = @affair.footer
+
+    .row
+      .col-sm-6
         .autocompleted.form-group
           %label{:for => 'affair_buyer'}
             = I18n.t('affair.views.buyer')
@@ -41,7 +68,7 @@
                  :name => 'buyer_id',
                  :value => @affair.buyer_id}
 
-      .col-lg-6
+      .col-sm-6
         .autocompleted.form-group
           %label{:for => 'affair_receiver'}
             = I18n.t('affair.views.receiver')
@@ -56,13 +83,38 @@
                   :value => @affair.receiver_id}
 
     .row
-      .col-lg-12
+      .col-sm-6
+        .autocompleted.form-group
+          %label{:for => 'affair_seller'}
+            = I18n.t('affair.views.seller')
+          %input{:type => 'search',
+                 :name => 'seller',
+                 :id => 'affair_seller',
+                 :class => 'required form-control',
+                 :value => @affair.seller_name,
+                 :action => '/people/search'}
+          %input{:type => 'hidden',
+                 :name => 'seller_id',
+                 :value => @affair.seller_id}
+      .col-sm-6
+        .checkbox
+          %label.control-label
+            %input{ :type => 'checkbox',
+                    :id => 'affair_estimate',
+                    :name => 'estimate',
+                    :checked => @affair.estimate,
+                    :value => 1 }
+            = I18n.t('affair.views.estimate')
+
+    .row
+      .col-sm-12
         - if parseInt(@person_id) == parseInt(@affair.owner_id) or @affair.isNew?()
           - unless @affair.isNew?()
-            %button{:name => "affair-destroy",
-                    :class => 'btn btn-danger' }
+            %a{:name => "affair-destroy",
+               :class => 'btn btn-danger' }
               .icon-remove
               = I18n.t('common.destroy')
+
 
           .pull-right
             != @partial('submit_button')(@affair)
@@ -74,4 +126,21 @@
               .icon-eye-open
               = I18n.t('affair.views.actions.show_owner')
 
+
+    .row
+      .col-sm-12
+        - unless @affair.isNew?()
+          %center
+            %br
+            .btn-group
+              %a{:class => 'btn btn-default', :disabled => true}
+                .icon-link
+              %a{:class => 'btn btn-default', :href => '#balance'}
+                = I18n.t('admin.views.finances')
+
+              %a{:class => 'btn btn-default', :href => '#person_affair_products'}
+                = I18n.t('affair.views.products')
+
+              %a{:class => 'btn btn-default', :href => '#person_affair_extras'}
+                = I18n.t('affair.views.extras')
 

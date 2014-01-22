@@ -1,16 +1,16 @@
 ---
 en:
   directory:
-    import:
-      main_communication_language: main communication language
-      row: row
     errors:
       no_file_submitted: Please select a file
-      wrong_file_format: Wrong file format
       query_empty: The search query was empty, type a query and try again.
       query_invalid: The query "%{query}" was invalid
       search_error: Search error -> %{error}
+      wrong_file_format: Wrong file format
       you_need_to_select_at_least_one_attribute_to_display: You need to select at least one attribute to display
+    import:
+      main_communication_language: main communication language
+      row: row
     notices:
       add_members_email_will_be_sent: The member import process has started, a report will be sent to you at %{email} upon completion.
       people_imported: The selected persons have been imported, a report has been sent to you at %{email}.
