@@ -44,7 +44,6 @@ class Index extends App.ExtendedController
 
     ajax_success = (data, textStatus, jqXHR) =>
       @render_success()
-      PersonRole.refresh(data, {clear: true})
 
     # TODO make this send JSON params instead of HTML form params
     Spine.Ajax.queue =>
