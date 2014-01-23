@@ -76,6 +76,7 @@ fr:
     preview: aperçu
     preview_in_new_tab: aperçu dans un nouvel onglet
     quantity: quantité
+    rate: taux
     released_under: livrée sous la version 3 de la license
     requires_browser_update: Une mise à jour de votre navigateur est requise pour consulter cette page.
     reset: réinitialiser
@@ -106,5 +107,6 @@ fr:
     upload: téléverser
     use_right_click_save_as: utilisez le click droit et sélectionnez 'enregistrer le lien sous...'
     value: valeur
+    vat: TVA
     weak: faible
     year: année

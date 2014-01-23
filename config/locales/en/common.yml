@@ -76,6 +76,7 @@ en:
     preview: preview
     preview_in_new_tab: preview in a new tab
     quantity: quantity
+    rate: rate
     released_under: released under the version 3
     requires_browser_update: Your browser must be updated to see this page.
     reset: reset
@@ -106,5 +107,6 @@ en:
     upload: upload
     use_right_click_save_as: right-click and select 'Save as...'
     value: value
+    vat: VAT
     weak: weak
     year: year

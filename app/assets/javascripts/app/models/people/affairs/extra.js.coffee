@@ -18,7 +18,7 @@ class App.PersonAffairExtra extends Spine.Model
 
   @configure 'PersonAffairExtra', 'id', 'affair_id', 'title', 'description',
     'value_in_cents', 'value_currency', 'quantity', 'position', 'created_at',
-    'updated_at', 'value'
+    'updated_at', 'value', 'vat_in_cents', 'vat_currency', 'vat_percentage'
 
   @extend Spine.Model.Ajax
 

@@ -87,20 +87,20 @@ class Edit extends App.ExtendedController
 
       # Tasks
       # #person_affairs, which is @el of App.PersonAffairs
-      person_affair_tasks_ctrl = $("#person_affair_tasks").data('controller')
-      person_affair_tasks_ctrl.activate(person_id: @person_id, affair_id: @id)
-      PersonTask.url = =>
-        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/tasks"
-      PersonTask.refresh([], clear: true)
-      PersonTask.fetch()
+      # person_affair_tasks_ctrl = $("#person_affair_tasks").data('controller')
+      # person_affair_tasks_ctrl.activate(person_id: @person_id, affair_id: @id)
+      # PersonTask.url = =>
+      #   "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/tasks"
+      # PersonTask.refresh([], clear: true)
+      # PersonTask.fetch()
 
-      # Products
-      person_affair_products_ctrl = $("#person_affair_products").data('controller')
-      person_affair_products_ctrl.activate(person_id: @person_id, affair_id: @id)
-      PersonAffairProductsProgram.url = =>
-        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/products"
-      PersonAffairProductsProgram.refresh([], clear: true)
-      PersonAffairProductsProgram.fetch()
+      # # Products
+      # person_affair_products_ctrl = $("#person_affair_products").data('controller')
+      # person_affair_products_ctrl.activate(person_id: @person_id, affair_id: @id)
+      # PersonAffairProductsProgram.url = =>
+      #   "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/products"
+      # PersonAffairProductsProgram.refresh([], clear: true)
+      # PersonAffairProductsProgram.fetch()
 
       # Extras
       person_affair_extras_ctrl = $("#person_affair_extras").data('controller')

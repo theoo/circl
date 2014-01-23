@@ -291,8 +291,6 @@ en:
           one: 1 error has prohibited this form from being saved
           other: ! '%{count} errors has prohibited this form from being saved'
     models:
-      ! '#{@template_class':
-        toLowerCase()}: tolowercase()}
       activity: Activity
       affair: Affair
       application_setting: Application Setting

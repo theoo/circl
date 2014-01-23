@@ -25,22 +25,6 @@
             = @extra.description
 
     .row
-      .col-md-6
-        .form-group
-          %label{:for => 'person_affair_extra_value'}
-            = I18n.t('common.unit_value')
-          .input-group
-            %input{ :type => 'number',
-                    :step => 0.01,
-                    :id => 'person_affair_extra_value',
-                    :class => 'required form-control',
-                    :min => 0,
-                    :max => 99999999.99,
-                    :name => 'value',
-                    :value => @extra.value }
-            .input-group-addon
-              CHF
-
       .col-md-3.col-sm-6
         .form-group
           %label{:for => 'person_affair_extra_quantity'}
@@ -64,6 +48,43 @@
                   :class => 'form-control number',
                   :name => 'position',
                   :value => @extra.position }
+
+    .row
+      .col-md-6
+        .form-group
+          %label{:for => 'person_affair_extra_value'}
+            = I18n.t('common.unit_value')
+          .input-group
+            %input{ :type => 'number',
+                    :step => 0.01,
+                    :id => 'person_affair_extra_value',
+                    :class => 'required form-control',
+                    :min => 0,
+                    :max => 99999999.99,
+                    :name => 'value',
+                    :value => @extra.value }
+            .input-group-addon
+              = @extra.value_currency
+
+      .col-md-6
+        .form-group
+          %label{:for => 'person_affair_extra_vat'}
+            = I18n.t('common.vat')
+            ,
+            = I18n.t('common.rate')
+          .input-group
+            %input{ :type => 'number',
+                    :step => 0.01,
+                    :id => 'person_affair_extra_vat',
+                    :class => 'form-control',
+                    :min => 0,
+                    :max => 99999999.99,
+                    :name => 'vat',
+                    :value => @extra.vat }
+            .input-group-addon
+              = @extra.vat_currency
+            .input-group-addon
+              TODO
 
     .row
       .col-lg-12
