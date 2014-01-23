@@ -20,7 +20,7 @@ en:
       document_export: Documents generation
       estimate: estimate
       extras: Extras
-      footer: footer
+      footer: comments
       format: format
       invoice_names_filter: invoice names filter
       invoices: Invoices

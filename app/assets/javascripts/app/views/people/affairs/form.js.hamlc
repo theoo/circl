@@ -5,7 +5,7 @@
         .validation_errors_placeholder
 
     .row
-      .col-lg-12
+      .col-sm-9
         .form-group
           %label{:for => 'affair_title'}
             = I18n.t('common.title')
@@ -14,9 +14,20 @@
                  :id => 'affair_title',
                  :class => 'required form-control',
                  :value => @affair.title}
+      .col-sm-3
+        %br
+        .checkbox
+          %label.control-label
+            %input{ :type => 'checkbox',
+                    :id => 'affair_estimate',
+                    :name => 'estimate',
+                    :checked => @affair.estimate,
+                    :value => 1 }
+            = I18n.t('affair.views.estimate')
+
 
     .row
-      .col-lg-12
+      .col-sm-9
         .form-group.autocompleted
           %label{:for => 'affair_parent'}
             = I18n.t('common.parent')
@@ -30,6 +41,7 @@
           %input{ :type => 'hidden',
                   :name => 'parent_id',
                   :value => @affair.parent_id }
+      .col-sm-3
 
     .row
       .col-lg-12
@@ -97,14 +109,6 @@
                  :name => 'seller_id',
                  :value => @affair.seller_id}
       .col-sm-6
-        .checkbox
-          %label.control-label
-            %input{ :type => 'checkbox',
-                    :id => 'affair_estimate',
-                    :name => 'estimate',
-                    :checked => @affair.estimate,
-                    :value => 1 }
-            = I18n.t('affair.views.estimate')
 
     .row
       .col-sm-12
@@ -130,17 +134,16 @@
     .row
       .col-sm-12
         - unless @affair.isNew?()
-          %center
-            %br
-            .btn-group
-              %a{:class => 'btn btn-default', :disabled => true}
-                .icon-link
-              %a{:class => 'btn btn-default', :href => '#balance'}
-                = I18n.t('admin.views.finances')
+          %br
+          .btn-group
+            %a{:class => 'btn btn-default', :disabled => true}
+              .icon-link
+            %a{:class => 'btn btn-default', :href => '#balance'}
+              = I18n.t('admin.views.finances')
 
-              %a{:class => 'btn btn-default', :href => '#person_affair_products'}
-                = I18n.t('affair.views.products')
+            %a{:class => 'btn btn-default', :href => '#person_affair_products'}
+              = I18n.t('affair.views.products')
 
-              %a{:class => 'btn btn-default', :href => '#person_affair_extras'}
-                = I18n.t('affair.views.extras')
+            %a{:class => 'btn btn-default', :href => '#person_affair_extras'}
+              = I18n.t('affair.views.extras')
 

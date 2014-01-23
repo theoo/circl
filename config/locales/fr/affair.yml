@@ -20,7 +20,7 @@ fr:
       document_export: Génération de documents
       estimate: devis
       extras: Extras
-      footer: pied de page
+      footer: commentaires
       format: format
       invoice_names_filter: filtre pour le nom des factures
       invoices: Factures

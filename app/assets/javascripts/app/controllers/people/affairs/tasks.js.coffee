@@ -49,6 +49,14 @@ class New extends App.TimesheetExtention
     if @person.task_rate_id > 0 and App.TaskType.count() > 0 and App.TaskRate.count() > 0
       @task = new PersonTask
 
+      @task.owner_name = @person.name
+      @task.owner_id = @person.id
+
+      if @affair_id
+        @affair = App.PersonAffair.find @affair_id
+        @task.affair_title = @affair.title
+        @task.affair_id = @affair.id
+
       @task.start_date = (new Date).to_view()
       @task.start_time = '09:00'
       @task.end_time = '18:00'
@@ -56,9 +64,12 @@ class New extends App.TimesheetExtention
 
       super
 
+      if @disabled() then @disable_panel() else @enable_panel()
+
       # Disable owner and affair selection which makes sens only
       # on dashboard page
-      @el.find("#task_owner_affair").css(display: 'none')
+      @el.find("#task_owner_affair input").each (i,e) =>
+        $(e).prop('disabled', true)
 
     else
       if App.TaskType.count() == 0
@@ -70,7 +81,7 @@ class New extends App.TimesheetExtention
         unless @person.task_rate_id
           @html @view('people/affairs/tasks/no_rate_selected')(@)
 
-    if @disabled() then @disable_panel() else @enable_panel()
+      if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>
     PersonTask.url() == undefined
@@ -78,7 +89,6 @@ class New extends App.TimesheetExtention
   submit: (e) ->
     e.preventDefault()
     @task.fromForm(e.target)
-    @task.affair_id =
     @task.start_date = @repack_date_time(@task.start_date)
     @save_with_notifications @task, @render
 
