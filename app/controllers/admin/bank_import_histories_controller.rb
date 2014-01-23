@@ -86,7 +86,7 @@ class Admin::BankImportHistoriesController < ApplicationController
                         :resource_id => '0',
                         :action => 'info',
                         :data => { receipts: "Imported at #{Time.now}" })
-      redirect_to admin_path
+      redirect_to admin_path(:anchor => 'finances')
 
     else
 
