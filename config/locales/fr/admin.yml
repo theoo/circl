@@ -18,7 +18,7 @@ fr:
       invoice_value: valeur de la facture
       invoices: Factures
       private_tags: Tags privés
-      proceed_with_import: continuer avec l'importation
+      proceed_with_import: Continuer avec l'importation
       public_tags: Tags publics
       receipt_date: date du reçu
       receipt_value: valeur du reçu

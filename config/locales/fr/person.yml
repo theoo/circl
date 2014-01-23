@@ -46,8 +46,7 @@ fr:
       invalid_role: Rôle invalide "%{role}"
       invalid_translation_aptitude: Aptitude de traduction invalide "%{translation_aptitude}"
       line: ligne
-      not_existing_#{relation:
-        singularize}: singularize}
+      not_existing_: ! 'not existing '
       not_existing_private_tag: Le tag privé "%{tag}" sera créé.
       not_existing_public_tag: Le tag public "%{tag}" sera créé.
     mail:

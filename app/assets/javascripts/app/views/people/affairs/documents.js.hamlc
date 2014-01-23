@@ -4,7 +4,7 @@
   %h4.modal-title
     = I18n.t("affair.views.document_export")
     \-
-    = I18n.t("activerecord.models.#{@template_class.toLowerCase()}")
+    = I18n.t("activerecord.models." + @template_class.toLowerCase())
 
 %form{ :method =>'get', :action => @form_url + "." + @format }
   .modal-body

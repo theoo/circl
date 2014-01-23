@@ -115,7 +115,7 @@ class PersonRelationsParser
       if tag.count > 0
         @person.send(relation) << tag.first
       else
-        @person.notices.add(relation.to_sym, I18n.t("person.import.not_existing_#{relation.singularize}", :tag => item.strip))
+        @person.notices.add(relation.to_sym, I18n.t("person.import.not_existing_" + relation.singularize, :tag => item.strip))
         new_tags << item.strip
       end
     end

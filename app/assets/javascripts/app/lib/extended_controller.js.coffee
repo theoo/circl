@@ -129,6 +129,7 @@ class App.ExtendedController extends Spine.Controller
     panel = $(@el).closest('.panel')
     panel.removeClass 'panel-primary panel-default panel-danger'
     panel.addClass 'panel-success'
+    panel.find("button[type=submit]").effect("highlight", color: "#d6e9c6")
 
     restore_panel_status = ->
       original_class = if panel.data('primary_panel') then 'panel-primary' else 'panel-default'
