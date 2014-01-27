@@ -55,7 +55,7 @@ module Translator
     #hsh
     h = {}
     tokens = scope.split('.')
-    h[tokens.first] = (tokens.size > 1) ? i18n_scope_to_hash(tokens[1..-1].join('.')) : tokens.first.humanize.downcase
+    h[tokens.first] = (tokens.size > 1) ? i18n_scope_to_hash(tokens[1..-1].join('.')) : "MISSING_TRANSLATION " + tokens.first.humanize.downcase
     h
   end
 end
