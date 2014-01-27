@@ -1,0 +1,13 @@
+---
+en:
+  currency:
+    views:
+      delimiter: subunit delimiter
+      iso_code: iso code
+      iso_numeric: iso numeric
+      priority: priority
+      separator: thousand separator
+      subunit: subunit
+      subunit_to_unit: subunit factor
+      symbol: symbol
+      updated_rates_can_be_found_online: Updated rates can be found online on websites like <a hrefe="http://www.xe.com">http://www.xe.com</a>.

@@ -6,6 +6,8 @@ fr:
       affairs: Affaires
       application_settings: Paramètres de l'application
       attributes: Attributs
+      currencies: Devises
+      currency_rates: Taux de changes
       generic_templates: Modèles Génériques
       invoice_templates: Modèles de facture
       jobs: Métiers

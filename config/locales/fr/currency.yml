@@ -1,0 +1,13 @@
+---
+fr:
+  currency:
+    views:
+      delimiter: délimit. de sous-unité
+      iso_code: code iso
+      iso_numeric: code iso numérique
+      priority: priorité
+      separator: séparateur de millier
+      subunit: sous-unité
+      subunit_to_unit: facteur de sous-unité
+      symbol: symbole
+      updated_rates_can_be_found_online: Les taux de changes à jour peuvent être consultés en ligne sur des sites tels que <a href="www.xe.com" target="_blank">http://www.xe.com</a>.

@@ -2,7 +2,7 @@
   %thead
     %tr
       %th= I18n.t('currency.views.iso_code')
-      %th= I18n.t('currency.views.name')
+      %th= I18n.t('common.name')
       %th= I18n.t('currency.views.symbol')
 
   %tbody

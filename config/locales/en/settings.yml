@@ -6,6 +6,8 @@ en:
       affairs: Affairs
       application_settings: Application settings
       attributes: Attributes
+      currencies: Currencies
+      currency_rates: Exchange rates
       generic_templates: Generic Templates
       invoice_templates: Invoice templates
       jobs: Jobs
