@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Extra < ActiveRecord::Base
+class CurrencyRate < ActiveRecord::Base
 
   ################
   ### INCLUDES ###
@@ -31,33 +31,22 @@ class Extra < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
-  before_validation :set_position_if_none_given, :if => Proc.new {|i| i.position.blank? }
 
   #################
   ### RELATIONS ###
   #################
 
-  belongs_to  :affair
-  has_one     :owner, :through => 'affair'
-
-  money :value
-  money :vat
+  belongs_to :from_currency, :class_name => 'Currency'
+  belongs_to :to_currency, :class_name => 'Currency'
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates :title, :presence => true
-  validates :value, :presence => true,
-                    :numericality => { :less_than_or_equal => 99999999.99, :greater_than => 0 }
-  validates :position, :uniqueness => { :scope => :affair_id }
-  validates :quantity, :presence => true
+  validates :from_currency_id, :presence => true
+  validates :to_currency_id, :presence => true
+  validates :rate, :presence => true, :numericality => {:greater_than => 0}
 
-  # Validate fields of type 'string' length
-  validates_length_of :title, :maximum => 255
-
-  # Validate fields of type 'text' length
-  validates_length_of :description, :maximum =>  65535
   ########################
   #### CLASS METHODS #####
   ########################
@@ -66,16 +55,11 @@ class Extra < ActiveRecord::Base
   def as_json(options = nil)
     h = super(options)
 
-    h[:total_value]    = total_value.to_f
-    h[:value]          = value.to_f
-    h[:vat]            = vat.to_f
-    h[:errors]         = errors
+    h[:from_currency_iso_code] = from_currency.iso_code
+    h[:to_currency_iso_code] = to_currency.iso_code
+    h[:errors] = errors
 
     h
-  end
-
-  def total_value
-    value * quantity
   end
 
   ########################
@@ -84,13 +68,5 @@ class Extra < ActiveRecord::Base
 
   private
 
-  def set_position_if_none_given
-    last_item = self.affair.extras.order(:position).last
-    if last_item
-      self.position = last_item.position + 1
-    else
-      self.position = 1
-    end
-  end
 
 end

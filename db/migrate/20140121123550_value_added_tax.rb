@@ -1,12 +1,12 @@
 class ValueAddedTax < ActiveRecord::Migration
   def change
     add_column :invoices, :vat_in_cents, :integer, :null => false, :default => 0
-    add_column :invoices, :vat_currency, :string
+    add_column :invoices, :vat_currency, :string, :null => false, :default => 'CHF'
     add_column :invoices, :vat_percentage, :integer
     add_index :invoices, :vat_in_cents
 
     add_column :extras, :vat_in_cents, :integer, :null => false, :default => 0
-    add_column :extras, :vat_currency, :string
+    add_column :extras, :vat_currency, :string, :null => false, :default => 'CHF'
     add_column :extras, :vat_percentage, :integer
     add_index :extras, :vat_in_cents
 
@@ -29,7 +29,7 @@ class ValueAddedTax < ActiveRecord::Migration
     add_index :currencies, :priority
     add_index :currencies, :iso_code
 
-    create_table :currency_rates do |r|
+    create_table :currency_rates do |c|
       c.integer :from_currency_id, :null => false
       c.integer :to_currency_id, :null => false
       c.float   :rate, :null => false

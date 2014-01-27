@@ -218,11 +218,13 @@ Directory::Application.routes.draw do
   namespace :settings do
     resources :application_settings
 
-    resources :invoice_templates do
+    resources :currencies do
       collection do
-        get 'placeholders', 'count'
+        get 'search'
       end
     end
+
+    resources :currency_rates
 
     resources :generic_templates do
       collection do
@@ -230,6 +232,12 @@ Directory::Application.routes.draw do
       end
       member do
         post 'upload_odt'
+      end
+    end
+
+    resources :invoice_templates do
+      collection do
+        get 'placeholders', 'count'
       end
     end
 

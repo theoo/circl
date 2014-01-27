@@ -32,8 +32,11 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
 
   add_index "affairs", ["buyer_id"], :name => "index_affairs_on_buyer_id"
   add_index "affairs", ["created_at"], :name => "index_affairs_on_created_at"
+  add_index "affairs", ["estimate"], :name => "index_affairs_on_estimate"
   add_index "affairs", ["owner_id"], :name => "index_affairs_on_owner_id"
+  add_index "affairs", ["parent_id"], :name => "index_affairs_on_parent_id"
   add_index "affairs", ["receiver_id"], :name => "index_affairs_on_receiver_id"
+  add_index "affairs", ["seller_id"], :name => "index_affairs_on_seller_id"
   add_index "affairs", ["status"], :name => "index_affairs_on_status"
   add_index "affairs", ["updated_at"], :name => "index_affairs_on_updated_at"
   add_index "affairs", ["value_currency"], :name => "index_affairs_on_value_currency"
@@ -125,6 +128,33 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
   add_index "comments", ["resource_type"], :name => "index_comments_on_resource_type"
   add_index "comments", ["updated_at"], :name => "index_comments_on_updated_at"
 
+  create_table "currencies", :force => true do |t|
+    t.integer "priority"
+    t.string  "iso_code",        :null => false
+    t.string  "iso_numeric"
+    t.string  "name"
+    t.string  "symbol"
+    t.string  "subunit"
+    t.integer "subunit_to_unit"
+    t.string  "separator"
+    t.string  "delimiter"
+  end
+
+  add_index "currencies", ["iso_code"], :name => "index_currencies_on_iso_code"
+  add_index "currencies", ["priority"], :name => "index_currencies_on_priority"
+
+  create_table "currency_rates", :force => true do |t|
+    t.integer  "from_currency_id", :null => false
+    t.integer  "to_currency_id",   :null => false
+    t.float    "rate",             :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "currency_rates", ["from_currency_id"], :name => "index_currency_rates_on_from_currency_id"
+  add_index "currency_rates", ["rate"], :name => "index_currency_rates_on_rate"
+  add_index "currency_rates", ["to_currency_id"], :name => "index_currency_rates_on_to_currency_id"
+
   create_table "employment_contracts", :force => true do |t|
     t.integer  "person_id"
     t.float    "percentage"
@@ -151,15 +181,16 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "vat_in_cents",    :default => 0, :null => false
-    t.string   "vat_currency"
-    t.integer  "vat_perthousand"
+    t.integer  "vat_in_cents",   :default => 0,     :null => false
+    t.string   "vat_currency",   :default => "CHF", :null => false
+    t.integer  "vat_percentage"
   end
 
   add_index "extras", ["affair_id"], :name => "index_extras_on_affair_id"
   add_index "extras", ["position"], :name => "index_extras_on_position"
   add_index "extras", ["quantity"], :name => "index_extras_on_quantity"
   add_index "extras", ["value_in_cents"], :name => "index_extras_on_value_in_cents"
+  add_index "extras", ["vat_in_cents"], :name => "index_extras_on_vat_in_cents"
 
   create_table "generic_templates", :force => true do |t|
     t.string   "title",                 :null => false
@@ -216,8 +247,8 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
     t.boolean  "cancelled",                        :default => false, :null => false
     t.boolean  "offered",                          :default => false, :null => false
     t.integer  "vat_in_cents",                     :default => 0,     :null => false
-    t.string   "vat_currency"
-    t.integer  "vat_perthousand"
+    t.string   "vat_currency",                     :default => "CHF", :null => false
+    t.integer  "vat_percentage"
     t.text     "conditions"
   end
 
@@ -229,6 +260,7 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
   add_index "invoices", ["updated_at"], :name => "index_invoices_on_updated_at"
   add_index "invoices", ["value_currency"], :name => "index_invoices_on_value_currency"
   add_index "invoices", ["value_in_cents"], :name => "index_invoices_on_value_in_cents"
+  add_index "invoices", ["vat_in_cents"], :name => "index_invoices_on_vat_in_cents"
 
   create_table "jobs", :force => true do |t|
     t.string "name",        :default => ""
@@ -431,7 +463,7 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
     t.datetime "updated_at"
     t.integer  "vat_in_cents",           :default => 0,     :null => false
     t.string   "vat_currency"
-    t.integer  "vat_perthousand"
+    t.integer  "vat_percentage"
   end
 
   add_index "product_variants", ["art_in_cents"], :name => "index_product_variants_on_art_in_cents"
@@ -439,6 +471,7 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
   add_index "product_variants", ["product_id"], :name => "index_product_variants_on_product_id"
   add_index "product_variants", ["program_group"], :name => "index_product_variants_on_program_group"
   add_index "product_variants", ["selling_price_in_cents"], :name => "index_product_variants_on_selling_price_in_cents"
+  add_index "product_variants", ["vat_in_cents"], :name => "index_product_variants_on_vat_in_cents"
 
   create_table "products", :force => true do |t|
     t.integer  "provider_id"

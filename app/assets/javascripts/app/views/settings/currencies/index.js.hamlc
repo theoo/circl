@@ -1,0 +1,13 @@
+%table.datatable
+  %thead
+    %tr
+      %th= I18n.t('currency.views.iso_code')
+      %th= I18n.t('currency.views.name')
+      %th= I18n.t('currency.views.symbol')
+
+  %tbody
+    - for currency in App.Currency.all()
+      %tr{:data-id => currency.id, :class => 'item'}
+        %td= currency.iso_code
+        %td= currency.name
+        %td= currency.symbol

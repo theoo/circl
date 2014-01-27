@@ -39,6 +39,11 @@
             %a{:href => '#affairs_tab'}
               = I18n.t('settings.views.affairs')
 
+        - if can? :manage, Currency
+          %li
+            %a{:href => '#currencies_tab'}
+              = I18n.t('settings.views.currencies')
+
         - if can? :manage, ApplicationSetting
           %li
             %a{:href => '#advanced_tab'}
@@ -154,6 +159,21 @@
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.product_programs')
+
+    #currencies_tab.tab-pane.fade
+      .row
+        .col-lg-6
+          - if can? :update, Currency
+            #settings_currencies.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.currencies')
+        .col-lg-6
+          - if can? :update, CurrencyRate
+            #settings_currency_rates.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.currency_rates')
 
     #advanced_tab.tab-pane.fade
       .row

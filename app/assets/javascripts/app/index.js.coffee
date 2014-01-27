@@ -208,4 +208,7 @@ class @Settings extends App
     @subapp($('#settings_products'), 'SettingsProducts')
     @subapp($('#settings_product_programs'), 'SettingsProductPrograms')
 
+    @subapp($('#settings_currencies'), 'SettingsCurrencies')
+    @subapp($('#settings_currency_rates'), 'SettingsCurrencyRates')
+
     @subapp($('#settings_application_settings'), 'SettingsApplicationSettings')

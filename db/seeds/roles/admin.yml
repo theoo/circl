@@ -55,3 +55,9 @@
 
 - subject: ProductProgram
   action: manage
+
+- subject: Currency
+  action: manage
+
+- subject: CurrencyRate
+  action: manage

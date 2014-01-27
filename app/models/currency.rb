@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Extra < ActiveRecord::Base
+class Currency < ActiveRecord::Base
 
   ################
   ### INCLUDES ###
@@ -31,33 +31,35 @@ class Extra < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
-  before_validation :set_position_if_none_given, :if => Proc.new {|i| i.position.blank? }
+  before_save :default_values
 
   #################
   ### RELATIONS ###
   #################
 
-  belongs_to  :affair
-  has_one     :owner, :through => 'affair'
+  has_many :rates_as_base, # buy
+    :class_name => 'CurrencyRate',
+    :foreign_key => 'from_currency_id'
 
-  money :value
-  money :vat
+  has_many :rates_as_exchange, # sell
+    :class_name => 'CurrencyRate',
+    :foreign_key => 'to_currency_id'
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates :title, :presence => true
-  validates :value, :presence => true,
-                    :numericality => { :less_than_or_equal => 99999999.99, :greater_than => 0 }
-  validates :position, :uniqueness => { :scope => :affair_id }
-  validates :quantity, :presence => true
+  validates :iso_code, :presence => true, :length => {:is => 3}
+  validates :iso_numeric, :length => {:maximum => 255}
+  validates :name, :length => {:maximum => 255}
+  validates :symbol, :length => {:maximum => 3}
+  validates :subunit, :length => {:maximum => 255}
+  validates :separator, :length => {:maximum => 255}
+  validates :delimiter, :length => {:maximum => 255}
 
-  # Validate fields of type 'string' length
-  validates_length_of :title, :maximum => 255
+  validates :priority, :numericality => true, :unless => Proc.new {|c| c.priority.blank? }
+  validates :subunit_to_unit, :numericality => true, :unless => Proc.new {|c| c.subunit_to_unit.blank? }
 
-  # Validate fields of type 'text' length
-  validates_length_of :description, :maximum =>  65535
   ########################
   #### CLASS METHODS #####
   ########################
@@ -66,16 +68,9 @@ class Extra < ActiveRecord::Base
   def as_json(options = nil)
     h = super(options)
 
-    h[:total_value]    = total_value.to_f
-    h[:value]          = value.to_f
-    h[:vat]            = vat.to_f
     h[:errors]         = errors
 
     h
-  end
-
-  def total_value
-    value * quantity
   end
 
   ########################
@@ -84,13 +79,12 @@ class Extra < ActiveRecord::Base
 
   private
 
-  def set_position_if_none_given
-    last_item = self.affair.extras.order(:position).last
-    if last_item
-      self.position = last_item.position + 1
-    else
-      self.position = 1
-    end
+  def default_values
+    self.priority         ||= Currency.count > 0 ? Currency.order(:priority).last.priority + 1 : 1
+    self.subunit          ||= "cent"
+    self.subunit_to_unit  ||= 100
+    self.separator        ||= ","
+    self.delimiter        ||= "."
   end
 
 end
