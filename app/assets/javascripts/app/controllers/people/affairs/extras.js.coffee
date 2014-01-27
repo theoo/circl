@@ -23,6 +23,7 @@ $.fn.extra = ->
 class New extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click a[name=person-affair-extra-adjust-vat]': 'adjust_vat'
 
   constructor: ->
     super
@@ -52,6 +53,7 @@ class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click button[name=person-affair-extra-destroy]': 'destroy'
+    'click a[name=person-affair-extra-adjust-vat]': 'adjust_vat'
 
   constructor: ->
     super
@@ -64,7 +66,6 @@ class Edit extends App.ExtendedController
   render: =>
     return unless PersonAffairExtra.exists(@id) && @can
     @extra = PersonAffairExtra.find(@id)
-    console.log @extra
 
     @html @view('people/affairs/extras/form')(@)
     @show()

@@ -53,11 +53,11 @@ class @App extends Spine.Controller
 
   # Named user here to prevent confusion with person, which is the current
   # edited person.
-  # @set_current_user = ->
-  # sessionStorage.setItem("current_user", JSON.stringify(person))
+  @current_user =
+    JSON.parse($('meta[name="current_user"]').attr('content'))
 
-  @current_user = -> JSON.parse($('meta[name="current_user"]').attr('content'))
-  # return JSON.parse(sessionStorage.getItem("current_user"))
+  @available_currencies =
+    JSON.parse($('meta[name="available_currencies"]').attr('content'))
 
 class @Dashboard extends App
 
@@ -98,31 +98,34 @@ class @PersonEdit extends App
       @subapp($('#person'), 'People')
 
     App.Person.one 'refresh', =>
-      @subapp($('#person'), 'People')
-      @subapp($('#person_communication_languages'), 'PersonCommunicationLanguages')
-      @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
-      @subapp($('#person_private_tags'), 'PersonPrivateTags')
-      @subapp($('#person_public_tags'), 'PersonPublicTags')
-      @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
-      @subapp($('#person_roles'), 'PersonRoles')
-      @subapp($('#person_comments'), 'PersonComments')
-      @subapp($('#person_activities'), 'PersonActivities')
+      App.ApplicationSetting.one 'refresh', =>
+        @subapp($('#person'), 'People')
+        @subapp($('#person_communication_languages'), 'PersonCommunicationLanguages')
+        @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
+        @subapp($('#person_private_tags'), 'PersonPrivateTags')
+        @subapp($('#person_public_tags'), 'PersonPublicTags')
+        @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
+        @subapp($('#person_roles'), 'PersonRoles')
+        @subapp($('#person_comments'), 'PersonComments')
+        @subapp($('#person_activities'), 'PersonActivities')
 
-      App.GenericTemplate.one 'refresh', =>
-        @subapp($('#person_affairs'), 'PersonAffairs')
-        @subapp($('#person_affair_task_rates'), 'PersonAffairTaskRates')
-        @subapp($('#person_affair_tasks'), 'PersonAffairTasks')
-        @subapp($('#person_affair_products'), 'PersonAffairProducts')
-        @subapp($('#person_affair_extras'), 'PersonAffairExtras')
-        @subapp($('#person_affair_subscriptions'), 'PersonAffairSubscriptions')
-        @subapp($('#person_affair_invoices'), 'PersonAffairInvoices')
-        @subapp($('#person_affair_receipts'), 'PersonAffairReceipts')
+        App.GenericTemplate.one 'refresh', =>
+          @subapp($('#person_affairs'), 'PersonAffairs')
+          @subapp($('#person_affair_task_rates'), 'PersonAffairTaskRates')
+          @subapp($('#person_affair_tasks'), 'PersonAffairTasks')
+          @subapp($('#person_affair_products'), 'PersonAffairProducts')
+          @subapp($('#person_affair_extras'), 'PersonAffairExtras')
+          @subapp($('#person_affair_subscriptions'), 'PersonAffairSubscriptions')
+          @subapp($('#person_affair_invoices'), 'PersonAffairInvoices')
+          @subapp($('#person_affair_receipts'), 'PersonAffairReceipts')
 
-        @subapp($('#person_salaries'), 'PersonSalaries')
-        @subapp($('#person_salary_items'), 'PersonSalaryItems')
-        @subapp($('#person_salary_tax_datas'), 'PersonSalaryTaxDatas')
+          @subapp($('#person_salaries'), 'PersonSalaries')
+          @subapp($('#person_salary_items'), 'PersonSalaryItems')
+          @subapp($('#person_salary_tax_datas'), 'PersonSalaryTaxDatas')
 
-      App.GenericTemplate.fetch()
+        App.GenericTemplate.fetch()
+
+      App.ApplicationSetting.fetch()
 
 class @Directory extends App
   constructor: (params) ->
@@ -163,19 +166,21 @@ class @Admin extends App
   constructor: (params) ->
     super
 
-    # required by receipts and invoices widgets
-    App.ApplicationSetting.fetch()
 
     @subapp($('#admin_private_tags'), 'AdminPrivateTags')
     @subapp($('#admin_public_tags'), 'AdminPublicTags')
 
-    App.GenericTemplate.one 'refresh', =>
-      @subapp($('#admin_affairs'), 'AdminAffairs')
-      @subapp($('#admin_subscriptions'), 'AdminSubscriptions')
-      @subapp($('#admin_invoices'), 'AdminInvoices')
-      @subapp($('#admin_receipts'), 'AdminReceipts')
+    App.ApplicationSetting.one 'refresh', =>
 
-    App.GenericTemplate.fetch()
+      App.GenericTemplate.one 'refresh', =>
+        @subapp($('#admin_affairs'), 'AdminAffairs')
+        @subapp($('#admin_subscriptions'), 'AdminSubscriptions')
+        @subapp($('#admin_invoices'), 'AdminInvoices')
+        @subapp($('#admin_receipts'), 'AdminReceipts')
+
+      App.GenericTemplate.fetch()
+
+    App.ApplicationSetting.fetch()
 
 
 class @Salaries extends App

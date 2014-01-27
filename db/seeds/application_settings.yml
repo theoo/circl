@@ -21,8 +21,6 @@
   value: '2222'
 - key: invoices_vat_code
   value: '1300'
-- key: invoices_vat_rate
-  value: '8'
 - key: receipts_prefix
   value: receipts
 - key: receipts_debit_account
@@ -31,8 +29,6 @@
   value: '4444'
 - key: receipts_vat_code
   value: '1300'
-- key: receipts_vat_rate
-  value: '8'
 - key: salaries_prefix
   value: salary
 - key: salaries_employee_deductions_prefix
@@ -41,11 +37,11 @@
   value: employer deductions
 - key: banana_accounting_headers_mapping
   value: '{"id": "id", "date": "Date", "title": "Title", "description": "Description", "value": "Amount", "value_currency": "AmountCurrency", "account": "AccountDebit", "counterpart_account": "AccountCredit", "vat_code": "VatCode", "vat_rate": "VatPercentNonDeductible", "person_id": "PersonID", "person_name": "PersonName", "document_type": "Document" }'
-- key: service_vat_perthousand
-  value: '80'
+- key: service_vat_rate
+  value: '8.0'
 - key: service_vat_number
   value: 'CHE-123.456.789 TVA'
-- key: use_service_vat
+- key: use_vat
   value: 'true'
 - key: default_currency
   value: 'CHF'

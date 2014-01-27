@@ -82,7 +82,7 @@ module Exporter
           :account                    => nil,
           :counterpart_account        => salary.net_account,
           :vat_code                   => @options[:salary_vat_code],
-          :vat_rate                   => @options[:salary_vat_rate],
+          :vat_rate                   => @options[:service_vat_rate],
           :person_id                  => salary.person.id,
           :person_name                => salary.person.name,
           :document_type              => :salary
@@ -101,7 +101,7 @@ module Exporter
             :account                    => salary.employer_account,
             :counterpart_account        => nil,
             :vat_code                   => @options[:salary_vat_code],
-            :vat_rate                   => @options[:salary_vat_rate],
+            :vat_rate                   => @options[:service_vat_rate],
             :person_id                  => salary.person.id,
             :person_name                => salary.person.name,
             :document_type              => :salary

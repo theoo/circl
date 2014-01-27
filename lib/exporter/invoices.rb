@@ -27,7 +27,7 @@ module Exporter
       options[:account]             ||= ApplicationSetting.value("invoices_credit_account")
       options[:counterpart_account] ||= ApplicationSetting.value("invoices_debit_account")
       options[:invoice_vat_code]    ||= ApplicationSetting.value("invoices_vat_code")
-      options[:invoice_vat_rate]    ||= ApplicationSetting.value("invoices_vat_rate")
+      options[:service_vat_rate]         ||= ApplicationSetting.value("service_vat_rate")
       options[:invoice_prefix]      ||= ApplicationSetting.value("invoices_prefix")
       @options = options
     end
@@ -55,7 +55,7 @@ module Exporter
         :account                    => @options[:account],
         :counterpart_account        => @options[:counterpart_account],
         :vat_code                   => @options[:invoice_vat_code],
-        :vat_rate                   => @options[:invoice_vat_rate],
+        :vat_rate                   => @options[:service_vat_rate],
         :person_id                  => invoice.owner.try(:id),
         :person_name                => invoice.owner.try(:name),
         :document_type              => :invoice

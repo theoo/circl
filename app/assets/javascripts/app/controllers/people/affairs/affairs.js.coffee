@@ -47,7 +47,7 @@ class New extends App.ExtendedController
     @affair.owner_id = @affair.buyer_id = @affair.receiver_id = @person.id
     @affair.owner_name = @affair.buyer_name = @affair.receiver_name = @person.name
 
-    @current_user = App.current_user()
+    @current_user = App.current_user
     @affair.seller_id = @current_user.id
     @affair.seller_name = @current_user.name
 

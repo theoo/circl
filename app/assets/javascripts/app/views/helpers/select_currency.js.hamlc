@@ -1,0 +1,13 @@
+%select{:name => @.name}
+  - if @.currency
+    - currency = @.currency
+  - else
+    - currency = App.ApplicationSetting.value('default_currency')
+
+  - for c in App.available_currencies
+    - if c == currency
+      %option{:value => c, :selected => true}
+        = c
+    - else
+      %option{:value => c}
+        = c

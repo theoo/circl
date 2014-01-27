@@ -16,8 +16,12 @@
           %b= extra.title
           %br
           = extra.description
-        %td= extra.value.to_view()
-        %td= extra.total_value.to_view()
+        %td
+          = extra.value.to_view()
+          = extra.value_currency
+        %td
+          = extra.total_value.to_view()
+          = extra.total_value_currency
 
 - if App.PersonAffairExtra.all().length > 0
   .panel-footer
