@@ -74,15 +74,14 @@ Number.prototype.to_view = (num)->
     # this defines currency precision - decimals
     num = @ unless num
 
-    # TODO load config from application settings
-    thousands_separator = "'"
-    decimal_mark = "."
-    with_currency = false
-    precision = 2
+    defaults = JSON.parse App.ApplicationSetting.value("default_currency_details")
+    thousands_separator = defaults.separator
+    decimal_mark = defaults.delimiter
+    precision = (defaults.subunit_to_unit + "").match(/0+/)[0].length
 
     money = num.toFixed(precision)
 
-    # ensure this computation is usefull
+    # Format money corresponding to currency configuration
     if num >= 1000
       # split the fixed in two
       a = String(money).match(/^(\d+)(.\d{2})$/)

@@ -25,6 +25,10 @@ class Settings::ApplicationSettingsController < ApplicationController
   monitor_changes :@application_setting
 
   def index
+    default_currency = ApplicationSetting.value("default_currency")
+    h = { :key => 'default_currency_details', :value => Currency.where(:iso_code => default_currency).first.attributes.to_json }
+    @application_settings << h
+
     respond_to do |format|
       format.json { render :json => @application_settings }
     end

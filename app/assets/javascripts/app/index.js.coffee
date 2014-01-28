@@ -166,7 +166,6 @@ class @Admin extends App
   constructor: (params) ->
     super
 
-
     @subapp($('#admin_private_tags'), 'AdminPrivateTags')
     @subapp($('#admin_public_tags'), 'AdminPublicTags')
 
@@ -195,25 +194,28 @@ class @Settings extends App
   constructor: (params) ->
     super
 
-    @subapp($('#settings_locations'), 'SettingsLocations')
-    @subapp($('#settings_languages'), 'SettingsLanguages')
-    @subapp($('#settings_jobs'), 'SettingsJobs')
+    App.ApplicationSetting.one 'refresh', =>
+      @subapp($('#settings_locations'), 'SettingsLocations')
+      @subapp($('#settings_languages'), 'SettingsLanguages')
+      @subapp($('#settings_jobs'), 'SettingsJobs')
 
-    @subapp($('#settings_invoice_templates'), 'SettingsInvoiceTemplates')
-    @subapp($('#settings_generic_templates'), 'SettingsGenericTemplates')
+      @subapp($('#settings_invoice_templates'), 'SettingsInvoiceTemplates')
+      @subapp($('#settings_generic_templates'), 'SettingsGenericTemplates')
 
-    @subapp($('#settings_search_attributes'), 'SettingsSearchAttributes')
-    @subapp($('#settings_ldap_attributes'), 'SettingsLdapAttributes')
-    @subapp($('#settings_roles'), 'SettingsRoles')
-    @subapp($('#settings_role_permissions'), 'SettingsRolePermissions')
+      @subapp($('#settings_search_attributes'), 'SettingsSearchAttributes')
+      @subapp($('#settings_ldap_attributes'), 'SettingsLdapAttributes')
+      @subapp($('#settings_roles'), 'SettingsRoles')
+      @subapp($('#settings_role_permissions'), 'SettingsRolePermissions')
 
-    @subapp($('#settings_task_types'), 'SettingsTaskTypes')
-    @subapp($('#settings_task_rates'), 'SettingsTaskRates')
+      @subapp($('#settings_task_types'), 'SettingsTaskTypes')
+      @subapp($('#settings_task_rates'), 'SettingsTaskRates')
 
-    @subapp($('#settings_products'), 'SettingsProducts')
-    @subapp($('#settings_product_programs'), 'SettingsProductPrograms')
+      @subapp($('#settings_products'), 'SettingsProducts')
+      @subapp($('#settings_product_programs'), 'SettingsProductPrograms')
 
-    @subapp($('#settings_currencies'), 'SettingsCurrencies')
-    @subapp($('#settings_currency_rates'), 'SettingsCurrencyRates')
+      @subapp($('#settings_currencies'), 'SettingsCurrencies')
+      @subapp($('#settings_currency_rates'), 'SettingsCurrencyRates')
 
-    @subapp($('#settings_application_settings'), 'SettingsApplicationSettings')
+      @subapp($('#settings_application_settings'), 'SettingsApplicationSettings')
+
+    App.ApplicationSetting.fetch()

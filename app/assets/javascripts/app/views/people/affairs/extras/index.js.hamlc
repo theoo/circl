@@ -21,7 +21,7 @@
           = extra.value_currency
         %td
           = extra.total_value.to_view()
-          = extra.total_value_currency
+          = extra.value_currency
 
 - if App.PersonAffairExtra.all().length > 0
   .panel-footer

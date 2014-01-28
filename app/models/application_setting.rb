@@ -82,6 +82,15 @@ class ApplicationSetting < ActiveRecord::Base
     :default_locale]
   end
 
+  # attributes overridden - JSON API
+  def as_json(options = nil)
+    h = super(options)
+
+    h[:errors] = errors
+
+    h
+  end
+
   protected
 
   def ensure_key_is_unchanged

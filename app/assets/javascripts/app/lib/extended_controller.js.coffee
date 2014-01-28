@@ -278,8 +278,8 @@ class App.ExtendedController extends Spine.Controller
     $(@el).closest(".panel").removeClass 'panel-disabled'
 
   # money
-  adjust_vat: (e) ->
-    e.preventDefault()
-    val = @el.find('#person_affair_extra_value').val()
-    vat = parseFloat(val) / 100.0 * parseFloat(App.ApplicationSetting.value("service_vat_rate"))
-    @el.find('#person_affair_extra_vat').val(vat.to_view())
+  update_vat: (ids_prefix) ->
+    val = @el.find("#" + ids_prefix + 'value').val()
+    rate = @el.find("#" + ids_prefix + 'vat_percentage').val()
+    vat = parseFloat(val) / 100.0 * parseFloat(rate)
+    @el.find("#" + ids_prefix + 'vat').val(vat.toFixed(2))
