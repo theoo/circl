@@ -129,7 +129,6 @@
         %small.help-block
           - if @task.value != @task.computed_value
             = I18n.t("task.notices.computed_value_is", {value: @task.computed_value.to_view()})
-            CHF
           - else
             = I18n.t("task.notices.the_value_is_automaticaly_computed")
 

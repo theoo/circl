@@ -224,7 +224,11 @@ Directory::Application.routes.draw do
       end
     end
 
-    resources :currency_rates
+    resources :currency_rates do
+      collection do
+        get 'exchange'
+      end
+    end
 
     resources :generic_templates do
       collection do

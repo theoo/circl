@@ -32,6 +32,11 @@ class New extends App.ExtendedController
 
   constructor: (params) ->
     super
+
+    @setup_vat
+      ids_prefix: 'person_affair_invoice_'
+      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
+
     PersonAffair.bind('refresh', @active)
     PersonAffairInvoice.bind('refresh', @active)
     InvoiceTemplate.bind('refresh', @active)
@@ -77,11 +82,15 @@ class Edit extends App.ExtendedController
     'submit form': 'submit'
     'click a[name="invoice-download-pdf"]': 'pdf'
     'click a[name="invoice-preview-pdf"]': 'preview'
-    'click button[name="invoice-destroy"]': 'destroy'
-    'click button[name="invoice-add-receipt"]': 'add_receipt'
+    'click a[name="invoice-destroy"]': 'destroy'
+    'click a[name="invoice-add-receipt"]': 'add_receipt'
 
   constructor: (params) ->
     super
+
+    @setup_vat
+      ids_prefix: 'person_affair_invoice_'
+      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
 
   active: (params) ->
     @can = params.can if params.can

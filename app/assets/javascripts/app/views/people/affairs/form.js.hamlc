@@ -1,5 +1,5 @@
-.panel-body
-  %form
+%form
+  .panel-body
     .row
       .col-lg-12
         .validation_errors_placeholder
@@ -110,6 +110,47 @@
                  :value => @affair.seller_id}
       .col-sm-6
 
+    - unless @affair.isNew?()
+      .row
+        .col-sm-6
+          .list-group
+            - if @affair.subscriptions_count > 0
+              %a{:href => '#person_affair_subscriptions', :class => 'list-group-item'}
+                .badge= @affair.subscriptions_count
+                = I18n.t('affair.views.subscriptions') + " :"
+                = @affair.subscriptions_value.to_view()
+
+            - if @affair.tasks_count > 0
+              %a{:href => '#person_affair_tasks', :class => 'list-group-item'}
+                .badge= @affair.tasks_count
+                = I18n.t('affair.views.tasks') + " :"
+                = @affair.tasks_value.to_view()
+
+            - if @affair.products_count > 0
+              %a{:href => '#person_affair_products', :class => 'list-group-item'}
+                .badge= @affair.products_count
+                = I18n.t('affair.views.products') + " :"
+                = @affair.products_value.to_view()
+
+            - if @affair.extras_count > 0
+              %a{:href => '#person_affair_extras', :class => 'list-group-item'}
+                .badge= @affair.extras_count
+                = I18n.t('affair.views.extras') + " :"
+                = @affair.extras_value.to_view()
+
+        .col-sm-6
+          .list-group
+            %a{:href => '#balance', :class => 'list-group-item'}
+              .badge= @affair.invoices_count
+              = I18n.t('affair.views.invoices') + " :"
+              = @affair.invoices_value.to_view()
+
+            %a{:href => '#balance', :class => 'list-group-item'}
+              .badge= @affair.receipts_count
+              = I18n.t('affair.views.receipts') + " :"
+              = @affair.receipts_value.to_view()
+
+  .panel-body
     .row
       .col-sm-12
         - if parseInt(@person_id) == parseInt(@affair.owner_id) or @affair.isNew?()
@@ -131,19 +172,4 @@
               = I18n.t('affair.views.actions.show_owner')
 
 
-    .row
-      .col-sm-12
-        - unless @affair.isNew?()
-          %br
-          .btn-group
-            %a{:class => 'btn btn-default', :disabled => true}
-              .icon-link
-            %a{:class => 'btn btn-default', :href => '#balance'}
-              = I18n.t('admin.views.finances')
-
-            %a{:class => 'btn btn-default', :href => '#person_affair_products'}
-              = I18n.t('affair.views.products')
-
-            %a{:class => 'btn btn-default', :href => '#person_affair_extras'}
-              = I18n.t('affair.views.extras')
 

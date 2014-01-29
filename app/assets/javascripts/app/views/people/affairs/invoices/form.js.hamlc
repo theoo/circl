@@ -2,11 +2,11 @@
   .panel-body
     %form
       .row
-        .col-lg-12
+        .col-sm-12
           .validation_errors_placeholder
 
       .row
-        .col-lg-8
+        .col-sm-8
           .form-group
             %label{:for => 'person_affair_invoice_title'}
               = I18n.t('common.title')
@@ -16,7 +16,7 @@
                    :class => 'required form-control',
                    :value => @invoice.title}
 
-        .col-lg-4
+        .col-sm-4
           .form-group
             %label{:for => 'person_affair_invoice_template_id'}
               = I18n.t('common.template')
@@ -29,7 +29,7 @@
                 - else
                   %option{:value => l.id}= l.title
       .row
-        .col-lg-12
+        .col-sm-12
           .form-group
             %label{:for => 'person_affair_invoice_description'}
               = I18n.t('common.description')
@@ -39,7 +39,7 @@
                       :class => 'form-control'}
               = @invoice.description
       .row
-        .col-lg-7
+        .col-sm-7
           .form-group
             %label{:for => 'person_affair_invoice_printed_address'}= I18n.t('invoice.views.printed_address')
             %textarea{:name => 'printed_address',
@@ -47,21 +47,16 @@
                       :rows => 5,
                       :class => 'form-control'}
               = @invoice.printed_address
-            .help-block
-              = I18n.t("invoice.views.wipe_content_to_update_address")
-              .label.label-info
-                = I18n.t("common.info")
 
-        .col-lg-5
-          .form-group
-            %label{:for => 'person_affair_invoice_created_at'}
-              = I18n.t('invoice.views.invoice_date')
-            %input{:type => 'text',
-                   :name => 'created_at',
-                   :id => 'person_affair_invoice_created_at',
-                   :class => 'datepicker required form-control',
-                   :value => @invoice.created_at }
+        .col-sm-5
+          %br
+          %small.help-block
+            = I18n.t("invoice.views.wipe_content_to_update_address")
+            .label.label-info
+              = I18n.t("common.info")
 
+      .row
+        .col-sm-6
           .form-group
             %label{:for => 'person_affair_invoice_value'}
               = I18n.t('common.value')
@@ -75,29 +70,42 @@
                       :name => 'value',
                       :value => @invoice.value }
               .input-group-addon
-                CHF
+                != @partial('select_currency')(currency: @invoice.value_currency, name: 'value_currency')
+
+        .col-sm-6
+          .form-group
+            %label{:for => 'person_affair_invoice_created_at'}
+              = I18n.t('invoice.views.invoice_date')
+            %input{:type => 'text',
+                   :name => 'created_at',
+                   :id => 'person_affair_invoice_created_at',
+                   :class => 'datepicker required form-control',
+                   :value => @invoice.created_at }
+
+      - if App.ApplicationSetting.value('use_vat') == "true"
+        != @partial('edit_vat')(object: @invoice, prefix: @ids_prefix)
 
       .row
-        .col-lg-12
+        .col-sm-12
           .pull-right
             != @partial('submit_button')(@invoice)
 
           - unless @invoice.isNew()
             .btn-group
-              %button{:name => "invoice-destroy",
-                      :class => 'btn btn-danger' }
+              %a{ :name => "invoice-destroy",
+                  :class => 'btn btn-danger' }
                 .icon-remove
                 = I18n.t('common.destroy')
 
-              %button{:name => "invoice-add-receipt",
+              %a{:name => "invoice-add-receipt",
                       :class => 'btn btn-default' }
                 .icon-plus
                 = I18n.t('invoice.views.actions.add_receipt')
 
               .btn-group
-                %button{:data-toggle => 'dropdown',
-                        :type => 'button',
-                        :class => 'btn btn-default dropdown-toggle' }
+                %a{ :data-toggle => 'dropdown',
+                    :type => 'button',
+                    :class => 'btn btn-default dropdown-toggle' }
                   .icon-paper-clip
                   = I18n.t('common.pdf')
                   .caret

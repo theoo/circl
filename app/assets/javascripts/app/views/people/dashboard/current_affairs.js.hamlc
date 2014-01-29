@@ -23,38 +23,32 @@
             %br
             .badge= affair.subscriptions_count
             = I18n.t('affair.views.subscriptions') + " :"
-            = affair.subscriptions_value
-            = affair.value_currency
+            = affair.subscriptions_value.to_view()
 
           - if affair.tasks_count > 0
             %br
             .badge= affair.tasks_count
             = I18n.t('affair.views.tasks') + " :"
-            = affair.tasks_value
-            = affair.value_currency
+            = affair.tasks_value.to_view()
 
           - if affair.products_count > 0
             %br
             .badge= affair.products_count
             = I18n.t('affair.views.products') + " :"
-            = affair.products_value
-            = affair.value_currency
+            = affair.products_value.to_view()
 
           - if affair.extras_count > 0
             %br
             .badge= affair.extras_count
             = I18n.t('affair.views.extras') + " :"
-            = affair.extras_count
-            = affair.value_currency
+            = affair.extras_value.to_view()
 
           %br
           .badge= affair.invoices_count
           = I18n.t('affair.views.invoices') + " :"
-          = affair.invoices_value
-          = affair.value_currency
+          = affair.invoices_value.to_view()
 
           %br
           .badge= affair.receipts_count
           = I18n.t('affair.views.receipts') + " :"
-          = affair.receipts_value
-          = affair.value_currency
+          = affair.receipts_value.to_view()

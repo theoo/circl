@@ -71,7 +71,8 @@ class People::Affairs::InvoicesController < ApplicationController
   end
 
   def create
-    @invoice.value = params[:value]
+    @invoice.value = Money.new(params[:value].to_f * 100, params[:value_currency])
+    @invoice.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @invoice.save
         format.json { render :json => @invoice }
@@ -88,7 +89,8 @@ class People::Affairs::InvoicesController < ApplicationController
   end
 
   def update
-    @invoice.value = params[:value]
+    @invoice.value = Money.new(params[:value].to_f * 100, params[:value_currency])
+    @invoice.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @invoice.update_attributes(params[:invoice])
         format.json { render :json => @invoice }

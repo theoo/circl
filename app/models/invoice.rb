@@ -355,7 +355,8 @@ class Invoice < ActiveRecord::Base
     h[:affair_title]   = affair.try(:title)
 
     h[:value]          = value.try(:to_f)
-    h[:created_at]     = created_at.to_date # FIXME: do a migration
+    h[:vat]            = vat.try(:to_f)
+    h[:created_at]     = created_at.to_date
     h[:age]            = helper.distance_of_time_in_words_to_now(created_at)
 
     h[:receipts_value] = receipts_value.try(:to_f)

@@ -16,7 +16,8 @@
 
 class App.PersonAffairReceipt extends Spine.Model
 
-  @configure 'PersonAffairReceipt', 'invoice_id', 'invoice_title', 'invoice_pool_title', 'means_of_payment', 'value', 'value_date', 'created_at'
+  @configure 'PersonAffairReceipt', 'invoice_id', 'means_of_payment',
+    'value', 'value_currency', 'value_date', 'created_at'
 
   @extend Spine.Model.Ajax
 

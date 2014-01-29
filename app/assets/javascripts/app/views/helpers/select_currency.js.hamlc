@@ -1,4 +1,4 @@
-%select{:name => @.name}
+%select{:name => @.name, :class => 'currency_selector'}
   - if @.currency
     - currency = @.currency
   - else
@@ -11,3 +11,5 @@
     - else
       %option{:value => c}
         = c
+
+%input{:type => 'hidden', :name => 'current_currency', :value => currency}

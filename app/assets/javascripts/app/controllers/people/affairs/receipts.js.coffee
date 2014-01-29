@@ -69,13 +69,13 @@ class New extends App.ExtendedController
   submit: (e) ->
     e.preventDefault()
 
-    # reset invoice so next receipt if empty
+    # reset invoice so next receipt is empty
     @invoice = undefined
 
     @save_with_notifications @receipt.fromForm(e.target), =>
+      @render()
       PersonAffair.fetch()
       PersonAffairInvoice.fetch()
-      @render()
 
 class Edit extends App.ExtendedController
   events:
@@ -101,9 +101,9 @@ class Edit extends App.ExtendedController
     @html @view('people/affairs/receipts/form')(@)
 
   update_callback: =>
+    @hide()
     PersonAffair.fetch()
     PersonAffairInvoice.fetch()
-    @hide()
 
   submit: (e) ->
     e.preventDefault()
@@ -193,11 +193,11 @@ class App.PersonAffairReceipts extends Spine.Controller
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
 
-    @index.bind 'error', (id, errors) =>
+    @edit.bind 'error', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 
-    @index.bind 'destroyError', (id, errors) =>
+    @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
 

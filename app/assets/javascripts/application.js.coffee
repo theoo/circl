@@ -33,8 +33,6 @@
 
 $ = jQuery
 
-Ui.initialize_ui()
-
 ##################
 ### PROTOTYPING ##
 ##################

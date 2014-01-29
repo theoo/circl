@@ -79,4 +79,13 @@ class Settings::CurrencyRatesController < ApplicationController
     end
   end
 
+  def exchange
+    m = Money.new(params[:current_value].to_f * 100, params[:current_currency])
+    target_value = m.exchange_to(params[:target_currency])
+
+    respond_to do |format|
+      format.json { render :json => {:target_value => target_value.to_view} }
+    end
+  end
+
 end

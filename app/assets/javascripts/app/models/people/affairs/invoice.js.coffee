@@ -17,9 +17,9 @@
 class App.PersonAffairInvoice extends Spine.Model
 
   @configure 'PersonAffairInvoice', 'invoice_template_id', 'affair_id',
-             'affair_title', 'title', 'description', 'printed_address', 'value', 'cancelled',
-             'owner_id', 'buyer_id', 'receiver_id', 'owner_name', 'buyer_name', 'receiver_name',
-             'offered', 'receipts_value', 'balance_value', 'created_at'
+             'title', 'description', 'printed_address', 'value', 'cancelled',
+             'offered', 'created_at', 'value_currency', 'vat', 'vat_currency',
+             'vat_percentage'
 
   @extend Spine.Model.Ajax
 
