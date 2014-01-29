@@ -11,7 +11,7 @@ class ValueAddedTax < ActiveRecord::Migration
     add_index :extras, :vat_in_cents
 
     add_column :product_variants, :vat_in_cents, :integer, :null => false, :default => 0
-    add_column :product_variants, :vat_currency, :string
+    add_column :product_variants, :vat_currency, :null => false, :default => 'CHF'
     add_column :product_variants, :vat_percentage, :integer
     add_index :product_variants, :vat_in_cents
 

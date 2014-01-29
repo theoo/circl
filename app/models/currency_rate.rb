@@ -36,6 +36,7 @@ class CurrencyRate < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
+  before_destroy :ensure_no_currency_depend_on_it
   belongs_to :from_currency, :class_name => 'Currency'
   belongs_to :to_currency, :class_name => 'Currency'
 
@@ -55,8 +56,8 @@ class CurrencyRate < ActiveRecord::Base
   def as_json(options = nil)
     h = super(options)
 
-    h[:from_currency_iso_code] = from_currency.iso_code
-    h[:to_currency_iso_code] = to_currency.iso_code
+    h[:from_currency_iso_code] = from_currency.try(:iso_code)
+    h[:to_currency_iso_code] = to_currency.try(:iso_code)
     h[:errors] = errors
 
     h
@@ -68,5 +69,12 @@ class CurrencyRate < ActiveRecord::Base
 
   private
 
+  def ensure_no_currency_depend_on_it
+    if from_currency and to_currency
+      errors.add(:base,
+        I18n.t('currency.errors.unable_to_destroy_a_rate_which_is_used'))
+      false
+    end
+  end
 
 end

@@ -20,53 +20,15 @@ $.fn.extra = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
 
-class VatController extends App.ExtendedController
-
-  constructor: ->
-    super
-    @ids_prefix = 'person_affair_extra_'
-
-  highlight_vat: (e) =>
-    e.preventDefault() if e
-    if @compare_vat()
-      @el.find("#" + @ids_prefix + 'vat')
-        .closest('.form-group')
-        .removeClass('has-warning')
-    else
-      @el.find("#" + @ids_prefix + 'vat')
-        .closest('.form-group')
-        .addClass('has-warning')
-
-  adjust_vat: (e) =>
-    e.preventDefault() if e
-    @update_vat()
-    @highlight_vat()
-
-  compute_vat: () =>
-    val = @el.find("#" + @ids_prefix + 'value').val()
-    rate = @el.find("#" + @ids_prefix + 'vat_percentage').val()
-    parseFloat((parseFloat(val) / 100.0 * parseFloat(rate)).toFixed(2))
-
-  compare_vat: () =>
-    vat = @compute_vat()
-    parseFloat(@el.find("#" + @ids_prefix + 'vat').val()) == vat
-
-  update_vat: () =>
-    vat = @compute_vat()
-    @el.find("#" + @ids_prefix + 'vat').val(vat)
-
-
-class New extends VatController
+class New extends App.ExtendedController
   events:
     'submit form': 'submit'
 
   constructor: ->
     super
-    if App.ApplicationSetting.value('use_vat') == "true"
-      @el.on 'click', 'a[name=person-affair-extra-adjust-vat]', @adjust_vat
-      @el.on 'keyup', '#person_affair_extra_value', @adjust_vat
-      @el.on 'keyup', '#person_affair_extra_vat', @highlight_vat
-      @el.on 'keyup', '#person_affair_extra_vat_percentage', @highlight_vat
+    @setup_vat
+      ids_prefix: 'person_affair_extra_'
+      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
 
   active: (params) =>
     if params
@@ -89,17 +51,16 @@ class New extends VatController
     e.preventDefault()
     @save_with_notifications @extra.fromForm(e.target), @render
 
-class Edit extends VatController
+class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click a[name=person-affair-extra-destroy]': 'destroy'
 
   constructor: ->
     super
-    if App.ApplicationSetting.value('use_vat') == "true"
-      @el.on 'click', 'a[name=person-affair-extra-adjust-vat]', @adjust_vat
-      @el.on 'keyup', '#person_affair_extra_value', @adjust_vat
-      @el.on 'keyup', '#person_affair_extra_vat', @highlight_vat
-      @el.on 'keyup', '#person_affair_extra_vat_percentage', @highlight_vat
+    @setup_vat
+      ids_prefix: 'person_affair_extra_'
+      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
 
   active: (params) =>
     @can = params.can if params.can

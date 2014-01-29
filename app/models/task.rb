@@ -125,10 +125,13 @@ class Task < ActiveRecord::Base
 
   def compute_value
     if task_type.ratio
-      owner.task_rate.value * duration_in_hours * task_type.ratio
+      value = owner.task_rate.value * duration_in_hours * task_type.ratio
     else
-      task_type.value * duration_in_hours
+      value = task_type.value * duration_in_hours
     end
+
+    # task type may be another currency than task
+    value.exchange_to(value_currency)
   end
 
   # Proxy, mostly used for placeholders substitutions

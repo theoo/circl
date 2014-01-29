@@ -67,7 +67,7 @@ class People::Affairs::ExtrasController < ApplicationController
 
   def create
     @extra.value = Money.new(params[:value].to_f * 100, params[:value_currency])
-    @extra.vat = Money.new(params[:vat].to_f * 100, params[:vat_currency])
+    @extra.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @extra.save
         format.json { render :json => @extra }
@@ -85,7 +85,7 @@ class People::Affairs::ExtrasController < ApplicationController
 
   def update
     @extra.value = Money.new(params[:value].to_f * 100, params[:value_currency])
-    @extra.vat = Money.new(params[:vat].to_f * 100, params[:vat_currency])
+    @extra.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @extra.update_attributes(params[:extra])
         format.json { render :json => @extra }

@@ -79,7 +79,10 @@ class ApplicationSetting < ActiveRecord::Base
     :receipts_prefix,
     :receipts_debit_account,
     :receipts_credit_account,
-    :default_locale]
+    :default_locale,
+    :me,
+    :default_currency,
+    :use_vat]
   end
 
   # attributes overridden - JSON API

@@ -69,7 +69,6 @@ class People::Affairs::TasksController < ApplicationController
     authorize! :create, ::Task
 
     @task = ::Task.new(params[:task])
-
     override_posted_values
 
     respond_to do |format|
@@ -92,7 +91,7 @@ class People::Affairs::TasksController < ApplicationController
     authorize! :update, ::Task
 
     @task = ::Task.find(params[:id])
-    @task.value = params[:value]
+    override_posted_values
 
     respond_to do |format|
       if @task.update_attributes(params[:task])
@@ -122,7 +121,7 @@ class People::Affairs::TasksController < ApplicationController
   def override_posted_values
     @task.affair_id = params[:affair_id]
     @task.executer_id = current_person.id
-    @task.value = params[:value] if params[:value]
+    @task.value = Money.new(params[:value].to_f * 100, params[:value_currency])
   end
 
 end

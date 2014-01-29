@@ -277,9 +277,41 @@ class App.ExtendedController extends Spine.Controller
 
     $(@el).closest(".panel").removeClass 'panel-disabled'
 
-  # money
-  update_vat: (ids_prefix) ->
-    val = @el.find("#" + ids_prefix + 'value').val()
-    rate = @el.find("#" + ids_prefix + 'vat_percentage').val()
-    vat = parseFloat(val) / 100.0 * parseFloat(rate)
-    @el.find("#" + ids_prefix + 'vat').val(vat.toFixed(2))
+  # Money - VAT
+  setup_vat: (params) =>
+    @ids_prefix = params.ids_prefix
+
+    if params.bind_events
+      @el.on 'click', "a[name=#{@ids_prefix}adjust-vat]", @adjust_vat
+      @el.on 'keyup', "\##{@ids_prefix}value", @adjust_vat
+      @el.on 'keyup', "\##{@ids_prefix}vat", @highlight_vat
+      @el.on 'keyup', "\##{@ids_prefix}vat_percentage", @highlight_vat
+
+  highlight_vat: (e) =>
+    e.preventDefault() if e
+    if @compare_vat()
+      @el.find("#" + @ids_prefix + 'vat')
+        .closest('.form-group')
+        .removeClass('has-warning')
+    else
+      @el.find("#" + @ids_prefix + 'vat')
+        .closest('.form-group')
+        .addClass('has-warning')
+
+  adjust_vat: (e) =>
+    e.preventDefault() if e
+    @update_vat()
+    @highlight_vat()
+
+  compute_vat: () =>
+    val = @el.find("#" + @ids_prefix + 'value').val()
+    rate = @el.find("#" + @ids_prefix + 'vat_percentage').val()
+    parseFloat((parseFloat(val) / 100.0 * parseFloat(rate)).toFixed(2))
+
+  compare_vat: () =>
+    vat = @compute_vat()
+    parseFloat(@el.find("#" + @ids_prefix + 'vat').val()) == vat
+
+  update_vat: () =>
+    vat = @compute_vat()
+    @el.find("#" + @ids_prefix + 'vat').val(vat)

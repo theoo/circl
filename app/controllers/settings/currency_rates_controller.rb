@@ -39,6 +39,7 @@ class Settings::CurrencyRatesController < ApplicationController
   def create
     respond_to do |format|
       if @currency_rate.save
+        Money.default_bank.update_rates
         format.json do
           render :json => @currency_rate
         end
@@ -57,6 +58,7 @@ class Settings::CurrencyRatesController < ApplicationController
   def update
     respond_to do |format|
       if @currency_rate.update_attributes(params[:currency_rate])
+        Money.default_bank.update_rates
         format.json do
           render :json => @currency_rate
         end
@@ -69,6 +71,7 @@ class Settings::CurrencyRatesController < ApplicationController
   def destroy
     respond_to do |format|
       if @currency_rate.destroy
+        Money.default_bank.update_rates
         format.json { render :json => {} }
       else
         format.json { render :json => @currency_rate.errors, :status => :unprocessable_entity }

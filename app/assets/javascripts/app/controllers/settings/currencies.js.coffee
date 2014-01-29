@@ -36,7 +36,9 @@ class New extends App.ExtendedController
     e.preventDefault()
     data = $(e.target).serializeObject()
     @currency.load(data)
-    @save_with_notifications @currency, @render
+    @save_with_notifications @currency, =>
+      @render()
+      App.CurrencyRate.fetch()
 
 class Edit extends App.ExtendedController
   events:
@@ -61,12 +63,17 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     data = $(e.target).serializeObject()
     @currency.load(data)
-    @save_with_notifications @currency, @hide
+    @save_with_notifications @currency, =>
+      @hide()
+      App.CurrencyRate.fetch()
 
   destroy: (e) ->
     e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications @currency, @hide
+      @destroy_with_notifications @currency, =>
+        @hide()
+        App.CurrencyRate.refresh([], clear: true)
+        App.CurrencyRate.fetch()
 
 class Index extends App.ExtendedController
   events:

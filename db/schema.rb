@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140121131809) do
+ActiveRecord::Schema.define(:version => 20140129134904) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -609,6 +609,7 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
     t.string   "cert_others_title",                                        :default => "",    :null => false
     t.text     "cert_notes",                                               :default => "",    :null => false
     t.string   "employer_account",                                         :default => ""
+    t.string   "yearly_salary_currency",                                   :default => "CHF", :null => false
   end
 
   add_index "salaries", ["is_reference"], :name => "index_salaries_on_is_template"
@@ -618,13 +619,14 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
 
   create_table "salaries_items", :force => true do |t|
     t.integer  "parent_id"
-    t.integer  "salary_id",                   :null => false
-    t.integer  "position",                    :null => false
-    t.string   "title",                       :null => false
-    t.integer  "value_in_cents", :limit => 8, :null => false
+    t.integer  "salary_id",                                      :null => false
+    t.integer  "position",                                       :null => false
+    t.string   "title",                                          :null => false
+    t.integer  "value_in_cents", :limit => 8,                    :null => false
     t.string   "category"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "value_currency",              :default => "CHF", :null => false
   end
 
   add_index "salaries_items", ["salary_id"], :name => "index_salaries_items_on_salary_id"
@@ -638,17 +640,19 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
   add_index "salaries_items_taxes", ["tax_id"], :name => "index_salaries_items_taxes_on_tax_id"
 
   create_table "salaries_tax_data", :force => true do |t|
-    t.integer  "salary_id",                                                          :null => false
-    t.integer  "tax_id",                                                             :null => false
-    t.integer  "position",                                                           :null => false
-    t.integer  "employer_value_in_cents", :limit => 8,                               :null => false
-    t.decimal  "employer_percent",                     :precision => 6, :scale => 3, :null => false
-    t.boolean  "employer_use_percent",                                               :null => false
-    t.integer  "employee_value_in_cents", :limit => 8,                               :null => false
-    t.decimal  "employee_percent",                     :precision => 6, :scale => 3, :null => false
-    t.boolean  "employee_use_percent",                                               :null => false
+    t.integer  "salary_id",                                                                             :null => false
+    t.integer  "tax_id",                                                                                :null => false
+    t.integer  "position",                                                                              :null => false
+    t.integer  "employer_value_in_cents", :limit => 8,                                                  :null => false
+    t.decimal  "employer_percent",                     :precision => 6, :scale => 3,                    :null => false
+    t.boolean  "employer_use_percent",                                                                  :null => false
+    t.integer  "employee_value_in_cents", :limit => 8,                                                  :null => false
+    t.decimal  "employee_percent",                     :precision => 6, :scale => 3,                    :null => false
+    t.boolean  "employee_use_percent",                                                                  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "employee_value_currency",                                            :default => "CHF", :null => false
+    t.string   "employer_value_currency",                                            :default => "CHF", :null => false
   end
 
   add_index "salaries_tax_data", ["salary_id"], :name => "index_salaries_tax_data_on_salary_id"
@@ -687,32 +691,36 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
   add_index "salaries_taxes_age", ["year"], :name => "index_salaries_taxes_age_on_year"
 
   create_table "salaries_taxes_generic", :force => true do |t|
-    t.integer  "tax_id",                                                             :null => false
-    t.integer  "year",                                                               :null => false
+    t.integer  "tax_id",                                                                                :null => false
+    t.integer  "year",                                                                                  :null => false
     t.integer  "salary_from_in_cents",    :limit => 8
     t.integer  "salary_to_in_cents",      :limit => 8
-    t.integer  "employer_value_in_cents", :limit => 8,                               :null => false
-    t.decimal  "employer_percent",                     :precision => 6, :scale => 3, :null => false
-    t.boolean  "employer_use_percent",                                               :null => false
-    t.integer  "employee_value_in_cents", :limit => 8,                               :null => false
-    t.decimal  "employee_percent",                     :precision => 6, :scale => 3, :null => false
-    t.boolean  "employee_use_percent",                                               :null => false
+    t.integer  "employer_value_in_cents", :limit => 8,                                                  :null => false
+    t.decimal  "employer_percent",                     :precision => 6, :scale => 3,                    :null => false
+    t.boolean  "employer_use_percent",                                                                  :null => false
+    t.integer  "employee_value_in_cents", :limit => 8,                                                  :null => false
+    t.decimal  "employee_percent",                     :precision => 6, :scale => 3,                    :null => false
+    t.boolean  "employee_use_percent",                                                                  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "salary_from_currency",                                               :default => "CHF", :null => false
+    t.string   "salary_to_currency",                                                 :default => "CHF", :null => false
+    t.string   "employer_value_currency",                                            :default => "CHF", :null => false
+    t.string   "employee_value_currency",                                            :default => "CHF", :null => false
   end
 
   add_index "salaries_taxes_generic", ["tax_id"], :name => "index_salaries_taxes_generic_on_tax_id"
   add_index "salaries_taxes_generic", ["year"], :name => "index_salaries_taxes_generic_on_year"
 
   create_table "salaries_taxes_is", :force => true do |t|
-    t.integer  "tax_id",                                                           :null => false
-    t.integer  "year",                                                             :null => false
-    t.integer  "yearly_from_in_cents",  :limit => 8,                               :null => false
-    t.integer  "yearly_to_in_cents",    :limit => 8,                               :null => false
-    t.integer  "monthly_from_in_cents", :limit => 8,                               :null => false
-    t.integer  "monthly_to_in_cents",   :limit => 8,                               :null => false
-    t.integer  "hourly_from_in_cents",  :limit => 8,                               :null => false
-    t.integer  "hourly_to_in_cents",    :limit => 8,                               :null => false
+    t.integer  "tax_id",                                                                              :null => false
+    t.integer  "year",                                                                                :null => false
+    t.integer  "yearly_from_in_cents",  :limit => 8,                                                  :null => false
+    t.integer  "yearly_to_in_cents",    :limit => 8,                                                  :null => false
+    t.integer  "monthly_from_in_cents", :limit => 8,                                                  :null => false
+    t.integer  "monthly_to_in_cents",   :limit => 8,                                                  :null => false
+    t.integer  "hourly_from_in_cents",  :limit => 8,                                                  :null => false
+    t.integer  "hourly_to_in_cents",    :limit => 8,                                                  :null => false
     t.decimal  "percent_alone",                      :precision => 7, :scale => 2
     t.decimal  "percent_married",                    :precision => 7, :scale => 2
     t.decimal  "percent_children_1",                 :precision => 7, :scale => 2
@@ -722,6 +730,12 @@ ActiveRecord::Schema.define(:version => 20140121131809) do
     t.decimal  "percent_children_5",                 :precision => 7, :scale => 2
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "yearly_from_currency",                                             :default => "CHF", :null => false
+    t.string   "yearly_to_currency",                                               :default => "CHF", :null => false
+    t.string   "monthly_from_currency",                                            :default => "CHF", :null => false
+    t.string   "monthly_to_currency",                                              :default => "CHF", :null => false
+    t.string   "hourly_from_currency",                                             :default => "CHF", :null => false
+    t.string   "hourly_to_currency",                                               :default => "CHF", :null => false
   end
 
   add_index "salaries_taxes_is", ["tax_id"], :name => "index_salaries_taxes_is_on_tax_id"

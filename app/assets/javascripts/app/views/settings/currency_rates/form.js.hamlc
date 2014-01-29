@@ -17,6 +17,7 @@
                 :name => 'from_currency_iso_code',
                 :id => 'settings_currency_rate_from',
                 :class => 'form-control required',
+                :disabled => true,
                 :value => @currency_rate.from_currency_iso_code,
                 :action => "/settings/currencies/search"}
 
@@ -31,6 +32,7 @@
                 :name => 'to_currency_iso_code',
                 :id => 'settings_currency_rate_to',
                 :class => 'form-control required',
+                :disabled => true,
                 :value => @currency_rate.to_currency_iso_code,
                 :action => "/settings/currencies/search"}
 

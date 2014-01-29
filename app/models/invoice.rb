@@ -93,6 +93,7 @@ class Invoice < ActiveRecord::Base
 
   # money
   money :value
+  money :vat
 
   scope :open_invoices, Proc.new {
     mask = Invoice.statuses_value_for(:open)
