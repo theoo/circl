@@ -351,7 +351,6 @@ class Salaries::Salary < ActiveRecord::Base
   def taxed_categories
     h = {}
     taxed_items.each do |i|
-      next if i.value <= 0
       h[i.category] ||= 0.to_money
       h[i.category] += i.value
     end
@@ -361,7 +360,6 @@ class Salaries::Salary < ActiveRecord::Base
   def untaxed_categories
     h = {}
     untaxed_items.each do |i|
-      next if i.value <= 0
       h[i.category] ||= 0.to_money
       h[i.category] += i.value
     end
