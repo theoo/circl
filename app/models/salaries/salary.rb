@@ -359,7 +359,7 @@ class Salaries::Salary < ActiveRecord::Base
 
   def untaxed_categories
     h = {}
-    untaxed_itmes.each do |i|
+    untaxed_items.each do |i|
       h[i.category] ||= 0.to_money
       h[i.category] += i.value
     end
