@@ -116,11 +116,11 @@ module Exporter
 
       salary.untaxed_items.each do |u|
         if u.value > 0
-          account  = "CHANGEME"
-          caccount = salary.net_account
-        else
           account  = salary.net_account
           caccount = "CHANGEME"
+        else
+          account  = "CHANGEME"
+          caccount = salary.net_account
         end
 
         # append untaxed categories
