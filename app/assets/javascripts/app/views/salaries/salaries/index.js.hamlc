@@ -22,6 +22,8 @@
       %th.ignore-sort
         -# check as paid
       %th.ignore-sort
+        -# download
+      %th.ignore-sort
         -# destroy
 
   %tbody
@@ -39,23 +41,29 @@
         %td= salary.created_at
         %td.ignore-click
           - if salary.is_reference
-            %button{:type => 'button',
-                    :class => 'btn btn-default',
-                    :name => 'salary-copy',
-                    :title => I18n.t('salary.views.actions.copy_reference') }
+            %a{:type => 'button',
+                :class => 'btn btn-default',
+                :name => 'salary-copy',
+                :title => I18n.t('salary.views.actions.copy_reference') }
               .icon-copy
         %td.ignore-click
           - if ! salary.is_reference and ! salary.paid
-            %button{:type => 'button',
-                    :class => 'btn btn-default',
-                    :name => 'salary-check-as-paid',
-                    :title => I18n.t('salary.views.actions.check_as_paid') }
+            %a{:type => 'button',
+                :class => 'btn btn-default',
+                :name => 'salary-check-as-paid',
+                :title => I18n.t('salary.views.actions.check_as_paid') }
               .icon-ok
         %td.ignore-click
-          %button{:type => 'button',
-                  :class => 'btn btn-danger',
-                  :name => 'salary-destroy',
-                  :title => I18n.t('common.destroy') }
+          %a{:type => 'button',
+              :class => 'btn btn-default',
+              :name => 'salary-download',
+              :title => I18n.t('common.download') }
+            .icon-cloud-download
+        %td.ignore-click
+          %a{:type => 'button',
+              :class => 'btn btn-danger',
+              :name => 'salary-destroy',
+              :title => I18n.t('common.destroy') }
             .icon-remove
 
 .panel-footer

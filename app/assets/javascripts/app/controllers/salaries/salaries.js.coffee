@@ -23,10 +23,11 @@ $.fn.salary = ->
 
 class Index extends App.ExtendedController
   events:
-    'click tr.item td:not(.ignore-click)'                   : 'edit'
-    'click button[name=salary-check-as-paid]'      : 'check_as_paid'
-    'click button[name=salary-copy]'               : 'copy_reference'
-    'click button[name=salary-destroy]'            : 'destroy'
+    'click tr.item td:not(.ignore-click)'              : 'edit'
+    'click a[name=salary-check-as-paid]'               : 'check_as_paid'
+    'click a[name=salary-copy]'                        : 'copy_reference'
+    'click a[name=salary-download]'                    : 'download'
+    'click a[name=salary-destroy]'                     : 'destroy'
     'click a[name=salaries-export]'                    : 'stack_export_generic'
     'click a[name=salaries-export-to-accounting]'      : 'stack_export_to_accounting_window'
     'click a[name=salaries-export-to-ocas]'            : 'stack_export_to_ocas_window'
@@ -71,6 +72,11 @@ class Index extends App.ExtendedController
       url: url
       title: title
       message: message
+
+  download: (e) ->
+    e.preventDefault()
+    salary = $(e.target).salary()
+    window.location = "/people/#{salary.person_id}/salaries/#{salary.id}.pdf"
 
   stack_export_generic: (e) ->
     e.preventDefault()
