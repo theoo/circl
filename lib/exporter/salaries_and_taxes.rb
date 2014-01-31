@@ -26,6 +26,7 @@ module Exporter
 
       options[:salary_prefix]       ||= ApplicationSetting.value("salaries_prefix")
       @options = options
+      @options[:date] ||= Time.now.to_date
 
       @display_employer_part = @options.delete(:employer_part)
     end
@@ -113,6 +114,32 @@ module Exporter
         end
       end
 
+      salary.untaxed_items.each do |u|
+        if u.value > 0
+          account  = salary.net_account
+          caccount = "CHANGEME"
+        else
+          account  = "CHANGEME"
+          caccount = salary.net_account
+        end
+
+        # append untaxed categories
+        salary_and_taxes << {
+            :id                         => salary.id,
+            :date                       => @options[:date],
+            :title                      => salary.title,
+            :description                => desc_for(salary) + "/" + u.title,
+            :value                      => u.value.abs.to_f,
+            :value_currency             => u.value.currency.to_s,
+            :account                    => account,
+            :counterpart_account        => caccount,
+            :vat_code                   => @options[:salary_vat_code],
+            :vat_rate                   => @options[:salary_vat_rate],
+            :person_id                  => salary.person.id,
+            :person_name                => salary.person.name,
+            :document_type              => :salary
+        }
+      end
 
       salary_and_taxes
     end
