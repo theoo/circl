@@ -94,7 +94,7 @@ class Salaries::Taxes::Age < ActiveRecord::Base
           .where("#{gender}_from <= ? and ? <= #{gender}_to" , *([infos.age] * 2))
           .first
 
-    reference_value = 0 if data.nil?
+    reference_value = 0.to_money if data.nil?
 
     if data
       {
@@ -114,9 +114,9 @@ class Salaries::Taxes::Age < ActiveRecord::Base
       }
     else
       {
-        :taxed_value => 0,
-        :employee => {:percent => 0, :value   => 0, :use_percent  => true },
-        :employer => {:percent => 0, :value   => 0, :use_percent  => true }
+        :taxed_value => 0.to_money,
+        :employee => {:percent => 0, :value   => 0.to_money, :use_percent  => true },
+        :employer => {:percent => 0, :value   => 0.to_money, :use_percent  => true }
       }
     end
   end

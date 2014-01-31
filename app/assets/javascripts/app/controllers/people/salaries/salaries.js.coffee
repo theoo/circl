@@ -73,6 +73,12 @@ class New extends App.ExtendedController
       @salary.married             = false
       @salary.children_count      = 0
       @salary.yearly_salary_count = 12
+
+      now = new Date
+      year = now.getFullYear()
+      @salary.from                = "01-01-" + year
+      @salary.to                  = "31-12-" + year
+
     else
       # copy reference in this new salary
       reference = PersonSalary.find(@get_reference_id())
@@ -86,12 +92,10 @@ class New extends App.ExtendedController
       @salary.employer_account    = reference.employer_account
       @salary.paid                = reference.paid
       @salary.parent_id           = reference.id
+      @salary.from                = reference.from
+      @salary.to                  = reference.to
 
     # defaults
-    now = new Date
-    year = now.getFullYear()
-    @salary.from                = "01-01-" + year
-    @salary.to                  = "31-12-" + year
     @html @view('people/salaries/form')(@)
 
   submit: (e) ->
