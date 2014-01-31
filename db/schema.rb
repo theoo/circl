@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(:version => 20140113125819) do
     t.integer  "product_id"
     t.integer  "program_id"
     t.integer  "position"
-    t.integer  "quantity"
+    t.float    "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

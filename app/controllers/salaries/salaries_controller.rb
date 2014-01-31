@@ -135,7 +135,9 @@ class Salaries::SalariesController < ApplicationController
     respond_to do |format|
       format.html do
         if from && to
-          salaries = salaries_arel.where('salaries.from >= ? AND salaries.to <= ?', from, to).order('salaries.from ASC')
+          salaries = salaries_arel
+            .where('salaries.from >= ? AND salaries.to <= ?', from, to)
+            .order('salaries.from ASC')
           exporter = Exporter::Factory.new( :salaries,
                                             :salary_details )
 
@@ -173,7 +175,9 @@ class Salaries::SalariesController < ApplicationController
     respond_to do |format|
       format.html do
         if from && to
-          salaries = salaries_arel.where('salaries.from >= ? AND salaries.to <= ?', from, to).order(:created_at)
+          salaries = salaries_arel
+            .where('salaries.from >= ? AND salaries.to <= ?', from, to)
+            .order('person_id, salaries.from ASC')
           extention = params[:type] == 'banana' ? 'txt' : 'csv'
           exporter = Exporter::Factory.new( :salaries_and_taxes,
                                             params[:type].to_sym,

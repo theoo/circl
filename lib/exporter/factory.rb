@@ -74,7 +74,7 @@ module Exporter
       cols.each do |k|
         if k.is_a? Symbol
           unless item.keys.index(k)
-            raise ArgumentError, "Argument '#{k}' is missing."
+            raise ArgumentError, "Argument '#{k}' is missing for '#{item.inspect}'."
           end
         end
       end
