@@ -24,13 +24,21 @@ class Salaries::SalariesController < ApplicationController
     Salaries::Salary
   end
 
-  load_and_authorize_resource
+  load_and_authorize_resource :except => :index
 
   monitor_changes :@salary
 
   def index
+    authorize! :index, Product
+
     respond_to do |format|
-      format.json { render :json => @salaries }
+      format.json { render :json => SalariesDatatable.new(view_context) }
+    end
+  end
+
+  def show
+    respond_to do |format|
+      format.json { render :json => @salary }
     end
   end
 

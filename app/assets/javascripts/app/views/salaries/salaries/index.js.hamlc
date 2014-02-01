@@ -4,67 +4,27 @@
     .col-lg-12
       .validation_errors_placeholder
 
-%table.datatable
+%table.datatable{ :action => '/salaries/salaries' }
   %thead
     %tr
       %th= I18n.t('common.id')
       %th= I18n.t('common.person')
       %th= I18n.t('common.title')
-      %th= I18n.t('salary.views.reference')
       %th= I18n.t('common.from')
       %th= I18n.t('common.to')
-      %th= I18n.t('salary.views.gross_pay')
-      %th= I18n.t('salary.views.net_salary')
-      %th= I18n.t('common.paid')
+      %th.ignore-sort
+        = I18n.t('salary.views.gross_pay')
+      %th.ignore-sort
+        = I18n.t('salary.views.net_salary')
       %th= I18n.t('common.created_at')
-      %th.ignore-sort
-        -# copy reference
-      %th.ignore-sort
-        -# check as paid
-      %th.ignore-sort
-        -# download
-      %th.ignore-sort
-        -# destroy
-
-  %tbody
-    - for salary in App.Salary.all()
-      %tr{:data-id => salary.id, :class => 'item'}
-        %td= salary.id
-        %td= salary.person_name
-        %td= salary.title
-        %td= I18n.t('common.' + salary.is_reference)
-        %td= salary.from
-        %td= salary.to
-        %td.number= salary.gross_pay.to_view() if salary.gross_pay
-        %td.number= salary.net_salary.to_view() if salary.net_salary
-        %td= I18n.t('common.' + salary.paid)
-        %td= salary.created_at
-        %td.ignore-click
-          - if salary.is_reference
-            %a{:type => 'button',
-                :class => 'btn btn-default',
-                :name => 'salary-copy',
-                :title => I18n.t('salary.views.actions.copy_reference') }
-              .icon-copy
-        %td.ignore-click
-          - if ! salary.is_reference and ! salary.paid
-            %a{:type => 'button',
-                :class => 'btn btn-default',
-                :name => 'salary-check-as-paid',
-                :title => I18n.t('salary.views.actions.check_as_paid') }
-              .icon-ok
-        %td.ignore-click
-          %a{:type => 'button',
-              :class => 'btn btn-default',
-              :name => 'salary-download',
-              :title => I18n.t('common.download') }
-            .icon-cloud-download
-        %td.ignore-click
-          %a{:type => 'button',
-              :class => 'btn btn-danger',
-              :name => 'salary-destroy',
-              :title => I18n.t('common.destroy') }
-            .icon-remove
+      %th.ignore-sort.ignore-click
+        = I18n.t('salary.views.reference')
+      %th.ignore-sort.ignore-click
+        = I18n.t('common.paid')
+      %th.ignore-sort.ignore-click
+        = I18n.t('common.download')
+      %th.ignore-sort.ignore-click
+        = I18n.t('common.destroy')
 
 .panel-footer
   .btn-group
