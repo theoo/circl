@@ -76,8 +76,8 @@ class Person < ActiveRecord::Base
 
   attr_accessor :notices
 
-  def initialize(params = nil)
-    super(params)
+  def initialize(*params)
+    super(*params)
     @notices = ActiveModel::Errors.new(self)
   end
 
@@ -330,6 +330,7 @@ class Person < ActiveRecord::Base
 
     infos[:private_tags] = []
     infos[:public_tags]  = []
+    infos[:jobs]         = []
 
     begin
       CSV.parse(data, :encoding => 'UTF-8')[1..-1].each_with_index do |row, i|
@@ -362,14 +363,22 @@ class Person < ActiveRecord::Base
         p.valid?
 
         parser = PersonRelationsParser.new(p)
+        p.comments_edited_by_others << parser.parse_comments(row[25])
+
+        job = parser.parse_job(row[13])
+        infos[:jobs] << job if job
+
         parser.parse_location(row[6], row[7])
-        parser.parse_job(row[13])
         parser.parse_roles(row[18])
         parser.parse_main_communication_language(row[19])
         parser.parse_communication_languages(row[20])
         parser.parse_translation_aptitudes(row[21])
-        infos[:private_tags] << parser.parse_private_tags(row[22])
-        infos[:public_tags]  << parser.parse_public_tags(row[23])
+
+        private_tags = parser.parse_private_tags(row[22])
+        infos[:private_tags] << private_tags unless private_tags.empty?
+
+        public_tags = parser.parse_public_tags(row[23])
+        infos[:public_tags]  << public_tags unless public_tags.empty?
 
         infos[:people] << p
       end
@@ -378,8 +387,9 @@ class Person < ActiveRecord::Base
       infos[:errors] << e.inspect
     end
 
-    infos[:private_tags].flatten!.uniq!
-    infos[:public_tags].flatten!.uniq!
+    infos[:private_tags] = infos[:private_tags].flatten.uniq
+    infos[:public_tags] = infos[:public_tags].flatten.uniq
+    infos[:jobs].uniq!
 
     infos
 

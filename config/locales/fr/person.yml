@@ -48,6 +48,7 @@ fr:
       line: ligne
       not_existing_private_tag: Le tag privé "%{tag}" sera créé.
       not_existing_public_tag: Le tag public "%{tag}" sera créé.
+      not_existing_job: Le métier "%{job}" sera créé.
     mail:
       admin_receipts_were_generated: Génération des documents de reçus
       admin_receipts_were_generated_explanation: Vous pouvez télécharger le document généré à l'adresse suivante

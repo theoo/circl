@@ -215,14 +215,38 @@ class DirectoryController < ApplicationController
           PublicTag.create(:name => tag)
         end
       end
+      # Create missing jobs
+      if params[:jobs]
+        params[:jobs].each do |job|
+          Job.create(:name => job)
+        end
+      end
 
+      # Temporarly disable geoloc and ES
+      Rails.configuration.settings['maps']['enable_geolocalization'] = false
+      Rails.configuration.settings['elasticsearch']['enable_indexing'] = false
       # Then re-parse file and import people
       report = Person.parse_people(session[:people_file_data])
-      # TODO Import without ES indexation and reindex people after transaction
       report[:people].each do |p|
+        comments = p.comments_edited_by_others.dup
+        p.comments_edited_by_others = []
         p.save
+        p.comments_edited_by_others = comments
+        comments.each{|c| c.save}
       end
+
+      # Ensure ES and geoloc are enable again
+      Rails.configuration.settings['elasticsearch']['enable_indexing'] = true
+      Rails.configuration.settings['maps']['enable_geolocalization'] = true
+
+      # Reindex the whole database
+      BackgroundTasks::RunRakeTask.schedule(:name => 'elasticsearch:sync')
+
     end
+
+    # Ensure ES and geoloc are enable again
+    Rails.configuration.settings['elasticsearch']['enable_indexing'] = true
+    Rails.configuration.settings['maps']['enable_geolocalization'] = true
 
     # In rails 3.1, session is a normal Hash
     # In rails 3.2, session is a CGI::Session
