@@ -23,10 +23,10 @@ fr:
       total_receipts_count_mismatch: Le nombre de reçus ne correspond pas (%{receipts_count} != %{computed_receipts_count})
       unknown_type: type inconnu
     import_status:
-      rectification: réctification
-      error: erreur
-      correct: correct
       already_imported: déjà importé
+      correct: correct
+      error: erreur
+      rectification: réctification
     mail:
       account: compte
       already_imported: déjà importé

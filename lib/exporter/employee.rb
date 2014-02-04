@@ -29,6 +29,15 @@ module Exporter
     end
 
     def convert(person)
+      country = nil
+      # Only print country if different from directory owner
+      me = Person.find ApplicationSetting.value("me")
+      if me
+        if person.try(:location).try(:country) != me.try(:location).try(:country)
+          country = person.try(:location).try(:country).try(:name)
+        end
+      end
+
       {
         :person_id                  => person.id,
         :person_first_name          => person.first_name,
@@ -38,10 +47,10 @@ module Exporter
         :person_address             => person.address,
         :person_postal_code         => person.try(:location).try(:postal_code_prefix),
         :person_city                => person.try(:location).try(:name),
-        :person_country             => person.try(:location).try(:country).try(:name),
+        :person_country             => country,
         :person_gender              => (person.gender ? "M" : "F"),
         :person_avs_number          => person.avs_number,
-        :person_birth_date          => person.birth_date,
+        :person_birth_date          => person.birth_date
       }
     end
   end

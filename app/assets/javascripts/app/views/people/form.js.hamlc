@@ -213,43 +213,62 @@
                       = I18n.t("common.incomplete")
 
           .row
-            .col-sm-6.form-group
-              %label{:for => 'person_birth_date', :class => 'control-label'}
-                = I18n.t('person.views.birth_date')
-              %input{ :type => 'text',
-                      :id => 'person_birth_date',
-                      :name => 'birth_date',
-                      :class => 'datepicker form-control',
-                      :value => @person.birth_date }
+            .col-sm-6
+              .row
+                .col-sm-12.form-group
+                  %label{:for => 'person_birth_date', :class => 'control-label'}
+                    = I18n.t('person.views.birth_date')
+                  %input{ :type => 'text',
+                          :id => 'person_birth_date',
+                          :name => 'birth_date',
+                          :class => 'datepicker form-control',
+                          :value => @person.birth_date }
 
-            .col-sm-6.form-group.autocompleted
-              %label{:for => 'person_nationality', :class => 'control-label'}
-                = I18n.t('person.views.nationality')
-              %input{ :type => 'search',
-                      :id => 'person_nationality',
-                      :class => 'form-control',
-                      :name => 'nationality',
-                      :value => @person.nationality,
-                      :action => '/people/nationality_search'
+              .row
+                .col-sm-12.form-group
+                  %label{:for => 'person_bank_information', :class => 'control-label'}
+                    = I18n.t('person.views.bank_informations')
+                  %textarea{:name => 'bank_informations',
+                            :id => 'person_bank_information',
+                            :rows => 4,
+                            :class => 'form-control'}
+                    = @person.bank_informations
 
-          .row
-            .col-sm-6.form-group
-              %label{:for => 'person_bank_information', :class => 'control-label'}
-                = I18n.t('person.views.bank_informations')
-              %textarea{:name => 'bank_informations',
-                        :id => 'person_bank_information',
-                        :rows => 4,
-                        :class => 'form-control'}
-                = @person.bank_informations
+            .col-sm-6
+              .row
+                .col-sm-12.form-group.autocompleted
+                  %label{:for => 'person_nationality', :class => 'control-label'}
+                    = I18n.t('person.views.nationality')
+                  %input{ :type => 'search',
+                          :id => 'person_nationality',
+                          :class => 'form-control',
+                          :name => 'nationality',
+                          :value => @person.nationality,
+                          :action => '/people/nationality_search'
 
-            .col-sm-6.form-group
-              %label{:for => 'person_avs_number', :class => 'control-label'}
-                = I18n.t('person.views.avs_number')
-              %input{ :type => 'text',
-                      :id => 'person_avs_number',
-                      :class => 'form-control',
-                      :name => 'avs_number',
-                      :value => @person.avs_number}
+              .row
+                .col-sm-12.form-group
+                  %label{:for => 'person_avs_number', :class => 'control-label'}
+                    = I18n.t('person.views.avs_number')
+                  %input{ :type => 'text',
+                          :id => 'person_avs_number',
+                          :class => 'form-control',
+                          :name => 'avs_number',
+                          :value => @person.avs_number}
+
+              .row
+                .col-sm-12.form-group
+                  %label{:for => 'person_gender', :class => 'control-label'}
+                    = I18n.t('person.views.gender')
+                  %select{:id => 'person_gender',
+                          :class => 'form-control',
+                          :name => 'gender'}
+                    - if @person.gender
+                      %option{:value => 1, :selected => true}= I18n.t("person.views.male")
+                      %option{:value => 0}= I18n.t("person.views.female")
+                    - else
+                      %option{:value => 1}= I18n.t("person.views.male")
+                      %option{:value => 0, :selected => true}= I18n.t("person.views.female")
 
       .col-md-6
         .row

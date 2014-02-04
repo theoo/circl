@@ -47,9 +47,9 @@ fr:
       invalid_translation_aptitude: Aptitude de traduction invalide "%{translation_aptitude}"
       line: ligne
       not_existing_: ! 'not existing '
+      not_existing_job: Le métier "%{job}" sera créé.
       not_existing_private_tag: Le tag privé "%{tag}" sera créé.
       not_existing_public_tag: Le tag public "%{tag}" sera créé.
-      not_existing_job: Le métier "%{job}" sera créé.
     mail:
       admin_receipts_were_generated: Génération des documents de reçus
       admin_receipts_were_generated_explanation: Vous pouvez télécharger le document généré à l'adresse suivante
@@ -95,7 +95,9 @@ fr:
       email: email
       employee_information: Informations de l'employé
       employment_contracts: Contrats d'emploi
+      female: féminin
       first_name: prénom
+      gender: genre
       generate_authentication_token: (re)générer
       geographic_coordinates: coordonnées géographiques
       hidden: caché
@@ -105,6 +107,7 @@ fr:
       last_name: nom de famille
       location: localité / lieu
       logout: Déconnexion
+      male: masculin
       mobile: mobile
       nationality: nationalité
       new_contact: nouveau contact
