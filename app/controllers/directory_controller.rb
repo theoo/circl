@@ -240,7 +240,7 @@ class DirectoryController < ApplicationController
       Rails.configuration.settings['maps']['enable_geolocalization'] = true
 
       # Reindex the whole database
-      BackgroundTasks::RunRakeTask.schedule(:name => 'elasticsearch:sync')
+      BackgroundTasks::RunRakeTask.process!(:name => 'elasticsearch:sync')
 
     end
 
