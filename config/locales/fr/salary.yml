@@ -37,7 +37,7 @@ fr:
       civil_status: état civil
       copy_reference_message: Copie du salaire de référence vers un groupe de personne.
       copy_reference_title: Copie du salaire de référence
-      employer_account: retenues employeur
+      employer_account: compte part employeur
       employer_part: part employeur
       export_interval_explanation: L'intervalle sélectionné doit correspondre à l'intervalle couvert par les salaires et non à leurs dates de création.
       generic_template_item_category: Revenus

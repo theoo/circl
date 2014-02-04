@@ -120,7 +120,7 @@ Directory::Application.routes.draw do
 
   match 'salaries' => 'salaries#index'
   namespace :salaries do
-    resources :salaries, :only => [:index, :update, :destroy] do
+    resources :salaries, :except => [:edit] do
       member do
         post 'copy_reference'
       end

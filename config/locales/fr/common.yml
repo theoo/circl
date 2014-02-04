@@ -69,9 +69,9 @@ fr:
     paid: payé
     parent: parent
     pdf: PDF
+    people: Personnes
     per_hour: par heure
     person: personne
-    people: Personnes
     position: position
     preview: aperçu
     preview_in_new_tab: aperçu dans un nouvel onglet
@@ -100,7 +100,7 @@ fr:
     total: total
     'true': vrai
     unit_value: valeur unit
-    unpaid: à payé
+    unpaid: à payer
     update: mettre à jour
     updated_at: mise à jour
     upload: téléverser

@@ -50,8 +50,6 @@ class Edit extends App.ExtendedController
 
     ajax_success = (data, textStatus, jqXHR) =>
       @render_success()
-      # Store the modifications in Spine
-      PersonPrivateTag.refresh(data, clear: true)
 
     PersonPrivateTag.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 

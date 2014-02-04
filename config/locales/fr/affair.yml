@@ -3,14 +3,14 @@ fr:
   affair:
     errors:
       cant_delete_affair_who_has_invoices: Il est impossible de détruire une affaire dont dépend une facture.
-      wrong_date: wrong date
+      wrong_date: Mauvaise date
     notices:
+      document_export_explanation: Veuillez sélectionner ci-dessous les critères de tri pour la génération du document.
+      document_export_explanation_title: Génération de documents
+      document_export_process: Le processus de sélection des personnes suivra cette étape.
+      regexp: Une expression rationnelle est attendue.
       will_match_all_defined_thresholds: Toutes les limites définies seront employées pour le tri.
       will_match_all_selected_statuses: Tous les status sélectionnés seront employés pour le tri.
-      document_export_explanation: Veuillez sélectionner ci-dessous les critères de tri pour la génération du document.
-      document_export_process: Le processus de sélection des personnes suivra cette étape.
-      document_export_explanation_title: Génération de documents
-      regexp: Une expression rationnelle est attendue.
     views:
       actions:
         edit_affair: modifier l'affaire

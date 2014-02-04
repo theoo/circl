@@ -21,7 +21,11 @@ en:
       total_cannot_parse: total cannot parse
       total_mismatch: total mismatch
       total_receipts_count_mismatch: total receipts count mismatch
-      unknown_type: unknown type
+    import_status:
+      rectification: réctification
+      error: erreur
+      correct: correct
+      already_imported: déjà importé
     mail:
       account: account
       already_imported: already imported

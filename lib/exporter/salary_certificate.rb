@@ -24,7 +24,9 @@ module Exporter
     def initialize(options = {})
       super
 
-      @options= { :date => Time.now.to_date }
+      @options = options
+
+      @options[:date] ||= Time.now.to_date
       @options.merge(options)
     end
 

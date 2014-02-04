@@ -22,6 +22,11 @@ fr:
       total_mismatch: Le total ne correspond pas (%{total} != %{computed_total})
       total_receipts_count_mismatch: Le nombre de reçus ne correspond pas (%{receipts_count} != %{computed_receipts_count})
       unknown_type: type inconnu
+    import_status:
+      rectification: réctification
+      error: erreur
+      correct: correct
+      already_imported: déjà importé
     mail:
       account: compte
       already_imported: déjà importé
@@ -62,7 +67,7 @@ fr:
       export: export des reçus
       id: id
       import_bank_file: importer un fichier bancaire
-      import_status: statut de l'import
+      import_status: status de l'import
       invoice: facture
       invoice_template: modèle de facture
       invoice_title: titre de la facture

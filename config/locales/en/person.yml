@@ -46,6 +46,7 @@ en:
       invalid_role: Invalid role "%{role}"
       invalid_translation_aptitude: Invalid translation aptitude "%{translation_aptitude}"
       line: line
+      not_existing_: ! 'not existing '
       not_existing_private_tag: The private tag "%{tag}" will be created.
       not_existing_public_tag: The public tag "%{tag}" will be created.
       not_existing_job: The job "%{job}" will be created.

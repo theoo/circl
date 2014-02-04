@@ -24,6 +24,7 @@ module Exporter
     def initialize(options = {})
       super
       @options = options
+      @options[:date] ||= Time.now.to_date
     end
 
     def convert(salary)
