@@ -105,6 +105,9 @@ class New extends App.ExtendedController
 
     @save_with_notifications @salary.fromForm(e.target), (id) =>
       @trigger('edit', id)
+      # Update badge
+      $('a[href=#salaries_tab] .badge').html PersonSalary.count()
+
 
 class Edit extends App.ExtendedController
   events:
@@ -231,9 +234,11 @@ class Edit extends App.ExtendedController
   destroy: (e) ->
     e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
+      @unload_dependencies()
       @destroy_with_notifications @salary, (id) =>
         @hide()
-        @unload_dependencies()
+        # Update badge
+        $('a[href=#salaries_tab] .badge').html PersonSalary.count()
 
   submit: (e) ->
     e.preventDefault()

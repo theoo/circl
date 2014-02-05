@@ -27,21 +27,25 @@
           %li
             %a{:href => '#affairs_tab'}
               = I18n.t('person.views.affairs')
+              .badge= @person.affairs.empty? ? nil : @person.affairs.count
 
         - if can? :read, Salaries::Salary
           %li
             %a{:href => '#salaries_tab'}
               = I18n.t('person.views.salaries')
+              .badge= @person.salaries.empty? ? nil : @person.salaries.count
 
         - if can? :read, Role
           %li
             %a{:href => '#permissions_tab'}
               = I18n.t('person.views.permissions')
+              .badge= @person.roles.empty? ? nil : @person.roles.count
 
         - if can? :read, Activity
           %li
             %a{:href => '#activities_tab'}
               = I18n.t('person.views.activities')
+              .badge= @person.comments_edited_by_others.empty? ? nil : @person.comments_edited_by_others.count
 
       // navbar-right doesn't pull buttons when resolition is XS. Forcing it with pull-right
       .pull-right

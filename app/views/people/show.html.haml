@@ -70,6 +70,7 @@
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.communication_languages')
+                  .pull-right.badge= @person.communication_languages.empty? ? nil : @person.communication_languages.count
 
         .col-md-4
           - if can? :read, @person => PeoplePrivateTag
@@ -78,6 +79,7 @@
                 .panel-heading
                   .panel-title
                     = I18n.t('person.views.private_tags')
+                    .pull-right.badge= @person.private_tags.empty? ? nil : @person.private_tags.count
 
         .col-md-4
           - if can? :read, @person => PeoplePublicTag
@@ -86,6 +88,7 @@
                 .panel-heading
                   .panel-title
                     = I18n.t('person.views.public_tags')
+                    .pull-right.badge= @person.public_tags.empty? ? nil : @person.public_tags.count
 
           //- if can? :read, @person => TranslationAptitude
           //  #person_translation_aptitudes.widget

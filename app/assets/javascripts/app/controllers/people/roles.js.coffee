@@ -44,6 +44,8 @@ class Index extends App.ExtendedController
 
     ajax_success = (data, textStatus, jqXHR) =>
       @render_success()
+      # Update badge
+      $('a[href=#permissions_tab] .badge').html ids.length
 
     # TODO make this send JSON params instead of HTML form params
     Spine.Ajax.queue =>

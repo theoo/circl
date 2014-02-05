@@ -462,7 +462,7 @@ ActiveRecord::Schema.define(:version => 20140129134904) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "vat_in_cents",           :default => 0,     :null => false
-    t.string   "vat_currency"
+    t.string   "vat_currency",           :default => "CHF", :null => false
     t.integer  "vat_percentage"
   end
 

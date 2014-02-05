@@ -26,8 +26,10 @@ class Settings::ApplicationSettingsController < ApplicationController
 
   def index
     default_currency = ApplicationSetting.value("default_currency")
-    h = { :key => 'default_currency_details', :value => Currency.where(:iso_code => default_currency).first.attributes.to_json }
-    @application_settings << h
+    if Currency.where(:iso_code => default_currency).count > 0
+      h = { :key => 'default_currency_details', :value => Currency.where(:iso_code => default_currency).first.attributes.to_json }
+      @application_settings << h
+    end
 
     respond_to do |format|
       format.json { render :json => @application_settings }

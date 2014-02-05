@@ -55,7 +55,7 @@ class New extends App.ExtendedController
       @receipt.invoice_id = @invoice.id
       @receipt.invoice_title = @invoice.title
 
-    if @affair_id
+    if @affair_id and PersonAffair.exists(@affair_id)
       @affair = PersonAffair.find(@affair_id)
       if @affair.invoices_value > @affair.receipts_value
         @receipt.value = @affair.invoices_value - @affair.receipts_value

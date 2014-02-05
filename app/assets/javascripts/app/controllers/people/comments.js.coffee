@@ -34,7 +34,10 @@ class New extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @comment.fromForm(e.target), @render
+    @save_with_notifications @comment.fromForm(e.target), =>
+      @render()
+      # Update badge
+      $('a[href=#activities_tab] .badge').html PersonComment.count()
 
 class Edit extends App.ExtendedController
   events:
@@ -70,8 +73,10 @@ class Edit extends App.ExtendedController
 
   destroy: (e) ->
     if confirm(I18n.t("common.are_you_sure"))
-      @destroy_with_notifications @comment
-      @hide()
+      @destroy_with_notifications @comment, =>
+        @hide()
+        # Update badge
+        $('a[href=#activities_tab] .badge').html PersonComment.count()
 
 class Index extends App.ExtendedController
   events:

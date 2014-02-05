@@ -58,6 +58,8 @@ class New extends App.ExtendedController
 
     redirect_to_edit = (id) =>
       @trigger('edit', id)
+      # Update badge
+      $('a[href=#affairs_tab] .badge').html PersonAffair.count()
 
     @save_with_notifications @affair.fromForm(e.target), redirect_to_edit
 
@@ -173,9 +175,12 @@ class Edit extends App.ExtendedController
 
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
+      @unload_dependencies()
       @destroy_with_notifications @affair, (id) =>
         @hide()
-        @unload_dependencies()
+        # Update badge
+        $('a[href=#affairs_tab] .badge').html PersonAffair.count()
+
 
 class Index extends App.ExtendedController
   events:
@@ -348,7 +353,7 @@ class App.PersonAffairs extends Spine.Controller
     @index.bind 'edit', (id) =>
       @edit.active(id: id, person_id: @person_id)
 
-    @index.bind 'destroyError', (id, errors) =>
+    @edit.bind 'destroyError', (id, errors) =>
       @edit.active(id: id)
       @edit.render_errors errors
 

@@ -1,15 +1,17 @@
 
 # Mind db:seed in db/seeds.rb
-tasks = %w{languages
-           private_tags
-           public_tags
-           application_settings
-           roles
-           ldap_attributes
-           search_attributes
-           generic_templates
-           task_types
-           task_rates}
+tasks = %w{ languages
+            currencies
+            private_tags
+            public_tags
+            application_settings
+            roles
+            ldap_attributes
+            search_attributes
+            generic_templates
+            product_programs
+            task_types
+            task_rates }
 
 namespace :db do
   desc "update CIRCL database with all required tasks"

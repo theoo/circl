@@ -20,7 +20,7 @@
 extend ColorizedOutput
 
 mandatory_fields = ApplicationSetting.mandatory_fields
- 
+
 # Table may not exist on rake db:schema:load
 if ActiveRecord::Base.connection.table_exists? 'application_settings' \
     and ENV['force_application_settings'] != 'true' \

@@ -61,7 +61,7 @@ class New extends App.ExtendedController
     else
       @invoice = new PersonAffairInvoice(value: 0)
 
-    if @affair_id
+    if @affair_id and PersonAffair.exists(@affair_id)
       @affair = PersonAffair.find(@affair_id)
 
     @html @view('people/affairs/invoices/form')(@)

@@ -150,7 +150,6 @@
               = I18n.t('affair.views.receipts') + " :"
               = @affair.receipts_value.to_view()
 
-  .panel-body
     .row
       .col-sm-12
         - if parseInt(@person_id) == parseInt(@affair.owner_id) or @affair.isNew?()

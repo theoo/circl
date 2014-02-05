@@ -52,7 +52,7 @@ class New extends App.TimesheetExtention
       @task.owner_name = @person.name
       @task.owner_id = @person.id
 
-      if @affair_id
+      if @affair_id and App.PersonAffair.exists(@affair_id)
         @affair = App.PersonAffair.find @affair_id
         @task.affair_title = @affair.title
         @task.affair_id = @affair.id

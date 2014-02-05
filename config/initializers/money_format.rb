@@ -39,7 +39,7 @@ class Money
   end
 end
 
-if ActiveRecord::Base.connection.table_exists? 'application_settings' \
+if ActiveRecord::Base.connection.table_exists? 'currencies'
 
   # Load Currencies
 
@@ -55,9 +55,11 @@ if ActiveRecord::Base.connection.table_exists? 'application_settings' \
   module MoneyClassExtention
     def to_view
       default_currency = Currency.where(:iso_code => ApplicationSetting.value("default_currency")).first
-      format(:thousands_separator => default_currency.separator,
-        :decimal_mark => default_currency.delimiter,
-        :with_currency => false)
+      if default_currency
+        format(:thousands_separator => default_currency.separator,
+          :decimal_mark => default_currency.delimiter,
+          :with_currency => false)
+      end
     end
   end
 
