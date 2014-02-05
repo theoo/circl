@@ -57,7 +57,7 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
       end
 
       if options[:from] and options[:to]
-        receipts = receipts.where("value_date BETWEEN ? AND ?", options[:from], options[:to])
+        receipts = receipts.where("value_date BETWEEN ? AND ?", Date.parse(options[:from]), Date.parse(options[:to]))
       end
 
       # exclude receipts for which value is below unit threshold
