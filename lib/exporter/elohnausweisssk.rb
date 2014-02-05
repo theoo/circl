@@ -99,10 +99,17 @@ module Exporter
 
       cols.map do |c|
         if c.is_a? Symbol
-          if i[c].is_a? Date
-            i[c].strftime("%d.%m.%Y")
-          else
-            i[c]
+          case i[c]
+            when Date
+              i[c].strftime("%d.%m.%Y")
+            when Float, Fixnum
+              # Don't display anything if zero.
+              i[c] == 0.0 ? nil : i[c]
+            when String
+              # Don't display empty strings
+              i[c].blank? ? nil : i[c]
+            else
+              i[c]
           end
         else
           c

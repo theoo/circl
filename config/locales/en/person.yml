@@ -47,6 +47,7 @@ en:
       invalid_translation_aptitude: Invalid translation aptitude "%{translation_aptitude}"
       line: line
       not_existing_: ! 'not existing '
+      not_existing_job: The job "%{job}" will be created.
       not_existing_private_tag: The private tag "%{tag}" will be created.
       not_existing_public_tag: The public tag "%{tag}" will be created.
     mail:
@@ -94,7 +95,9 @@ en:
       email: email
       employee_information: employee information
       employment_contracts: employment contracts
+      female: female
       first_name: first name
+      gender: gender
       generate_authentication_token: generate authentication token
       geographic_coordinates: geographic coordinates
       hidden: hidden
@@ -104,6 +107,7 @@ en:
       last_name: last name
       location: location
       logout: logout
+      male: male
       mobile: mobile
       nationality: nationality
       new_contact: new contact

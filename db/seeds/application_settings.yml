@@ -36,7 +36,7 @@
 - key: salaries_employer_deductions_prefix
   value: employer deductions
 - key: banana_accounting_headers_mapping
-  value: '{"id": "id", "date": "Date", "title": "Title", "description": "Description", "value": "Amount", "value_currency": "AmountCurrency", "account": "AccountDebit", "counterpart_account": "AccountCredit", "vat_code": "VatCode", "vat_rate": "VatPercentNonDeductible", "person_id": "PersonID", "person_name": "PersonName", "document_type": "Document" }'
+  value: '{"Date": "date", "Description": "description", "Amount": "value", "AccountDebit": "account", "AccountCredit": "counterpart_account"}'
 - key: service_vat_rate
   value: '8.0'
 - key: service_vat_number

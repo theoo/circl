@@ -144,7 +144,7 @@ class Salaries::Taxes::Is < ActiveRecord::Base
       :employer =>
       {
         :percent => 0,
-        :value   => 0,
+        :value   => 0.to_money,
         :use_percent  => true
       },
       :employee =>

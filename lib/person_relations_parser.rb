@@ -21,6 +21,14 @@ class PersonRelationsParser
     @person = person
   end
 
+  def parse_comments(raw_comments)
+    comments_string = raw_comments.strip
+    return [] if comments_string.blank?
+
+    # Comments will be save on transaction commit
+    Comment.new(:title => 'import', :description => comments_string)
+  end
+
   def parse_location(postal_code_prefix, name)
     if postal_code_prefix
       if postal_code_prefix.to_s.match(/^([a-zA-Z]+)/)
@@ -49,8 +57,19 @@ class PersonRelationsParser
     ary ? ary[1].strip : nil
   end
 
-  def parse_job(job)
-    parse_single_item(job, Job)
+  def parse_job(raw_job_name)
+    job_name = raw_job_name.strip[0..254].gsub(",", " ")
+    return if job_name.blank?
+
+    job = Job.where(:name => job_name).first
+    if job
+      @person.job = job
+      job_name = nil
+    else
+      @person.notices.add(:job, I18n.t("person.import.not_existing_job", :job => job_name))
+    end
+
+    job_name
   end
 
   def parse_roles(roles)
@@ -111,17 +130,18 @@ class PersonRelationsParser
     new_tags = []
 
     items.split(/\s*,\s*/).each do |item|
-      tag = model.where(:name => item.strip)
+      next if item.blank?
+      tag_name = item.strip[0..254]
+      tag = model.where(:name => tag_name)
       if tag.count > 0
         @person.send(relation) << tag.first
       else
-        @person.notices.add(relation.to_sym, I18n.t("person.import.not_existing_" + relation.singularize, :tag => item.strip))
-        new_tags << item.strip
+        @person.notices.add(relation.to_sym, I18n.t("person.import.not_existing_" + relation.singularize, :tag => tag_name))
+        new_tags << tag_name
       end
     end
 
     new_tags
-
   end
 
 end

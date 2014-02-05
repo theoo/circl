@@ -26,6 +26,8 @@ class PeopleDatatable
     @view = view
     @query = query
     @current_person = current_person
+
+    init_haml_helpers
   end
 
   def as_json(options = {})
@@ -47,7 +49,6 @@ class PeopleDatatable
         h[index] = highlight(person, attr)
       end
 
-      init_haml_helpers
       index = @query[:selected_attributes].size
 
       h[index + 1] = capture_haml do

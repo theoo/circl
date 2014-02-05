@@ -124,5 +124,8 @@
                 - @infos[:public_tags].each do |t|
                   = hidden_field_tag 'public_tags[]', t
 
+                - @infos[:jobs].each do |j|
+                  = hidden_field_tag 'jobs[]', j
+
                 = submit_tag I18n.t('directory.views.proceed_with_import'), :class => 'btn btn-primary'
 

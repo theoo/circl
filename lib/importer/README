@@ -1,0 +1,7 @@
+Rewrite importer with the following features:
+
+- One transaction for both confirmation and importation
+- Use the transaction to match double in one import
+- Allow merge with existing entries or imported entries during the first transaction
+- Validates length of every fields before trying to import. Strip if needed
+- Make it modular, like exporter so the same transaction can be used with different ressources

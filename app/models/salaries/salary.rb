@@ -351,7 +351,6 @@ class Salaries::Salary < ActiveRecord::Base
   def taxed_categories
     h = {}
     taxed_items.each do |i|
-      next if i.value <= 0
       h[i.category] ||= 0.to_money
       h[i.category] += i.value
     end
@@ -361,7 +360,6 @@ class Salaries::Salary < ActiveRecord::Base
   def untaxed_categories
     h = {}
     untaxed_items.each do |i|
-      next if i.value <= 0
       h[i.category] ||= 0.to_money
       h[i.category] += i.value
     end
@@ -396,7 +394,7 @@ class Salaries::Salary < ActiveRecord::Base
   # deductions
 
   def gross_pay
-    items.reject{|i| i.category.blank? }.map(&:value).sum.to_money
+    taxed_items.reject{|i| i.category.blank? }.map(&:value).sum.to_money
   end
 
   def net_salary
@@ -475,6 +473,23 @@ class Salaries::Salary < ActiveRecord::Base
 
     h[:errors] = errors
     h
+  end
+
+  def yearly_salary
+    # TODO, update this when moving to multicurrencies
+    is_reference ? Money.new(yearly_salary_in_cents) : reference.yearly_salary
+  end
+
+  def yearly_salary_count
+    is_reference ? super : reference.yearly_salary_count
+  end
+
+  def brut_account
+    is_reference ? super : reference.brut_account
+  end
+
+  def net_account
+    is_reference ? super : reference.net_account
   end
 
   private
