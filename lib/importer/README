@@ -5,3 +5,4 @@ Rewrite importer with the following features:
 - Allow merge with existing entries or imported entries during the first transaction
 - Validates length of every fields before trying to import. Strip if needed
 - Make it modular, like exporter so the same transaction can be used with different ressources
+- Append rejected entries in a csv and join it to the report mail
