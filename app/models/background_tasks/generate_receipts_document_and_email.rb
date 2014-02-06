@@ -50,9 +50,9 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
 
       receipts = person.receipts.order(:invoice_id, :value_date)
 
-      if options[:invoices_filter]
+      if options[:subscriptions_filter]
         begin # Postgresql may trow an error if regexp is not correct
-          receipts = receipts.joins(:invoice).where("invoices.title ~ ?", options[:invoices_filter])
+          receipts = receipts.joins(:subscriptions).where("subscriptions.title ~ ?", options[:subscriptions_filter])
         end
       end
 
