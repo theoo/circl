@@ -101,8 +101,13 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
           files << tmpfile
         else
           lines << [person.id,
-            person.name,
+            person.first_name,
+            person.last_name,
+            person.organization_name,
             person.full_address,
+            person.location.try(:country).try(:name),
+            person.email,
+            person.phone,
             receipts.count,
             receipts.map(&:value).sum,
             receipts.map(&:overpaid_value).sum]
@@ -129,8 +134,13 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
       document = Tempfile.new(["admin_receipts_file", '.csv'], :encoding => 'ascii-8bit')
       content = CSV.generate(:encoding => 'UTF-8') do |csv|
         csv << ["person_id",
-          "person_name",
-          "person_address",
+          "person_first_name",
+          "person_last_name",
+          "person_organization_name",
+          "person_full_address",
+          "person_country",
+          "person_email",
+          "person_phone",
           "receipts_count",
           "receipts_value",
           "receipts_overpaid_value"]
