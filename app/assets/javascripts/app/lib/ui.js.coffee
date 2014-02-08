@@ -402,6 +402,7 @@ class Ui
       select_callback = (event, ui) ->
         hidden_field.attr('value', ui.item.id)
         text_field.attr('value', ui.item.title) if ui.item.title
+        # $(event.target).trigger "selected", [event, ui]
 
       keydown_callback = (event) ->
         if $(@).data('autocomplete')

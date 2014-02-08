@@ -269,7 +269,7 @@ Directory::Application.routes.draw do
 
     resources :products do
       collection do
-        get 'search', 'count'
+        get 'search', 'count', 'category_search'
       end
       member do
         get 'programs'

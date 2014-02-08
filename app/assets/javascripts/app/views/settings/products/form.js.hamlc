@@ -65,6 +65,17 @@
                    :name => 'after_sale_id',
                    :value => @product.after_sale_id}
 
+        .col-sm-6
+          .autocompleted.form-group
+            %label{:for => 'settings_product_category'}
+              = I18n.t('product.views.category')
+            %input{:type => 'search',
+                   :name => 'category',
+                   :id => 'settings_product_category',
+                   :class => 'form-control',
+                   :value => @product.category,
+                   :action => '/settings/products/category_search'}
+
       .row
         .col-md-6
           .checkbox

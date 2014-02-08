@@ -43,8 +43,8 @@ class ProductsDatatable
         1 => product.key,
         2 => "<b>" + product.title + "</b><br/>" + product.description,
         3 => product.variants.count,
-        # 4 => I18n.t("common." + product.has_accessories.to_s),
-        4 => product.updated_at,
+        4 => product.category,
+        5 => product.updated_at,
         'id' => product.id,
         'number_columns' => [3],
         'classes' => classes.join(" ")
@@ -79,7 +79,7 @@ class ProductsDatatable
   end
 
   def sort_column
-    columns = %w{id key description variants updated_at}
+    columns = %w{id key description variants category updated_at}
     columns[params[:iSortCol_0].to_i]
   end
 

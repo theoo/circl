@@ -55,7 +55,6 @@
                 :value => @product.quantity }
 
       .col-md-3.form-group
-        - # if @product.has_accessories
         %label{:for => 'person_affair_product_position'}
           = I18n.t('product.views.position')
         %input{ :type => 'number',

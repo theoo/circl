@@ -26,24 +26,21 @@ $.fn.product = ->
 
 class PersonAffairProductExtention extends App.ExtendedController
 
-  render: =>
+  init_locals: =>
+    # Theses locals need to be set when template has been rendered
     @product_field = @el.find("#person_affair_product_search")
     @product_id_field = @el.find("input[name=product_id]")
     @program_field = @el.find("#person_affair_product_program_search")
     @program_id_field = @el.find("input[name=program_id]")
 
-    ### Callbacks ###
-    # product is cleared
-    @product_field.on 'keyup search', (e) =>
-      # if $(e.target).val() == ''
+  product_selected: (e, ui) =>
+    @product_id_field.val ui.item.id
 
-    # product is selected
-    @product_field.autocomplete('option', 'select', (e, ui) =>
-      @product_id_field.val ui.item.id
-      # set program search url
-      @program_field.autocomplete({source: '/settings/products/' + ui.item.id + '/programs' })
-    )
+    @program_field.autocomplete source: '/settings/products/' + ui.item.id + '/programs'
 
+    if ui.item.program_key
+      @program_field.val ui.item.program_key
+      @program_id_field.val ui.item.program_id
 
 class New extends PersonAffairProductExtention
   events:
@@ -61,10 +58,12 @@ class New extends PersonAffairProductExtention
     @render()
 
   render: =>
-    super
     @show()
     @product = new PersonAffairProductsProgram(quantity: 1)
     @html @view('people/affairs/products/form')(@)
+    @init_locals()
+
+    @product_field.autocomplete select: @product_selected
 
     if @disabled() then @disable_panel() else @enable_panel()
 
@@ -91,11 +90,14 @@ class Edit extends PersonAffairProductExtention
 
   render: =>
     return unless PersonAffairProductsProgram.exists(@id) && @can
-    super
-
     @product = PersonAffairProductsProgram.find(@id)
 
     @html @view('people/affairs/products/form')(@)
+    @init_locals()
+
+    @product_field.autocomplete select: @product_selected
+    @program_field.autocomplete source: '/settings/products/' + @product.product_id + '/programs'
+
     @show()
     if @disabled() then @disable_panel() else @enable_panel()
 
