@@ -68,6 +68,7 @@ class AffairsProductsProgram < ActiveRecord::Base
     h[:key]             = product.try(:key)
     h[:title]           = variant.title.blank? ? product.title : [product.title, variant.title].join(" / ")
     h[:description]     = product.try(:description)
+    h[:category]        = product.try(:category)
     h[:value]           = value.to_f
 
     h[:errors]         = errors
