@@ -131,14 +131,10 @@ class Index extends App.ExtendedController
   render: =>
     @html @view('people/affairs/products/index')(@)
     @el.find('table.datatable')
-      .rowGrouping
-        iGroupingColumnIndex: 0
-        iGroupingOrderByColumnIndex: 0
-        sGroupingClass: 'active'
       .rowReordering(
-        bGroupingUsed: false
-        iIndexColumn: 1
-        bHideGroupingColumn: false)
+        sURL: PersonAffairProductsProgram.url() + "/change_order"
+        sRequestType: "GET"
+        fnSuccess: (data) -> PersonAffairProductsProgram.refresh(data))
 
   edit: (e) ->
     @id = $(e.target).product()

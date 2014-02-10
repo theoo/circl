@@ -53,7 +53,7 @@ Directory::Application.routes.draw do
 
       resources :products, :controller => 'people/affairs/products' do
         collection do
-          get 'search'
+          get 'search', 'change_order'
         end
       end
 

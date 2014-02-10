@@ -74,7 +74,8 @@ class Affair < ActiveRecord::Base
   has_many    :extras, :dependent => :destroy
   has_many    :tasks, :dependent => :destroy
   has_many    :product_items, :class_name => 'AffairsProductsProgram',
-                              :dependent => :destroy
+                              :dependent => :destroy,
+                              :order => :position
   has_many    :products, :through => :product_items
   has_many    :programs, :through => :product_items
   # has_many    :product_variants, :through => :products

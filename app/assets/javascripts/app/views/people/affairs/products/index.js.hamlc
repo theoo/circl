@@ -1,7 +1,7 @@
 %table.datatable
   %thead
     %tr
-      %th.ignore-sort= I18n.t('product.views.category')
+      - # %th.ignore-sort= I18n.t('product.views.category')
       %th.ignore-sort= I18n.t('common.table.position')
       %th.ignore-sort= I18n.t('common.table.quantity')
       %th.ignore-sort= I18n.t('common.key')
@@ -11,10 +11,9 @@
   %tbody
     - for item in App.PersonAffairProductsProgram.all()
       - classes = ['item']
-      -# classes.push 'success' if ! item.archive
       - # id is required for datatable reordering
-      %tr{:data-id => item.id, :class => classes.join(" "), :id => "person_affair_product_#{item.id}"}
-        %td= item.category
+      %tr{:data-id => item.id, :class => classes.join(" "), :id => item.id}
+        - # %td= item.category
         %td= item.position
         %td= item.quantity
         %td= item.key
