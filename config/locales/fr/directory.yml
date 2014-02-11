@@ -3,7 +3,7 @@ fr:
   directory:
     errors:
       no_file_submitted: Veuillez sélectionner un fichier
-      query_empty: Aucune requête transmise, veuillez en fournir une et recommancer.
+      query_empty: Aucune requête transmise, veuillez en fournir une et recommencer.
       query_invalid: requête "%{query}" invalide
       search_error: erreur lors de la recherche -> %{error}
       wrong_file_format: Mauvais format de fichier
