@@ -346,7 +346,7 @@ class Person < ActiveRecord::Base
         p.first_name         = row[0]
         p.last_name          = row[1]
         p.title              = row[2]
-        p.is_an_organization = ['1', 'true'].include?(row[3])
+        p.is_an_organization = ['1', 'true', 'True'].include?(row[3])
         p.organization_name  = row[4]
         p.address            = row[5]
         p.phone              = row[8]
@@ -358,7 +358,7 @@ class Person < ActiveRecord::Base
         p.nationality        = row[15]
         p.avs_number         = row[16]
         p.bank_informations  = row[17]
-        p.hidden             = ['1', 'true'].include?(row[24])
+        p.hidden             = ['1', 'true', 'True'].include?(row[24])
 
         p.valid?
 
