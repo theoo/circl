@@ -61,7 +61,6 @@ class SearchEngineExtention extends App.ExtendedController
           ary.push @.trim()
         @custom_action.disabled = ary
 
-
   toggle_edit: (e) ->
     e.preventDefault()
     $("#presets_summary").collapse("toggle")
@@ -446,6 +445,13 @@ class Index extends App.ExtendedController
             'phone' ]
         attribues_order:
           [ 'created_at' ]
+
+    # Ensure datatable show a page where there is content
+    panel_name = "datatable/directory"
+    datatable_config = JSON.parse(localStorage.getItem(panel_name))
+    if datatable_config.iLength < datatable_config.iStart
+      datatable_config.iStart = datatable_config.iLength
+      localStorage.setItem(panel_name, JSON.stringify(datatable_config))
 
   active: (params) ->
     @render()
