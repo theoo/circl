@@ -208,6 +208,7 @@ class Salaries::Salary < ActiveRecord::Base
   validate :ensure_person_have_required_fields, :if => :person
   validate :ensure_interval_dates_are_for_the_same_year, :if => [:from, :to]
   validate :ensure_from_date_is_before_to_date, :if => [:from, :to]
+  validate :ensure_taxes_have_data_for_the_given_interval, :if => [:from, :to]
   validates_numericality_of :activity_rate,
                             :greater_than_or_equal_to => 0,
                             :less_than_or_equal_to => 100,
@@ -526,7 +527,6 @@ class Salaries::Salary < ActiveRecord::Base
                  I18n.t('salary.errors.from_and_to_dates_should_be_in_the_same_year'))
       false
     end
-
   end
 
   def ensure_from_date_is_before_to_date
@@ -537,7 +537,24 @@ class Salaries::Salary < ActiveRecord::Base
                  I18n.t('salary.errors.to_date_should_be_after_from_date'))
       false
     end
+  end
 
+  def ensure_taxes_have_data_for_the_given_interval
+    taxes_without_data = []
+    Salaries::Tax.all.each do |tax|
+      # NOTE Salary have to be in the same year, check validation above
+      if tax.model.constantize.where(:tax_id => tax.id, :year => to.year).count == 0
+        taxes_without_data << tax.title
+      end
+    end
+
+    unless taxes_without_data.empty?
+      errors.add(:base,
+                 I18n.t('salary.errors.missing_tax_data_for_the_given_year',
+                  :taxes => taxes_without_data.join(", "),
+                  :year => to.year))
+      false
+    end
   end
 
 end

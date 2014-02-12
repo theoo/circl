@@ -94,7 +94,6 @@ class Salaries::Item < ActiveRecord::Base
   validates_length_of :title, :maximum => 255
   validates_length_of :category, :maximum => 255
 
-
   ########################
   ### INSTANCE METHODS ###
   ########################
