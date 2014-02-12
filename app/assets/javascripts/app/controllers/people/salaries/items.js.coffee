@@ -40,6 +40,21 @@ class App.PersonSalaryItems extends App.ExtendedController
 
   render: =>
     @items = _.sortBy PersonSalaryItem.all(), (d) -> d.position
+
+    # select not archives taxes
+    @available_taxes = App.SalaryTax.actives()
+    available_taxes_ids = _.map(@available_taxes, (t) -> t.id)
+
+    # select currently used archives, even if archived
+    items_taxes_ids = _.uniq(_.flatten(_.map(@items, (i) -> i.tax_ids)))
+
+    # extract archived and used taxes
+    ids = _.difference(items_taxes_ids, available_taxes_ids)
+
+    # append archived taxes to @available_taxes
+    for tax_id in ids
+      @available_taxes.push App.SalaryTax.find(tax_id)
+
     @html @view('people/salaries/items')(@)
 
     # Keep width

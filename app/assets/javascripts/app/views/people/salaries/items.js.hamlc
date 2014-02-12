@@ -10,8 +10,11 @@
         %th= I18n.t('common.position')
         %th= I18n.t('common.title')
         %th= I18n.t('common.value')
-        - for tax in App.SalaryTax.all()
-          %th= tax.title
+        - for tax in @available_taxes
+          - if tax.archive
+            %th.danger= tax.title
+          - else
+            %th= tax.title
         %th= I18n.t('item.views.category')
         %th{:style => 'min-width: 130px', :class => 'ignore-click'}= I18n.t('common.actions')
 
@@ -34,8 +37,10 @@
                     :step => 0.01,
                     :class => 'form-control',
                     :value => item.value }
-          - for tax in App.SalaryTax.all()
-            %td.tax
+          - for tax in @available_taxes
+            - classes = ["tax"]
+            - classes.push "danger" if tax.archive
+            %td{:class => classes.join(" ")}
               %input{ :name => "items[#{index}][tax_ids][]",
                       :type => 'checkbox',
                       :checked => (tax.id in item.tax_ids),
@@ -78,8 +83,10 @@
                   :type => 'number',
                   :class => 'form-control',
                   :step => 0.01 }
-        - for tax in App.SalaryTax.all()
-          %td.tax
+        - for tax in @available_taxes
+          - classes = ["tax"]
+          - classes.push "danger" if tax.archive
+          %td{:class => classes.join(" ")}
             %input{ :name => "items[#{unique_id}][tax_ids][]",
                     :type => 'checkbox',
                     :checked => false,

@@ -17,7 +17,7 @@
 class App.SalaryTax extends Spine.Model
 
   @configure 'SalaryTax', 'title', 'model', 'employee_account', 'employer_account',
-             'exporter_avs_group', 'exporter_lpp_group', 'exporter_is_group'
+             'exporter_avs_group', 'exporter_lpp_group', 'exporter_is_group', 'archive'
 
   @extend Spine.Model.Ajax
 
@@ -26,6 +26,12 @@ class App.SalaryTax extends Spine.Model
 
   constructor: ->
     super
+
+  @actives: ->
+    taxes = []
+    for attr in @all()
+      taxes.push(attr) unless attr.archive
+    taxes
 
   @fetch_count: ->
     get_callback = (data) =>

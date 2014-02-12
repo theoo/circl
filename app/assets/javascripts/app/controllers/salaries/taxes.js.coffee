@@ -34,18 +34,20 @@ class New extends App.ExtendedController
     @render()
 
   render: =>
-    @tax = new SalaryTax()
+    @tax = new SalaryTax(archive: false)
     @html @view('salaries/taxes/form')(@)
 
   submit: (e) ->
     e.preventDefault()
-    form = @tax.fromForm(e.target)
+    data = $(e.target).serializeObject()
+    @tax.load(data)
 
-    group = form.exporter_group
-    form[group] = true
-    delete form['exporter_group']
+    group = @tax.exporter_group
+    @tax[group] = true
+    delete @tax['exporter_group']
+    @tax.archive = data.archive?
 
-    @save_with_notifications form, @render
+    @save_with_notifications @tax, @render
 
 class Edit extends App.ExtendedController
   events:
@@ -73,13 +75,15 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    form = @tax.fromForm(e.target)
+    data = $(e.target).serializeObject()
+    @tax.load(data)
 
-    group = form.exporter_group
-    form[group] = true
-    delete form['exporter_group']
+    group = @tax.exporter_group
+    @tax[group] = true
+    delete @tax['exporter_group']
+    @tax.archive = data.archive?
 
-    @save_with_notifications form, @hide
+    @save_with_notifications @tax, @hide
 
   stack_upload_window: (e) ->
     e.preventDefault()

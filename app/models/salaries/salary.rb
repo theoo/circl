@@ -267,7 +267,7 @@ class Salaries::Salary < ActiveRecord::Base
 
   def init_items
     wage = yearly_salary && yearly_salary_count ? self.yearly_salary / self.yearly_salary_count : 1000.to_money
-    taxes = Salaries::Tax.all
+    taxes = Salaries::Tax.where(:archive => false).all
     item = Salaries::Item.new(:title => I18n.t("salary.views.generic_template_item_title"),
                               :category => I18n.t("salary.views.generic_template_item_category"), 
                               :position => 0,

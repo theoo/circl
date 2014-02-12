@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140113125819) do
+ActiveRecord::Schema.define(:version => 20140212101717) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -617,6 +617,7 @@ ActiveRecord::Schema.define(:version => 20140113125819) do
     t.boolean  "exporter_lpp_group", :default => false, :null => false
     t.boolean  "exporter_is_group",  :default => false, :null => false
     t.string   "employer_account",   :default => ""
+    t.boolean  "archive",            :default => false, :null => false
   end
 
   add_index "salaries_taxes", ["exporter_avs_group"], :name => "index_salaries_taxes_on_exporter_avs_group"
