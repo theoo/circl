@@ -451,7 +451,7 @@ class Index extends App.ExtendedController
     panel_name = "datatable/directory"
     datatable_config = JSON.parse(localStorage.getItem(panel_name))
     if datatable_config.iLength < datatable_config.iStart
-      datatable_config.iStart = datatable_config.iLength
+      datatable_config.iStart = 0
       localStorage.setItem(panel_name, JSON.stringify(datatable_config))
 
   active: (params) ->
