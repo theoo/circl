@@ -144,13 +144,40 @@ class Settings::ProductsController < ApplicationController
         .limit(10)
     end
 
+    h = result.map do |p|
+      if p.available_programs.count == 1
+        { :id => p.id,
+          :label => p.key,
+          :title => p.title,
+          :desc => p.description,
+          :program_key => p.available_programs.first.key,
+          :program_id => p.available_programs.first.id }
+      else
+        { :id => p.id,
+          :label => p.key,
+          :title => p.title,
+          :desc => p.description }
+      end
+    end
+
     respond_to do |format|
       format.json do
-        render :json => result.map{ |t| { :id => t.id,
-          :label => t.key,
-          :title => t.title,
-          :desc => t.description }}
+        render :json => h
       end
+    end
+  end
+
+  def category_search
+    if params[:term].blank?
+      results = []
+    else
+      param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
+      results = @products.where("products.category ~* ?", params[:term])
+        .select("DISTINCT(products.category)")
+    end
+
+    respond_to do |format|
+      format.json { render :json => results.map{ |p| { :label => p.category }}}
     end
   end
 
@@ -160,7 +187,7 @@ class Settings::ProductsController < ApplicationController
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       result = @product
-        .programs
+        .available_programs
         .where("product_programs.key ~* ? OR product_programs.title ~* ?", param, param)
         .limit(10)
     end

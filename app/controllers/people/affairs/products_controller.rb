@@ -147,6 +147,32 @@ class People::Affairs::ProductsController < ApplicationController
     end
   end
 
+  def change_order
+    authorize! :update, @person => AffairsProductsProgram
+    @product = AffairsProductsProgram.find(params[:id])
+    success = false
+
+    AffairsProductsProgram.transaction do
+      siblings = @affair.product_items.all
+      siblings.delete @product
+      siblings.insert(params[:toPosition].to_i, @product)
+      siblings.reverse.each_with_index do |s, i|
+        u = AffairsProductsProgram.find(s.id)
+        u.update_attributes(:position => i)
+      end
+
+      success = true
+    end
+
+    respond_to do |format|
+      if success
+        format.json { render :json => @affair.product_items.all }
+      else
+        format.json { render :json => @product.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
   private
 
   def update_instance(prod)

@@ -49,7 +49,9 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   validates :affair_id, :presence => true
   validates :product_id, :presence => true
-  validates :position, :presence => true, :uniqueness => { :scope => :affair_id }
+  validates :position, :presence => true
+  # unable to validate uniqueness when reordering items
+  #, :uniqueness => { :scope => :affair_id }
   validates :quantity, :presence => true
   # TODO: edit if this validation should exists in application settings.
   # validate :uniquness_of_jointure, :if => Proc.new {|i| i.new_record?}
@@ -68,6 +70,7 @@ class AffairsProductsProgram < ActiveRecord::Base
     h[:key]             = product.try(:key)
     h[:title]           = variant.title.blank? ? product.title : [product.title, variant.title].join(" / ")
     h[:description]     = product.try(:description)
+    h[:category]        = product.try(:category)
     h[:value]           = value.to_f
 
     h[:errors]         = errors

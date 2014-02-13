@@ -17,7 +17,7 @@
 class App.Product extends Spine.Model
 
   @configure 'Product', "id", "provider_id", "after_sale_id", "key", "title",
-              "description", "has_accessories", "archive", "variants"
+              "description", "has_accessories", "archive", "variants", "category"
 
   @extend Spine.Model.Ajax
   @url: -> undefined
