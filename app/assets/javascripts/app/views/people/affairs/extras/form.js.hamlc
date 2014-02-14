@@ -39,7 +39,7 @@
                     :name => 'value',
                     :value => @extra.value }
             .input-group-addon
-              != @partial('select_currency')(currency: @extra.value_currency, name: 'value_currency')
+              != @partial('select_currency')(currency: @extra.value_currency, name: 'value_currency', value: @extra.value)
 
       .col-sm-3
         .form-group
@@ -52,7 +52,6 @@
                   :min => 0.1,
                   :name => 'quantity',
                   :value => @extra.quantity }
-
 
       .col-sm-3
         .form-group

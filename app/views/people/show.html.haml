@@ -119,11 +119,11 @@
                   = I18n.t('task_rate.views.rates')
 
         .col-md-6
-          //   - if can? :read, @person => Affair
-          //     #person_affair_tasks.panel.panel-default
-          //       .panel-heading
-          //         .panel-title
-          //           = I18n.t('affair.views.tasks')
+          - if can? :read, @person => Affair
+            #person_affair_tasks.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('affair.views.tasks')
 
           - if can? :read, @person => Affair
             #person_affair_products.panel.panel-default

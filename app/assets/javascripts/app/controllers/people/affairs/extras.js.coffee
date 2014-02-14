@@ -23,6 +23,7 @@ $.fn.extra = ->
 class New extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'change select.currency_selector': 'on_currency_change'
 
   constructor: ->
     super
@@ -51,15 +52,26 @@ class New extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @extra.fromForm(e.target), @render
 
+  on_currency_change: (e) ->
+    e.preventDefault()
+    currency_input = $(e.target)
+    vat_currency_input = @el.find("input[name=vat_currency]")
+    vat_currency_input.val currency_input.val()
+    @el.find("##{@ids_prefix}vat_currency").html(currency_input.val())
+
+    @adjust_vat(e)
+
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click a[name=person-affair-extra-destroy]': 'destroy'
+    'change select.currency_selector': 'on_currency_change'
 
   constructor: ->
     super
+    @ids_prefix = 'person_affair_extra_'
     @setup_vat
-      ids_prefix: 'person_affair_extra_'
+      ids_prefix: @ids_prefix
       bind_events: (App.ApplicationSetting.value('use_vat') == "true")
 
   active: (params) =>
@@ -89,6 +101,14 @@ class Edit extends App.ExtendedController
     if confirm(I18n.t('common.are_you_sure'))
       @destroy_with_notifications @extra, @hide
 
+  on_currency_change: (e) ->
+    e.preventDefault()
+    currency_input = $(e.target)
+    vat_currency_input = @el.find("input[name=vat_currency]")
+    vat_currency_input.val currency_input.val()
+    @el.find("##{@ids_prefix}vat_currency").html(currency_input.val())
+
+    @adjust_vat(e)
 
 class Index extends App.ExtendedController
   events:

@@ -16,9 +16,12 @@
                     :value => @.object.vat }
             .input-group-addon
               - if @.object.vat_currency
-                = @.object.vat_currency
+                - vat_currency = @.object.vat_currency
               - else
-                = App.ApplicationSetting.value("default_currency")
+                - vat_currency = App.ApplicationSetting.value("default_currency")
+              %input{:type => 'hidden', :name => 'vat_currency', :value => vat_currency}
+              %div{:id => "#{@.prefix}vat_currency"}
+                = vat_currency
 
       .col-sm-6
         .form-group

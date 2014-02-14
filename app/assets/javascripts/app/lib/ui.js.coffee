@@ -59,21 +59,17 @@ class Ui
 
   bind_currency_selector: ->
     $(document).on 'change', 'select.currency_selector', (e) ->
-      input = $(e.target).closest(".input-group").find("input[type=number]")
-      hidden_field = $(e.target).siblings("input[name=current_currency]")
-
-      target_currency = $(e.target).val()
-      current_currency = hidden_field.val()
-      value = input.val()
+      value_input        = $(e.target).closest(".input-group").find("input[type=number]")
+      ref_currency_input = $(e.target).siblings("input[name=reference_currency]")
+      ref_value_input    = $(e.target).siblings("input[name=reference_value]")
 
       data =
-        target_currency: target_currency
-        current_currency: current_currency
-        current_value: value
+        target_currency: $(e.target).val()
+        reference_currency: ref_currency_input.val()
+        reference_value: ref_value_input.val()
 
       success = (d) ->
-        hidden_field.val(target_currency)
-        input.val(d.target_value)
+        value_input.val(d.target_value)
 
       $.get "/settings/currency_rates/exchange", data, success, 'json'
 

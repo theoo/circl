@@ -300,6 +300,7 @@ class App.ExtendedController extends Spine.Controller
 
   adjust_vat: (e) =>
     e.preventDefault() if e
+    console.log e
     @update_vat()
     @highlight_vat()
 

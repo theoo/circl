@@ -124,7 +124,7 @@
                   :name => 'value',
                   :value => @task.value }
           .input-group-addon
-            != @partial('select_currency')(currency: @task.value_currency, name: 'value_currency')
+            != @partial('select_currency')(currency: @task.value_currency, name: 'value_currency', value: @task.value)
 
         %small.help-block
           - if @task.value != @task.computed_value
