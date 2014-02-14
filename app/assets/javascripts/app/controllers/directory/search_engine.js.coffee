@@ -450,7 +450,7 @@ class Index extends App.ExtendedController
     # Ensure datatable show a page where there is content
     panel_name = "datatable/directory"
     datatable_config = JSON.parse(localStorage.getItem(panel_name))
-    if datatable_config.iLength < datatable_config.iStart
+    if datatable_config? and datatable_config.iLength < datatable_config.iStart
       datatable_config.iStart = 0
       localStorage.setItem(panel_name, JSON.stringify(datatable_config))
 
