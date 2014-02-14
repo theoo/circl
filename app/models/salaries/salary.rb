@@ -237,7 +237,7 @@ class Salaries::Salary < ActiveRecord::Base
   end
 
   def untaxed_items_total
-    untaxed_items.map(&:value).sum
+    untaxed_items.map(&:value).sum.to_money
   end
 
   def pdf_up_to_date?
@@ -399,7 +399,7 @@ class Salaries::Salary < ActiveRecord::Base
   end
 
   def net_salary
-    gross_pay - employee_value_total
+    gross_pay + untaxed_items_total - employee_value_total
   end
 
   def employer_value_total
@@ -541,7 +541,7 @@ class Salaries::Salary < ActiveRecord::Base
 
   def ensure_taxes_have_data_for_the_given_interval
     taxes_without_data = []
-    Salaries::Tax.all.each do |tax|
+    Salaries::Tax.where(:archive => false).each do |tax|
       # NOTE Salary have to be in the same year, check validation above
       if tax.model.constantize.where(:tax_id => tax.id, :year => to.year).count == 0
         taxes_without_data << tax.title
