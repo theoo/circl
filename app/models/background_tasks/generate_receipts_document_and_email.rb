@@ -108,6 +108,7 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
             person.location.try(:country).try(:name),
             person.email,
             person.phone,
+            person.main_communication_language.try(:name),
             receipts.count,
             receipts.map(&:value).sum,
             receipts.map(&:overpaid_value).sum]
@@ -141,6 +142,7 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
           "person_country",
           "person_email",
           "person_phone",
+          "person_main_communication_language",
           "receipts_count",
           "receipts_value",
           "receipts_overpaid_value"]
