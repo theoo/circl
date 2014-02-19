@@ -306,7 +306,7 @@ class Salaries::Salary < ActiveRecord::Base
   def create_missing_tax_data
     next_pos = tax_data.size
     existing_ids = tax_data.map(&:tax_id)
-    Salaries::Tax.all.reject{ |t| existing_ids.include?(t.id) }.each do |tax|
+    Salaries::Tax.where(:archive => false).reject{ |t| existing_ids.include?(t.id) }.each do |tax|
       data = tax_data.build(:tax => tax, :position => next_pos)
       data.reset
       data.save!

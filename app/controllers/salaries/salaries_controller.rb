@@ -29,7 +29,7 @@ class Salaries::SalariesController < ApplicationController
   monitor_changes :@salary
 
   def index
-    authorize! :index, Product
+    authorize! :index, Salaries::Salary
 
     respond_to do |format|
       format.json { render :json => SalariesDatatable.new(view_context) }

@@ -69,11 +69,17 @@ class Salaries::Tax < ActiveRecord::Base
            :class_name => 'Salaries::TaxData'
 
   has_many :generic_taxes,
-           :class_name => 'Salaries::Taxes::Generic'
+           :class_name => 'Salaries::Taxes::Generic',
+           :dependent => :delete_all
   has_many :age_taxes,
-           :class_name => 'Salaries::Taxes::Age'
+           :class_name => 'Salaries::Taxes::Age',
+           :dependent => :delete_all
   has_many :is_taxes,
-           :class_name => 'Salaries::Taxes::Is'
+           :class_name => 'Salaries::Taxes::Is',
+           :dependent => :delete_all
+  has_many :is2014_taxes,
+           :class_name => 'Salaries::Taxes::Is2014',
+           :dependent => :delete_all
 
 
   ########################
