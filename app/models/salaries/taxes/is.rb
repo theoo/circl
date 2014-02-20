@@ -126,34 +126,53 @@ class Salaries::Taxes::Is < ActiveRecord::Base
            .where('yearly_from_in_cents <= ? and ? <= yearly_to_in_cents', *([infos.yearly_salary.cents] * 2))
            .first
 
-    raise RuntimeError, 'cannot find data' unless data
-
     children_count = infos.children_count
     children_count = 5 if children_count > 5
 
-    percent = if children_count > 0
-                data.send("percent_children_#{children_count}")
-              elsif infos.married?
-                data.percent_married
-              else
-                data.percent_alone
-              end
+    if data
+      percent = if children_count > 0
+                  data.send("percent_children_#{children_count}")
+                elsif infos.married?
+                  data.percent_married
+                else
+                  data.percent_alone
+                end
 
-    {
-      :taxed_value => reference_value,
-      :employer =>
       {
-        :percent => 0,
-        :value   => 0.to_money,
-        :use_percent  => true
-      },
-      :employee =>
-      {
-        :percent => percent,
-        :value   => reference_value * (percent / 100),
-        :use_percent  => true
+        :taxed_value => reference_value,
+        :employer =>
+        {
+          :percent => 0,
+          :value   => 0.to_money,
+          :use_percent  => true
+        },
+        :employee =>
+        {
+          :percent => percent,
+          :value   => reference_value * (percent / 100),
+          :use_percent  => true
+        }
       }
-    }
+
+    else
+
+      {
+        :taxed_value => reference_value,
+        :employer =>
+        {
+          :percent => 0,
+          :value   => 0.to_money,
+          :use_percent  => true
+        },
+        :employee =>
+        {
+          :percent => 0,
+          :value   => 0.to_money,
+          :use_percent  => true
+        }
+      }
+
+    end
   end
 
   def self.process_data(tax, data)

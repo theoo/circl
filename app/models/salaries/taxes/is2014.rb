@@ -131,7 +131,7 @@ class Salaries::Taxes::Is2014 < ActiveRecord::Base
         :employee =>
         {
           :percent => data.tax_value_percentage,
-          :value   => data.tax_value,
+          :value   => reference_value / 100 * data.tax_value_percentage,
           :use_percent  => true
         }
       }
