@@ -32,6 +32,7 @@ class AffairsProductsProgram < ActiveRecord::Base
   #################
 
   before_validation :set_position_if_none_given, :if => Proc.new {|i| i.position.blank? }
+  before_save :insert_in_list_if_accessory
 
   #################
   ### RELATIONS ###
@@ -119,6 +120,20 @@ class AffairsProductsProgram < ActiveRecord::Base
     if self.class.where(:affair_id => affair_id, :product_id => product_id, :program_id => program_id).count > 0
       errors.add :base, I18n.t("product_variant.errors.this_relation_already_exists")
       false
+    end
+  end
+
+  def insert_in_list_if_accessory
+    if new_record? and parent
+      siblings = affair.product_items.all
+      last_child = parent.children.order(:position).last
+      i = siblings.index(last_child) + 1
+      self.position = i
+      siblings.insert i, self
+
+      siblings.each_with_index do |s, i|
+        s.update_attributes(:position => i) unless s == self
+      end
     end
   end
 
