@@ -72,15 +72,18 @@ class Product < ActiveRecord::Base
     h[:variants_count] = variants.count
 
     h[:variants] = variants.map do |v|
-      { :id            => v.id,
-        :product_id    => v.product_id,
-        :program_group => v.program_group,
-        :title         => v.title,
-        :buying_price  => v.buying_price.to_f,
-        :selling_price => v.selling_price.to_f,
-        :art           => v.art.to_f,
-        :created_at    => v.created_at,
-        :updated_at    => v.updated_at }
+      { :id                     => v.id,
+        :product_id             => v.product_id,
+        :program_group          => v.program_group,
+        :title                  => v.title,
+        :buying_price           => v.buying_price.to_f,
+        :buying_price_currency  => v.buying_price_currency,
+        :selling_price          => v.selling_price.to_f,
+        :selling_price_currency => v.selling_price_currency,
+        :art                    => v.art.to_f,
+        :art_currency           => v.art_currency,
+        :created_at             => v.created_at,
+        :updated_at             => v.updated_at }
     end
 
     h[:errors]         = errors

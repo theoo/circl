@@ -266,7 +266,7 @@ class Salaries::Salary < ActiveRecord::Base
   end
 
   def init_items
-    wage = yearly_salary && yearly_salary_count ? self.yearly_salary / self.yearly_salary_count : 1000.to_money
+    wage = yearly_salary && yearly_salary_count ? self.yearly_salary / self.yearly_salary_count : 1000.to_money(self.yearly_salary_currency)
     taxes = Salaries::Tax.all
     item = Salaries::Item.new(:title => I18n.t("salary.views.generic_template_item_title"),
                               :category => I18n.t("salary.views.generic_template_item_category"), 
@@ -477,7 +477,7 @@ class Salaries::Salary < ActiveRecord::Base
 
   def yearly_salary
     # TODO, update this when moving to multicurrencies
-    is_reference ? Money.new(yearly_salary_in_cents) : reference.yearly_salary
+    is_reference ? Money.new(yearly_salary_in_cents, yearly_salary_currency) : reference.yearly_salary
   end
 
   def yearly_salary_count

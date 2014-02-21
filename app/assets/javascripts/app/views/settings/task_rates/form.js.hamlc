@@ -27,7 +27,8 @@
                   :value => @task_rate.value,
                   :class => 'form-control required'}
           .input-group-addon
-            CHF /
+            != @partial('select_currency')(currency: @task_rate.value_currency, name: 'value_currency', value: @task_rate.value)
+            = "/"
             = I18n.t("common.hour")
 
     .row

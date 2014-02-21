@@ -57,8 +57,11 @@ class VariantsController extends App.ExtendedController
         title: tr.find("input[name='variants[][title]']").val()
         description: tr.find("textarea[name='variants[][description]']").val()
         buying_price: tr.find("input[name='variants[][buying_price]']").val()
+        buying_price_currency: tr.find("select[name='variants[][buying_price_currency]']").val()
         selling_price: tr.find("input[name='variants[][selling_price]']").val()
+        selling_price_currency: tr.find("select[name='variants[][selling_price_currency]']").val()
         art: tr.find("input[name='variants[][art]']").val()
+        art_currency: tr.find("select[name='variants[][art_currency]']").val()
         program_group: tr.find("select[name='variants[][program_group]'] option:selected").val()
 
       values.push val

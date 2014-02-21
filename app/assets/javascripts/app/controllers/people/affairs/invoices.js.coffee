@@ -29,6 +29,7 @@ $.fn.invoice = ->
 class New extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'currency_changed select.currency_selector': 'on_currency_change'
 
   constructor: (params) ->
     super
@@ -84,6 +85,7 @@ class Edit extends App.ExtendedController
     'click a[name="invoice-preview-pdf"]': 'preview'
     'click a[name="invoice-destroy"]': 'destroy'
     'click a[name="invoice-add-receipt"]': 'add_receipt'
+    'currency_changed select.currency_selector': 'on_currency_change'
 
   constructor: (params) ->
     super
@@ -108,14 +110,9 @@ class Edit extends App.ExtendedController
     @affair = PersonAffair.find(@invoice.affair_id)
 
     @html @view('people/affairs/invoices/form')(@)
-    # Disable destroy if invoice have receipts
-    #unless @invoice.receipts_value > 0
-      #destroy = $(@el).find('button[name=invoice-destroy]')
-      #destroy.prop('disabled', true)
-      #destroy.popover(title: 'unable',
-                      #content: "asdf a asdf  fasd s dfkasdlkj a dsf sdfk",
-                      #placement: 'auto bottom',
-                      #trigger: 'click')
+
+    if App.ApplicationSetting.value('use_vat') == "true"
+      @highlight_vat()
 
   update_callback: =>
     PersonAffair.fetch()

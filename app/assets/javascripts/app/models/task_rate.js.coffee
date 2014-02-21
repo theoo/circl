@@ -16,7 +16,7 @@
 
 class App.TaskRate extends Spine.Model
 
-  @configure 'TaskRate', 'title', 'description', 'value', 'archive'
+  @configure 'TaskRate', 'title', 'description', 'value', 'value_currency', 'archive'
 
   @extend Spine.Model.Ajax
 

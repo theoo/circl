@@ -126,16 +126,16 @@
                   = I18n.t('affair.views.tasks')
 
           - if can? :read, @person => Affair
-            #person_affair_products.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('affair.views.products')
-
-          - if can? :read, @person => Affair
             #person_affair_extras.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('affair.views.extras')
+
+          - if can? :read, @person => Affair
+            #person_affair_products.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('affair.views.products')
 
       .well
         #balance

@@ -103,15 +103,17 @@
                               :name => "values[][private_tag_id]",
                               :value => value.private_tag_id }
 
-
-                  %td
-                    %input{ :type => 'number',
-                            :class => 'form-control',
-                            :step => 0.01,
-                            :min => 0,
-                            :max => 1000000,
-                            :name => "values[][value]",
-                            :value => value.value }
+                  %td.col-xs-4
+                    .input-group
+                      %input{ :type => 'number',
+                              :class => 'form-control',
+                              :step => 0.01,
+                              :min => 0,
+                              :max => 1000000,
+                              :name => "values[][value]",
+                              :value => value.value }
+                      .input-group-addon
+                        != @partial('select_currency')(currency: value.value_currency, name: 'value_currency', value: value.value)
 
                   %td
                     %select{:name => 'values[][invoice_template_id]', :class => 'form-control'}
@@ -142,14 +144,17 @@
                     %input{ :type => 'hidden',
                             :name => "values[][private_tag_id]"}
 
+                %td.col-xs-4
+                  .input-group
+                    %input{ :type => 'number',
+                            :class => 'form-control',
+                            :step => 0.01,
+                            :min => 0,
+                            :max => 1000000,
+                            :name => "values[][value]"}
+                    .input-group-addon
+                      != @partial('select_currency')(name: 'value_currency')
 
-                %td
-                  %input{ :type => 'number',
-                          :class => 'form-control',
-                          :step => 0.01,
-                          :min => 0,
-                          :max => 1000000,
-                          :name => "values[][value]" }
                 %td
                   %select{:name => 'values[][invoice_template_id]', :class => 'form-control'}
                     %option{:value => ""}

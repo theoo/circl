@@ -45,7 +45,7 @@ class Settings::TaskTypesController < ApplicationController
   end
 
   def create
-    @task_type.value = params[:value]
+    @task_type.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @task_type.save
         format.json { render :json => @task_type }
@@ -62,7 +62,7 @@ class Settings::TaskTypesController < ApplicationController
   end
 
   def update
-    @task_type.value = params[:value]
+    @task_type.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @task_type.update_attributes(params[:task_type])
         format.json { render :json => @task_type }

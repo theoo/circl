@@ -63,6 +63,14 @@ class Ui
       ref_currency_input = $(e.target).siblings("input[name=reference_currency]")
       ref_value_input    = $(e.target).siblings("input[name=reference_value]")
 
+      # When object is new, there is no reference value
+      unless ref_currency_input.val()
+        ref_currency_input = $(e.target).closest(".input-group").find("input[name=value_currency]")
+
+      unless ref_value_input.val()
+        val = $(e.target).closest(".input-group").find("input[name=value]").val()
+        ref_value_input.val(val)
+
       data =
         target_currency: $(e.target).val()
         reference_currency: ref_currency_input.val()
@@ -70,6 +78,7 @@ class Ui
 
       success = (d) ->
         value_input.val(d.target_value)
+        $(e.target).trigger 'currency_changed' # Catch this in 'events:'
 
       $.get "/settings/currency_rates/exchange", data, success, 'json'
 
