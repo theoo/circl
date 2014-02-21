@@ -126,14 +126,21 @@ class AffairsProductsProgram < ActiveRecord::Base
   def insert_in_list_if_accessory
     if new_record? and parent
       siblings = affair.product_items.all
+
       last_child = parent.children.order(:position).last
-      i = siblings.index(last_child) + 1
+      if last_child
+        i = siblings.index(last_child) + 1
+      else
+        i = siblings.index(parent) + 1
+      end
+
       self.position = i
       siblings.insert i, self
 
       siblings.each_with_index do |s, i|
         s.update_attributes(:position => i) unless s == self
       end
+
     end
   end
 
