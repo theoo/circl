@@ -194,11 +194,12 @@ class People::Affairs::ProductsController < ApplicationController
     prod[:product_id] = nil unless prod[:product_id]
 
     @product.assign_attributes(
-      :parent_id  => prod[:parent_id],
-      :program_id => prod[:program_id],
-      :product_id => prod[:product_id],
-      :position   => prod[:position],
-      :quantity   => prod[:quantity])
+      :parent_id      => prod[:parent_id],
+      :program_id     => prod[:program_id],
+      :product_id     => prod[:product_id],
+      :position       => prod[:position],
+      :bid_percentage => prod[:bid_percentage],
+      :quantity       => prod[:quantity])
   end
 
 end

@@ -51,11 +51,17 @@ class AffairsProductsProgram < ActiveRecord::Base
   validates :affair_id, :presence => true
   validates :product_id, :presence => true
   validates :position, :presence => true
-  # unable to validate uniqueness when reordering items
+  # NOTE unable to validate uniqueness when reordering items
   #, :uniqueness => { :scope => :affair_id }
   validates :quantity, :presence => true
-  # TODO: edit if this validation should exists in application settings.
+  # TODO edit if this validation should exists in application settings.
   # validate :uniquness_of_jointure, :if => Proc.new {|i| i.new_record?}
+  validates_numericality_of :bid_percentage,
+                            :greater_than_or_equal_to => 0,
+                            :less_than_or_equal_to => 100,
+                            :only_integer => false,
+                            :unless => "bid_percentage.blank?"
+
 
   ########################
   #### CLASS METHODS #####
@@ -65,15 +71,17 @@ class AffairsProductsProgram < ActiveRecord::Base
   def as_json(options = nil)
     h = super(options)
 
-    h[:program_key]     = program.try(:key)
-    h[:parent_key]      = parent.try(:product).try(:key)
-    h[:has_accessories] = product.try(:has_accessories)
-    h[:key]             = product.try(:key)
-    h[:title]           = variant.title.blank? ? product.title : [product.title, variant.title].join(" / ")
-    h[:description]     = product.try(:description)
-    h[:category]        = product.try(:category)
-    h[:value]           = value.to_f
-    h[:value_currency]  = value.currency.try(:iso_code)
+    h[:program_key]        = program.try(:key)
+    h[:parent_key]         = parent.try(:product).try(:key)
+    h[:has_accessories]    = product.try(:has_accessories)
+    h[:key]                = product.try(:key)
+    h[:title]              = variant.title.blank? ? product.title : [product.title, variant.title].join(" / ")
+    h[:description]        = product.try(:description)
+    h[:category]           = product.try(:category)
+    h[:value]              = value.to_f
+    h[:value_currency]     = value.currency.try(:iso_code)
+    h[:bid_price]          = bid_price.to_f
+    h[:bid_price_currency] = bid_price.currency.try(:iso_code)
 
     h[:errors]         = errors
 
@@ -105,6 +113,13 @@ class AffairsProductsProgram < ActiveRecord::Base
     define_method(m){ product.send(m) }
   end
 
+  def bid_price
+    if bid_percentage
+      value - (value / 100 * bid_percentage)
+    else
+      value
+    end
+  end
 
   private
 

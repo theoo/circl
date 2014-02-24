@@ -12,6 +12,7 @@
     - for item in App.PersonAffairProductsProgram.all()
       - classes = ['item']
       - classes.push 'warning' if item.parent_id
+
       - # id is required for datatable reordering
       %tr{:data-id => item.id, :class => classes.join(" "), :id => item.id}
         - # %td= item.category
@@ -26,7 +27,13 @@
           - else
             != item.description.replace(/\n/g, '<br/>')
 
-        %td.number= item.value.to_view(item.value_currency)
+        %td.number
+          - if item.value != item.bid_price
+            %strike.text-danger= item.value.to_view(item.value_currency)
+            = "(-" + item.bid_percentage + "%)"
+            = item.bid_price.to_view(item.bid_price_currency)
+          - else
+            = item.value.to_view(item.value_currency)
 
 - if App.PersonAffairProductsProgram.all().length > 0
   .panel-footer

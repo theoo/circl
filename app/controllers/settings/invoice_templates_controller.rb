@@ -72,13 +72,13 @@ class Settings::InvoiceTemplatesController < ApplicationController
         @invoice_template.reload
         format.json { render :json => @invoice_template }
         format.html do
-          flash[:notice] = I18n.t("common.successfully_updated")
+          flash[:notice] = I18n.t("common.notices.successfully_updated")
           redirect_to edit_settings_invoice_template_path(@invoice_template)
         end
       else
         format.json { render :json => @invoice_template.errors, :status => :unprocessable_entity }
         format.html do
-          flash[:error] = I18n.t("common.failed_to_update")
+          flash[:error] = I18n.t("common.errors.failed_to_update")
           render 'edit', :layout => 'minimal'
         end
       end
