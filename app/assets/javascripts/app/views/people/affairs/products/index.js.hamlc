@@ -26,7 +26,7 @@
           - else
             != item.description.replace(/\n/g, '<br/>')
 
-        %td.number= item.value.to_view()
+        %td.number= item.value.to_view(item.value_currency)
 
 - if App.PersonAffairProductsProgram.all().length > 0
   .panel-footer

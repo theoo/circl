@@ -12,7 +12,7 @@
         %td= task.id
         %td
           = task.start_date
-        %td.number= task.value.to_view()
+        %td.number= task.value.to_view(task.value_currency)
         %td
           %b= task.duration + " min"
           \-

@@ -73,6 +73,7 @@ class AffairsProductsProgram < ActiveRecord::Base
     h[:description]     = product.try(:description)
     h[:category]        = product.try(:category)
     h[:value]           = value.to_f
+    h[:value_currency]  = value.currency.try(:iso_code)
 
     h[:errors]         = errors
 

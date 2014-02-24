@@ -19,7 +19,7 @@
           = "(#{r.invoice_id})"
         %td= r.means_of_payment
         %td.number
-          = r.value.to_view()
+          = r.value.to_view(r.value_currency)
           - if r.overpaid_value > 0
             = "(#{r.overpaid_value.to_view()})"
         %td= r.value_date

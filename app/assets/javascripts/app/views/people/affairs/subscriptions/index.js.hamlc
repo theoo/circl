@@ -16,7 +16,7 @@
         %td= s.title
         %td= s.interval_starts_on
         %td= s.interval_ends_on
-        %td.number= s.value.to_view() if s.value
+        %td.number= s.value.to_view(s.value_currency) if s.value
         %td= s.created_at
         %td
           %button{:name => 'subscription-destroy', :class => 'btn btn-danger btl-xs'}

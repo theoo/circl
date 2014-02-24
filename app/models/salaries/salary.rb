@@ -444,13 +444,15 @@ class Salaries::Salary < ActiveRecord::Base
     h[:reference_title] = reference.try(:title)
 
     h[:married] = married?
-    h[:yearly_salary] = yearly_salary.to_f
+    h[:yearly_salary]  = yearly_salary.to_f
     h[:children_count] = children_count # number of kids
     h[:salaries_count] = children.count # salaries that use this reference
 
-    h[:gross_pay]   = gross_pay.to_f
-    h[:net_salary]  = net_salary.to_f
-    h[:person_name] = person.name
+    h[:gross_pay]           = gross_pay.to_f
+    h[:gross_pay_currency]  = gross_pay.currency.try(:iso_code)
+    h[:net_salary]          = net_salary.to_f
+    h[:net_salary_currency] = net_salary.currency.try(:iso_code)
+    h[:person_name]         = person.name
 
     h[:items] = items.map(&:as_json)
     h[:tax_data] = selected_tax_data.map(&:as_json)

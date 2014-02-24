@@ -35,9 +35,9 @@
 
         %td= affair.id
         %td= affair.title
-        %td.number= affair.value.to_view()
-        %td.number= affair.invoices_value.to_view()
-        %td.number= affair.receipts_value.to_view()
+        %td.number= affair.value.to_view(affair.value_currency)
+        %td.number= affair.invoices_value.to_view(affair.value_currency)
+        %td.number= affair.receipts_value.to_view(affair.value_currency)
         %td= affair.statuses
         %td= affair.created_at
 

@@ -19,7 +19,7 @@
           %br
           = rate.description
 
-        %td.number= rate.value.to_view()
+        %td.number= rate.value.to_view(rate.value_currency)
         %td= I18n.t("common." + rate.archive)
         %td= rate.people_count
         %td= rate.created_at

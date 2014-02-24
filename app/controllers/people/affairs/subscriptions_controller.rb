@@ -40,6 +40,7 @@ class People::Affairs::SubscriptionsController < ApplicationController
           h = s.to_hash
           # Add current value for this person
           h[:value] = s.value_for(@person).to_f
+          h[:value_currency] = s.value_for(@person).currency.try(:iso_code)
           subs << h
         end
         render :json => subs

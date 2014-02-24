@@ -145,25 +145,31 @@ class Affair < ActiveRecord::Base
   # attributes overridden - JSON API
   def as_json(options = nil)
     h = super(options)
-    h[:parent_title]        = parent.try(:title)
-    h[:owner_name]          = owner.try(:name)
-    h[:buyer_name]          = buyer.try(:name)
-    h[:seller_name]         = seller.try(:name)
-    h[:receiver_name]       = receiver.try(:name)
-    h[:invoices_count]      = invoices.count
-    h[:invoices_value]      = invoices_value.to_f
-    h[:receipts_count]      = receipts.count
-    h[:receipts_value]      = receipts_value.to_f
-    h[:subscriptions_count] = subscriptions.count
-    h[:subscriptions_value] = subscriptions_value.to_f
-    h[:tasks_count]         = tasks.count
-    h[:tasks_value]         = tasks_value.to_f
-    h[:products_count]      = product_items.count
-    h[:products_value]      = product_items_value.to_f
-    h[:extras_count]        = extras.count
-    h[:extras_value]        = extras_value.to_f
-    h[:value]               = value.try(:to_f)
-    h[:statuses]            = translated_statuses 
+    h[:parent_title]                 = parent.try(:title)
+    h[:owner_name]                   = owner.try(:name)
+    h[:buyer_name]                   = buyer.try(:name)
+    h[:seller_name]                  = seller.try(:name)
+    h[:receiver_name]                = receiver.try(:name)
+    h[:invoices_count]               = invoices.count
+    h[:invoices_value]               = invoices_value.to_f
+    h[:invoices_value_currency]      = invoices_value.currency.try(:iso_code)
+    h[:receipts_count]               = receipts.count
+    h[:receipts_value]               = receipts_value.to_f
+    h[:receipts_value_currency]      = receipts_value.currency.try(:iso_code)
+    h[:subscriptions_count]          = subscriptions.count
+    h[:subscriptions_value]          = subscriptions_value.to_f
+    h[:subscriptions_value_currency] = subscriptions_value.currency.try(:iso_code)
+    h[:tasks_count]                  = tasks.count
+    h[:tasks_value]                  = tasks_value.to_f
+    h[:tasks_value_currency]         = tasks_value.currency.try(:iso_code)
+    h[:products_count]               = product_items.count
+    h[:products_value]               = product_items_value.to_f
+    h[:products_value_currency]      = product_items_value.currency.try(:iso_code)
+    h[:extras_count]                 = extras.count
+    h[:extras_value]                 = extras_value.to_f
+    h[:extras_value_currency]        = extras_value.currency.try(:iso_code)
+    h[:value]                        = value.try(:to_f)
+    h[:statuses]                     = translated_statuses 
     h
   end
 
@@ -172,29 +178,29 @@ class Affair < ActiveRecord::Base
   end
 
   def invoices_value
-    invoices.map(&:value).sum.to_money
+    invoices.map(&:value).sum.to_money(value_currency)
   end
 
   def receipts_value
-    receipts.map(&:value).sum.to_money
+    receipts.map(&:value).sum.to_money(value_currency)
   end
 
   def subscriptions_value
     # Sum only leaves of a subscription tree (the last child)
     leaves = find_children(subscriptions)
-    leaves.map{|l| l.value_for(owner)}.sum.to_money
+    leaves.map{|l| l.value_for(owner)}.sum.to_money(value_currency)
   end
 
   def tasks_value
-    tasks.map(&:value).sum.to_money
+    tasks.map(&:value).sum.to_money(value_currency)
   end
 
   def product_items_value
-    product_items.map(&:value).sum.to_money
+    product_items.map(&:value).sum.to_money(value_currency)
   end
 
   def extras_value
-    extras.map(&:value).sum.to_money
+    extras.map(&:value).sum.to_money(value_currency)
   end
 
   def balance_value
