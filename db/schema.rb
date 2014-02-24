@@ -28,15 +28,11 @@ ActiveRecord::Schema.define(:version => 20140224125655) do
     t.integer  "parent_id"
     t.text     "footer"
     t.integer  "seller_id",                            :default => 1,     :null => false
-    t.integer  "custom_value_in_cents"
-    t.string   "custom_value_currency",                :default => "CHF", :null => false
     t.boolean  "custom_value_with_taxes",              :default => false
   end
 
   add_index "affairs", ["buyer_id"], :name => "index_affairs_on_buyer_id"
   add_index "affairs", ["created_at"], :name => "index_affairs_on_created_at"
-  add_index "affairs", ["custom_value_currency"], :name => "index_affairs_on_custom_value_currency"
-  add_index "affairs", ["custom_value_in_cents"], :name => "index_affairs_on_custom_value_in_cents"
   add_index "affairs", ["estimate"], :name => "index_affairs_on_estimate"
   add_index "affairs", ["owner_id"], :name => "index_affairs_on_owner_id"
   add_index "affairs", ["parent_id"], :name => "index_affairs_on_parent_id"

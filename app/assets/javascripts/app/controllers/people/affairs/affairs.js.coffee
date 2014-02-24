@@ -68,6 +68,7 @@ class Edit extends App.ExtendedController
     'submit form': 'submit'
     'click button[name="affair-show-owner"]': 'show_owner'
     'click a[name="affair-destroy"]': 'destroy'
+    'click button[name=reset_value]': 'reset_value'
 
   constructor: ->
     super
@@ -180,6 +181,10 @@ class Edit extends App.ExtendedController
         @hide()
         # Update badge
         $('a[href=#affairs_tab] .badge').html PersonAffair.count()
+
+  reset_value: (e) ->
+    e.preventDefault()
+    @el.find("#person_affair_value").val @affair.computed_value
 
 
 class Index extends App.ExtendedController

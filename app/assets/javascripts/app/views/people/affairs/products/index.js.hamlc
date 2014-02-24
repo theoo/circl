@@ -30,7 +30,8 @@
         %td.number
           - if item.value != item.bid_price
             %strike.text-danger= item.value.to_view(item.value_currency)
-            = "(-" + item.bid_percentage + "%)"
+            .text-danger
+              = "-" + item.bid_percentage + "%"
             = item.bid_price.to_view(item.bid_price_currency)
           - else
             = item.value.to_view(item.value_currency)

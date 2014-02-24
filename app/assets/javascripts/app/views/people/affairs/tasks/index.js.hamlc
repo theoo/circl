@@ -25,7 +25,8 @@
         %td.number
           - if task.value != task.computed_value
             %strike.text-danger= task.computed_value.to_view(task.computed_value_currency)
-            = "(" + (task.value - task.computed_value).to_view(task.value_currency) + ")"
+            .text-danger
+              = (task.value - task.computed_value).to_view(task.value_currency)
             = task.value.to_view(task.value_currency)
           - else
             = task.value.to_view(task.value_currency)

@@ -35,7 +35,16 @@
 
         %td= affair.id
         %td= affair.title
-        %td.number= affair.value.to_view(affair.value_currency)
+
+        %td.number
+          - if affair.value != affair.computed_value
+            %strike.text-danger= affair.computed_value.to_view(affair.computed_value_currency)
+            .text-danger
+              = (affair.value - affair.computed_value).to_view(affair.value_currency)
+            = affair.value.to_view(affair.value_currency)
+          - else
+            = affair.value.to_view(affair.value_currency)
+
         %td.number= affair.invoices_value.to_view(affair.value_currency)
         %td.number= affair.receipts_value.to_view(affair.value_currency)
         %td= affair.statuses

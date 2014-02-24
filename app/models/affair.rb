@@ -50,7 +50,8 @@ class Affair < ActiveRecord::Base
   #################
 
   after_save :update_elasticsearch
-  before_save :compute_value, :update_statuses
+  before_save :compute_value, :if => 'value_in_cents.blank?'
+  before_save :update_statuses
   before_validation  :ensure_buyer_and_receiver_person_exists
   before_destroy :do_not_destroy_if_has_invoices
   before_destroy { subscriptions.clear }
@@ -169,7 +170,13 @@ class Affair < ActiveRecord::Base
     h[:extras_value]                 = extras_value.to_f
     h[:extras_value_currency]        = extras_value.currency.try(:iso_code)
     h[:value]                        = value.try(:to_f)
-    h[:statuses]                     = translated_statuses 
+    h[:computed_value]               = compute_value.try(:to_f)
+    h[:computed_value_currency]      = compute_value.currency.try(:iso_code)
+    h[:arts_value]                   = arts_value.try(:to_f)
+    h[:arts_value_currency]          = arts_value.currency.try(:iso_code)
+    h[:vat_value]                    = vat_value.try(:to_f)
+    h[:vat_value_currency]           = vat_value.currency.try(:iso_code)
+    h[:statuses]                     = translated_statuses
     h
   end
 
@@ -209,6 +216,26 @@ class Affair < ActiveRecord::Base
 
   def overpaid_value
     (balance_value > 0) ? balance_value : 0.to_money
+  end
+
+  def arts_value
+    product_items.map{|i| i.variant.art * i.quantity}.sum.to_money(value_currency)
+  end
+
+  def vat_value
+    sum = 0.to_money(value_currency)
+
+    # Fixed VAT
+    sum += tasks_value
+    sum += arts_value
+    sum += product_items_value
+
+    vat = sum / 100.0 * ApplicationSetting.value("service_vat_rate").to_f
+
+    # Variable VAT
+    vat += extras.map(&:vat).sum
+
+    vat
   end
 
   # Workflows and statuses
@@ -278,7 +305,7 @@ class Affair < ActiveRecord::Base
     self.value += tasks_value
     self.value += product_items_value
     self.value += extras_value
-    self.value
+    self.value.to_money(value_currency)
   end
 
   # Update this affair's statuses by comparing affair's value, its invoices and receipts
