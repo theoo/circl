@@ -3,8 +3,8 @@
     %tr
       %th= I18n.t('common.id')
       %th.desc= I18n.t('common.date')
-      %th= I18n.t('common.value')
       %th= I18n.t('common.description')
+      %th= I18n.t('common.value')
 
   %tbody
     - for task in App.PersonTask.all()
@@ -12,7 +12,6 @@
         %td= task.id
         %td
           = task.start_date
-        %td.number= task.value.to_view()
         %td
           %b= task.duration + " min"
           \-
@@ -23,6 +22,14 @@
             != task.description.replace(/\n/g, '<br/>').substring(0, 250).trim() + "..."
           - else
             != task.description.replace(/\n/g, '<br/>')
+        %td.number
+          - if task.value != task.computed_value
+            %strike.text-danger= task.computed_value.to_view(task.computed_value_currency)
+            .text-danger
+              = (task.value - task.computed_value).to_view(task.value_currency)
+            = task.value.to_view(task.value_currency)
+          - else
+            = task.value.to_view(task.value_currency)
 
 - if App.PersonTask.all().length > 0
   .panel-footer

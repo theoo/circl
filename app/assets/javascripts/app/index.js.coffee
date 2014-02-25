@@ -33,11 +33,18 @@ class @App extends Spine.Controller
 
   constructor: (params) ->
     super
-
     Ui.initialize_ui()
 
     # Don't display the hash fragment
     Spine.Route.setup(shim: true)
+
+    # preload dependencies
+    App.ApplicationSetting.one 'refresh', =>
+      App.Currency.one 'refresh', =>
+        @el.trigger "dependencies_preloaded"
+      App.Currency.fetch()
+    App.ApplicationSetting.fetch()
+
 
   subapp: (element, class_name, extra_params = {}) ->
     # TODO Raise a message if application controller cannot be found.
@@ -64,15 +71,15 @@ class @Dashboard extends App
   constructor: (params) ->
     super
 
-    # everything depend on current user
-    if params.id
-      @person_id = params.id
-      App.Person.fetch {id: @person_id}
-    else
-      console.log "params.id is missing"
+    @el.one 'dependencies_preloaded', =>
+      # everything depend on current user
+      if params.id
+        @person_id = params.id
+        App.Person.fetch {id: @person_id}
+      else
+        console.log "params.id is missing"
 
-    App.Person.one 'refresh', =>
-      App.ApplicationSetting.one 'refresh', =>
+      App.Person.one 'refresh', =>
         #@subapp($('#dashboard_messages'), 'DashboardMessages')
         @subapp($('#dashboard_background_tasks'), 'DashboardBackgroundTasks')
         @subapp($('#dashboard_timesheet'), 'DashboardTimesheet')
@@ -83,24 +90,23 @@ class @Dashboard extends App
         @subapp($('#dashboard_last_people_added'), 'DashboardLastPeopleAdded')
         @subapp($('#dashboard_open_salaries'), 'DashboardOpenSalaries')
         # @subapp($('#dashboard_statistics'), 'DashboardStatistics')
-      App.ApplicationSetting.fetch()
 
 class @PersonEdit extends App
 
   constructor: (params) ->
     super
 
-    # everything depend on this person
-    @person_id = params.id if params
-    if @person_id
-      # edit person
-      App.Person.fetch {id: @person_id}
-    else
-      # new person
-      @subapp($('#person'), 'People')
+    @el.one 'dependencies_preloaded', =>
+      # everything depend on this person
+      @person_id = params.id if params
+      if @person_id
+        # edit person
+        App.Person.fetch {id: @person_id}
+      else
+        # new person
+        @subapp($('#person'), 'People')
 
-    App.Person.one 'refresh', =>
-      App.ApplicationSetting.one 'refresh', =>
+      App.Person.one 'refresh', =>
         @subapp($('#person'), 'People')
         @subapp($('#person_communication_languages'), 'PersonCommunicationLanguages')
         @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
@@ -127,12 +133,11 @@ class @PersonEdit extends App
 
         App.GenericTemplate.fetch()
 
-      App.ApplicationSetting.fetch()
-
 class @Directory extends App
   constructor: (params) ->
     super
-    @subapp($('#directory_search_engine'), 'DirectorySearchEngine', params)
+    @el.one 'dependencies_preloaded', =>
+      @subapp($('#directory_search_engine'), 'DirectorySearchEngine', params)
 
   # NOTE Use Directory.search(search_string: "something") to run a query in the directory
   @search: (query) =>
@@ -168,10 +173,9 @@ class @Admin extends App
   constructor: (params) ->
     super
 
-    @subapp($('#admin_private_tags'), 'AdminPrivateTags')
-    @subapp($('#admin_public_tags'), 'AdminPublicTags')
-
-    App.ApplicationSetting.one 'refresh', =>
+    @el.one 'dependencies_preloaded', =>
+      @subapp($('#admin_private_tags'), 'AdminPrivateTags')
+      @subapp($('#admin_public_tags'), 'AdminPublicTags')
 
       App.GenericTemplate.one 'refresh', =>
         @subapp($('#admin_affairs'), 'AdminAffairs')
@@ -180,9 +184,6 @@ class @Admin extends App
         @subapp($('#admin_receipts'), 'AdminReceipts')
 
       App.GenericTemplate.fetch()
-
-    App.ApplicationSetting.fetch()
-
 
 class @Salaries extends App
 
@@ -196,7 +197,7 @@ class @Settings extends App
   constructor: (params) ->
     super
 
-    App.ApplicationSetting.one 'refresh', =>
+    @el.one 'dependencies_preloaded', =>
       @subapp($('#settings_locations'), 'SettingsLocations')
       @subapp($('#settings_languages'), 'SettingsLanguages')
       @subapp($('#settings_jobs'), 'SettingsJobs')
@@ -219,5 +220,3 @@ class @Settings extends App
       @subapp($('#settings_currency_rates'), 'SettingsCurrencyRates')
 
       @subapp($('#settings_application_settings'), 'SettingsApplicationSettings')
-
-    App.ApplicationSetting.fetch()

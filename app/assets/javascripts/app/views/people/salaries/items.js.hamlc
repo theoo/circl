@@ -28,12 +28,15 @@
                     :type => 'text',
                     :class => 'form-control',
                     :value => item.title }
-          %td
-            %input{ :name => "items[#{index}][value]",
-                    :type => 'number',
-                    :step => 0.01,
-                    :class => 'form-control',
-                    :value => item.value }
+          %td.col-xs-2
+            .input-group
+              %input{ :name => "items[#{index}][value]",
+                      :type => 'number',
+                      :step => 0.01,
+                      :class => 'form-control',
+                      :value => item.value }
+              .input-group-addon
+                = item.value_currency
           - for tax in App.SalaryTax.all()
             %td.tax
               %input{ :name => "items[#{index}][tax_ids][]",
@@ -74,10 +77,14 @@
                   :class => 'form-control',
                   :type => 'text' }
         %td
-          %input{ :name => "items[#{unique_id}][value]",
-                  :type => 'number',
-                  :class => 'form-control',
-                  :step => 0.01 }
+          .input-group
+            %input{ :name => "items[#{unique_id}][value]",
+                    :type => 'number',
+                    :step => 0.01,
+                    :class => 'form-control' }
+            .input-group-addon
+              = @salary.yearly_salary_currency
+
         - for tax in App.SalaryTax.all()
           %td.tax
             %input{ :name => "items[#{unique_id}][tax_ids][]",

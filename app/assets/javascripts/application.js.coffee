@@ -68,9 +68,12 @@ $(document).ready ->
     $(e.target).attr('placeholder', I18n.t('directory.views.quick_search_placeholder'))
 
 
-Number.prototype.to_view = (num)->
+Number.prototype.to_view = (currency = null)->
     # this defines currency precision - decimals
-    num = @ unless num
+    num = @
+    negative = num < 0
+
+    num = Math.abs num
 
     defaults = JSON.parse App.ApplicationSetting.value("default_currency_details")
     thousands_separator = defaults.separator
@@ -100,6 +103,12 @@ Number.prototype.to_view = (num)->
       integers_with_separators = thousands.join(thousands_separator)
 
       money = integers_with_separators + decimals
+
+    if currency
+      if c = App.Currency.findByAttribute("iso_code", currency)
+        money += " " + c.symbol
+
+    money = "-" + money if negative
 
     return money # as a string
 

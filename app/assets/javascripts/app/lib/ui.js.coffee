@@ -59,21 +59,26 @@ class Ui
 
   bind_currency_selector: ->
     $(document).on 'change', 'select.currency_selector', (e) ->
-      input = $(e.target).closest(".input-group").find("input[type=number]")
-      hidden_field = $(e.target).siblings("input[name=current_currency]")
+      value_input        = $(e.target).closest(".input-group").find("input[type=number]")
+      ref_currency_input = $(e.target).siblings("input[name=reference_currency]")
+      ref_value_input    = $(e.target).siblings("input[name=reference_value]")
 
-      target_currency = $(e.target).val()
-      current_currency = hidden_field.val()
-      value = input.val()
+      # When object is new, there is no reference value
+      unless ref_currency_input.val()
+        ref_currency_input = $(e.target).closest(".input-group").find("input[name=value_currency]")
+
+      unless ref_value_input.val()
+        val = $(e.target).closest(".input-group").find("input[name=value]").val()
+        ref_value_input.val(val)
 
       data =
-        target_currency: target_currency
-        current_currency: current_currency
-        current_value: value
+        target_currency: $(e.target).val()
+        reference_currency: ref_currency_input.val()
+        reference_value: ref_value_input.val()
 
       success = (d) ->
-        hidden_field.val(target_currency)
-        input.val(d.target_value)
+        value_input.val(d.target_value)
+        $(e.target).trigger 'currency_changed' # Catch this in 'events:'
 
       $.get "/settings/currency_rates/exchange", data, success, 'json'
 

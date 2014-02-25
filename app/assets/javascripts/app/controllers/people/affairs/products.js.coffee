@@ -73,7 +73,10 @@ class New extends PersonAffairProductExtention
   submit: (e) ->
     e.preventDefault()
     @product.fromForm(e.target)
-    @save_with_notifications @product, @render
+    @save_with_notifications @product, =>
+      @render()
+      PersonAffairProductsProgram.refresh([], clear: true)
+      PersonAffairProductsProgram.fetch()
 
 class Edit extends PersonAffairProductExtention
   events:
@@ -84,8 +87,12 @@ class Edit extends PersonAffairProductExtention
     super
 
   active: (params) =>
-    @can = params.can if params.can
-    @id = params.id if params.id
+    if params
+      @person_id = params.person_id if params.person_id
+      @affair_id = params.affair_id if params.affair_id
+      @can = params.can if params.can
+      @id = params.id if params.id
+
     @render()
 
   render: =>
@@ -107,11 +114,17 @@ class Edit extends PersonAffairProductExtention
   submit: (e) ->
     e.preventDefault()
     @product.fromForm(e.target)
-    @save_with_notifications @product, @hide
+    @save_with_notifications @product, =>
+      @hide()
+      PersonAffairProductsProgram.refresh([], clear: true)
+      PersonAffairProductsProgram.fetch()
 
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications @product, @hide
+      @destroy_with_notifications @product, =>
+        @hide()
+        PersonAffairProductsProgram.refresh([], clear: true)
+        PersonAffairProductsProgram.fetch()
 
 class Index extends App.ExtendedController
   events:
@@ -130,11 +143,17 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('people/affairs/products/index')(@)
+
+    refresh_index = =>
+      PersonAffairProductsProgram.refresh([], clear: true)
+      PersonAffairProductsProgram.fetch()
+
     @el.find('table.datatable')
       .rowReordering(
         sURL: PersonAffairProductsProgram.url() + "/change_order"
         sRequestType: "GET"
-        fnSuccess: (data) -> PersonAffairProductsProgram.refresh(data))
+        iIndexColumn: 0
+        fnSuccess: refresh_index)
 
   edit: (e) ->
     @id = $(e.target).product()
@@ -167,7 +186,7 @@ class App.PersonAffairProducts extends Spine.Controller
     @append(@new, @edit, @index)
 
     @index.bind 'edit', (id) =>
-      @edit.active(id: id)
+      @edit.active person_id: @person_id, affair_id: @affair_id, id: id
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()

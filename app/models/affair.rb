@@ -50,7 +50,8 @@ class Affair < ActiveRecord::Base
   #################
 
   after_save :update_elasticsearch
-  before_save :compute_value, :update_statuses
+  before_save :compute_value, :if => 'value_in_cents.blank?'
+  before_save :update_statuses
   before_validation  :ensure_buyer_and_receiver_person_exists
   before_destroy :do_not_destroy_if_has_invoices
   before_destroy { subscriptions.clear }
@@ -145,25 +146,37 @@ class Affair < ActiveRecord::Base
   # attributes overridden - JSON API
   def as_json(options = nil)
     h = super(options)
-    h[:parent_title]        = parent.try(:title)
-    h[:owner_name]          = owner.try(:name)
-    h[:buyer_name]          = buyer.try(:name)
-    h[:seller_name]         = seller.try(:name)
-    h[:receiver_name]       = receiver.try(:name)
-    h[:invoices_count]      = invoices.count
-    h[:invoices_value]      = invoices_value.to_f
-    h[:receipts_count]      = receipts.count
-    h[:receipts_value]      = receipts_value.to_f
-    h[:subscriptions_count] = subscriptions.count
-    h[:subscriptions_value] = subscriptions_value.to_f
-    h[:tasks_count]         = tasks.count
-    h[:tasks_value]         = tasks_value.to_f
-    h[:products_count]      = product_items.count
-    h[:products_value]      = product_items_value.to_f
-    h[:extras_count]        = extras.count
-    h[:extras_value]        = extras_value.to_f
-    h[:value]               = value.try(:to_f)
-    h[:statuses]            = translated_statuses 
+    h[:parent_title]                 = parent.try(:title)
+    h[:owner_name]                   = owner.try(:name)
+    h[:buyer_name]                   = buyer.try(:name)
+    h[:seller_name]                  = seller.try(:name)
+    h[:receiver_name]                = receiver.try(:name)
+    h[:invoices_count]               = invoices.count
+    h[:invoices_value]               = invoices_value.to_f
+    h[:invoices_value_currency]      = invoices_value.currency.try(:iso_code)
+    h[:receipts_count]               = receipts.count
+    h[:receipts_value]               = receipts_value.to_f
+    h[:receipts_value_currency]      = receipts_value.currency.try(:iso_code)
+    h[:subscriptions_count]          = subscriptions.count
+    h[:subscriptions_value]          = subscriptions_value.to_f
+    h[:subscriptions_value_currency] = subscriptions_value.currency.try(:iso_code)
+    h[:tasks_count]                  = tasks.count
+    h[:tasks_value]                  = tasks_value.to_f
+    h[:tasks_value_currency]         = tasks_value.currency.try(:iso_code)
+    h[:products_count]               = product_items.count
+    h[:products_value]               = product_items_value.to_f
+    h[:products_value_currency]      = product_items_value.currency.try(:iso_code)
+    h[:extras_count]                 = extras.count
+    h[:extras_value]                 = extras_value.to_f
+    h[:extras_value_currency]        = extras_value.currency.try(:iso_code)
+    h[:value]                        = value.try(:to_f)
+    h[:computed_value]               = compute_value.try(:to_f)
+    h[:computed_value_currency]      = compute_value.currency.try(:iso_code)
+    h[:arts_value]                   = arts_value.try(:to_f)
+    h[:arts_value_currency]          = arts_value.currency.try(:iso_code)
+    h[:vat_value]                    = vat_value.try(:to_f)
+    h[:vat_value_currency]           = vat_value.currency.try(:iso_code)
+    h[:statuses]                     = translated_statuses
     h
   end
 
@@ -172,29 +185,29 @@ class Affair < ActiveRecord::Base
   end
 
   def invoices_value
-    invoices.map(&:value).sum.to_money
+    invoices.map(&:value).sum.to_money(value_currency)
   end
 
   def receipts_value
-    receipts.map(&:value).sum.to_money
+    receipts.map(&:value).sum.to_money(value_currency)
   end
 
   def subscriptions_value
     # Sum only leaves of a subscription tree (the last child)
     leaves = find_children(subscriptions)
-    leaves.map{|l| l.value_for(owner)}.sum.to_money
+    leaves.map{|l| l.value_for(owner)}.sum.to_money(value_currency)
   end
 
   def tasks_value
-    tasks.map(&:value).sum.to_money
+    tasks.map(&:value).sum.to_money(value_currency)
   end
 
   def product_items_value
-    product_items.map(&:value).sum.to_money
+    product_items.map(&:value).sum.to_money(value_currency)
   end
 
   def extras_value
-    extras.map(&:value).sum.to_money
+    extras.map(&:value).sum.to_money(value_currency)
   end
 
   def balance_value
@@ -203,6 +216,26 @@ class Affair < ActiveRecord::Base
 
   def overpaid_value
     (balance_value > 0) ? balance_value : 0.to_money
+  end
+
+  def arts_value
+    product_items.map{|i| i.variant.art * i.quantity}.sum.to_money(value_currency)
+  end
+
+  def vat_value
+    sum = 0.to_money(value_currency)
+
+    # Fixed VAT
+    sum += tasks_value
+    sum += arts_value
+    sum += product_items_value
+
+    vat = sum / 100.0 * ApplicationSetting.value("service_vat_rate").to_f
+
+    # Variable VAT
+    vat += extras.map(&:vat).sum
+
+    vat
   end
 
   # Workflows and statuses
@@ -272,7 +305,7 @@ class Affair < ActiveRecord::Base
     self.value += tasks_value
     self.value += product_items_value
     self.value += extras_value
-    self.value
+    self.value.to_money(value_currency)
   end
 
   # Update this affair's statuses by comparing affair's value, its invoices and receipts

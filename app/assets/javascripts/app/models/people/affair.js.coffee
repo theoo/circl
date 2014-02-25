@@ -17,7 +17,7 @@
 class App.PersonAffair extends Spine.Model
 
   @configure 'PersonAffair', 'owner_id', 'owner_name', 'buyer_id', 'buyer_name', 'receiver_id', 'receiver_name',
-             'title', 'description', 'value', 'invoices_count', 'invoices_value', 'receipts_value', 'created_at',
+             'title', 'description', 'value', 'value_currency', 'created_at',
              'parent_id', 'footer', 'seller_id'
 
   @extend Spine.Model.Ajax

@@ -16,7 +16,7 @@
 
 class App.TaskType extends Spine.Model
 
-  @configure 'TaskType', 'title', 'description', 'ratio', 'value', 'archive'
+  @configure 'TaskType', 'title', 'description', 'ratio', 'value', 'value_currency', 'archive'
 
   @extend Spine.Model.Ajax
 

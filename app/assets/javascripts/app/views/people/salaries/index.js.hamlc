@@ -24,8 +24,8 @@
             %td= salary.id
             %td= salary.reference_title
             %td= salary.title
-            %td.number= salary.gross_pay.to_view() if salary.gross_pay
-            %td.number= salary.net_salary.to_view() if salary.net_salary
+            %td.number= salary.gross_pay.to_view(salary.gross_pay_currency) if salary.gross_pay
+            %td.number= salary.net_salary.to_view(salary.gross_pay_currency) if salary.net_salary
             %td= I18n.t("common." + salary.paid)
 
   #person_salary_references_index.tab-pane
@@ -46,6 +46,6 @@
             %td.number= salary.activity_rate + " %"
             %td.number
               - if salary.yearly_salary
-                = salary.yearly_salary.to_view()
+                = salary.yearly_salary.to_view(salary.yearly_salary_currency)
                 = "(#{salary.yearly_salary_count})"
             %td.number= salary.salaries_count

@@ -41,6 +41,7 @@ class TaskType < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
+  before_validation :set_defaults
   before_destroy :prevent_if_task_present
 
   #################
@@ -83,6 +84,10 @@ class TaskType < ActiveRecord::Base
       errors.add(:base, I18n.t('task_type.errors.cannot_destroy_if_task_present'))
       return false
     end
+  end
+
+  def set_defaults
+    self.ratio ||= 0
   end
 
 end

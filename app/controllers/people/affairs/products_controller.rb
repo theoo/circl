@@ -131,6 +131,8 @@ class People::Affairs::ProductsController < ApplicationController
   def search
     authorize! :read, @person => AffairsProductsProgram
 
+    @affair_product_programAffairsProductsProgram
+
     hash = {}
     if ! params[:term].blank?
       result = []
@@ -139,7 +141,16 @@ class People::Affairs::ProductsController < ApplicationController
         .joins(:product_items)
         .where("affairs_products_programs.affair_id = ?", @affair.id)
         .where("products.key ~* ? OR products.title ~* ?", param, param)
-      hash = result.map{ |t| { :id => t.id, :label => t.key, :title => t.title, :desc => t.description }} if result
+      if result
+        hash = result.map{ |t|
+          {
+            :id => @affair.product_items.where(:product_id => t.id).first.id,
+            :label => t.key,
+            :title => t.title,
+            :desc => t.description
+          }
+        }
+      end
     end
 
     respond_to do |format|
@@ -154,9 +165,10 @@ class People::Affairs::ProductsController < ApplicationController
 
     AffairsProductsProgram.transaction do
       siblings = @affair.product_items.all
-      siblings.delete @product
-      siblings.insert(params[:toPosition].to_i, @product)
-      siblings.reverse.each_with_index do |s, i|
+      p = siblings.delete_at params[:fromPosition].to_i
+      siblings.insert(params[:toPosition].to_i, p)
+      siblings.delete(nil) # If there is holes in list they will be replace by nil
+      siblings.each_with_index do |s, i|
         u = AffairsProductsProgram.find(s.id)
         u.update_attributes(:position => i)
       end
@@ -182,11 +194,12 @@ class People::Affairs::ProductsController < ApplicationController
     prod[:product_id] = nil unless prod[:product_id]
 
     @product.assign_attributes(
-      :parent_id  => prod[:parent_id],
-      :program_id => prod[:program_id],
-      :product_id => prod[:product_id],
-      :position   => prod[:position],
-      :quantity   => prod[:quantity])
+      :parent_id      => prod[:parent_id],
+      :program_id     => prod[:program_id],
+      :product_id     => prod[:product_id],
+      :position       => prod[:position],
+      :bid_percentage => prod[:bid_percentage],
+      :quantity       => prod[:quantity])
   end
 
 end

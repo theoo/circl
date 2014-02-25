@@ -158,13 +158,17 @@
                 .form-group
                   %label{:for => 'person_salary_yearly_salary'}
                     = I18n.t('salary.views.annual_earning_total')
-                  %input{ :name => 'yearly_salary',
-                          :type => 'number',
-                          :id => 'person_salary_yearly_salary',
-                          :min => 0.0,
-                          :class => 'form-control',
-                          :step => 0.01,
-                          :value => @salary.yearly_salary }
+                  .input-group
+                    %input{ :name => 'yearly_salary',
+                            :type => 'number',
+                            :id => 'person_salary_yearly_salary',
+                            :min => 0.0,
+                            :class => 'form-control',
+                            :step => 0.01,
+                            :value => @salary.yearly_salary }
+
+                    .input-group-addon
+                      != @partial('select_currency')(currency: @salary.yearly_salary_currency, name: 'yearly_salary_currency', value: @salary.yearly_salary)
 
                   - if @salary.activity_rate != 100.0 and @salary.yearly_salary
                     .help-block

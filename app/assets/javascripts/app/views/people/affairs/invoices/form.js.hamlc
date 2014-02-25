@@ -70,7 +70,7 @@
                       :name => 'value',
                       :value => @invoice.value }
               .input-group-addon
-                != @partial('select_currency')(currency: @invoice.value_currency, name: 'value_currency')
+                != @partial('select_currency')(currency: @invoice.value_currency, name: 'value_currency', value: @invoice.value)
 
         .col-sm-6
           .form-group

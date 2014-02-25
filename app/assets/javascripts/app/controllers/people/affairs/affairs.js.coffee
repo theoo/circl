@@ -68,6 +68,7 @@ class Edit extends App.ExtendedController
     'submit form': 'submit'
     'click button[name="affair-show-owner"]': 'show_owner'
     'click a[name="affair-destroy"]': 'destroy'
+    'click button[name=reset_value]': 'reset_value'
 
   constructor: ->
     super
@@ -89,12 +90,12 @@ class Edit extends App.ExtendedController
 
       # Tasks
       # person_affairs, which is @el of App.PersonAffairs
-      # person_affair_tasks_ctrl = $("#person_affair_tasks").data('controller')
-      # person_affair_tasks_ctrl.activate(person_id: @person_id, affair_id: @id)
-      # PersonTask.url = =>
-      #   "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/tasks"
-      # PersonTask.refresh([], clear: true)
-      # PersonTask.fetch()
+      person_affair_tasks_ctrl = $("#person_affair_tasks").data('controller')
+      person_affair_tasks_ctrl.activate(person_id: @person_id, affair_id: @id)
+      PersonTask.url = =>
+        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/tasks"
+      PersonTask.refresh([], clear: true)
+      PersonTask.fetch()
 
       # # Products
       person_affair_products_ctrl = $("#person_affair_products").data('controller')
@@ -180,6 +181,10 @@ class Edit extends App.ExtendedController
         @hide()
         # Update badge
         $('a[href=#affairs_tab] .badge').html PersonAffair.count()
+
+  reset_value: (e) ->
+    e.preventDefault()
+    @el.find("#person_affair_value").val @affair.computed_value
 
 
 class Index extends App.ExtendedController

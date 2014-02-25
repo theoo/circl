@@ -30,7 +30,7 @@
                   :value => @task_type.value,
                   :class => 'form-control'}
           .input-group-addon
-            CHF
+            != @partial('select_currency')(currency: @task_type.value_currency, name: 'value_currency', value: @task_type.value)
 
       .col-sm-6.form-goup
         %label{:for => 'settings_task_type_ratio'}

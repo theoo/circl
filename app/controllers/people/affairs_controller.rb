@@ -40,6 +40,7 @@ class People::AffairsController < ApplicationController
   end
 
   def create
+    @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @affair.save
         format.json { render :json => @affair }
@@ -56,6 +57,7 @@ class People::AffairsController < ApplicationController
   end
 
   def update
+    @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @affair.update_attributes(params[:affair])
         format.json { render :json => @affair }

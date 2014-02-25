@@ -19,7 +19,7 @@
           %br
           = type.description
 
-        %td.number= type.value.to_view()
-        %td.number= type.ratio.to_view() if type.ratio?
+        %td.number= type.value.to_view(type.value_currency)
+        %td.number= type.ratio if type.ratio?
         %td= I18n.t("common." + type.archive)
         %td= type.tasks_count

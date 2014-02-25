@@ -104,14 +104,16 @@ class Task < ActiveRecord::Base
 
   def as_json(options = nil)
     h = super(options)
-    h[:task_type_title] = task_type.try(:title)
-    h[:affair_title] = affair.try(:title)
-    h[:owner_name] = owner.try(:name)
-    h[:executer_name] = executer.try(:name)
-    h[:duration_in_words] = helper.distance_of_time_in_words(duration * 60)
-    h[:value] = value.to_f
-    h[:computed_value] = compute_value.to_f
-    h[:errors] = errors
+    h[:task_type_title]         = task_type.try(:title)
+    h[:affair_title]            = affair.try(:title)
+    h[:owner_name]              = owner.try(:name)
+    h[:executer_name]           = executer.try(:name)
+    h[:duration_in_words]       = helper.distance_of_time_in_words(duration * 60)
+    h[:value]                   = value.to_f
+    h[:value_currency]          = value.currency.try(:iso_code)
+    h[:computed_value]          = compute_value.to_f
+    h[:computed_value_currency] = compute_value.currency.try(:iso_code)
+    h[:errors]                  = errors
     h
   end
 

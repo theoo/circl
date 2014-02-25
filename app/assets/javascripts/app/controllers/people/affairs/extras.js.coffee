@@ -23,6 +23,7 @@ $.fn.extra = ->
 class New extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'currency_changed select.currency_selector': 'on_currency_change'
 
   constructor: ->
     super
@@ -55,11 +56,13 @@ class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click a[name=person-affair-extra-destroy]': 'destroy'
+    'currency_changed select.currency_selector': 'on_currency_change'
 
   constructor: ->
     super
+    @ids_prefix = 'person_affair_extra_'
     @setup_vat
-      ids_prefix: 'person_affair_extra_'
+      ids_prefix: @ids_prefix
       bind_events: (App.ApplicationSetting.value('use_vat') == "true")
 
   active: (params) =>
@@ -88,7 +91,6 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
       @destroy_with_notifications @extra, @hide
-
 
 class Index extends App.ExtendedController
   events:

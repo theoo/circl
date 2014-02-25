@@ -15,9 +15,13 @@ en:
       program_title: program title
     views:
       after_sale: after sale
+      bid: MISSING_TRANSLATION bid
+      bid_price: MISSING_TRANSLATION bid price
+      category: MISSING_TRANSLATION category
       description: description
       has_accessories: has accessories
       key: key
+      normal_price: MISSING_TRANSLATION normal price
       position: position
       product_search: product
       products_list_pdf_title: products list pdf title

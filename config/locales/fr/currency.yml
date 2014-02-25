@@ -1,6 +1,9 @@
 ---
 fr:
   currency:
+    errors:
+      unable_to_destroy_a_currency_which_is_used: Il est impossible de supprimer une devise employée
+      unable_to_destroy_a_rate_which_is_used: Il est impossible de supprimer un taux de change employé
     views:
       delimiter: délimit. de sous-unité
       iso_code: code iso

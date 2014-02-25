@@ -50,6 +50,11 @@ class Settings::ProductsController < ApplicationController
       # append variants
       params[:variants].each do |v|
         pv = @product.variants.new(v)
+
+        pv.buying_price = Money.new(v[:buying_price].to_f * 100, v[:buying_price_currency])
+        pv.selling_price = Money.new(v[:selling_price].to_f * 100, v[:selling_price_currency])
+        pv.art = Money.new(v[:art].to_f * 100, v[:art_currency])
+
         unless pv.save
           pv.errors.messages.each do |k,v|
             @product.errors.add(("variants[][" + k.to_s + "]").to_sym, v.join(", "))
@@ -98,6 +103,10 @@ class Settings::ProductsController < ApplicationController
         else
           pv = @product.variants.new(v)
         end
+
+        pv.buying_price = Money.new(v[:buying_price].to_f * 100, v[:buying_price_currency])
+        pv.selling_price = Money.new(v[:selling_price].to_f * 100, v[:selling_price_currency])
+        pv.art = Money.new(v[:art].to_f * 100, v[:art_currency])
 
         unless pv.save
           pv.errors.messages.each do |k,v|

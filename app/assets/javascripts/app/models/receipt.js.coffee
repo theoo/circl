@@ -18,7 +18,7 @@ class App.Receipt extends Spine.Model
 
   @configure 'Receipt', 'id', 'invoice_id', 'invoice_title', 'affair_id',
   	'affair_title', 'owner_id', 'owner_name', 'subscription_id',
-  	'subscription_title', 'means_of_payment', 'value', 'value_date',
+  	'subscription_title', 'means_of_payment', 'value', 'value_date', 'value_currency',
   	'invoice_template_id', 'created_at'
 
   @extend Spine.Model.Ajax

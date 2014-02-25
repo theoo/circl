@@ -68,6 +68,7 @@ class People::Salaries::SalariesController < ApplicationController
   end
 
   def create
+    @salary.yearly_salary = Money.new(params[:yearly_salary].to_f * 100, params[:yearly_salary_currency])
     respond_to do |format|
       if @salary.save
         format.json { render :json => @salary }
@@ -84,6 +85,8 @@ class People::Salaries::SalariesController < ApplicationController
   end
 
   def update
+    @salary.yearly_salary = Money.new(params[:yearly_salary].to_f * 100, params[:yearly_salary_currency])
+    params[:salary].delete(:yearly_salary)
     respond_to do |format|
       if @salary.update_attributes(params[:salary])
         format.json { render :json => @salary }

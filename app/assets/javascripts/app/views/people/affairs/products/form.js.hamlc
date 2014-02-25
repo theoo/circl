@@ -65,6 +65,30 @@
                 :value => @product.position }
 
     .row
+      .col-md-4.form-group
+        %label{:for => 'person_affair_product_bid_percentage'}
+          = I18n.t('product.views.bid')
+        .input-group
+          %input{ :type => 'number',
+                  :step => 0.01,
+                  :id => 'person_affair_product_bid_percentage',
+                  :class => 'required form-control',
+                  :min => 0,
+                  :max => 100,
+                  :name => 'bid_percentage',
+                  :value => @product.bid_percentage }
+          .input-group-addon %
+      .col-md-4
+        %label= I18n.t('product.views.normal_price')
+        - if @product.value
+          = @product.value.to_view(@product.value_currency)
+      .col-md-4
+        %label= I18n.t('product.views.bid_price')
+        - if @product.bid_price
+          = @product.bid_price.to_view(@product.bid_price_currency)
+
+
+    .row
       .col-lg-12
         .pull-right
           %button{:type => 'submit', :class => 'btn btn-primary'}

@@ -104,11 +104,11 @@
       %tbody
         - if @product.variants and @product.variants.length > 0
           - for variant in @product.variants
-            != @partial('product_variant_item')(variant)
+            != @partial('product_variant_item')(context: @, object: variant)
         - else
-          != @partial('product_variant_item')({})
+          != @partial('product_variant_item')(context: @, object: {})
 
-        != @partial('product_variant_item')({stub: true})
+        != @partial('product_variant_item')(context: @, object: {stub: true})
 
         %tr{'data-name' => 'variant_add', :class => 'row'}
           %td.col-lg-11

@@ -46,7 +46,7 @@ class Settings::TaskRatesController < ApplicationController
   end
 
   def create
-    @task_rate.value = params[:value]
+    @task_rate.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @task_rate.save
         format.json { render :json => @task_rate }
@@ -63,7 +63,7 @@ class Settings::TaskRatesController < ApplicationController
   end
 
   def update
-    @task_rate.value = params[:value]
+    @task_rate.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @task_rate.update_attributes(params[:task_rate])
         format.json { render :json => @task_rate }

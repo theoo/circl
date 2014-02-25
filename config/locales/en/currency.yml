@@ -1,6 +1,9 @@
 ---
 en:
   currency:
+    errors:
+      unable_to_destroy_a_currency_which_is_used: unable to destroy a currency which is used
+      unable_to_destroy_a_rate_which_is_used: unable to destroy a rate which is used
     views:
       delimiter: subunit delimiter
       iso_code: iso code

@@ -17,7 +17,7 @@
 class App.ProductVariant extends Spine.Model
 
   @configure 'ProductVariant', "id", "program_id", "product_id", "key", "title",
-              "description", "price", "list_price", "art"
+              "description", "buying_price", "selling_price", "art"
 
   @extend Spine.Model.Ajax
   @url: -> undefined

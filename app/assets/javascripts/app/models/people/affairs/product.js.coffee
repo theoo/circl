@@ -17,7 +17,7 @@
 class App.PersonAffairProductsProgram extends Spine.Model
 
   @configure 'PersonAffairProductsProgram', "parent_id", "affair_id", "product_id", "program_id",
-    "parent_key", "affair_title", "program_key",
+    "parent_key", "affair_title", "program_key", "bid_percentage",
     "position", "quantity", "created_at", "updated_at", 'description', 'key', 'value'
 
   @extend Spine.Model.Ajax

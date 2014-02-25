@@ -315,3 +315,13 @@ class App.ExtendedController extends Spine.Controller
   update_vat: () =>
     vat = @compute_vat()
     @el.find("#" + @ids_prefix + 'vat').val(vat)
+
+  # Function called from events, trigger sent from ui.js#bind_currency_selector
+  on_currency_change: (e) ->
+    e.preventDefault()
+    currency_input = $(e.target)
+    vat_currency_input = @el.find("input[name=vat_currency]")
+    vat_currency_input.val currency_input.val()
+    @el.find("##{@ids_prefix}vat_currency").html(currency_input.val())
+
+    @adjust_vat(e)

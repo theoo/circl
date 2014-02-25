@@ -98,7 +98,7 @@ class Salaries::TaxData < ActiveRecord::Base
   end
 
   def reference_value
-    Money.new(taxed_items.sum(:value_in_cents))
+    Money.new(taxed_items.sum(:value_in_cents), salary.yearly_salary_currency)
   end
 
   def taxed_value
@@ -152,12 +152,12 @@ class Salaries::TaxData < ActiveRecord::Base
 
   def reset
     h = tax.compute(reference_value, salary.year, salary.infos)
-    self.employer_value       = h[:employer][:value]
-    self.employer_percent     = h[:employer][:percent]
-    self.employer_use_percent = h[:employer][:use_percent]
-    self.employee_value       = h[:employee][:value]
-    self.employee_percent     = h[:employee][:percent]
-    self.employee_use_percent = h[:employee][:use_percent]
+    self.employer_value          = h[:employer][:value]
+    self.employer_percent        = h[:employer][:percent]
+    self.employer_use_percent    = h[:employer][:use_percent]
+    self.employee_value          = h[:employee][:value]
+    self.employee_percent        = h[:employee][:percent]
+    self.employee_use_percent    = h[:employee][:use_percent]
   end
 
   # attributes overridden - JSON API

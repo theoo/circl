@@ -12,4 +12,5 @@
       %option{:value => c}
         = c
 
-%input{:type => 'hidden', :name => 'current_currency', :value => currency}
+%input{:type => 'hidden', :name => 'reference_currency', :value => currency}
+%input{:type => 'hidden', :name => 'reference_value', :value => @.value}

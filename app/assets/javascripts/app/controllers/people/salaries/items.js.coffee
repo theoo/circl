@@ -39,6 +39,7 @@ class App.PersonSalaryItems extends App.ExtendedController
     @render()
 
   render: =>
+    return unless @salary
     @items = _.sortBy PersonSalaryItem.all(), (d) -> d.position
     @html @view('people/salaries/items')(@)
 
