@@ -50,7 +50,7 @@ class Affair < ActiveRecord::Base
   #################
 
   after_save :update_elasticsearch
-  before_save :compute_value, :if => 'value_in_cents.blank?'
+  before_save :update_value, :if => 'value_in_cents.blank?'
   before_save :update_statuses
   before_validation  :ensure_buyer_and_receiver_person_exists
   before_destroy :do_not_destroy_if_has_invoices
@@ -73,17 +73,26 @@ class Affair < ActiveRecord::Base
   has_many    :receipts, :through => :invoices, :uniq => true
 
   has_many    :extras, :dependent => :destroy
+                       #:after_add    => :update_on_prestation_alteration,
+                       #:after_remove => :update_on_prestation_alteration
+
   has_many    :tasks, :dependent => :destroy
+                      #:after_add    => :update_on_prestation_alteration,
+                      #:after_remove => :update_on_prestation_alteration
+
   has_many    :product_items, :class_name => 'AffairsProductsProgram',
                               :dependent => :destroy,
                               :order => :position
+                              #:after_add    => :update_on_prestation_alteration,
+                              #:after_remove => :update_on_prestation_alteration
+
   has_many    :products, :through => :product_items
   has_many    :programs, :through => :product_items
   # has_many    :product_variants, :through => :products
 
   monitored_habtm :subscriptions,
-                  :after_add    => :update_on_subscription_habtm_alteration,
-                  :after_remove => :update_on_subscription_habtm_alteration
+                  :after_add    => :update_on_prestation_alteration,
+                  :after_remove => :update_on_prestation_alteration
   has_many :affairs_subscriptions # for permissions
 
   # Money
@@ -146,37 +155,39 @@ class Affair < ActiveRecord::Base
   # attributes overridden - JSON API
   def as_json(options = nil)
     h = super(options)
-    h[:parent_title]                 = parent.try(:title)
-    h[:owner_name]                   = owner.try(:name)
-    h[:buyer_name]                   = buyer.try(:name)
-    h[:seller_name]                  = seller.try(:name)
-    h[:receiver_name]                = receiver.try(:name)
-    h[:invoices_count]               = invoices.count
-    h[:invoices_value]               = invoices_value.to_f
-    h[:invoices_value_currency]      = invoices_value.currency.try(:iso_code)
-    h[:receipts_count]               = receipts.count
-    h[:receipts_value]               = receipts_value.to_f
-    h[:receipts_value_currency]      = receipts_value.currency.try(:iso_code)
-    h[:subscriptions_count]          = subscriptions.count
-    h[:subscriptions_value]          = subscriptions_value.to_f
-    h[:subscriptions_value_currency] = subscriptions_value.currency.try(:iso_code)
-    h[:tasks_count]                  = tasks.count
-    h[:tasks_value]                  = tasks_value.to_f
-    h[:tasks_value_currency]         = tasks_value.currency.try(:iso_code)
-    h[:products_count]               = product_items.count
-    h[:products_value]               = product_items_value.to_f
-    h[:products_value_currency]      = product_items_value.currency.try(:iso_code)
-    h[:extras_count]                 = extras.count
-    h[:extras_value]                 = extras_value.to_f
-    h[:extras_value_currency]        = extras_value.currency.try(:iso_code)
-    h[:value]                        = value.try(:to_f)
-    h[:computed_value]               = compute_value.try(:to_f)
-    h[:computed_value_currency]      = compute_value.currency.try(:iso_code)
-    h[:arts_value]                   = arts_value.try(:to_f)
-    h[:arts_value_currency]          = arts_value.currency.try(:iso_code)
-    h[:vat_value]                    = vat_value.try(:to_f)
-    h[:vat_value_currency]           = vat_value.currency.try(:iso_code)
-    h[:statuses]                     = translated_statuses
+    h[:parent_title]                  = parent.try(:title)
+    h[:owner_name]                    = owner.try(:name)
+    h[:buyer_name]                    = buyer.try(:name)
+    h[:seller_name]                   = seller.try(:name)
+    h[:receiver_name]                 = receiver.try(:name)
+    h[:invoices_count]                = invoices.count
+    h[:invoices_value]                = invoices_value.to_f
+    h[:invoices_value_currency]       = invoices_value.currency.try(:iso_code)
+    h[:receipts_count]                = receipts.count
+    h[:receipts_value]                = receipts_value.to_f
+    h[:receipts_value_currency]       = receipts_value.currency.try(:iso_code)
+    h[:subscriptions_count]           = subscriptions.count
+    h[:subscriptions_value]           = subscriptions_value.to_f
+    h[:subscriptions_value_currency]  = subscriptions_value.currency.try(:iso_code)
+    h[:tasks_count]                   = tasks.count
+    h[:tasks_value]                   = tasks_value.to_f
+    h[:tasks_value_currency]          = tasks_value.currency.try(:iso_code)
+    h[:products_count]                = product_items.count
+    h[:products_value]                = product_items_value.to_f
+    h[:products_value_currency]       = product_items_value.currency.try(:iso_code)
+    h[:extras_count]                  = extras.count
+    h[:extras_value]                  = extras_value.to_f
+    h[:extras_value_currency]         = extras_value.currency.try(:iso_code)
+    h[:value]                         = value.try(:to_f)
+    h[:computed_value]                = compute_value.try(:to_f)
+    h[:computed_value_currency]       = compute_value.currency.try(:iso_code)
+    h[:arts_count]                    = product_items.each_with_object([]){|i,a| a << i if i.variant.art > 0}.size
+    h[:arts_value]                    = arts_value.try(:to_f)
+    h[:arts_value_currency]           = arts_value.currency.try(:iso_code)
+    h[:vat_count]                     = extras.each_with_object([]){|i,a| a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f}.size + 1
+    h[:vat_value]                     = vat_value.try(:to_f)
+    h[:vat_value_currency]            = vat_value.currency.try(:iso_code)
+    h[:statuses]                      = translated_statuses
     h
   end
 
@@ -223,19 +234,19 @@ class Affair < ActiveRecord::Base
   end
 
   def vat_value
-    sum = 0.to_money(value_currency)
+    # Variable VAT, extract extras with different vat rate
+    extra_with_different_vat_rate = extras.each_with_object([]) do |i,a|
+      a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f
+    end
 
-    # Fixed VAT
-    sum += tasks_value
-    sum += arts_value
-    sum += product_items_value
+    extras_diff_value = extra_with_different_vat_rate.map(&:value).sum.to_money(value_currency)
+    extras_diff_vat = extra_with_different_vat_rate.map(&:vat).sum.to_money(value_currency)
 
-    vat = sum / 100.0 * ApplicationSetting.value("service_vat_rate").to_f
+    service_value = self.value - extras_diff_value
+    sum = service_value / 100.0 * ApplicationSetting.value("service_vat_rate").to_f
+    sum += extras_diff_vat
 
-    # Variable VAT
-    vat += extras.map(&:vat).sum
-
-    vat
+    sum
   end
 
   # Workflows and statuses
@@ -293,7 +304,7 @@ class Affair < ActiveRecord::Base
 
   # Buffer method used to update value and statuses information after habtm relationship
   # alteration.
-  def update_on_subscription_habtm_alteration(record = nil)
+  def update_on_prestation_alteration(record = nil)
     self.update_attribute(:value, compute_value)
     self.update_attribute(:status, update_statuses)
   end
@@ -301,11 +312,16 @@ class Affair < ActiveRecord::Base
   # It will set this affair's value to the computed value of all provisions and
   # returns its value.
   def compute_value
-    self.value = subscriptions_value
-    self.value += tasks_value
-    self.value += product_items_value
-    self.value += extras_value
-    self.value.to_money(value_currency)
+    val = subscriptions_value
+    val += tasks_value
+    val += product_items_value
+    val += arts_value
+    val += extras_value
+    val.to_money(value_currency)
+  end
+
+  def update_value
+    self.value = compute_value
   end
 
   # Update this affair's statuses by comparing affair's value, its invoices and receipts

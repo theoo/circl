@@ -93,7 +93,7 @@ class Salaries::TaxesController < ApplicationController
 
         if @tax.process_data(params[:file].read)
           format.html do
-            flash[:notice] = I18n.t('common.successfully_updated')
+            flash[:notice] = I18n.t('common.notices.successfully_updated')
             redirect_to salaries_path
           end
           format.json do

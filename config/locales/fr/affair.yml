@@ -15,8 +15,12 @@ fr:
       actions:
         edit_affair: modifier l'affaire
         show_owner: consulter la page du propriétaire
+      arts: TAR
       available_statuses: status disponibles
+      bid_value: La valeur HT de la remise est
       buyer: payeur
+      computed_value_is: La valeur HT calculée est
+      custom_value_with_taxes: la valeur fixée est TTC
       document_export: Génération de documents
       estimate: devis
       extras: Extras
@@ -48,9 +52,11 @@ fr:
         underpaid: sous-payée
       subscriptions: Inscriptions
       tasks: Services
+      taxes: taxes
       template: modèle de document
       threshold_overpaid_global: limite de la somme des surpaiements
       threshold_overpaid_unit: limite de surpaiement
       threshold_value_global: limite de la somme des valeurs
       threshold_value_unit: valeur limite
       update_date: dernière mise à jour
+      vat: TVA

@@ -61,7 +61,10 @@ class New extends App.ExtendedController
       # Update badge
       $('a[href=#affairs_tab] .badge').html PersonAffair.count()
 
-    @save_with_notifications @affair.fromForm(e.target), redirect_to_edit
+    data = $(e.target).serializeObject()
+    @affair.load(data)
+    @affair.custom_value_with_taxes = data.custom_value_with_taxes?
+    @save_with_notifications @affair, redirect_to_edit
 
 class Edit extends App.ExtendedController
   events:
@@ -167,7 +170,10 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @affair.fromForm(e.target), (id) =>
+    data = $(e.target).serializeObject()
+    @affair.load(data)
+    @affair.custom_value_with_taxes = data.custom_value_with_taxes?
+    @save_with_notifications @affair, (id) =>
       @hide()
       @unload_dependencies()
 

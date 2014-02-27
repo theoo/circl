@@ -158,7 +158,7 @@ class App.UploadOdt extends App.ExtendedController
       else
         # if a validation failed before, remove it's explanation
         @el.find('.validation_errors_placeholder').css('display', 'none')
-        text = I18n.t('common.successfully_updated')
+        text = I18n.t('common.notices.successfully_updated')
 
         # update template item on template widget/list
         GenericTemplate.fetch(id: template.template_id)

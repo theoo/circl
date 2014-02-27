@@ -79,12 +79,14 @@
                   :value => @product.bid_percentage }
           .input-group-addon %
       .col-md-4
-        %label= I18n.t('product.views.normal_price')
-        - if @product.value
+        - if @product.value and @product.value != @product.bid_price
+          %label= I18n.t('product.views.normal_price')
+          %br
           = @product.value.to_view(@product.value_currency)
       .col-md-4
-        %label= I18n.t('product.views.bid_price')
-        - if @product.bid_price
+        - if @product.bid_price and @product.value != @product.bid_price
+          %label= I18n.t('product.views.bid_price')
+          %br
           = @product.bid_price.to_view(@product.bid_price_currency)
 
 
