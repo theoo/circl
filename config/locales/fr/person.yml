@@ -128,3 +128,5 @@ fr:
       this_person_uniq_id: Identifiant unique de cette personne (ID)
       translation_aptitudes: Aptitudes de traduction
       update_password: mettre à jour le mot de passe
+      website: adresse du site internet (URL)
+

@@ -277,6 +277,7 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of :second_email, :if => :has_second_email?
   validates_format_of :email, :with => FormatValidations::EMAIL_REGEX, :if => :has_email?
   validates_format_of :second_email, :with => FormatValidations::EMAIL_REGEX, :if => :has_second_email?
+  validates :website, :format => URI::regexp(%w(http https))
   validate :avs_number_format
   validate :second_email_is_different, :if => lambda { has_email? && has_second_email? }
   validate :has_org_name_if_is_an_org_is_set

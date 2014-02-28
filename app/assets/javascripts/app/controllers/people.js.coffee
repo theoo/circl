@@ -72,6 +72,7 @@ class Edit extends App.ExtendedController
     'click a[name=person_phone_button]': 'call_to'
     'click a[name=person_second_phone_button]': 'call_to'
     'click a[name=person_mobile_button]': 'call_to'
+    'click a[name=person_website_button]': 'link_to'
 
   constructor: (params) ->
     super
@@ -92,6 +93,7 @@ class Edit extends App.ExtendedController
     $("a[name=person_phone_button]").attr(disabled: true)         unless @person.phone
     $("a[name=person_second_phone_button]").attr(disabled: true)  unless @person.second_phone
     $("a[name=person_mobile_button]").attr(disabled: true)        unless @person.mobile
+    $("a[name=person_website_button]").attr(disabled: true)       unless @person.website
 
   submit: (e) ->
     e.preventDefault()
@@ -114,6 +116,11 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     phone = $(e.target).closest(".input-group").find("input").val().split(" ").join("")
     window.location = "callto:#{phone}"
+
+  link_to: (e) ->
+    e.preventDefault()
+    url = $(e.target).closest(".input-group").find("input").val()
+    window.open(url, 'person_website')
 
 class App.People extends Spine.Controller
   className: 'person'
