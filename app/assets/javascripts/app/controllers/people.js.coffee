@@ -70,6 +70,8 @@ class Edit extends App.ExtendedController
     'click a[name=person_email_button]': 'mail_to'
     'click a[name=person_second_email_button]': 'mail_to'
     'click a[name=person_phone_button]': 'call_to'
+    'click a[name=person_second_phone_button]': 'call_to'
+    'click a[name=person_mobile_button]': 'call_to'
 
   constructor: (params) ->
     super
@@ -110,7 +112,7 @@ class Edit extends App.ExtendedController
 
   call_to: (e) ->
     e.preventDefault()
-    phone = $(e.target).closest(".input-group").find("input").val()
+    phone = $(e.target).closest(".input-group").find("input").val().split(" ").join("")
     window.location = "callto:#{phone}"
 
 class App.People extends Spine.Controller
