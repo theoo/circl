@@ -54,7 +54,7 @@ class New extends App.ExtendedController
       @person = Person.find(@person_id)
       @affair = PersonAffair.find(@affair_id)
       @invoice = new PersonAffairInvoice(value: 0)
-      @invoice.printed_address = @person.address_for_bvr
+      @invoice.printed_address = @affair.buyer_address
       @invoice.title = @affair.title
       @invoice.description = @affair.description
       @invoice.value = @affair.value

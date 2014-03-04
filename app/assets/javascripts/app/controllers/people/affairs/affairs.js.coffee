@@ -364,9 +364,12 @@ class App.PersonAffairs extends Spine.Controller
     @index.bind 'edit', (id) =>
       @edit.active(id: id, person_id: @person_id)
 
+    # TODO, if an error is raised the record is unloaded
+
     @edit.bind 'destroyError', (id, errors) =>
-      @edit.active(id: id)
-      @edit.render_errors errors
+      PersonAffair.one 'refresh', =>
+        @edit.render_errors errors
+      PersonAffair.fetch(id: id)
 
   activate: ->
     super

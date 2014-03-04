@@ -51,6 +51,7 @@ class Affair < ActiveRecord::Base
 
   after_save :update_elasticsearch
   before_save :update_value, :if => 'value_in_cents.blank?'
+  before_save :compute_value_without_taxes, :if => 'custom_value_with_taxes'
   before_save :update_statuses
   before_validation  :ensure_buyer_and_receiver_person_exists
   before_destroy :do_not_destroy_if_has_invoices
@@ -103,6 +104,9 @@ class Affair < ActiveRecord::Base
     where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
   }
 
+  # Used to calculate value from value with taxes
+  attr_accessor :custom_value_with_taxes
+
 
   ###################
   ### VALIDATIONS ###
@@ -115,6 +119,7 @@ class Affair < ActiveRecord::Base
 
   # Validate fields of type 'text' length
   validates_length_of :description, :maximum => 65536
+  validate :vat_calculation_availability, :if => 'custom_value_with_taxes'
 
   ########################
   #### CLASS METHODS #####
@@ -155,39 +160,45 @@ class Affair < ActiveRecord::Base
   # attributes overridden - JSON API
   def as_json(options = nil)
     h = super(options)
-    h[:parent_title]                  = parent.try(:title)
-    h[:owner_name]                    = owner.try(:name)
-    h[:buyer_name]                    = buyer.try(:name)
-    h[:seller_name]                   = seller.try(:name)
-    h[:receiver_name]                 = receiver.try(:name)
-    h[:invoices_count]                = invoices.count
-    h[:invoices_value]                = invoices_value.to_f
-    h[:invoices_value_currency]       = invoices_value.currency.try(:iso_code)
-    h[:receipts_count]                = receipts.count
-    h[:receipts_value]                = receipts_value.to_f
-    h[:receipts_value_currency]       = receipts_value.currency.try(:iso_code)
-    h[:subscriptions_count]           = subscriptions.count
-    h[:subscriptions_value]           = subscriptions_value.to_f
-    h[:subscriptions_value_currency]  = subscriptions_value.currency.try(:iso_code)
-    h[:tasks_count]                   = tasks.count
-    h[:tasks_value]                   = tasks_value.to_f
-    h[:tasks_value_currency]          = tasks_value.currency.try(:iso_code)
-    h[:products_count]                = product_items.count
-    h[:products_value]                = product_items_value.to_f
-    h[:products_value_currency]       = product_items_value.currency.try(:iso_code)
-    h[:extras_count]                  = extras.count
-    h[:extras_value]                  = extras_value.to_f
-    h[:extras_value_currency]         = extras_value.currency.try(:iso_code)
-    h[:value]                         = value.try(:to_f)
-    h[:computed_value]                = compute_value.try(:to_f)
-    h[:computed_value_currency]       = compute_value.currency.try(:iso_code)
-    h[:arts_count]                    = product_items.each_with_object([]){|i,a| a << i if i.variant.art > 0}.size
-    h[:arts_value]                    = arts_value.try(:to_f)
-    h[:arts_value_currency]           = arts_value.currency.try(:iso_code)
-    h[:vat_count]                     = extras.each_with_object([]){|i,a| a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f}.size + 1
-    h[:vat_value]                     = vat_value.try(:to_f)
-    h[:vat_value_currency]            = vat_value.currency.try(:iso_code)
-    h[:statuses]                      = translated_statuses
+    h[:parent_title]                       = parent.try(:title)
+    h[:owner_name]                         = owner.try(:name)
+    h[:owner_address]                      = owner.try(:address_for_bvr)
+    h[:buyer_name]                         = buyer.try(:name)
+    h[:buyer_address]                      = buyer.try(:address_for_bvr)
+    h[:seller_name]                        = seller.try(:name)
+    h[:receiver_name]                      = receiver.try(:name)
+    h[:receiver_address]                   = receiver.try(:address_for_bvr)
+    h[:invoices_count]                     = invoices.count
+    h[:invoices_value]                     = invoices_value.to_f
+    h[:invoices_value_currency]            = invoices_value.currency.try(:iso_code)
+    h[:receipts_count]                     = receipts.count
+    h[:receipts_value]                     = receipts_value.to_f
+    h[:receipts_value_currency]            = receipts_value.currency.try(:iso_code)
+    h[:subscriptions_count]                = subscriptions.count
+    h[:subscriptions_value]                = subscriptions_value.to_f
+    h[:subscriptions_value_currency]       = subscriptions_value.currency.try(:iso_code)
+    h[:tasks_count]                        = tasks.count
+    h[:tasks_value]                        = tasks_value.to_f
+    h[:tasks_value_currency]               = tasks_value.currency.try(:iso_code)
+    h[:products_count]                     = product_items.count
+    h[:products_value]                     = product_items_value.to_f
+    h[:products_value_currency]            = product_items_value.currency.try(:iso_code)
+    h[:extras_count]                       = extras.count
+    h[:extras_value]                       = extras_value.to_f
+    h[:extras_value_currency]              = extras_value.currency.try(:iso_code)
+    h[:value]                              = value.try(:to_f)
+    h[:value_currency]                     = value.currency.try(:iso_code)
+    h[:computed_value]                     = compute_value.try(:to_f)
+    h[:computed_value_currency]            = compute_value.currency.try(:iso_code)
+    h[:computed_value_with_taxes]          = compute_value_with_taxes.try(:to_f)
+    h[:computed_value_with_taxes_currency] = compute_value_with_taxes.currency.try(:iso_code)
+    h[:arts_count]                         = product_items.each_with_object([]){|i,a| a << i if i.variant.art > 0}.size
+    h[:arts_value]                         = arts_value.try(:to_f)
+    h[:arts_value_currency]                = arts_value.currency.try(:iso_code)
+    h[:vat_count]                          = extras.each_with_object([]){|i,a| a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f}.size + 1
+    h[:vat_value]                          = vat_value.try(:to_f)
+    h[:vat_value_currency]                 = vat_value.currency.try(:iso_code)
+    h[:statuses]                           = translated_statuses
     h
   end
 
@@ -233,7 +244,7 @@ class Affair < ActiveRecord::Base
     product_items.map{|i| i.variant.art * i.quantity}.sum.to_money(value_currency)
   end
 
-  def vat_value
+  def vat_value(forced_value = self.value)
     # Variable VAT, extract extras with different vat rate
     extra_with_different_vat_rate = extras.each_with_object([]) do |i,a|
       a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f
@@ -242,7 +253,7 @@ class Affair < ActiveRecord::Base
     extras_diff_value = extra_with_different_vat_rate.map(&:value).sum.to_money(value_currency)
     extras_diff_vat = extra_with_different_vat_rate.map(&:vat).sum.to_money(value_currency)
 
-    service_value = self.value - extras_diff_value
+    service_value = forced_value - extras_diff_value
     sum = service_value / 100.0 * ApplicationSetting.value("service_vat_rate").to_f
     sum += extras_diff_vat
 
@@ -320,8 +331,32 @@ class Affair < ActiveRecord::Base
     val.to_money(value_currency)
   end
 
+  def compute_value_with_taxes
+    val = compute_value
+    taxes = vat_value(val)
+    val + taxes
+  end
+
   def update_value
     self.value = compute_value
+  end
+
+  def compute_value_without_taxes
+    self.value = reverse_vat_value(value)
+  end
+
+  def reverse_vat_value(value_with_taxes)
+    value_with_taxes / ( 1 + (ApplicationSetting.value("service_vat_rate").to_f / 100) )
+  end
+
+  def vat_calculation_availability
+    extras.each do |i|
+      if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f
+        errors.add(:base,
+           I18n.t('affair.errors.unable_to_compute_value_without_taxes_if_extras_have_different_vat_values'))
+        return false
+      end
+    end
   end
 
   # Update this affair's statuses by comparing affair's value, its invoices and receipts

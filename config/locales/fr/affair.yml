@@ -3,6 +3,7 @@ fr:
   affair:
     errors:
       cant_delete_affair_who_has_invoices: Il est impossible de détruire une affaire dont dépend une facture.
+      unable_to_compute_value_without_taxes_if_extras_have_different_vat_values: Il est impossible de calculer la valeur hors taxe si l'affaire contient des extras aux TVA différentes.
       wrong_date: Mauvaise date
     notices:
       document_export_explanation: Veuillez sélectionner ci-dessous les critères de tri pour la génération du document.
@@ -59,4 +60,5 @@ fr:
       threshold_value_global: limite de la somme des valeurs
       threshold_value_unit: valeur limite
       update_date: dernière mise à jour
+      value_with_taxes_is: La valeur TTC calculée est
       vat: TVA
