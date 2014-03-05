@@ -19,48 +19,49 @@
       %ul.nav.navbar-nav.navbar-right.hidden-xs
         = render :partial => 'layouts/login'
 
-      - if can? :index, Directory
-        = form_tag directory_path,
-            :method => 'get',
-            :id => 'quick_search',
-            :class => 'navbar-form navbar-right hidden-sm hidden-xs',
-            :role => 'search' do
-          .form-group
-            - # style vs chrome bug => https://github.com/twbs/bootstrap/issues/9950
-            .input-group{:style => 'width: 250px;'}
-              %input{ :type => 'search',
-                      :class => 'form-control',
-                      :name => 'quick_search_string',
-                      :id => 'quick_search_string',
-                      :placeholder => I18n.t('directory.views.quick_search_placeholder') }
-              .input-group-btn
-                %button{:type => 'submit', :class => 'btn btn-default'}
-                  .icon-search
+        - if can? :index, Directory
+          = form_tag directory_path,
+              :method => 'get',
+              :id => 'quick_search',
+              :class => 'navbar-form navbar-right hidden-sm hidden-xs',
+              :role => 'search' do
+            .form-group
+              - # style vs chrome bug => https://github.com/twbs/bootstrap/issues/9950
+              .input-group{:style => 'width: 250px;'}
+                %input{ :type => 'search',
+                        :class => 'form-control',
+                        :name => 'quick_search_string',
+                        :id => 'quick_search_string',
+                        :placeholder => I18n.t('directory.views.quick_search_placeholder') }
+                .input-group-btn
+                  %button{:type => 'submit', :class => 'btn btn-default'}
+                    .icon-search
 
 
-      #main_navigation.collapse.navbar-collapse.container
-        %ul.nav.navbar-nav
-          .visible-xs.login-xs
-            = render :partial => 'layouts/login'
+      .container
+        #main_navigation.collapse.navbar-collapse.container
+          %ul.nav.navbar-nav
+            .visible-xs.login-xs
+              = render :partial => 'layouts/login'
 
-          - if can? :index, Directory
-            %li{:class => ('active' if request.path == directory_path)}
-              = link_to I18n.t('common.directory'),
-                        directory_path
+            - if can? :index, Directory
+              %li{:class => ('active' if request.path == directory_path)}
+                = link_to I18n.t('common.directory'),
+                          directory_path
 
-          - if can? :index, Admin
-            %li{:class => ('active' if request.path == admin_path)}
-              = link_to I18n.t('common.administration'),
-                        admin_path
+            - if can? :index, Admin
+              %li{:class => ('active' if request.path == admin_path)}
+                = link_to I18n.t('common.administration'),
+                          admin_path
 
-          - if can? :index, Salaries
-            %li{:class => ('active' if request.path == salaries_path)}
-              = link_to I18n.t('common.salaries'),
-                        salaries_path
+            - if can? :index, Salaries
+              %li{:class => ('active' if request.path == salaries_path)}
+                = link_to I18n.t('common.salaries'),
+                          salaries_path
 
-          - if can? :index, Setting
-            %li{:class => ('active' if request.path == settings_path)}
-              = link_to I18n.t('common.settings'),
-                        settings_path
+            - if can? :index, Setting
+              %li{:class => ('active' if request.path == settings_path)}
+                = link_to I18n.t('common.settings'),
+                          settings_path
 
 
