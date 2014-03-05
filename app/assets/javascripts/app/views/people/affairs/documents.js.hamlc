@@ -155,7 +155,7 @@
           %select{:name => 'generic_template_id',
                   :id => 'person_affairs_document_export_template',
                   :class => 'form-control required'}
-            - for h in App.GenericTemplate.category(@template_class)
+            - for h in _.sortBy(App.GenericTemplate.category(@template_class), (t) -> t.title)
               %option{:value => h.id}= h.title
 
         .form-group

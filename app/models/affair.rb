@@ -106,6 +106,7 @@ class Affair < ActiveRecord::Base
 
   # Used to calculate value from value with taxes
   attr_accessor :custom_value_with_taxes
+  attr_accessor :generic_template
 
 
   ###################
@@ -188,6 +189,8 @@ class Affair < ActiveRecord::Base
     h[:extras_value_currency]              = extras_value.currency.try(:iso_code)
     h[:value]                              = value.try(:to_f)
     h[:value_currency]                     = value.currency.try(:iso_code)
+    h[:value_with_taxes]                   = value_with_taxes.try(:to_f)
+    h[:value_with_taxes_currency]          = value_with_taxes.currency.try(:iso_code)
     h[:computed_value]                     = compute_value.try(:to_f)
     h[:computed_value_currency]            = compute_value.currency.try(:iso_code)
     h[:computed_value_with_taxes]          = compute_value_with_taxes.try(:to_f)
@@ -207,29 +210,45 @@ class Affair < ActiveRecord::Base
   end
 
   def invoices_value
-    invoices.map(&:value).sum.to_money(value_currency)
+    invoices.map{|i| i.value.to_money(value_currency)}.sum.to_money
   end
 
   def receipts_value
-    receipts.map(&:value).sum.to_money(value_currency)
+    receipts.map{ |r| r.value.to_money(value_currency)}.sum.to_money
   end
 
   def subscriptions_value
     # Sum only leaves of a subscription tree (the last child)
     leaves = find_children(subscriptions)
-    leaves.map{|l| l.value_for(owner)}.sum.to_money(value_currency)
+    leaves.map{|l| l.value_for(owner).to_money(value_currency)}.sum.to_money
   end
 
   def tasks_value
-    tasks.map(&:value).sum.to_money(value_currency)
+    tasks.map{ |t| t.value.to_money(value_currency)}.sum.to_money
+  end
+
+  def tasks_real_value
+    tasks.map{ |t| t.compute_value.to_money(value_currency)}.sum.to_money
+  end
+
+  def tasks_bid_value
+    tasks_real_value - tasks_value
   end
 
   def product_items_value
-    product_items.map(&:value).sum.to_money(value_currency)
+    product_items.map{|p| p.bid_price.to_money(value_currency)}.sum.to_money
+  end
+
+  def product_items_real_value
+    product_items.map{|p| p.value.to_money(value_currency)}.sum.to_money
+  end
+
+  def product_items_bid_value
+    product_items_real_value - product_items_value
   end
 
   def extras_value
-    extras.map(&:value).sum.to_money(value_currency)
+    extras.map{|e| e.value.to_money(value_currency)}.sum.to_money
   end
 
   def balance_value
@@ -241,9 +260,10 @@ class Affair < ActiveRecord::Base
   end
 
   def arts_value
-    product_items.map{|i| i.variant.art * i.quantity}.sum.to_money(value_currency)
+    product_items.map{|i| i.variant.art.to_money(value_currency) * i.quantity}.sum.to_money
   end
 
+  # TODO round value isn't correct
   def vat_value(forced_value = self.value)
     # Variable VAT, extract extras with different vat rate
     extra_with_different_vat_rate = extras.each_with_object([]) do |i,a|
@@ -258,6 +278,27 @@ class Affair < ActiveRecord::Base
     sum += extras_diff_vat
 
     sum
+  end
+
+  # It will set this affair's value to the computed value of all provisions and
+  # returns its value.
+  def compute_value
+    val = subscriptions_value
+    val += tasks_value
+    val += product_items_value
+    val += arts_value
+    val += extras_value
+    val.to_money(value_currency)
+  end
+
+  def compute_value_with_taxes
+    val = compute_value
+    taxes = vat_value(val)
+    val + taxes
+  end
+
+  def value_with_taxes
+    value + vat_value
   end
 
   # Workflows and statuses
@@ -311,6 +352,31 @@ class Affair < ActiveRecord::Base
     invoices_value < value
   end
 
+  def product_items_for_category(cat)
+    if cat
+      product_items
+        .joins(:product)
+        .where("products.category = ?", cat)
+    else
+      product_items
+        .joins(:product)
+        .where("products.category is null")
+    end
+  end
+
+  def product_items_categories
+    Product
+      .joins(:product_items)
+      .where("affairs_products_programs.affair_id = ?", id)
+      .select("DISTINCT category")
+      .order("category")
+      .map(&:category)
+  end
+
+  def product_items_category_value_for(cat)
+    product_items_for_category(cat).map(&:value).sum.to_money(value_currency)
+  end
+
   private
 
   # Buffer method used to update value and statuses information after habtm relationship
@@ -318,23 +384,6 @@ class Affair < ActiveRecord::Base
   def update_on_prestation_alteration(record = nil)
     self.update_attribute(:value, compute_value)
     self.update_attribute(:status, update_statuses)
-  end
-
-  # It will set this affair's value to the computed value of all provisions and
-  # returns its value.
-  def compute_value
-    val = subscriptions_value
-    val += tasks_value
-    val += product_items_value
-    val += arts_value
-    val += extras_value
-    val.to_money(value_currency)
-  end
-
-  def compute_value_with_taxes
-    val = compute_value
-    taxes = vat_value(val)
-    val + taxes
   end
 
   def update_value
@@ -345,8 +394,9 @@ class Affair < ActiveRecord::Base
     self.value = reverse_vat_value(value)
   end
 
-  def reverse_vat_value(value_with_taxes)
-    value_with_taxes / ( 1 + (ApplicationSetting.value("service_vat_rate").to_f / 100) )
+  # Takes a value taxes included
+  def reverse_vat_value(val)
+    val / ( 1 + (ApplicationSetting.value("service_vat_rate").to_f / 100) )
   end
 
   def vat_calculation_availability

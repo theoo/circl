@@ -35,9 +35,21 @@
               = I18n.t('common.description')
             %textarea{:name => 'description',
                       :id => 'person_affair_invoice_description',
-                      :rows => 5,
+                      :rows => 3,
                       :class => 'form-control'}
               = @invoice.description
+
+      .row
+        .col-sm-12
+          .form-group
+            %label{:for => 'person_affair_invoice_conditions'}
+              = I18n.t('invoice.views.conditions')
+            %textarea{:name => 'conditions',
+                      :id => 'person_affair_invoice_conditions',
+                      :rows => 3,
+                      :class => 'form-control'}
+              = @invoice.conditions
+
       .row
         .col-sm-7
           .form-group

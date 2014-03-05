@@ -49,7 +49,7 @@
           %label{:for => 'affair_description'}
             = I18n.t('common.description')
           %textarea{:name => 'description',
-                    :rows => 4,
+                    :rows => 3,
                     :id => 'affair_description',
                     :class => 'form-control'}
             = @affair.description
@@ -60,10 +60,21 @@
           %label{:for => 'affair_footer'}
             = I18n.t('affair.views.footer')
           %textarea{:name => 'footer',
-                    :rows => 4,
+                    :rows => 3,
                     :id => 'affair_footer',
                     :class => 'form-control'}
             = @affair.footer
+
+    .row
+      .col-lg-12
+        .form-group
+          %label{:for => 'affair_conditions'}
+            = I18n.t('affair.views.conditions')
+          %textarea{:name => 'conditions',
+                    :rows => 3,
+                    :id => 'affair_conditions',
+                    :class => 'form-control'}
+            = @affair.conditions
 
     .row
       .col-sm-6
@@ -112,9 +123,7 @@
 
     .row
       .col-sm-12
-        intervennants
-
-
+        %label TODO intervennants
 
     - unless @affair.isNew?()
       .row
@@ -136,7 +145,7 @@
               %input{ :type => 'number',
                       :step => 0.01,
                       :id => 'person_affair_value',
-                      :class => 'form-control',
+                      :class => 'form-control required',
                       :min => 0,
                       :max => 99999999.99,
                       :name => 'value',
@@ -157,7 +166,6 @@
         .col-sm-6
           .form-group
             %label
-              = I18n.t('affair.views.taxes')
 
             .checkbox
               %label.control-label
@@ -168,8 +176,11 @@
                         :value => 1 }
                 = I18n.t('affair.views.custom_value_with_taxes')
               %small.help-block
+                = I18n.t("affair.views.computed_value_with_taxes_is")
+                = @affair.computed_value_with_taxes?.to_view(@affair.computed_value_with_taxes_currency)
+                %br
                 = I18n.t("affair.views.value_with_taxes_is")
-                = @affair.computed_value_with_taxes?.to_view(@affair.computed_value_currency)
+                = @affair.value_with_taxes?.to_view(@affair.value_with_taxes_currency)
 
 
       .row
@@ -224,14 +235,50 @@
               = @affair.receipts_value?.to_view(@affair.receipts_value_currency)
 
     .row
+      .col-sm-6
+        - unless @affair.isNew?()
+          .form-group
+            %label{:for => 'affair_template'}
+              = I18n.t('affair.views.template')
+            %select{:name => 'generic_template_id',
+                    :id => 'affair_template',
+                    :class => 'form-control'}
+              - for h in _.sortBy(App.GenericTemplate.category('Affair'), (t) -> t.title)
+                %option{:value => h.id}= h.title
+      .col-sm-6
+
+    .row
       .col-sm-12
         - if parseInt(@person_id) == parseInt(@affair.owner_id) or @affair.isNew?()
-          - unless @affair.isNew?()
-            %a{:name => "affair-destroy",
-               :class => 'btn btn-danger' }
-              .icon-remove
-              = I18n.t('common.destroy')
 
+          - unless @affair.isNew?()
+            .btn-group
+              %a{:name => "affair-destroy",
+                 :class => 'btn btn-danger' }
+                .icon-remove
+                = I18n.t('common.destroy')
+
+              .btn-group
+                %a{ :data-toggle => 'dropdown',
+                    :type => 'button',
+                    :class => 'btn btn-default dropdown-toggle' }
+                  .icon-paper-clip
+                  = I18n.t('common.documents')
+                  .caret
+
+                %ul.dropdown-menu
+                  %li
+                    %a{:href => '#', :name => 'affair-preview-pdf'}
+                      .icon-eye-open
+                      = I18n.t('common.preview')
+                  %li
+                    %a{:href => '#', :name => 'affair-download-pdf'}
+                      .icon-download-alt
+                      = I18n.t('common.pdf')
+                  %li
+                    %a{:href => '#', :name => 'affair-download-odt'}
+                      .icon-download-alt
+                      = I18n.t('common.odt')
 
           .pull-right
             != @partial('submit_button')(@affair)

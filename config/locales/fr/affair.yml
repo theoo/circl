@@ -15,12 +15,15 @@ fr:
     views:
       actions:
         edit_affair: modifier l'affaire
+        preview_in_new_tab: prévisualiser dans un nouvel onglet
         show_owner: consulter la page du propriétaire
       arts: TAR
       available_statuses: status disponibles
       bid_value: La valeur HT de la remise est
       buyer: payeur
       computed_value_is: La valeur HT calculée est
+      computed_value_with_taxes_is: La valeur TTC calculée est
+      conditions: conditions
       custom_value_with_taxes: la valeur fixée est TTC
       document_export: Génération de documents
       estimate: devis
@@ -60,5 +63,5 @@ fr:
       threshold_value_global: limite de la somme des valeurs
       threshold_value_unit: valeur limite
       update_date: dernière mise à jour
-      value_with_taxes_is: La valeur TTC calculée est
+      value_with_taxes_is: La valeur TTC est
       vat: TVA

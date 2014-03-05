@@ -108,17 +108,17 @@ class AffairsProductsProgram < ActiveRecord::Base
     end
   end
 
-  # Proxy, mostly used for placeholders substitutions
-  %w(key title description).each do |m|
-    define_method(m){ product.send(m) }
-  end
-
   def bid_price
     if bid_percentage
       value - (value / 100 * bid_percentage)
     else
       value
     end
+  end
+
+  # Proxy, mostly used for placeholders substitutions
+  %w(key title description category).each do |m|
+    define_method(m){ product.send(m) }
   end
 
   private

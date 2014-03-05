@@ -62,6 +62,8 @@ class New extends App.ExtendedController
     else
       @invoice = new PersonAffairInvoice(value: 0)
 
+    @invoice.conditions = App.ApplicationSetting.value("default_invoice_conditions")
+
     if @affair_id and PersonAffair.exists(@affair_id)
       @affair = PersonAffair.find(@affair_id)
 

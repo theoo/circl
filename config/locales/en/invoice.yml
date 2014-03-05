@@ -13,6 +13,7 @@ en:
       age: age
       balance_value: balance value
       buyer: buyer
+      conditions: conditions
       counterpart_account: counterpart account
       export: export
       invoice_date: invoice date

@@ -45,3 +45,7 @@
   value: 'true'
 - key: default_currency
   value: 'CHF'
+- key: default_affair_conditions
+  value: 'pay to confirm order'
+- key: default_invoice_conditions
+  value: '10 days'

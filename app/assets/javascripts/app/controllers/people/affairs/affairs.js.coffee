@@ -43,7 +43,7 @@ class New extends App.ExtendedController
   render: =>
     return unless Person.exists(@person_id)
     @person = Person.find(@person_id)
-    @affair = new PersonAffair()
+    @affair = new PersonAffair(conditions: App.ApplicationSetting.value("default_affair_conditions"))
     @affair.owner_id = @affair.buyer_id = @affair.receiver_id = @person.id
     @affair.owner_name = @affair.buyer_name = @affair.receiver_name = @person.name
 
@@ -63,6 +63,7 @@ class New extends App.ExtendedController
 
     data = $(e.target).serializeObject()
     @affair.load(data)
+    @affair.value_currency = App.ApplicationSetting.value("default_currency") unless @affair.value_currency
     @affair.custom_value_with_taxes = data.custom_value_with_taxes?
     @save_with_notifications @affair, redirect_to_edit
 
@@ -72,6 +73,9 @@ class Edit extends App.ExtendedController
     'click button[name="affair-show-owner"]': 'show_owner'
     'click a[name="affair-destroy"]': 'destroy'
     'click button[name=reset_value]': 'reset_value'
+    'click a[name="affair-preview-pdf"]': 'preview'
+    'click a[name="affair-download-pdf"]': 'pdf'
+    'click a[name="affair-download-odt"]': 'odt'
 
   constructor: ->
     super
@@ -191,6 +195,51 @@ class Edit extends App.ExtendedController
   reset_value: (e) ->
     e.preventDefault()
     @el.find("#person_affair_value").val @affair.computed_value
+
+  pdf: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#affair_template").val()
+    window.location = "#{PersonAffair.url()}/#{@affair.id}.pdf?template_id=#{@template_id}"
+
+  odt: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#affair_template").val()
+    window.location = "#{PersonAffair.url()}/#{@affair.id}.odt?template_id=#{@template_id}"
+
+  preview: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#affair_template").val()
+
+    win = $("<div class='modal fade' id='affair-preview' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Update title
+    win.find('h4').text I18n.t('common.preview') + ": " + @affair.title
+
+    # Insert iframe to content
+    iframe = $("<iframe src='" +
+                "#{PersonAffair.url()}/#{@affair.id}.html?template_id=#{@template_id}" +
+                "' width='100%' " + "height='" + ($(window).height() - 60) +
+                "'></iframe>")
+    win.find('.modal-body').html iframe
+
+    # Adapt width to A4
+    win.find('.modal-dialog').css(width: 900)
+
+    # Add preview in new tab button
+    btn = "<button type='button' name='affair-preview-in-new-tab' class='btn btn-default'>"
+    btn += I18n.t('affair.views.actions.preview_in_new_tab')
+    btn += "</button>"
+    btn = $(btn)
+    win.find('.modal-footer').append btn
+    btn.on 'click', (e) =>
+      e.preventDefault()
+      window.open "#{PersonSalary.url()}/#{@affair.id}.html", "affair_preview"
+
+    win.modal('show')
 
 
 class Index extends App.ExtendedController

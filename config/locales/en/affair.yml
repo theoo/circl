@@ -15,12 +15,15 @@ en:
     views:
       actions:
         edit_affair: edit affair
+        preview_in_new_tab: preview in new tab
         show_owner: show owner's page
       arts: ART
       available_statuses: available statuses
       bid_value: The bid value is
       buyer: buyer
       computed_value_is: The computed value is
+      computed_value_with_taxes_is: The computed value with taxes is
+      conditions: conditions
       custom_value_with_taxes: The fixed value is all taxes included
       document_export: Documents generation
       estimate: estimate
@@ -60,5 +63,5 @@ en:
       threshold_value_global: value sum threshold
       threshold_value_unit: value threshold
       update_date: last update
-      value_with_taxes_is: The computed value with taxes is
+      value_with_taxes_is: The value with taxes is
       vat: VAT

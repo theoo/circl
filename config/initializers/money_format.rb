@@ -46,7 +46,8 @@ if ActiveRecord::Base.connection.table_exists? 'currencies'
   Currency.all.each do |curr|
     h = curr.attributes.symbolize_keys
     h.delete(:id)
-    # h.symbol = "" # Workaround to remove currency symbol in to_view
+    h[:decimal_mark] = curr.delimiter
+    h[:thousands_separator] = curr.separator
     Money::Currency.register(h)
   end
 
@@ -54,12 +55,17 @@ if ActiveRecord::Base.connection.table_exists? 'currencies'
 
   module MoneyClassExtention
     def to_view
-      default_currency = Currency.where(:iso_code => ApplicationSetting.value("default_currency")).first
-      if default_currency
-        format(:thousands_separator => default_currency.separator,
-          :decimal_mark => default_currency.delimiter,
-          :with_currency => false)
-      end
+      #default_currency = Money.default_currency
+      #format(:thousands_separator => default_currency.separator,
+      #  :decimal_mark => default_currency.delimiter,
+      #  :with_currency => false)
+      format
+    end
+
+    # Force currency to default currency
+    def to_doc
+      m = exchange_to(Money.default_currency.iso_code)
+      # raise ArgumentError, self.currency.inspect
     end
   end
 

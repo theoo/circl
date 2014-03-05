@@ -93,6 +93,8 @@ class AttachmentGenerator
     @tmp_file = Tempfile.new(['pdf_generation' + @object.id.to_s, '.odt'], :encoding => 'ascii-8bit')
     @tmp_file.binmode
 
+    I18n.locale = @object.generic_template.language.symbol
+
     begin
       render_odt @object.generic_template.odt.path, @tmp_file.path
     rescue Exception => @e

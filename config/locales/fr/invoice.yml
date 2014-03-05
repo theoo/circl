@@ -13,6 +13,7 @@ fr:
       age: age
       balance_value: balance
       buyer: payeur
+      conditions: conditions
       counterpart_account: contrepartie
       export: export des factures
       invoice_date: date de la facture

@@ -36,7 +36,36 @@ class People::AffairsController < ApplicationController
   end
 
   def show
-    edit
+
+    @affair.generic_template = GenericTemplate.find params[:template_id]
+
+    respond_to do |format|
+      format.json { render :json => @affair }
+
+      format.html do
+        generator = AttachmentGenerator.new(@affair)
+        render :inline => generator.html, :layout => 'preview'
+      end
+
+      format.pdf do
+        @pdf = ""
+        generator = AttachmentGenerator.new(@affair)
+        generator.pdf { |o,pdf| @pdf = pdf.read }
+        send_data @pdf,
+                  :filename => "affair_#{params[:id]}.pdf",
+                  :type => 'application/pdf'
+      end
+
+      format.odt do
+        @odt = ""
+        generator = AttachmentGenerator.new(@affair)
+        generator.odt { |o,odt| @odt = odt.read }
+        send_data @odt,
+                  :filename => "affair_#{params[:id]}.odt",
+                  :type => 'application/vnd.oasis.opendocument.text'
+      end
+    end
+
   end
 
   def create

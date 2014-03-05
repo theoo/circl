@@ -14,21 +14,21 @@
 ActiveRecord::Schema.define(:version => 20140224125655) do
 
   create_table "affairs", :force => true do |t|
-    t.integer  "owner_id",                                                :null => false
-    t.integer  "buyer_id",                                                :null => false
-    t.integer  "receiver_id",                                             :null => false
-    t.string   "title",                                :default => "",    :null => false
-    t.text     "description",                          :default => ""
-    t.integer  "value_in_cents",          :limit => 8, :default => 0,     :null => false
-    t.string   "value_currency",                       :default => "CHF", :null => false
+    t.integer  "owner_id",                                       :null => false
+    t.integer  "buyer_id",                                       :null => false
+    t.integer  "receiver_id",                                    :null => false
+    t.string   "title",                       :default => "",    :null => false
+    t.text     "description",                 :default => ""
+    t.integer  "value_in_cents", :limit => 8, :default => 0,     :null => false
+    t.string   "value_currency",              :default => "CHF", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "status",                               :default => 0,     :null => false
-    t.boolean  "estimate",                             :default => false, :null => false
+    t.integer  "status",                      :default => 0,     :null => false
+    t.boolean  "estimate",                    :default => false, :null => false
     t.integer  "parent_id"
     t.text     "footer"
-    t.integer  "seller_id",                            :default => 1,     :null => false
-    t.boolean  "custom_value_with_taxes",              :default => false
+    t.integer  "seller_id",                   :default => 1,     :null => false
+    t.text     "conditions"
   end
 
   add_index "affairs", ["buyer_id"], :name => "index_affairs_on_buyer_id"
