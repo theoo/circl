@@ -224,7 +224,7 @@ class Salaries::Salary < ActiveRecord::Base
   end
 
   def taxed_items_total
-    taxed_items.map(&:value).sum
+    taxed_items.map(&:value).sum.to_money
   end
 
   def untaxed_items

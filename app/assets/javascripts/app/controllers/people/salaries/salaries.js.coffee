@@ -94,6 +94,7 @@ class New extends App.ExtendedController
       @salary.parent_id           = reference.id
       @salary.from                = reference.from
       @salary.to                  = reference.to
+      @salary.comments            = reference.comments
 
     # defaults
     @html @view('people/salaries/form')(@)

@@ -149,6 +149,17 @@
                           :value => 1 }
                   = I18n.t('common.paid')
 
+            .col-lg-12
+              .form-group
+                %label{ :for => 'salary_comments', :class => 'label-control' }
+                  = I18n.t('salary.views.comments')
+
+                %textarea{:name => 'comments',
+                          :id => 'salary_comments',
+                          :rows => 3,
+                          :class => 'form-control'}
+                  = @salary.comments
+
           - if @salary.is_reference
             .row
               .col-lg-12
