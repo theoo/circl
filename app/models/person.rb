@@ -285,6 +285,10 @@ class Person < ActiveRecord::Base
   validates_strength_of :password, :with => :email, :if => lambda { !password.blank? }
   validates_confirmation_of :password
 
+  validates :latitude, :inclusion => 0..90, :if => 'latitude'
+  validates :longitude, :inclusion => -180..180, :if => 'longitude'
+
+
   # Validate fields of type 'string' length
   validates_length_of :organization_name, :maximum => 255
   validates_length_of :title, :maximum => 255
