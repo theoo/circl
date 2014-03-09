@@ -57,7 +57,9 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
       end
 
       if options[:from] and options[:to]
-        receipts = receipts.where("value_date BETWEEN ? AND ?", Date.parse(options[:from]), Date.parse(options[:to]))
+        from = options[:from].is_a?(Date) ? options[:from] : Date.parse(options[:from])
+        to = options[:to].is_a?(Date) ? options[:to] : Date.parse(options[:to])
+        receipts = receipts.where("value_date BETWEEN ? AND ?", from, to)
       end
 
       # exclude receipts for which value is below unit threshold
@@ -66,7 +68,8 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
       end
 
       if options[:global_value]
-        receipts = receipts.reject{|a| a.invoice.receipts_value < options[:global_value]}
+        total_value = receipts.map(&:value).sum
+        receipts = [] if total_value < options[:global_value].to_i
       end
 
       # exclude receipts for which overpaid value is below unit threshold
@@ -75,7 +78,8 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
       end
 
       if options[:global_overpaid]
-        receipts = receipts.reject{|a| a.invoice.overpaid_value < options[:global_overpaid]}
+        total_overpaid_value = receipts.map(&:overpaid_value).sum
+        receipts = [] if total_overpaid_value < options[:global_overpaid].to_i
       end
 
       receipts.uniq!
