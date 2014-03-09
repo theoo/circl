@@ -281,7 +281,7 @@ class DocumentsMachine extends App.ExtendedController
       form = $(e.target).serializeObject()
       params = $.param form
 
-      query       = {search_string: "*"}
+      query       = {search_string: ""}
       url         = "#{Receipt.url()}/documents?" + params
       title       = I18n.t('receipt.notices.sort_people_for_pdf_generation')
       message     = I18n.t('receipt.notices.sort_people_message')
