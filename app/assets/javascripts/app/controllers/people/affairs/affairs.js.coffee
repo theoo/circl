@@ -237,7 +237,7 @@ class Edit extends App.ExtendedController
     win.find('.modal-footer').append btn
     btn.on 'click', (e) =>
       e.preventDefault()
-      window.open "#{PersonSalary.url()}/#{@affair.id}.html", "affair_preview"
+      window.open "#{PersonAffair.url()}/#{@affair.id}.html?template_id=#{@template_id}", "affair_preview"
 
     win.modal('show')
 

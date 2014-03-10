@@ -16,7 +16,7 @@
       - # id is required for datatable reordering
       %tr{:data-id => item.id, :class => classes.join(" "), :id => item.id}
         - # %td= item.category
-        %td= item.position
+        %td= item.position + 1
         %td= item.quantity
         %td= item.key
         %td

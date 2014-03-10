@@ -231,6 +231,10 @@ class Affair < ActiveRecord::Base
     tasks.map{ |t| t.compute_value.to_money(value_currency)}.sum.to_money
   end
 
+  def tasks_duration
+    tasks.map{ |t| t.duration}.sum
+  end
+
   def tasks_bid_value
     tasks_real_value - tasks_value
   end

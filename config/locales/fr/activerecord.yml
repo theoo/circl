@@ -298,6 +298,7 @@ fr:
       comment: Commentaire
       elastic_search_attribute: Attribut d'Elastic Search
       employment_contract: Contrat d'emploi
+      extra: Extra
       invoice: Facture
       invoice_template: Modèle de facture
       job: Métier
@@ -307,6 +308,7 @@ fr:
       person: Personne
       private_tag: Tag privé
       public_tag: Tag public
+      product: Produit
       query_preset: Pré-réglage de recherche
       receipt: Reçu
       role: Rôle
