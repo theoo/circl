@@ -27,6 +27,14 @@ class People::Affairs::ExtrasController < ApplicationController
   monitor_changes :@extra
 
   def index
+
+    @affair = Affair.find(params[:affair_id])
+    @extras = @affair.extras
+
+    if params[:template_id]
+      @affair.generic_template = GenericTemplate.find params[:template_id]
+    end
+
     respond_to do |format|
       format.json { render :json => @extras }
 
@@ -43,20 +51,29 @@ class People::Affairs::ExtrasController < ApplicationController
         render :inline => csv_ify(@extras, fields)
       end
 
-      format.pdf do
-        # TODO Allow user to edit this pdf listing through a template
-        html = render_to_string(:layout => 'pdf.html.haml')
+      if params[:template_id]
+        format.html do
+          generator = AttachmentGenerator.new(@affair)
+          render :inline => generator.html, :layout => 'preview'
+        end
 
-        html.assets_to_full_path!
+        format.pdf do
+          @pdf = ""
+          generator = AttachmentGenerator.new(@affair)
+          generator.pdf { |o,pdf| @pdf = pdf.read }
+          send_data @pdf,
+                    :filename => "affair_extras_#{params[:affair_id]}.pdf",
+                    :type => 'application/pdf'
+        end
 
-        file = Tempfile.new(['extras', '.pdf'], :encoding => 'ascii-8bit')
-        file.binmode
-        file.write(PDFKit.new(html).to_pdf)
-        file.flush
-
-        send_data File.read(file), :filename => "affair_#{params[:affair_id]}_extras.pdf", :type => 'application/pdf'
-
-        file.unlink
+        format.odt do
+          @odt = ""
+          generator = AttachmentGenerator.new(@affair)
+          generator.odt { |o,odt| @odt = odt.read }
+          send_data @odt,
+                    :filename => "affair_extras_#{params[:affair_id]}.odt",
+                    :type => 'application/vnd.oasis.opendocument.text'
+        end
       end
     end
   end

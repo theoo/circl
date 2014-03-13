@@ -96,8 +96,10 @@ class Index extends App.ExtendedController
   events:
     'click tr.item':      'edit'
     'datatable_redraw': 'table_redraw'
-    'click a[name=extras-csv]': 'export_csv'
-    'click a[name=extras-pdf]': 'export_pdf'
+    'click a[name=affair-extras-csv]': 'csv'
+    'click a[name=affair-extras-pdf]': 'pdf'
+    'click a[name=affair-extras-odt]': 'odt'
+    'click a[name=affair-extras-preview]': 'preview'
 
   constructor: (params) ->
     super
@@ -125,13 +127,55 @@ class Index extends App.ExtendedController
 
     @activate_in_list(target)
 
-  export_csv: (e) ->
+  csv: (e) ->
     e.preventDefault()
-    window.location = PersonAffairExtra.url() + ".csv"
+    @template_id = @el.find("#affair_extras_template").val()
+    window.location = PersonAffairExtra.url() + ".csv?template_id=#{@template_id}"
 
-  export_pdf: (e) ->
+  pdf: (e) ->
     e.preventDefault()
-    window.location = PersonAffairExtra.url() + ".pdf"
+    @template_id = @el.find("#affair_extras_template").val()
+    window.location = PersonAffairExtra.url() + ".pdf?template_id=#{@template_id}"
+
+  odt: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#affair_extras_template").val()
+    window.location = PersonAffairExtra.url() + ".odt?template_id=#{@template_id}"
+
+  preview: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#affair_extras_template").val()
+
+    win = $("<div class='modal fade' id='affair-extras-preview' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Update title
+    win.find('h4').text I18n.t('common.preview')
+
+    # Insert iframe to content
+    iframe = $("<iframe src='" +
+                "#{PersonAffairExtra.url()}.html?template_id=#{@template_id}" +
+                "' width='100%' " + "height='" + ($(window).height() - 60) +
+                "'></iframe>")
+    win.find('.modal-body').html iframe
+
+    # Adapt width to A4
+    win.find('.modal-dialog').css(width: 900)
+
+    # Add preview in new tab button
+    btn = "<button type='button' name='affair-extras-preview-in-new-tab' class='btn btn-default'>"
+    btn += I18n.t('affair.views.actions.preview_in_new_tab')
+    btn += "</button>"
+    btn = $(btn)
+    win.find('.modal-footer').append btn
+    btn.on 'click', (e) =>
+      e.preventDefault()
+      window.open "#{PersonAffairExtra.url()}.html?template_id=#{@template_id}", "affair_extras_preview"
+
+    win.modal('show')
 
 class App.PersonAffairExtras extends Spine.Controller
   className: 'extras'

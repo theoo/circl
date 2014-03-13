@@ -252,7 +252,7 @@ class Affair < ActiveRecord::Base
   end
 
   def extras_value
-    extras.map{|e| e.value.to_money(value_currency)}.sum.to_money
+    extras.map{|e| e.total_value.to_money(value_currency)}.sum.to_money
   end
 
   def balance_value

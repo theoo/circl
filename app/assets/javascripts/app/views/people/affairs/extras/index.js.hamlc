@@ -23,20 +23,38 @@
 
 - if App.PersonAffairExtra.all().length > 0
   .panel-footer
-    .btn-group
-      %button{:type => 'button',
-              :data-toggle => 'dropdown',
-              :class => 'btn btn-default dropdown-toggle' }
-        .icon-paper-clip
-        = I18n.t("common.documents")
-        .caret
+    .form-inline
+      .form-group
+        %label{:for => 'affair_extras_template', :class => 'sr-only'}
+          = I18n.t('affair.views.template')
+        %select{:name => 'generic_template_id',
+                :id => 'affair_extras_template',
+                :class => 'form-control'}
+          - for h in _.sortBy(App.GenericTemplate.category('Extra'), (t) -> t.title)
+            %option{:value => h.id}= h.title
 
-      %ul.dropdown-menu
-        %li
-          %a{:href => '#', :name => 'extras-csv'}
-            .icon-file-text
-            = I18n.t('common.csv')
-        %li
-          %a{:href => '#', :name => 'extras-pdf'}
-            .icon-file
-            = I18n.t('common.pdf')
+        .btn-group
+          %button{:type => 'button',
+                  :data-toggle => 'dropdown',
+                  :class => 'btn btn-default dropdown-toggle' }
+            .icon-paper-clip
+            = I18n.t("common.documents")
+            .caret
+
+          %ul.dropdown-menu
+            %li
+              %a{:href => '#', :name => 'affair-extras-preview'}
+                .icon-eye-open
+                = I18n.t('common.preview')
+            %li
+              %a{:href => '#', :name => 'affair-extras-pdf'}
+                .icon-download-alt
+                = I18n.t('common.pdf')
+            %li
+              %a{:href => '#', :name => 'affair-extras-odt'}
+                .icon-download-alt
+                = I18n.t('common.odt')
+            %li
+              %a{:href => '#', :name => 'affair-extras-csv'}
+                .icon-file-text
+                = I18n.t('common.csv')

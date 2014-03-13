@@ -130,8 +130,10 @@ class Index extends App.ExtendedController
   events:
     'click tr.item':      'edit'
     'datatable_redraw': 'table_redraw'
-    'click a[name=products-csv]': 'export_csv'
-    'click a[name=products-pdf]': 'export_pdf'
+    'click a[name=affair-products-csv]': 'csv'
+    'click a[name=affair-products-pdf]': 'pdf'
+    'click a[name=affair-products-odt]': 'odt'
+    'click a[name=affair-products-preview]': 'preview'
 
   constructor: (params) ->
     super
@@ -166,13 +168,55 @@ class Index extends App.ExtendedController
 
     @activate_in_list(target)
 
-  export_csv: (e) ->
+  csv: (e) ->
     e.preventDefault()
-    window.location = PersonAffairProductsProgram.url() + ".csv"
+    @template_id = @el.find("#affair_products_template").val()
+    window.location = PersonAffairProductsProgram.url() + ".csv?template_id=#{@template_id}"
 
-  export_pdf: (e) ->
+  pdf: (e) ->
     e.preventDefault()
-    window.location = PersonAffairProductsProgram.url() + ".pdf"
+    @template_id = @el.find("#affair_products_template").val()
+    window.location = PersonAffairProductsProgram.url() + ".pdf?template_id=#{@template_id}"
+
+  odt: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#affair_products_template").val()
+    window.location = PersonAffairProductsProgram.url() + ".odt?template_id=#{@template_id}"
+
+  preview: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#affair_products_template").val()
+
+    win = $("<div class='modal fade' id='affair-products-preview' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Update title
+    win.find('h4').text I18n.t('common.preview')
+
+    # Insert iframe to content
+    iframe = $("<iframe src='" +
+                "#{PersonAffairProductsProgram.url()}.html?template_id=#{@template_id}" +
+                "' width='100%' " + "height='" + ($(window).height() - 60) +
+                "'></iframe>")
+    win.find('.modal-body').html iframe
+
+    # Adapt width to A4
+    win.find('.modal-dialog').css(width: 900)
+
+    # Add preview in new tab button
+    btn = "<button type='button' name='affair-products-preview-in-new-tab' class='btn btn-default'>"
+    btn += I18n.t('affair.views.actions.preview_in_new_tab')
+    btn += "</button>"
+    btn = $(btn)
+    win.find('.modal-footer').append btn
+    btn.on 'click', (e) =>
+      e.preventDefault()
+      window.open "#{PersonAffairProductsProgram.url()}.html?template_id=#{@template_id}", "affair_products_preview"
+
+    win.modal('show')
 
 class App.PersonAffairProducts extends Spine.Controller
   className: 'products'
