@@ -35,3 +35,9 @@
 
 - subject: Person
   action: title_search
+
+- subject: Currency
+  action: index
+
+- subject: CurrencyRate
+  action: index
