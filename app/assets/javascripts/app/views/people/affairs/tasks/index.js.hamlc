@@ -37,11 +37,16 @@
       .form-group
         %label{:for => 'affair_tasks_template', :class => 'sr-only'}
           = I18n.t('affair.views.template')
-        %select{:name => 'generic_template_id',
-                :id => 'affair_tasks_template',
-                :class => 'form-control'}
-          - for h in _.sortBy(App.GenericTemplate.category('Task'), (t) -> t.title)
-            %option{:value => h.id}= h.title
+        - if App.GenericTemplate.category('Task').length > 0
+          %select{:name => 'generic_template_id',
+                  :id => 'affair_tasks_template',
+                  :class => 'form-control'}
+            - for h in _.sortBy(App.GenericTemplate.category('Task'), (t) -> t.title)
+              %option{:value => h.id}= h.title
+
+        - else
+          %a{:href => '/settings#templates', :class => 'btn btn-warning'}
+            = I18n.t("common.add_new_template")
 
         .btn-group
           %button{:type => 'button',
@@ -52,18 +57,19 @@
             .caret
 
           %ul.dropdown-menu
-            %li
-              %a{:href => '#', :name => 'affair-tasks-preview'}
-                .icon-eye-open
-                = I18n.t('common.preview')
-            %li
-              %a{:href => '#', :name => 'affair-tasks-pdf'}
-                .icon-download-alt
-                = I18n.t('common.pdf')
-            %li
-              %a{:href => '#', :name => 'affair-tasks-odt'}
-                .icon-download-alt
-                = I18n.t('common.odt')
+            - if App.GenericTemplate.category('Task').length > 0
+              %li
+                %a{:href => '#', :name => 'affair-tasks-preview'}
+                  .icon-eye-open
+                  = I18n.t('common.preview')
+              %li
+                %a{:href => '#', :name => 'affair-tasks-pdf'}
+                  .icon-download-alt
+                  = I18n.t('common.pdf')
+              %li
+                %a{:href => '#', :name => 'affair-tasks-odt'}
+                  .icon-download-alt
+                  = I18n.t('common.odt')
             %li
               %a{:href => '#', :name => 'affair-tasks-csv'}
                 .icon-file-text

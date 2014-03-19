@@ -5,6 +5,7 @@ en:
     action: action
     actions: actions
     add: add
+    add_new_template: add template
     adjust: adjust
     admin: administration
     administration: Administration
