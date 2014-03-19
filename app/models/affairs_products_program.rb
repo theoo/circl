@@ -128,7 +128,7 @@ class AffairsProductsProgram < ActiveRecord::Base
     if last_item
       self.position = last_item.position + 1
     else
-      self.position = 0
+      self.position = 1
     end
   end
 

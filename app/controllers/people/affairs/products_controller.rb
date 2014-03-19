@@ -23,7 +23,7 @@ class People::Affairs::ProductsController < ApplicationController
   monitor_changes :@product
 
   before_filter do
-    @person = Affair.find params[:person_id]
+    @person = Person.find params[:person_id]
     @affair = Affair.find params[:affair_id]
   end
 
@@ -178,12 +178,12 @@ class People::Affairs::ProductsController < ApplicationController
 
     AffairsProductsProgram.transaction do
       siblings = @affair.product_items.all
-      p = siblings.delete_at params[:fromPosition].to_i
-      siblings.insert(params[:toPosition].to_i, p)
+      p = siblings.delete_at params[:fromPosition].to_i - 1
+      siblings.insert(params[:toPosition].to_i - 1, p)
       siblings.delete(nil) # If there is holes in list they will be replace by nil
       siblings.each_with_index do |s, i|
         u = AffairsProductsProgram.find(s.id)
-        u.update_attributes(:position => i)
+        u.update_attributes(:position => i + 1)
       end
 
       success = true
