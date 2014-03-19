@@ -46,7 +46,7 @@ class New extends ClassNamesExtention
     @render()
 
   render: ->
-    @template = new GenericTemplate
+    @template = new GenericTemplate()
     @html @view('settings/generic_templates/form')(@)
 
   submit: (e) ->
@@ -200,7 +200,9 @@ class App.SettingsGenericTemplates extends Spine.Controller
       @edit.active(id: id)
 
     @edit.bind 'show', => @new.hide()
-    @edit.bind 'hide', => @new.show()
+    @edit.bind 'hide', =>
+      @new.render()
+      @new.show()
 
     @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id
