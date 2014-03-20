@@ -32,7 +32,6 @@ class AffairsProductsProgram < ActiveRecord::Base
   #################
 
   before_validation :set_position_if_none_given, :if => Proc.new {|i| i.position.blank? }
-  before_save :insert_in_list_if_accessory
 
   #################
   ### RELATIONS ###
@@ -126,7 +125,11 @@ class AffairsProductsProgram < ActiveRecord::Base
   def set_position_if_none_given
     last_item = self.affair.product_items.order(:position).last
     if last_item
-      self.position = last_item.position + 1
+      if parent
+        insert_in_list_if_accessory
+      else
+        self.position = last_item.position + 1
+      end
     else
       self.position = 1
     end
@@ -140,23 +143,21 @@ class AffairsProductsProgram < ActiveRecord::Base
   end
 
   def insert_in_list_if_accessory
-    if new_record? and parent
-      siblings = affair.product_items.all
+    siblings = affair.product_items.all
 
-      last_child = parent.children.order(:position).last
-      if last_child
-        i = siblings.index(last_child) + 1
-      else
-        i = siblings.index(parent) + 1
-      end
+    last_child = parent.children.order(:position).map(&:id)
+    last_child.delete(self.id) unless new_record?
+    if last_child.size > 0
+      i = siblings.index(affair.product_items.find(last_child.last)) + 1
+    else
+      i = siblings.index(parent) + 1
+    end
 
-      self.position = i
-      siblings.insert i, self
+    self.position = i
+    siblings.insert i, self
 
-      siblings.each_with_index do |s, i|
-        s.update_attributes(:position => i) unless s == self
-      end
-
+    siblings.each_with_index do |s, i|
+      s.update_attributes(:position => i) unless s == self
     end
   end
 

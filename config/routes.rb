@@ -41,7 +41,7 @@ Directory::Application.routes.draw do
 
       resources :extras, :controller => 'people/affairs/extras' do
         collection do
-          get 'count'
+          get 'count', 'change_order'
         end
       end
 

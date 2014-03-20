@@ -111,6 +111,18 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('people/affairs/extras/index')(@)
+
+    refresh_index = =>
+      PersonAffairExtra.refresh([], clear: true)
+      PersonAffairExtra.fetch()
+
+    @el.find('table.datatable')
+      .rowReordering(
+        sURL: PersonAffairExtra.url() + "/change_order"
+        sRequestType: "GET"
+        iIndexColumn: 0
+        fnSuccess: refresh_index)
+
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>

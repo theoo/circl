@@ -196,6 +196,20 @@
   group: Person
 
 - model: Person
+  name: website
+  indexing: website
+  mapping:
+    type: multi_field
+    fields:
+      website:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
   name: npa
   indexing: location.try(:postal_code_prefix)
   mapping:

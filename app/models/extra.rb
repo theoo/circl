@@ -50,7 +50,9 @@ class Extra < ActiveRecord::Base
   validates :title, :presence => true
   validates :value, :presence => true,
                     :numericality => { :less_than_or_equal => 99999999.99, :greater_than => 0 }
-  validates :position, :uniqueness => { :scope => :affair_id }
+  validates :position, :presence => true
+  # Unable to validae uniqueness when reordering
+  # , :uniqueness => { :scope => :affair_id }
   validates :quantity, :presence => true
 
   # Validate fields of type 'string' length

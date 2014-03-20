@@ -128,4 +128,32 @@ class People::Affairs::ExtrasController < ApplicationController
     end
   end
 
+  def change_order
+    authorize! :update, @person => Extra
+    @extras = Extra.find(params[:id])
+    success = false
+
+    Extra.transaction do
+      siblings = @affair.extras.order(:position).map(&:id)
+      id = siblings.delete_at params[:fromPosition].to_i - 1
+      siblings.insert(params[:toPosition].to_i - 1, id)
+      siblings.delete(nil) # If there is holes in list they will be replace by nil
+      siblings.each_with_index do |s, i|
+        u = Extra.find(s)
+        u.position = i + 1
+        u.save!
+      end
+
+      success = true
+    end
+
+    respond_to do |format|
+      if success
+        format.json { render :json => @affair.extras.all }
+      else
+        format.json { render :json => @extras.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
 end

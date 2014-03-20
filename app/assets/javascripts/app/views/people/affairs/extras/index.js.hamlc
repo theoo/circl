@@ -9,7 +9,7 @@
 
   %tbody
     - for extra in App.PersonAffairExtra.all()
-      %tr{:data-id => extra.id, :class => 'item'}
+      %tr{:data-id => extra.id, :class => 'item', :id => extra.id}
         %td= extra.position
         %td= extra.quantity
         %td
