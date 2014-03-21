@@ -65,7 +65,10 @@ if ActiveRecord::Base.connection.table_exists? 'currencies'
     # Force currency to default currency
     def to_doc
       m = exchange_to(Money.default_currency.iso_code)
-      # raise ArgumentError, self.currency.inspect
+
+      format(:thousands_separator => Money.default_currency.delimiter,
+        :decimal_mark => Money.default_currency.separator,
+        :symbol => '')
     end
   end
 

@@ -154,19 +154,9 @@
               .input-group-addon
                 != @partial('select_currency')(currency: @affair.value_currency, name: 'value_currency', value: @affair.value)
 
-            - if @affair.computed_value != @affair.value
-              %small.help-block
-                = I18n.t("affair.views.computed_value_is")
-                = @affair.computed_value?.to_view(@affair.computed_value_currency)
-
-                .text-danger
-                  = I18n.t("affair.views.bid_value")
-                  = (@affair.computed_value - @affair.value)?.to_view(@affair.value_currency)
-
         .col-sm-6
           .form-group
             %label
-
             .checkbox
               %label.control-label
                 %input{ :type => 'checkbox',
@@ -175,13 +165,24 @@
                         :checked => false,
                         :value => 1 }
                 = I18n.t('affair.views.custom_value_with_taxes')
-              %small.help-block
-                = I18n.t("affair.views.computed_value_with_taxes_is")
-                = @affair.computed_value_with_taxes?.to_view(@affair.computed_value_with_taxes_currency)
-                %br
-                = I18n.t("affair.views.value_with_taxes_is")
-                = @affair.value_with_taxes?.to_view(@affair.value_with_taxes_currency)
 
+      .row
+        .col-sm-6
+          - if @affair.computed_value != @affair.value
+            %small.help-block
+              = I18n.t("affair.views.computed_value_is")
+              = @affair.computed_value?.to_view(@affair.computed_value_currency)
+
+              .text-danger
+                = I18n.t("affair.views.bid_value")
+                = (@affair.computed_value - @affair.value)?.to_view(@affair.value_currency)
+        .col-sm-6
+          %small.help-block
+            = I18n.t("affair.views.computed_value_with_taxes_is")
+            = @affair.computed_value_with_taxes?.to_view(@affair.computed_value_with_taxes_currency)
+            %br
+            = I18n.t("affair.views.value_with_taxes_is")
+            = @affair.value_with_taxes?.to_view(@affair.value_with_taxes_currency)
 
       .row
         .col-sm-6
