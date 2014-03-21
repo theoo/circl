@@ -89,11 +89,9 @@ class Person < ActiveRecord::Base
   before_destroy :do_not_destroy_if_has_invoices
   before_destroy :do_not_destroy_if_has_salaries
   before_destroy :do_not_destroy_if_first_admin
-  # TODO remove password if removing last email.
-
-  # employment_contracts
   before_destroy :do_not_destroy_if_has_running_contracts
   before_destroy :clear_affairs_as_buyer_and_affairs_as_receiver
+  # TODO remove password if removing last email.
 
   before_destroy do
     roles.clear
