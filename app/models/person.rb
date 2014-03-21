@@ -397,6 +397,7 @@ class Person < ActiveRecord::Base
   ### LDAP ###
   ############
 
+  # TODO if ldap_remove fails, raise an explicit error.
   def ldap_remove
     ldap = Rails.configuration.ldap_admin
 

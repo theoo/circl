@@ -267,7 +267,6 @@ class Affair < ActiveRecord::Base
     product_items.map{|i| i.variant.art.to_money(value_currency) * i.quantity}.sum.to_money
   end
 
-  # TODO round value isn't correct
   def vat_value(forced_value = self.value)
     # Variable VAT, extract extras with different vat rate
     extra_with_different_vat_rate = extras.each_with_object([]) do |i,a|
@@ -278,7 +277,7 @@ class Affair < ActiveRecord::Base
     extras_diff_vat = extra_with_different_vat_rate.map(&:vat).sum.to_money(value_currency)
 
     service_value = forced_value - extras_diff_value
-    sum = service_value / 100.0 * ApplicationSetting.value("service_vat_rate").to_f
+    sum = service_value * (ApplicationSetting.value("service_vat_rate").to_f / 100.0)
     sum += extras_diff_vat
 
     sum
