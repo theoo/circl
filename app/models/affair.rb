@@ -73,11 +73,13 @@ class Affair < ActiveRecord::Base
   has_many    :invoices, :dependent => :destroy
   has_many    :receipts, :through => :invoices, :uniq => true
 
-  has_many    :extras, :dependent => :destroy
+  has_many    :extras,  :dependent => :destroy,
+                        :order => :position
                        #:after_add    => :update_on_prestation_alteration,
                        #:after_remove => :update_on_prestation_alteration
 
-  has_many    :tasks, :dependent => :destroy
+  has_many    :tasks, :dependent => :destroy,
+                      :order => 'start_date ASC'
                       #:after_add    => :update_on_prestation_alteration,
                       #:after_remove => :update_on_prestation_alteration
 

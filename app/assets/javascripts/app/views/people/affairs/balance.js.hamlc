@@ -9,9 +9,8 @@
         - if @overpaid
           %span{:style => "width: #{100 - @paid}%", :class => 'progress-bar progress-bar-warning'}
             - if @affair
-              = (@affair.receipts_value? - @affair.invoices_value)?.to_view()
+              = (@affair.receipts_value - @affair.invoices_value)?.to_view()
         - else
           %span{:style => "width: #{100 - @paid}%", :class => 'progress-bar progress-bar-danger'}
             - if @affair
-              = (@affair.invoices_value? - @affair.receipts_value)?.to_view()
-
+              = (@affair.invoices_value - @affair.receipts_value)?.to_view()

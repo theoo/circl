@@ -27,8 +27,16 @@ class People::Affairs::ReceiptsController < ApplicationController
   monitor_changes :@receipt
 
   def index
+    @affair = Affair.find(params[:affair_id])
+    @receipts = @affair.receipts
+
+    if params[:template_id]
+      @affair.generic_template = GenericTemplate.find params[:template_id]
+    end
+
     respond_to do |format|
       format.json { render :json => @receipts }
+
       format.csv do
         fields = []
         fields << 'value_date'
@@ -44,7 +52,33 @@ class People::Affairs::ReceiptsController < ApplicationController
         fields << 'owner.email'
         render :inline => csv_ify(@receipts, fields)
       end
+
+      if params[:template_id]
+        format.html do
+          generator = AttachmentGenerator.new(@affair)
+          render :inline => generator.html, :layout => 'preview'
+        end
+
+        format.pdf do
+          @pdf = ""
+          generator = AttachmentGenerator.new(@affair)
+          generator.pdf { |o,pdf| @pdf = pdf.read }
+          send_data @pdf,
+                    :filename => "affair_receipts_#{params[:affair_id]}.pdf",
+                    :type => 'application/pdf'
+        end
+
+        format.odt do
+          @odt = ""
+          generator = AttachmentGenerator.new(@affair)
+          generator.odt { |o,odt| @odt = odt.read }
+          send_data @odt,
+                    :filename => "affair_receipts_#{params[:affair_id]}.odt",
+                    :type => 'application/vnd.oasis.opendocument.text'
+        end
+      end
     end
+
   end
 
   def show

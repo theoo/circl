@@ -183,6 +183,10 @@ class Index extends App.ExtendedController
     'datatable_redraw': 'table_redraw'
     'mouseover tr.item':'item_over'
     'mouseout tr.item': 'item_out'
+    'click a[name=affair-invoices-csv]': 'csv'
+    'click a[name=affair-invoices-pdf]': 'pdf'
+    'click a[name=affair-invoices-odt]': 'odt'
+    'click a[name=affair-invoices-preview]': 'preview'
 
   constructor: (params) ->
     super
@@ -242,6 +246,55 @@ class Index extends App.ExtendedController
             else
               $(r).removeClass(sclass)
 
+  csv: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#affair_invoices_template").val()
+    window.location = PersonAffairInvoice.url() + ".csv?template_id=#{@template_id}"
+
+  pdf: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#affair_invoices_template").val()
+    window.location = PersonAffairInvoice.url() + ".pdf?template_id=#{@template_id}"
+
+  odt: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#affair_invoices_template").val()
+    window.location = PersonAffairInvoice.url() + ".odt?template_id=#{@template_id}"
+
+  preview: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#affair_invoices_template").val()
+
+    win = $("<div class='modal fade' id='affair-invoices-preview' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Update title
+    win.find('h4').text I18n.t('common.preview')
+
+    # Insert iframe to content
+    iframe = $("<iframe src='" +
+                "#{PersonAffairInvoice.url()}.html?template_id=#{@template_id}" +
+                "' width='100%' " + "height='" + ($(window).height() - 60) +
+                "'></iframe>")
+    win.find('.modal-body').html iframe
+
+    # Adapt width to A4
+    win.find('.modal-dialog').css(width: 900)
+
+    # Add preview in new tab button
+    btn = "<button type='button' name='affair-invoices-preview-in-new-tab' class='btn btn-default'>"
+    btn += I18n.t('affair.views.actions.preview_in_new_tab')
+    btn += "</button>"
+    btn = $(btn)
+    win.find('.modal-footer').append btn
+    btn.on 'click', (e) =>
+      e.preventDefault()
+      window.open "#{PersonAffairInvoice.url()}.html?template_id=#{@template_id}", "affair_invoices_preview"
+
+    win.modal('show')
 
 class App.PersonAffairInvoices extends Spine.Controller
   className: 'invoices'
