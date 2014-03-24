@@ -3,10 +3,10 @@
     %tr
       - # %th.ignore-sort= I18n.t('product.views.category')
       %th.asc= I18n.t('common.table.position')
-      %th.ignore-sort= I18n.t('common.table.quantity')
-      %th.ignore-sort= I18n.t('common.key')
+      %th.small-number.ignore-sort= I18n.t('common.table.quantity')
+      %th.small-number.ignore-sort= I18n.t('common.key')
       %th.ignore-sort= I18n.t('common.description')
-      %th.ignore-sort= I18n.t('common.value')
+      %th.number.ignore-sort= I18n.t('common.value')
 
   %tbody
     - for item in App.PersonAffairProductsProgram.all()
@@ -16,8 +16,8 @@
       - # id is required for datatable reordering
       %tr{:data-id => item.id, :class => classes.join(" "), :id => item.id}
         - # %td= item.category
-        %td= item.position
-        %td= item.quantity
+        %td.small-number= item.position
+        %td.small-number= item.quantity + " " + I18n.t("product.units.#{item.unit_symbol}.symbol")
         %td= item.key
         %td
           %b= item.title

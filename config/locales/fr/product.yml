@@ -22,8 +22,29 @@ fr:
       key: clé
       normal_price: prix normal
       position: position
+      price_to_unit_rate: rapport de conversion du prix
       product_search: produit
       products_list_pdf_title: List des produits pour l'affaire <i>%{affair_title}</i>
       provider: fournisseur
       quantity: quantité
+      unit: unité
       variants: variantes
+    units:
+      m:
+        title: mètres
+        symbol: m
+      cm:
+        title: centimètres
+        symbol: cm
+      mm:
+        title: milimètres
+        symbol: mm
+      g:
+        title: grammes
+        symbol: g
+      kg:
+        title: kilogrammes
+        symbol: kg
+      pc:
+        title: unité
+        symbol: pc

@@ -23,9 +23,31 @@ en:
       key: key
       normal_price: MISSING_TRANSLATION normal price
       position: position
+      price_to_unit_rate: Price to unit rate
       product_search: product
       products_list_pdf_title: products list pdf title
       provider: provider
       quantity: quantity
-      title: title
+      unit: unit
       variants: variants
+    units:
+      m:
+        title: meters
+        symbol: m
+      cm:
+        title: centimeters
+        symbol: cm
+      mm:
+        title: milimeters
+        symbol: mm
+      g:
+        title: grams
+        symbol: g
+      kg:
+        title: kilograms
+        symbol: kg
+      pc:
+        title: unit
+        symbol: pc
+
+

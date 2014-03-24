@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140224125655) do
+ActiveRecord::Schema.define(:version => 20140324104949) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -27,8 +27,8 @@ ActiveRecord::Schema.define(:version => 20140224125655) do
     t.boolean  "estimate",                    :default => false, :null => false
     t.integer  "parent_id"
     t.text     "footer"
-    t.integer  "seller_id",                   :default => 1,     :null => false
     t.text     "conditions"
+    t.integer  "seller_id",                   :default => 1,     :null => false
   end
 
   add_index "affairs", ["buyer_id"], :name => "index_affairs_on_buyer_id"
@@ -478,14 +478,16 @@ ActiveRecord::Schema.define(:version => 20140224125655) do
   create_table "products", :force => true do |t|
     t.integer  "provider_id"
     t.integer  "after_sale_id"
-    t.string   "key",                                :null => false
+    t.string   "key",                                   :null => false
     t.string   "title"
     t.string   "category"
     t.text     "description"
-    t.boolean  "has_accessories", :default => false, :null => false
-    t.boolean  "archive",         :default => false, :null => false
+    t.boolean  "has_accessories",    :default => false, :null => false
+    t.boolean  "archive",            :default => false, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "unit_symbol"
+    t.integer  "price_to_unit_rate"
   end
 
   add_index "products", ["after_sale_id"], :name => "index_products_on_after_sale_id"
@@ -670,6 +672,7 @@ ActiveRecord::Schema.define(:version => 20140224125655) do
     t.boolean  "exporter_lpp_group", :default => false, :null => false
     t.boolean  "exporter_is_group",  :default => false, :null => false
     t.string   "employer_account",   :default => ""
+    t.boolean  "archive",            :default => false, :null => false
   end
 
   add_index "salaries_taxes", ["exporter_avs_group"], :name => "index_salaries_taxes_on_exporter_avs_group"
@@ -742,6 +745,26 @@ ActiveRecord::Schema.define(:version => 20140224125655) do
 
   add_index "salaries_taxes_is", ["tax_id"], :name => "index_salaries_taxes_is_on_tax_id"
   add_index "salaries_taxes_is", ["year"], :name => "index_salaries_taxes_is_on_year"
+
+  create_table "salaries_taxes_is2014", :force => true do |t|
+    t.integer  "tax_id",                                  :null => false
+    t.integer  "year",                                    :null => false
+    t.string   "tax_group",                               :null => false
+    t.integer  "children_count",                          :null => false
+    t.string   "ecclesiastical",       :default => "N",   :null => false
+    t.integer  "salary_from_in_cents", :default => 0,     :null => false
+    t.string   "salary_from_currency", :default => "CHF", :null => false
+    t.integer  "salary_to_in_cents",   :default => 0,     :null => false
+    t.string   "salary_to_currency",   :default => "CHF", :null => false
+    t.integer  "tax_value_in_cents",   :default => 0,     :null => false
+    t.string   "tax_value_currency",   :default => "CHF", :null => false
+    t.float    "tax_value_percentage", :default => 0.0,   :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "salaries_taxes_is2014", ["tax_id"], :name => "index_salaries_taxes_is2014_on_tax_id"
+  add_index "salaries_taxes_is2014", ["year"], :name => "index_salaries_taxes_is2014_on_year"
 
   create_table "search_attributes", :force => true do |t|
     t.string "model",    :default => "", :null => false

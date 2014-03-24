@@ -57,6 +57,9 @@ class Product < ActiveRecord::Base
   validates :key, :presence => true,
                   :length => { :maximum => 255 },
                   :uniqueness => true
+  validates :unit_symbol, :presence => true,
+                          :length => {:maximum => 255}
+  validates :price_to_unit_rate, :presence => true
 
   ########################
   #### CLASS METHODS #####
@@ -97,6 +100,12 @@ class Product < ActiveRecord::Base
     # ON product_variants.program_group = product_programs.program_group")
     program_groups = self.variants.map(&:program_group)
     ProductProgram.where(:program_group => program_groups)
+  end
+
+  def unit_symbol_translated
+    I18n.t!("product.units.#{self.unit_symbol}.symbol")
+  rescue
+    self.unit_symbol
   end
 
 

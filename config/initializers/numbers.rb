@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Integer
+module IntegerExtension
   def mod10rec
         code = [ 0, 9, 4, 6, 8, 2, 7, 1, 3, 5 ]
         num = 0
@@ -25,4 +25,18 @@ class Integer
         end
         return (10 - num) % 10
   end
+end
+
+class Integer
+  include IntegerExtension
+end
+
+module FloatExtension
+  def to_doc
+    self.to_i == self ? self.to_i : self
+  end
+end
+
+class Float
+  include FloatExtension
 end

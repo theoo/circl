@@ -166,9 +166,6 @@ class App.SettingsProducts extends Spine.Controller
   constructor: (params) ->
     super
 
-    Product.url = ->
-      "#{Spine.Model.host}/settings/products"
-
     App.ProductProgram.bind 'refresh', => @activate()
 
     @index = new Index

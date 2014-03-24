@@ -1,8 +1,8 @@
 %table.datatable
   %thead
     %tr
-      %th= I18n.t('common.table.position')
-      %th= I18n.t('common.table.quantity')
+      %th.small-number= I18n.t('common.table.position')
+      %th.small-number= I18n.t('common.table.quantity')
       %th= I18n.t('common.description')
       %th= I18n.t('common.unit_value')
       %th= I18n.t('common.value')
@@ -10,8 +10,8 @@
   %tbody
     - for extra in App.PersonAffairExtra.all()
       %tr{:data-id => extra.id, :class => 'item', :id => extra.id}
-        %td= extra.position
-        %td= extra.quantity
+        %td.small-number= extra.position
+        %td.small-number= extra.quantity
         %td
           %b= extra.title
           %br

@@ -81,6 +81,7 @@ class AffairsProductsProgram < ActiveRecord::Base
     h[:value_currency]     = value.currency.try(:iso_code)
     h[:bid_price]          = bid_price.to_f
     h[:bid_price_currency] = bid_price.currency.try(:iso_code)
+    h[:unit_symbol]        = product.try(:unit_symbol)
 
     h[:errors]         = errors
 
@@ -101,7 +102,7 @@ class AffairsProductsProgram < ActiveRecord::Base
   # An item may not have value (free accessories)
   def value
     if variant
-      variant.selling_price * quantity
+      variant.selling_price * quantity / product.price_to_unit_rate
     else
       0.to_money
     end

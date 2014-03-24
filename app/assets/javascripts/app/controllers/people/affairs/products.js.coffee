@@ -32,11 +32,19 @@ class PersonAffairProductExtention extends App.ExtendedController
     @product_id_field = @el.find("input[name=product_id]")
     @program_field = @el.find("#person_affair_product_program_search")
     @program_id_field = @el.find("input[name=program_id]")
+    @product_unit_symbol = @el.find("#affair-product-unit")
 
   product_selected: (e, ui) =>
     @product_id_field.val ui.item.id
 
     @program_field.autocomplete source: '/settings/products/' + ui.item.id + '/programs'
+
+    App.Product.one "refresh", =>
+      prod = App.Product.find(ui.item.id)
+      symbol = I18n.t("product.units.#{prod.unit_symbol}.symbol")
+      @product_unit_symbol.html(symbol)
+
+    App.Product.fetch(id: ui.item.id)
 
     if ui.item.program_key
       @program_field.val ui.item.program_key
@@ -59,7 +67,7 @@ class New extends PersonAffairProductExtention
 
   render: =>
     @show()
-    @product = new PersonAffairProductsProgram(quantity: 1)
+    @product = new PersonAffairProductsProgram(quantity: 1, unit_symbol: "?")
     @html @view('people/affairs/products/form')(@)
     @init_locals()
 

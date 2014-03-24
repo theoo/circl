@@ -17,10 +17,11 @@
 class App.Product extends Spine.Model
 
   @configure 'Product', "id", "provider_id", "after_sale_id", "key", "title",
-              "description", "has_accessories", "archive", "variants", "category"
+              "description", "has_accessories", "archive", "variants", "category",
+              "unit_symbol", "price_to_unit_rate"
 
   @extend Spine.Model.Ajax
-  @url: -> undefined
+  @url: -> "#{Spine.Model.host}/settings/products"
 
   constructor: ->
     super

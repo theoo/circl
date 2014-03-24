@@ -45,16 +45,6 @@
                :value => @product.parent_id}
 
       .col-md-3.form-group
-        %label{:for => 'person_affair_product_quantity'}
-          = I18n.t('product.views.quantity')
-        %input{ :type => 'number',
-                :step => 0.001,
-                :id => 'person_affair_product_quantity',
-                :name => 'quantity',
-                :class => 'form-control required',
-                :value => @product.quantity }
-
-      .col-md-3.form-group
         %label{:for => 'person_affair_product_position'}
           = I18n.t('product.views.position')
         %input{ :type => 'number',
@@ -65,6 +55,20 @@
                 :value => @product.position }
 
     .row
+      .col-md-4.form-group
+        %label{:for => 'person_affair_product_quantity'}
+          = I18n.t('product.views.quantity')
+        .input-group
+          %input{ :type => 'number',
+                  :step => 0.001,
+                  :id => 'person_affair_product_quantity',
+                  :name => 'quantity',
+                  :class => 'form-control required',
+                  :value => @product.quantity }
+          .input-group-addon
+            #affair-product-unit
+              = @product.unit_symbol
+
       .col-md-4.form-group
         %label{:for => 'person_affair_product_bid_percentage'}
           = I18n.t('product.views.bid')
@@ -78,6 +82,7 @@
                   :name => 'bid_percentage',
                   :value => @product.bid_percentage }
           .input-group-addon %
+
       .col-md-4
         - if @product.value and @product.value != @product.bid_price
           %label= I18n.t('product.views.normal_price')
