@@ -50,7 +50,10 @@ class New extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @extra.fromForm(e.target), @render
+    @save_with_notifications @extra.fromForm(e.target), =>
+      @render()
+      App.PersonAffair.fetch(id: @affair_id)
+
 
 class Edit extends App.ExtendedController
   events:
@@ -85,12 +88,16 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @extra.fromForm(e.target), @hide
+    @save_with_notifications @extra.fromForm(e.target), =>
+      @hide()
+      App.PersonAffair.fetch(id: @affair_id)
 
   destroy: (e) ->
     e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications @extra, @hide
+      @destroy_with_notifications @extra, =>
+        @hide()
+        App.PersonAffair.fetch(id: @affair_id)
 
 class Index extends App.ExtendedController
   events:

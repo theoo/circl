@@ -74,7 +74,7 @@ class New extends App.ExtendedController
 
     @save_with_notifications @receipt.fromForm(e.target), =>
       @render()
-      PersonAffair.fetch()
+      PersonAffair.fetch(id: @affair_id)
       PersonAffairInvoice.fetch()
 
 class Edit extends App.ExtendedController
@@ -102,7 +102,7 @@ class Edit extends App.ExtendedController
 
   update_callback: =>
     @hide()
-    PersonAffair.fetch()
+    PersonAffair.fetch(id: @affair_id)
     PersonAffairInvoice.fetch()
 
   submit: (e) ->

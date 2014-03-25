@@ -45,7 +45,10 @@
           - else
             = affair.value?.to_view(affair.value_currency)
 
-        %td.number= affair.invoices_value?.to_view(affair.value_currency)
+          - if App.ApplicationSetting.value('use_vat') == "true"
+            %i= "+" + affair.vat_value?.to_view(affair.value_currency)
+
+        %td.number= affair.invoices_value_with_taxes?.to_view(affair.value_currency)
         %td.number= affair.receipts_value?.to_view(affair.value_currency)
         %td= affair.statuses
         %td= affair.created_at

@@ -79,7 +79,7 @@ class New extends App.ExtendedController
     e.preventDefault()
     @invoice.fromForm(e.target)
     @save_with_notifications @invoice, =>
-      PersonAffair.fetch()
+      PersonAffair.fetch(id: @affair_id)
       @render()
 
 class Edit extends App.ExtendedController
@@ -119,7 +119,7 @@ class Edit extends App.ExtendedController
       @highlight_vat()
 
   update_callback: =>
-    PersonAffair.fetch()
+    PersonAffair.fetch(id: @affair_id)
     PersonAffairReceipt.fetch()
     @hide()
 

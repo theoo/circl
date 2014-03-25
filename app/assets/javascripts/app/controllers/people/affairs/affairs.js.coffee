@@ -80,6 +80,7 @@ class Edit extends App.ExtendedController
   constructor: ->
     super
     @balance = new Balance
+    PersonAffair.bind('refresh', @render)
 
   active: (params) ->
     @id = params.id if params.id

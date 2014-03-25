@@ -85,6 +85,7 @@ class New extends PersonAffairProductExtention
       @render()
       PersonAffairProductsProgram.refresh([], clear: true)
       PersonAffairProductsProgram.fetch()
+      PersonAffair.fetch(id: @affair_id)
 
 class Edit extends PersonAffairProductExtention
   events:
@@ -126,6 +127,7 @@ class Edit extends PersonAffairProductExtention
       @hide()
       PersonAffairProductsProgram.refresh([], clear: true)
       PersonAffairProductsProgram.fetch()
+      PersonAffair.fetch(id: @affair_id)
 
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
@@ -133,6 +135,7 @@ class Edit extends PersonAffairProductExtention
         @hide()
         PersonAffairProductsProgram.refresh([], clear: true)
         PersonAffairProductsProgram.fetch()
+        PersonAffair.fetch(id: @affair_id)
 
 class Index extends App.ExtendedController
   events:

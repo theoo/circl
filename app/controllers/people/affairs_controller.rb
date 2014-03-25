@@ -37,7 +37,9 @@ class People::AffairsController < ApplicationController
 
   def show
 
-    @affair.generic_template = GenericTemplate.find params[:template_id]
+    if params[:template_id]
+      @affair.generic_template = GenericTemplate.find params[:template_id]
+    end
 
     respond_to do |format|
       format.json { render :json => @affair }

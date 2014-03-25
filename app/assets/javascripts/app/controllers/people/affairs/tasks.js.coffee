@@ -90,7 +90,9 @@ class New extends App.TimesheetExtention
     e.preventDefault()
     @task.fromForm(e.target)
     @task.start_date = @repack_date_time(@task.start_date)
-    @save_with_notifications @task, @render
+    @save_with_notifications @task, =>
+      @render()
+      App.PersonAffair.fetch(id: @affair_id)
 
 class Edit extends App.TimesheetExtention
 
@@ -136,12 +138,16 @@ class Edit extends App.TimesheetExtention
     e.preventDefault()
     @task.fromForm(e.target)
     @task.start_date = @repack_date_time(@task.start_date)
-    @save_with_notifications @task, @hide
+    @save_with_notifications @task, =>
+      @hide()
+      App.PersonAffair.fetch(id: @affair_id)
 
   destroy: (e) ->
     e.preventDefault()
     if confirm(I18n.t("common.are_you_sure"))
-      @destroy_with_notifications @task, @hide
+      @destroy_with_notifications @task, =>
+        @hide()
+        App.PersonAffair.fetch(id: @affair_id)
 
   reset_value: (e) ->
     e.preventDefault()
