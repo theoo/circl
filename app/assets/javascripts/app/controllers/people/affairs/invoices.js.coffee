@@ -57,7 +57,7 @@ class New extends App.ExtendedController
       @invoice.printed_address = @affair.buyer_address
       @invoice.title = @affair.title
       @invoice.description = @affair.description
-      @invoice.value = @affair.value
+      @invoice.value = (@affair.value - @affair.invoices_value).toFixed(2)
       @invoice.created_at = (new Date).to_view()
     else
       @invoice = new PersonAffairInvoice(value: 0)
@@ -68,6 +68,8 @@ class New extends App.ExtendedController
       @affair = PersonAffair.find(@affair_id)
 
     @html @view('people/affairs/invoices/form')(@)
+    @adjust_vat()
+
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>

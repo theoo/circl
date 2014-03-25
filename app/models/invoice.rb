@@ -198,10 +198,12 @@ class Invoice < ActiveRecord::Base
                       'INVOICE_DESCRIPTION'                => description.to_s,
                       'INVOICE_ID'                         => id.to_s,
                       'INVOICE_TITLE'                      => title.to_s,
-                      'INVOICE_VALUE'                      => value.to_view,
-                      'INVOICE_BALANCE_VALUE'              => balance_value.to_view,
-                      'INVOICE_RECEIPTS_VALUE'             => receipts_value.to_view,
-                      'INVOICE_OVERPAID_VALUE'             => overpaid_value.to_view,
+                      'INVOICE_VALUE_WITH_TAXES'           => value_with_taxes.to_doc,
+                      'INVOICE_VALUE'                      => value.to_doc,
+                      'INVOICE_VAT'                        => vat.to_doc,
+                      'INVOICE_BALANCE_VALUE'              => balance_value.to_doc,
+                      'INVOICE_RECEIPTS_VALUE'             => receipts_value.to_doc,
+                      'INVOICE_OVERPAID_VALUE'             => overpaid_value.to_doc,
                       'INVOICE_OWNER_ID'                   => owner.id.to_s,
                       'INVOICE_OWNER_TITLE'                => owner.title.to_s,
                       'INVOICE_OWNER_NAME'                 => owner.name,
@@ -223,9 +225,11 @@ class Invoice < ActiveRecord::Base
                       'INVOICE_RECEIVER_FIRST_NAME'        => receiver.first_name,
                       'INVOICE_RECEIVER_LAST_NAME'         => receiver.last_name,
                       'INVOICE_RECEIVER_FULL_NAME'         => receiver.full_name,
+                      'AFFAIR_ID'                          => affair.id.to_s,
                       'AFFAIR_TITLE'                       => affair.title,
-                      'AFFAIR_VALUE'                       => affair.value.to_view,
-                      'AFFAIR_VAT_VALUE'                   => affair.vat_value.to_view,
+                      'AFFAIR_VALUE_WITH_TAXES'            => affair.value_with_taxes.to_doc,
+                      'AFFAIR_VALUE'                       => affair.value.to_doc,
+                      'AFFAIR_VAT_VALUE'                   => affair.vat_value.to_doc,
                       'AFFAIR_DESCRIPTION'                 => affair.description,
                       'AFFAIR_FOOTER'                      => affair.footer,
                       'AFFAIR_CONDITIONS'                  => affair.conditions,
@@ -235,6 +239,7 @@ class Invoice < ActiveRecord::Base
     h[:iterators] = {
                       'EXTRAS'                            => extras,
                       'PRODUCT_ITEMS'                     => product_items,
+                      'AFFAIR_RECEIPTS'                   => affair.receipts,
                       'RECEIPTS'                          => receipts,
                       'SUBSCRIPTIONS'                     => subscriptions,
                       'TASKS'                             => tasks
@@ -400,6 +405,11 @@ class Invoice < ActiveRecord::Base
   # Run immediately a background task to update the PDF.
   def update_pdf!
     BackgroundTasks::GenerateInvoicePdf.process!(:invoice_id => self.id)
+  end
+
+  # Placeholder proxy
+  def affair_receipts
+    affair.receipts
   end
 
   protected

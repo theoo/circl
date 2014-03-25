@@ -60,6 +60,14 @@ en:
     notices:
       sort_people_for_pdf_generation: Receipt documents generation
       sort_people_message: Please select and sort the appropriate group of people for which receipt documents will be generated.
+    pdf:
+      id: id
+      invoice_id: invoice id
+      value: value
+      value_date: value date
+      means_of_payment: means of payment
+      created_at: creation date
+      updated_at: update date
     views:
       actions:
         edit_receipt: edit receipt

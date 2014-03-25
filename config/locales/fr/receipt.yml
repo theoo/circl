@@ -60,6 +60,14 @@ fr:
     notices:
       sort_people_for_pdf_generation: Génération des documents de reçu
       sort_people_message: Veuillez sélectionner le groupe de personne et l'ordre de tri pour lequel générer les documents de reçu.
+    pdf:
+      id: id
+      invoice_id: id de la facture
+      value: valeur
+      value_date: date de valeur
+      means_of_payment: moyen de paiement
+      created_at: date de création
+      updated_at: date de mise à jour
     views:
       actions:
         edit_receipt: modifier le reçu

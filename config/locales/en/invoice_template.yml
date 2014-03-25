@@ -18,6 +18,15 @@ en:
       language: language
       language_notice: language notice
       placeholders:
+        affair_id: Affair ID
+        affair_title: Affair title
+        affair_value_with_taxes: Affair's value with VAT
+        affair_value: Affair's value
+        affair_vat_value: Affair's VAT value
+        affair_description: Affair's description
+        affair_footer: Affair's footer or comments
+        affair_conditions: Affair's conditions
+        affair_seller_name: Affair's seller name
         bvr_account: BVR account
         bvr_address: BVR address
         bvr_codeline: BVR codeline
@@ -64,12 +73,15 @@ en:
         invoice_receiver_title: Invoice receiver title
         invoice_receiver_title_and_full_name: Invoice receiver title and full name
         invoice_title: Invoice title
-        invoice_value: Invoice value
+        invoice_value_with_taxes: Invoice's value with VAT
+        invoice_value: Invoice's value
+        invoice_vat: Invoice's VAT value
         invoice_year_numeric: Invoice year
         locale: This template language abreviation
         placeholders: placeholders
         product_items: ! 'Subscriptions iterator. Options: { attributes | sort by | separator, ''table''}, Attributes: id, parent_id, created_at, updated_at, key, title, description, category, quantity, value, value_in_cents, value_currency'
-        receipts: ! 'Receipts iterator. Options: { attributes | sort by | separator, ''table''}, Attributes: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
+        receipts: ! 'Invoice''s receipts iterator. Options: { attributes | sort by | separator, ''table''}, Attributes: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
+        affair_receipts: ! 'Affair''s receipts iterator. Options: { attributes | sort by | separator, ''table''}, Attributes: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
         subscriptions: ! 'Subscriptions iterator. Options: { attributes | sort by | separator, ''table''}, Attributes: id, parend_id, title, description, value, interval_starts_on, interval_ends_on, created_at, updated_at'
         tasks: ! 'Subscriptions iterator. Options: { attributes | sort by | separator, ''table''}, Attributes: id, executer_name, description, duration, start_date, created_at, updated_at, task_type_title, task_type_description, task_type_ratio, task_type_value, value, value_in_cents, value_currency, position'
       show_invoice_value: show invoice value

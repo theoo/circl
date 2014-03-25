@@ -330,6 +330,30 @@ class People::Affairs::InvoicesController < ApplicationController
     html
   end
 
+  ##
+  # Returns receipts as an HTML fragment build from the given options.
+  #
+  # Available options:
+  #
+  # *fields*:: <tt>+id, invoice_id, value, value_date, means_of_payment, created_at, updated_at</tt>
+  # *order*::  <tt>+:interval_starts_on+, any available attributes</tt>
+  # *joins*::  <tt>+:table+, any kind of string as separator, like ", "</tt>
+  #
+  def build_affair_receipts_list(invoice, options = {})
+    defaults = {:fields => ['id', 'invoice_id', 'value', 'value_date',
+                            'means_of_payment', 'created_at', 'updated_at'],
+                :order  => 'value_date ASC',
+                :join  => :table,
+                :translation_path => 'receipt' }
+
+    defaults.each{|k,v| options[k] = v if options[k].blank? }
+
+    html = ""
+    html << build_join_for(invoice, 'affair_receipts', options)
+    html
+  end
+
+
   private
 
   def build_join_for(invoice, object_name, options)
@@ -345,6 +369,8 @@ class People::Affairs::InvoicesController < ApplicationController
     rescue Exception => e
       raise ArgumentError, "object name: #{object_name} is not a valid method."
     end
+
+    options[:translation_path] ||= object_name.singularize
 
     html = ""
 
