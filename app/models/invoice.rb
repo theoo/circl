@@ -187,42 +187,49 @@ class Invoice < ActiveRecord::Base
     # NOTE don't forget to add translation manualy. rake i18n:import_missing_translations won't parse this code.
     # NOTE Be careful with name colision, INVOICE_TITLE and INVOICE_TITLE_AND_SOMETHING won't work correctly.
     h[:simples] =   {
-                      'LOCALE'                               => I18n.locale.to_s,
-                      'INVOICE_ADDRESS'                      => simple_format(printed_address),
-                      'INVOICE_DATE'                         => created_at.to_date.to_s,
-                      'INVOICE_DAY_NUMERIC'                  => I18n.l(created_at, :format => "%d"),
-                      'INVOICE_MONTH_NUMERIC'                => created_at.strftime("%m"),
-                      'INVOICE_YEAR_NUMERIC'                 => created_at.strftime("%Y"),
-                      'INVOICE_DAY_WORD'                     => I18n.l(created_at, :format => "%A"),
-                      'INVOICE_MONTH_WORD'                   => I18n.l(created_at, :format => "%B"),
-                      'INVOICE_DESCRIPTION'                  => description.to_s,
-                      'INVOICE_ID'                           => id.to_s,
-                      'INVOICE_TITLE'                        => title.to_s,
-                      'INVOICE_VALUE'                        => value.to_view,
-                      'INVOICE_BALANCE_VALUE'                => balance_value.to_view,
-                      'INVOICE_RECEIPTS_VALUE'               => receipts_value.to_view,
-                      'INVOICE_OVERPAID_VALUE'               => overpaid_value.to_view,
-                      'INVOICE_OWNER_ID'                     => owner.id.to_s,
-                      'INVOICE_OWNER_TITLE'                  => owner.title.to_s,
-                      'INVOICE_OWNER_NAME'                   => owner.name,
-                      'INVOICE_OWNER_ORGANIZATION_NAME'      => owner.organization_name,
-                      'INVOICE_OWNER_FIRST_NAME'             => owner.first_name,
-                      'INVOICE_OWNER_LAST_NAME'              => owner.last_name,
-                      'INVOICE_OWNER_FULL_NAME'              => owner.full_name,
-                      'INVOICE_BUYER_ID'                     => buyer.id.to_s,
-                      'INVOICE_BUYER_TITLE'                  => buyer.title.to_s,
-                      'INVOICE_BUYER_NAME'                   => buyer.name,
-                      'INVOICE_BUYER_ORGANIZATION_NAME'      => buyer.organization_name,
-                      'INVOICE_BUYER_FIRST_NAME'             => buyer.first_name,
-                      'INVOICE_BUYER_LAST_NAME'              => buyer.last_name,
-                      'INVOICE_BUYER_FULL_NAME'              => buyer.full_name,
-                      'INVOICE_RECEIVER_ID'                  => receiver.id.to_s,
-                      'INVOICE_RECEIVER_TITLE'               => receiver.title.to_s,
-                      'INVOICE_RECEIVER_NAME'                => receiver.name,
-                      'INVOICE_RECEIVER_ORGANIZATION_NAME'   => receiver.organization_name,
-                      'INVOICE_RECEIVER_FIRST_NAME'          => receiver.first_name,
-                      'INVOICE_RECEIVER_LAST_NAME'           => receiver.last_name,
-                      'INVOICE_RECEIVER_FULL_NAME'           => receiver.full_name,
+                      'LOCALE'                             => I18n.locale.to_s,
+                      'INVOICE_ADDRESS'                    => simple_format(printed_address),
+                      'INVOICE_DATE'                       => created_at.to_date.to_s,
+                      'INVOICE_DAY_NUMERIC'                => I18n.l(created_at, :format => "%d"),
+                      'INVOICE_MONTH_NUMERIC'              => created_at.strftime("%m"),
+                      'INVOICE_YEAR_NUMERIC'               => created_at.strftime("%Y"),
+                      'INVOICE_DAY_WORD'                   => I18n.l(created_at, :format => "%A"),
+                      'INVOICE_MONTH_WORD'                 => I18n.l(created_at, :format => "%B"),
+                      'INVOICE_DESCRIPTION'                => description.to_s,
+                      'INVOICE_ID'                         => id.to_s,
+                      'INVOICE_TITLE'                      => title.to_s,
+                      'INVOICE_VALUE'                      => value.to_view,
+                      'INVOICE_BALANCE_VALUE'              => balance_value.to_view,
+                      'INVOICE_RECEIPTS_VALUE'             => receipts_value.to_view,
+                      'INVOICE_OVERPAID_VALUE'             => overpaid_value.to_view,
+                      'INVOICE_OWNER_ID'                   => owner.id.to_s,
+                      'INVOICE_OWNER_TITLE'                => owner.title.to_s,
+                      'INVOICE_OWNER_NAME'                 => owner.name,
+                      'INVOICE_OWNER_ORGANIZATION_NAME'    => owner.organization_name,
+                      'INVOICE_OWNER_FIRST_NAME'           => owner.first_name,
+                      'INVOICE_OWNER_LAST_NAME'            => owner.last_name,
+                      'INVOICE_OWNER_FULL_NAME'            => owner.full_name,
+                      'INVOICE_BUYER_ID'                   => buyer.id.to_s,
+                      'INVOICE_BUYER_TITLE'                => buyer.title.to_s,
+                      'INVOICE_BUYER_NAME'                 => buyer.name,
+                      'INVOICE_BUYER_ORGANIZATION_NAME'    => buyer.organization_name,
+                      'INVOICE_BUYER_FIRST_NAME'           => buyer.first_name,
+                      'INVOICE_BUYER_LAST_NAME'            => buyer.last_name,
+                      'INVOICE_BUYER_FULL_NAME'            => buyer.full_name,
+                      'INVOICE_RECEIVER_ID'                => receiver.id.to_s,
+                      'INVOICE_RECEIVER_TITLE'             => receiver.title.to_s,
+                      'INVOICE_RECEIVER_NAME'              => receiver.name,
+                      'INVOICE_RECEIVER_ORGANIZATION_NAME' => receiver.organization_name,
+                      'INVOICE_RECEIVER_FIRST_NAME'        => receiver.first_name,
+                      'INVOICE_RECEIVER_LAST_NAME'         => receiver.last_name,
+                      'INVOICE_RECEIVER_FULL_NAME'         => receiver.full_name,
+                      'AFFAIR_TITLE'                       => affair.title,
+                      'AFFAIR_VALUE'                       => affair.value.to_view,
+                      'AFFAIR_VAT_VALUE'                   => affair.vat_value.to_view,
+                      'AFFAIR_DESCRIPTION'                 => affair.description,
+                      'AFFAIR_FOOTER'                      => affair.footer,
+                      'AFFAIR_CONDITIONS'                  => affair.conditions,
+                      'AFFAIR_SELLER_NAME'                 => affair.seller.try(:name)
                     }
 
     h[:iterators] = {
@@ -310,12 +317,16 @@ class Invoice < ActiveRecord::Base
   # Zero (0) equals a perfect balance when the invoice is paid and
   # there is no overpaying.
   def balance_value
-    receipts_value - value
+    receipts_value - value_with_taxes
   end
 
   # Returns the overpaid value.
   def overpaid_value
     (balance_value > 0) ? balance_value : 0.to_money
+  end
+
+  def value_with_taxes
+    value + vat
   end
 
   # Returns true if receipts sum is greater or equal ot invoice value.
@@ -346,25 +357,26 @@ class Invoice < ActiveRecord::Base
     h = super(options)
 
     # add relation description to save a request
-    h[:owner_id]       = owner.try(:id)
-    h[:owner_name]     = owner.try(:name)
-    h[:buyer_id]       = buyer.try(:id)
-    h[:buyer_name]     = buyer.try(:name)
-    h[:receiver_id]    = receiver.try(:id)
-    h[:receiver_name]  = receiver.try(:name)
-    h[:affair_title]   = affair.try(:title)
+    h[:owner_id]         = owner.try(:id)
+    h[:owner_name]       = owner.try(:name)
+    h[:buyer_id]         = buyer.try(:id)
+    h[:buyer_name]       = buyer.try(:name)
+    h[:receiver_id]      = receiver.try(:id)
+    h[:receiver_name]    = receiver.try(:name)
+    h[:affair_title]     = affair.try(:title)
 
-    h[:value]          = value.try(:to_f)
-    h[:vat]            = vat.try(:to_f)
-    h[:created_at]     = created_at.to_date
-    h[:age]            = helper.distance_of_time_in_words_to_now(created_at)
+    h[:value]            = value.try(:to_f)
+    h[:vat]              = vat.try(:to_f)
+    h[:value_with_taxes] = value_with_taxes.try(:to_f)
+    h[:created_at]       = created_at.to_date
+    h[:age]              = helper.distance_of_time_in_words_to_now(created_at)
 
-    h[:receipts_value] = receipts_value.try(:to_f)
-    h[:balance_value]  = balance_value.try(:to_f)
+    h[:receipts_value]   = receipts_value.try(:to_f)
+    h[:balance_value]    = balance_value.try(:to_f)
 
-    h[:statuses]       = get_statuses.map{|s| I18n.t("invoice.views.statuses." + s.to_s)}.join(", ")
+    h[:statuses]         = get_statuses.map{|s| I18n.t("invoice.views.statuses." + s.to_s)}.join(", ")
 
-    h[:errors]         = errors
+    h[:errors]           = errors
 
     h
   end

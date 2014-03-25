@@ -174,6 +174,8 @@ class Affair < ActiveRecord::Base
     h[:invoices_count]                     = invoices.count
     h[:invoices_value]                     = invoices_value.to_f
     h[:invoices_value_currency]            = invoices_value.currency.try(:iso_code)
+    h[:invoices_value_with_taxes]          = invoices_value_with_taxes.to_f
+    h[:invoices_value_with_taxes_currency] = invoices_value_with_taxes.currency.try(:iso_code)
     h[:receipts_count]                     = receipts.count
     h[:receipts_value]                     = receipts_value.to_f
     h[:receipts_value_currency]            = receipts_value.currency.try(:iso_code)
@@ -213,6 +215,10 @@ class Affair < ActiveRecord::Base
 
   def invoices_value
     invoices.map{|i| i.value.to_money(value_currency)}.sum.to_money
+  end
+
+  def invoices_value_with_taxes
+    invoices.map{|i| i.value_with_taxes.to_money(value_currency)}.sum.to_money
   end
 
   def receipts_value

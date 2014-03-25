@@ -314,12 +314,12 @@ class Balance extends App.ExtendedController
       @affair = PersonAffair.find(@affair_id)
 
       # Compute balance
-      if @affair.invoices_value >= @affair.receipts_value
+      if @affair.invoices_value_with_taxes >= @affair.receipts_value
         @overpaid = false
-        @paid = 100 / @affair.invoices_value * @affair.receipts_value
+        @paid = 100 / @affair.invoices_value_with_taxes * @affair.receipts_value
       else
         @overpaid = true
-        @paid = 100 / @affair.receipts_value * @affair.invoices_value
+        @paid = 100 / @affair.receipts_value * @affair.invoices_value_with_taxes
 
     @render()
 
