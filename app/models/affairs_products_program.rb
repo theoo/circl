@@ -49,6 +49,7 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   validates :affair_id, :presence => true
   validates :product_id, :presence => true
+  validates :program_id, :presence => true
   validates :position, :presence => true
   # NOTE unable to validate uniqueness when reordering items
   #, :uniqueness => { :scope => :affair_id }

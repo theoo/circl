@@ -24,7 +24,7 @@
         %input{ :type => 'search',
                 :id => 'person_affair_product_program_search',
                 :name => 'program',
-                :class => 'form-control',
+                :class => 'form-control required',
                 :value => @product.program_key,
                 :action => '/settings/product_programs/search'}
         %input{:type => 'hidden',
@@ -76,7 +76,7 @@
           %input{ :type => 'number',
                   :step => 0.01,
                   :id => 'person_affair_product_bid_percentage',
-                  :class => 'required form-control',
+                  :class => 'form-control',
                   :min => 0,
                   :max => 100,
                   :name => 'bid_percentage',

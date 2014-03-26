@@ -149,7 +149,7 @@ class Settings::ProductsController < ApplicationController
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       result = @products
-        .where("products.key ~* ? OR products.title ~* ?", param, param)
+        .where("products.key ~* ? OR products.title ~* ? OR products.description ~* ?", *([param]*3))
         .limit(10)
     end
 

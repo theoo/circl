@@ -12,7 +12,7 @@
 - title: Offre étendue
   language_id: 1
   class_name: Affair
-  odt: app/assets/odt/donation.odt
+  odt: app/assets/odt/extended_offer.odt
 
 - title: Relevé de compte global
   language_id: 1
