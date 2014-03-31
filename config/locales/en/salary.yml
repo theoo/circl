@@ -35,6 +35,7 @@ en:
       category: category
       children_count: children count
       civil_status: civil status
+      comments: Comments
       copy_reference_message: copy reference message
       copy_reference_title: copy reference title
       employer_account: employer account
