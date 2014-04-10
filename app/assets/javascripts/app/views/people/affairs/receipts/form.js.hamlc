@@ -44,11 +44,10 @@
 
       .col-lg-4
         .form-group
-          %label{:for => 'affair_receipt_value_date'}
+          %label
             = I18n.t('receipt.views.value_date')
           %input{:type => 'text',
                  :name => 'value_date',
-                 :id => 'affair_receipt_value_date',
                  :class => 'datepicker required form-control',
                  :value => @receipt.value_date }
 

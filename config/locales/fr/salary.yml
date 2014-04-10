@@ -36,6 +36,7 @@ fr:
       category: categorie
       children_count: nombre d'enfants
       civil_status: état civil
+      comments: commentaires
       copy_reference_message: Copie du salaire de référence vers un groupe de personne.
       copy_reference_title: Copie du salaire de référence
       employer_account: compte part employeur

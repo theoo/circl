@@ -33,10 +33,9 @@
   %fieldset#timesheet
     .row
       .col-lg-4.col-md-4.col-sm-4.form-group
-        %label{:for => 'task_start_date'}
+        %label
           = I18n.t('common.date')
         %input{ :type => 'text',
-                :id => 'task_start_date',
                 :name => 'start_date',
                 :class => 'datepicker form-control required',
                 :value => @task.start_date }

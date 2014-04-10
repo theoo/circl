@@ -54,11 +54,10 @@
 
         .col-lg-5
           .form-group
-            %label{:for => 'person_affair_invoice_created_at'}
+            %label
               = I18n.t('invoice.views.invoice_date')
             %input{:type => 'text',
                    :name => 'created_at',
-                   :id => 'person_affair_invoice_created_at',
                    :class => 'datepicker required form-control',
                    :value => @invoice.created_at }
 

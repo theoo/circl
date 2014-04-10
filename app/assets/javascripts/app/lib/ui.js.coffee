@@ -42,6 +42,9 @@ class Ui
     # $(document).delegate 'input[type="date"]', 'click', (e) ->
     #  e.preventDefault() # disable HTML5 default behavior
 
+    # If an ID is given to the datepicker, ensure it's really unique
+    # and not in a hidden form (like it is with spine new/edit paradigm)
+
     $(document).delegate 'input.datepicker', 'focus', ->
       $(@).datepicker
         inline: true

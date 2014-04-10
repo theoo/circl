@@ -67,32 +67,29 @@
 
             .col-lg-6
               .form-group
-                %label{:for => 'person_salary_created_at'}
+                %label
                   = I18n.t('common.created_at')
                 %input{ :type => 'text',
                         :name => 'created_at',
-                        :id => 'person_salary_created_at',
                         :class => 'datepicker form-control',
                         :value => @salary.created_at }
 
           .row
             .col-lg-6
               .form-group
-                %label{:for => 'person_salary_from'}
+                %label
                   = I18n.t('common.from')
                 %input{:type => 'text',
                        :name => 'from',
-                       :id => 'person_salary_from',
                        :class => 'datepicker form-control required',
                        :value => @salary.from }
 
             .col-lg-6
               .form-group
-                %label{:for => 'person_salary_to'}
+                %label
                   = I18n.t('common.to')
                 %input{ :type => 'text',
                         :name => 'to',
-                        :id => 'person_salary_to',
                         :class => 'datepicker form-control required',
                         :value => @salary.to }
 
