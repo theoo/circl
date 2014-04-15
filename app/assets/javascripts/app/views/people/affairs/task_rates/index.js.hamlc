@@ -29,7 +29,7 @@
 
     .panel-footer
       .text-right
-        != @partial('submit_button')(@person)
+        != @partial('update_button')(@person)
 
 - else
 

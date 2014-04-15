@@ -13,4 +13,4 @@ en:
       subunit: subunit
       subunit_to_unit: subunit factor
       symbol: symbol
-      updated_rates_can_be_found_online: Updated rates can be found online on websites like <a hrefe="http://www.xe.com">http://www.xe.com</a>.
+      updated_rates_can_be_found_online: Updated rates can be found online on websites like <a href="http://www.xe.com">http://www.xe.com</a>.

@@ -39,6 +39,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click a[name=tag-view-members]':   'view_members'
     'click a[name=tag-add-members]':    'add_members'
     'click a[name=tag-remove-members]': 'remove_members'
@@ -59,7 +60,7 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @tag.fromForm(e.target), @hide
+    @save_with_notifications @tag.fromForm(e.target)
 
   view_members: (e) ->
     e.preventDefault()

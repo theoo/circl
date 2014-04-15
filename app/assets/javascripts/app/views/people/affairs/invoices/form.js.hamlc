@@ -100,7 +100,7 @@
       .row
         .col-sm-12
           .pull-right
-            != @partial('submit_button')(@invoice)
+            != @partial('save_and_cancel_buttons')(@invoice)
 
           - unless @invoice.isNew()
             .btn-group

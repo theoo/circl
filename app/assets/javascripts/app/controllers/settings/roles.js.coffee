@@ -42,6 +42,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name=settings-role-destroy]': 'destroy'
     'click button[name=settings-role-view-members]': 'view_members'
 
@@ -60,9 +61,12 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @role.fromForm(e.target), =>
-      @unload_dependencies()
-      @hide()
+    @save_with_notifications @role.fromForm(e.target)
+
+  cancel: (e) ->
+    e.preventDefault()
+    @unload_dependencies()
+    @hide()
 
   destroy: (e) ->
     e.preventDefault()

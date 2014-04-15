@@ -50,6 +50,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name=tax-upload]':  'stack_upload_window'
     'click button[name=tax-destroy]': 'destroy'
 
@@ -79,7 +80,7 @@ class Edit extends App.ExtendedController
     form[group] = true
     delete form['exporter_group']
 
-    @save_with_notifications form, @hide
+    @save_with_notifications form
 
   stack_upload_window: (e) ->
     e.preventDefault()

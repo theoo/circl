@@ -116,6 +116,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'change #person_salary_parent_id':     'reference_selected'
     'click a[name="salary-download-pdf"]': 'pdf'
     'click a[name="salary-download-odt"]': 'odt'
@@ -253,9 +254,7 @@ class Edit extends App.ExtendedController
     @salary.married = data.married?
     @salary.paid = data.paid?
 
-    @save_with_notifications @salary, (id) =>
-      @hide()
-      @unload_dependencies()
+    @save_with_notifications @salary
 
 class Index extends App.ExtendedController
   events:

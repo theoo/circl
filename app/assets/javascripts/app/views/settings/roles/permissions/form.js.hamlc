@@ -43,4 +43,4 @@
       .col-lg-12
         - unless @permission.isNew()
           .pull-right
-            != @partial('submit_button')(@permission)
+            != @partial('save_and_cancel_buttons')(@permission)

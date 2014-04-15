@@ -39,6 +39,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name="employment-contract-destroy"]': 'destroy'
 
   constructor: ->
@@ -56,7 +57,7 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @employment_contract.fromForm(e.target), @hide
+    @save_with_notifications @employment_contract.fromForm(e.target)
 
   destroy: (e) ->
     e.preventDefault()

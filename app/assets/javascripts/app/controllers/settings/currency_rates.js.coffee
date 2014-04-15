@@ -41,6 +41,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click a[name=settings-currency-rate-destroy]': 'destroy'
 
   constructor: ->
@@ -61,7 +62,7 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     data = $(e.target).serializeObject()
     @currency_rate.load(data)
-    @save_with_notifications @currency_rate, @hide
+    @save_with_notifications @currency_rate
 
   destroy: (e) ->
     e.preventDefault()

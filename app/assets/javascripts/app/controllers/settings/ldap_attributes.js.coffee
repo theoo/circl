@@ -39,6 +39,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name=settings-ldap-attribute-destroy]': 'destroy'
 
   constructor: ->
@@ -55,7 +56,7 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @ldap_attribute.fromForm(e.target), @hide
+    @save_with_notifications @ldap_attribute.fromForm(e.target)
 
   destroy: (e) ->
     e.preventDefault()

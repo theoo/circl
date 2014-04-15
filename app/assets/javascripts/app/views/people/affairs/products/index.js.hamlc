@@ -18,7 +18,10 @@
         - # %td= item.category
         %td.small-number= item.position
         %td.small-number= item.quantity + " " + I18n.t("product.units.#{item.unit_symbol}.symbol")
-        %td= item.key
+        %td
+          %b= item.key
+          = "/"
+          = item.program_key
         %td
           %b= item.title
           %br

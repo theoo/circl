@@ -58,7 +58,7 @@
     .row
       .col-sm-12
         .pull-right
-          != @partial('submit_button')(@receipt)
+          != @partial('save_and_cancel_buttons')(@receipt)
 
         .btn-group
           - unless @receipt.isNew()

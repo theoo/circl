@@ -231,7 +231,7 @@
           .row
             .col-lg-12
               .pull-right
-                != @partial('submit_button')(@salary)
+                != @partial('save_and_cancel_buttons')(@salary)
 
               .btn-group
                 - unless @salary.isNew?()

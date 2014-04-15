@@ -39,6 +39,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name=settings-location-destroy]': 'destroy'
     'click a[name=settings-location-view-members]': 'view_members'
 
@@ -58,7 +59,7 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @location.fromForm(e.target), @hide
+    @save_with_notifications @location.fromForm(e.target)
 
   destroy: (e) ->
     e.preventDefault()

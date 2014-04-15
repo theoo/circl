@@ -45,13 +45,11 @@
     .row
       .col-md-12
         .pull-right
-          %button{:type => 'submit',
-                  :class => 'btn btn-primary'}
-            .icon-download-alt
-            - if @template.isNew()
-              = I18n.t("common.create")
-            - else
-              = I18n.t("common.update")
+          != @partial("save_and_cancel_buttons")(@template)
+
+        .visible-xs.visible-md.visible-lg
+          %br
+          %br
 
         - unless @template.isNew()
           .btn-group

@@ -25,7 +25,6 @@
                     :value => 1 }
             = I18n.t('affair.views.estimate')
 
-
     .row
       .col-sm-9
         .form-group.autocompleted
@@ -123,7 +122,7 @@
 
     .row
       .col-sm-12
-        %label TODO intervennants
+        %label TODO intervenants
 
     - unless @affair.isNew?()
       .row
@@ -282,7 +281,7 @@
                       = I18n.t('common.odt')
 
           .pull-right
-            != @partial('submit_button')(@affair)
+            != @partial('save_and_cancel_buttons')(@affair)
 
         - else
           .pull-right

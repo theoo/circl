@@ -30,7 +30,7 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial('submit_button')(@role)
+          != @partial('save_and_cancel_buttons')(@role)
 
         .btn-group
           - unless @role.isNew?()

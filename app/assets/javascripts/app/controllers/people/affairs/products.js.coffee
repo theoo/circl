@@ -90,6 +90,7 @@ class New extends PersonAffairProductExtention
 class Edit extends PersonAffairProductExtention
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name=person-affair-product-destroy]': 'destroy'
 
   constructor: ->

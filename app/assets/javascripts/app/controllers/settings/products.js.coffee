@@ -71,6 +71,7 @@ class VariantsController extends App.ExtendedController
 class New extends VariantsController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name="remove_variant"]':  'remove_variant'
     'click button[name="add_variant"]':     'add_variant'
 
@@ -99,6 +100,7 @@ class New extends VariantsController
 class Edit extends VariantsController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name=settings-product-destroy]': 'destroy'
     'click button[name="remove_variant"]':  'remove_variant'
     'click button[name="add_variant"]':     'add_variant'
@@ -125,7 +127,7 @@ class Edit extends VariantsController
     @product.load(data)
     @product.archive = data.archive?
     @product.has_accessories = data.has_accessories?
-    @save_with_notifications @product, @hide
+    @save_with_notifications @product
 
   destroy: (e) ->
     e.preventDefault()

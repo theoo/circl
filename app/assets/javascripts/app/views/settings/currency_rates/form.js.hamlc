@@ -59,7 +59,7 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial('submit_button')(@currency_rate)
+          != @partial('save_and_cancel_buttons')(@currency_rate)
 
         - unless @currency_rate.isNew()
           %a{:type => 'button',

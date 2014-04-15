@@ -31,7 +31,7 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial('submit_button')(@tag)
+          != @partial('save_and_cancel_buttons')(@tag)
 
         - unless @tag.isNew()
           .btn-group

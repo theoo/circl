@@ -1,0 +1,14 @@
+- if @isNew? && @isNew()
+  %button{:type => 'submit', :class => 'btn btn-primary'}
+    .icon-download-alt
+    = I18n.t('common.create')
+- else
+  // when hitting 'enter' on a form the first button is triggered
+  %button{:type => 'submit', :style => "visibility: hidden;"}
+  .btn-group
+    %button{:name => 'cancel', :class => 'btn btn-default'}
+      .icon-undo
+      = I18n.t('common.close')
+    %button{:type => 'submit', :class => 'btn btn-primary'}
+      .icon-download-alt
+      = I18n.t('common.save')

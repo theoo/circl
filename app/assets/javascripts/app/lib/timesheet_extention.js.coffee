@@ -43,7 +43,7 @@ class App.TimesheetExtention extends App.ExtendedController
     @task_type_description_div = @el.find("#task_type_description")
     @description_field = @el.find("textarea[name='description']")
 
-    @submit_button = @el.find('button[type=submit]')
+    @update_button = @el.find('button[type=submit]')
 
     ### Callbacks ###
     # client is cleared
@@ -97,7 +97,7 @@ class App.TimesheetExtention extends App.ExtendedController
     # @description_field.prop('disabled', true)
 
   disable_submit: ->
-    @submit_button.addClass('disabled')
+    @update_button.addClass('disabled')
 
   enable_affair_selection: ->
     @affair_field.removeAttr('disabled')
@@ -113,7 +113,7 @@ class App.TimesheetExtention extends App.ExtendedController
     # @description_field.removeAttr('disabled')
 
   enable_submit: ->
-    @submit_button.removeClass('disabled')
+    @update_button.removeClass('disabled')
 
   select_content: (e) ->
     $(e.target).select()

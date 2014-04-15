@@ -35,4 +35,4 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial('submit_button')()
+          != @partial('update_button')()

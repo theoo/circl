@@ -94,17 +94,22 @@
           %br
           = @product.bid_price.to_view(@product.bid_price_currency)
 
-
     .row
       .col-lg-12
         .pull-right
-          %button{:type => 'submit', :class => 'btn btn-primary'}
-            - if @product.isNew()
+          - if @product.isNew()
+            %button{:type => 'submit', :class => 'btn btn-primary'}
               .icon-plus
-              = I18n.t("common.add")
-            - else
-              .icon-download-alt
-              = I18n.t("common.update")
+              = I18n.t('common.add')
+          - else
+            .btn-group
+              %button{:name => 'cancel', :class => 'btn btn-default'}
+                .icon-undo
+                = I18n.t('common.cancel')
+              %button{:type => 'submit', :class => 'btn btn-primary'}
+                .icon-download-alt
+                = I18n.t('common.save')
+
 
         - unless @product.isNew()
           %button{:type => 'button',

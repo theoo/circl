@@ -70,7 +70,7 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial('submit_button')(@extra)
+          != @partial('save_and_cancel_buttons')(@extra)
 
         - unless @extra.isNew()
           .btn-group

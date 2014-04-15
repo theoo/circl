@@ -49,6 +49,10 @@ class App.ExtendedController extends Spine.Controller
     $(@el).show()
     @trigger 'show'
 
+  cancel: (e) ->
+    e.preventDefault()
+    @hide()
+
   # stacked windows
   open: =>
     $(@el).modal('show')

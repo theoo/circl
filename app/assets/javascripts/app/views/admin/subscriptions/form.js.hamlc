@@ -180,7 +180,7 @@
       .row
         .col-md-12
           .pull-right
-            != @partial('submit_button')(@subscription)
+            != @partial('save_and_cancel_buttons')(@subscription)
 
           - unless @subscription.isNew()
             .btn-group

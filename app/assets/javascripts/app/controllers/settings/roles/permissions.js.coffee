@@ -101,6 +101,7 @@ class SelectedPermissionsIndex extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
 
   constructor: ->
     super
@@ -131,6 +132,10 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @permission.fromForm(e.target), =>
       @active(id: undefined)
+
+  cancel: (e) ->
+    e.preventDefault()
+    @active(id: undefined)
 
 class App.SettingsRolePermissions extends Spine.Controller
   className: 'role_permissions'

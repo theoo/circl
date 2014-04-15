@@ -30,7 +30,7 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial("submit_button")(@comment)
+          != @partial("update_button")(@comment)
 
         .btn-group
           - unless @comment.isNew?()

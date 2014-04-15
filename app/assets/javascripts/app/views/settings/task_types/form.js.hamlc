@@ -71,7 +71,7 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial('submit_button')(@task_type)
+          != @partial('save_and_cancel_buttons')(@task_type)
 
         - unless @task_type.isNew()
           %button{:type => 'button',

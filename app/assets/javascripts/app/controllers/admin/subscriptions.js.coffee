@@ -183,6 +183,7 @@ class New extends ValueItemsController
 class Edit extends ValueItemsController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name="remove_item"]':  'remove_value_item'
     'click button[name="add_item"]':     'add_value_item'
     'click button[name=subscription-destroy]':                'destroy'
@@ -228,7 +229,7 @@ class Edit extends ValueItemsController
     # Allow to remove parent
     attr.parent_id = undefined if attr.subscription_parent_title == ""
 
-    @save_with_notifications @subscription.load(attr), @hide
+    @save_with_notifications @subscription.load(attr)
 
   pdf: (e) ->
     e.preventDefault()

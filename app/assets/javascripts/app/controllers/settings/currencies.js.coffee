@@ -43,6 +43,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click a[name=settings-currency-destroy]': 'destroy'
 
   constructor: ->
@@ -64,7 +65,6 @@ class Edit extends App.ExtendedController
     data = $(e.target).serializeObject()
     @currency.load(data)
     @save_with_notifications @currency, =>
-      @hide()
       App.CurrencyRate.fetch()
 
   destroy: (e) ->

@@ -98,7 +98,7 @@ class Salaries::TaxData < ActiveRecord::Base
   end
 
   def reference_value
-    Money.new(taxed_items.sum(:value_in_cents), salary.yearly_salary_currency)
+    Money.new(taxed_items.sum(:value_in_cents), salary.yearly_salary.currency)
   end
 
   def taxed_value

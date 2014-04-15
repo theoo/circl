@@ -42,6 +42,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name=settings-task-rate-destroy]': 'destroy'
 
   constructor: ->
@@ -63,7 +64,7 @@ class Edit extends App.ExtendedController
     data = $(e.target).serializeObject()
     @task_rate.load(data)
     @task_rate.archive = data.archive?
-    @save_with_notifications @task_rate, @hide
+    @save_with_notifications @task_rate
 
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))

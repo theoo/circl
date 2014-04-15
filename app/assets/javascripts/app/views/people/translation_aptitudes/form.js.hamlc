@@ -22,4 +22,4 @@
 
       %td
         .block.align_right
-          != @partial("submit_button")(@)
+          != @partial("update_button")(@)

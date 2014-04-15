@@ -72,13 +72,7 @@
     .row
       .col-lg-12
         .pull-right
-          %button{:type => 'submit',
-                  :class => 'btn btn-primary'}
-            .icon-download-alt
-            - if @invoice_template.isNew()
-              = I18n.t("common.create")
-            - else
-              = I18n.t("common.update")
+          != @partial("save_and_cancel_buttons")(@invoice_template)
 
         - unless @invoice_template.isNew()
           .btn-group

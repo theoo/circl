@@ -318,7 +318,7 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial("submit_button")(@person)
+          != @partial("update_button")(@person)
 
         - unless @person.isNew()
           .text-info

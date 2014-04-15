@@ -478,7 +478,6 @@ class Salaries::Salary < ActiveRecord::Base
   end
 
   def yearly_salary
-    # TODO, update this when moving to multicurrencies
     is_reference ? Money.new(yearly_salary_in_cents, yearly_salary_currency) : reference.yearly_salary
   end
 

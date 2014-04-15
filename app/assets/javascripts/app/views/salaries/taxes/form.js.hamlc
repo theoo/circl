@@ -68,7 +68,7 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial('submit_button')(@tax)
+          != @partial('save_and_cancel_buttons')(@tax)
 
         .btn-group
           - unless @tax.isNew?()

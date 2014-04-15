@@ -60,6 +60,7 @@ class New extends ClassNamesExtention
 class Edit extends ClassNamesExtention
   events:
     'submit form' : 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name=settings-template-destroy]': 'destroy'
     'click button[name=settings-template-edit]': 'edit_template'
     'click #settings_template_upload': 'stack_upload_window'
@@ -80,7 +81,7 @@ class Edit extends ClassNamesExtention
     e.preventDefault()
     data = $(e.target).serializeObject()
     @template.load(data)
-    @save_with_notifications @template, @hide
+    @save_with_notifications @template
 
   edit_template: (e) ->
     e.preventDefault()

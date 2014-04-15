@@ -30,6 +30,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
 
   active: (params) ->
     @id = params.id if params.id
@@ -43,7 +44,7 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @application_setting.fromForm(e.target), @hide
+    @save_with_notifications @application_setting.fromForm(e.target)
 
 class Index extends App.ExtendedController
   events:

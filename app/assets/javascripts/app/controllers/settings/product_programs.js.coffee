@@ -42,6 +42,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name=settings-product-program-destroy]': 'destroy'
 
   constructor: ->
@@ -61,7 +62,7 @@ class Edit extends App.ExtendedController
     data = $(e.target).serializeObject()
     @product_program.load(data)
     @product_program.archive = data.archive?
-    @save_with_notifications @product_program, @hide
+    @save_with_notifications @product_program
 
   destroy: (e) ->
     e.preventDefault()

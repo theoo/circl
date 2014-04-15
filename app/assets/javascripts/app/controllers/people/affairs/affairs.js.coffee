@@ -70,6 +70,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name="affair-show-owner"]': 'show_owner'
     'click a[name="affair-destroy"]': 'destroy'
     'click button[name=reset_value]': 'reset_value'
@@ -178,9 +179,12 @@ class Edit extends App.ExtendedController
     data = $(e.target).serializeObject()
     @affair.load(data)
     @affair.custom_value_with_taxes = data.custom_value_with_taxes?
-    @save_with_notifications @affair, (id) =>
-      @hide()
-      @unload_dependencies()
+    @save_with_notifications @affair
+
+  cancel: (e) ->
+    e.preventDefault()
+    @unload_dependencies()
+    @hide()
 
   show_owner: (e) ->
     window.location = "/people/#{@affair.owner_id}#affairs"

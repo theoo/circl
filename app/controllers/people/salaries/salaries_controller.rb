@@ -85,7 +85,10 @@ class People::Salaries::SalariesController < ApplicationController
   end
 
   def update
-    @salary.yearly_salary = Money.new(params[:yearly_salary].to_f * 100, params[:yearly_salary_currency])
+    if params[:is_reference]
+      @salary.yearly_salary = Money.new(params[:yearly_salary].to_f * 100, params[:yearly_salary_currency])
+    end
+
     params[:salary].delete(:yearly_salary)
     respond_to do |format|
       if @salary.update_attributes(params[:salary])

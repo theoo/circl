@@ -60,7 +60,7 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial('submit_button')(@search_attribute)
+          != @partial('save_and_cancel_buttons')(@search_attribute)
 
         - unless @search_attribute.isNew()
           %button{:type => 'button',

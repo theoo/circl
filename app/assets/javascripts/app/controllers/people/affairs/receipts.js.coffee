@@ -50,15 +50,17 @@ class New extends App.ExtendedController
     # TODO replace CCP by global variable
     @receipt.means_of_payment = 'CCP'
 
-    if @invoice
-      @receipt.value = @invoice.value_with_taxes
-      @receipt.invoice_id = @invoice.id
-      @receipt.invoice_title = @invoice.title
-
+    # update receipt value if not existing
     if @affair_id and PersonAffair.exists(@affair_id) and not @receipt.value
       @affair = PersonAffair.find(@affair_id)
       if @affair.invoices_value > @affair.receipts_value
         @receipt.value = (@affair.invoices_value_with_taxes - @affair.receipts_value).toFixed(2)
+
+    # link invoice to the new receipt if invoice ref exist
+    if @invoice
+      @receipt.value = @invoice.value_with_taxes
+      @receipt.invoice_id = @invoice.id
+      @receipt.invoice_title = @invoice.title
 
     @html @view('people/affairs/receipts/form')(@)
     if @disabled() then @disable_panel() else @enable_panel()
@@ -80,6 +82,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name="receipt-destroy"]': 'destroy'
 
   constructor: (params) ->

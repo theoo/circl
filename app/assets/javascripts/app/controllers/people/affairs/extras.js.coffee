@@ -58,6 +58,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click a[name=person-affair-extra-destroy]': 'destroy'
     'currency_changed select.currency_selector': 'on_currency_change'
 

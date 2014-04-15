@@ -27,7 +27,7 @@
     .row
       .col-lg-12
         .pull-right
-          != @partial('submit_button')(@ldap_attribute)
+          != @partial('save_and_cancel_buttons')(@ldap_attribute)
 
         - unless @ldap_attribute.isNew()
           %button{:type => 'button',

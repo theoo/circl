@@ -152,7 +152,7 @@
       .row
         .col-lg-12
           .pull-right
-            != @partial('submit_button')(@product)
+            != @partial('save_and_cancel_buttons')(@product)
 
           - unless @product.isNew()
             %button{:type => 'button',

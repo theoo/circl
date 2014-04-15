@@ -50,6 +50,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name=settings-invoice-template-destroy]': 'destroy'
     'click button[name=settings-invoice-template-edit]': 'edit_template'
 
@@ -71,7 +72,7 @@ class Edit extends App.ExtendedController
     @invoice_template.load(data)
     @invoice_template.with_bvr = data.with_bvr?
     @invoice_template.show_invoice_value = data.show_invoice_value?
-    @save_with_notifications @invoice_template, @hide
+    @save_with_notifications @invoice_template
 
   edit_template: (e) ->
     e.preventDefault()
