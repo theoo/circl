@@ -47,20 +47,20 @@ class Comment < ActiveRecord::Base
   #################
 
   belongs_to  :person
-  belongs_to  :resource, :polymorphic => true
+  belongs_to  :resource, polymorphic: true
 
 
   ###################
   ### VALIDATIONS ###
   ###################
   validates_presence_of :title, :description, :resource_type, :resource_id
-  validates_with PointsToModelValidator, :attr => :resource_type
+  validates_with PointsToModelValidator, attr: :resource_type
 
   # Validate fields of type 'string' length
-  validates_length_of :title, :maximum => 255
+  validates_length_of :title, maximum: 255
 
   # Validate fields of type 'text' length
-  validates_length_of :description, :maximum => 65536
+  validates_length_of :description, maximum: 65536
 
 
   ########################

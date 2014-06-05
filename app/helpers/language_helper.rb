@@ -28,7 +28,7 @@ module LanguageHelper
   #     if loc == I18n.locale
   #       links << "<span class='active'>" + translations[loc][:common][:language_name] + "</span>"
   #     else
-  #       links << link_to( translations[loc][:common][:language_name], url_for(params.merge(:locale => loc)) )
+  #       links << link_to( translations[loc][:common][:language_name], url_for(params.merge(locale: loc)) )
   #     end
   #   end
   #   links.join( " / " )

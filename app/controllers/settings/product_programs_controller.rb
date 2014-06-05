@@ -30,7 +30,7 @@ class Settings::ProductProgramsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        render :json => @product_programs
+        render json: @product_programs
       end
     end
   end
@@ -43,17 +43,17 @@ class Settings::ProductProgramsController < ApplicationController
     respond_to do |format|
       if @product_program.save
         format.json do
-          render :json => @product_program
+          render json: @product_program
         end
       else
-        format.json { render :json => @product_program.errors, :status => :unprocessable_entity }
+        format.json { render json: @product_program.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @product_program }
+      format.json { render json: @product_program }
     end
   end
 
@@ -61,10 +61,10 @@ class Settings::ProductProgramsController < ApplicationController
     respond_to do |format|
       if @product_program.update_attributes(params[:product_program])
         format.json do
-          render :json => @product_program
+          render json: @product_program
         end
       else
-        format.json { render :json => @product_program.errors, :status => :unprocessable_entity }
+        format.json { render json: @product_program.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -72,9 +72,9 @@ class Settings::ProductProgramsController < ApplicationController
   def destroy
     respond_to do |format|
       if @product_program.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @product_program.errors, :status => :unprocessable_entity }
+        format.json { render json: @product_program.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -88,7 +88,7 @@ class Settings::ProductProgramsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:label => t.program_group}}}
+      format.json { render json: result.map{|t| {label: t.program_group}}}
     end
   end
 
@@ -96,7 +96,7 @@ class Settings::ProductProgramsController < ApplicationController
     result = @product_programs.select("DISTINCT(product_programs.program_group)")
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| t.program_group}}
+      format.json { render json: result.map{|t| t.program_group}}
     end
   end
 
@@ -110,17 +110,17 @@ class Settings::ProductProgramsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        render :json => result.map{ |t| { :id => t.id,
-          :label => t.key,
-          :title => t.title,
-          :desc => t.description }}
+        render json: result.map{ |t| { id: t.id,
+          label: t.key,
+          title: t.title,
+          desc: t.description }}
       end
     end
   end
 
   def count
     respond_to do |format|
-      format.json { render :json => {:count => ProductProgram.count} }
+      format.json { render json: {count: ProductProgram.count} }
     end
   end
 

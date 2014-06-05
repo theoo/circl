@@ -22,7 +22,7 @@ class People::Affairs::InvoicesController < ApplicationController
 
   load_resource :person
   load_resource :affair
-  load_and_authorize_resource :through => :affair
+  load_and_authorize_resource through: :affair
 
   monitor_changes :@invoice
 
@@ -35,7 +35,7 @@ class People::Affairs::InvoicesController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => @invoices }
+      format.json { render json: @invoices }
 
       format.csv do
         fields = []
@@ -49,13 +49,13 @@ class People::Affairs::InvoicesController < ApplicationController
         fields << 'owner.try(:location).try(:country).try(:name)'
         fields << 'owner.try(:main_communication_language).try(:name)'
         fields << 'owner.email'
-        render :inline => csv_ify(@invoices, fields)
+        render inline: csv_ify(@invoices, fields)
       end
 
       if params[:template_id]
         format.html do
           generator = AttachmentGenerator.new(@affair)
-          render :inline => generator.html, :layout => 'preview'
+          render inline: generator.html, layout: 'preview'
         end
 
         format.pdf do
@@ -63,8 +63,8 @@ class People::Affairs::InvoicesController < ApplicationController
           generator = AttachmentGenerator.new(@affair)
           generator.pdf { |o,pdf| @pdf = pdf.read }
           send_data @pdf,
-                    :filename => "affair_invoices_#{params[:affair_id]}.pdf",
-                    :type => 'application/pdf'
+                    filename: "affair_invoices_#{params[:affair_id]}.pdf",
+                    type: 'application/pdf'
         end
 
         format.odt do
@@ -72,8 +72,8 @@ class People::Affairs::InvoicesController < ApplicationController
           generator = AttachmentGenerator.new(@affair)
           generator.odt { |o,odt| @odt = odt.read }
           send_data @odt,
-                    :filename => "affair_invoices_#{params[:affair_id]}.odt",
-                    :type => 'application/vnd.oasis.opendocument.text'
+                    filename: "affair_invoices_#{params[:affair_id]}.odt",
+                    type: 'application/vnd.oasis.opendocument.text'
         end
       end
     end
@@ -81,13 +81,13 @@ class People::Affairs::InvoicesController < ApplicationController
 
   def show
     respond_to do |format|
-      format.json { render :json => @invoice }
+      format.json { render json: @invoice }
 
       # Render HTML but don't build PDF.
       format.html do
         html = build_from_template(@invoice)
         html.assets_to_full_path!
-        render :inline => html, :layout => 'preview'
+        render inline: html, layout: 'preview'
       end
 
       # Call Background task to build pdf through invoice model.
@@ -96,7 +96,7 @@ class People::Affairs::InvoicesController < ApplicationController
           @invoice.update_pdf!
           @invoice.reload
         end
-        send_data File.read(@invoice.pdf.path), :filename => "invoice_#{params[:id]}.pdf", :type => 'application/pdf'
+        send_data File.read(@invoice.pdf.path), filename: "invoice_#{params[:id]}.pdf", type: 'application/pdf'
       end
     end
   end
@@ -106,16 +106,16 @@ class People::Affairs::InvoicesController < ApplicationController
     @invoice.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @invoice.save
-        format.json { render :json => @invoice }
+        format.json { render json: @invoice }
       else
-        format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
+        format.json { render json: @invoice.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @invoice }
+      format.json { render json: @invoice }
     end
   end
 
@@ -124,9 +124,9 @@ class People::Affairs::InvoicesController < ApplicationController
     @invoice.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @invoice.update_attributes(params[:invoice])
-        format.json { render :json => @invoice }
+        format.json { render json: @invoice }
       else
-        format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
+        format.json { render json: @invoice.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -134,9 +134,9 @@ class People::Affairs::InvoicesController < ApplicationController
   def destroy
     respond_to do |format|
       if @invoice.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @invoice.errors, :status => :unprocessable_entity }
+        format.json { render json: @invoice.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -150,7 +150,7 @@ class People::Affairs::InvoicesController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:id => t.id, :label => t.title}}}
+      format.json { render json: result.map{|t| {id: t.id, label: t.title}}}
     end
   end
 
@@ -186,13 +186,13 @@ class People::Affairs::InvoicesController < ApplicationController
           order  = opts[1].strip if opts.size > 0
           join   = opts[2] if opts.size > 1
 
-          iterator = "build_#{p.downcase}_list(invoice, :fields => fields, :order => order, :join => join)"
+          iterator = "build_#{p.downcase}_list(invoice, fields: fields, order: order, join: join)"
           # TODO ensure that what is evaluated is safe
           sub = eval iterator
 
           html.gsub!(ph, sub)
         rescue Exception => e
-          error = I18n.t("invoice_template.errors.failed_to_substitute_iterator", :iterator => p)
+          error = I18n.t("invoice_template.errors.failed_to_substitute_iterator", iterator: p)
           error += "<br />"
           error += CGI::escapeHTML(e.inspect)
           html.gsub!(ph, error)
@@ -214,21 +214,21 @@ class People::Affairs::InvoicesController < ApplicationController
   # *joins*::  <tt>+:table+, any kind of string as separator, like ", "</tt>
   #
   def build_subscriptions_list(invoice, options = {})
-    defaults = {:fields => ['id', 'parent_id', 'title', 'description',
+    defaults = {fields: ['id', 'parent_id', 'title', 'description',
                             'interval_starts_on', 'interval_ends_on',
                             'created_at', 'updated_at', 'value'],
-                :order  => 'interval_starts_on ASC',
-                :join  => :table }
+                order: 'interval_starts_on ASC',
+                join: :table }
 
     defaults.each{|k,v| options[k] = v if options[k].blank? }
 
     html = ""
 
     if options[:join].to_s.strip == 'table'
-      html << render_to_string( :partial => 'subscriptions.html',
-                                :locals => {:subscriptions => invoice.subscriptions,
-                                            :invoice => invoice,
-                                            :options => options})
+      html << render_to_string( partial: 'subscriptions.html',
+                                locals: {subscriptions: invoice.subscriptions,
+                                            invoice: invoice,
+                                            options: options})
     else
       invoice.subscriptions.order(options[:order]).each do |s|
         fields = options[:fields].map do |f|
@@ -257,9 +257,9 @@ class People::Affairs::InvoicesController < ApplicationController
   #
   # available = ['id', 'executer_name', 'description', 'duration', 'start_date', 'created_at', 'updated_at', 'task_type_title', 'task_type_description', 'task_type_ratio', 'task_type_value', 'value', 'value_in_cents', 'value_currency', 'position']
   def build_tasks_list(invoice, options = {})
-    defaults = {:fields => ['executer_name', 'task_type_title', 'description', 'start_date', 'duration', 'value'],
-                :order  => 'start_date ASC',
-                :join  => :table }
+    defaults = {fields: ['executer_name', 'task_type_title', 'description', 'start_date', 'duration', 'value'],
+                order: 'start_date ASC',
+                join: :table }
 
     defaults.each{|k,v| options[k] = v if options[k].blank? }
 
@@ -277,9 +277,9 @@ class People::Affairs::InvoicesController < ApplicationController
   #
   # available = ['id', 'parent_id', 'created_at', 'updated_at', 'key', 'title', 'description', 'category', 'quantity', 'value', 'value_in_cents', 'value_currency']
   def build_product_items_list(invoice, options = {})
-    defaults = {:fields => ['key', 'title', 'description', 'quantity', 'value'],
-                :order  => 'position ASC',
-                :join  => :table }
+    defaults = {fields: ['key', 'title', 'description', 'quantity', 'value'],
+                order: 'position ASC',
+                join: :table }
 
     defaults.each{|k,v| options[k] = v if options[k].blank? }
 
@@ -297,9 +297,9 @@ class People::Affairs::InvoicesController < ApplicationController
   #
   # available = ['id', 'title', 'description', 'value', 'value_in_cents', 'value_currency', 'quantity', 'position', 'created_at', 'updated_at']
   def build_extras_list(invoice, options = {})
-    defaults = {:fields => ['title', 'description', 'quantity', 'value'],
-                :order  => 'position ASC',
-                :join  => :table }
+    defaults = {fields: ['title', 'description', 'quantity', 'value'],
+                order: 'position ASC',
+                join: :table }
 
     defaults.each{|k,v| options[k] = v if options[k].blank? }
 
@@ -318,10 +318,10 @@ class People::Affairs::InvoicesController < ApplicationController
   # *joins*::  <tt>+:table+, any kind of string as separator, like ", "</tt>
   #
   def build_receipts_list(invoice, options = {})
-    defaults = {:fields => ['id', 'invoice_id', 'value', 'value_date',
+    defaults = {fields: ['id', 'invoice_id', 'value', 'value_date',
                             'means_of_payment', 'created_at', 'updated_at'],
-                :order  => 'value_date ASC',
-                :join  => :table }
+                order: 'value_date ASC',
+                join: :table }
 
     defaults.each{|k,v| options[k] = v if options[k].blank? }
 
@@ -340,11 +340,11 @@ class People::Affairs::InvoicesController < ApplicationController
   # *joins*::  <tt>+:table+, any kind of string as separator, like ", "</tt>
   #
   def build_affair_receipts_list(invoice, options = {})
-    defaults = {:fields => ['id', 'invoice_id', 'value', 'value_date',
+    defaults = {fields: ['id', 'invoice_id', 'value', 'value_date',
                             'means_of_payment', 'created_at', 'updated_at'],
-                :order  => 'value_date ASC',
-                :join  => :table,
-                :translation_path => 'receipt' }
+                order: 'value_date ASC',
+                join: :table,
+                translation_path: 'receipt' }
 
     defaults.each{|k,v| options[k] = v if options[k].blank? }
 
@@ -377,10 +377,10 @@ class People::Affairs::InvoicesController < ApplicationController
     # print table or join only if there is objects
     if objects.size > 0
       if options[:join].to_s.strip == 'table'
-        html << render_to_string( :partial => "generic",
-                                  :locals => {:objects => objects,
-                                              :object_name => object_name,
-                                              :options => options})
+        html << render_to_string( partial: "generic",
+                                  locals: {objects: objects,
+                                              object_name: object_name,
+                                              options: options})
       else
           objects.order(options[:order]).each do |s|
             fields = options[:fields].map do |f|

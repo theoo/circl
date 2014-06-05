@@ -48,10 +48,10 @@ class TaskType < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  has_many :tasks, :dependent => :nullify
+  has_many :tasks, dependent: :nullify
 
-  scope :actives, Proc.new { where(:archive => false)}
-  scope :archived, Proc.new { where(:archive => true)}
+  scope :actives, Proc.new { where(archive: false)}
+  scope :archived, Proc.new { where(archive: true)}
 
   money :value
 

@@ -106,7 +106,7 @@ class Person < ActiveRecord::Base
 
   # LDAP
   if Rails.configuration.ldap_enabled
-    after_save :ldap_update, :unless => "tracked_changes.empty?"
+    after_save :ldap_update, unless: "tracked_changes.empty?"
     before_destroy :ldap_remove
   end
 
@@ -118,126 +118,126 @@ class Person < ActiveRecord::Base
   belongs_to  :job
   belongs_to  :location
   belongs_to  :main_communication_language,
-              :class_name => 'Language'
+              class_name: 'Language'
 
   has_many    :employment_contracts,
-              :dependent => :destroy
+              dependent: :destroy
 
   # logs what this "user" have done (to any entry)
   has_many    :activities,
-              :order => 'created_at DESC',
-              :limit => '100',
-              :dependent => :destroy
+              order: 'created_at DESC',
+              limit: '100',
+              dependent: :destroy
 
   # logs what this person's entry have undergone
   has_many    :alterations,
-              :class_name => 'Activity',
-              :as => :resource,
-              :order => 'created_at DESC',
-              :limit => '100',
-              :dependent => :destroy
+              class_name: 'Activity',
+              as: :resource,
+              order: 'created_at DESC',
+              limit: '100',
+              dependent: :destroy
 
   # comments made by this person
   has_many    :edited_comments,
-              :class_name => 'Comment',
-              :dependent => :destroy
+              class_name: 'Comment',
+              dependent: :destroy
 
   # comments made by someone else on this entry
   has_many    :comments_edited_by_others,
-              :class_name => 'Comment',
-              :as => :resource,
-              :dependent => :destroy
+              class_name: 'Comment',
+              as: :resource,
+              dependent: :destroy
 
   has_many  :translation_aptitudes,
-            :dependent => :destroy
+            dependent: :destroy
   accepts_nested_attributes_for :translation_aptitudes
 
   monitored_habtm :roles,
-                  :after_add => :update_elasticsearch_index,
-                  :after_remove => :update_elasticsearch_index
+                  after_add: :update_elasticsearch_index,
+                  after_remove: :update_elasticsearch_index
   has_many  :people_roles # for permissions
 
   has_many  :permissions,
-            :through => :roles,
-            :uniq => true
+            through: :roles,
+            uniq: true
 
   monitored_habtm :public_tags,
-                  :uniq => true,
-                  :after_add => :update_elasticsearch_index,
-                  :after_remove => :update_elasticsearch_index
+                  uniq: true,
+                  after_add: :update_elasticsearch_index,
+                  after_remove: :update_elasticsearch_index
 
   monitored_habtm :private_tags,
-                  :uniq => true,
-                  :after_add => :update_elasticsearch_index,
-                  :after_remove => :update_elasticsearch_index
+                  uniq: true,
+                  after_add: :update_elasticsearch_index,
+                  after_remove: :update_elasticsearch_index
 
   has_many  :people_public_tags # for permissions
   has_many  :people_private_tags # for permissions
 
   # secondary communication languages
   monitored_habtm :communication_languages,
-                  :class_name => 'Language',
-                  :join_table => 'people_communication_languages',
-                  :uniq => true,
-                  :after_add => :update_elasticsearch_index,
-                  :after_remove => :update_elasticsearch_index
+                  class_name: 'Language',
+                  join_table: 'people_communication_languages',
+                  uniq: true,
+                  after_add: :update_elasticsearch_index,
+                  after_remove: :update_elasticsearch_index
 
   has_many  :people_communication_languages # for permissions
 
   # Financial
   has_many    :affairs,
-              :foreign_key => :owner_id,
-              :dependent => :destroy
+              foreign_key: :owner_id,
+              dependent: :destroy
 
   has_many    :affairs_as_buyer,
-              :class_name => 'Affair',
-              :foreign_key => :buyer_id
+              class_name: 'Affair',
+              foreign_key: :buyer_id
 
   has_many    :affairs_as_receiver,
-              :class_name => 'Affair',
-              :foreign_key => :receiver_id
+              class_name: 'Affair',
+              foreign_key: :receiver_id
 
   has_many    :affairs_stakeholders
   has_many    :affairs_as_stakeholder,
-              :through => :affairs_stakeholders,
-              :source => :affair,
-              :uniq => true
+              through: :affairs_stakeholders,
+              source: :affair,
+              uniq: true
 
   has_many    :invoices,
-              :through => :affairs,
-              :foreign_key => 'owner_id',
-              :uniq => true
+              through: :affairs,
+              foreign_key: 'owner_id',
+              uniq: true
 
   has_many    :receipts,
-              :through => :invoices,
-              :uniq => true
+              through: :invoices,
+              uniq: true
 
   has_many    :subscriptions,
-              :through => :affairs,
-              :uniq => true
+              through: :affairs,
+              uniq: true
 
   # Salaries
   has_many    :salaries,
-              :class_name => 'Salaries::Salary',
-              :dependent => :destroy
+              class_name: 'Salaries::Salary',
+              dependent: :destroy
 
   has_many    :background_tasks
 
   # tasks this person have edited
   has_many    :executed_tasks,
-              :class_name => '::Task',
-              :foreign_key => 'executer_id',
-              :dependent => :destroy
+              class_name: '::Task',
+              foreign_key: 'executer_id',
+              dependent: :destroy
 
   # tasks made for this person, the client
   has_many    :tasks,
-              :through => :affairs
+              through: :affairs
 
-  has_many    :products_to_sell,  :class_name => 'Product',
-                                  :foreign_key => :provider_id
+  has_many    :products_to_sell,  class_name: 'Product',
+                                  foreign_key: :provider_id
 
-  has_many    :products_to_maintain,  :class_name => 'Product',
-                                      :foreign_key => :after_sale_id
+  has_many    :products_to_maintain,  class_name: 'Product',
+                                      foreign_key: :after_sale_id
 
   belongs_to  :task_rate
 
@@ -246,7 +246,7 @@ class Person < ActiveRecord::Base
   ### NAMESCOPES ###
   ##################
 
-  scope :hidden, where(:hidden => true)
+  scope :hidden, where(hidden: true)
   scope :visible, where("hidden is NULL OR hidden IN ('false', 'f', '0')")
 
   # Include default devise modules. Others available are:
@@ -261,11 +261,11 @@ class Person < ActiveRecord::Base
 
   validates_with PresenceOfIdentifierValidator
   validates_with FullNameValidator
-  validates_with DateValidator, :attribute => :birth_date
+  validates_with DateValidator, attribute: :birth_date
 
-  validates_with PhoneValidator, :attribute => :phone
-  validates_with PhoneValidator, :attribute => :second_phone
-  validates_with PhoneValidator, :attribute => :mobile
+  validates_with PhoneValidator, attribute: :phone
+  validates_with PhoneValidator, attribute: :second_phone
+  validates_with PhoneValidator, attribute: :mobile
 
   validate :cannot_use_same_first_name_and_last_name_unless_has_email
 
@@ -276,34 +276,34 @@ class Person < ActiveRecord::Base
   validate :email_exists_if_it_has_a_second_email
   validate :email_required_if_it_is_loggable
   validate :cannot_use_existing_email
-  validates_uniqueness_of :authentication_token, :allow_nil => true
-  validates_uniqueness_of :email, :if => :has_email?
-  validates_uniqueness_of :second_email, :if => :has_second_email?
-  validates_format_of :email, :with => FormatValidations::EMAIL_REGEX, :if => :has_email?
-  validates_format_of :second_email, :with => FormatValidations::EMAIL_REGEX, :if => :has_second_email?
+  validates_uniqueness_of :authentication_token, allow_nil: true
+  validates_uniqueness_of :email, if: :has_email?
+  validates_uniqueness_of :second_email, if: :has_second_email?
+  validates_format_of :email, with: FormatValidations::EMAIL_REGEX, if: :has_email?
+  validates_format_of :second_email, with: FormatValidations::EMAIL_REGEX, if: :has_second_email?
   validate :avs_number_format
-  validate :second_email_is_different, :if => lambda { has_email? && has_second_email? }
+  validate :second_email_is_different, if: lambda { has_email? && has_second_email? }
   validate :has_org_name_if_is_an_org_is_set
   validate :main_language_is_not_in_communication_languages
-  validates_strength_of :password, :with => :email, :if => lambda { !password.blank? }
+  validates_strength_of :password, with: :email, if: lambda { !password.blank? }
   validates_confirmation_of :password
 
   # Validate fields of type 'string' length
-  validates_length_of :organization_name, :maximum => 255
-  validates_length_of :title, :maximum => 255
-  validates_length_of :first_name, :maximum => 255
-  validates_length_of :last_name, :maximum => 255
-  validates_length_of :phone, :maximum => 255
-  validates_length_of :second_phone, :maximum => 255
-  validates_length_of :mobile, :maximum => 255
-  validates_length_of :email, :maximum => 255
-  validates_length_of :second_email, :maximum => 255
-  validates_length_of :nationality, :maximum => 255
-  validates_length_of :avs_number, :maximum => 255
+  validates_length_of :organization_name, maximum: 255
+  validates_length_of :title, maximum: 255
+  validates_length_of :first_name, maximum: 255
+  validates_length_of :last_name, maximum: 255
+  validates_length_of :phone, maximum: 255
+  validates_length_of :second_phone, maximum: 255
+  validates_length_of :mobile, maximum: 255
+  validates_length_of :email, maximum: 255
+  validates_length_of :second_email, maximum: 255
+  validates_length_of :nationality, maximum: 255
+  validates_length_of :avs_number, maximum: 255
 
   # Validate fields of type 'text' length
-  validates_length_of :address, :maximum => 65535
-  validates_length_of :bank_informations, :maximum => 65535
+  validates_length_of :address, maximum: 65535
+  validates_length_of :bank_informations, maximum: 65535
 
 
   #####################
@@ -337,7 +337,7 @@ class Person < ActiveRecord::Base
     infos[:jobs]         = []
 
     begin
-      CSV.parse(data, :encoding => 'UTF-8')[1..-1].each_with_index do |row, i|
+      CSV.parse(data, encoding: 'UTF-8')[1..-1].each_with_index do |row, i|
         if row.size < 25
           infos[:errors] << "#{I18n.t('person.import.line')} #{i+2}: #{I18n.t('person.import.invalid_line')}"
           next
@@ -407,7 +407,7 @@ class Person < ActiveRecord::Base
   def ldap_remove
     ldap = Rails.configuration.ldap_admin
 
-    ldap.delete(:dn => ldap_dn)
+    ldap.delete(dn: ldap_dn)
     return true if [0, 32].include?(ldap.get_operation_result.code)
 
     File.open("#{Rails.root.to_s}/log/ldap.log", 'a') do |f|
@@ -419,7 +419,7 @@ class Person < ActiveRecord::Base
   def ldap_add
     ldap = Rails.configuration.ldap_admin
 
-    return true if ldap.add(:dn => ldap_dn, :attributes => ldap_attributes)
+    return true if ldap.add(dn: ldap_dn, attributes: ldap_attributes)
 
     File.open("#{Rails.root.to_s}/log/ldap.log", 'a') do |f|
       f << Time.now.to_s + ": Cannot add LDAP entry #{id}: error #{ldap.get_operation_result.code}, #{ldap.get_operation_result.message}"
@@ -470,7 +470,7 @@ class Person < ActiveRecord::Base
 
   def accessible_by
     roles = Role.all.select do |role|
-      fake_user = OpenStruct.new(:permissions => role.permissions)
+      fake_user = OpenStruct.new(permissions: role.permissions)
       a = Ability.new(fake_user)
       a.can? :read, self
     end
@@ -615,7 +615,7 @@ class Person < ActiveRecord::Base
   def age_at(date)
     # date should be UTC Date
     if birth_date.is_a? Date
-      date.year - birth_date.year - (birth_date.to_date.change(:year => date.year) > date ? 1 : 0)
+      date.year - birth_date.year - (birth_date.to_date.change(year: date.year) > date ? 1 : 0)
     else
       nil
     end
@@ -718,7 +718,7 @@ class Person < ActiveRecord::Base
     if email.blank? &&
        organization_name.blank? &&
        !full_name.blank? &&
-       Person.where(:first_name => first_name, :last_name => last_name)
+       Person.where(first_name: first_name, last_name: last_name)
              .where(Person.arel_table[:id].not_eq(id)).size > 0
       errors.add(:base, I18n.t('person.errors.combination_of_first_name_and_last_name_already_taken'))
       false
@@ -868,10 +868,10 @@ class Person < ActiveRecord::Base
 
   def clear_affairs_as_buyer_and_affairs_as_receiver
     self.affairs_as_receiver.each do |a|
-      a.update_attributes(:receiver_id => a.owner_id)
+      a.update_attributes(receiver_id: a.owner_id)
     end
     self.affairs_as_buyer.each do |a|
-      a.update_attributes(:buyer_id => a.owner_id)
+      a.update_attributes(buyer_id: a.owner_id)
     end
   end
 
@@ -881,7 +881,7 @@ class Person < ActiveRecord::Base
         field = I18n.t("activerecord.attributes.person." + f)
         errors.add(f.to_sym,
                     I18n.t('person.errors.the_required_information_about_this_employee_are_not_satisfied',
-                      :field => field ))
+                      field: field ))
       end
 
       false

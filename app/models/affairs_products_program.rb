@@ -31,7 +31,7 @@ class AffairsProductsProgram < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
-  before_validation :set_position_if_none_given, :if => Proc.new {|i| i.position.blank? }
+  before_validation :set_position_if_none_given, if: Proc.new {|i| i.position.blank? }
 
   #################
   ### RELATIONS ###
@@ -41,26 +41,26 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   belongs_to :affair
   belongs_to :product
-  belongs_to :program, :class_name => "ProductProgram"
+  belongs_to :program, class_name: "ProductProgram"
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates :affair_id, :presence => true
-  validates :product_id, :presence => true
-  validates :program_id, :presence => true
-  validates :position, :presence => true
+  validates :affair_id, presence: true
+  validates :product_id, presence: true
+  validates :program_id, presence: true
+  validates :position, presence: true
   # NOTE unable to validate uniqueness when reordering items
-  #, :uniqueness => { :scope => :affair_id }
-  validates :quantity, :presence => true
+  #, uniqueness: { scope: :affair_id }
+  validates :quantity, presence: true
   # TODO edit if this validation should exists in application settings.
-  # validate :uniquness_of_jointure, :if => Proc.new {|i| i.new_record?}
+  # validate :uniquness_of_jointure, if: Proc.new {|i| i.new_record?}
   validates_numericality_of :bid_percentage,
-                            :greater_than_or_equal_to => 0,
-                            :less_than_or_equal_to => 100,
-                            :only_integer => false,
-                            :unless => "bid_percentage.blank?"
+                            greater_than_or_equal_to: 0,
+                            less_than_or_equal_to: 100,
+                            only_integer: false,
+                            unless: "bid_percentage.blank?"
 
 
   ########################
@@ -95,7 +95,7 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   def variant
     if program
-      product.variants.where(:program_group => program.program_group).first
+      product.variants.where(program_group: program.program_group).first
     end
   end
 
@@ -138,7 +138,7 @@ class AffairsProductsProgram < ActiveRecord::Base
   end
 
   def uniquness_of_jointure
-    if self.class.where(:affair_id => affair_id, :product_id => product_id, :program_id => program_id).count > 0
+    if self.class.where(affair_id: affair_id, product_id: product_id, program_id: program_id).count > 0
       errors.add :base, I18n.t("product_variant.errors.this_relation_already_exists")
       false
     end
@@ -159,7 +159,7 @@ class AffairsProductsProgram < ActiveRecord::Base
     siblings.insert i, self
 
     siblings.each_with_index do |s, i|
-      s.update_attributes(:position => i) unless s == self
+      s.update_attributes(position: i) unless s == self
     end
   end
 

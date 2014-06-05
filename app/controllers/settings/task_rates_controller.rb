@@ -27,7 +27,7 @@ class Settings::TaskRatesController < ApplicationController
     @task_rates = TaskRate.actives
 
     respond_to do |format|
-      format.json { render :json => @task_rates }
+      format.json { render json: @task_rates }
     end
   end
 
@@ -37,7 +37,7 @@ class Settings::TaskRatesController < ApplicationController
     @task_rates = TaskRate.all
 
     respond_to do |format|
-      format.json { render :json => @task_rates }
+      format.json { render json: @task_rates }
     end
   end
 
@@ -49,16 +49,16 @@ class Settings::TaskRatesController < ApplicationController
     @task_rate.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @task_rate.save
-        format.json { render :json => @task_rate }
+        format.json { render json: @task_rate }
       else
-        format.json { render :json => @task_rate.errors, :status => :unprocessable_entity }
+        format.json { render json: @task_rate.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @task_rate }
+      format.json { render json: @task_rate }
     end
   end
 
@@ -66,9 +66,9 @@ class Settings::TaskRatesController < ApplicationController
     @task_rate.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @task_rate.update_attributes(params[:task_rate])
-        format.json { render :json => @task_rate }
+        format.json { render json: @task_rate }
       else
-        format.json { render :json => @task_rate.errors, :status => :unprocessable_entity }
+        format.json { render json: @task_rate.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -76,9 +76,9 @@ class Settings::TaskRatesController < ApplicationController
   def destroy
     respond_to do |format|
       if @task_rate.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @task_rate.errors, :status => :unprocessable_entity}
+        format.json { render json: @task_rate.errors, status: :unprocessable_entity}
       end
     end
   end

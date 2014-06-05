@@ -65,11 +65,11 @@ class Subscription < ActiveRecord::Base
 
   acts_as_tree
 
-  has_and_belongs_to_many :affairs, :uniq => true
-  has_many  :invoices, :through => :affairs, :uniq => true
-  has_many  :receipts, :through => :affairs, :uniq => true
-  has_many  :people,   :through => :invoices, :source => :owner, :uniq => true
-  has_many  :values,   :class_name => 'SubscriptionValue', :order => 'position ASC'
+  has_and_belongs_to_many :affairs, uniq: true
+  has_many  :invoices, through: :affairs, uniq: true
+  has_many  :receipts, through: :affairs, uniq: true
+  has_many  :people,   through: :invoices, source: :owner, uniq: true
+  has_many  :values,   class_name: 'SubscriptionValue', order: 'position ASC'
   belongs_to :invoice_template
 
   has_attached_file :pdf
@@ -81,14 +81,14 @@ class Subscription < ActiveRecord::Base
   validates_presence_of :title
   validates_uniqueness_of :title
   validates_with IntervalValidator
-  validates_with DateValidator, :attribute => :interval_starts_on
-  validates_with DateValidator, :attribute => :interval_ends_on
+  validates_with DateValidator, attribute: :interval_starts_on
+  validates_with DateValidator, attribute: :interval_ends_on
 
   # Validate fields of type 'string' length
-  validates_length_of :title, :maximum => 255
+  validates_length_of :title, maximum: 255
 
   # Validate fields of type 'text' length
-  validates_length_of :description, :maximum => 65536
+  validates_length_of :description, maximum: 65536
 
   ########################
   ### INSTANCE METHODS ###
@@ -207,13 +207,13 @@ class Subscription < ActiveRecord::Base
     h = super(options)
     h[:parent_title] = parent.title
     h[:values] = values.map do |v|
-      { :id => v.id,
-        :value => v.value.to_f,
-        :private_tag_id => v.private_tag.try(:id),
-        :private_tag_name => v.private_tag.try(:name),
-        :invoice_template_id => v.invoice_template.try(:id),
-        :invoice_template_title => v.invoice_template.try(:title),
-        :position => v.position }
+      { id: v.id,
+        value: v.value.to_f,
+        private_tag_id: v.private_tag.try(:id),
+        private_tag_name: v.private_tag.try(:name),
+        invoice_template_id: v.invoice_template.try(:id),
+        invoice_template_title: v.invoice_template.try(:title),
+        position: v.position }
     end
     h[:invoices_count] = invoices.count
     h[:invoices_value] = invoices_value.to_f
@@ -304,14 +304,14 @@ class Subscription < ActiveRecord::Base
   end
 
   def add_catchall_value_if_not_existing
-    catchall = values.where(:private_tag_id => nil)
+    catchall = values.where(private_tag_id: nil)
     if catchall.count == 0
 
       pos = values.size > 0 ? values.last.position + 1 : 0
 
-      values.create!( :invoice_template => InvoiceTemplate.first,
-                      :value => 0,
-                      :position => pos)
+      values.create!( invoice_template: InvoiceTemplate.first,
+                      value: 0,
+                      position: pos)
 
     end
   end
@@ -319,10 +319,10 @@ class Subscription < ActiveRecord::Base
   def anything_from_values_for(person)
     # find the first matching person's private_tags and
     # return its value
-    v = values.where(:private_tag_id => person.private_tags.map(&:id)).first
+    v = values.where(private_tag_id: person.private_tags.map(&:id)).first
 
     # or return catchall value
-    v ||= values.where(:private_tag_id => nil).first
+    v ||= values.where(private_tag_id: nil).first
     v
   end
 

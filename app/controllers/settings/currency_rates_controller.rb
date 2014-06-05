@@ -27,7 +27,7 @@ class Settings::CurrencyRatesController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        render :json => @currency_rates
+        render json: @currency_rates
       end
     end
   end
@@ -41,17 +41,17 @@ class Settings::CurrencyRatesController < ApplicationController
       if @currency_rate.save
         Money.default_bank.update_rates
         format.json do
-          render :json => @currency_rate
+          render json: @currency_rate
         end
       else
-        format.json { render :json => @currency_rate.errors, :status => :unprocessable_entity }
+        format.json { render json: @currency_rate.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @currency_rate }
+      format.json { render json: @currency_rate }
     end
   end
 
@@ -60,10 +60,10 @@ class Settings::CurrencyRatesController < ApplicationController
       if @currency_rate.update_attributes(params[:currency_rate])
         Money.default_bank.update_rates
         format.json do
-          render :json => @currency_rate
+          render json: @currency_rate
         end
       else
-        format.json { render :json => @currency_rate.errors, :status => :unprocessable_entity }
+        format.json { render json: @currency_rate.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -72,9 +72,9 @@ class Settings::CurrencyRatesController < ApplicationController
     respond_to do |format|
       if @currency_rate.destroy
         Money.default_bank.update_rates
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @currency_rate.errors, :status => :unprocessable_entity }
+        format.json { render json: @currency_rate.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -84,7 +84,7 @@ class Settings::CurrencyRatesController < ApplicationController
     target_value = m.exchange_to(params[:target_currency])
 
     respond_to do |format|
-      format.json { render :json => {:target_value => target_value.to_f} }
+      format.json { render json: {target_value: target_value.to_f} }
     end
   end
 

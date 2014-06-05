@@ -61,11 +61,11 @@ class Receipt < ActiveRecord::Base
 
   belongs_to :invoice
 
-  has_one :affair, :through => :invoice
-  has_one :owner, :through => :affair
-  has_one :buyer, :through => :affair
-  has_one :receiver, :through => :affair
-  has_many :subscriptions, :through => :affair, :uniq => true
+  has_one :affair, through: :invoice
+  has_one :owner, through: :affair
+  has_one :buyer, through: :affair
+  has_one :receiver, through: :affair
+  has_many :subscriptions, through: :affair, uniq: true
 
   # money
   money :value
@@ -75,21 +75,21 @@ class Receipt < ActiveRecord::Base
   ###################
 
   validates_presence_of :value_date, :invoice_id
-  validates_with DateValidator, :attribute => :value_date
-  validates :value, :presence => true,
-                    :numericality => { :greater_than => 0,
-                                       :less_than_or_equal => 99999999.99 } # BVR limit
+  validates_with DateValidator, attribute: :value_date
+  validates :value, presence: true,
+                    numericality: { greater_than: 0,
+                                       less_than_or_equal: 99999999.99 } # BVR limit
 
 
   # Validate fields of type 'string' length
-  validates_length_of :means_of_payment, :maximum => 255
+  validates_length_of :means_of_payment, maximum: 255
 
   #####################
   ### CLASS METHODS ###
   #####################
 
   def self.orphans
-    where(:invoice_id => nil)
+    where(invoice_id: nil)
   end
 
   # Complicated method to extract overpaid value of the last receipts, if existing

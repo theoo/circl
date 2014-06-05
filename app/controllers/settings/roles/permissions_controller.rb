@@ -21,14 +21,14 @@ class Settings::Roles::PermissionsController < ApplicationController
   layout false
 
   load_resource :role
-  load_and_authorize_resource :through => :role
+  load_and_authorize_resource through: :role
 
   monitor_changes :@permission
 
   def index
     respond_to do |format|
       format.json do
-        render :json => @permissions
+        render json: @permissions
       end
     end
   end
@@ -41,17 +41,17 @@ class Settings::Roles::PermissionsController < ApplicationController
     respond_to do |format|
       if @permission.save
         format.json do
-          render :json => @permission
+          render json: @permission
         end
       else
-        format.json { render :json => @permission.errors, :status => :unprocessable_entity }
+        format.json { render json: @permission.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @permission }
+      format.json { render json: @permission }
     end
   end
 
@@ -59,10 +59,10 @@ class Settings::Roles::PermissionsController < ApplicationController
     respond_to do |format|
       if @permission.update_attributes(params[:permission])
         format.json do
-          render :json => @permission
+          render json: @permission
         end
       else
-        format.json { render :json => @permission.errors, :status => :unprocessable_entity }
+        format.json { render json: @permission.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -70,9 +70,9 @@ class Settings::Roles::PermissionsController < ApplicationController
   def destroy
     respond_to do |format|
       if @permission.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @permission.errors, :status => :unprocessable_entity }
+        format.json { render json: @permission.errors, status: :unprocessable_entity }
       end
     end
   end

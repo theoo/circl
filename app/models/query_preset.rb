@@ -57,13 +57,13 @@ class QueryPreset < ActiveRecord::Base
   validates_uniqueness_of :name
 
   # Validate fields of type 'string' length
-  validates_length_of :name, :maximum => 255
+  validates_length_of :name, maximum: 255
 
 
   private
 
   def set_default_query
-    self.query ||= { :selected_attributes => [], :attributes_order => [] }
+    self.query ||= { selected_attributes: [], attributes_order: [] }
   end
 
 end

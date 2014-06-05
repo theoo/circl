@@ -24,12 +24,12 @@ class Settings::PermissionsController < ApplicationController
     authorize! :index, Permission
 
     @permissions = Permission.get_available_permissions.map do |p|
-      { :action => p.action, :subject => p.subject }
+      { action: p.action, subject: p.subject }
     end
 
     respond_to do |format|
       format.json do
-        render :json => @permissions
+        render json: @permissions
       end
     end
   end

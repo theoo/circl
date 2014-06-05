@@ -58,14 +58,14 @@ class SearchAttribute < ActiveRecord::Base
   ###################
 
   validates_presence_of :model, :name, :indexing
-  validates_uniqueness_of :name, :scope => :model
+  validates_uniqueness_of :name, scope: :model
 
   # Validate fields of type 'string' length
-  validates_length_of :model, :maximum => 255
-  validates_length_of :name, :maximum => 255
-  validates_length_of :indexing, :maximum => 65535
-  validates_length_of :mapping, :maximum => 65535
-  validates_length_of :group, :maximum => 255
+  validates_length_of :model, maximum: 255
+  validates_length_of :name, maximum: 255
+  validates_length_of :indexing, maximum: 65535
+  validates_length_of :mapping, maximum: 65535
+  validates_length_of :group, maximum: 255
 
   scope :searchable, where("#{table_name}.group <> ''")
   scope :orderable, searchable.where("#{table_name}.mapping NOT LIKE '%object%'")

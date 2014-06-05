@@ -33,7 +33,7 @@ class People::PrivateTagsController < ApplicationController
     @people_private_tags = @person.people_private_tags
 
     respond_to do |format|
-      format.json { render :json => @people_private_tags }
+      format.json { render json: @people_private_tags }
     end
   end
 
@@ -41,10 +41,10 @@ class People::PrivateTagsController < ApplicationController
     authorize! [:create, :destroy], @person => self.class.model
 
     respond_to do |format|
-      if @person.update_attributes(:private_tag_ids => params[:private_tag_ids])
-        format.json  { render :json => @person.people_private_tags }
+      if @person.update_attributes(private_tag_ids: params[:private_tag_ids])
+        format.json  { render json: @person.people_private_tags }
       else
-        format.json { render :json => @person.errors, :status => :unprocessable_entity}
+        format.json { render json: @person.errors, status: :unprocessable_entity}
       end
     end
   end

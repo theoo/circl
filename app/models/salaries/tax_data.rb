@@ -58,9 +58,9 @@ class Salaries::TaxData < ActiveRecord::Base
   #################
 
   belongs_to :salary,
-             :class_name => 'Salaries::Salary'
+             class_name: 'Salaries::Salary'
   belongs_to :tax,
-             :class_name => 'Salaries::Tax'
+             class_name: 'Salaries::Tax'
 
   # money
   money :employer_value
@@ -70,8 +70,8 @@ class Salaries::TaxData < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
-  validates_presence_of :employee_percent, :if => :employee_use_percent
-  validates_presence_of :employer_percent, :if => :employer_use_percent
+  validates_presence_of :employee_percent, if: :employee_use_percent
+  validates_presence_of :employer_percent, if: :employer_use_percent
 
   ########################
   ### INSTANCE METHODS ###
@@ -82,11 +82,11 @@ class Salaries::TaxData < ActiveRecord::Base
   end
 
   def reference
-    salary.reference.tax_data.where(:tax_id => tax.id).first
+    salary.reference.tax_data.where(tax_id: tax.id).first
   end
 
   def children
-    salary.children.map{ |s| s.tax_data.where(:tax_id => tax.id).first }
+    salary.children.map{ |s| s.tax_data.where(tax_id: tax.id).first }
   end
 
   def is_reference?
@@ -94,7 +94,7 @@ class Salaries::TaxData < ActiveRecord::Base
   end
 
   def taxed_items
-    tax.items.where(:salary_id => salary.id)
+    tax.items.where(salary_id: salary.id)
   end
 
   def reference_value

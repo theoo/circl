@@ -30,7 +30,7 @@ class Salaries::TaxesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => @taxes }
+      format.json { render json: @taxes }
     end
   end
 
@@ -39,7 +39,7 @@ class Salaries::TaxesController < ApplicationController
       "Salaries::Taxes::#{File.basename(file, '.*').camelize}"
     end
     respond_to do |format|
-      format.json { render :json => { :models => models } }
+      format.json { render json: { models: models } }
     end
   end
 
@@ -50,25 +50,25 @@ class Salaries::TaxesController < ApplicationController
   def create
     respond_to do |format|
       if @tax.save
-        format.json { render :json => @tax }
+        format.json { render json: @tax }
       else
-        format.json { render :json => @tax.errors, :status => :unprocessable_entity }
+        format.json { render json: @tax.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @tax }
+      format.json { render json: @tax }
     end
   end
 
   def update
     respond_to do |format|
       if @tax.update_attributes(params[:tax])
-        format.json { render :json => @tax }
+        format.json { render json: @tax }
       else
-        format.json { render :json => @tax.errors, :status => :unprocessable_entity }
+        format.json { render json: @tax.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -76,9 +76,9 @@ class Salaries::TaxesController < ApplicationController
   def destroy
     respond_to do |format|
       if @tax.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @tax.errors, :status => :unprocessable_entity}
+        format.json { render json: @tax.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -97,7 +97,7 @@ class Salaries::TaxesController < ApplicationController
             redirect_to salaries_path
           end
           format.json do
-            render :json => @tax
+            render json: @tax
           end
         else
 
@@ -107,7 +107,7 @@ class Salaries::TaxesController < ApplicationController
             redirect_to salaries_path
           end
           format.json do
-            render :json => {:errors => {:base => [I18n.t("admin.errors.wrong_file_format")]}}, :status => :unprocessable_entity
+            render json: {errors: {base: [I18n.t("admin.errors.wrong_file_format")]}}, status: :unprocessable_entity
           end
         end
       else
@@ -118,7 +118,7 @@ class Salaries::TaxesController < ApplicationController
           redirect_to salaries_path
         end
         format.json do
-          render :json => {:errors => {:base => [I18n.t("admin.errors.no_file_submitted")]}}, :status => :unprocessable_entity
+          render json: {errors: {base: [I18n.t("admin.errors.no_file_submitted")]}}, status: :unprocessable_entity
         end
       end
 
@@ -127,7 +127,7 @@ class Salaries::TaxesController < ApplicationController
 
   def count
     respond_to do |format|
-      format.json { render :json => {:count => Salaries::Tax.count} }
+      format.json { render json: {count: Salaries::Tax.count} }
     end
   end
 

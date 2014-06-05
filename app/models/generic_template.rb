@@ -58,17 +58,17 @@ class GenericTemplate < ActiveRecord::Base
 
   belongs_to :language
   has_many :salaries,
-           :class_name => 'Salaries::Salary'
+           class_name: 'Salaries::Salary'
 
   has_attached_file :odt,
-                    :default_url => '/assets/generic_template.odt',
-                    :use_timestamp => true
+                    default_url: '/assets/generic_template.odt',
+                    use_timestamp: true
 
   has_attached_file :snapshot,
-                    :default_url => '/images/missing_thumbnail.png',
-                    :default_style => :thumb,
-                    :use_timestamp => true,
-                    :styles => {:medium => ["420x594>", :png], :thumb => ["105x147>", :png]}
+                    default_url: '/images/missing_thumbnail.png',
+                    default_style: :thumb,
+                    use_timestamp: true,
+                    styles: {medium: ["420x594>", :png], thumb: ["105x147>", :png]}
 
   ###################
   ### VALIDATIONS ###
@@ -78,10 +78,10 @@ class GenericTemplate < ActiveRecord::Base
   validates_uniqueness_of :title
 
   # Validate fields of type 'string' length
-  validates_length_of :title, :maximum => 255
+  validates_length_of :title, maximum: 255
 
-  validates_attachment :odt, :content_type => { :content_type => "application/vnd.oasis.opendocument.text" },
-                              :size => { :in => 0..1.megabytes }
+  validates_attachment :odt, content_type: { content_type: "application/vnd.oasis.opendocument.text" },
+                              size: { in: 0..1.megabytes }
 
 
   ########################

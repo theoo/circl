@@ -22,7 +22,7 @@ class People::Affairs::ExtrasController < ApplicationController
 
   load_resource :person
   load_resource :affair
-  load_and_authorize_resource :through => :affair
+  load_and_authorize_resource through: :affair
 
   monitor_changes :@extra
 
@@ -36,7 +36,7 @@ class People::Affairs::ExtrasController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => @extras }
+      format.json { render json: @extras }
 
       format.csv do
         fields = []
@@ -48,13 +48,13 @@ class People::Affairs::ExtrasController < ApplicationController
         fields << 'value'
         fields << 'created_at'
         fields << 'updated_at'
-        render :inline => csv_ify(@extras, fields)
+        render inline: csv_ify(@extras, fields)
       end
 
       if params[:template_id]
         format.html do
           generator = AttachmentGenerator.new(@affair)
-          render :inline => generator.html, :layout => 'preview'
+          render inline: generator.html, layout: 'preview'
         end
 
         format.pdf do
@@ -62,8 +62,8 @@ class People::Affairs::ExtrasController < ApplicationController
           generator = AttachmentGenerator.new(@affair)
           generator.pdf { |o,pdf| @pdf = pdf.read }
           send_data @pdf,
-                    :filename => "affair_extras_#{params[:affair_id]}.pdf",
-                    :type => 'application/pdf'
+                    filename: "affair_extras_#{params[:affair_id]}.pdf",
+                    type: 'application/pdf'
         end
 
         format.odt do
@@ -71,8 +71,8 @@ class People::Affairs::ExtrasController < ApplicationController
           generator = AttachmentGenerator.new(@affair)
           generator.odt { |o,odt| @odt = odt.read }
           send_data @odt,
-                    :filename => "affair_extras_#{params[:affair_id]}.odt",
-                    :type => 'application/vnd.oasis.opendocument.text'
+                    filename: "affair_extras_#{params[:affair_id]}.odt",
+                    type: 'application/vnd.oasis.opendocument.text'
         end
       end
     end
@@ -87,16 +87,16 @@ class People::Affairs::ExtrasController < ApplicationController
     @extra.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @extra.save
-        format.json { render :json => @extra }
+        format.json { render json: @extra }
       else
-        format.json { render :json => @extra.errors, :status => :unprocessable_entity }
+        format.json { render json: @extra.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @extra }
+      format.json { render json: @extra }
     end
   end
 
@@ -105,9 +105,9 @@ class People::Affairs::ExtrasController < ApplicationController
     @extra.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @extra.update_attributes(params[:extra])
-        format.json { render :json => @extra }
+        format.json { render json: @extra }
       else
-        format.json { render :json => @extra.errors, :status => :unprocessable_entity }
+        format.json { render json: @extra.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -115,16 +115,16 @@ class People::Affairs::ExtrasController < ApplicationController
   def destroy
     respond_to do |format|
       if @extra.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @extra.errors, :status => :unprocessable_entity }
+        format.json { render json: @extra.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def count
     respond_to do |format|
-      format.json { render :json => { :count => @affair.extras.count } }
+      format.json { render json: { count: @affair.extras.count } }
     end
   end
 
@@ -149,9 +149,9 @@ class People::Affairs::ExtrasController < ApplicationController
 
     respond_to do |format|
       if success
-        format.json { render :json => @affair.extras.all }
+        format.json { render json: @affair.extras.all }
       else
-        format.json { render :json => @extras.errors, :status => :unprocessable_entity }
+        format.json { render json: @extras.errors, status: :unprocessable_entity }
       end
     end
   end

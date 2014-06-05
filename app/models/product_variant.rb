@@ -46,11 +46,11 @@ class ProductVariant < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
-  validates :program_group, :presence => true,
-                            :length => { :maximum => 255 }
-  validates_uniqueness_of :program_group, :scope => :product_id
-  validates :selling_price, :presence => true
-  validates :selling_price_in_cents, :presence => true
+  validates :program_group, presence: true,
+                            length: { maximum: 255 }
+  validates_uniqueness_of :program_group, scope: :product_id
+  validates :selling_price, presence: true
+  validates :selling_price_in_cents, presence: true
 
   ########################
   #### CLASS METHODS #####

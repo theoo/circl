@@ -56,7 +56,7 @@ class InvoicesDatatable
 
   def fetch_invoices
     invoices = Invoice.select('invoices.*')
-                      .joins(:affair => :owner)
+                      .joins(affair: :owner)
                       .group('invoices.id, affairs.id')
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes

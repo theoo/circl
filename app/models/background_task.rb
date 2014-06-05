@@ -51,15 +51,15 @@ class BackgroundTask < ActiveRecord::Base
   ### VALIDATIONS #
   #################
 
-  validate :person, :presence => true,
-                    :numericality => true
+  validate :person, presence: true,
+                    numericality: true
 
-  validate :title,  :presence => true,
-                    :length => {:maximum => 255}
+  validate :title,  presence: true,
+                    length: {maximum: 255}
 
-  validate :options, :presence => true
+  validate :options, presence: true
 
-  validate :status, :length => {:maximum => 255}
+  validate :status, length: {maximum: 255}
 
   #####################
   ### CLASS METHODS ###
@@ -69,13 +69,13 @@ class BackgroundTask < ActiveRecord::Base
 
   class << self
     def process!(options = nil)
-      new(:options => options).process!
+      new(options: options).process!
     end
 
     def schedule(options = nil)
       raise RuntimeError, 'call this method from the derived classes' if self == BackgroundTask
 
-      existing_task = where(:options => YAML.dump(options)).first
+      existing_task = where(options: YAML.dump(options)).first
       if existing_task
         logger.debug("task '#{existing_task.inspect}' is already scheduled")
       else
@@ -84,7 +84,7 @@ class BackgroundTask < ActiveRecord::Base
         else
           person = Person.find(ApplicationSetting.value(:me)) # Admin
         end
-        create!(:options => options, :person => options[:person], :title => generate_title(options))
+        create!(options: options, person: options[:person], title: generate_title(options))
       end
 
       run_if_needed

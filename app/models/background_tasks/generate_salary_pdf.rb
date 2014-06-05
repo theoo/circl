@@ -33,8 +33,8 @@ class BackgroundTasks::GenerateSalaryPdf < BackgroundTask
 
   def self.generate_title(options)
     I18n.t("background_task.tasks.generate_salary_pdf",
-      :salary_id => options[:salary_id],
-      :salary_title => Salary.find(options[:salary_id]).title)
+      salary_id: options[:salary_id],
+      salary_title: Salary.find(options[:salary_id]).title)
   end
 
   def process!
@@ -42,7 +42,7 @@ class BackgroundTasks::GenerateSalaryPdf < BackgroundTask
 
     generator = AttachmentGenerator.new(@salary, [:person])
     generator.pdf do |o, pdf|
-      o.update_attributes :pdf => pdf
+      o.update_attributes pdf: pdf
 
       # this won't touch updated_at column and thereby set PDF as uptodate
       o.update_column(:pdf_updated_at, Time.now)

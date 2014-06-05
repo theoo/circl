@@ -18,28 +18,28 @@
 
 class PeopleController < ApplicationController
 
-  load_and_authorize_resource :except => :welcome
+  load_and_authorize_resource except: :welcome
 
-  monitor_changes :@person, :only => [:create, :update, :update_password, :destroy]
+  monitor_changes :@person, only: [:create, :update, :update_password, :destroy]
 
   layout false
 
   def index
     respond_to do |format|
       format.html { redirect_to directory_path }
-      format.json { render :json => {}, :status => :unprocessable_entity }
+      format.json { render json: {}, status: :unprocessable_entity }
     end
   end
 
   def show
     respond_to do |format|
-      format.html { render :layout => 'application' }
+      format.html { render layout: 'application' }
       format.json do
         options = {}
         options[:restricted_attributes] = can?(:restricted_attributes, @person)
         options[:authenticate_using_token] = can?(:authenticate_using_token, @person)
 
-        render :json => @person.as_json(options)
+        render json: @person.as_json(options)
       end
     end
   end
@@ -59,7 +59,7 @@ class PeopleController < ApplicationController
     popup += @person.full_address.split("\n").join("<br />")
 
     if @person.latitude and @person.longitude
-      @map[:markers] = [{:latlng => [@person.latitude, @person.longitude], :popup => popup}]
+      @map[:markers] = [{latlng: [@person.latitude, @person.longitude], popup: popup}]
     else
       @placeholder = Person.find ApplicationSetting.value("me")
       if @placeholder.latitude
@@ -67,19 +67,19 @@ class PeopleController < ApplicationController
       else
         latlng = [46.1995684109777, 6.13489329814911]
       end
-      @map[:markers] = [{:latlng => latlng, :popup => popup}]
+      @map[:markers] = [{latlng: latlng, popup: popup}]
     end
     @map[:config] = Rails.configuration.settings["maps"]
 
     respond_to do |format|
-      format.html { render :layout => 'minimal' }
+      format.html { render layout: 'minimal' }
     end
   end
 
   def new
     respond_to do |format|
-      format.html { render :layout => 'application', :action => 'show' }
-      format.json { render :json => @person }
+      format.html { render layout: 'application', action: 'show' }
+      format.json { render json: @person }
     end
   end
 
@@ -92,9 +92,9 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
-        format.json { render :json => @person }
+        format.json { render json: @person }
       else
-        format.json { render :json => @person.errors, :status => :unprocessable_entity }
+        format.json { render json: @person.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -110,10 +110,10 @@ class PeopleController < ApplicationController
           options[:restricted_attributes] = can?(:restricted_attributes, @person)
           options[:authenticate_using_token] = can?(:authenticate_using_token, @person)
 
-          render :json => @person.as_json(options)
+          render json: @person.as_json(options)
         end
       else
-        format.json { render :json => @person.errors, :status => :unprocessable_entity}
+        format.json { render json: @person.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -125,17 +125,17 @@ class PeopleController < ApplicationController
           flash[:notice] = I18n.t('common.notices.successfully_destroyed')
           redirect_to directory_path
         end
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
         format.html do
           # TODO usually if we reach this code path it's because ldap_remove fails
           # in the before_destroy callback. Refactor so Person#errors is updated with the reasons.
           flash[:alert] = I18n.t('common.errors.failed_to_destroy')
-          render :show, :layout => 'application'
+          render :show, layout: 'application'
         end
         format.json do
           flash[:alert] = I18n.t('common.errors.failed_to_destroy') + " " + I18n.t("common.errors.please_verify_rights_and_record")
-          render :json => @person.errors, :status => :unprocessable_entity
+          render json: @person.errors, status: :unprocessable_entity
         end
       end
     end
@@ -152,7 +152,7 @@ class PeopleController < ApplicationController
 
   def change_password
     respond_to do |format|
-      format.html { render :layout => 'application' }
+      format.html { render layout: 'application' }
     end
   end
 
@@ -167,7 +167,7 @@ class PeopleController < ApplicationController
       if @person.errors.empty? && @person.update_attributes(params[:person])
         format.html { redirect_to person_path(@person) }
       else
-        format.html { render 'change_password', :layout => 'application' }
+        format.html { render 'change_password', layout: 'application' }
       end
     end
   end
@@ -195,7 +195,7 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       format.html do
-        render :show, :layout => 'application'
+        render :show, layout: 'application'
       end
     end
   end
@@ -212,7 +212,7 @@ class PeopleController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => results.map{ |p| { :label => p.name, :id => p.id }}}
+      format.json { render json: results.map{ |p| { label: p.name, id: p.id }}}
     end
   end
 
@@ -225,7 +225,7 @@ class PeopleController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:label => t.title}}}
+      format.json { render json: result.map{|t| {label: t.title}}}
     end
   end
 
@@ -237,7 +237,7 @@ class PeopleController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:label => t}}}
+      format.json { render json: result.map{|t| {label: t}}}
     end
   end
 

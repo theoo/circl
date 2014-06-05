@@ -43,7 +43,7 @@ class People::Affairs::SubscriptionsController < ApplicationController
           h[:value_currency] = s.value_for(@person).currency.try(:iso_code)
           subs << h
         end
-        render :json => subs
+        render json: subs
       end
     end
   end
@@ -57,9 +57,9 @@ class People::Affairs::SubscriptionsController < ApplicationController
         subscription = Subscription.find params[:subscription_id]
         @affair.subscriptions << subscription
 
-        format.json { render :json => subscription }
+        format.json { render json: subscription }
       else
-        format.json { render :json => { :subscription_id => [I18n.t('activerecord.errors.messages.blank')] }, :status => :unprocessable_entity }
+        format.json { render json: { subscription_id: [I18n.t('activerecord.errors.messages.blank')] }, status: :unprocessable_entity }
       end
     end
 
@@ -69,7 +69,7 @@ class People::Affairs::SubscriptionsController < ApplicationController
     authorize! :destroy, @affair => self.class.model
     @affair.subscription_ids -= [params[:subscription_id].to_i]
     respond_to do |format|
-      format.json { render :json => {} }
+      format.json { render json: {} }
     end
   end
 

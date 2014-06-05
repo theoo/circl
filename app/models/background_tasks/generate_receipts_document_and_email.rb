@@ -32,7 +32,7 @@
 class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
   def self.generate_title(options)
     I18n.t("background_task.tasks.generate_receipts_document_and_email",
-      :people_count => options[:people_ids].size)
+      people_count: options[:people_ids].size)
   end
 
   # options => :people_ids, :person, :from, :to, :generic_template_id, :unit_value, :global_value, :unit_overpaid, :global_overpaid
@@ -112,8 +112,8 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
 
     # merge files in one file
     if options[:format] == 'pdf'
-      document = Tempfile.new(["admin_receipts_file", '.pdf'], :encoding => 'ascii-8bit')
-      script = Tempfile.new(['script', '.sh'], :encoding => 'ascii-8bit')
+      document = Tempfile.new(["admin_receipts_file", '.pdf'], encoding: 'ascii-8bit')
+      script = Tempfile.new(['script', '.sh'], encoding: 'ascii-8bit')
       script.write("#!/bin/bash\n")
       script.write("pdftk #{files.map(&:path).join(' ')} cat output #{document.path}")
       script.flush
@@ -126,8 +126,8 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
       # Remove previously created fake tempfile
       files.each {|f| File.delete(f) }
     else
-      document = Tempfile.new(["admin_receipts_file", '.csv'], :encoding => 'ascii-8bit')
-      content = CSV.generate(:encoding => 'UTF-8') do |csv|
+      document = Tempfile.new(["admin_receipts_file", '.csv'], encoding: 'ascii-8bit')
+      content = CSV.generate(encoding: 'UTF-8') do |csv|
         csv << ["person_id",
           "person_name",
           "person_address",
@@ -142,7 +142,7 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
     end
 
     # Store document in cache_documents table
-    cd = CachedDocument.create!(:document => document)
+    cd = CachedDocument.create!(document: document)
     document.unlink
 
     # send an email to the file

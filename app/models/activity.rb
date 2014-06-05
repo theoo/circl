@@ -61,7 +61,7 @@ class Activity < ActiveRecord::Base
   #################
 
   belongs_to  :person
-  belongs_to  :resource, :polymorphic => true
+  belongs_to  :resource, polymorphic: true
 
 
   ###################
@@ -69,10 +69,10 @@ class Activity < ActiveRecord::Base
   ###################
 
   validates_presence_of :action, :data, :resource_type, :resource_id
-  validates_with PointsToModelValidator, :attr => :resource_type
+  validates_with PointsToModelValidator, attr: :resource_type
 
   # Validate fields of type 'string' length
-  validates_length_of :action, :maximum => 255
+  validates_length_of :action, maximum: 255
 
 
   ########################
@@ -80,7 +80,7 @@ class Activity < ActiveRecord::Base
   ########################
 
   def clear_person_id
-    update_attributes(:person_id => nil)
+    update_attributes(person_id: nil)
   end
 
   def formatted_data

@@ -20,8 +20,8 @@ class SettingsController < ApplicationController
 
   layout 'application'
 
-  skip_before_filter :authenticate_person!, :only => 'requires_browser_update'
-  skip_before_filter :route_browser, :only => 'requires_browser_update'
+  skip_before_filter :authenticate_person!, only: 'requires_browser_update'
+  skip_before_filter :route_browser, only: 'requires_browser_update'
 
   def index
     authorize! :index, Setting
@@ -32,7 +32,7 @@ class SettingsController < ApplicationController
 
   def requires_browser_update
     respond_to do |format|
-      format.html { render :layout => false }
+      format.html { render layout: false }
     end
   end
 

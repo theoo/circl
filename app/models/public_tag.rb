@@ -53,9 +53,9 @@ class PublicTag < ActiveRecord::Base
   acts_as_tree
 
   has_and_belongs_to_many :people,
-                          :uniq => true,
-                          :after_add => :update_elasticsearch_index,
-                          :after_remove => :update_elasticsearch_index
+                          uniq: true,
+                          after_add: :update_elasticsearch_index,
+                          after_remove: :update_elasticsearch_index
 
 
   ###################
@@ -63,11 +63,11 @@ class PublicTag < ActiveRecord::Base
   ###################
 
   validates_presence_of :name
-  validates_uniqueness_of :name, :scope => :parent_id
+  validates_uniqueness_of :name, scope: :parent_id
   validate :cannot_be_its_own_parent
 
   # Validate fields of type 'string' length
-  validates_length_of :name, :maximum => 255
+  validates_length_of :name, maximum: 255
 
 
   ########################

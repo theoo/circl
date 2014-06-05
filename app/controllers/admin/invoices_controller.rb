@@ -20,12 +20,12 @@ class Admin::InvoicesController < ApplicationController
 
   layout false
 
-  load_and_authorize_resource :except => :index
+  load_and_authorize_resource except: :index
 
   def index
     authorize! :index, Invoice
     respond_to do |format|
-      format.json { render :json => InvoicesDatatable.new(view_context) }
+      format.json { render json: InvoicesDatatable.new(view_context) }
     end
   end
 
@@ -45,11 +45,11 @@ class Admin::InvoicesController < ApplicationController
           invoices = Invoice.where('created_at >= ? AND created_at <= ?', from, to).order(:created_at)
           exporter = Exporter::Factory.new( :invoices,
                                             params[:type].to_sym,
-                                            { :account => params["account"], :counterpart_account => params['counterpart_account'] })
+                                            { account: params["account"], counterpart_account: params['counterpart_account'] })
           send_data( exporter.export(invoices),
-                     :type => 'application/octet-stream',
-                     :filename=> "invoices_#{from}_#{to}_#{params[:type]}.csv",
-                     :disposition => 'attachment' )
+                     type: 'application/octet-stream',
+                     filename: "invoices_#{from}_#{to}_#{params[:type]}.csv",
+                     disposition: 'attachment' )
         else
           flash[:alert] = I18n.t('common.errors.date_must_match_format')
           redirect_to admin_path
@@ -60,7 +60,7 @@ class Admin::InvoicesController < ApplicationController
 
   def show
     respond_to do |format|
-      format.json { render :json => @invoice }
+      format.json { render json: @invoice }
     end
   end
 
@@ -73,7 +73,7 @@ class Admin::InvoicesController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:id => t.id, :label => t.title}}}
+      format.json { render json: result.map{|t| {id: t.id, label: t.title}}}
     end
   end
 
@@ -85,7 +85,7 @@ class Admin::InvoicesController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => statuses }
+      format.json { render json: statuses }
     end
   end
 

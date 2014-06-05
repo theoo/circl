@@ -63,15 +63,15 @@ class Salaries::Item < ActiveRecord::Base
   #################
 
   belongs_to :salary,
-             :class_name => 'Salaries::Salary'
+             class_name: 'Salaries::Salary'
   monitored_habtm :taxes,
-                  :class_name => 'Salaries::Tax',
-                  :join_table => 'salaries_items_taxes'
+                  class_name: 'Salaries::Tax',
+                  join_table: 'salaries_items_taxes'
 
   # Template
   belongs_to :reference,
-             :class_name => 'Salaries::Item',
-             :foreign_key => :parent_id
+             class_name: 'Salaries::Item',
+             foreign_key: :parent_id
 
   # money
   money :value
@@ -91,8 +91,8 @@ class Salaries::Item < ActiveRecord::Base
   validates_presence_of :value
 
   # Validate fields of type 'string' length
-  validates_length_of :title, :maximum => 255
-  validates_length_of :category, :maximum => 255
+  validates_length_of :title, maximum: 255
+  validates_length_of :category, maximum: 255
 
 
   ########################
@@ -125,12 +125,12 @@ class Salaries::Item < ActiveRecord::Base
 
   # tree methods, for references
   def children
-    Salaries::Item.where(:parent_id => id)
+    Salaries::Item.where(parent_id: id)
   end
 
   # tree methods, for items
   def siblings
-    Salaries::Item.where(:parent_id => parent_id)
+    Salaries::Item.where(parent_id: parent_id)
                   .where("id != ?", id)
   end
 

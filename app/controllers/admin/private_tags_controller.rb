@@ -26,8 +26,8 @@ class Admin::PrivateTagsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => @private_tags }
-      format.js { render :json => @private_tag, :callback => params[:callback] }
+      format.json { render json: @private_tags }
+      format.js { render json: @private_tag, callback: params[:callback] }
     end
   end
 
@@ -38,25 +38,25 @@ class Admin::PrivateTagsController < ApplicationController
   def create
     respond_to do |format|
       if @private_tag.save
-        format.json { render :json => @private_tag }
+        format.json { render json: @private_tag }
       else
-        format.json { render :json => @private_tag.errors, :status => :unprocessable_entity }
+        format.json { render json: @private_tag.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @private_tag }
+      format.json { render json: @private_tag }
     end
   end
 
   def update
     respond_to do |format|
       if @private_tag.update_attributes(params[:private_tag])
-        format.json { render :json => @private_tag }
+        format.json { render json: @private_tag }
       else
-        format.json { render :json => @private_tag.errors, :status => :unprocessable_entity }
+        format.json { render json: @private_tag.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -64,9 +64,9 @@ class Admin::PrivateTagsController < ApplicationController
   def destroy
     respond_to do |format|
       if @private_tag.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @private_tag.errors, :status => :unprocessable_entity }
+        format.json { render json: @private_tag.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -85,11 +85,11 @@ class Admin::PrivateTagsController < ApplicationController
       else
         name = t.name
       end
-      {:id => t.id, :label => t.name, :desc => name}
+      {id: t.id, label: t.name, desc: name}
     end
 
     respond_to do |format|
-      format.json { render :json => h }
+      format.json { render json: h }
     end
   end
 
@@ -98,10 +98,10 @@ class Admin::PrivateTagsController < ApplicationController
       query = JSON.parse params[:query]
       query.symbolize_keys!
       if query[:search_string].blank?
-        format.json { render :json => { :search_string => [I18n.t('activerecord.errors.messages.blank')] }, :status => :unprocessable_entity }
+        format.json { render json: { search_string: [I18n.t('activerecord.errors.messages.blank')] }, status: :unprocessable_entity }
         format.html {
           flash[:alert] = I18n.t("directory.errors.query_empty")
-          redirect_to admin_path(:anchor => 'tags')
+          redirect_to admin_path(anchor: 'tags')
         }
       else
         new_people_array = ElasticSearch.search(
@@ -112,13 +112,13 @@ class Admin::PrivateTagsController < ApplicationController
 
         current_people_array = @private_tag.people.map(&:id)
 
-        @private_tag.people = Person.where(:id => [current_people_array, new_people_array].flatten.uniq)
+        @private_tag.people = Person.where(id: [current_people_array, new_people_array].flatten.uniq)
 
-        format.json { render :json => {} }
+        format.json { render json: {} }
         format.html do
           # TODO improve report
-          flash[:notice] = I18n.t("tag.notices.members_added", :members_count => new_people_array.count)
-          redirect_to admin_path(:anchor => 'tags')
+          flash[:notice] = I18n.t("tag.notices.members_added", members_count: new_people_array.count)
+          redirect_to admin_path(anchor: 'tags')
         end
       end
     end
@@ -128,7 +128,7 @@ class Admin::PrivateTagsController < ApplicationController
     @private_tag.people = []
     respond_to do |format|
       # how could it fails?
-      format.json { render :json => {} }
+      format.json { render json: {} }
     end
   end
 

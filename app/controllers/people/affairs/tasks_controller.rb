@@ -33,7 +33,7 @@ class People::Affairs::TasksController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => @tasks }
+      format.json { render json: @tasks }
 
       format.csv do
         fields = []
@@ -45,13 +45,13 @@ class People::Affairs::TasksController < ApplicationController
         fields << 'description'
         fields << 'executer.name'
         fields << 'value'
-        render :inline => csv_ify(@tasks, fields)
+        render inline: csv_ify(@tasks, fields)
       end
 
       if params[:template_id]
         format.html do
           generator = AttachmentGenerator.new(@affair)
-          render :inline => generator.html, :layout => 'preview'
+          render inline: generator.html, layout: 'preview'
         end
 
         format.pdf do
@@ -59,8 +59,8 @@ class People::Affairs::TasksController < ApplicationController
           generator = AttachmentGenerator.new(@affair)
           generator.pdf { |o,pdf| @pdf = pdf.read }
           send_data @pdf,
-                    :filename => "affair_tasks_#{params[:affair_id]}.pdf",
-                    :type => 'application/pdf'
+                    filename: "affair_tasks_#{params[:affair_id]}.pdf",
+                    type: 'application/pdf'
         end
 
         format.odt do
@@ -68,8 +68,8 @@ class People::Affairs::TasksController < ApplicationController
           generator = AttachmentGenerator.new(@affair)
           generator.odt { |o,odt| @odt = odt.read }
           send_data @odt,
-                    :filename => "affair_tasks_#{params[:affair_id]}.odt",
-                    :type => 'application/vnd.oasis.opendocument.text'
+                    filename: "affair_tasks_#{params[:affair_id]}.odt",
+                    type: 'application/vnd.oasis.opendocument.text'
         end
       end
     end
@@ -87,9 +87,9 @@ class People::Affairs::TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.json { render :json => @task }
+        format.json { render json: @task }
       else
-        format.json { render :json => @task.errors, :status => :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -97,7 +97,7 @@ class People::Affairs::TasksController < ApplicationController
   def edit
     authorize! :read, ::Task
     respond_to do |format|
-      format.json { render :json => @task }
+      format.json { render json: @task }
     end
   end
 
@@ -109,9 +109,9 @@ class People::Affairs::TasksController < ApplicationController
 
     respond_to do |format|
       if @task.update_attributes(params[:task])
-        format.json { render :json => @task }
+        format.json { render json: @task }
       else
-        format.json { render :json => @task.errors, :status => :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -123,9 +123,9 @@ class People::Affairs::TasksController < ApplicationController
 
     respond_to do |format|
       if @task.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @task.errors, :status => :unprocessable_entity}
+        format.json { render json: @task.errors, status: :unprocessable_entity}
       end
     end
   end

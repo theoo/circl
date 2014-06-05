@@ -35,23 +35,23 @@ class PersonMailer < ActionMailer::Base
   def send_mailchimp_sync_report(person, report)
     I18n.locale = person.main_communication_language.symbol
     @report = report
-    mail( :to => person.email,
-          :subject => I18n.t('person.mail.mailchimp_synchronisation_report'))
+    mail( to: person.email,
+          subject: I18n.t('person.mail.mailchimp_synchronisation_report'))
   end
 
   def send_background_task_error_report(email, messages)
     # No locale is set as there is no user involved, only email address from configuration.yml
     @messages = messages
-    mail( :to => email,
-          :subject => I18n.t('person.mail.background_task_error_report'))
+    mail( to: email,
+          subject: I18n.t('person.mail.background_task_error_report'))
   end
 
   def send_receipts_import_report(person, receipts = [], errors = [])
     I18n.locale = person.main_communication_language.symbol
     @receipts = receipts
     @errors   = errors
-    mail( :to => person.email,
-          :subject => I18n.t('person.mail.receipts_import_report'))
+    mail( to: person.email,
+          subject: I18n.t('person.mail.receipts_import_report'))
   end
 
   def send_people_import_report(person, people)
@@ -59,16 +59,16 @@ class PersonMailer < ActionMailer::Base
     @valid_people = []
     @invalid_people = []
     people.each{|p| (p.errors.empty? ? @valid_people : @invalid_people) << p }
-    mail( :to => person.email,
-          :subject => I18n.t('person.mail.people_import_report'))
+    mail( to: person.email,
+          subject: I18n.t('person.mail.people_import_report'))
   end
 
   def send_subscription_pdf_link(person, subscription_id)
     I18n.locale = person.main_communication_language.symbol
     @subscription = Subscription.find(subscription_id)
-    mail( :to => person.email,
-          :subject => I18n.t('person.mail.pdf_for_subscription',
-          :title => @subscription.title))
+    mail( to: person.email,
+          subject: I18n.t('person.mail.pdf_for_subscription',
+          title: @subscription.title))
   end
 
   def send_members_added_to_subscription(person, subscription_id, new_people_ids, existing_people_ids)
@@ -76,41 +76,41 @@ class PersonMailer < ActionMailer::Base
     @new_people = new_people_ids.map{ |id| Person.find(id) }
     @existing_people = existing_people_ids.map{ |id| Person.find(id) }
     @subscription = Subscription.find(subscription_id)
-    mail( :to => person.email,
-          :subject => I18n.t('person.mail.members_were_added_to_subscription',
-          :title => @subscription.title))
+    mail( to: person.email,
+          subject: I18n.t('person.mail.members_were_added_to_subscription',
+          title: @subscription.title))
   end
 
   def send_subscriptions_merged(person, destination_subscription_id)
     I18n.locale = person.main_communication_language.symbol
     @destination_subscription = Subscription.find(destination_subscription_id)
-    mail( :to => person.email,
-          :subject => I18n.t('person.mail.subscription_were_merged',
-          :title => @destination_subscription.title))
+    mail( to: person.email,
+          subject: I18n.t('person.mail.subscription_were_merged',
+          title: @destination_subscription.title))
   end
 
   def send_subscription_invoices_updated(person, subscription_id)
     I18n.locale = person.main_communication_language.symbol
     @subscription = Subscription.find subscription_id
-    mail( :to => person.email,
-          :subject => I18n.t('person.mail.subscription_were_updated',
-          :title => @subscription.title))
+    mail( to: person.email,
+          subject: I18n.t('person.mail.subscription_were_updated',
+          title: @subscription.title))
   end
 
   def send_receipts_document_link(person, cached_doc)
     @document = cached_doc
     I18n.locale = person.main_communication_language.symbol
-    mail(:to => person.email,
-      :subject => I18n.t('person.mail.admin_receipts_were_generated'))
+    mail(to: person.email,
+      subject: I18n.t('person.mail.admin_receipts_were_generated'))
   end
 
   def send_report_error_to_admin(current_person, exception)
     # No locale is set as there is no user involved, only email address from configuration.yml
     @exception = exception
     @current_person = current_person
-    mail( :to => Rails.configuration.settings['directory_admin_email'],
-          :subject => I18n.t("person.mail.report_error_subject"),
-          :layout => false)
+    mail( to: Rails.configuration.settings['directory_admin_email'],
+          subject: I18n.t("person.mail.report_error_subject"),
+          layout: false)
   end
 
 end

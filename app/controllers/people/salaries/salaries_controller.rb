@@ -25,34 +25,34 @@ class People::Salaries::SalariesController < ApplicationController
   end
 
   load_resource :person
-  # load_and_authorize_resource :class => model, :through => :person
-  load_resource :class => model, :through => :person
+  # load_and_authorize_resource class: model, through: :person
+  load_resource class: model, through: :person
 
   monitor_changes :@salary
 
   def index
     respond_to do |format|
-      format.json { render :json => @salaries }
+      format.json { render json: @salaries }
     end
   end
 
   def show
     respond_to do |format|
-      format.json { render :json => @salary }
+      format.json { render json: @salary }
 
       format.html do
         generator = AttachmentGenerator.new(@salary)
-        render :inline => generator.html, :layout => 'preview'
+        render inline: generator.html, layout: 'preview'
       end
 
       format.pdf do
         if ! @salary.pdf_up_to_date? or ! @salary.pdf.exists?
-          BackgroundTasks::GenerateSalaryPdf.process!(:salary_id => @salary.id)
+          BackgroundTasks::GenerateSalaryPdf.process!(salary_id: @salary.id)
           @salary.reload
         end
         send_data File.read(@salary.pdf.path),
-          :filename => "salary_#{params[:id]}.pdf",
-          :type => 'application/pdf'
+          filename: "salary_#{params[:id]}.pdf",
+          type: 'application/pdf'
       end
 
       format.odt do
@@ -60,8 +60,8 @@ class People::Salaries::SalariesController < ApplicationController
         generator = AttachmentGenerator.new(@salary)
         generator.odt { |o,odt| @odt = odt.read }
         send_data @odt,
-                  :filename => "salary_#{params[:id]}.odt",
-                  :type => 'application/vnd.oasis.opendocument.text'
+                  filename: "salary_#{params[:id]}.odt",
+                  type: 'application/vnd.oasis.opendocument.text'
       end
 
     end
@@ -71,16 +71,16 @@ class People::Salaries::SalariesController < ApplicationController
     @salary.yearly_salary = Money.new(params[:yearly_salary].to_f * 100, params[:yearly_salary_currency])
     respond_to do |format|
       if @salary.save
-        format.json { render :json => @salary }
+        format.json { render json: @salary }
       else
-        format.json { render :json => @salary.errors, :status => :unprocessable_entity }
+        format.json { render json: @salary.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @salary }
+      format.json { render json: @salary }
     end
   end
 
@@ -92,9 +92,9 @@ class People::Salaries::SalariesController < ApplicationController
     params[:salary].delete(:yearly_salary)
     respond_to do |format|
       if @salary.update_attributes(params[:salary])
-        format.json { render :json => @salary }
+        format.json { render json: @salary }
       else
-        format.json { render :json => @salary.errors, :status => :unprocessable_entity }
+        format.json { render json: @salary.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -129,9 +129,9 @@ class People::Salaries::SalariesController < ApplicationController
         # Delete removed items
         removed_items.each(&:destroy)
 
-        format.json { render :json => @salary.reload }
+        format.json { render json: @salary.reload }
       else
-        format.json { render :json => errors, :status => :unprocessable_entity }
+        format.json { render json: errors, status: :unprocessable_entity }
       end
     end
   end
@@ -159,9 +159,9 @@ class People::Salaries::SalariesController < ApplicationController
         # Save new items
         tax_data.each(&:save!)
 
-        format.json { render :json => @salary.reload }
+        format.json { render json: @salary.reload }
       else
-        format.json { render :json => errors, :status => :unprocessable_entity }
+        format.json { render json: errors, status: :unprocessable_entity }
       end
     end
   end
@@ -169,9 +169,9 @@ class People::Salaries::SalariesController < ApplicationController
   def destroy
     respond_to do |format|
       if @salary.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @salary.errors, :status => :unprocessable_entity}
+        format.json { render json: @salary.errors, status: :unprocessable_entity}
       end
     end
   end

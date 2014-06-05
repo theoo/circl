@@ -25,7 +25,7 @@ class Directory::QueryPresetsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => @query_presets.order(:id) }
+      format.json { render json: @query_presets.order(:id) }
     end
   end
 
@@ -36,25 +36,25 @@ class Directory::QueryPresetsController < ApplicationController
   def create
     respond_to do |format|
       if @query_preset.save
-        format.json  { render :json => @query_preset }
+        format.json  { render json: @query_preset }
       else
-        format.json { render :json => @query_preset.errors, :status => :unprocessable_entity }
+        format.json { render json: @query_preset.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @query_preset }
+      format.json { render json: @query_preset }
     end
   end
 
   def update
     respond_to do |format|
       if @query_preset.update_attributes(params[:query_preset])
-        format.json { render :json => @query_preset }
+        format.json { render json: @query_preset }
       else
-        format.json { render :json => @query_preset.errors, :status => :unprocessable_entity }
+        format.json { render json: @query_preset.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,9 +62,9 @@ class Directory::QueryPresetsController < ApplicationController
   def destroy
     respond_to do |format|
       if @query_preset.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @query_preset.errors, :status => :unprocessable_entity }
+        format.json { render json: @query_preset.errors, status: :unprocessable_entity }
       end
     end
   end

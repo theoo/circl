@@ -21,16 +21,16 @@ class People::CommentsController < ApplicationController
   layout false
 
   load_resource :person
-  before_filter :load_comments, :only => :index
-  before_filter :create_comment, :only => :create
-  before_filter :load_comment, :except => [:index, :create]
+  before_filter :load_comments, only: :index
+  before_filter :create_comment, only: :create
+  before_filter :load_comment, except: [:index, :create]
   authorize_resource
 
   monitor_changes :@comment
 
   def index
     respond_to do |format|
-      format.json { render :json => @comments }
+      format.json { render json: @comments }
     end
   end
 
@@ -41,25 +41,25 @@ class People::CommentsController < ApplicationController
   def create
     respond_to do |format|
       if @comment.save
-        format.json  { render :json => @comment }
+        format.json  { render json: @comment }
       else
-        format.json { render :json => @comment.errors, :status => :unprocessable_entity }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @comment }
+      format.json { render json: @comment }
     end
   end
 
   def update
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
-        format.json { render :json => @comment }
+        format.json { render json: @comment }
       else
-        format.json { render :json => @comment.errors, :status => :unprocessable_entity }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -67,9 +67,9 @@ class People::CommentsController < ApplicationController
   def destroy
     respond_to do |format|
       if @comment.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @comment.errors, :status => :unprocessable_entity }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end

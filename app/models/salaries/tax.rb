@@ -55,25 +55,25 @@ class Salaries::Tax < ActiveRecord::Base
   #################
 
   validates_presence_of :title
-  validates_length_of :title, :maximum => 255
+  validates_length_of :title, maximum: 255
 
   #################
   ### RELATIONS ###
   #################
 
   monitored_habtm :items,
-                  :class_name => 'Salaries::Item',
-                  :join_table => 'salaries_items_taxes',
-                  :order => :position
+                  class_name: 'Salaries::Item',
+                  join_table: 'salaries_items_taxes',
+                  order: :position
   has_many :tax_data,
-           :class_name => 'Salaries::TaxData'
+           class_name: 'Salaries::TaxData'
 
   has_many :generic_taxes,
-           :class_name => 'Salaries::Taxes::Generic'
+           class_name: 'Salaries::Taxes::Generic'
   has_many :age_taxes,
-           :class_name => 'Salaries::Taxes::Age'
+           class_name: 'Salaries::Taxes::Age'
   has_many :is_taxes,
-           :class_name => 'Salaries::Taxes::Is'
+           class_name: 'Salaries::Taxes::Is'
 
 
   ########################
@@ -89,7 +89,7 @@ class Salaries::Tax < ActiveRecord::Base
   end
 
   def copy_year_data(from, to)
-    model.constantize.where(:year => from).each do |item|
+    model.constantize.where(year: from).each do |item|
       new_item = item.dup
       new_item.year = to
       new_item.save!
@@ -97,11 +97,11 @@ class Salaries::Tax < ActiveRecord::Base
   end
 
   def number_of_rows
-    model.constantize.where(:tax_id => self.id).count
+    model.constantize.where(tax_id: self.id).count
   end
 
   def available_years
-    model.constantize.where(:tax_id => self.id).select("DISTINCT year").map(&:year)
+    model.constantize.where(tax_id: self.id).select("DISTINCT year").map(&:year)
   end
 
   # attributes overridden - JSON API

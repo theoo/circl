@@ -17,13 +17,13 @@
 =end
 
 # Options are:
-#   :required => [:source_subscriptions_id, :destination_subscriptions_id, :person]
+#   required: [:source_subscriptions_id, :destination_subscriptions_id, :person]
 class BackgroundTasks::MergeSubscriptions < BackgroundTask
 
   def self.generate_title(options)
     I18n.t("background_task.tasks.merge_subscriptions",
-      :source_subscription_id => options[:source_subscription_id],
-      :destination_subscription_id => options[:destination_subscription_id])
+      source_subscription_id: options[:source_subscription_id],
+      destination_subscription_id: options[:destination_subscription_id])
   end
 
   def process!
@@ -35,7 +35,7 @@ class BackgroundTasks::MergeSubscriptions < BackgroundTask
       # Append the new subscription to the current subscription's affair
     	a.subscriptions << destination_subscription
       # Change affair's title so it's easier to read
-      a.update_attributes(:title => destination_subscription.title)
+      a.update_attributes(title: destination_subscription.title)
     end
 
     # detach from all affairs

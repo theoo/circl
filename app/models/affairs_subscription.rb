@@ -40,5 +40,5 @@ class AffairsSubscription < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
-  validates_uniqueness_of :subscription_id, :scope => :affair_id
+  validates_uniqueness_of :subscription_id, scope: :affair_id
 end

@@ -26,7 +26,7 @@ class People::DashboardController < ApplicationController
     @person = params[:id] ? Person.find(params[:id]) : current_person
 
     respond_to do |format|
-      format.html { render :layout => 'application' }
+      format.html { render layout: 'application' }
     end
   end
 
@@ -34,7 +34,7 @@ class People::DashboardController < ApplicationController
     @comments = Comment.order("created_at desc").limit(10)
 
     respond_to do |format|
-      format.json { render :json => @comments }
+      format.json { render json: @comments }
     end
   end
 
@@ -42,7 +42,7 @@ class People::DashboardController < ApplicationController
     @activities = @person.activities.order("created_at desc").limit(10)
 
     respond_to do |format|
-      format.json { render :json => @activities }
+      format.json { render json: @activities }
     end
   end
 
@@ -50,7 +50,7 @@ class People::DashboardController < ApplicationController
     @last_people_added = Person.order("created_at desc").limit(10)
 
     respond_to do |format|
-      format.json { render :json => @last_people_added }
+      format.json { render json: @last_people_added }
     end
   end
 
@@ -58,7 +58,7 @@ class People::DashboardController < ApplicationController
     @open_invoices = Invoice.open_invoices.order("created_at desc").limit(10)
 
     respond_to do |format|
-      format.json { render :json => @open_invoices }
+      format.json { render json: @open_invoices }
     end
   end
 
@@ -66,7 +66,7 @@ class People::DashboardController < ApplicationController
     @current_affairs = Affair.open_affairs("created_at desc").limit(10)
 
     respond_to do |format|
-      format.json { render :json => @current_affairs }
+      format.json { render json: @current_affairs }
     end
   end
 
@@ -74,7 +74,7 @@ class People::DashboardController < ApplicationController
     @open_salaries = Salaries::Salary.unpaid_salaries.order("created_at desc").limit(10)
 
     respond_to do |format|
-      format.json { render :json => @open_salaries }
+      format.json { render json: @open_salaries }
     end
   end
 end

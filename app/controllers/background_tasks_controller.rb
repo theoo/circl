@@ -20,23 +20,23 @@ class BackgroundTasksController < ApplicationController
 
   load_and_authorize_resource
 
-  # monitor_changes :@background_task, :only => [:create, :update, :update_password, :destroy]
+  # monitor_changes :@background_task, only: [:create, :update, :update_password, :destroy]
 
   layout false
 
   def index
     respond_to do |format|
-      format.json { render :json => @background_tasks }
+      format.json { render json: @background_tasks }
     end
   end
 
   def destroy
     respond_to do |format|
       if @background_task.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
         format.json do
-          render :json => @background_task.errors, :status => :unprocessable_entity
+          render json: @background_task.errors, status: :unprocessable_entity
         end
       end
     end

@@ -21,7 +21,7 @@ class People::AffairsController < ApplicationController
   layout false
 
   load_resource :person
-  load_and_authorize_resource :through => :person
+  load_and_authorize_resource through: :person
 
   monitor_changes :@affair
 
@@ -30,7 +30,7 @@ class People::AffairsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        render :json => @affairs
+        render json: @affairs
       end
     end
   end
@@ -42,11 +42,11 @@ class People::AffairsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => @affair }
+      format.json { render json: @affair }
 
       format.html do
         generator = AttachmentGenerator.new(@affair)
-        render :inline => generator.html, :layout => 'preview'
+        render inline: generator.html, layout: 'preview'
       end
 
       format.pdf do
@@ -54,8 +54,8 @@ class People::AffairsController < ApplicationController
         generator = AttachmentGenerator.new(@affair)
         generator.pdf { |o,pdf| @pdf = pdf.read }
         send_data @pdf,
-                  :filename => "affair_#{params[:id]}.pdf",
-                  :type => 'application/pdf'
+                  filename: "affair_#{params[:id]}.pdf",
+                  type: 'application/pdf'
       end
 
       format.odt do
@@ -63,8 +63,8 @@ class People::AffairsController < ApplicationController
         generator = AttachmentGenerator.new(@affair)
         generator.odt { |o,odt| @odt = odt.read }
         send_data @odt,
-                  :filename => "affair_#{params[:id]}.odt",
-                  :type => 'application/vnd.oasis.opendocument.text'
+                  filename: "affair_#{params[:id]}.odt",
+                  type: 'application/vnd.oasis.opendocument.text'
       end
     end
 
@@ -78,8 +78,8 @@ class People::AffairsController < ApplicationController
       # append stakeholders
       params[:affairs_stakeholders].each do |s|
         stakeholder = @affair.affairs_stakeholders.new(
-          :person_id => s[:person_id],
-          :title => s[:title] )
+          person_id: s[:person_id],
+          title: s[:title] )
         unless stakeholder.save
           stakeholder.errors.messages.each do |k,v|
             @affair.errors.add(("stakeholders[][" + k.to_s + "]").to_sym, v.join(", "))
@@ -96,16 +96,16 @@ class People::AffairsController < ApplicationController
 
     respond_to do |format|
       if success
-        format.json { render :json => @affair }
+        format.json { render json: @affair }
       else
-        format.json { render :json => @affair.errors, :status => :unprocessable_entity }
+        format.json { render json: @affair.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @affair }
+      format.json { render json: @affair }
     end
   end
 
@@ -134,8 +134,8 @@ class People::AffairsController < ApplicationController
           stakeholder.title = s[:title]
         else
           stakeholder = @affair.affairs_stakeholders.new(
-            :person_id => s[:person_id],
-            :title => s[:title] )
+            person_id: s[:person_id],
+            title: s[:title] )
         end
 
         unless stakeholder.save
@@ -156,9 +156,9 @@ class People::AffairsController < ApplicationController
 
     respond_to do |format|
       if success
-        format.json { render :json => @affair }
+        format.json { render json: @affair }
       else
-        format.json { render :json => @affair.errors, :status => :unprocessable_entity }
+        format.json { render json: @affair.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -166,9 +166,9 @@ class People::AffairsController < ApplicationController
   def destroy
     respond_to do |format|
       if @affair.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @affair.errors, :status => :unprocessable_entity}
+        format.json { render json: @affair.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -183,7 +183,7 @@ class People::AffairsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        render :json => result.map{|t|
+        render json: result.map{|t|
           desc = " "
           if t.estimate
             desc += "<i>" + I18n.t("affair.views.estimate") + "</i>"
@@ -191,9 +191,9 @@ class People::AffairsController < ApplicationController
           else
             desc += t.description
           end
-          { :id => t.id,
-            :label => t.title,
-            :desc => desc }}
+          { id: t.id,
+            label: t.title,
+            desc: desc }}
       end
     end
   end
@@ -246,7 +246,7 @@ class People::AffairsController < ApplicationController
         ######### RENDER ############
 
         format.json do
-          render :json => @affairs
+          render json: @affairs
         end
 
         format.csv do
@@ -265,24 +265,24 @@ class People::AffairsController < ApplicationController
           fields << 'get_statuses.join(", ")'
           fields << 'created_at'
           fields << 'updated_at'
-          render :inline => csv_ify(@affairs, fields)
+          render inline: csv_ify(@affairs, fields)
         end
 
         format.pdf do
           send_data generator.pdf,
-            :filename => "person_#{@person.id}_affairs.pdf",
-            :type => 'application/pdf'
+            filename: "person_#{@person.id}_affairs.pdf",
+            type: 'application/pdf'
         end
 
         format.odt do
           send_data generator.odt,
-            :filename => "person_#{@person.id}_affairs.odt",
-            :type => 'application/vnd.oasis.opendocument.text'
+            filename: "person_#{@person.id}_affairs.odt",
+            type: 'application/vnd.oasis.opendocument.text'
         end
 
       else
         format.json do
-          render :json => errors, :status => :unprocessable_entity
+          render json: errors, status: :unprocessable_entity
         end
       end
     end
@@ -344,7 +344,7 @@ class People::AffairsController < ApplicationController
         ######### RENDER ############
 
         format.json do
-          render :json => @invoices
+          render json: @invoices
         end
 
         format.csv do
@@ -363,24 +363,24 @@ class People::AffairsController < ApplicationController
           fields << 'invoice_template_id'
           fields << 'created_at'
           fields << 'updated_at'
-          render :inline => csv_ify(@invoices, fields)
+          render inline: csv_ify(@invoices, fields)
         end
 
         format.pdf do
           send_data generator.pdf,
-            :filename => "person_#{@person.id}_invoices.pdf",
-            :type => 'application/pdf'
+            filename: "person_#{@person.id}_invoices.pdf",
+            type: 'application/pdf'
         end
 
         format.odt do
           send_data generator.odt,
-            :filename => "person_#{@person.id}_invoices.odt",
-            :type => 'application/vnd.oasis.opendocument.text'
+            filename: "person_#{@person.id}_invoices.odt",
+            type: 'application/vnd.oasis.opendocument.text'
         end
 
       else
         format.json do
-          render :json => errors, :status => :unprocessable_entity
+          render json: errors, status: :unprocessable_entity
         end
       end
     end
@@ -435,7 +435,7 @@ class People::AffairsController < ApplicationController
         ######### RENDER ############
 
         format.json do
-          render :json => @receipts
+          render json: @receipts
         end
 
         format.csv do
@@ -453,24 +453,24 @@ class People::AffairsController < ApplicationController
           fields << 'means_of_payment'
           fields << 'created_at'
           fields << 'updated_at'
-          render :inline => csv_ify(@receipts, fields)
+          render inline: csv_ify(@receipts, fields)
         end
 
         format.pdf do
           send_data generator.pdf,
-            :filename => "person_#{@person.id}_receipts.pdf",
-            :type => 'application/pdf'
+            filename: "person_#{@person.id}_receipts.pdf",
+            type: 'application/pdf'
         end
 
         format.odt do
           send_data generator.odt,
-            :filename => "person_#{@person.id}_receipts.odt",
-            :type => 'application/vnd.oasis.opendocument.text'
+            filename: "person_#{@person.id}_receipts.odt",
+            type: 'application/vnd.oasis.opendocument.text'
         end
 
       else
         format.json do
-          render :json => errors, :status => :unprocessable_entity
+          render json: errors, status: :unprocessable_entity
         end
       end
     end

@@ -26,19 +26,19 @@ class Settings::InvoiceTemplatesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => @invoice_templates }
+      format.json { render json: @invoice_templates }
     end
   end
 
   def show
     respond_to do |format|
-      format.json { render :json => @invoice_template }
+      format.json { render json: @invoice_template }
       format.html do
-        render :inline => @invoice_template.html, :layout => 'preview.html.haml'
+        render inline: @invoice_template.html, layout: 'preview.html.haml'
       end
       format.jpg do
         unless @invoice_template.snapshot.path and File.exists? @invoice_template.snapshot.path
-          BackgroundTasks::GenerateInvoiceTemplateJpg.process!(:invoice_template_id => @invoice_template.id)
+          BackgroundTasks::GenerateInvoiceTemplateJpg.process!(invoice_template_id: @invoice_template.id)
           @invoice_template.reload
         end
         redirect_to @invoice_template.snapshot.url
@@ -49,37 +49,37 @@ class Settings::InvoiceTemplatesController < ApplicationController
   def create
     respond_to do |format|
       if @invoice_template.save
-        BackgroundTasks::GenerateInvoiceTemplateJpg.process!(:invoice_template_id => @invoice_template.id)
+        BackgroundTasks::GenerateInvoiceTemplateJpg.process!(invoice_template_id: @invoice_template.id)
         @invoice_template.reload
-        format.json { render :json => @invoice_template }
+        format.json { render json: @invoice_template }
       else
-        format.json { render :json => @invoice_template.errors, :status => :unprocessable_entity }
+        format.json { render json: @invoice_template.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @invoice_template }
-      format.html { render :layout => 'minimal' }
+      format.json { render json: @invoice_template }
+      format.html { render layout: 'minimal' }
     end
   end
 
   def update
     respond_to do |format|
       if @invoice_template.update_attributes(params[:invoice_template])
-        BackgroundTasks::GenerateInvoiceTemplateJpg.process!(:invoice_template_id => @invoice_template.id)
+        BackgroundTasks::GenerateInvoiceTemplateJpg.process!(invoice_template_id: @invoice_template.id)
         @invoice_template.reload
-        format.json { render :json => @invoice_template }
+        format.json { render json: @invoice_template }
         format.html do
           flash[:notice] = I18n.t("common.notices.successfully_updated")
           redirect_to edit_settings_invoice_template_path(@invoice_template)
         end
       else
-        format.json { render :json => @invoice_template.errors, :status => :unprocessable_entity }
+        format.json { render json: @invoice_template.errors, status: :unprocessable_entity }
         format.html do
           flash[:error] = I18n.t("common.errors.failed_to_update")
-          render 'edit', :layout => 'minimal'
+          render 'edit', layout: 'minimal'
         end
       end
     end
@@ -88,9 +88,9 @@ class Settings::InvoiceTemplatesController < ApplicationController
   def destroy
     respond_to do |format|
       if @invoice_template.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @invoice_template.errors, :status => :unprocessable_entity }
+        format.json { render json: @invoice_template.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -98,17 +98,17 @@ class Settings::InvoiceTemplatesController < ApplicationController
   def placeholders
     authorize! :manage, InvoiceTemplate
 
-    it = InvoiceTemplate.new(:language => @current_person.main_communication_language)
+    it = InvoiceTemplate.new(language: @current_person.main_communication_language)
     placeholders = it.placeholders
 
     respond_to do |format|
-      format.json { render :json => placeholders }
+      format.json { render json: placeholders }
     end
   end
 
   def count
     respond_to do |format|
-      format.json { render :json => {:count => InvoiceTemplate.count} }
+      format.json { render json: {count: InvoiceTemplate.count} }
     end
   end
 end

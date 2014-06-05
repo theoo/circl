@@ -20,14 +20,14 @@ class Settings::LocationsController < ApplicationController
 
   layout false
 
-  load_and_authorize_resource :except => :index
+  load_and_authorize_resource except: :index
 
   monitor_changes :@location
 
   def index
     authorize! :index, Location
     respond_to do |format|
-      format.json { render :json => LocationsDatatable.new(view_context) }
+      format.json { render json: LocationsDatatable.new(view_context) }
     end
   end
 
@@ -38,25 +38,25 @@ class Settings::LocationsController < ApplicationController
   def create
     respond_to do |format|
       if @location.save
-        format.json { render :json => @location }
+        format.json { render json: @location }
       else
-        format.json { render :json => @location.errors, :status => :unprocessable_entity }
+        format.json { render json: @location.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @location }
+      format.json { render json: @location }
     end
   end
 
   def update
     respond_to do |format|
       if @location.update_attributes(params[:location])
-        format.json { render :json => @location }
+        format.json { render json: @location }
       else
-        format.json { render :json => @location.errors, :status => :unprocessable_entity }
+        format.json { render json: @location.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -64,9 +64,9 @@ class Settings::LocationsController < ApplicationController
   def destroy
     respond_to do |format|
       if @location.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @location.errors, :status => :unprocessable_entity }
+        format.json { render json: @location.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -82,7 +82,7 @@ class Settings::LocationsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{ |t| {:id => t.id, :label => t.full_name }}}
+      format.json { render json: result.map{ |t| {id: t.id, label: t.full_name }}}
     end
   end
 

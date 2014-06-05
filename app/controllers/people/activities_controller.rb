@@ -21,14 +21,14 @@ class People::ActivitiesController < ApplicationController
   layout false
 
   load_resource :person
-  load_and_authorize_resource :through => :person
+  load_and_authorize_resource through: :person
 
   monitor_changes :@activity
 
   def index
     respond_to do |format|
-      format.json { render :json => @activities }
-      format.xml  { render :xml => @activities }
+      format.json { render json: @activities }
+      format.xml  { render xml: @activities }
       format.csv do
         fields = []
         fields << 'person.name'
@@ -37,7 +37,7 @@ class People::ActivitiesController < ApplicationController
         fields << 'title'
         fields << 'description'
         fields << 'created_at'
-        render :inline => csv_ify(@activities, fields)
+        render inline: csv_ify(@activities, fields)
       end
     end
   end
@@ -49,25 +49,25 @@ class People::ActivitiesController < ApplicationController
   def create
     respond_to do |format|
       if @activity.save
-        format.json { render :json => @activity }
+        format.json { render json: @activity }
       else
-        format.json { render :json => @activity.errors, :status => :unprocessable_entity }
+        format.json { render json: @activity.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @activity }
+      format.json { render json: @activity }
     end
   end
 
   def update
     respond_to do |format|
       if @activity.update_attributes(params[:activity])
-        format.json { render :json => @activity }
+        format.json { render json: @activity }
       else
-        format.json { render :json => @activity.errors, :status => :unprocessable_entity }
+        format.json { render json: @activity.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -75,9 +75,9 @@ class People::ActivitiesController < ApplicationController
   def destroy
     respond_to do |format|
       if @activity.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @activity.errors, :status => :unprocessable_entity }
+        format.json { render json: @activity.errors, status: :unprocessable_entity }
       end
     end
   end

@@ -27,7 +27,7 @@ class Settings::CurrenciesController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        render :json => @currencies
+        render json: @currencies
       end
     end
   end
@@ -40,17 +40,17 @@ class Settings::CurrenciesController < ApplicationController
     respond_to do |format|
       if @currency.save
         format.json do
-          render :json => @currency
+          render json: @currency
         end
       else
-        format.json { render :json => @currency.errors, :status => :unprocessable_entity }
+        format.json { render json: @currency.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @currency }
+      format.json { render json: @currency }
     end
   end
 
@@ -58,10 +58,10 @@ class Settings::CurrenciesController < ApplicationController
     respond_to do |format|
       if @currency.update_attributes(params[:currency])
         format.json do
-          render :json => @currency
+          render json: @currency
         end
       else
-        format.json { render :json => @currency.errors, :status => :unprocessable_entity }
+        format.json { render json: @currency.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -69,9 +69,9 @@ class Settings::CurrenciesController < ApplicationController
   def destroy
     respond_to do |format|
       if @currency.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @currency.errors, :status => :unprocessable_entity }
+        format.json { render json: @currency.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -88,7 +88,7 @@ class Settings::CurrenciesController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => results.map{ |p| { :label => p.iso_code, :desc => p.name, :id => p.id }}}
+      format.json { render json: results.map{ |p| { label: p.iso_code, desc: p.name, id: p.id }}}
     end
   end
 

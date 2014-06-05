@@ -33,7 +33,7 @@ class People::RolesController < ApplicationController
     @roles = @person.roles
 
     respond_to do |format|
-      format.json { render :json => @roles }
+      format.json { render json: @roles }
     end
   end
 
@@ -41,10 +41,10 @@ class People::RolesController < ApplicationController
     authorize! [:create, :update], @person => self.class.model
 
     respond_to do |format|
-      if @person.update_attributes(:role_ids => params[:ids])
-        format.json { render :json => @person.roles }
+      if @person.update_attributes(role_ids: params[:ids])
+        format.json { render json: @person.roles }
       else
-        format.json { render :json => @person.errors, :status => :unprocessable_entity }
+        format.json { render json: @person.errors, status: :unprocessable_entity }
       end
     end
   end

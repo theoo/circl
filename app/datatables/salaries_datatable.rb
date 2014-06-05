@@ -62,10 +62,10 @@ class SalariesDatatable
       if salary.is_reference
         h[8] = capture_haml do
           haml_tag  :a,
-                    :class => 'btn btn-default',
-                    :name => 'salary-copy',
-                    :title => I18n.t('salary.views.actions.copy_reference') do
-            haml_tag :i, :class => 'icon-copy'
+                    class: 'btn btn-default',
+                    name: 'salary-copy',
+                    title: I18n.t('salary.views.actions.copy_reference') do
+            haml_tag :i, class: 'icon-copy'
           end
         end
       else
@@ -75,10 +75,10 @@ class SalariesDatatable
       if ! salary.paid?
         h[9] = capture_haml do
           haml_tag  :a,
-                    :class => 'btn btn-default',
-                    :name => 'salary-check-as-paid',
-                    :title => I18n.t('salary.views.actions.check_as_paid') do
-            haml_tag :i, :class => 'icon-ok'
+                    class: 'btn btn-default',
+                    name: 'salary-check-as-paid',
+                    title: I18n.t('salary.views.actions.check_as_paid') do
+            haml_tag :i, class: 'icon-ok'
           end
         end
       else
@@ -88,10 +88,10 @@ class SalariesDatatable
       if ! salary.is_reference
         h[10] = capture_haml do
           haml_tag  :a,
-                    :class => 'btn btn-default',
-                    :name => 'salary-download',
-                    :title => I18n.t('common.download') do
-            haml_tag :i, :class => 'icon-download'
+                    class: 'btn btn-default',
+                    name: 'salary-download',
+                    title: I18n.t('common.download') do
+            haml_tag :i, class: 'icon-download'
           end
         end
       else
@@ -101,10 +101,10 @@ class SalariesDatatable
       if salary.children.count == 0
         h[11] = capture_haml do
           haml_tag  :a,
-                    :class => 'btn btn-danger',
-                    :name => 'salary-destroy',
-                    :title => I18n.t('common.destroy') do
-            haml_tag :i, :class => 'icon-remove'
+                    class: 'btn btn-danger',
+                    name: 'salary-destroy',
+                    title: I18n.t('common.destroy') do
+            haml_tag :i, class: 'icon-remove'
           end
         end
       else

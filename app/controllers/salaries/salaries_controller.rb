@@ -24,7 +24,7 @@ class Salaries::SalariesController < ApplicationController
     Salaries::Salary
   end
 
-  load_and_authorize_resource :except => :index
+  load_and_authorize_resource except: :index
 
   monitor_changes :@salary
 
@@ -32,13 +32,13 @@ class Salaries::SalariesController < ApplicationController
     authorize! :index, Product
 
     respond_to do |format|
-      format.json { render :json => SalariesDatatable.new(view_context) }
+      format.json { render json: SalariesDatatable.new(view_context) }
     end
   end
 
   def show
     respond_to do |format|
-      format.json { render :json => @salary }
+      format.json { render json: @salary }
     end
   end
 
@@ -47,12 +47,12 @@ class Salaries::SalariesController < ApplicationController
   def pending
     authorize! :pending_salaries, Salaries::Salary
 
-    @salaries = Salaries::Salary.where(:paid => false, :is_reference => false)
+    @salaries = Salaries::Salary.where(paid: false, is_reference: false)
                                 .order("salaries.from DESC")
                                 .limit(100)
 
     respond_to do |format|
-      format.json { render :json => @salaries }
+      format.json { render json: @salaries }
     end
   end
 
@@ -67,7 +67,7 @@ class Salaries::SalariesController < ApplicationController
         query.symbolize_keys!
 
         if query[:search_string].blank?
-          format.json { render :json => { :search_string => [I18n.t('activerecord.errors.messages.blank')] }, :status => :unprocessable_entity }
+          format.json { render json: { search_string: [I18n.t('activerecord.errors.messages.blank')] }, status: :unprocessable_entity }
         else
           succeed_token = true
           Salaries::Salary.transaction do
@@ -80,7 +80,7 @@ class Salaries::SalariesController < ApplicationController
 
             if @employees.size != people_ids.size
               flash[:alert] = I18n.t("salary.errors.one_or_more_people_doesnt_satisfy_requirements", 
-                                {:people_ids => (people_ids -@employees.map(&:id))})
+                                {people_ids: (people_ids -@employees.map(&:id))})
               succeed_token = false
               raise ActiveRecord::Rollback
             end
@@ -106,22 +106,22 @@ class Salaries::SalariesController < ApplicationController
           end
 
           if succeed_token
-            format.json { render :json => {} }
+            format.json { render json: {} }
             format.html do
               # TODO improve report
-              flash[:notice] = I18n.t("salary.notices.reference_were_copied", :members_count => @employees.size)
-              redirect_to salaries_path(:anchor => 'payroll')
+              flash[:notice] = I18n.t("salary.notices.reference_were_copied", members_count: @employees.size)
+              redirect_to salaries_path(anchor: 'payroll')
             end
           else
-            format.json { render :json => { :error => [flash[:alert]] }, :status => :unprocessable_entity }
+            format.json { render json: { error: [flash[:alert]] }, status: :unprocessable_entity }
             format.html do
               flash[:notice] = I18n.t("salary.notices.please_try_again")
-              redirect_to salaries_path(:anchor => 'payroll')
+              redirect_to salaries_path(anchor: 'payroll')
             end
           end
         end
       else
-        format.json { render :json => { :error => [I18n.t('salary.errors.is_not_a_reference')] }, :status => :unprocessable_entity }
+        format.json { render json: { error: [I18n.t('salary.errors.is_not_a_reference')] }, status: :unprocessable_entity }
       end
     end
   end
@@ -131,13 +131,13 @@ class Salaries::SalariesController < ApplicationController
     to   = Date.parse(params[:to]) if validate_date_format(params[:to])
 
     # select all salaries which are not references
-    salaries_arel = Salaries::Salary.where(:is_reference => false)
+    salaries_arel = Salaries::Salary.where(is_reference: false)
 
     # select paid or not
     if params[:paid] and not params[:unpaid]
-      salaries_arel = salaries_arel.where(:paid => true)
+      salaries_arel = salaries_arel.where(paid: true)
     elsif params[:unpaid] and not params[:paid]
-      salaries_arel = salaries_arel.where(:paid => false)
+      salaries_arel = salaries_arel.where(paid: false)
     end
 
     respond_to do |format|
@@ -155,9 +155,9 @@ class Salaries::SalariesController < ApplicationController
           end
 
           send_data( exporter.export(salaries),
-                     :type => 'application/octet-stream',
-                     :filename=> "salaries_#{from}_#{to}_#{params[:type]}.#{extention}",
-                     :disposition => 'attachment' )
+                     type: 'application/octet-stream',
+                     filename: "salaries_#{from}_#{to}_#{params[:type]}.#{extention}",
+                     disposition: 'attachment' )
         else
           flash[:alert] = I18n.t('common.errors.date_must_match_format')
           redirect_to salaries_path
@@ -171,13 +171,13 @@ class Salaries::SalariesController < ApplicationController
     to   = Date.parse(params[:to]) if validate_date_format(params[:to])
 
     # select all salaries which are not references
-    salaries_arel = Salaries::Salary.where(:is_reference => false)
+    salaries_arel = Salaries::Salary.where(is_reference: false)
 
     # select paid or not
     if params[:paid] and not params[:unpaid]
-      salaries_arel = salaries_arel.where(:paid => true)
+      salaries_arel = salaries_arel.where(paid: true)
     elsif params[:unpaid] and not params[:paid]
-      salaries_arel = salaries_arel.where(:paid => false)
+      salaries_arel = salaries_arel.where(paid: false)
     end
 
     respond_to do |format|
@@ -189,11 +189,11 @@ class Salaries::SalariesController < ApplicationController
           extention = params[:type] == 'banana' ? 'txt' : 'csv'
           exporter = Exporter::Factory.new( :salaries_and_taxes,
                                             params[:type].to_sym,
-                                            {:employer_part => params[:employer_part]})
+                                            {employer_part: params[:employer_part]})
           send_data( exporter.export(salaries),
-                     :type => 'application/octet-stream',
-                     :filename=> "salaries_#{from}_#{to}_#{params[:type]}.#{extention}",
-                     :disposition => 'attachment' )
+                     type: 'application/octet-stream',
+                     filename: "salaries_#{from}_#{to}_#{params[:type]}.#{extention}",
+                     disposition: 'attachment' )
         else
           flash[:alert] = I18n.t('common.errors.date_must_match_format')
           redirect_to salaries_path
@@ -218,9 +218,9 @@ class Salaries::SalariesController < ApplicationController
           salaries = Salaries::Salary.interval(from, to)
           exporter = Exporter::Factory.new( :custom, :ocas)
           send_data( exporter.export(salaries),
-                     :type => 'application/octet-stream',
-                     :filename=> "ocas_#{from}_#{to}_#{params[:type]}.csv",
-                     :disposition => 'attachment' )
+                     type: 'application/octet-stream',
+                     filename: "ocas_#{from}_#{to}_#{params[:type]}.csv",
+                     disposition: 'attachment' )
         else
           flash[:alert] = I18n.t('common.errors.date_must_match_format')
           redirect_to salaries_path
@@ -245,9 +245,9 @@ class Salaries::SalariesController < ApplicationController
           salaries = Salaries::Salary.interval(from, to)
           exporter = Exporter::Factory.new( :custom, :elohnausweisssk )
           send_data( exporter.export(salaries),
-                     :type => 'application/octet-stream',
-                     :filename=> "elohnausweissk_#{from}_#{to}_#{params[:type]}.csv",
-                     :disposition => 'attachment' )
+                     type: 'application/octet-stream',
+                     filename: "elohnausweissk_#{from}_#{to}_#{params[:type]}.csv",
+                     disposition: 'attachment' )
         else
           flash[:alert] = I18n.t('common.errors.date_must_match_format')
           redirect_to salaries_path
@@ -261,22 +261,22 @@ class Salaries::SalariesController < ApplicationController
       from = Salaries::Salary.order('salaries.from ASC').first.from.year
       to   = Salaries::Salary.order('salaries.to ASC').last.to.year
 
-      years = { :from => from, :to => to }
+      years = { from: from, to: to }
     else
-      years = { :from => Time.now.year - 5, :to => Time.now.year }
+      years = { from: Time.now.year - 5, to: Time.now.year }
     end
 
     respond_to do |format|
-      format.json { render :json => years }
+      format.json { render json: years }
     end
   end
 
   def update
     respond_to do |format|
       if @salary.update_attributes(params[:salary])
-        format.json { render :json => @salary }
+        format.json { render json: @salary }
       else
-        format.json { render :json => @salary.errors, :status => :unprocessable_entity }
+        format.json { render json: @salary.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -284,9 +284,9 @@ class Salaries::SalariesController < ApplicationController
   def destroy
     respond_to do |format|
       if @salary.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @salary.errors, :status => :unprocessable_entity}
+        format.json { render json: @salary.errors, status: :unprocessable_entity}
       end
     end
   end

@@ -26,13 +26,13 @@ class Settings::ApplicationSettingsController < ApplicationController
 
   def index
     default_currency = ApplicationSetting.value("default_currency")
-    if Currency.where(:iso_code => default_currency).count > 0
-      h = { :key => 'default_currency_details', :value => Currency.where(:iso_code => default_currency).first.attributes.to_json }
+    if Currency.where(iso_code: default_currency).count > 0
+      h = { key: 'default_currency_details', value: Currency.where(iso_code: default_currency).first.attributes.to_json }
       @application_settings << h
     end
 
     respond_to do |format|
-      format.json { render :json => @application_settings }
+      format.json { render json: @application_settings }
     end
   end
 
@@ -43,25 +43,25 @@ class Settings::ApplicationSettingsController < ApplicationController
   def create
     respond_to do |format|
       if @application_setting.save
-        format.json { render :json => @application_setting }
+        format.json { render json: @application_setting }
       else
-        format.json { render :json => @application_setting.errors, :status => :unprocessable_entity }
+        format.json { render json: @application_setting.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @application_setting }
+      format.json { render json: @application_setting }
     end
   end
 
   def update
     respond_to do |format|
       if @application_setting.update_attributes(params[:application_setting])
-        format.json { render :json => @application_setting }
+        format.json { render json: @application_setting }
       else
-        format.json { render :json => @application_setting.errors, :status => :unprocessable_entity }
+        format.json { render json: @application_setting.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -69,9 +69,9 @@ class Settings::ApplicationSettingsController < ApplicationController
   def destroy
     respond_to do |format|
       if @application_setting.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @application_setting.errors, :status => :unprocessable_entity }
+        format.json { render json: @application_setting.errors, status: :unprocessable_entity }
       end
     end
   end

@@ -67,13 +67,13 @@ class Task < ActiveRecord::Base
 
   belongs_to  :affair
   # made for this person
-  has_one     :owner, :through => :affair
+  has_one     :owner, through: :affair
   # made by this person
-  belongs_to  :executer, :class_name => 'Person'
+  belongs_to  :executer, class_name: 'Person'
   belongs_to  :task_type
-  belongs_to  :salary, :class_name => 'Salaries::Salary'
+  belongs_to  :salary, class_name: 'Salaries::Salary'
 
-  scope :availables, Proc.new { where(:archive => false)}
+  scope :availables, Proc.new { where(archive: false)}
 
   # Money
   money :value
@@ -82,7 +82,7 @@ class Task < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
-  validates_with DateValidator, :attribute => :start_date
+  validates_with DateValidator, attribute: :start_date
   validates_presence_of :description,
                         :affair_id,
                         :task_type_id,
@@ -91,12 +91,12 @@ class Task < ActiveRecord::Base
                         :value_in_cents,
                         :value_currency
 
-  validate :duration_is_required_if_selected_task_type_have_a_ratio, :if => 'task_type_id'
+  validate :duration_is_required_if_selected_task_type_have_a_ratio, if: 'task_type_id'
   validate :duration_is_positive
-  validate :owner_should_have_a_task_rate, :if => 'affair_id'
+  validate :owner_should_have_a_task_rate, if: 'affair_id'
 
   # Validate fields of type 'text' length
-  validates_length_of :description, :maximum => 65536
+  validates_length_of :description, maximum: 65536
 
   ########################
   ### INSTANCE METHODS ###

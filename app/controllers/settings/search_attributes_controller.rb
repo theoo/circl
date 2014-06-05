@@ -25,7 +25,7 @@ class Settings::SearchAttributesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => @search_attributes.order(:id) }
+      format.json { render json: @search_attributes.order(:id) }
     end
   end
 
@@ -33,7 +33,7 @@ class Settings::SearchAttributesController < ApplicationController
     @search_attributes = @search_attributes.searchable
 
     respond_to do |format|
-      format.json { render :json => @search_attributes.as_json(:except => [:mapping, :indexing]) }
+      format.json { render json: @search_attributes.as_json(except: [:mapping, :indexing]) }
     end
   end
 
@@ -44,25 +44,25 @@ class Settings::SearchAttributesController < ApplicationController
   def create
     respond_to do |format|
       if @search_attribute.save
-        format.json  { render :json => @search_attribute }
+        format.json  { render json: @search_attribute }
       else
-        format.json { render :json => @search_attribute.errors, :status => :unprocessable_entity }
+        format.json { render json: @search_attribute.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @search_attribute }
+      format.json { render json: @search_attribute }
     end
   end
 
   def update
     respond_to do |format|
       if @search_attribute.update_attributes(params[:search_attribute])
-        format.json { render :json => @search_attribute }
+        format.json { render json: @search_attribute }
       else
-        format.json { render :json => @search_attribute.errors, :status => :unprocessable_entity }
+        format.json { render json: @search_attribute.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -70,22 +70,22 @@ class Settings::SearchAttributesController < ApplicationController
   def destroy
     respond_to do |format|
       if @search_attribute.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @search_attribute.errors, :status => :unprocessable_entity }
+        format.json { render json: @search_attribute.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def synchronize
-    if BackgroundTasks::RunRakeTask.schedule(:name => 'elasticsearch:sync')
-      Activity.create!(:person => current_person, :resource_type => 'SearchAttribute', :resource_id => '0', :action => 'info', :data => { :synchronize => "Sync started at #{Time.now}" })
-      flash[:notice] = I18n.t('common.notices.synchronization_started', :email => current_person.email)
+    if BackgroundTasks::RunRakeTask.schedule(name: 'elasticsearch:sync')
+      Activity.create!(person: current_person, resource_type: 'SearchAttribute', resource_id: '0', action: 'info', data: { synchronize: "Sync started at #{Time.now}" })
+      flash[:notice] = I18n.t('common.notices.synchronization_started', email: current_person.email)
     else
       flash[:alert] = I18n.t('common.errors.already_synchronizing')
     end
 
-    redirect_to settings_path, :anchor => 'searchengine'
+    redirect_to settings_path, anchor: 'searchengine'
   end
 
 end

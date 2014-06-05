@@ -48,8 +48,8 @@ class TranslationAptitude < ActiveRecord::Base
   ### RELATIONS ###
   #################
   belongs_to  :person
-  belongs_to  :from_language, :class_name => 'Language'
-  belongs_to  :to_language, :class_name => 'Language'
+  belongs_to  :from_language, class_name: 'Language'
+  belongs_to  :to_language, class_name: 'Language'
 
 
   ###################
@@ -60,7 +60,7 @@ class TranslationAptitude < ActiveRecord::Base
   validates_presence_of :from_language
   validates_presence_of :to_language
 
-  validate :translation_aptitude_is_unique, :if => :person
+  validate :translation_aptitude_is_unique, if: :person
   validate :translation_aptitude_languages_should_be_different
 
 

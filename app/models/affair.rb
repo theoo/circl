@@ -54,8 +54,8 @@ class Affair < ActiveRecord::Base
   #################
 
   after_save :update_elasticsearch
-  before_save :update_value, :if => 'value_in_cents.blank?'
-  before_save :compute_value_without_taxes, :if => 'custom_value_with_taxes'
+  before_save :update_value, if: 'value_in_cents.blank?'
+  before_save :compute_value_without_taxes, if: 'custom_value_with_taxes'
   before_save :update_statuses
   before_validation  :ensure_buyer_and_receiver_person_exists
   before_destroy :do_not_destroy_if_has_invoices
@@ -66,48 +66,48 @@ class Affair < ActiveRecord::Base
   #################
 
   # Relations
-  belongs_to  :owner, :class_name => 'Person', :foreign_key => 'owner_id'
-  belongs_to  :buyer, :class_name => 'Person', :foreign_key => 'buyer_id'
-  belongs_to  :receiver, :class_name => 'Person', :foreign_key => 'receiver_id'
-  belongs_to  :seller, :class_name => 'Person', :foreign_key => 'seller_id'
+  belongs_to  :owner, class_name: 'Person', foreign_key: 'owner_id'
+  belongs_to  :buyer, class_name: 'Person', foreign_key: 'buyer_id'
+  belongs_to  :receiver, class_name: 'Person', foreign_key: 'receiver_id'
+  belongs_to  :seller, class_name: 'Person', foreign_key: 'seller_id'
 
-  belongs_to  :condition, :class_name => 'AffairsCondition'
+  belongs_to  :condition, class_name: 'AffairsCondition'
 
-  has_one     :parent, :class_name => 'Affair', :primary_key => 'parent_id', :foreign_key => 'id'
-  has_many    :children, :class_name => 'Affair', :foreign_key => 'parent_id'
+  has_one     :parent, class_name: 'Affair', primary_key: 'parent_id', foreign_key: 'id'
+  has_many    :children, class_name: 'Affair', foreign_key: 'parent_id'
 
-  has_many    :invoices, :dependent => :destroy
-  has_many    :receipts, :through => :invoices, :uniq => true
+  has_many    :invoices, dependent: :destroy
+  has_many    :receipts, through: :invoices, uniq: true
 
-  has_many    :extras,  :dependent => :destroy,
-                        :order => :position
-                       #:after_add    => :update_on_prestation_alteration,
-                       #:after_remove => :update_on_prestation_alteration
+  has_many    :extras,  dependent: :destroy,
+                        order: :position
+                       #after_add: :update_on_prestation_alteration,
+                       #after_remove: :update_on_prestation_alteration
 
-  has_many    :tasks, :dependent => :destroy,
-                      :order => 'start_date ASC'
-                      #:after_add    => :update_on_prestation_alteration,
-                      #:after_remove => :update_on_prestation_alteration
+  has_many    :tasks, dependent: :destroy,
+                      order: 'start_date ASC'
+                      #after_add: :update_on_prestation_alteration,
+                      #after_remove: :update_on_prestation_alteration
 
-  has_many    :product_items, :class_name => 'AffairsProductsProgram',
-                              :dependent => :destroy,
-                              :order => :position
-                              #:after_add    => :update_on_prestation_alteration,
-                              #:after_remove => :update_on_prestation_alteration
+  has_many    :product_items, class_name: 'AffairsProductsProgram',
+                              dependent: :destroy,
+                              order: :position
+                              #after_add: :update_on_prestation_alteration,
+                              #after_remove: :update_on_prestation_alteration
 
-  has_many    :products, :through => :product_items
-  has_many    :programs, :through => :product_items
+  has_many    :products, through: :product_items
+  has_many    :programs, through: :product_items
 
   has_many    :affairs_stakeholders
   has_many    :stakeholders,
-              :through => :affairs_stakeholders,
-              :source => :person
+              through: :affairs_stakeholders,
+              source: :person
 
   has_many :affairs_subscriptions # for permissions
 
   monitored_habtm :subscriptions,
-                  :after_add    => :update_on_prestation_alteration,
-                  :after_remove => :update_on_prestation_alteration
+                  after_add: :update_on_prestation_alteration,
+                  after_remove: :update_on_prestation_alteration
 
   # Money
   money :value
@@ -129,11 +129,11 @@ class Affair < ActiveRecord::Base
   validates_presence_of :title, :owner_id, :buyer_id, :receiver_id, :value_in_cents, :value_currency
 
   # Validate fields of type 'string' length
-  validates_length_of :title, :maximum => 255
+  validates_length_of :title, maximum: 255
 
   # Validate fields of type 'text' length
-  validates_length_of :description, :maximum => 65536
-  validate :vat_calculation_availability, :if => 'custom_value_with_taxes'
+  validates_length_of :description, maximum: 65536
+  validate :vat_calculation_availability, if: 'custom_value_with_taxes'
 
   ########################
   #### CLASS METHODS #####

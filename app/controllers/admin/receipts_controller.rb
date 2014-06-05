@@ -20,12 +20,12 @@ class Admin::ReceiptsController < ApplicationController
 
   layout false
 
-  load_and_authorize_resource :receipt, :except => :index, :parent => false
+  load_and_authorize_resource :receipt, except: :index, parent: false
 
   def index
     authorize! :index, Receipt
     respond_to do |format|
-      format.json { render :json => ReceiptsDatatable.new(view_context) }
+      format.json { render json: ReceiptsDatatable.new(view_context) }
     end
   end
 
@@ -51,7 +51,7 @@ class Admin::ReceiptsController < ApplicationController
           receipts = receipt_arel.where('value_date >= ? AND value_date <= ?', from, to).order(:value_date)
           exporter = Exporter::Factory.new( :receipts,
                                             params[:type].to_sym,
-                                            { :account => params["account"], :counterpart_account => params['counterpart_account'] })
+                                            { account: params["account"], counterpart_account: params['counterpart_account'] })
 
           extention = case params[:type]
             when 'banana' then 'txt'
@@ -59,9 +59,9 @@ class Admin::ReceiptsController < ApplicationController
           end
 
           send_data( exporter.export(receipts),
-                     :type => 'application/octet-stream',
-                     :filename=> "receipts_#{from}_#{to}_#{params[:type]}.#{extention}",
-                     :disposition => 'attachment' )
+                     type: 'application/octet-stream',
+                     filename: "receipts_#{from}_#{to}_#{params[:type]}.#{extention}",
+                     disposition: 'attachment' )
         else
           flash[:alert] = I18n.t('common.errors.date_must_match_format')
           redirect_to admin_path
@@ -104,10 +104,10 @@ class Admin::ReceiptsController < ApplicationController
       if Subscription.exists? params[:subscription_id]
         @subscription = Subscription.find(params[:subscription_id])
         @affair = Affair.joins(:subscriptions)
-                        .where(:owner_id => params[:owner_id],
-                               :subscriptions => {
-                                 :id => @subscription.id,
-                                 :title => @subscription.title
+                        .where(owner_id: params[:owner_id],
+                               subscriptions: {
+                                 id: @subscription.id,
+                                 title: @subscription.title
                                })
                         .select('affairs.*') # We need this otherwise the returned record is readonly
                         .first
@@ -123,8 +123,8 @@ class Admin::ReceiptsController < ApplicationController
 
         # Create an affair if the process of finding one failed
         unless @affair
-          @affair = Affair.new( :owner_id => params[:owner_id],
-                                :title => @subscription.title )
+          @affair = Affair.new( owner_id: params[:owner_id],
+                                title: @subscription.title )
 
           # This will validate and populate receiver_id/buyer_id
           unless @affair.save
@@ -138,11 +138,11 @@ class Admin::ReceiptsController < ApplicationController
 
         # Create an invoice if the process of finding one failed
         unless @invoice
-          @invoice = Invoice.new :value => @affair.value,
-                       :created_at => params[:value_date],
-                       :title => @affair.title,
-                       :invoice_template_id => params[:invoice_template_id],
-                       :affair_id => @affair.id
+          @invoice = Invoice.new value: @affair.value,
+                       created_at: params[:value_date],
+                       title: @affair.title,
+                       invoice_template_id: params[:invoice_template_id],
+                       affair_id: @affair.id
         end
 
         unless @invoice.save
@@ -151,10 +151,10 @@ class Admin::ReceiptsController < ApplicationController
         end
 
         # Finaly create a new receipt
-        @receipt = Receipt.new :value => params[:value],
-                               :value_date => params[:value_date],
-                               :means_of_payment => params[:means_of_payment],
-                               :invoice_id => @invoice.id
+        @receipt = Receipt.new value: params[:value],
+                               value_date: params[:value_date],
+                               means_of_payment: params[:means_of_payment],
+                               invoice_id: @invoice.id
         unless @receipt.save
           errors = @receipt.errors
           raise ActiveRecord::Rollback
@@ -164,16 +164,16 @@ class Admin::ReceiptsController < ApplicationController
 
     respond_to do |format|
       if errors.empty?
-        format.json { render :json => @receipt }
+        format.json { render json: @receipt }
       else
-        format.json { render :json => errors, :status => :unprocessable_entity }
+        format.json { render json: errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @receipt }
+      format.json { render json: @receipt }
     end
   end
 
@@ -181,9 +181,9 @@ class Admin::ReceiptsController < ApplicationController
     @receipt.value = params[:value]
     respond_to do |format|
       if @receipt.update_attributes(params[:receipt])
-        format.json { render :json => @receipt }
+        format.json { render json: @receipt }
       else
-        format.json { render :json => @receipt.errors, :status => :unprocessable_entity }
+        format.json { render json: @receipt.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -191,9 +191,9 @@ class Admin::ReceiptsController < ApplicationController
   def destroy
     respond_to do |format|
       if @receipt.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @receipt.errors, :status => :unprocessable_entity }
+        format.json { render json: @receipt.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -207,7 +207,7 @@ class Admin::ReceiptsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:id => nil, :label => t.means_of_payment}}}
+      format.json { render json: result.map{|t| {id: nil, label: t.means_of_payment}}}
     end
   end
 
@@ -222,32 +222,32 @@ class Admin::ReceiptsController < ApplicationController
     respond_to do |format|
       if errors.empty?
         people = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order])
-        BackgroundTasks::GenerateReceiptsDocumentAndEmail.schedule(:people_ids => people.map{ |p| p.id.to_i },
-                                                                   :person => current_person,
-                                                                   :from => from,
-                                                                   :to => to,
-                                                                   :format => params[:format],
-                                                                   :generic_template_id => params[:generic_template_id],
-                                                                   :invoices_filter => params[:invoices_filter],
-                                                                   :unit_value => params[:unit_value],
-                                                                   :global_value => params[:global_value],
-                                                                   :unit_overpaid => params[:unit_overpaid],
-                                                                   :global_overpaid => params[:global_overpaid])
-        format.json { render :json => {} }
+        BackgroundTasks::GenerateReceiptsDocumentAndEmail.schedule(people_ids: people.map{ |p| p.id.to_i },
+                                                                   person: current_person,
+                                                                   from: from,
+                                                                   to: to,
+                                                                   format: params[:format],
+                                                                   generic_template_id: params[:generic_template_id],
+                                                                   invoices_filter: params[:invoices_filter],
+                                                                   unit_value: params[:unit_value],
+                                                                   global_value: params[:global_value],
+                                                                   unit_overpaid: params[:unit_overpaid],
+                                                                   global_overpaid: params[:global_overpaid])
+        format.json { render json: {} }
         format.any do
           # TODO improve report
           flash[:notice] = I18n.t("admin.notices.receipts_generation_started",
-            :members_count => people.count,
-            :email => current_person.email)
-          redirect_to admin_path(:anchor => 'finances')
+            members_count: people.count,
+            email: current_person.email)
+          redirect_to admin_path(anchor: 'finances')
         end
       else
         format.json do
-          render :json => errors, :status => :unprocessable_entity
+          render json: errors, status: :unprocessable_entity
         end
         format.any do
           flash[:alert] = I18n.t("directory.errors.query_empty") if errors[:search_string]
-          redirect_to admin_path(:anchor => 'finances')
+          redirect_to admin_path(anchor: 'finances')
         end
       end
     end

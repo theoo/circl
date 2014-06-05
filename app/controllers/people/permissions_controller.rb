@@ -34,7 +34,7 @@ class People::PermissionsController < ApplicationController
       end
     end
     respond_to do |format|
-      format.json { render :json => hash }
+      format.json { render json: hash }
     end
   end
 

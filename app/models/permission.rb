@@ -53,12 +53,12 @@ class Permission < ActiveRecord::Base
   ###################
   validates_presence_of :action, :subject, :role_id
 
-  validate :subject_is_model, :if => :has_conditions?
-  validate :has_valid_conditions, :if => :has_conditions?
+  validate :subject_is_model, if: :has_conditions?
+  validate :has_valid_conditions, if: :has_conditions?
 
   # Validate fields of type 'string' length
-  validates_length_of :action, :maximum => 255
-  validates_length_of :subject, :maximum => 255
+  validates_length_of :action, maximum: 255
+  validates_length_of :subject, maximum: 255
 
 
   ########################
@@ -119,7 +119,7 @@ class Permission < ActiveRecord::Base
   def self.permissionize(h)
     h.each_with_object([]) do |(model, actions), arr|
       actions.each do |action|
-        p = Permission.new(:action => action, :subject => model.to_s)
+        p = Permission.new(action: action, subject: model.to_s)
         p.readonly!
         arr << p
       end

@@ -70,39 +70,39 @@ class Salaries::Taxes::Generic < ActiveRecord::Base
   ###################
 
   validates :year,
-            :numericality => {:only_integer => true},
-            :presence => true
+            numericality: {only_integer: true},
+            presence: true
 
   validates :salary_from_in_cents,
-            :numericality => {:only_integer => true}
+            numericality: {only_integer: true}
 
   validates :salary_to_in_cents,
-            :numericality => {:only_integer => true}
+            numericality: {only_integer: true}
 
   validates :employer_value_in_cents,
-            :numericality => {:only_integer => true}
+            numericality: {only_integer: true}
 
   validates :employer_percent,
-            :numericality => {:greater_than_or_equal_to => 0, :less_than_or_equal_to => 100}
+            numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}
 
   validates :employer_use_percent,
-            :inclusion => { :in => [true, false] }
+            inclusion: { in: [true, false] }
 
   validates :employee_value_in_cents,
-            :numericality => {:only_integer => true}
+            numericality: {only_integer: true}
 
   validates :employee_percent,
-            :numericality => {:greater_than_or_equal_to => 0, :less_than_or_equal_to => 100}
+            numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 100}
 
   validates :employee_use_percent,
-            :inclusion => { :in => [true, false] }
+            inclusion: { in: [true, false] }
 
   #####################
   ### CLASS METHODS ###
   #####################
 
   def self.compute(reference_value, year, infos, tax)
-    data = where(:tax_id => tax.id, :year => year).first
+    data = where(tax_id: tax.id, year: year).first
     raise RuntimeError, 'Cannot find tax data' unless data
 
     if infos.yearly_salary && (data.salary_from_in_cents? || data.salary_to_in_cents?)
@@ -127,18 +127,18 @@ class Salaries::Taxes::Generic < ActiveRecord::Base
     # create another helper class that uses two foo_data as `composed_of` that splits fields
     # over the appropriate db fields
     {
-      :taxed_value => taxed_value,
-      :employer =>
+      taxed_value: taxed_value,
+      employer:
       {
-        :percent => data.employer_percent,
-        :value   => taxed_value * (data.employee_percent / 100),
-        :use_percent  => true
+        percent: data.employer_percent,
+        value: taxed_value * (data.employee_percent / 100),
+        use_percent: true
       },
-      :employee =>
+      employee:
       {
-        :percent => data.employee_percent,
-        :value   => taxed_value * (data.employee_percent / 100),
-        :use_percent  => true
+        percent: data.employee_percent,
+        value: taxed_value * (data.employee_percent / 100),
+        use_percent: true
       }
     }
   end
@@ -147,7 +147,7 @@ class Salaries::Taxes::Generic < ActiveRecord::Base
     transaction do
       begin
         # parse file and build an array of generic tax
-        items = CSV.parse(data, :encoding => 'UTF-8')[1..-1].map do |row|
+        items = CSV.parse(data, encoding: 'UTF-8')[1..-1].map do |row|
           return false if row.size != 9
 
           # TODO Move validation to lib an include it in every taxes type.
@@ -169,22 +169,22 @@ class Salaries::Taxes::Generic < ActiveRecord::Base
             return false unless ['true', 'false'].index(row[i])
           end
 
-          new :tax                   => tax,
-              :year                  => row[0].to_i,
-              :salary_from           => row[1].to_i,
-              :salary_to             => row[2].to_i,
-              :employer_value        => row[3].to_i,
-              :employer_percent      => row[4].to_f,
-              :employer_use_percent  => (row[5] == "true"),
-              :employee_value        => row[6].to_i,
-              :employee_percent      => row[7].to_f,
-              :employee_use_percent  => (row[8] == "true")
+          new tax: tax,
+              year: row[0].to_i,
+              salary_from: row[1].to_i,
+              salary_to: row[2].to_i,
+              employer_value: row[3].to_i,
+              employer_percent: row[4].to_f,
+              employer_use_percent: (row[5] == "true"),
+              employee_value: row[6].to_i,
+              employee_percent: row[7].to_f,
+              employee_use_percent: (row[8] == "true")
         end
         return if items.empty?
 
         # remove currently stored data for the same year(s)
         items.map(&:year).uniq.each do |year|
-          where(:year => year, :tax_id => tax.id).destroy_all
+          where(year: year, tax_id: tax.id).destroy_all
         end
 
         # try to save taxes (it's a transaction...)

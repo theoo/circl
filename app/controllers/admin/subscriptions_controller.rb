@@ -26,7 +26,7 @@ class Admin::SubscriptionsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => SubscriptionsDatatable.new(view_context) }
+      format.json { render json: SubscriptionsDatatable.new(view_context) }
     end
   end
 
@@ -37,22 +37,22 @@ class Admin::SubscriptionsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => @subscription }
+      format.json { render json: @subscription }
       format.pdf do
         if @subscription.pdf_up_to_date?(query) and File.exist?(@subscription.pdf.path)
-          send_data File.read(@subscription.pdf.path), :filename => "subscription_#{params[:id]}.pdf", :type => 'application/pdf'
+          send_data File.read(@subscription.pdf.path), filename: "subscription_#{params[:id]}.pdf", type: 'application/pdf'
         else
           if params[:query]
-            BackgroundTasks::PrepareSubscriptionPdfsAndEmail.schedule(:subscription_id => @subscription.id,
-                                                                      :people_ids => people.map{ |p| p.id.to_i },
-                                                                      :person => current_person,
-                                                                      :query => query)
+            BackgroundTasks::PrepareSubscriptionPdfsAndEmail.schedule(subscription_id: @subscription.id,
+                                                                      people_ids: people.map{ |p| p.id.to_i },
+                                                                      person: current_person,
+                                                                      query: query)
 
-            flash[:notice] = I18n.t('admin.notices.pdf_will_be_sent', :email => current_person.email)
+            flash[:notice] = I18n.t('admin.notices.pdf_will_be_sent', email: current_person.email)
           else
             flash[:error] = I18n.t('directory.errors.query_invalid')
           end
-          redirect_to admin_path(:anchor => 'affairs')
+          redirect_to admin_path(anchor: 'affairs')
         end
       end
     end
@@ -63,22 +63,22 @@ class Admin::SubscriptionsController < ApplicationController
       query = JSON.parse params[:query]
       query.symbolize_keys!
       if query[:search_string].blank?
-        format.json { render :json => { :search_string => [I18n.t('activerecord.errors.messages.blank')] }, :status => :unprocessable_entity }
+        format.json { render json: { search_string: [I18n.t('activerecord.errors.messages.blank')] }, status: :unprocessable_entity }
         format.html {
           flash[:alert] = I18n.t("directory.errors.query_empty")
-          redirect_to admin_path(:anchor => 'affairs')
+          redirect_to admin_path(anchor: 'affairs')
         }
       else
         people = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order])
-        BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(:subscription_id => @subscription.id,
-                                                                  :people_ids => people.map{ |p| p.id.to_i },
-                                                                  :person => current_person)
-        flash[:notice] = I18n.t('admin.notices.add_members_email_will_be_sent', :email => current_person.email)
-        format.json { render :json => {} }
+        BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(subscription_id: @subscription.id,
+                                                                  people_ids: people.map{ |p| p.id.to_i },
+                                                                  person: current_person)
+        flash[:notice] = I18n.t('admin.notices.add_members_email_will_be_sent', email: current_person.email)
+        format.json { render json: {} }
         format.html do
           # TODO improve report
-          flash[:notice] = I18n.t("subscription.notices.members_added", :members_count => people.count)
-          redirect_to admin_path(:anchor => 'affairs')
+          flash[:notice] = I18n.t("subscription.notices.members_added", members_count: people.count)
+          redirect_to admin_path(anchor: 'affairs')
         end
       end
     end
@@ -88,10 +88,10 @@ class Admin::SubscriptionsController < ApplicationController
     respond_to do |format|
       # ensure there is no receipts
       if @subscription.receipts.count > 0
-        format.json { render :json => { :subscription_id => [I18n.t('subscription.errors.cannot_remove_members_if_there_is_receipts')] }, :status => :unprocessable_entity }
+        format.json { render json: { subscription_id: [I18n.t('subscription.errors.cannot_remove_members_if_there_is_receipts')] }, status: :unprocessable_entity }
       else
         @subscription.destroy_affairs # This will destroy dependent stuff
-        format.json { render :json => {} }
+        format.json { render json: {} }
       end
     end
   end
@@ -109,10 +109,10 @@ class Admin::SubscriptionsController < ApplicationController
 
       Subscription.transaction do
         @subscription.affairs.each do |affair|
-          new_affair = Affair.new :title => transfer_to.title,
-                                  :owner_id => affair.owner_id,
-                                  :created_at => affair.created_at,
-                                  :updated_at => affair.updated_at
+          new_affair = Affair.new title: transfer_to.title,
+                                  owner_id: affair.owner_id,
+                                  created_at: affair.created_at,
+                                  updated_at: affair.updated_at
 
           # Affair requires to be saved before adding subscriptions
           new_affair.save!
@@ -130,12 +130,12 @@ class Admin::SubscriptionsController < ApplicationController
 
             # Create the new invoice
             overpaid_value = invoice.overpaid_value
-            new_invoice = Invoice.new :value => overpaid_value,
-                                      :title => new_affair.title,
-                                      :affair_id => new_affair.id,
-                                      :invoice_template_id => transfer_to.invoice_template_for(invoice.owner),
-                                      :created_at => invoice.created_at,
-                                      :updated_at => invoice.updated_at
+            new_invoice = Invoice.new value: overpaid_value,
+                                      title: new_affair.title,
+                                      affair_id: new_affair.id,
+                                      invoice_template_id: transfer_to.invoice_template_for(invoice.owner),
+                                      created_at: invoice.created_at,
+                                      updated_at: invoice.updated_at
             unless new_invoice.save
               errors = new_invoice.errors
               raise ActiveRecord::Rollback
@@ -162,12 +162,12 @@ class Admin::SubscriptionsController < ApplicationController
             end
 
             # Create the new receipt
-            new_receipt = Receipt.new :value => new_invoice.value,
-                                      :invoice_id => new_invoice.id,
-                                      :value_date => receipt.value_date,
-                                      :means_of_payment => receipt.means_of_payment,
-                                      :created_at => receipt.created_at,
-                                      :updated_at => receipt.updated_at
+            new_receipt = Receipt.new value: new_invoice.value,
+                                      invoice_id: new_invoice.id,
+                                      value_date: receipt.value_date,
+                                      means_of_payment: receipt.means_of_payment,
+                                      created_at: receipt.created_at,
+                                      updated_at: receipt.updated_at
             unless new_receipt.save
               errors = new_receipt.errors
               raise ActiveRecord::Rollback
@@ -179,9 +179,9 @@ class Admin::SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if errors.empty?
-        format.json { render :json => @subscription }
+        format.json { render json: @subscription }
       else
-        format.json { render :json => errors, :status => :unprocessable_entity }
+        format.json { render json: errors, status: :unprocessable_entity }
       end
     end
   end
@@ -198,10 +198,10 @@ class Admin::SubscriptionsController < ApplicationController
 
       # append values
       params[:values].each do |v|
-        sv =  @subscription.values.new(:value => v[:value],
-                :position            => v[:position],
-                :private_tag_id      => v[:private_tag_id],
-                :invoice_template_id => v[:invoice_template_id])
+        sv =  @subscription.values.new(value: v[:value],
+                position: v[:position],
+                private_tag_id: v[:private_tag_id],
+                invoice_template_id: v[:invoice_template_id])
         unless sv.save
           sv.errors.messages.each do |k,v|
             @subscription.errors.add(("values[][" + k.to_s + "]").to_sym, v.join(", "))
@@ -226,11 +226,11 @@ class Admin::SubscriptionsController < ApplicationController
         end
 
         if do_bg_tasks
-          BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(:subscription_id => @subscription.id,
-            :people_ids => people_ids,
-            :person => current_person,
-            :parent_subscription_id => params[:parent_id],
-            :status => params[:status])
+          BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(subscription_id: @subscription.id,
+            people_ids: people_ids,
+            person: current_person,
+            parent_subscription_id: params[:parent_id],
+            status: params[:status])
         end
       end
       succeed = true
@@ -238,16 +238,16 @@ class Admin::SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if succeed
-        format.json { render :json => @subscription }
+        format.json { render json: @subscription }
       else
-        format.json { render :json => @subscription.errors, :status => :unprocessable_entity }
+        format.json { render json: @subscription.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @subscription }
+      format.json { render json: @subscription }
     end
   end
 
@@ -274,10 +274,10 @@ class Admin::SubscriptionsController < ApplicationController
           sv.private_tag_id      = v[:private_tag_id]
           sv.invoice_template_id = v[:invoice_template_id]
         else
-          sv = @subscription.values.new(:value => v[:value],
-                :position            => v[:position],
-                :private_tag_id      => v[:private_tag_id],
-                :invoice_template_id => v[:invoice_template_id])
+          sv = @subscription.values.new(value: v[:value],
+                position: v[:position],
+                private_tag_id: v[:private_tag_id],
+                invoice_template_id: v[:invoice_template_id])
         end
 
         unless sv.save
@@ -288,8 +288,8 @@ class Admin::SubscriptionsController < ApplicationController
         end
       end
 
-      BackgroundTasks::UpdateSubscriptionInvoicesAndEmail.schedule( :subscription_id => @subscription.id,
-                                                                    :person => current_person )
+      BackgroundTasks::UpdateSubscriptionInvoicesAndEmail.schedule( subscription_id: @subscription.id,
+                                                                    person: current_person )
 
       succeed = true
     end
@@ -297,9 +297,9 @@ class Admin::SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if succeed
-        format.json { render :json => @subscription }
+        format.json { render json: @subscription }
       else
-        format.json { render :json => @subscription.errors, :status => :unprocessable_entity }
+        format.json { render json: @subscription.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -307,9 +307,9 @@ class Admin::SubscriptionsController < ApplicationController
   def destroy
     respond_to do |format|
       if @subscription.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @subscription.errors, :status => :unprocessable_entity }
+        format.json { render json: @subscription.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -327,13 +327,13 @@ class Admin::SubscriptionsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:id => t.id, :label => t.title}}}
+      format.json { render json: result.map{|t| {id: t.id, label: t.title}}}
     end
   end
 
   def count
     respond_to do |format|
-      format.json { render :json => {:count => Subscription.count} }
+      format.json { render json: {count: Subscription.count} }
     end
   end
 
@@ -409,9 +409,9 @@ class Admin::SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if success
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @errors , :status => :unprocessable_entity }
+        format.json { render json: @errors , status: :unprocessable_entity }
       end
     end
   end
@@ -429,14 +429,14 @@ class Admin::SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if @errors.size > 0
-        format.json { render :json => @errors , :status => :unprocessable_entity }
+        format.json { render json: @errors , status: :unprocessable_entity }
       else
         BackgroundTasks::MergeSubscriptions.schedule(
-          :source_subscription_id => params[:id],
-          :destination_subscription_id => params[:transfer_to_subscription_id],
-          :person => current_person)
+          source_subscription_id: params[:id],
+          destination_subscription_id: params[:transfer_to_subscription_id],
+          person: current_person)
 
-        format.json { render :json => {} }
+        format.json { render json: {} }
       end
     end
   end

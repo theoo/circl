@@ -57,37 +57,37 @@ class ApplicationController < ActionController::Base
 
     rescue_from CanCan::AccessDenied do |exception|
       respond_to do |format|
-        format.html { render :file => "#{Rails.root}/public/403.html.haml", :layout => 'errors' } # status => 403 disabled
-        format.json { render :json => {:base => [I18n.t("permission.errors.forbidden")]}, :status => :forbidden }
+        format.html { render file: "#{Rails.root}/public/403.html.haml", layout: 'errors' } # status => 403 disabled
+        format.json { render json: {base: [I18n.t("permission.errors.forbidden")]}, status: :forbidden }
       end
     end
 
     rescue_from ActiveRecord::RecordNotFound do |exception|
       respond_to do |format|
-        format.html { render :file => "#{Rails.root}/public/404_record_not_found.html.haml", :layout => 'errors' }
-        format.json { render :json => {:base => [I18n.t("permission.errors.record_not_found")]}, :status => :not_found }
+        format.html { render file: "#{Rails.root}/public/404_record_not_found.html.haml", layout: 'errors' }
+        format.json { render json: {base: [I18n.t("permission.errors.record_not_found")]}, status: :not_found }
       end
     end
 
     rescue_from ApplicationSetting::MissingAttribute do |exception|
       @exception = exception
       respond_to do |format|
-        format.html { render :file => "#{Rails.root}/public/404_attribute_not_found.html.haml", :layout => 'errors' }
-        format.json { render :json => "ApplicationSetting: " + @exception.to_s, :status => :not_found }
+        format.html { render file: "#{Rails.root}/public/404_attribute_not_found.html.haml", layout: 'errors' }
+        format.json { render json: "ApplicationSetting: " + @exception.to_s, status: :not_found }
       end
     end
 
     rescue_from ActionController::RoutingError do |exception|
       respond_to do |format|
-        format.html { render :file => "#{Rails.root}/public/404.html.haml", :layout => 'errors' }
-        format.json { render :json => {:base => [I18n.t("permission.errors.record_not_found")]}, :status => :not_found }
+        format.html { render file: "#{Rails.root}/public/404.html.haml", layout: 'errors' }
+        format.json { render json: {base: [I18n.t("permission.errors.record_not_found")]}, status: :not_found }
       end
     end
 
     rescue_from ApplicationController::InvalidParameters do |exception|
       respond_to do |format|
-        format.html { render :file => "#{Rails.root}/public/400.html.haml", :layout => 'errors' }
-        format.json { render :json => {:base => [I18n.t("permission.errors.invalid_parameters")]}, :status => :bad_request }
+        format.html { render file: "#{Rails.root}/public/400.html.haml", layout: 'errors' }
+        format.json { render json: {base: [I18n.t("permission.errors.invalid_parameters")]}, status: :bad_request }
       end
     end
   end
@@ -149,7 +149,7 @@ class ApplicationController < ActionController::Base
   # returns a CSV string when giving an ActiveRecord Object array
   # TODO move me into a lib/helper
   def csv_ify(ary, fields)
-    CSV.generate(:encoding => 'UTF-8') do |csv|
+    CSV.generate(encoding: 'UTF-8') do |csv|
       # header
       # TODO: i18n?
       csv << fields.map{|e| e.humanize}
@@ -172,7 +172,7 @@ class ApplicationController < ActionController::Base
     language.scan(/^[a-z]{2}/).first if language
   end
 
-  def self.monitor_changes(instance_name, options = { :only => [:create, :update, :destroy] })
+  def self.monitor_changes(instance_name, options = { only: [:create, :update, :destroy] })
     class << self; attr_accessor :monitored_instance_name end
     self.monitored_instance_name = instance_name
     after_filter :log_activity_automatically, options
@@ -198,10 +198,10 @@ class ApplicationController < ActionController::Base
   end
 
   def log_activity(action, resource, data)
-    Activity.create! :action => action,
-                     :data => data,
-                     :person => current_person,
-                     :resource => resource
+    Activity.create! action: action,
+                     data: data,
+                     person: current_person,
+                     resource: resource
   end
 
   # parameters validation

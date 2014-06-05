@@ -32,18 +32,18 @@
 class BackgroundTasks::ConcatAndEmailSubscriptionPdf < BackgroundTask
   def self.generate_title(options)
     I18n.t("background_task.tasks.concat_and_email_subscription_pdf",
-      :people_count => options[:people_ids].size,
-      :subscription_id => options[:subscription_id],
-      :subscription_title => Subscription.find(options[:subscription_id]).title)
+      people_count: options[:people_ids].size,
+      subscription_id: options[:subscription_id],
+      subscription_title: Subscription.find(options[:subscription_id]).title)
   end
 
   def process!
     subscription = Subscription.find options[:subscription_id]
     paths = options[:invoices_ids].map{ |id| Invoice.find(id).pdf.path }
 
-    file = Tempfile.new(["subscription#{subscription.id}", ".pdf"], :encoding => 'ascii-8bit')
+    file = Tempfile.new(["subscription#{subscription.id}", ".pdf"], encoding: 'ascii-8bit')
     file.binmode
-    script = Tempfile.new(['script', '.sh'], :encoding => 'ascii-8bit')
+    script = Tempfile.new(['script', '.sh'], encoding: 'ascii-8bit')
     script.write("#!/bin/bash\n")
     script.write("pdftk #{paths.join(' ')} cat output #{file.path}")
     script.flush

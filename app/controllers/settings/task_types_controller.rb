@@ -27,7 +27,7 @@ class Settings::TaskTypesController < ApplicationController
     @task_types = TaskType.actives
 
     respond_to do |format|
-      format.json { render :json => @task_types }
+      format.json { render json: @task_types }
     end
   end
 
@@ -36,7 +36,7 @@ class Settings::TaskTypesController < ApplicationController
     @task_types = TaskType.all
 
     respond_to do |format|
-      format.json { render :json => @task_types }
+      format.json { render json: @task_types }
     end
   end
 
@@ -48,16 +48,16 @@ class Settings::TaskTypesController < ApplicationController
     @task_type.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @task_type.save
-        format.json { render :json => @task_type }
+        format.json { render json: @task_type }
       else
-        format.json { render :json => @task_type.errors, :status => :unprocessable_entity }
+        format.json { render json: @task_type.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @task_type }
+      format.json { render json: @task_type }
     end
   end
 
@@ -65,9 +65,9 @@ class Settings::TaskTypesController < ApplicationController
     @task_type.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @task_type.update_attributes(params[:task_type])
-        format.json { render :json => @task_type }
+        format.json { render json: @task_type }
       else
-        format.json { render :json => @task_type.errors, :status => :unprocessable_entity }
+        format.json { render json: @task_type.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -75,9 +75,9 @@ class Settings::TaskTypesController < ApplicationController
   def destroy
     respond_to do |format|
       if @task_type.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @task_type.errors, :status => :unprocessable_entity}
+        format.json { render json: @task_type.errors, status: :unprocessable_entity}
       end
     end
   end

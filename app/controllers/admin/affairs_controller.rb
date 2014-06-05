@@ -20,18 +20,18 @@ class Admin::AffairsController < ApplicationController
 
   layout false
 
-  load_and_authorize_resource :except => :index
+  load_and_authorize_resource except: :index
 
   def index
     authorize! :index, Affair
     respond_to do |format|
-      format.json { render :json => AffairsDatatable.new(view_context) }
+      format.json { render json: AffairsDatatable.new(view_context) }
     end
   end
 
   def show
     respond_to do |format|
-      format.json { render :json => @affair }
+      format.json { render json: @affair }
     end
   end
 
@@ -44,7 +44,7 @@ class Admin::AffairsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:id => t.id, :label => t.title}}}
+      format.json { render json: result.map{|t| {id: t.id, label: t.title}}}
     end
   end
 
@@ -56,7 +56,7 @@ class Admin::AffairsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => statuses }
+      format.json { render json: statuses }
     end
   end
 

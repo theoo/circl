@@ -27,7 +27,7 @@ class Settings::RolesController < ApplicationController
   def index
     respond_to do |format|
       format.json do
-        render :json => @roles
+        render json: @roles
       end
     end
   end
@@ -40,17 +40,17 @@ class Settings::RolesController < ApplicationController
     respond_to do |format|
       if @role.save
         format.json do
-          render :json => @role
+          render json: @role
         end
       else
-        format.json { render :json => @role.errors, :status => :unprocessable_entity }
+        format.json { render json: @role.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @role }
+      format.json { render json: @role }
     end
   end
 
@@ -58,10 +58,10 @@ class Settings::RolesController < ApplicationController
     respond_to do |format|
       if @role.update_attributes(params[:role])
         format.json do
-          render :json => @role
+          render json: @role
         end
       else
-        format.json { render :json => @role.errors, :status => :unprocessable_entity }
+        format.json { render json: @role.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -69,9 +69,9 @@ class Settings::RolesController < ApplicationController
   def destroy
     respond_to do |format|
       if @role.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @role.errors, :status => :unprocessable_entity }
+        format.json { render json: @role.errors, status: :unprocessable_entity }
       end
     end
   end

@@ -31,14 +31,14 @@ class Extra < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
-  before_validation :set_position_if_none_given, :if => Proc.new {|i| i.position.blank? }
+  before_validation :set_position_if_none_given, if: Proc.new {|i| i.position.blank? }
 
   #################
   ### RELATIONS ###
   #################
 
   belongs_to  :affair
-  has_one     :owner, :through => 'affair'
+  has_one     :owner, through: 'affair'
 
   money :value
   money :vat
@@ -47,19 +47,19 @@ class Extra < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
-  validates :title, :presence => true
-  validates :value, :presence => true,
-                    :numericality => { :less_than_or_equal => 99999999.99, :greater_than => 0 }
-  validates :position, :presence => true
+  validates :title, presence: true
+  validates :value, presence: true,
+                    numericality: { less_than_or_equal: 99999999.99, greater_than: 0 }
+  validates :position, presence: true
   # Unable to validae uniqueness when reordering
-  # , :uniqueness => { :scope => :affair_id }
-  validates :quantity, :presence => true
+  # , uniqueness: { scope: :affair_id }
+  validates :quantity, presence: true
 
   # Validate fields of type 'string' length
-  validates_length_of :title, :maximum => 255
+  validates_length_of :title, maximum: 255
 
   # Validate fields of type 'text' length
-  validates_length_of :description, :maximum =>  65535
+  validates_length_of :description, maximum:  65535
   ########################
   #### CLASS METHODS #####
   ########################

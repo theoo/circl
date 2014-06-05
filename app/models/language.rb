@@ -47,18 +47,18 @@ class Language < ActiveRecord::Base
   #################
 
   has_many :main_people,
-           :class_name => 'Person',
-           :foreign_key => :main_communication_language_id
+           class_name: 'Person',
+           foreign_key: :main_communication_language_id
   has_many  :translation_aptitudes
   has_many  :invoice_templates
   has_many  :salaries_templates
 
   has_and_belongs_to_many :communication_people, #communication_languages
-                          :class_name => 'Person',
-                          :join_table => 'people_communication_languages',
-                          :uniq => true,
-                          :after_add => :update_elasticsearch_index,
-                          :after_remove => :update_elasticsearch_index
+                          class_name: 'Person',
+                          join_table: 'people_communication_languages',
+                          uniq: true,
+                          after_add: :update_elasticsearch_index,
+                          after_remove: :update_elasticsearch_index
 
   ###################
   ### VALIDATIONS ###
@@ -68,8 +68,8 @@ class Language < ActiveRecord::Base
   validates_uniqueness_of :name
 
   # Validate fields of type 'string' length
-  validates_length_of :name, :maximum => 255
-  validates_length_of :code, :maximum => 255
+  validates_length_of :name, maximum: 255
+  validates_length_of :code, maximum: 255
 
 
   ########################
@@ -90,7 +90,7 @@ class Language < ActiveRecord::Base
 
   def reindex_people
     ids = main_people.map(&:id) + communication_people.map(&:id)
-    BackgroundTasks::UpdateIndexForPeople.schedule(:people_ids => ids.uniq)
+    BackgroundTasks::UpdateIndexForPeople.schedule(people_ids: ids.uniq)
     true
   end
 

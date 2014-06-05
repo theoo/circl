@@ -26,13 +26,13 @@ class Settings::GenericTemplatesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => @generic_templates }
+      format.json { render json: @generic_templates }
     end
   end
 
   def show
     respond_to do |format|
-      format.json { render :json => @generic_template }
+      format.json { render json: @generic_template }
       format.jpg do
         unless @generic_template.snapshot.path and File.exists? @generic_template.snapshot.path
           @generic_template.take_snapshot
@@ -46,30 +46,30 @@ class Settings::GenericTemplatesController < ApplicationController
   def create
     respond_to do |format|
       if @generic_template.save
-        format.json { render :json => @generic_template }
+        format.json { render json: @generic_template }
       else
-        format.json { render :json => @generic_template.errors, :status => :unprocessable_entity }
+        format.json { render json: @generic_template.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @generic_template }
-      format.html { render :layout => 'minimal' }
+      format.json { render json: @generic_template }
+      format.html { render layout: 'minimal' }
     end
   end
 
   def update
     respond_to do |format|
       if @generic_template.update_attributes(params[:generic_template])
-        format.json { render :json => @generic_template }
+        format.json { render json: @generic_template }
         format.html do
           flash[:notice] = I18n.t("common.notices.successfully_updated")
           redirect_to edit_settings_template_path(@generic_template)
         end
       else
-        format.json { render :json => @generic_template.errors, :status => :unprocessable_entity }
+        format.json { render json: @generic_template.errors, status: :unprocessable_entity }
         format.html do
           flash[:error] = I18n.t("common.errors.failed_to_update")
           render 'edit'
@@ -81,9 +81,9 @@ class Settings::GenericTemplatesController < ApplicationController
   def destroy
     respond_to do |format|
       if @generic_template.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @generic_template.errors, :status => :unprocessable_entity}
+        format.json { render json: @generic_template.errors, status: :unprocessable_entity}
       end
     end
   end
@@ -97,16 +97,16 @@ class Settings::GenericTemplatesController < ApplicationController
     respond_to do |format|
       if @generic_template.save
         @generic_template.take_snapshot
-        format.json { render :json => @generic_template }
+        format.json { render json: @generic_template }
       else
-        format.json { render :json => {:errors => @generic_template.errors}, :status => :unprocessable_entity }
+        format.json { render json: {errors: @generic_template.errors}, status: :unprocessable_entity }
       end
     end
   end
 
   def count
     respond_to do |format|
-      format.json { render :json => {:count => GenericTemplate.count} }
+      format.json { render json: {count: GenericTemplate.count} }
     end
   end
 

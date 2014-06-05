@@ -26,7 +26,7 @@ class Settings::AffairsConditionsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => @affairs_conditions }
+      format.json { render json: @affairs_conditions }
     end
   end
 
@@ -37,25 +37,25 @@ class Settings::AffairsConditionsController < ApplicationController
   def create
     respond_to do |format|
       if @affairs_condition.save
-        format.json { render :json => @affairs_condition }
+        format.json { render json: @affairs_condition }
       else
-        format.json { render :json => @affairs_condition.errors, :status => :unprocessable_entity }
+        format.json { render json: @affairs_condition.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @affairs_condition }
+      format.json { render json: @affairs_condition }
     end
   end
 
   def update
     respond_to do |format|
       if @affairs_condition.update_attributes(params[:application_setting])
-        format.json { render :json => @affairs_condition }
+        format.json { render json: @affairs_condition }
       else
-        format.json { render :json => @affairs_condition.errors, :status => :unprocessable_entity }
+        format.json { render json: @affairs_condition.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -63,9 +63,9 @@ class Settings::AffairsConditionsController < ApplicationController
   def destroy
     respond_to do |format|
       if @affairs_condition.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @affairs_condition.errors, :status => :unprocessable_entity }
+        format.json { render json: @affairs_condition.errors, status: :unprocessable_entity }
       end
     end
   end

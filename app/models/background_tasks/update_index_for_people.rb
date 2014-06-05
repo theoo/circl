@@ -32,7 +32,7 @@
 class BackgroundTasks::UpdateIndexForPeople < BackgroundTask
   def self.generate_title(options)
     I18n.t("background_task.tasks.update_index_for_people",
-      :people_count => options[:people_ids].size)
+      people_count: options[:people_ids].size)
  end
 
   def process!

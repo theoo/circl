@@ -54,20 +54,20 @@ class PeopleDatatable
       h[index + 1] = capture_haml do
         # TODO if can? :change_password, person
         haml_tag  :button,
-                  :class => 'btn btn-default',
-                  :name => 'directory-person-change-password',
-                  :title => I18n.t("directory.views.actions.change_person_password") do
-          haml_tag :i, :class => 'icon-key'
+                  class: 'btn btn-default',
+                  name: 'directory-person-change-password',
+                  title: I18n.t("directory.views.actions.change_person_password") do
+          haml_tag :i, class: 'icon-key'
         end
       end
 
       h[index + 2] = capture_haml do
         # TODO if can? :destroy, person
         haml_tag  :button,
-                  :class => 'btn btn-danger',
-                  :name => 'directory-person-destroy',
-                  :title => I18n.t("common.destroy") do
-          haml_tag :i, :class => 'icon-remove'
+                  class: 'btn btn-danger',
+                  name: 'directory-person-destroy',
+                  title: I18n.t("common.destroy") do
+          haml_tag :i, class: 'icon-remove'
         end
       end
 

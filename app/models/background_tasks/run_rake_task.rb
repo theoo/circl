@@ -32,8 +32,8 @@
 class BackgroundTasks::RunRakeTask < BackgroundTask
   def self.generate_title(options)
     I18n.t("background_task.tasks.run_rake_task",
-      :name => options[:name],
-      :argument => options[:argument])
+      name: options[:name],
+      argument: options[:argument])
   end
 
   def process!

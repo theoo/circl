@@ -32,17 +32,17 @@
 class BackgroundTasks::GenerateInvoiceTemplateJpg < BackgroundTask
   def self.generate_title(options)
     I18n.t("background_task.tasks.generate_invoice_template_jpg",
-      :invoice_template_id => options[:invoice_template_id],
-      :invoice_template_title => InvoiceTemplate.find(options[:invoice_template_id]).title)
+      invoice_template_id: options[:invoice_template_id],
+      invoice_template_title: InvoiceTemplate.find(options[:invoice_template_id]).title)
   end
 
   def process!
     invoice_template = InvoiceTemplate.find(options[:invoice_template_id])
 
     controller = Settings::InvoiceTemplatesController.new
-    html = controller.render_to_string :inline => invoice_template.html,
-      :layout => 'preview.html.haml',
-      :formats => [:jpg]
+    html = controller.render_to_string inline: invoice_template.html,
+      layout: 'preview.html.haml',
+      formats: [:jpg]
 
     html.assets_to_full_path!
 

@@ -82,14 +82,14 @@ class Invoice < ActiveRecord::Base
 
   belongs_to  :affair
   belongs_to  :invoice_template
-  has_many    :receipts, :dependent => :destroy
-  has_one     :owner, :through => :affair
-  has_one     :buyer, :through => :affair
-  has_one     :receiver, :through => :affair
-  has_many    :subscriptions, :through => :affair, :uniq => true
-  has_many    :tasks,         :through => :affair, :uniq => true
-  has_many    :product_items, :through => :affair, :uniq => true
-  has_many    :extras,        :through => :affair, :uniq => true
+  has_many    :receipts, dependent: :destroy
+  has_one     :owner, through: :affair
+  has_one     :buyer, through: :affair
+  has_one     :receiver, through: :affair
+  has_many    :subscriptions, through: :affair, uniq: true
+  has_many    :tasks,         through: :affair, uniq: true
+  has_many    :product_items, through: :affair, uniq: true
+  has_many    :extras,        through: :affair, uniq: true
 
   # paperclip
   has_attached_file :pdf
@@ -108,18 +108,18 @@ class Invoice < ActiveRecord::Base
   ###################
 
   validates_presence_of :title, :invoice_template_id, :affair_id
-  validates_presence_of :created_at, :on => :update
-  validates_with DateValidator, :attribute => :created_at
+  validates_presence_of :created_at, on: :update
+  validates_with DateValidator, attribute: :created_at
 
   # Validate fields of type 'string' length
-  validates_length_of :title, :maximum => 255
+  validates_length_of :title, maximum: 255
 
   # Validate fields of type 'text' length
-  validates_length_of :description, :maximum => 65536
-  validates_length_of :printed_address, :maximum => 65536
-  validates :value, :presence => true,
-                    :numericality => { :less_than_or_equal => 99999999.99 }, # BVR limit
-                    :allow_nil => true
+  validates_length_of :description, maximum: 65536
+  validates_length_of :printed_address, maximum: 65536
+  validates :value, presence: true,
+                    numericality: { less_than_or_equal: 99999999.99 }, # BVR limit
+                    allow_nil: true
 
   #####################
   ### CLASS METHODS ###
@@ -193,11 +193,11 @@ class Invoice < ActiveRecord::Base
                       'LOCALE'                             => I18n.locale.to_s,
                       'INVOICE_ADDRESS'                    => simple_format(printed_address),
                       'INVOICE_DATE'                       => created_at.to_date.to_s,
-                      'INVOICE_DAY_NUMERIC'                => I18n.l(created_at, :format => "%d"),
+                      'INVOICE_DAY_NUMERIC'                => I18n.l(created_at, format: "%d"),
                       'INVOICE_MONTH_NUMERIC'              => created_at.strftime("%m"),
                       'INVOICE_YEAR_NUMERIC'               => created_at.strftime("%Y"),
-                      'INVOICE_DAY_WORD'                   => I18n.l(created_at, :format => "%A"),
-                      'INVOICE_MONTH_WORD'                 => I18n.l(created_at, :format => "%B"),
+                      'INVOICE_DAY_WORD'                   => I18n.l(created_at, format: "%A"),
+                      'INVOICE_MONTH_WORD'                 => I18n.l(created_at, format: "%B"),
                       'INVOICE_DESCRIPTION'                => description.to_s,
                       'INVOICE_ID'                         => id.to_s,
                       'INVOICE_TITLE'                      => title.to_s,
@@ -262,7 +262,7 @@ class Invoice < ActiveRecord::Base
       end
 
       h[:simples].merge!({'BVR_REFERENCE_NUMBER'        => bvr_reference_number,
-                          'BVR_SPACED_REFERENCE_NUMBER' => bvr_reference_number(:with_spaces => true),
+                          'BVR_SPACED_REFERENCE_NUMBER' => bvr_reference_number(with_spaces: true),
                           'BVR_ADDRESS'                 => invoice_template.bvr_address.to_s,
                           'BVR_ACCOUNT'                 => invoice_template.bvr_account.to_s,
                           'BVR_CODELINE'                => bvr_codelines.join,
@@ -402,12 +402,12 @@ class Invoice < ActiveRecord::Base
 
   # Append a background task in the queue to update the PDF.
   def update_pdf
-    BackgroundTasks::GenerateInvoicePdf.schedule(:invoice_id => self.id)
+    BackgroundTasks::GenerateInvoicePdf.schedule(invoice_id: self.id)
   end
 
   # Run immediately a background task to update the PDF.
   def update_pdf!
-    BackgroundTasks::GenerateInvoicePdf.process!(:invoice_id => self.id)
+    BackgroundTasks::GenerateInvoicePdf.process!(invoice_id: self.id)
   end
 
   # Placeholder proxy

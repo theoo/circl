@@ -61,18 +61,18 @@ class EmploymentContract < ActiveRecord::Base
   validates_presence_of :percentage, :interval_starts_on, :interval_ends_on, :person_id
 
   validates_numericality_of :percentage,
-                            :greater_than_or_equal_to => 0,
-                            :less_than_or_equal_to => 100,
-                            :only_integer => false
+                            greater_than_or_equal_to: 0,
+                            less_than_or_equal_to: 100,
+                            only_integer: false
 
   validates_with IntervalValidator
-  validates_with DateValidator, :attribute => :interval_starts_on
-  validates_with DateValidator, :attribute => :interval_ends_on
+  validates_with DateValidator, attribute: :interval_starts_on
+  validates_with DateValidator, attribute: :interval_ends_on
 
   validate :person_exists
 
   # Validate fields of type 'text' length
-  validates_length_of :description, :maximum => 65536
+  validates_length_of :description, maximum: 65536
 
 
   ########################

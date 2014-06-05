@@ -25,12 +25,12 @@ class People::Salaries::ItemsController < ApplicationController
   end
 
   load_resource :person
-  load_resource :salary, :class => ::Salaries::Salary
-  load_resource :class => model, :through => :salary
+  load_resource :salary, class: ::Salaries::Salary
+  load_resource class: model, through: :salary
 
   def index
     respond_to do |format|
-      format.json { render :json => @items }
+      format.json { render json: @items }
     end
   end
 
@@ -53,7 +53,7 @@ class People::Salaries::ItemsController < ApplicationController
     value = (yearly_items_sum - siblings_sum) / future_items_count
 
     respond_to do |format|
-      format.json { render :json => { :value => value.to_f } }
+      format.json { render json: { value: value.to_f } }
     end
   end
 
@@ -75,7 +75,7 @@ class People::Salaries::ItemsController < ApplicationController
     value = yearly_items_sum - (siblings_sum + (reference.value * future_items_count))
 
     respond_to do |format|
-      format.json { render :json => { :value => value.to_f } }
+      format.json { render json: { value: value.to_f } }
     end
   end
 

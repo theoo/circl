@@ -18,7 +18,7 @@
 
 class CachedDocument < ActiveRecord::Base
 
-  has_attached_file :document, :use_timestamp => true
+  has_attached_file :document, use_timestamp: true
 
   before_save do
     self.validity_time = 1.day.seconds

@@ -21,22 +21,22 @@ class People::TranslationAptitudesController < ApplicationController
   layout false
 
   load_resource :person
-  load_and_authorize_resource :through => :person
+  load_and_authorize_resource through: :person
 
   monitor_changes :@translation_aptitude
 
   def index
     respond_to do |format|
-      format.json { render :json => @translation_aptitudes }
+      format.json { render json: @translation_aptitudes }
     end
   end
 
   def create
     respond_to do |format|
       if @translation_aptitude.save
-        format.json { render :json => @translation_aptitude }
+        format.json { render json: @translation_aptitude }
       else
-        format.json { render :json => @translation_aptitude.errors, :status => :unprocessable_entity }
+        format.json { render json: @translation_aptitude.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -44,9 +44,9 @@ class People::TranslationAptitudesController < ApplicationController
   def destroy
     respond_to do |format|
       if @translation_aptitude.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @translation_aptitude.errors, :status => :unprocessable_entity}
+        format.json { render json: @translation_aptitude.errors, status: :unprocessable_entity}
       end
     end
   end

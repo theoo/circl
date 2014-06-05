@@ -21,8 +21,8 @@ module ApplicationHelper
   # build the container for flash messages
   def flash_messages
     if flash[:notice]
-      haml_tag :div, :class => 'alert alert-info' do
-        haml_tag :button, :class => 'close', "data-dismiss" => "alert", "aria-hidden" => true do
+      haml_tag :div, class: 'alert alert-info' do
+        haml_tag :button, class: 'close', "data-dismiss" => "alert", "aria-hidden" => true do
           haml_concat "&times;"
         end
         haml_concat flash[:notice]
@@ -30,8 +30,8 @@ module ApplicationHelper
     end
 
     if flash[:error] or flash[:alert]
-      haml_tag :div, :class => 'alert alert-danger' do
-        haml_tag :button, :class => 'close', "data-dismiss" => "alert", "aria-hidden" => true do
+      haml_tag :div, class: 'alert alert-danger' do
+        haml_tag :button, class: 'close', "data-dismiss" => "alert", "aria-hidden" => true do
           haml_concat "&times;"
         end
         haml_concat flash[:alert]
@@ -43,9 +43,9 @@ module ApplicationHelper
   # build the container for error messages
   def error_messages_for(obj)
     if obj.errors && obj.errors.any?
-      haml_tag :div, :class => 'alert alert-danger' do
+      haml_tag :div, class: 'alert alert-danger' do
         haml_tag :h2 do
-          haml_concat I18n.t('activerecord.errors.template.header', :model => 'model', :count => obj.errors.count)
+          haml_concat I18n.t('activerecord.errors.template.header', model: 'model', count: obj.errors.count)
         end
         haml_tag :p, I18n.t('activerecord.errors.template.body')
         haml_tag :ul do

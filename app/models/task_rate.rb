@@ -35,25 +35,25 @@ class TaskRate < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  has_many :people, :dependent => :nullify
+  has_many :people, dependent: :nullify
 
   # Money
   money :value
 
-  scope :actives, Proc.new { where(:archive => false)}
-  scope :archived, Proc.new { where(:archive => true)}
+  scope :actives, Proc.new { where(archive: false)}
+  scope :archived, Proc.new { where(archive: true)}
 
   ###################
   ### VALIDATIONS ###
   ###################
 
   validates_presence_of :title
-  validates :value, :presence => true,
-                    :numericality => {:greater_than => 0,
-                                      :less_than_or_equal => 99999999.99 } # BVR limit
+  validates :value, presence: true,
+                    numericality: {greater_than: 0,
+                                      less_than_or_equal: 99999999.99 } # BVR limit
 
   # Validate fields of type 'text' length
-  validates_length_of :description, :maximum => 65536
+  validates_length_of :description, maximum: 65536
 
   ########################
   ### INSTANCE METHODS ###

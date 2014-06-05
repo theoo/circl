@@ -26,7 +26,7 @@ class Settings::LanguagesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => @languages }
+      format.json { render json: @languages }
     end
   end
 
@@ -37,25 +37,25 @@ class Settings::LanguagesController < ApplicationController
   def create
     respond_to do |format|
       if @language.save
-        format.json  { render :json => @language }
+        format.json  { render json: @language }
       else
-        format.json  { render :json => @language.errors, :status => :unprocessable_entity }
+        format.json  { render json: @language.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json  { render :json => @language }
+      format.json  { render json: @language }
     end
   end
 
   def update
     respond_to do |format|
       if @language.update_attributes(params[:language])
-        format.json  { render :json => @language }
+        format.json  { render json: @language }
       else
-        format.json  { render :json => @language.errors, :status => :unprocessable_entity }
+        format.json  { render json: @language.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -63,9 +63,9 @@ class Settings::LanguagesController < ApplicationController
   def destroy
     respond_to do |format|
       if @language.destroy
-        format.json  { render :json => {} }
+        format.json  { render json: {} }
       else
-        format.json  { render :json => @language.errors, :status => :unprocessable_entity }
+        format.json  { render json: @language.errors, status: :unprocessable_entity }
       end
     end
   end

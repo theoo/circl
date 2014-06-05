@@ -21,13 +21,13 @@ class People::EmploymentContractsController < ApplicationController
   layout false
 
   load_resource :person
-  load_and_authorize_resource :through => :person
+  load_and_authorize_resource through: :person
 
   monitor_changes :@employment_contract
 
   def index
     respond_to do |format|
-      format.json { render :json => @employment_contracts }
+      format.json { render json: @employment_contracts }
     end
   end
 
@@ -38,25 +38,25 @@ class People::EmploymentContractsController < ApplicationController
   def create
     respond_to do |format|
       if @employment_contract.save
-        format.json  { render :json => @employment_contract}
+        format.json  { render json: @employment_contract}
       else
-        format.json { render :json => @employment_contract.errors, :status => :unprocessable_entity }
+        format.json { render json: @employment_contract.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json  => @employment_contract }
+      format.json { render json: @employment_contract }
     end
   end
 
   def update
     respond_to do |format|
       if @employment_contract.update_attributes(params[:employment_contract])
-        format.json { render :json => @employment_contract }
+        format.json { render json: @employment_contract }
       else
-        format.json { render :json => @employment_contract.errors, :status => :unprocessable_entity }
+        format.json { render json: @employment_contract.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -64,9 +64,9 @@ class People::EmploymentContractsController < ApplicationController
   def destroy
     respond_to do |format|
       if @employment_contract.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @employment_contract.errors, :status => :unprocessable_entity }
+        format.json { render json: @employment_contract.errors, status: :unprocessable_entity }
       end
     end
   end

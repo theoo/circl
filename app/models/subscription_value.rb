@@ -60,12 +60,12 @@ class SubscriptionValue < ActiveRecord::Base
   ### VALIDATIONS ###
   ###################
 
-  validates :subscription_id, :presence => true, :numericality => true
-  validates :invoice_template_id, :presence => true, :numericality => true
-  validates :private_tag_id, :allow_blank => true, :allow_nil => true, :numericality => true
-  validates :value_in_cents, :presence => true, :numericality => true
-  validates :value_currency, :presence => true
-  validates :position, :presence => true, :numericality => true
+  validates :subscription_id, presence: true, numericality: true
+  validates :invoice_template_id, presence: true, numericality: true
+  validates :private_tag_id, allow_blank: true, allow_nil: true, numericality: true
+  validates :value_in_cents, presence: true, numericality: true
+  validates :value_currency, presence: true
+  validates :position, presence: true, numericality: true
 
   ########################
   ### INSTANCE METHODS ###

@@ -39,32 +39,32 @@ class Product < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  belongs_to :provider, :class_name => 'Person'
-  belongs_to :after_sale, :class_name => 'Person'
+  belongs_to :provider, class_name: 'Person'
+  belongs_to :after_sale, class_name: 'Person'
 
-  has_many :variants, :class_name => 'ProductVariant',
-                      :dependent => :destroy
+  has_many :variants, class_name: 'ProductVariant',
+                      dependent: :destroy
 
-  has_many :product_items, :class_name => 'AffairsProductsProgram',
-                           :dependent => :destroy
+  has_many :product_items, class_name: 'AffairsProductsProgram',
+                           dependent: :destroy
 
-  has_many :programs, :through => :product_items
-  has_many :affairs,  :through => :product_items
+  has_many :programs, through: :product_items
+  has_many :affairs,  through: :product_items
 
-  scope :actives, Proc.new { where(:archive => false)}
-  scope :archived, Proc.new { where(:archive => true)}
+  scope :actives, Proc.new { where(archive: false)}
+  scope :archived, Proc.new { where(archive: true)}
 
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates :key, :presence => true,
-                  :length => { :maximum => 255 },
-                  :uniqueness => true
-  validates :unit_symbol, :presence => true,
-                          :length => {:maximum => 255}
-  validates :price_to_unit_rate, :presence => true
+  validates :key, presence: true,
+                  length: { maximum: 255 },
+                  uniqueness: true
+  validates :unit_symbol, presence: true,
+                          length: {maximum: 255}
+  validates :price_to_unit_rate, presence: true
 
 
   ########################
@@ -81,18 +81,18 @@ class Product < ActiveRecord::Base
     h[:variants_count] = variants.count
 
     h[:variants] = variants.map do |v|
-      { :id                     => v.id,
-        :product_id             => v.product_id,
-        :program_group          => v.program_group,
-        :title                  => v.title,
-        :buying_price           => v.buying_price.to_f,
-        :buying_price_currency  => v.buying_price_currency,
-        :selling_price          => v.selling_price.to_f,
-        :selling_price_currency => v.selling_price_currency,
-        :art                    => v.art.to_f,
-        :art_currency           => v.art_currency,
-        :created_at             => v.created_at,
-        :updated_at             => v.updated_at }
+      { id: v.id,
+        product_id: v.product_id,
+        program_group: v.program_group,
+        title: v.title,
+        buying_price: v.buying_price.to_f,
+        buying_price_currency: v.buying_price_currency,
+        selling_price: v.selling_price.to_f,
+        selling_price_currency: v.selling_price_currency,
+        art: v.art.to_f,
+        art_currency: v.art_currency,
+        created_at: v.created_at,
+        updated_at: v.updated_at }
     end
 
     h[:errors]         = errors
@@ -105,7 +105,7 @@ class Product < ActiveRecord::Base
     # Product.find(3).variants.joins("LEFT JOIN product_programs
     # ON product_variants.program_group = product_programs.program_group")
     program_groups = self.variants.map(&:program_group)
-    ProductProgram.where(:program_group => program_groups)
+    ProductProgram.where(program_group: program_groups)
   end
 
   def unit_symbol_translated

@@ -20,7 +20,7 @@ class Settings::ProductsController < ApplicationController
 
   layout false
 
-  load_and_authorize_resource :except => :index
+  load_and_authorize_resource except: :index
 
   monitor_changes :@product
 
@@ -30,7 +30,7 @@ class Settings::ProductsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        render :json => ProductsDatatable.new(view_context)
+        render json: ProductsDatatable.new(view_context)
       end
     end
   end
@@ -69,17 +69,17 @@ class Settings::ProductsController < ApplicationController
     respond_to do |format|
       if succeed
         format.json do
-          render :json => @product
+          render json: @product
         end
       else
-        format.json { render :json => @product.errors, :status => :unprocessable_entity }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @product }
+      format.json { render json: @product }
     end
   end
 
@@ -125,10 +125,10 @@ class Settings::ProductsController < ApplicationController
     respond_to do |format|
       if succeed
         format.json do
-          render :json => @product
+          render json: @product
         end
       else
-        format.json { render :json => @product.errors, :status => :unprocessable_entity }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -136,9 +136,9 @@ class Settings::ProductsController < ApplicationController
   def destroy
     respond_to do |format|
       if @product.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @product.errors, :status => :unprocessable_entity }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -155,23 +155,23 @@ class Settings::ProductsController < ApplicationController
 
     h = result.map do |p|
       if p.available_programs.count == 1
-        { :id => p.id,
-          :label => p.key,
-          :title => p.title,
-          :desc => p.description,
-          :program_key => p.available_programs.first.key,
-          :program_id => p.available_programs.first.id }
+        { id: p.id,
+          label: p.key,
+          title: p.title,
+          desc: p.description,
+          program_key: p.available_programs.first.key,
+          program_id: p.available_programs.first.id }
       else
-        { :id => p.id,
-          :label => p.key,
-          :title => p.title,
-          :desc => p.description }
+        { id: p.id,
+          label: p.key,
+          title: p.title,
+          desc: p.description }
       end
     end
 
     respond_to do |format|
       format.json do
-        render :json => h
+        render json: h
       end
     end
   end
@@ -186,7 +186,7 @@ class Settings::ProductsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => results.map{ |p| { :label => p.category }}}
+      format.json { render json: results.map{ |p| { label: p.category }}}
     end
   end
 
@@ -203,17 +203,17 @@ class Settings::ProductsController < ApplicationController
 
     respond_to do |format|
       format.json do
-        render :json => result.map{ |t| { :id => t.id,
-          :label => t.key,
-          :title => t.title,
-          :desc => t.description }}
+        render json: result.map{ |t| { id: t.id,
+          label: t.key,
+          title: t.title,
+          desc: t.description }}
       end
     end
   end
 
   def count
     respond_to do |format|
-      format.json { render :json => {:count => Product.count} }
+      format.json { render json: {count: Product.count} }
     end
   end
 

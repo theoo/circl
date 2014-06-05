@@ -22,7 +22,7 @@ class People::Affairs::ReceiptsController < ApplicationController
 
   load_resource :person
   load_resource :affair
-  load_and_authorize_resource :through => :affair
+  load_and_authorize_resource through: :affair
 
   monitor_changes :@receipt
 
@@ -35,7 +35,7 @@ class People::Affairs::ReceiptsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => @receipts }
+      format.json { render json: @receipts }
 
       format.csv do
         fields = []
@@ -50,13 +50,13 @@ class People::Affairs::ReceiptsController < ApplicationController
         fields << 'owner.try(:location).try(:country).try(:name)'
         fields << 'owner.main_communication_language.name'
         fields << 'owner.email'
-        render :inline => csv_ify(@receipts, fields)
+        render inline: csv_ify(@receipts, fields)
       end
 
       if params[:template_id]
         format.html do
           generator = AttachmentGenerator.new(@affair)
-          render :inline => generator.html, :layout => 'preview'
+          render inline: generator.html, layout: 'preview'
         end
 
         format.pdf do
@@ -64,8 +64,8 @@ class People::Affairs::ReceiptsController < ApplicationController
           generator = AttachmentGenerator.new(@affair)
           generator.pdf { |o,pdf| @pdf = pdf.read }
           send_data @pdf,
-                    :filename => "affair_receipts_#{params[:affair_id]}.pdf",
-                    :type => 'application/pdf'
+                    filename: "affair_receipts_#{params[:affair_id]}.pdf",
+                    type: 'application/pdf'
         end
 
         format.odt do
@@ -73,8 +73,8 @@ class People::Affairs::ReceiptsController < ApplicationController
           generator = AttachmentGenerator.new(@affair)
           generator.odt { |o,odt| @odt = odt.read }
           send_data @odt,
-                    :filename => "affair_receipts_#{params[:affair_id]}.odt",
-                    :type => 'application/vnd.oasis.opendocument.text'
+                    filename: "affair_receipts_#{params[:affair_id]}.odt",
+                    type: 'application/vnd.oasis.opendocument.text'
         end
       end
     end
@@ -89,16 +89,16 @@ class People::Affairs::ReceiptsController < ApplicationController
     @receipt.value = params[:value]
     respond_to do |format|
       if @receipt.save
-        format.json { render :json => @receipt }
+        format.json { render json: @receipt }
       else
-        format.json { render :json => @receipt.errors, :status => :unprocessable_entity }
+        format.json { render json: @receipt.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @receipt }
+      format.json { render json: @receipt }
     end
   end
 
@@ -106,9 +106,9 @@ class People::Affairs::ReceiptsController < ApplicationController
     @receipt.value = params[:value]
     respond_to do |format|
       if @receipt.update_attributes(params[:receipt])
-        format.json { render :json => @receipt }
+        format.json { render json: @receipt }
       else
-        format.json { render :json => @receipt.errors, :status => :unprocessable_entity }
+        format.json { render json: @receipt.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -116,9 +116,9 @@ class People::Affairs::ReceiptsController < ApplicationController
   def destroy
     respond_to do |format|
       if @receipt.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @receipt.errors, :status => :unprocessable_entity }
+        format.json { render json: @receipt.errors, status: :unprocessable_entity }
       end
     end
   end

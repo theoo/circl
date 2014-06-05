@@ -106,10 +106,10 @@ class Salaries::Salary < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
-  before_create :init_from_reference, :if => :has_reference?
-  before_create :init_items, :unless => :has_reference?
+  before_create :init_from_reference, if: :has_reference?
+  before_create :init_items, unless: :has_reference?
   after_save    :update_tax_data
-  before_destroy :prevent_destroy_active_reference, :if => :is_reference
+  before_destroy :prevent_destroy_active_reference, if: :is_reference
 
   ################
   ### INCLUDES ###
@@ -128,11 +128,11 @@ class Salaries::Salary < ActiveRecord::Base
 
   # Template
   belongs_to :reference,
-             :class_name => 'Salaries::Salary',
-             :foreign_key => :parent_id
+             class_name: 'Salaries::Salary',
+             foreign_key: :parent_id
   has_many   :children,
-             :class_name => 'Salaries::Salary',
-             :foreign_key => :parent_id
+             class_name: 'Salaries::Salary',
+             foreign_key: :parent_id
 
   # paperclip
   has_attached_file :pdf
@@ -141,15 +141,15 @@ class Salaries::Salary < ActiveRecord::Base
 
   belongs_to :person
   has_many   :items,
-             :class_name => 'Salaries::Item',
-             :order => :position,
-             :dependent => :destroy
+             class_name: 'Salaries::Item',
+             order: :position,
+             dependent: :destroy
   has_many   :tax_data,
-             :class_name => 'Salaries::TaxData',
-             :order => :position,
-             :dependent => :destroy
+             class_name: 'Salaries::TaxData',
+             order: :position,
+             dependent: :destroy
   has_many   :tasks,
-             :class_name => '::Task'
+             class_name: '::Task'
 
   # Money
   money :yearly_salary
@@ -182,16 +182,16 @@ class Salaries::Salary < ActiveRecord::Base
   ### SCOPE ###
   #############
 
-  scope :references, where(:is_reference => true)
-  scope :instances, where(:is_reference => false)
-  scope :unpaid_salaries, where(:paid => false)
+  scope :references, where(is_reference: true)
+  scope :instances, where(is_reference: false)
+  scope :unpaid_salaries, where(paid: false)
 
   #################
   ### Relations ###
   #################
 
   def selected_tax_data
-    tax_data.where(:tax_id => items.map{|i| i.taxes}.flatten.uniq)
+    tax_data.where(tax_id: items.map{|i| i.taxes}.flatten.uniq)
   end
 
   ###################
@@ -204,14 +204,14 @@ class Salaries::Salary < ActiveRecord::Base
   validates_presence_of :children_count
   validates_presence_of :person_id
   validates_presence_of :generic_template_id
-  validates_presence_of :yearly_salary_count, :if => :is_reference
-  validate :ensure_person_have_required_fields, :if => :person
-  validate :ensure_interval_dates_are_for_the_same_year, :if => [:from, :to]
-  validate :ensure_from_date_is_before_to_date, :if => [:from, :to]
+  validates_presence_of :yearly_salary_count, if: :is_reference
+  validate :ensure_person_have_required_fields, if: :person
+  validate :ensure_interval_dates_are_for_the_same_year, if: [:from, :to]
+  validate :ensure_from_date_is_before_to_date, if: [:from, :to]
   validates_numericality_of :activity_rate,
-                            :greater_than_or_equal_to => 0,
-                            :less_than_or_equal_to => 100,
-                            :only_integer => false
+                            greater_than_or_equal_to: 0,
+                            less_than_or_equal_to: 100,
+                            only_integer: false
 
   ########################
   ### INSTANCE METHODS ###
@@ -251,7 +251,7 @@ class Salaries::Salary < ActiveRecord::Base
   end
 
   def update_pdf
-    BackgroundTasks::GenerateSalaryPdf.schedule(:invoice_id => self.id)
+    BackgroundTasks::GenerateSalaryPdf.schedule(invoice_id: self.id)
   end
 
   def has_reference?
@@ -268,11 +268,11 @@ class Salaries::Salary < ActiveRecord::Base
   def init_items
     wage = yearly_salary && yearly_salary_count ? self.yearly_salary / self.yearly_salary_count : 1000.to_money(self.yearly_salary_currency)
     taxes = Salaries::Tax.all
-    item = Salaries::Item.new(:title => I18n.t("salary.views.generic_template_item_title"),
-                              :category => I18n.t("salary.views.generic_template_item_category"), 
-                              :position => 0,
-                              :value => wage,
-                              :taxes => taxes)
+    item = Salaries::Item.new(title: I18n.t("salary.views.generic_template_item_title"),
+                              category: I18n.t("salary.views.generic_template_item_category"), 
+                              position: 0,
+                              value: wage,
+                              taxes: taxes)
     self.items << item
   end
 
@@ -306,7 +306,7 @@ class Salaries::Salary < ActiveRecord::Base
     next_pos = tax_data.size
     existing_ids = tax_data.map(&:tax_id)
     Salaries::Tax.all.reject{ |t| existing_ids.include?(t.id) }.each do |tax|
-      data = tax_data.build(:tax => tax, :position => next_pos)
+      data = tax_data.build(tax: tax, position: next_pos)
       data.reset
       data.save!
       next_pos += 1
@@ -332,11 +332,11 @@ class Salaries::Salary < ActiveRecord::Base
   end
 
   def infos
-    OpenStruct.new :yearly_salary => has_reference? ? reference.yearly_salary : yearly_salary,
+    OpenStruct.new yearly_salary: has_reference? ? reference.yearly_salary : yearly_salary,
                    :married? => married,
-                   :children_count => children_count,
-                   :gender => person.gender,
-                   :age => person.age_at(from.to_date)
+                   children_count: children_count,
+                   gender: person.gender,
+                   age: person.age_at(from.to_date)
   end
 
   def summary
@@ -368,10 +368,10 @@ class Salaries::Salary < ActiveRecord::Base
 
   def summary_json
     h = summary
-    j = {:taxed_categories => {},
-         :tax_data => 0,
-         :untaxed_categories => {},
-         :net_salary => 0 }
+    j = {taxed_categories: {},
+         tax_data: 0,
+         untaxed_categories: {},
+         net_salary: 0 }
 
     j.each do |cat,val|
       if h[cat].is_a? Hash
@@ -504,14 +504,14 @@ class Salaries::Salary < ActiveRecord::Base
 
       errors.add(:base,
                   I18n.t('salary.errors.the_required_information_about_this_person_are_not_satisfied',
-                    :required_fields => missing_fields ))
+                    required_fields: missing_fields ))
       false
     end
 
   end
 
   def prevent_destroy_active_reference
-    children = Salaries::Salary.where(:parent_id => self.id)
+    children = Salaries::Salary.where(parent_id: self.id)
     if children.size > 0
       errors.add(:base,
                  I18n.t('salary.errors.unable_to_destroy_a_reference_which_has_children_salaries'))

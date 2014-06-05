@@ -29,13 +29,13 @@ class DirectoryController < ApplicationController
     # Indicate incorrect query to the user
     if error.message =~ /SearchParseException/ && params[:query]
       query = HashWithIndifferentAccess.new(JSON.parse(params[:query]))
-      message = I18n.t('directory.errors.query_invalid', :query => query[:search_string])
+      message = I18n.t('directory.errors.query_invalid', query: query[:search_string])
     else
-      message = I18n.t('directory.errors.search_error', :error => error.message)
+      message = I18n.t('directory.errors.search_error', error: error.message)
     end
 
     if request.format.json?
-      render :json => { :search_string => [message] }, :status => :unprocessable_entity
+      render json: { search_string: [message] }, status: :unprocessable_entity
     elsif request.format.html?
       flash[:error] = message
       redirect_to directory_path
@@ -91,16 +91,16 @@ class DirectoryController < ApplicationController
       end
 
       format.json do
-        render :json => PeopleDatatable.new(view_context, @query, current_person)
+        render json: PeopleDatatable.new(view_context, @query, current_person)
       end
 
       format.js do
-        render :json => PeopleDatatable.new(view_context, @query, current_person), :callback => params[:callback]
+        render json: PeopleDatatable.new(view_context, @query, current_person), callback: params[:callback]
       end
 
       format.xml do
         people.map!{ |p| p.load }
-        render :xml => people.to_xml
+        render xml: people.to_xml
       end
 
       format.csv do
@@ -109,7 +109,7 @@ class DirectoryController < ApplicationController
             o.send("#{f}=", relation_to_string(o.send(f)))
           end
         end
-        render :inline => csv_ify(people, @query['selected_attributes'])
+        render inline: csv_ify(people, @query['selected_attributes'])
       end
     end
   end
@@ -120,10 +120,10 @@ class DirectoryController < ApplicationController
     if mailchimp_synchronizing?
       flash[:alert] = I18n.t('common.errors.already_synchronizing')
     else
-      flash[:notice] = I18n.t('common.notices.synchronization_started', :email => current_person.email)
-      BackgroundTasks::RunRakeTask.schedule(:name => 'mailchimp:sync',
-                                            :arguments => { :person_id => current_person.id })
-      Activity.create!(:person => current_person, :resource_type => 'Directory', :resource_id => '0', :action => 'info', :data => { :mailchimp => "Sync started at #{Time.now}" })
+      flash[:notice] = I18n.t('common.notices.synchronization_started', email: current_person.email)
+      BackgroundTasks::RunRakeTask.schedule(name: 'mailchimp:sync',
+                                            arguments: { person_id: current_person.id })
+      Activity.create!(person: current_person, resource_type: 'Directory', resource_id: '0', action: 'info', data: { mailchimp: "Sync started at #{Time.now}" })
     end
     redirect_to directory_path
   end
@@ -168,7 +168,7 @@ class DirectoryController < ApplicationController
           popup += p.name.to_s
           popup += "</b><br />"
           popup += [p.address, p.npa_town, p.country].join("<br />")
-          @map[:markers] << {:latlng => [p.latitude, p.longitude], :popup => popup}
+          @map[:markers] << {latlng: [p.latitude, p.longitude], popup: popup}
         end
       end
       @map[:config] = Rails.configuration.settings["maps"]
@@ -176,7 +176,7 @@ class DirectoryController < ApplicationController
 
     respond_to do |format|
       format.html do
-        render 'people/map' , :layout => 'minimal'
+        render 'people/map' , layout: 'minimal'
       end
     end
   end
@@ -207,18 +207,18 @@ class DirectoryController < ApplicationController
       # Create tags first
       if params[:private_tags]
         params[:private_tags].each do |tag|
-          PrivateTag.create(:name => tag)
+          PrivateTag.create(name: tag)
         end
       end
       if params[:public_tags]
         params[:public_tags].each do |tag|
-          PublicTag.create(:name => tag)
+          PublicTag.create(name: tag)
         end
       end
       # Create missing jobs
       if params[:jobs]
         params[:jobs].each do |job|
-          Job.create(:name => job)
+          Job.create(name: job)
         end
       end
 
@@ -240,7 +240,7 @@ class DirectoryController < ApplicationController
       Rails.configuration.settings['maps']['enable_geolocalization'] = true
 
       # Reindex the whole database
-      BackgroundTasks::RunRakeTask.process!(:name => 'elasticsearch:sync')
+      BackgroundTasks::RunRakeTask.process!(name: 'elasticsearch:sync')
 
     end
 
@@ -257,8 +257,8 @@ class DirectoryController < ApplicationController
     end
 
     PersonMailer.send_people_import_report(current_person, report[:people]).deliver
-    flash[:notice] = I18n.t('directory.notices.people_imported', :email => current_person.email)
-    Activity.create!(:person => current_person, :resource_type => 'Admin', :resource_id => '0', :action => 'info', :data => { :people => "imported at #{Time.now}" })
+    flash[:notice] = I18n.t('directory.notices.people_imported', email: current_person.email)
+    Activity.create!(person: current_person, resource_type: 'Admin', resource_id: '0', action: 'info', data: { people: "imported at #{Time.now}" })
     redirect_to directory_path
   end
 

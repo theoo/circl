@@ -32,7 +32,7 @@ class People::CommunicationLanguagesController < ApplicationController
     @communication_languages = @person.communication_languages
 
     respond_to do |format|
-      format.json { render :json => @communication_languages }
+      format.json { render json: @communication_languages }
     end
   end
 
@@ -40,10 +40,10 @@ class People::CommunicationLanguagesController < ApplicationController
     authorize! [:create, :update], @person => self.class.model
 
     respond_to do |format|
-      if @person.update_attributes(:communication_language_ids => params[:communication_language_ids])
-        format.json { render :json => @person.communication_languages }
+      if @person.update_attributes(communication_language_ids: params[:communication_language_ids])
+        format.json { render json: @person.communication_languages }
       else
-        format.json { render :json => @person.errors, :status => :unprocessable_entity }
+        format.json { render json: @person.errors, status: :unprocessable_entity }
       end
     end
   end

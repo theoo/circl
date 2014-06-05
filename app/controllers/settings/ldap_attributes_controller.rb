@@ -26,7 +26,7 @@ class Settings::LdapAttributesController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => @ldap_attributes }
+      format.json { render json: @ldap_attributes }
     end
   end
 
@@ -37,25 +37,25 @@ class Settings::LdapAttributesController < ApplicationController
   def create
     respond_to do |format|
       if @ldap_attribute.save
-        format.json  { render :json => @ldap_attribute }
+        format.json  { render json: @ldap_attribute }
       else
-        format.json  { render :json => @ldap_attribute.errors, :status => :unprocessable_entity }
+        format.json  { render json: @ldap_attribute.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json  { render :json => @ldap_attribute }
+      format.json  { render json: @ldap_attribute }
     end
   end
 
   def update
     respond_to do |format|
       if @ldap_attribute.update_attributes(params[:ldap_attribute])
-        format.json  { render :json => @ldap_attribute }
+        format.json  { render json: @ldap_attribute }
       else
-        format.json  { render :json => @ldap_attribute.errors, :status => :unprocessable_entity }
+        format.json  { render json: @ldap_attribute.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -63,17 +63,17 @@ class Settings::LdapAttributesController < ApplicationController
   def destroy
     respond_to do |format|
       if @ldap_attribute.destroy
-        format.json  { render :json => {} }
+        format.json  { render json: {} }
       else
-        format.json  { render :json => @ldap_attribute.errors, :status => :unprocessable_entity }
+        format.json  { render json: @ldap_attribute.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def synchronize
-    if BackgroundTasks::RunRakeTask.schedule(:name => 'ldap:sync')
-      Activity.create!(:person => current_person, :resource_type => 'LdapAttribute', :resource_id => '0', :action => 'info', :data => { :synchronize => "Sync started at #{Time.now}" })
-      flash[:notice] = I18n.t('common.notices.synchronization_started', :email => current_person.email)
+    if BackgroundTasks::RunRakeTask.schedule(name: 'ldap:sync')
+      Activity.create!(person: current_person, resource_type: 'LdapAttribute', resource_id: '0', action: 'info', data: { synchronize: "Sync started at #{Time.now}" })
+      flash[:notice] = I18n.t('common.notices.synchronization_started', email: current_person.email)
     else
       flash[:alert] = I18n.t('common.errors.already_synchronizing')
     end

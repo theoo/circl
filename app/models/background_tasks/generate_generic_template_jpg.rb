@@ -32,8 +32,8 @@
 class BackgroundTasks::GenerateGenericTemplateJpg < BackgroundTask
   def self.generate_title(options)
     I18n.t("background_task.tasks.generate_template_jpg",
-      :generic_template_id => options[:salary_id],
-      :generic_template_title => GenericTemplate.find(options[:generic_template_id]).title)
+      generic_template_id: options[:salary_id],
+      generic_template_title: GenericTemplate.find(options[:generic_template_id]).title)
   end
 
   def process!

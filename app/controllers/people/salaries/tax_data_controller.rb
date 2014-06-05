@@ -25,14 +25,14 @@ class People::Salaries::TaxDataController < ApplicationController
   end
 
   load_resource :person
-  load_resource :salary, :class => Salaries::Salary
+  load_resource :salary, class: Salaries::Salary
 
   def index
     authorize! :index, Salaries::TaxData
 
     @tax_data = @salary.selected_tax_data
     respond_to do |format|
-      format.json { render :json => @tax_data }
+      format.json { render json: @tax_data }
     end
   end
 
@@ -52,7 +52,7 @@ class People::Salaries::TaxDataController < ApplicationController
     json = @tax_data.as_json.select { |key, value| keys.include?(key.to_s) }
 
     respond_to do |format|
-      format.json { render :json => json }
+      format.json { render json: json }
     end
   end
 
@@ -81,7 +81,7 @@ class People::Salaries::TaxDataController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => json }
+      format.json { render json: json }
     end
   end
 
@@ -110,7 +110,7 @@ class People::Salaries::TaxDataController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => json }
+      format.json { render json: json }
     end
   end
 

@@ -31,8 +31,8 @@ class People::HistoriesController < ApplicationController
     @histories = @person.alterations
 
     respond_to do |format|
-      format.json { render :json => @histories }
-      format.xml  { render :xml => @histories }
+      format.json { render json: @histories }
+      format.xml  { render xml: @histories }
       format.csv do
         fields = []
         fields << 'person.name'
@@ -41,7 +41,7 @@ class People::HistoriesController < ApplicationController
         fields << 'title'
         fields << 'description'
         fields << 'created_at'
-        render :inline => csv_ify(@histories, fields)
+        render inline: csv_ify(@histories, fields)
       end
     end
   end

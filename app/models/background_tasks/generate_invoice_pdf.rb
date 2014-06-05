@@ -35,8 +35,8 @@ class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
 
   def self.generate_title(options)
     I18n.t("background_task.tasks.generate_invoice_pdf",
-      :invoice_id => options[:invoice_id],
-      :invoice_title => Invoice.find(options[:invoice_id]).title)
+      invoice_id: options[:invoice_id],
+      invoice_title: Invoice.find(options[:invoice_id]).title)
   end
 
   def process!
@@ -45,11 +45,11 @@ class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
     person  = invoice.owner
 
     controller = People::Affairs::InvoicesController.new
-    html = controller.render_to_string( :inline => controller.build_from_template(invoice),
-                                        :layout => 'pdf.html.haml')
+    html = controller.render_to_string( inline: controller.build_from_template(invoice),
+                                        layout: 'pdf.html.haml')
     html.assets_to_full_path!
 
-    file = Tempfile.new(['invoice', '.pdf'], :encoding => 'ascii-8bit')
+    file = Tempfile.new(['invoice', '.pdf'], encoding: 'ascii-8bit')
     file.binmode
 
     # Using path instead of url so it works in dev mode too.

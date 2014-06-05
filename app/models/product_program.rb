@@ -37,24 +37,24 @@ class ProductProgram < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  has_many :product_items, :class_name => 'AffairsProductsProgram',
-                           :foreign_key => 'program_id',
-                           :dependent => :destroy
-  has_many :products, :through => :product_items
-  has_many :affairs,  :through => :product_items
+  has_many :product_items, class_name: 'AffairsProductsProgram',
+                           foreign_key: 'program_id',
+                           dependent: :destroy
+  has_many :products, through: :product_items
+  has_many :affairs,  through: :product_items
 
-  scope :actives, Proc.new { where(:archive => false)}
-  scope :archived, Proc.new { where(:archive => true)}
+  scope :actives, Proc.new { where(archive: false)}
+  scope :archived, Proc.new { where(archive: true)}
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates :key, :presence => true,
-                  :length => { :maximum => 255 },
-                  :uniqueness => true
-  validates :program_group, :presence => true,
-                            :length => { :maximum => 255 }
+  validates :key, presence: true,
+                  length: { maximum: 255 },
+                  uniqueness: true
+  validates :program_group, presence: true,
+                            length: { maximum: 255 }
 
   ########################
   #### CLASS METHODS #####

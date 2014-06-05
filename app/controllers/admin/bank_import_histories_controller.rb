@@ -25,7 +25,7 @@ class Admin::BankImportHistoriesController < ApplicationController
   def index
     authorize! :index, BankImportHistory
     respond_to do |format|
-      format.json { render :json => BankImportHistoriesDatatable.new(view_context) }
+      format.json { render json: BankImportHistoriesDatatable.new(view_context) }
     end
   end
 
@@ -34,7 +34,7 @@ class Admin::BankImportHistoriesController < ApplicationController
 
     unless params[:receipts_file]
       flash[:alert] = I18n.t('admin.errors.no_file_submitted')
-      redirect_to admin_path(:anchor => 'finances')
+      redirect_to admin_path(anchor: 'finances')
       return
     end
 
@@ -42,7 +42,7 @@ class Admin::BankImportHistoriesController < ApplicationController
     @file_name = params[:receipts_file].original_filename
 
     respond_to do |format|
-      format.html { render :layout => 'application' }
+      format.html { render layout: 'application' }
     end
   end
 
@@ -60,9 +60,9 @@ class Admin::BankImportHistoriesController < ApplicationController
         receipts.each do |info|
 
           # keep a track of each imported lines
-          BankImportHistory.create!(:file_name => file_name,
-                                    :media_date => file_date,
-                                    :reference_line => info[:line] )
+          BankImportHistory.create!(file_name: file_name,
+                                    media_date: file_date,
+                                    reference_line: info[:line] )
 
           tmp = info.dup
           if info[:rectification] == 'true'
@@ -80,18 +80,18 @@ class Admin::BankImportHistoriesController < ApplicationController
       PersonMailer.send_receipts_import_report( current_person,
                                                 params[:receipts],
                                                 params[:errors]).deliver
-      flash[:notice] = I18n.t('admin.notices.receipts_imported', :email => current_person.email)
-      Activity.create!( :person => current_person,
-                        :resource_type => 'Admin',
-                        :resource_id => '0',
-                        :action => 'info',
-                        :data => { receipts: "Imported at #{Time.now}" })
-      redirect_to admin_path(:anchor => 'finances')
+      flash[:notice] = I18n.t('admin.notices.receipts_imported', email: current_person.email)
+      Activity.create!( person: current_person,
+                        resource_type: 'Admin',
+                        resource_id: '0',
+                        action: 'info',
+                        data: { receipts: "Imported at #{Time.now}" })
+      redirect_to admin_path(anchor: 'finances')
 
     else
 
       flash[:error] = I18n.t('receipt.errors.no_receipts_selected')
-      redirect_to admin_path(:anchor => 'finances')
+      redirect_to admin_path(anchor: 'finances')
 
     end
 
@@ -112,7 +112,7 @@ class Admin::BankImportHistoriesController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => @bihs }
+      format.json { render json: @bihs }
       format.csv do
         fields = []
         fields << 'account'
@@ -126,7 +126,7 @@ class Admin::BankImportHistoriesController < ApplicationController
         fields << 'file_name'
         fields << 'media_date'
         fields << 'reference_line'
-        render :inline => csv_ify(@bihs, fields)
+        render inline: csv_ify(@bihs, fields)
       end
     end
   end

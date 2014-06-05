@@ -26,7 +26,7 @@ class Settings::JobsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render :json => @jobs }
+      format.json { render json: @jobs }
     end
   end
 
@@ -37,25 +37,25 @@ class Settings::JobsController < ApplicationController
   def create
     respond_to do |format|
       if @job.save
-        format.json { render :json => @job }
+        format.json { render json: @job }
       else
-        format.json { render :json => @job.errors, :status => :unprocessable_entity }
+        format.json { render json: @job.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
     respond_to do |format|
-      format.json { render :json => @job }
+      format.json { render json: @job }
     end
   end
 
   def update
     respond_to do |format|
       if @job.update_attributes(params[:job])
-        format.json { render :json => @job }
+        format.json { render json: @job }
       else
-        format.json { render :json => @job.errors, :status => :unprocessable_entity }
+        format.json { render json: @job.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -63,9 +63,9 @@ class Settings::JobsController < ApplicationController
   def destroy
     respond_to do |format|
       if @job.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @job.errors, :status => :unprocessable_entity }
+        format.json { render json: @job.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -79,7 +79,7 @@ class Settings::JobsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => result.map{|t| {:id => t.id, :label => t.name}}}
+      format.json { render json: result.map{|t| {id: t.id, label: t.name}}}
     end
   end
 

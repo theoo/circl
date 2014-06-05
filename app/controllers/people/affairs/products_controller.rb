@@ -37,7 +37,7 @@ class People::Affairs::ProductsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render :json => @products }
+      format.json { render json: @products }
 
       format.csv do
         fields = []
@@ -53,13 +53,13 @@ class People::Affairs::ProductsController < ApplicationController
         fields << 'program.title'
         fields << 'program.description'
         fields << 'value'
-        render :inline => csv_ify(@products, fields)
+        render inline: csv_ify(@products, fields)
       end
 
       if params[:template_id]
         format.html do
           generator = AttachmentGenerator.new(@affair)
-          render :inline => generator.html, :layout => 'preview'
+          render inline: generator.html, layout: 'preview'
         end
 
         format.pdf do
@@ -67,8 +67,8 @@ class People::Affairs::ProductsController < ApplicationController
           generator = AttachmentGenerator.new(@affair)
           generator.pdf { |o,pdf| @pdf = pdf.read }
           send_data @pdf,
-                    :filename => "affair_products_#{params[:affair_id]}.pdf",
-                    :type => 'application/pdf'
+                    filename: "affair_products_#{params[:affair_id]}.pdf",
+                    type: 'application/pdf'
         end
 
         format.odt do
@@ -76,8 +76,8 @@ class People::Affairs::ProductsController < ApplicationController
           generator = AttachmentGenerator.new(@affair)
           generator.odt { |o,odt| @odt = odt.read }
           send_data @odt,
-                    :filename => "affair_products_#{params[:affair_id]}.odt",
-                    :type => 'application/vnd.oasis.opendocument.text'
+                    filename: "affair_products_#{params[:affair_id]}.odt",
+                    type: 'application/vnd.oasis.opendocument.text'
         end
       end
     end
@@ -95,9 +95,9 @@ class People::Affairs::ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.json { render :json => @product }
+        format.json { render json: @product }
       else
-        format.json { render :json => @product.errors, :status => :unprocessable_entity }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -108,7 +108,7 @@ class People::Affairs::ProductsController < ApplicationController
     @product = @affair.product_items.find(params[:id])
 
     respond_to do |format|
-      format.json { render :json => @product }
+      format.json { render json: @product }
     end
   end
 
@@ -120,9 +120,9 @@ class People::Affairs::ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.json { render :json => @product }
+        format.json { render json: @product }
       else
-        format.json { render :json => @product.errors, :status => :unprocessable_entity }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -134,9 +134,9 @@ class People::Affairs::ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @product.errors, :status => :unprocessable_entity }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -157,17 +157,17 @@ class People::Affairs::ProductsController < ApplicationController
       if result
         hash = result.map{ |t|
           {
-            :id => @affair.product_items.where(:product_id => t.id).first.id,
-            :label => t.key,
-            :title => t.title,
-            :desc => t.description
+            id: @affair.product_items.where(product_id: t.id).first.id,
+            label: t.key,
+            title: t.title,
+            desc: t.description
           }
         }
       end
     end
 
     respond_to do |format|
-      format.json { render :json => hash }
+      format.json { render json: hash }
     end
   end
 
@@ -183,7 +183,7 @@ class People::Affairs::ProductsController < ApplicationController
       siblings.delete(nil) # If there is holes in list they will be replace by nil
       siblings.each_with_index do |s, i|
         u = AffairsProductsProgram.find(s.id)
-        u.update_attributes(:position => i + 1)
+        u.update_attributes(position: i + 1)
       end
 
       success = true
@@ -191,9 +191,9 @@ class People::Affairs::ProductsController < ApplicationController
 
     respond_to do |format|
       if success
-        format.json { render :json => @affair.product_items.all }
+        format.json { render json: @affair.product_items.all }
       else
-        format.json { render :json => @product.errors, :status => :unprocessable_entity }
+        format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -207,12 +207,12 @@ class People::Affairs::ProductsController < ApplicationController
     prod[:product_id] = nil unless prod[:product_id]
 
     @product.assign_attributes(
-      :parent_id      => prod[:parent_id],
-      :program_id     => prod[:program_id],
-      :product_id     => prod[:product_id],
-      :position       => prod[:position],
-      :bid_percentage => prod[:bid_percentage],
-      :quantity       => prod[:quantity])
+      parent_id: prod[:parent_id],
+      program_id: prod[:program_id],
+      product_id: prod[:product_id],
+      position: prod[:position],
+      bid_percentage: prod[:bid_percentage],
+      quantity: prod[:quantity])
   end
 
 end

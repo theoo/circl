@@ -31,7 +31,7 @@ class People::TasksController < ApplicationController
     @tasks = @person.executed_tasks
 
     respond_to do |format|
-      format.json { render :json => @tasks }
+      format.json { render json: @tasks }
     end
   end
 
@@ -47,9 +47,9 @@ class People::TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.json { render :json => @task }
+        format.json { render json: @task }
       else
-        format.json { render :json => @task.errors, :status => :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -59,7 +59,7 @@ class People::TasksController < ApplicationController
     @task = ::Task.find(params[:id])
 
     respond_to do |format|
-      format.json { render :json => @task }
+      format.json { render json: @task }
     end
   end
 
@@ -70,9 +70,9 @@ class People::TasksController < ApplicationController
 
     respond_to do |format|
       if @task.update_attributes(params[:task])
-        format.json { render :json => @task }
+        format.json { render json: @task }
       else
-        format.json { render :json => @task.errors, :status => :unprocessable_entity }
+        format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -83,9 +83,9 @@ class People::TasksController < ApplicationController
 
     respond_to do |format|
       if @task.destroy
-        format.json { render :json => {} }
+        format.json { render json: {} }
       else
-        format.json { render :json => @task.errors, :status => :unprocessable_entity}
+        format.json { render json: @task.errors, status: :unprocessable_entity}
       end
     end
   end

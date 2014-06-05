@@ -37,16 +37,16 @@ class CurrencyRate < ActiveRecord::Base
   #################
 
   before_destroy :ensure_no_currency_depend_on_it
-  belongs_to :from_currency, :class_name => 'Currency'
-  belongs_to :to_currency, :class_name => 'Currency'
+  belongs_to :from_currency, class_name: 'Currency'
+  belongs_to :to_currency, class_name: 'Currency'
 
   ###################
   ### VALIDATIONS ###
   ###################
 
-  validates :from_currency_id, :presence => true
-  validates :to_currency_id, :presence => true
-  validates :rate, :presence => true, :numericality => {:greater_than => 0}
+  validates :from_currency_id, presence: true
+  validates :to_currency_id, presence: true
+  validates :rate, presence: true, numericality: {greater_than: 0}
 
   ########################
   #### CLASS METHODS #####

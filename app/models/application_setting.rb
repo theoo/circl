@@ -44,10 +44,10 @@ class ApplicationSetting < ActiveRecord::Base
 
   validates_presence_of :key
   validates_uniqueness_of :key
-  validate :ensure_key_is_unchanged, :unless => :new_record?
+  validate :ensure_key_is_unchanged, unless: :new_record?
 
   # Validate fields of type 'string' length
-  validates_length_of :key, :maximum => 255
+  validates_length_of :key, maximum: 255
   # value is a text field: length unlimited says postgresql...
   validate :length_of_value_if_mandatory
 
@@ -55,12 +55,12 @@ class ApplicationSetting < ActiveRecord::Base
   ### CLASS METHODS ###
   #####################
 
-  def self.value(key, options = {:silent => false})
-    setting = find(:first, :conditions => {:key => key})
+  def self.value(key, options = {silent: false})
+    setting = find(:first, conditions: {key: key})
     if setting
       setting.value
     elsif ! options[:silent]
-      msg = I18n.t("application_setting.errors.missing_attribute", :key => key)
+      msg = I18n.t("application_setting.errors.missing_attribute", key: key)
       logger.warn msg
       raise MissingAttribute, msg
     end

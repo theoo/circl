@@ -32,9 +32,9 @@
 class BackgroundTasks::PrepareSubscriptionPdfsAndEmail < BackgroundTask
   def self.generate_title(options)
     I18n.t("background_task.tasks.prepare_subscription_pdf_and_email",
-      :people_count => options[:people_ids].size,
-      :subscription_id => options[:subscription_id],
-      :subscription_title => Subscription.find(options[:subscription_id]).title)
+      people_count: options[:people_ids].size,
+      subscription_id: options[:subscription_id],
+      subscription_title: Subscription.find(options[:subscription_id]).title)
   end
 
   def process!
@@ -49,13 +49,13 @@ class BackgroundTasks::PrepareSubscriptionPdfsAndEmail < BackgroundTask
           log "PDF for invoice #{i.id} is up to date, skipping..."
         else
           log "PDF for invoice #{i.id} is not up to date, generating..."
-          BackgroundTasks::GenerateInvoicePdf.process!(:invoice_id => i.id)
+          BackgroundTasks::GenerateInvoicePdf.process!(invoice_id: i.id)
         end
       end
     end
-    BackgroundTasks::ConcatAndEmailSubscriptionPdf.process!(:subscription_id => options[:subscription_id],
-                                                            :invoices_ids    => invoices_ids,
-                                                            :person          => options[:person],
-                                                            :query           => options[:query])
+    BackgroundTasks::ConcatAndEmailSubscriptionPdf.process!(subscription_id: options[:subscription_id],
+                                                            invoices_ids: invoices_ids,
+                                                            person: options[:person],
+                                                            query: options[:query])
   end
 end

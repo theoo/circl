@@ -32,8 +32,8 @@
 class BackgroundTasks::UpdateSubscriptionInvoicesAndEmail < BackgroundTask
   def self.generate_title(options)
     I18n.t("background_task.tasks.update_subscription_invoices_and_email",
-      :subscription_id => options[:subscription_id],
-      :subscription_title => Subscription.find(options[:subscription_id]).title)
+      subscription_id: options[:subscription_id],
+      subscription_title: Subscription.find(options[:subscription_id]).title)
   end
 
   def process!

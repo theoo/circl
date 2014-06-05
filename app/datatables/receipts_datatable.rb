@@ -61,7 +61,7 @@ class ReceiptsDatatable
                                (SELECT CONCAT(last_name, first_name) from people where id = affairs.owner_id) as owner_name,
                                affairs.title as affair_title,
                                invoices.value_in_cents as value')
-                      .joins(:invoice => { :affair => :owner })
+                      .joins(invoice: { affair: :owner })
                       .group('receipts.id, invoices.id, affairs.id')
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes

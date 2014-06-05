@@ -23,12 +23,12 @@ module DeviseHelper
 
     messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
     sentence = I18n.t('activerecord.errors.template.header',
-                      :count => resource.errors.count,
-                      :resource => resource.class.model_name.human.downcase)
+                      count: resource.errors.count,
+                      resource: resource.class.model_name.human.downcase)
 
-    haml_tag :div, :class => 'error_explanation ui-state-error ui-corner-all' do
+    haml_tag :div, class: 'error_explanation ui-state-error ui-corner-all' do
       haml_tag :h2 do
-        haml_tag :span, :class => 'ui-icon ui-icon-alert float_left'
+        haml_tag :span, class: 'ui-icon ui-icon-alert float_left'
         haml_concat sentence
       end
       haml_tag :ul do

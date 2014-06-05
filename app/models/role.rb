@@ -50,11 +50,11 @@ class Role < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  has_many  :permissions, :dependent => :destroy
+  has_many  :permissions, dependent: :destroy
   has_and_belongs_to_many :people,
-                          :uniq => true,
-                          :after_add => :update_elasticsearch_index,
-                          :after_remove => :update_elasticsearch_index
+                          uniq: true,
+                          after_add: :update_elasticsearch_index,
+                          after_remove: :update_elasticsearch_index
 
   ###################
   ### VALIDATIONS ###
@@ -64,10 +64,10 @@ class Role < ActiveRecord::Base
   validates_uniqueness_of :name
 
   # Validate fields of type 'string' length
-  validates_length_of :name, :maximum => 255
+  validates_length_of :name, maximum: 255
 
   # Validate fields of type 'text' length
-  validates_length_of :description, :maximum => 65536
+  validates_length_of :description, maximum: 65536
 
 
   ########################

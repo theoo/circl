@@ -61,18 +61,18 @@ class Location < ActiveRecord::Base
   ###################
 
   validates_presence_of :name
-  validates_uniqueness_of :name, :scope => :postal_code_prefix
-  validates_uniqueness_of :iso_code_a2, :iso_code_a3, :iso_code_num, :allow_nil => true, :allow_blank => true
-  validates_presence_of :parent_id, :unless => :is_root?
-  validate :existence_of_parent_id, :unless => :is_root?
+  validates_uniqueness_of :name, scope: :postal_code_prefix
+  validates_uniqueness_of :iso_code_a2, :iso_code_a3, :iso_code_num, allow_nil: true, allow_blank: true
+  validates_presence_of :parent_id, unless: :is_root?
+  validate :existence_of_parent_id, unless: :is_root?
 
   # Validate fields of type 'string' length
-  validates_length_of :name, :maximum => 255
-  validates_length_of :iso_code_a2, :maximum => 255
-  validates_length_of :iso_code_a3, :maximum => 255
-  validates_length_of :iso_code_num, :maximum => 255
-  validates_length_of :postal_code_prefix, :maximum => 255
-  validates_length_of :phone_prefix, :maximum => 255
+  validates_length_of :name, maximum: 255
+  validates_length_of :iso_code_a2, maximum: 255
+  validates_length_of :iso_code_a3, maximum: 255
+  validates_length_of :iso_code_num, maximum: 255
+  validates_length_of :postal_code_prefix, maximum: 255
+  validates_length_of :phone_prefix, maximum: 255
 
 
   ########################

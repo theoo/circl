@@ -62,12 +62,12 @@ class InvoiceTemplate < ActiveRecord::Base
   validates_uniqueness_of :title
 
   # Validate fields of type 'string' length
-  validates_length_of :title, :maximum => 255
-  validates_length_of :bvr_account, :maximum => 255
+  validates_length_of :title, maximum: 255
+  validates_length_of :bvr_account, maximum: 255
 
   # Validate fields of type 'text' length
-  validates_length_of :html, :maximum => 65536
-  validates_length_of :bvr_address, :maximum => 65536
+  validates_length_of :html, maximum: 65536
+  validates_length_of :bvr_address, maximum: 65536
 
   #################
   ### RELATIONS ###
@@ -75,13 +75,13 @@ class InvoiceTemplate < ActiveRecord::Base
 
   belongs_to :language
   has_many :invoices
-  has_many :subscriptions, :through => :subscription_values
+  has_many :subscriptions, through: :subscription_values
   has_many :subscription_values
   has_attached_file :snapshot,
-    :default_url => '/images/missing_thumbnail.png',
-    :default_style => :thumb,
-    :use_timestamp => true,
-    :styles => {:medium => "420x594>",:thumb => "105x147>"}
+    default_url: '/images/missing_thumbnail.png',
+    default_style: :thumb,
+    use_timestamp: true,
+    styles: {medium: "420x594>",thumb: "105x147>"}
 
   ########################
   ### INSTANCE METHODS ###
@@ -90,11 +90,11 @@ class InvoiceTemplate < ActiveRecord::Base
   # Returns a list of all available placeholders for an invoice.
   def placeholders
     # Stub
-    i = Invoice.new(:invoice_template => self,
-                    :owner => Person.new,
-                    :buyer => Person.new,
-                    :receiver => Person.new,
-                    :created_at => Time.now)
+    i = Invoice.new(invoice_template: self,
+                    owner: Person.new,
+                    buyer: Person.new,
+                    receiver: Person.new,
+                    created_at: Time.now)
     p = i.placeholders
     h = {}
     %w(simples iterators).each { |i| h[i] = p[i.to_sym].keys.sort }
@@ -107,7 +107,7 @@ class InvoiceTemplate < ActiveRecord::Base
 
   def take_snapshot(html)
     kit = IMGKit.new(html).to_jpg
-    file = Tempfile.new(["snapshot_#{self.id.to_s}", 'jpg'], 'tmp', :encoding => 'ascii-8bit')
+    file = Tempfile.new(["snapshot_#{self.id.to_s}", 'jpg'], 'tmp', encoding: 'ascii-8bit')
     file.binmode
     file.write(kit)
     file.flush

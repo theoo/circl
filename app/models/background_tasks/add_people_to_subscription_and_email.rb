@@ -29,15 +29,15 @@
 #++
 
 # Options are:
-#   :required => [:subscriptions_id, :person, :people_ids]
-#   :optional => [:parent_subscription_id, :status]
+#   required: [:subscriptions_id, :person, :people_ids]
+#   optional: [:parent_subscription_id, :status]
 class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
 
   def self.generate_title(options)
     I18n.t("background_task.tasks.add_people_to_subscription_and_email",
-      :people_count => options[:people_ids].size,
-      :subscription_id => options[:subscription_id],
-      :subscription_title => Subscription.find(options[:subscription_id]).title)
+      people_count: options[:people_ids].size,
+      subscription_id: options[:subscription_id],
+      subscription_title: Subscription.find(options[:subscription_id]).title)
   end
 
   def process!
@@ -81,17 +81,17 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
         buyer    ||= p
         receiver ||= p
 
-        a = p.affairs.create!(:title => subscription.title,
-                              :owner => owner,
-                              :buyer => buyer,
-                              :receiver => receiver,
-                              :value => subscription.value_for(p),
-                              :subscriptions => [subscription])
+        a = p.affairs.create!(title: subscription.title,
+                              owner: owner,
+                              buyer: buyer,
+                              receiver: receiver,
+                              value: subscription.value_for(p),
+                              subscriptions: [subscription])
         # Append it an invoice
-        a.invoices.create!(:title => subscription.title,
-                           :value => subscription.value_for(p),
-                           :invoice_template => subscription.invoice_template_for(p),
-                           :printed_address => p.address_for_bvr )
+        a.invoices.create!(title: subscription.title,
+                           value: subscription.value_for(p),
+                           invoice_template: subscription.invoice_template_for(p),
+                           printed_address: p.address_for_bvr )
 
         new_people_ids << p.id
       end
