@@ -197,6 +197,12 @@ class Person < ActiveRecord::Base
               :class_name => 'Affair',
               :foreign_key => :receiver_id
 
+  has_many    :affairs_stakeholders
+  has_many    :affairs_as_stakeholder,
+              :through => :affairs_stakeholders,
+              :source => :affair,
+              :uniq => true
+
   has_many    :invoices,
               :through => :affairs,
               :foreign_key => 'owner_id',

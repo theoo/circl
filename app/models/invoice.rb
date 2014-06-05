@@ -46,6 +46,9 @@ class Invoice < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
+  # Monetize deprecation warning
+  require 'monetize/core_extensions'
+
   include ChangesTracker
   include StatusExtention
   include ActionView::Helpers::TextHelper

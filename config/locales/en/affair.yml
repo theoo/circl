@@ -35,6 +35,7 @@ en:
       invoices_count: invoice count
       invoices_value: values of invoices
       owner: owner
+      person: contact
       products: Products
       receipts: Receipts
       receipts_count: receipt count
@@ -44,6 +45,7 @@ en:
       select_payment_interval: Select extraction interval
       select_thresholds: Select minimum threshold
       seller: seller
+      stakeholders: stakeholders
       status: status
       statuses:
         cancelled: cancelled
@@ -62,6 +64,7 @@ en:
       threshold_overpaid_unit: overpaid threshold
       threshold_value_global: value sum threshold
       threshold_value_unit: value threshold
+      title: title
       update_date: last update
       value_with_taxes_is: The value with taxes is
       vat: VAT

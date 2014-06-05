@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140324104949) do
+ActiveRecord::Schema.define(:version => 20140604164134) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -29,9 +29,11 @@ ActiveRecord::Schema.define(:version => 20140324104949) do
     t.text     "footer"
     t.text     "conditions"
     t.integer  "seller_id",                   :default => 1,     :null => false
+    t.integer  "condition_id"
   end
 
   add_index "affairs", ["buyer_id"], :name => "index_affairs_on_buyer_id"
+  add_index "affairs", ["condition_id"], :name => "index_affairs_on_condition_id"
   add_index "affairs", ["created_at"], :name => "index_affairs_on_created_at"
   add_index "affairs", ["estimate"], :name => "index_affairs_on_estimate"
   add_index "affairs", ["owner_id"], :name => "index_affairs_on_owner_id"
@@ -42,6 +44,11 @@ ActiveRecord::Schema.define(:version => 20140324104949) do
   add_index "affairs", ["updated_at"], :name => "index_affairs_on_updated_at"
   add_index "affairs", ["value_currency"], :name => "index_affairs_on_value_currency"
   add_index "affairs", ["value_in_cents"], :name => "index_affairs_on_value_in_cents"
+
+  create_table "affairs_conditions", :force => true do |t|
+    t.string "title"
+    t.text   "description"
+  end
 
   create_table "affairs_products_programs", :force => true do |t|
     t.integer  "parent_id"
@@ -60,6 +67,15 @@ ActiveRecord::Schema.define(:version => 20140324104949) do
   add_index "affairs_products_programs", ["parent_id"], :name => "index_affairs_products_programs_on_parent_id"
   add_index "affairs_products_programs", ["product_id"], :name => "index_affairs_products_programs_on_product_id"
   add_index "affairs_products_programs", ["program_id"], :name => "index_affairs_products_programs_on_program_id"
+
+  create_table "affairs_stakeholders", :force => true do |t|
+    t.integer "person_id"
+    t.integer "affair_id"
+    t.string  "title"
+  end
+
+  add_index "affairs_stakeholders", ["affair_id"], :name => "index_affairs_stakeholders_on_affair_id"
+  add_index "affairs_stakeholders", ["person_id"], :name => "index_affairs_stakeholders_on_person_id"
 
   create_table "affairs_subscriptions", :id => false, :force => true do |t|
     t.integer "affair_id"
@@ -360,6 +376,7 @@ ActiveRecord::Schema.define(:version => 20140324104949) do
     t.integer  "task_rate_id"
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "website"
   end
 
   add_index "people", ["authentication_token"], :name => "index_people_on_authentication_token", :unique => true

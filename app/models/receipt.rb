@@ -38,6 +38,9 @@ class Receipt < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
+  # Monetize deprecation warning
+  require 'monetize/core_extensions'
+
   include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing

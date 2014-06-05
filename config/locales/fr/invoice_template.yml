@@ -18,15 +18,16 @@ fr:
       language: langue du modèle
       language_notice: localisation des attributs
       placeholders:
-        affair_id: ID de l'affaire
-        affair_title: Titre de l'affaire
-        affair_value_with_taxes: Valeur de l'affaire avec les taxes
-        affair_value: Valeur de l'affaire
-        affair_vat_value: Valeur TVA de l'affaire
+        affair_conditions: Conditions de l'affaire
         affair_description: Description de l'affaire
         affair_footer: Pied de page ou commentaires de l'affaire
-        affair_conditions: Conditions de l'affaire
+        affair_id: ID de l'affaire
+        affair_receipts: ! 'Itérateur des reçus de l''affaire. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
         affair_seller_name: Nom du vendeur de l'affaire
+        affair_title: Titre de l'affaire
+        affair_value: Valeur de l'affaire
+        affair_value_with_taxes: Valeur de l'affaire avec les taxes
+        affair_vat_value: Valeur TVA de l'affaire
         bvr_account: Compte BVR
         bvr_address: Adresse de l'émetteur affichée sur le BVR
         bvr_codeline: ligne codée pour le scan
@@ -73,15 +74,14 @@ fr:
         invoice_receiver_title: Titre du receveur des préstations
         invoice_receiver_title_and_full_name: Titre et nom complet du receveur des préstations
         invoice_title: titre de la facture
-        invoice_value_with_taxes: valeur de la facture avec TVA
         invoice_value: valeur de la facture
+        invoice_value_with_taxes: valeur de la facture avec TVA
         invoice_vat: TVA
         invoice_year_numeric: Année d'émission de la facture
         locale: Code de la langue du modèle
         placeholders: substituants
         product_items: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, parent_id, created_at, updated_at, key, title, description, category, quantity, value, value_in_cents, value_currency'
         receipts: ! 'Itérateur des reçus lié à la facture. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
-        affair_receipts: ! 'Itérateur des reçus de l''affaire. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
         subscriptions: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, parend_id, title, description, value, interval_starts_on, interval_ends_on, created_at, updated_at'
         tasks: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, executer_name, description, duration, start_date, created_at, updated_at, task_type_title, task_type_description, task_type_ratio, task_type_value, value, value_in_cents, value_currency, position'
       show_invoice_value: imprimer avec la valeure de la facture

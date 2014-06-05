@@ -1,6 +1,7 @@
 
 # Mind db:seed in db/seeds.rb
 tasks = %w{ languages
+            affairs_conditions
             currencies
             private_tags
             public_tags

@@ -35,6 +35,7 @@ fr:
       invoices_count: nombre de factures
       invoices_value: valeur des factures
       owner: propriétaire
+      person: contact
       products: Produits
       receipts: Reçus
       receipts_count: nombre de reçus
@@ -44,6 +45,7 @@ fr:
       select_payment_interval: Sélection de l'intervale à extraire
       select_thresholds: Sélection des limites minimales
       seller: vendeur
+      stakeholders: intervenant
       status: statut
       statuses:
         cancelled: annulée
@@ -62,6 +64,7 @@ fr:
       threshold_overpaid_unit: limite de surpaiement
       threshold_value_global: limite de la somme des valeurs
       threshold_value_unit: valeur limite
+      title: titre
       update_date: dernière mise à jour
       value_with_taxes_is: La valeur TTC est
       vat: TVA

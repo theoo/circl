@@ -1,4 +1,7 @@
 ---
+- subject: AffairsCondition
+  action: manage
+
 - subject: ApplicationSetting
   action: manage
 

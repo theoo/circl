@@ -307,8 +307,8 @@ fr:
       permission: Permission
       person: Personne
       private_tag: Tag privé
-      public_tag: Tag public
       product: Produit
+      public_tag: Tag public
       query_preset: Pré-réglage de recherche
       receipt: Reçu
       role: Rôle

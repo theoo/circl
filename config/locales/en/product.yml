@@ -13,12 +13,30 @@ en:
       program_description: program description
       program_key: program key
       program_title: program title
+    units:
+      cm:
+        symbol: cm
+        title: centimeters
+      g:
+        symbol: g
+        title: grams
+      kg:
+        symbol: kg
+        title: kilograms
+      m:
+        symbol: m
+        title: meters
+      mm:
+        symbol: mm
+        title: milimeters
+      pc:
+        symbol: pc
+        title: unit
     views:
       after_sale: after sale
       bid: MISSING_TRANSLATION bid
       bid_price: MISSING_TRANSLATION bid price
       category: MISSING_TRANSLATION category
-      description: description
       has_accessories: has accessories
       key: key
       normal_price: MISSING_TRANSLATION normal price
@@ -30,24 +48,3 @@ en:
       quantity: quantity
       unit: unit
       variants: variants
-    units:
-      m:
-        title: meters
-        symbol: m
-      cm:
-        title: centimeters
-        symbol: cm
-      mm:
-        title: milimeters
-        symbol: mm
-      g:
-        title: grams
-        symbol: g
-      kg:
-        title: kilograms
-        symbol: kg
-      pc:
-        title: unit
-        symbol: pc
-
-

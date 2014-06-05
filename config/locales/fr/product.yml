@@ -13,6 +13,25 @@ fr:
       program_description: description du programme
       program_key: clé du programme
       program_title: titre du programme
+    units:
+      cm:
+        symbol: cm
+        title: centimètres
+      g:
+        symbol: g
+        title: grammes
+      kg:
+        symbol: kg
+        title: kilogrammes
+      m:
+        symbol: m
+        title: mètres
+      mm:
+        symbol: mm
+        title: milimètres
+      pc:
+        symbol: pc
+        title: unité
     views:
       after_sale: après-vente
       bid: remise
@@ -29,22 +48,3 @@ fr:
       quantity: quantité
       unit: unité
       variants: variantes
-    units:
-      m:
-        title: mètres
-        symbol: m
-      cm:
-        title: centimètres
-        symbol: cm
-      mm:
-        title: milimètres
-        symbol: mm
-      g:
-        title: grammes
-        symbol: g
-      kg:
-        title: kilogrammes
-        symbol: kg
-      pc:
-        title: unité
-        symbol: pc

@@ -71,9 +71,31 @@ class People::AffairsController < ApplicationController
   end
 
   def create
-    @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])
+
+    success = false
+
+    Affair.transaction do
+      # append stakeholders
+      params[:affairs_stakeholders].each do |s|
+        stakeholder = @affair.affairs_stakeholders.new(
+          :person_id => s[:person_id],
+          :title => s[:title] )
+        unless stakeholder.save
+          stakeholder.errors.messages.each do |k,v|
+            @affair.errors.add(("stakeholders[][" + k.to_s + "]").to_sym, v.join(", "))
+          end
+          raise ActiveRecord::Rollback
+        end
+      end
+
+      @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])
+
+      success = @affair.save
+
+    end
+
     respond_to do |format|
-      if @affair.save
+      if success
         format.json { render :json => @affair }
       else
         format.json { render :json => @affair.errors, :status => :unprocessable_entity }
@@ -88,10 +110,52 @@ class People::AffairsController < ApplicationController
   end
 
   def update
-    @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])
-    @affair.custom_value_with_taxes = params[:custom_value_with_taxes]
+
+    success = false
+
+    Affair.transaction do
+      # remove parent if not sent
+      params[:parent_id] = nil unless params[:parent_id]
+
+      # raise the error and rollback transaction if validation fails
+      raise ActiveRecord::Rollback unless @affair.update_attributes(params[:affair])
+
+      # Only keep values that are returned
+      sent_ids = params[:affairs_stakeholders].map{|v| v[:id].to_i}
+      recorded_ids = @affair.affairs_stakeholders.map(&:id)
+      surplus_values = recorded_ids - sent_ids
+      AffairsStakeholder.destroy surplus_values
+
+      # and append or update stakeholders
+      params[:affairs_stakeholders].each do |s|
+        if @affair.affairs_stakeholders.exists?(s[:id])
+          stakeholder = @affair.affairs_stakeholders.find(s[:id])
+          stakeholder.person_id = s[:person_id]
+          stakeholder.title = s[:title]
+        else
+          stakeholder = @affair.affairs_stakeholders.new(
+            :person_id => s[:person_id],
+            :title => s[:title] )
+        end
+
+        unless stakeholder.save
+          stakeholder.errors.messages.each do |k,v|
+            @affair.errors.add(("stakeholders[][" + k.to_s + "]").to_sym, v.join(", "))
+          end
+          raise ActiveRecord::Rollback
+        end
+      end
+
+      @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])
+      # FIXME Why this is required to evaluate correctly the checkbox ? Only this one.
+      @affair.custom_value_with_taxes = params[:custom_value_with_taxes]
+
+      success = @affair.save
+      @affair.reload # Required to update affairs_stakeholders (?)
+    end
+
     respond_to do |format|
-      if @affair.update_attributes(params[:affair])
+      if success
         format.json { render :json => @affair }
       else
         format.json { render :json => @affair.errors, :status => :unprocessable_entity }
@@ -444,6 +508,10 @@ class People::AffairsController < ApplicationController
     end
 
     [errors, from, to]
+  end
+
+  def update_stakeholders(ary)
+
   end
 
 end

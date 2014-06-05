@@ -22,15 +22,69 @@ PersonAffairProductsProgram = App.PersonAffairProductsProgram
 PersonAffairExtra = App.PersonAffairExtra
 PersonAffairInvoice = App.PersonAffairInvoice
 PersonAffairReceipt = App.PersonAffairReceipt
+AffairsCondition = App.AffairsCondition
 
 $.fn.affair = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
   PersonAffair.find(elementID)
 
+# Modules
+ConditionsController =
+  update_conditions: (e) ->
+    e.preventDefault()
+    id = $(e.target).val()
+    textarea = @el.find('#affair_conditions')
+
+    if AffairsCondition.exists(id)
+      condition = AffairsCondition.find(id)
+      textarea.val(condition.description)
+    else
+      textarea.val("")
+
+StakeholdersController =
+  remove_value_item: (e) ->
+    current_row = $(e.target).closest("tr")
+    current_row.remove()
+
+  add_value_item: (e) ->
+    item_template = @el.find('tr[data-name="stakeholder_item_template"]')
+    new_row = item_template.clone()
+    # theses attributes belongs to template only
+    new_row.removeAttr('data-name')
+    new_row.removeAttr('style')
+    # this class make it selected on submit
+    new_row.addClass('item')
+
+    value_item_add = @el.find('tr[data-name="stakeholder_item_add"]')
+    value_item_add.before(new_row)
+
+    Ui.load_ui(new_row)
+
+  fetch_items: (e) ->
+    values = []
+    @el.find('table.table tr.item').each (i, tr) ->
+      tr = $(tr)
+      val =
+        id: tr.find("input[name='stakeholders[][id]']").prop('value')
+        title: tr.find("input[name='stakeholders[][title]']").prop('value')
+        person_id: tr.find("input[name='stakeholders[][person_id]']").prop('value')
+
+      values.push val
+
+    return values
+
+
 class New extends App.ExtendedController
+
+  @include ConditionsController
+  @include StakeholdersController
+
   events:
     'submit form': 'submit'
+    'change select[name="condition_id"]': 'update_conditions'
+    'click button[name="remove_item"]': 'remove_value_item'
+    'click button[name="add_item"]': 'add_value_item'
 
   constructor: (params) ->
     @person_id = params.person_id if params.person_id
@@ -43,7 +97,9 @@ class New extends App.ExtendedController
   render: =>
     return unless Person.exists(@person_id)
     @person = Person.find(@person_id)
-    @affair = new PersonAffair(conditions: App.ApplicationSetting.value("default_affair_conditions"))
+    @affair = new PersonAffair
+      conditions: App.ApplicationSetting.value("default_affair_conditions")
+      affairs_stakeholders: [{}]
     @affair.owner_id = @affair.buyer_id = @affair.receiver_id = @person.id
     @affair.owner_name = @affair.buyer_name = @affair.receiver_name = @person.name
 
@@ -63,11 +119,17 @@ class New extends App.ExtendedController
 
     data = $(e.target).serializeObject()
     @affair.load(data)
+    @affair.affairs_stakeholders = @fetch_items()
     @affair.value_currency = App.ApplicationSetting.value("default_currency") unless @affair.value_currency
+    @affair.estimate = data.estimate?
     @affair.custom_value_with_taxes = data.custom_value_with_taxes?
     @save_with_notifications @affair, redirect_to_edit
 
 class Edit extends App.ExtendedController
+
+  @include ConditionsController
+  @include StakeholdersController
+
   events:
     'submit form': 'submit'
     'click button[name="cancel"]': 'cancel'
@@ -76,7 +138,9 @@ class Edit extends App.ExtendedController
     'click button[name=reset_value]': 'reset_value'
     'click a[name="affair-preview-pdf"]': 'preview'
     'click a[name="affair-download-pdf"]': 'pdf'
-    'click a[name="affair-download-odt"]': 'odt'
+    'change select[name="condition_id"]': 'update_conditions'
+    'click button[name="remove_item"]': 'remove_value_item'
+    'click button[name="add_item"]': 'add_value_item'
 
   constructor: ->
     super
@@ -178,6 +242,8 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     data = $(e.target).serializeObject()
     @affair.load(data)
+    @affair.affairs_stakeholders = @fetch_items()
+    @affair.estimate = data.estimate?
     @affair.custom_value_with_taxes = data.custom_value_with_taxes?
     @save_with_notifications @affair
 
@@ -427,5 +493,9 @@ class App.PersonAffairs extends Spine.Controller
 
   activate: ->
     super
-    PersonAffair.fetch()
-    @new.active()
+
+    AffairsCondition.one 'refresh', =>
+      PersonAffair.fetch()
+      @new.active()
+
+    AffairsCondition.fetch()

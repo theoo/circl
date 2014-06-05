@@ -39,7 +39,8 @@ class Money
   end
 end
 
-if ActiveRecord::Base.connection.table_exists? 'currencies'
+if ActiveRecord::Base.connection.table_exists? 'currencies' \
+  and ApplicationSetting.where(:key => "default_currency").count > 0
 
   # Load Currencies
 

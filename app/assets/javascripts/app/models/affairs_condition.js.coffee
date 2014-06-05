@@ -14,14 +14,13 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class App.PersonAffair extends Spine.Model
+class App.AffairsCondition extends Spine.Model
 
-  @configure 'PersonAffair', 'owner_id', 'owner_name', 'buyer_id', 'buyer_name', 'estimate',
-             'receiver_id', 'receiver_name', 'parent_id', 'footer', 'seller_id', 'title',
-             'description', 'value', 'value_currency', 'created_at', 'custom_value_with_taxes',
-             'conditions', 'condition_id', 'affairs_stakeholders'
+  @configure 'AffairsCondition', 'id', 'title', 'description'
 
   @extend Spine.Model.Ajax
+  @url: ->
+    "#{Spine.Model.host}/settings/affairs_conditions"
 
   constructor: ->
     super

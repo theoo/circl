@@ -217,6 +217,7 @@ Directory::Application.routes.draw do
   end
   namespace :settings do
     resources :application_settings
+    resources :affairs_conditions
 
     resources :currencies do
       collection do

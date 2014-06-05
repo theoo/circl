@@ -60,7 +60,7 @@ gem 'devise-encryptable', '0.1.1'
 gem 'cancan', '1.6.7'
 
 ### Finances
-gem 'money', '6.0.1'
+gem 'money', '6.1.0'
 gem 'monetize', '0.1.3'
 
 ### MailChimp
@@ -75,7 +75,6 @@ gem 'rails_exception_handler', "~> 2"
 
 ### custom gem
 # gem 'plugin', :path => 'path/to/circl/plugin'
-# gem 'choisir', :path => '/home/to/Code/rails/circl_plugins/choisir'
 
 ### development console and testing
 group :development, :test do
@@ -88,10 +87,11 @@ group :development, :test do
   gem 'syntax', '1.0.0'
 
   ### IRB
-  gem 'wirble', '0.1.3'
-  gem 'hirb', '0.6.2'
-  gem 'awesome_print', '1.0.2', :require => 'ap'
-  gem 'interactive_editor', '0.0.10'
+  gem 'jazz_hands', "0.3.1"
+  # gem 'wirble', '0.1.3'
+  # gem 'hirb', '0.6.2'
+  # gem 'awesome_print', '1.0.2', :require => 'ap'
+  # gem 'interactive_editor', '0.0.10'
 
   ### Misc
   gem 'debugger', '1.1.3'

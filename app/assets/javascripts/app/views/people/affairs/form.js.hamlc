@@ -65,10 +65,23 @@
             = @affair.footer
 
     .row
-      .col-lg-12
+      .col-lg-6
         .form-group
           %label{:for => 'affair_conditions'}
             = I18n.t('affair.views.conditions')
+          %select{:name => 'condition_id',
+                  :class => 'form-control'}
+            %option{:value => undefined}= I18n.t("common.custom")
+            - for h in App.AffairsCondition.all()
+              - if h.id == @affair.condition_id
+                %option{:value => h.id, :selected => true}= h.title
+              - else
+                %option{:value => h.id}= h.title
+      .col-lg-6
+
+    .row
+      .col-lg-12
+        .form-group
           %textarea{:name => 'conditions',
                     :rows => 3,
                     :id => 'affair_conditions',
@@ -122,7 +135,73 @@
 
     .row
       .col-sm-12
-        %label TODO intervenants
+        %label= I18n.t("affair.views.stakeholders")
+        %table.table.table-condensed
+          %thead
+            %tr
+              %th= I18n.t('affair.views.title')
+              %th= I18n.t('affair.views.person')
+
+          %tbody
+            - for s in @affair.affairs_stakeholders
+              %tr{'data-id' => s.id, :class => 'item'}
+                %td
+                  %input{ :name => 'stakeholders[][title]',
+                          :class => 'form-control',
+                          :value => s.title,
+                          :type => 'text' }
+
+                %td
+                  %input{ :name => "stakeholders[][id]", :type => 'hidden', :value => s.id }
+                  .autocompleted
+                    %input{ :name => "stakeholders[][person]",
+                            :type => 'search',
+                            :value => s.person_name,
+                            :class => 'form-control',
+                            :action => '/people/search' }
+
+                    %input{ :type => 'hidden',
+                            :name => "stakeholders[][person_id]",
+                            :value => s.person_id }
+
+                %td
+                  %button{:type => 'button',
+                          :name => 'remove_item',
+                          :class => 'btn btn-danger'}
+                    .icon-remove
+
+            %tr{'data-name' => 'stakeholder_item_template', :style => 'display: none;'}
+              %td
+                %input{ :name => 'stakeholders[][title]',
+                        :class => 'form-control',
+                        :type => 'text' }
+
+              %td
+                .autocompleted
+                  %input{ :name => "stakeholders[][person]",
+                          :type => 'search',
+                          :class => 'form-control',
+                          :action => '/people/search' }
+
+                  %input{ :type => 'hidden',
+                          :name => "stakeholders[][person_id]" }
+
+              %td
+                %button{:type => 'button',
+                        :name => 'remove_item',
+                        :class => 'btn btn-danger'}
+                  .icon-remove
+
+
+            %tr{'data-name' => 'stakeholder_item_add'}
+              %td
+              %td
+              %td
+                %button{:type => 'button',
+                        :name => 'add_item',
+                        :class => 'btn btn-default'}
+                  .icon-plus
+
 
     - unless @affair.isNew?()
       .row

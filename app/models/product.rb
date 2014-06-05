@@ -30,6 +30,11 @@ class Product < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
+  before_validation do
+    self.price_to_unit_rate ||= 1
+    self.unit_symbol ||= "pc" # units are defined in translations
+  end
+
   #################
   ### RELATIONS ###
   #################
@@ -60,6 +65,7 @@ class Product < ActiveRecord::Base
   validates :unit_symbol, :presence => true,
                           :length => {:maximum => 255}
   validates :price_to_unit_rate, :presence => true
+
 
   ########################
   #### CLASS METHODS #####

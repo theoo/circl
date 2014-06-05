@@ -16,9 +16,9 @@
 
 class App.Affair extends Spine.Model
 
-  @configure 'Affair', 'id', 'owner_id', 'owner_name', 'buyer_id', 'buyer_name', 'receiver_id', 'receiver_name',
-             'title', 'description', 'value', 'value_currency', 'invoices_count', 'invoices_value', 'receipts_value',
-             'created_at'
+  @configure 'Affair', 'id', 'owner_id', 'owner_name', 'buyer_id', 'buyer_name', 'receiver_id',
+    'receiver_name', 'title', 'description', 'value', 'value_currency', 'invoices_count',
+    'invoices_value', 'receipts_value', 'created_at'
 
   @extend Spine.Model.Ajax
   @url: ->

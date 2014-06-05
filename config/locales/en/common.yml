@@ -23,6 +23,7 @@ en:
     created_at: created at
     css: CSS
     csv: CSV (Spreadsheet)
+    custom: custom
     dashboard: dashboard
     date: date
     description: description

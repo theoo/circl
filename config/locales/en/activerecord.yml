@@ -307,8 +307,8 @@ en:
       permission: Permission
       person: Person
       private_tag: Private Tag
-      public_tag: Public Tag
       product: Product
+      public_tag: Public Tag
       query_preset: Query Preset
       receipt: Receipt
       role: Role

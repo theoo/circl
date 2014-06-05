@@ -35,9 +35,13 @@
 #++
 
 class Affair < ActiveRecord::Base
+
   ################
   ### INCLUDES ###
   ################
+
+  # Monetize deprecation warning
+  require 'monetize/core_extensions'
 
   include ChangesTracker
   include StatusExtention
@@ -67,6 +71,8 @@ class Affair < ActiveRecord::Base
   belongs_to  :receiver, :class_name => 'Person', :foreign_key => 'receiver_id'
   belongs_to  :seller, :class_name => 'Person', :foreign_key => 'seller_id'
 
+  belongs_to  :condition, :class_name => 'AffairsCondition'
+
   has_one     :parent, :class_name => 'Affair', :primary_key => 'parent_id', :foreign_key => 'id'
   has_many    :children, :class_name => 'Affair', :foreign_key => 'parent_id'
 
@@ -91,12 +97,17 @@ class Affair < ActiveRecord::Base
 
   has_many    :products, :through => :product_items
   has_many    :programs, :through => :product_items
-  # has_many    :product_variants, :through => :products
+
+  has_many    :affairs_stakeholders
+  has_many    :stakeholders,
+              :through => :affairs_stakeholders,
+              :source => :person
+
+  has_many :affairs_subscriptions # for permissions
 
   monitored_habtm :subscriptions,
                   :after_add    => :update_on_prestation_alteration,
                   :after_remove => :update_on_prestation_alteration
-  has_many :affairs_subscriptions # for permissions
 
   # Money
   money :value
@@ -141,7 +152,7 @@ class Affair < ActiveRecord::Base
      nil,             # 4
      nil,             # 5
      nil,             # 6
-     :cancelled,      # 7
+     :cancelled,      # 7 user defined
 
                       # starting from 256 (bit 8-15),
                       # invoices are paid
@@ -152,7 +163,7 @@ class Affair < ActiveRecord::Base
      nil,             # 12
      nil,             # 13
      nil,             # 14
-     :offered         # 15
+     :offered         # 15 user defined
     ]
   end
 
@@ -206,6 +217,7 @@ class Affair < ActiveRecord::Base
     h[:vat_value]                          = vat_value.try(:to_f)
     h[:vat_value_currency]                 = vat_value.currency.try(:iso_code)
     h[:statuses]                           = translated_statuses
+    h[:affairs_stakeholders]               = affairs_stakeholders.as_json
     h
   end
 
@@ -424,16 +436,22 @@ class Affair < ActiveRecord::Base
   # and return its statuses.
   def update_statuses
     statuses = []
-    statuses << :open if open?
-    statuses << :underpaid if underpaid?
-    statuses << :partially_paid if partially_paid?
-    statuses << :to_be_billed if to_be_billed?
-    statuses << :cancelled if cancelled?
+    if cancelled?
+      statuses << :cancelled
+    else
+      statuses << :open if open?
+      statuses << :underpaid if underpaid?
+      statuses << :partially_paid if partially_paid?
+      statuses << :to_be_billed if to_be_billed?
+    end
 
     # TODO How an invoice could be paid and open in the same time ?
-    statuses << :paid if paid?
-    statuses << :overpaid if overpaid?
-    statuses << :offered if offered?
+    if offered?
+      statuses << :offered
+    else
+      statuses << :paid if paid?
+      statuses << :overpaid if overpaid?
+    end
 
     self.reset_statuses(statuses)
     statuses
