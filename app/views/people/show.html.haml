@@ -98,7 +98,7 @@
 
     #affairs_tab.tab-pane
       .row
-        .col-md-6
+        .col-md-12
           - # TODO Adjust access to every panel
           - if can? :read, @person => Affair
             #person_affairs{:class => 'panel panel-primary', 'data-primary_panel' => "true"}
@@ -106,11 +106,18 @@
                 .panel-title
                   = I18n.t('person.views.affairs')
 
+        .col-md-6
           - if can? :read, @person => Affair
             #person_affair_subscriptions.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('affair.views.subscriptions')
+
+          - if can? :read, @person => Affair
+            #person_affair_extras.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('affair.views.extras')
 
           - if can? :read, @person => TaskRate
             #person_affair_task_rates.panel.panel-default
@@ -124,12 +131,6 @@
               .panel-heading
                 .panel-title
                   = I18n.t('affair.views.tasks')
-
-          - if can? :read, @person => Affair
-            #person_affair_extras.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('affair.views.extras')
 
           - if can? :read, @person => Affair
             #person_affair_products.panel.panel-default

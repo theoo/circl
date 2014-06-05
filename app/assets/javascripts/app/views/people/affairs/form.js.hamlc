@@ -5,337 +5,346 @@
         .validation_errors_placeholder
 
     .row
-      .col-sm-9
-        .form-group
-          %label{:for => 'affair_title'}
-            = I18n.t('common.title')
-          %input{:type => 'text',
-                 :name => 'title',
-                 :id => 'affair_title',
-                 :class => 'required form-control',
-                 :value => @affair.title}
-      .col-sm-3
-        %br
-        .checkbox
-          %label.control-label
-            %input{ :type => 'checkbox',
-                    :id => 'affair_estimate',
-                    :name => 'estimate',
-                    :checked => @affair.estimate,
-                    :value => 1 }
-            = I18n.t('affair.views.estimate')
-
-    .row
-      .col-sm-9
-        .form-group.autocompleted
-          %label{:for => 'affair_parent'}
-            = I18n.t('common.parent')
-          %input{ :type => 'search',
-                  :name => 'parent',
-                  :id => 'affair_parent',
-                  :class => 'form-control',
-                  :value => @affair.parent_title,
-                  :action => "/people/#{@person_id}/affairs/search"}
-
-          %input{ :type => 'hidden',
-                  :name => 'parent_id',
-                  :value => @affair.parent_id }
-      .col-sm-3
-
-    .row
-      .col-lg-12
-        .form-group
-          %label{:for => 'affair_description'}
-            = I18n.t('common.description')
-          %textarea{:name => 'description',
-                    :rows => 3,
-                    :id => 'affair_description',
-                    :class => 'form-control'}
-            = @affair.description
-
-    .row
-      .col-lg-12
-        .form-group
-          %label{:for => 'affair_footer'}
-            = I18n.t('affair.views.footer')
-          %textarea{:name => 'footer',
-                    :rows => 3,
-                    :id => 'affair_footer',
-                    :class => 'form-control'}
-            = @affair.footer
-
-    .row
-      .col-lg-6
-        .form-group
-          %label{:for => 'affair_conditions'}
-            = I18n.t('affair.views.conditions')
-          %select{:name => 'condition_id',
-                  :class => 'form-control'}
-            %option{:value => undefined}= I18n.t("common.custom")
-            - for h in App.AffairsCondition.all()
-              - if h.id == @affair.condition_id
-                %option{:value => h.id, :selected => true}= h.title
-              - else
-                %option{:value => h.id}= h.title
-      .col-lg-6
-
-    .row
-      .col-lg-12
-        .form-group
-          %textarea{:name => 'conditions',
-                    :rows => 3,
-                    :id => 'affair_conditions',
-                    :class => 'form-control'}
-            = @affair.conditions
-
-    .row
-      .col-sm-6
-        .autocompleted.form-group
-          %label{:for => 'affair_buyer'}
-            = I18n.t('affair.views.buyer')
-          %input{:type => 'search',
-                 :name => 'buyer',
-                 :id => 'affair_buyer',
-                 :class => 'required form-control',
-                 :value => @affair.buyer_name,
-                 :action => '/people/search'}
-          %input{:type => 'hidden',
-                 :name => 'buyer_id',
-                 :value => @affair.buyer_id}
-
-      .col-sm-6
-        .autocompleted.form-group
-          %label{:for => 'affair_receiver'}
-            = I18n.t('affair.views.receiver')
-          %input{ :type => 'search',
-                  :name => 'receiver',
-                  :id => 'affair_receiver',
-                  :class => 'required form-control',
-                  :value => @affair.receiver_name,
-                  :action => '/people/search'}
-          %input{ :type => 'hidden',
-                  :name => 'receiver_id',
-                  :value => @affair.receiver_id}
-
-    .row
-      .col-sm-6
-        .autocompleted.form-group
-          %label{:for => 'affair_seller'}
-            = I18n.t('affair.views.seller')
-          %input{:type => 'search',
-                 :name => 'seller',
-                 :id => 'affair_seller',
-                 :class => 'required form-control',
-                 :value => @affair.seller_name,
-                 :action => '/people/search'}
-          %input{:type => 'hidden',
-                 :name => 'seller_id',
-                 :value => @affair.seller_id}
-      .col-sm-6
-
-    .row
-      .col-sm-12
-        %label= I18n.t("affair.views.stakeholders")
-        %table.table.table-condensed
-          %thead
-            %tr
-              %th= I18n.t('affair.views.title')
-              %th= I18n.t('affair.views.person')
-
-          %tbody
-            - for s in @affair.affairs_stakeholders
-              %tr{'data-id' => s.id, :class => 'item'}
-                %td
-                  %input{ :name => 'stakeholders[][title]',
-                          :class => 'form-control',
-                          :value => s.title,
-                          :type => 'text' }
-
-                %td
-                  %input{ :name => "stakeholders[][id]", :type => 'hidden', :value => s.id }
-                  .autocompleted
-                    %input{ :name => "stakeholders[][person]",
-                            :type => 'search',
-                            :value => s.person_name,
-                            :class => 'form-control',
-                            :action => '/people/search' }
-
-                    %input{ :type => 'hidden',
-                            :name => "stakeholders[][person_id]",
-                            :value => s.person_id }
-
-                %td
-                  %button{:type => 'button',
-                          :name => 'remove_item',
-                          :class => 'btn btn-danger'}
-                    .icon-remove
-
-            %tr{'data-name' => 'stakeholder_item_template', :style => 'display: none;'}
-              %td
-                %input{ :name => 'stakeholders[][title]',
-                        :class => 'form-control',
-                        :type => 'text' }
-
-              %td
-                .autocompleted
-                  %input{ :name => "stakeholders[][person]",
-                          :type => 'search',
-                          :class => 'form-control',
-                          :action => '/people/search' }
-
-                  %input{ :type => 'hidden',
-                          :name => "stakeholders[][person_id]" }
-
-              %td
-                %button{:type => 'button',
-                        :name => 'remove_item',
-                        :class => 'btn btn-danger'}
-                  .icon-remove
-
-
-            %tr{'data-name' => 'stakeholder_item_add'}
-              %td
-              %td
-              %td
-                %button{:type => 'button',
-                        :name => 'add_item',
-                        :class => 'btn btn-default'}
-                  .icon-plus
-
-
-    - unless @affair.isNew?()
-      .row
-        .col-sm-6
-          .form-group
-            %label{:for => 'person_affair_value'}
-              = I18n.t('common.value')
-            .input-group
-              .input-group-btn
-                - classes = ['btn', 'btn-default']
-                - if @affair.value == @affair.computed_value
-                  - classes.push('disabled')
-                - else
-                  - classes.push('btn-danger')
-
-                %button{:type => 'button', :class => classes.join(" "), :name => 'reset_value'}
-                  .icon-refresh
-
-              %input{ :type => 'number',
-                      :step => 0.01,
-                      :id => 'person_affair_value',
-                      :class => 'form-control required',
-                      :min => 0,
-                      :max => 99999999.99,
-                      :name => 'value',
-                      :value => @affair.value }
-
-              .input-group-addon
-                != @partial('select_currency')(currency: @affair.value_currency, name: 'value_currency', value: @affair.value)
-
-        .col-sm-6
-          .form-group
-            %label
+      .col-md-6
+        .row
+          .col-sm-9
+            .form-group
+              %label{:for => 'affair_title'}
+                = I18n.t('common.title')
+              %input{:type => 'text',
+                     :name => 'title',
+                     :id => 'affair_title',
+                     :class => 'required form-control',
+                     :value => @affair.title}
+          .col-sm-3
+            %br
             .checkbox
               %label.control-label
                 %input{ :type => 'checkbox',
-                        :id => 'person_affair_custom_value_with_taxes',
-                        :name => 'custom_value_with_taxes',
-                        :checked => false,
+                        :id => 'affair_estimate',
+                        :name => 'estimate',
+                        :checked => @affair.estimate,
                         :value => 1 }
-                = I18n.t('affair.views.custom_value_with_taxes')
+                = I18n.t('affair.views.estimate')
 
-      .row
-        .col-sm-6
-          - if @affair.computed_value != @affair.value
-            %small.help-block
-              = I18n.t("affair.views.computed_value_is")
-              = @affair.computed_value?.to_view(@affair.computed_value_currency)
+        .row
+          .col-sm-9
+            .form-group.autocompleted
+              %label{:for => 'affair_parent'}
+                = I18n.t('common.parent')
+              %input{ :type => 'search',
+                      :name => 'parent',
+                      :id => 'affair_parent',
+                      :class => 'form-control',
+                      :value => @affair.parent_title,
+                      :action => "/people/#{@person_id}/affairs/search"}
 
-              .text-danger
-                = I18n.t("affair.views.bid_value")
-                = (@affair.computed_value - @affair.value)?.to_view(@affair.value_currency)
-        .col-sm-6
-          %small.help-block
-            = I18n.t("affair.views.computed_value_with_taxes_is")
-            = @affair.computed_value_with_taxes?.to_view(@affair.computed_value_with_taxes_currency)
-            %br
-            = I18n.t("affair.views.value_with_taxes_is")
-            = @affair.value_with_taxes?.to_view(@affair.value_with_taxes_currency)
+              %input{ :type => 'hidden',
+                      :name => 'parent_id',
+                      :value => @affair.parent_id }
+          .col-sm-3
 
-      .row
-        .col-sm-6
-          .list-group
-            - if @affair.subscriptions_count > 0
-              %a{:href => '#person_affair_subscriptions', :class => 'list-group-item'}
-                .badge= @affair.subscriptions_count
-                = I18n.t('affair.views.subscriptions') + " :"
-                = @affair.subscriptions_value?.to_view(@affair.subscriptions_value_currency)
+        .row
+          .col-lg-12
+            .form-group
+              %label{:for => 'affair_description'}
+                = I18n.t('common.description')
+              %textarea{:name => 'description',
+                        :rows => 6,
+                        :id => 'affair_description',
+                        :class => 'form-control'}
+                = @affair.description
 
-            - if @affair.tasks_count > 0
-              %a{:href => '#person_affair_tasks', :class => 'list-group-item'}
-                .badge= @affair.tasks_count
-                = I18n.t('affair.views.tasks') + " :"
-                = @affair.tasks_value?.to_view(@affair.tasks_value_currency)
+        .row
+          .col-lg-12
+            .form-group
+              %label{:for => 'affair_footer'}
+                = I18n.t('affair.views.footer')
+              %textarea{:name => 'footer',
+                        :rows => 3,
+                        :id => 'affair_footer',
+                        :class => 'form-control'}
+                = @affair.footer
 
-            - if @affair.products_count > 0
-              %a{:href => '#person_affair_products', :class => 'list-group-item'}
-                .badge= @affair.products_count
-                = I18n.t('affair.views.products') + " :"
-                = @affair.products_value?.to_view(@affair.products_value_currency)
+        .row
+          .col-lg-6
+            .form-group
+              %label{:for => 'affair_conditions'}
+                = I18n.t('affair.views.conditions')
+              %select{:name => 'condition_id',
+                      :class => 'form-control'}
+                %option{:value => undefined}= I18n.t("common.custom")
+                - for h in App.AffairsCondition.all()
+                  - if h.id == @affair.condition_id
+                    %option{:value => h.id, :selected => true}= h.title
+                  - else
+                    %option{:value => h.id}= h.title
+          .col-lg-6
 
-            - if @affair.extras_count > 0
-              %a{:href => '#person_affair_extras', :class => 'list-group-item'}
-                .badge= @affair.extras_count
-                = I18n.t('affair.views.extras') + " :"
-                = @affair.extras_value?.to_view(@affair.extras_value_currency)
+        .row
+          .col-lg-12
+            .form-group
+              %textarea{:name => 'conditions',
+                        :rows => 3,
+                        :id => 'affair_conditions',
+                        :class => 'form-control'}
+                = @affair.conditions
 
-        .col-sm-6
-          .list-group
-            - if @affair.products_count > 0
-              %a{:href => '#person_affair_products', :class => 'list-group-item list-group-item-warning'}
-                .badge= @affair.arts_count
-                = I18n.t('affair.views.arts') + " :"
-                = @affair.arts_value?.to_view(@affair.arts_value_currency)
+      .col-md-6
+        .row
+          .col-sm-12
+            %label= I18n.t("affair.views.stakeholders")
+            %table.table.table-condensed
+              %thead
+                %tr
+                  %th= I18n.t('affair.views.title')
+                  %th= I18n.t('affair.views.person')
 
-            - if App.ApplicationSetting.value('use_vat') == "true"
-              %a{:href => '#balance', :class => 'list-group-item list-group-item-warning'}
-                .badge= @affair.vat_count
-                = I18n.t('affair.views.vat') + " :"
-                = @affair.vat_value?.to_view(@affair.vat_value_currency)
+              %tbody
+                %tr
+                  %td.col-sm-4
+                    %label{:for => 'affair_receiver', :class => 'required'}
+                      = I18n.t('affair.views.receiver')
+                  %td
+                    .autocompleted
+                      %input{:type => 'search',
+                             :name => 'receiver',
+                             :id => 'affair_receiver',
+                             :class => 'form-control',
+                             :value => @affair.receiver_name,
+                             :action => '/people/search'}
 
-            %a{:href => '#balance', :class => 'list-group-item'}
-              .badge= @affair.invoices_count
-              = I18n.t('affair.views.invoices') + " :"
-              = @affair.invoices_value?.to_view(@affair.invoices_value_currency)
+                      %input{:type => 'hidden',
+                             :name => 'receiver_id',
+                             :value => @affair.receiver_id}
+                  %td
 
-            %a{:href => '#balance', :class => 'list-group-item'}
-              .badge= @affair.receipts_count
-              = I18n.t('affair.views.receipts') + " :"
-              = @affair.receipts_value?.to_view(@affair.receipts_value_currency)
+                %tr
+                  %td
+                    %label{:for => 'affair_buyer', :class => 'required'}
+                      = I18n.t('affair.views.buyer')
+                  %td
+                    .autocompleted
+                      %input{:type => 'search',
+                             :name => 'buyer',
+                             :id => 'affair_buyer',
+                             :class => 'form-control',
+                             :value => @affair.buyer_name,
+                             :action => '/people/search'}
 
-    .row
-      .col-sm-6
+                      %input{:type => 'hidden',
+                             :name => 'buyer_id',
+                             :value => @affair.buyer_id}
+                  %td
+
+                %tr
+                  %td
+                    %label{:for => 'affair_seller', :class => 'required'}
+                      = I18n.t('affair.views.seller')
+                  %td
+                    .autocompleted
+                      %input{:type => 'search',
+                             :name => 'seller',
+                             :id => 'affair_seller',
+                             :class => 'form-control',
+                             :value => @affair.seller_name,
+                             :action => '/people/search'}
+
+                      %input{:type => 'hidden',
+                             :name => 'seller_id',
+                             :value => @affair.seller_id}
+                  %td
+
+
+                - for s in @affair.affairs_stakeholders
+                  %tr{'data-id' => s.id, :class => 'item'}
+                    %td.col-sm-4
+                      %input{ :name => 'stakeholders[][title]',
+                              :class => 'form-control',
+                              :value => s.title,
+                              :type => 'text' }
+
+                    %td
+                      %input{ :name => "stakeholders[][id]", :type => 'hidden', :value => s.id }
+                      .autocompleted
+                        %input{ :name => "stakeholders[][person]",
+                                :type => 'search',
+                                :value => s.person_name,
+                                :class => 'form-control',
+                                :action => '/people/search' }
+
+                        %input{ :type => 'hidden',
+                                :name => "stakeholders[][person_id]",
+                                :value => s.person_id }
+
+                    %td
+                      %button{:type => 'button',
+                              :name => 'remove_item',
+                              :class => 'btn btn-danger'}
+                        .icon-remove
+
+                %tr{'data-name' => 'stakeholder_item_template', :style => 'display: none;'}
+                  %td
+                    %input{ :name => 'stakeholders[][title]',
+                            :class => 'form-control',
+                            :type => 'text' }
+
+                  %td
+                    .autocompleted
+                      %input{ :name => "stakeholders[][person]",
+                              :type => 'search',
+                              :class => 'form-control',
+                              :action => '/people/search' }
+
+                      %input{ :type => 'hidden',
+                              :name => "stakeholders[][person_id]" }
+
+                  %td
+                    %button{:type => 'button',
+                            :name => 'remove_item',
+                            :class => 'btn btn-danger'}
+                      .icon-remove
+
+
+                %tr{'data-name' => 'stakeholder_item_add'}
+                  %td
+                  %td
+                  %td
+                    %button{:type => 'button',
+                            :name => 'add_item',
+                            :class => 'btn btn-default'}
+                      .icon-plus
+
+
         - unless @affair.isNew?()
-          .form-group
-            %label{:for => 'affair_template'}
-              = I18n.t('affair.views.template')
-            %select{:name => 'generic_template_id',
-                    :id => 'affair_template',
-                    :class => 'form-control'}
-              - for h in _.sortBy(App.GenericTemplate.category('Affair'), (t) -> t.title)
-                %option{:value => h.id}= h.title
-      .col-sm-6
+          .row
+            .col-sm-6
+              .form-group
+                %label{:for => 'person_affair_value'}
+                  = I18n.t('common.value')
+                .input-group
+                  .input-group-btn
+                    - classes = ['btn', 'btn-default']
+                    - if @affair.value == @affair.computed_value
+                      - classes.push('disabled')
+                    - else
+                      - classes.push('btn-danger')
 
-    .row
-      .col-sm-12
-        - if parseInt(@person_id) == parseInt(@affair.owner_id) or @affair.isNew?()
+                    %button{:type => 'button', :class => classes.join(" "), :name => 'reset_value'}
+                      .icon-refresh
 
+                  %input{ :type => 'number',
+                          :step => 0.01,
+                          :id => 'person_affair_value',
+                          :class => 'form-control required',
+                          :min => 0,
+                          :max => 99999999.99,
+                          :name => 'value',
+                          :value => @affair.value }
+
+                  .input-group-addon
+                    != @partial('select_currency')(currency: @affair.value_currency, name: 'value_currency', value: @affair.value)
+
+            .col-sm-6
+              .form-group
+                %label
+                .checkbox
+                  %label.control-label
+                    %input{ :type => 'checkbox',
+                            :id => 'person_affair_custom_value_with_taxes',
+                            :name => 'custom_value_with_taxes',
+                            :checked => false,
+                            :value => 1 }
+                    = I18n.t('affair.views.custom_value_with_taxes')
+
+          .row
+            .col-sm-6
+              - if @affair.computed_value != @affair.value
+                %small.help-block
+                  = I18n.t("affair.views.computed_value_is")
+                  = @affair.computed_value?.to_view(@affair.computed_value_currency)
+
+                  .text-danger
+                    = I18n.t("affair.views.bid_value")
+                    = (@affair.computed_value - @affair.value)?.to_view(@affair.value_currency)
+            .col-sm-6
+              %small.help-block
+                = I18n.t("affair.views.computed_value_with_taxes_is")
+                = @affair.computed_value_with_taxes?.to_view(@affair.computed_value_with_taxes_currency)
+                %br
+                = I18n.t("affair.views.value_with_taxes_is")
+                = @affair.value_with_taxes?.to_view(@affair.value_with_taxes_currency)
+
+          .row
+            .col-sm-6
+              .list-group
+                - if @affair.subscriptions_count > 0
+                  %a{:href => '#person_affair_subscriptions', :class => 'list-group-item'}
+                    .badge= @affair.subscriptions_count
+                    = I18n.t('affair.views.subscriptions') + " :"
+                    = @affair.subscriptions_value?.to_view(@affair.subscriptions_value_currency)
+
+                - if @affair.tasks_count > 0
+                  %a{:href => '#person_affair_tasks', :class => 'list-group-item'}
+                    .badge= @affair.tasks_count
+                    = I18n.t('affair.views.tasks') + " :"
+                    = @affair.tasks_value?.to_view(@affair.tasks_value_currency)
+
+                - if @affair.products_count > 0
+                  %a{:href => '#person_affair_products', :class => 'list-group-item'}
+                    .badge= @affair.products_count
+                    = I18n.t('affair.views.products') + " :"
+                    = @affair.products_value?.to_view(@affair.products_value_currency)
+
+                - if @affair.extras_count > 0
+                  %a{:href => '#person_affair_extras', :class => 'list-group-item'}
+                    .badge= @affair.extras_count
+                    = I18n.t('affair.views.extras') + " :"
+                    = @affair.extras_value?.to_view(@affair.extras_value_currency)
+
+            .col-sm-6
+              .list-group
+                - if @affair.products_count > 0
+                  %a{:href => '#person_affair_products', :class => 'list-group-item list-group-item-warning'}
+                    .badge= @affair.arts_count
+                    = I18n.t('affair.views.arts') + " :"
+                    = @affair.arts_value?.to_view(@affair.arts_value_currency)
+
+                - if App.ApplicationSetting.value('use_vat') == "true"
+                  %a{:href => '#balance', :class => 'list-group-item list-group-item-warning'}
+                    .badge= @affair.vat_count
+                    = I18n.t('affair.views.vat') + " :"
+                    = @affair.vat_value?.to_view(@affair.vat_value_currency)
+
+                %a{:href => '#balance', :class => 'list-group-item'}
+                  .badge= @affair.invoices_count
+                  = I18n.t('affair.views.invoices') + " :"
+                  = @affair.invoices_value?.to_view(@affair.invoices_value_currency)
+
+                %a{:href => '#balance', :class => 'list-group-item'}
+                  .badge= @affair.receipts_count
+                  = I18n.t('affair.views.receipts') + " :"
+                  = @affair.receipts_value?.to_view(@affair.receipts_value_currency)
+
+    - if parseInt(@person_id) == parseInt(@affair.owner_id) or @affair.isNew?()
+      .row
+        .col-sm-4
           - unless @affair.isNew?()
             .btn-group
               %a{:name => "affair-destroy",
                  :class => 'btn btn-danger' }
                 .icon-remove
                 = I18n.t('common.destroy')
+
+        .col-sm-4
+          - unless @affair.isNew?()
+            .form-inline
+              .form-group
+                %select{:name => 'generic_template_id',
+                        :id => 'affair_template',
+                        :class => 'form-control'}
+                  - for h in _.sortBy(App.GenericTemplate.category('Affair'), (t) -> t.title)
+                    %option{:value => h.id}= h.title
 
               .btn-group
                 %a{ :data-toggle => 'dropdown',
@@ -359,10 +368,13 @@
                       .icon-download-alt
                       = I18n.t('common.odt')
 
+        .col-sm-4
           .pull-right
             != @partial('save_and_cancel_buttons')(@affair)
 
-        - else
+    - else
+      .row
+        .col-sm-12
           .pull-right
             %button{:name => "affair-show-owner",
                     :class => 'btn btn-primary' }

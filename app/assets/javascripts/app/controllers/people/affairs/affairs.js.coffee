@@ -99,7 +99,7 @@ class New extends App.ExtendedController
     @person = Person.find(@person_id)
     @affair = new PersonAffair
       conditions: App.ApplicationSetting.value("default_affair_conditions")
-      affairs_stakeholders: [{}]
+      affairs_stakeholders: []
     @affair.owner_id = @affair.buyer_id = @affair.receiver_id = @person.id
     @affair.owner_name = @affair.buyer_name = @affair.receiver_name = @person.name
 
