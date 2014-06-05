@@ -7,24 +7,24 @@
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'settings_role_name'}
+          %label{for: 'settings_role_name'}
             = I18n.t('common.name')
-          %input{ :type => 'text',
-                  :name => 'name',
-                  :id => 'settings_role_name',
-                  :value => @role.name,
-                  :class => 'form-control required' }
+          %input{ type: 'text',
+                  name: 'name',
+                  id: 'settings_role_name',
+                  value: @role.name,
+                  class: 'form-control required' }
       .col-lg-6
 
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'settings_role_description'}
+          %label{for: 'settings_role_description'}
             = I18n.t('common.description')
-          %textarea{:name => 'description',
-                    :id => 'settings_role_description',
-                    :rows => 5,
-                    :class => 'form-control' }
+          %textarea{name: 'description',
+                    id: 'settings_role_description',
+                    rows: 5,
+                    class: 'form-control' }
             = @role.description
 
     .row
@@ -34,14 +34,14 @@
 
         .btn-group
           - unless @role.isNew?()
-            %button{:type => 'button',
-                    :name => "settings-role-destroy",
-                    :class => 'btn btn-danger' }
+            %button{type: 'button',
+                    name: "settings-role-destroy",
+                    class: 'btn btn-danger' }
               .icon-remove
               = I18n.t("common.destroy")
 
-            %button{:type => 'button',
-                    :name => "settings-role-view-members",
-                    :class => 'btn btn-default' }
+            %button{type: 'button',
+                    name: "settings-role-view-members",
+                    class: 'btn btn-default' }
               .icon-group
               = I18n.t('role.views.actions.view_role_members')

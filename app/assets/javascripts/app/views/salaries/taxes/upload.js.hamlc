@@ -1,5 +1,5 @@
 .modal-header
-  %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+  %button{type: 'button', class: 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
     = I18n.t('tax.views.upload_tax') + ": " + @tax.title
@@ -19,36 +19,36 @@
 
         %ol
           %li 1.
-            %a{:href => 'assets/tax_generic.csv'}
+            %a{href: 'assets/tax_generic.csv'}
               = I18n.t("tax.views.generic_tax_example_file_desc")
           %li 2.
-            %a{:href => 'assets/tax_age.csv'}
+            %a{href: 'assets/tax_age.csv'}
               = I18n.t("tax.views.age_tax_example_file_desc")
           %li 3.
-            %a{:href => 'assets/tax_is.txt'}
+            %a{href: 'assets/tax_is.txt'}
               = I18n.t("tax.views.is_tax_example_file_desc")
 
-        %input{ :type => 'hidden', :name => 'tax_id', :value => @tax.id }
+        %input{ type: 'hidden', name: 'tax_id', value: @tax.id }
         %br
         %br
 
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'taxes_upload_file'}
+          %label{for: 'taxes_upload_file'}
             = I18n.t('common.select_file')
-          %input{ :type => 'file',
-                  :name => 'file',
-                  :id => 'taxes_upload_file'}
+          %input{ type: 'file',
+                  name: 'file',
+                  id: 'taxes_upload_file'}
 
   .modal-footer
-    %button{:type => 'button',
-            :class => 'btn btn-default',
+    %button{type: 'button',
+            class: 'btn btn-default',
             :data-dismiss => 'modal'}
       .icon-chevron-left
       = I18n.t("common.close")
 
-    %button{:type => 'submit',
-            :class => 'btn btn-primary' }
+    %button{type: 'submit',
+            class: 'btn btn-primary' }
       .icon-cloud-upload
       = I18n.t('common.upload')

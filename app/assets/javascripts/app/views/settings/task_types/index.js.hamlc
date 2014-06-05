@@ -12,7 +12,7 @@
     - for type in App.TaskType.all()
       - classes = ['item']
       - classes.push 'success' if ! type.archive
-      %tr{:data-id => type.id, :class => classes.join(" ")}
+      %tr{:data-id => type.id, class: classes.join(" ")}
         %td= type.id
         %td
           %b= type.title

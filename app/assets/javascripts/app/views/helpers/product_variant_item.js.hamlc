@@ -6,90 +6,90 @@
 - else
   - name = 'variant_item'
 
-%tr{:data-id => @.object.id, :data-name => name, :class => classes.join(" ")}
+%tr{:data-id => @.object.id, :data-name => name, class: classes.join(" ")}
   %td.col-lg-11
 
-    %input{ :name => "variants[][position]", :type => 'hidden', :value => @.object.position }
-    %input{ :name => "variants[][id]", :type => 'hidden', :value => @.object.id }
+    %input{ name: "variants[][position]", type: 'hidden', value: @.object.position }
+    %input{ name: "variants[][id]", type: 'hidden', value: @.object.id }
 
     .row
       .col-sm-8
         .form-group
-          %label{:for => "product_variant_title_" + @.object.id}
+          %label{for: "product_variant_title_" + @.object.id}
             = I18n.t("common.title")
-          %input{ :type => 'text',
-                  :id => "product_variant_title_" + @.object.id,
-                  :class => 'form-control',
-                  :name => "variants[][title]",
-                  :value => @.object.title }
+          %input{ type: 'text',
+                  id: "product_variant_title_" + @.object.id,
+                  class: 'form-control',
+                  name: "variants[][title]",
+                  value: @.object.title }
 
       .col-sm-4
         .form-group
-          %label{:for => "product_variant_program_name_" + @.object.id}
+          %label{for: "product_variant_program_name_" + @.object.id}
             = I18n.t("product_variant.views.program_group")
-          %select{:name => 'variants[][program_group]',
-                  :id => "product_variant_program_name_" + @.object.id,
-                  :class => 'form-control'}
+          %select{name: 'variants[][program_group]',
+                  id: "product_variant_program_name_" + @.object.id,
+                  class: 'form-control'}
             - if App.ProductProgram.names()
               - for name in App.ProductProgram.names()
                 - if @.object.program_group == name
-                  %option{:value => name, :selected => true}= name
+                  %option{value: name, selected: true}= name
                 - else
-                  %option{:value => name}= name
+                  %option{value: name}= name
 
     .row
       .col-xs-6
         .form-group
-          %label{:for => "product_variant_buying_price_" + @.object.id}
+          %label{for: "product_variant_buying_price_" + @.object.id}
             = I18n.t("product_variant.views.buying_price")
           .input-group
-            %input{ :type => 'number',
-                    :class => 'form-control',
-                    :id => "product_variant_buying_pride_" + @.object.id,
-                    :step => 0.01,
-                    :min => 0,
-                    :max => 1000000,
-                    :name => "variants[][buying_price]",
-                    :value => @.object.buying_price }
+            %input{ type: 'number',
+                    class: 'form-control',
+                    id: "product_variant_buying_pride_" + @.object.id,
+                    step: 0.01,
+                    min: 0,
+                    max: 1000000,
+                    name: "variants[][buying_price]",
+                    value: @.object.buying_price }
             .input-group-addon
               != @.context.partial('select_currency')(currency: @.object.buying_price_currency, name: 'variants[][buying_price_currency]', value: @.object.buying_price)
 
       .col-xs-6
         .form-group
-          %label{:for => "product_variant_selling_price_" + @.object.id}
+          %label{for: "product_variant_selling_price_" + @.object.id}
             = I18n.t("product_variant.views.selling_price")
           .input-group
-            %input{ :type => 'number',
-                    :class => 'form-control',
-                    :id => "product_variant_sellgin_pride" + @.object.id,
-                    :step => 0.01,
-                    :min => 0,
-                    :max => 1000000,
-                    :name => "variants[][selling_price]",
-                    :value => @.object.selling_price }
+            %input{ type: 'number',
+                    class: 'form-control',
+                    id: "product_variant_sellgin_pride" + @.object.id,
+                    step: 0.01,
+                    min: 0,
+                    max: 1000000,
+                    name: "variants[][selling_price]",
+                    value: @.object.selling_price }
             .input-group-addon
               != @.context.partial('select_currency')(currency: @.object.selling_price_currency, name: 'variants[][selling_price_currency]', value: @.object.selling_price)
 
     .row
       .col-xs-6
         .form-group
-          %label{:for => "product_variant_art_" + @.object.id}
+          %label{for: "product_variant_art_" + @.object.id}
             = I18n.t("product_variant.views.art")
           .input-group
-            %input{ :type => 'number',
-                    :class => 'form-control',
-                    :id => "product_variant_art_" + @.object.id,
-                    :step => 0.01,
-                    :min => 0,
-                    :max => 1000000,
-                    :name => "variants[][art]",
-                    :value => @.object.art }
+            %input{ type: 'number',
+                    class: 'form-control',
+                    id: "product_variant_art_" + @.object.id,
+                    step: 0.01,
+                    min: 0,
+                    max: 1000000,
+                    name: "variants[][art]",
+                    value: @.object.art }
             .input-group-addon
               != @.context.partial('select_currency')(currency: @.object.art_currency, name: 'variants[][art_currency]', value: @.object.art)
 
 
   %td.col-lg-1.actions
-    %button{:type => 'button',
-            :name => 'remove_variant',
-            :class => 'btn btn-danger'}
+    %button{type: 'button',
+            name: 'remove_variant',
+            class: 'btn btn-danger'}
       .icon-remove

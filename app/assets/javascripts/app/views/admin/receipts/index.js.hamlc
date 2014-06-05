@@ -1,4 +1,4 @@
-%table.datatable{ :action => '/admin/receipts' }
+%table.datatable{ action: '/admin/receipts' }
   %thead
     %tr
       %th= I18n.t('common.id')
@@ -11,19 +11,19 @@
 
 .panel-footer
   .btn-group
-    %button{:type => 'button',
-            :name => 'admin-receipts-export',
-            :class => 'btn btn-default'}
+    %button{type: 'button',
+            name: 'admin-receipts-export',
+            class: 'btn btn-default'}
       .icon-cloud-upload
       = I18n.t('common.toolbox_export')
-    %button{:type => 'button',
-            :name => 'admin-receipts-import',
-            :class => 'btn btn-default'}
+    %button{type: 'button',
+            name: 'admin-receipts-import',
+            class: 'btn btn-default'}
       .icon-cloud-download
       = I18n.t('common.toolbox_import_bank_file')
 
-    %button{:type => 'button',
-            :name => 'admin-receipts-documents-receipts',
-            :class => 'btn btn-default dropdown-toggle' }
+    %button{type: 'button',
+            name: 'admin-receipts-documents-receipts',
+            class: 'btn btn-default dropdown-toggle' }
       .icon-paper-clip
       = I18n.t("common.documents")

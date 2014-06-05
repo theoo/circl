@@ -7,24 +7,24 @@
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'settings_application_setting_key'}
+          %label{for: 'settings_application_setting_key'}
             = I18n.t('application_setting.views.key')
-          %input{ :type => 'text',
-                  :name => 'key',
-                  :id => 'settings_application_setting_key',
-                  :value => @application_setting.key,
-                  :disabled => true,
-                  :class => 'form-control required' }
+          %input{ type: 'text',
+                  name: 'key',
+                  id: 'settings_application_setting_key',
+                  value: @application_setting.key,
+                  disabled: true,
+                  class: 'form-control required' }
 
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'settings_application_setting_value'}
+          %label{for: 'settings_application_setting_value'}
             = I18n.t('common.value')
-          %textarea{:name => 'value',
-                    :id => 'settings_application_setting_value',
-                    :rows => 5,
-                    :class => 'form-control required' }
+          %textarea{name: 'value',
+                    id: 'settings_application_setting_value',
+                    rows: 5,
+                    class: 'form-control required' }
             = @application_setting.value
 
     .row

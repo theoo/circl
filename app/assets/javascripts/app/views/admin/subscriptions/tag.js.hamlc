@@ -1,5 +1,5 @@
 .modal-header
-  %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+  %button{type: 'button', class: 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
     = I18n.t("subscription.views.tag_tool.tag_tool")
@@ -18,16 +18,16 @@
       .col-lg-2
       .col-lg-8
         .autocompleted.form-group
-          %label{:for => 'subscription_tag_tool_private_tag_name'}
+          %label{for: 'subscription_tag_tool_private_tag_name'}
             = I18n.t('subscription.views.tag_tool.private_tag_name')
-          %input{ :type => 'search',
-                  :id => 'subscription_tag_tool_private_tag_name',
-                  :name => 'private_tag',
-                  :class => 'form-control',
-                  :value => '',
-                  :action => '/admin/private_tags/search'}
-          %input{:type => 'hidden',
-                 :name => 'private_tag_id'}
+          %input{ type: 'search',
+                  id: 'subscription_tag_tool_private_tag_name',
+                  name: 'private_tag',
+                  class: 'form-control',
+                  value: '',
+                  action: '/admin/private_tags/search'}
+          %input{type: 'hidden',
+                 name: 'private_tag_id'}
       .col-lg-2
 
     .row
@@ -38,10 +38,10 @@
       .col-lg-6
         .checkbox
           %label
-            %input{ :type => 'checkbox',
-                    :name => 'subscription_member',
-                    :checked => '',
-                    :value => 1 }
+            %input{ type: 'checkbox',
+                    name: 'subscription_member',
+                    checked: '',
+                    value: 1 }
             = I18n.t('subscription.views.tag_tool.member')
 
         = I18n.t("subscription.views.tag_tool.of_a")
@@ -49,10 +49,10 @@
       .col-lg-6
         .checkbox
           %label
-            %input{ :type => 'checkbox',
-                    :name => 'subscription_paid',
-                    :checked => true,
-                    :value => 1 }
+            %input{ type: 'checkbox',
+                    name: 'subscription_paid',
+                    checked: true,
+                    value: 1 }
             = I18n.t('common.paid')
 
         = I18n.t("subscription.views.tag_tool.subscription_at_this_date")
@@ -61,24 +61,24 @@
       .col-lg-3
       .col-lg-6
         .form-group
-          %label{:for => "subscription_tag_tool_date"}
+          %label{for: "subscription_tag_tool_date"}
             = I18n.t('common.date')
-          %input{ :type => 'text',
-                  :id => 'subscription_tag_tool_date',
-                  :name => 'date',
-                  :class => 'datepicker form-control',
-                  :value => '' }
+          %input{ type: 'text',
+                  id: 'subscription_tag_tool_date',
+                  name: 'date',
+                  class: 'datepicker form-control',
+                  value: '' }
       .col-lg-3
 
   .modal-footer
-    %button{:type => 'button',
-            :class => 'btn btn-default',
+    %button{type: 'button',
+            class: 'btn btn-default',
             :data-dismiss => 'modal'}
       .icon-chevron-left
       = I18n.t("common.close")
 
-    %button{:type => 'submit',
-            :name => 'export',
-            :class => 'btn btn-primary'}
+    %button{type: 'submit',
+            name: 'export',
+            class: 'btn btn-primary'}
       = I18n.t('common.next')
       .icon-chevron-right

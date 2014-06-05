@@ -1,4 +1,4 @@
-%table.datatable{ :action => '/admin/affairs' }
+%table.datatable{ action: '/admin/affairs' }
   %thead
     %tr.item
       %th= I18n.t('common.id')

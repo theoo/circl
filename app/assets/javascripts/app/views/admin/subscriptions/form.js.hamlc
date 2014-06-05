@@ -10,42 +10,42 @@
           .row
             .col-md-6
               .form-group
-                %label{:for => 'admin_subscription_title'}
+                %label{for: 'admin_subscription_title'}
                   = I18n.t('common.title')
-                %input{:type => 'text',
-                       :name => 'title',
-                       :id => 'admin_subscription_title',
-                       :class => 'required form-control',
-                       :value => @subscription.title}
+                %input{type: 'text',
+                       name: 'title',
+                       id: 'admin_subscription_title',
+                       class: 'required form-control',
+                       value: @subscription.title}
 
             .col-md-6
               .form-group.autocompleted
-                %label{:for => 'admin_subscription_parent'}
+                %label{for: 'admin_subscription_parent'}
                   = I18n.t('common.parent')
-                %input{ :type => 'search',
-                        :name => 'subscription_parent_title',
-                        :id => 'admin_subscription_parent',
-                        :class => 'form-control',
-                        :value => @subscription.parent_title,
-                        :action => '/admin/subscriptions/search' }
+                %input{ type: 'search',
+                        name: 'subscription_parent_title',
+                        id: 'admin_subscription_parent',
+                        class: 'form-control',
+                        value: @subscription.parent_title,
+                        action: '/admin/subscriptions/search' }
 
-                %input{ :type => 'hidden',
-                        :name => 'parent_id',
-                        :value => @subscription.parent_id }
+                %input{ type: 'hidden',
+                        name: 'parent_id',
+                        value: @subscription.parent_id }
 
-                %input{ :type => 'hidden',
-                        :name => 'status',
-                        :value => @status }
+                %input{ type: 'hidden',
+                        name: 'status',
+                        value: @status }
 
           .row
             .col-md-12
               .form-group
-                %label{:for => 'admin_subscription_description'}
+                %label{for: 'admin_subscription_description'}
                   = I18n.t('common.description')
-                %textarea{:name => 'description',
-                          :rows => 5,
-                          :id => 'admin_subscription_description',
-                          :class => 'form-control'}
+                %textarea{name: 'description',
+                          rows: 5,
+                          id: 'admin_subscription_description',
+                          class: 'form-control'}
                   = @subscription.description
 
 
@@ -53,23 +53,23 @@
           .row
             .col-sm-6
               .form-group
-                %label{:for => 'admin_subscription_interval_starts_on'}
+                %label{for: 'admin_subscription_interval_starts_on'}
                   = I18n.t('common.from')
-                %input{:type => 'text',
-                       :name => 'interval_starts_on',
-                       :id => 'admin_subscription_interval_starts_on',
-                       :class => 'datepicker form-control',
-                       :value => @subscription.interval_starts_on }
+                %input{type: 'text',
+                       name: 'interval_starts_on',
+                       id: 'admin_subscription_interval_starts_on',
+                       class: 'datepicker form-control',
+                       value: @subscription.interval_starts_on }
 
             .col-sm-6
               .form-group
-                %label{:for => 'admin_subscription_interval_ends_on'}
+                %label{for: 'admin_subscription_interval_ends_on'}
                   = I18n.t('common.to')
-                %input{:type => 'text',
-                       :name => 'interval_ends_on',
-                       :id => 'admin_subscription_interval_ends_on',
-                       :class => 'datepicker form-control',
-                       :value => @subscription.interval_ends_on }
+                %input{type: 'text',
+                       name: 'interval_ends_on',
+                       id: 'admin_subscription_interval_ends_on',
+                       class: 'datepicker form-control',
+                       value: @subscription.interval_ends_on }
 
         .col-lg-6
           %h3= I18n.t('subscription.views.values_title')
@@ -85,86 +85,86 @@
 
             %tbody
               - for value, index in @subscription.values
-                %tr{'data-id' => value.id, :class => 'item'}
+                %tr{'data-id' => value.id, class: 'item'}
                   %td.handle
                     .icon-resize-vertical
-                    %input{ :name => "values[][position]", :type => 'hidden', :value => value.position }
-                    %input{ :name => "values[][id]", :type => 'hidden', :value => value.id }
+                    %input{ name: "values[][position]", type: 'hidden', value: value.position }
+                    %input{ name: "values[][id]", type: 'hidden', value: value.id }
 
                   %td
                     .autocompleted
-                      %input{ :name => "values[][private_tag_name]",
-                              :type => 'search',
-                              :value => value.private_tag_name,
-                              :class => 'form-control',
-                              :action => '/admin/private_tags/search' }
+                      %input{ name: "values[][private_tag_name]",
+                              type: 'search',
+                              value: value.private_tag_name,
+                              class: 'form-control',
+                              action: '/admin/private_tags/search' }
 
-                      %input{ :type => 'hidden',
-                              :name => "values[][private_tag_id]",
-                              :value => value.private_tag_id }
+                      %input{ type: 'hidden',
+                              name: "values[][private_tag_id]",
+                              value: value.private_tag_id }
 
                   %td.col-xs-4
                     .input-group
-                      %input{ :type => 'number',
-                              :class => 'form-control',
-                              :step => 0.01,
-                              :min => 0,
-                              :max => 1000000,
-                              :name => "values[][value]",
-                              :value => value.value }
+                      %input{ type: 'number',
+                              class: 'form-control',
+                              step: 0.01,
+                              min: 0,
+                              max: 1000000,
+                              name: "values[][value]",
+                              value: value.value }
                       .input-group-addon
                         != @partial('select_currency')(currency: value.value_currency, name: 'value_currency', value: value.value)
 
                   %td
-                    %select{:name => 'values[][invoice_template_id]', :class => 'form-control'}
+                    %select{name: 'values[][invoice_template_id]', class: 'form-control'}
                       - for l in App.InvoiceTemplate.all()
                         - if value.invoice_template_id == l.id
-                          %option{:value => l.id, :selected => true}= l.title
+                          %option{value: l.id, selected: true}= l.title
                         - else
-                          %option{:value => l.id}= l.title
+                          %option{value: l.id}= l.title
 
                   %td
-                    %button{:type => 'button',
-                            :name => 'remove_item',
-                            :class => 'btn btn-danger'}
+                    %button{type: 'button',
+                            name: 'remove_item',
+                            class: 'btn btn-danger'}
                       .icon-remove
 
-              %tr{'data-name' => 'value_item_template', :style => 'display: none;'}
+              %tr{'data-name' => 'value_item_template', style: 'display: none;'}
                 %td.handle
                   .icon-resize-vertical
-                  %input{ :name => "values[][position]", :type => 'hidden' }
+                  %input{ name: "values[][position]", type: 'hidden' }
 
                 %td
                   .autocompleted
-                    %input{ :name => "values[][private_tag_name]",
-                            :type => 'search',
-                            :class => 'form-control',
-                            :action => '/admin/private_tags/search' }
+                    %input{ name: "values[][private_tag_name]",
+                            type: 'search',
+                            class: 'form-control',
+                            action: '/admin/private_tags/search' }
 
-                    %input{ :type => 'hidden',
-                            :name => "values[][private_tag_id]"}
+                    %input{ type: 'hidden',
+                            name: "values[][private_tag_id]"}
 
                 %td.col-xs-4
                   .input-group
-                    %input{ :type => 'number',
-                            :class => 'form-control',
-                            :step => 0.01,
-                            :min => 0,
-                            :max => 1000000,
-                            :name => "values[][value]"}
+                    %input{ type: 'number',
+                            class: 'form-control',
+                            step: 0.01,
+                            min: 0,
+                            max: 1000000,
+                            name: "values[][value]"}
                     .input-group-addon
                       != @partial('select_currency')(name: 'value_currency')
 
                 %td
-                  %select{:name => 'values[][invoice_template_id]', :class => 'form-control'}
-                    %option{:value => ""}
+                  %select{name: 'values[][invoice_template_id]', class: 'form-control'}
+                    %option{value: ""}
                     - for l in App.InvoiceTemplate.all()
-                      %option{:value => l.id}= l.title
+                      %option{value: l.id}= l.title
 
                 %td
-                  %button{:type => 'button',
-                          :name => 'remove_item',
-                          :class => 'btn btn-danger'}
+                  %button{type: 'button',
+                          name: 'remove_item',
+                          class: 'btn btn-danger'}
                     .icon-remove
 
               %tr{'data-name' => 'value_item_add'}
@@ -173,9 +173,9 @@
                 %td
                 %td
                 %td
-                  %button{:type => 'button',
-                          :name => 'add_item',
-                          :class => 'btn btn-default'}
+                  %button{type: 'button',
+                          name: 'add_item',
+                          class: 'btn btn-default'}
                     .icon-plus
       .row
         .col-md-12
@@ -184,93 +184,93 @@
 
           - unless @subscription.isNew()
             .btn-group
-              %button{:name => "subscription-destroy",
-                      :class => 'btn btn-danger' }
+              %button{name: "subscription-destroy",
+                      class: 'btn btn-danger' }
                 .icon-remove
                 = I18n.t('common.destroy')
 
               .btn-group
                 %button{:data-toggle => 'dropdown',
-                        :type => 'button',
-                        :class => 'btn btn-default dropdown-toggle' }
+                        type: 'button',
+                        class: 'btn btn-default dropdown-toggle' }
                   .icon-paper-clip
                   = I18n.t('common.pdf')
                   .caret
 
                 %ul.dropdown-menu
-                  %li{:class => (if @subscription.invoices_count == 0 then 'disabled' else '')}
-                    %a{:href => '#', :name => 'subscription-pdf'}
+                  %li{class: (if @subscription.invoices_count == 0 then 'disabled' else '')}
+                    %a{href: '#', name: 'subscription-pdf'}
                       .icon-cloud-download
                       = I18n.t('subscription.views.actions.view_subscription_pdf')
 
               .btn-group
                 %button{:data-toggle => 'dropdown',
-                        :type => 'button',
-                        :class => 'btn btn-default dropdown-toggle' }
+                        type: 'button',
+                        class: 'btn btn-default dropdown-toggle' }
                   .icon-user
                   = I18n.t('subscription.views.members')
                   .caret
 
                 %ul.dropdown-menu
-                  %li{:class => (if @subscription.invoices_count == 0 then 'disabled' else '')}
-                    %a{:href => '#', :name => 'subscription-members-view' }
+                  %li{class: (if @subscription.invoices_count == 0 then 'disabled' else '')}
+                    %a{href: '#', name: 'subscription-members-view' }
                       .icon-eye-open
                       = I18n.t('subscription.views.actions.view_subscription_members')
-                  %li{:class => (if @subscription.invoices_count == 0 then 'disabled' else '')}
-                    %a{:href => '#', :name => 'subscription-buyers-view'}
+                  %li{class: (if @subscription.invoices_count == 0 then 'disabled' else '')}
+                    %a{href: '#', name: 'subscription-buyers-view'}
                       .icon-eye-open
                       = I18n.t('subscription.views.actions.view_subscription_buyers')
-                  %li{:class => (if @subscription.invoices_count == 0 then 'disabled' else '')}
-                    %a{:href => '#', :name => 'subscription-receivers-view'}
+                  %li{class: (if @subscription.invoices_count == 0 then 'disabled' else '')}
+                    %a{href: '#', name: 'subscription-receivers-view'}
                       .icon-eye-open
                       = I18n.t('subscription.views.actions.view_subscription_receivers')
                   %li.divider
 
-                  %li{:class => (if @subscription.receipts_value == 0 then 'disabled' else '')}
-                    %a{:href => '#', :name => 'subscription-members-who-paid-view'}
+                  %li{class: (if @subscription.receipts_value == 0 then 'disabled' else '')}
+                    %a{href: '#', name: 'subscription-members-who-paid-view'}
                       .icon-eye-open
                       = I18n.t('subscription.views.actions.view_subscription_members_who_paid')
-                  %li{:class => (if @subscription.invoices_count == 0 then 'disabled' else '')}
-                    %a{:href => '#', :name => 'subscription-members-who-didnt-paid-view'}
+                  %li{class: (if @subscription.invoices_count == 0 then 'disabled' else '')}
+                    %a{href: '#', name: 'subscription-members-who-didnt-paid-view'}
                       .icon-eye-open
                       = I18n.t('subscription.views.actions.view_subscription_members_who_didnt_paid')
 
                   %li.divider
 
                   %li
-                    %a{:href => '#', :name => 'subscription-members-add'}
+                    %a{href: '#', name: 'subscription-members-add'}
                       .icon-plus
                       = I18n.t('subscription.views.actions.add_members_to_subscription')
 
-                  %li{:class => (if @subscription.invoices_count == 0 then 'disabled' else '')}
-                    %a{:href => '#', :name => 'subscription-members-remove'}
+                  %li{class: (if @subscription.invoices_count == 0 then 'disabled' else '')}
+                    %a{href: '#', name: 'subscription-members-remove'}
                       .icon-minus
                       = I18n.t('subscription.views.actions.remove_members_from_subscription')
 
 
               .btn-group
                 %button{:data-toggle => 'dropdown',
-                        :type => 'button',
-                        :class => 'btn btn-default dropdown-toggle' }
+                        type: 'button',
+                        class: 'btn btn-default dropdown-toggle' }
                   .icon-wrench
                   = I18n.t('common.tools')
                   .caret
 
                 %ul.dropdown-menu
-                  %li{:class => (if @subscription.overpaid_value == 0 then 'disabled' else '')}
-                    %a{:href => '#', :name => 'subscription-transfer-overpaid-value'}
+                  %li{class: (if @subscription.overpaid_value == 0 then 'disabled' else '')}
+                    %a{href: '#', name: 'subscription-transfer-overpaid-value'}
                       .icon-stackexchange
                       = I18n.t('subscription.views.actions.transfer_overpaid_value')
                   %li
-                    %a{:href => '#', :name => 'subscription-reminder'}
+                    %a{href: '#', name: 'subscription-reminder'}
                       .icon-bullhorn
                       = I18n.t('subscription.views.actions.subscription_reminder')
                   %li
-                    %a{:href => '#', :name => 'subscription-renewal'}
+                    %a{href: '#', name: 'subscription-renewal'}
                       .icon-retweet
                       = I18n.t('subscription.views.actions.subscription_renewal')
                   %li
-                    %a{:href => '#', :name => 'subscription-merge'}
+                    %a{href: '#', name: 'subscription-merge'}
                       .icon-resize-small
                       = I18n.t('subscription.views.actions.merge')
 - else

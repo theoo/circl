@@ -5,75 +5,75 @@
 
   #task_owner_affair.row
     .col-lg-6.col-md-6.col-sm-6.autocompleted.form-group
-      %label{:for => 'task_owner'}
+      %label{for: 'task_owner'}
         = I18n.t('task.views.owner')
-      %input{:type => 'search',
-             :name => 'owner',
-             :id => 'task_owner',
-             :class => 'required form-control',
-             :value => @task.owner_name,
-             :action => '/people/search'}
-      %input{:type => 'hidden',
-             :name => 'owner_id',
-             :value => @task.owner_id}
+      %input{type: 'search',
+             name: 'owner',
+             id: 'task_owner',
+             class: 'required form-control',
+             value: @task.owner_name,
+             action: '/people/search'}
+      %input{type: 'hidden',
+             name: 'owner_id',
+             value: @task.owner_id}
 
     .col-lg-6.col-md-6.col-sm-6.autocompleted.form-group
-      %label{:for => 'task_affair'}
+      %label{for: 'task_affair'}
         = I18n.t('task.views.affair')
-      %input{:type => 'search',
-             :name => 'affair',
-             :id => 'task_affair',
-             :class => 'required form-control',
-             :value => @task.affair_title,
-             :action => '/nowhere'}
-      %input{:type => 'hidden',
-             :name => 'affair_id',
-             :value => @task.affair_id}
+      %input{type: 'search',
+             name: 'affair',
+             id: 'task_affair',
+             class: 'required form-control',
+             value: @task.affair_title,
+             action: '/nowhere'}
+      %input{type: 'hidden',
+             name: 'affair_id',
+             value: @task.affair_id}
 
   %fieldset#timesheet
     .row
       .col-lg-4.col-md-4.col-sm-4.form-group
-        %label{:for => 'task_start_date'}
+        %label{for: 'task_start_date'}
           = I18n.t('common.date')
-        %input{ :type => 'text',
-                :id => 'task_start_date',
-                :name => 'start_date',
-                :class => 'datepicker form-control required',
-                :value => @task.start_date }
+        %input{ type: 'text',
+                id: 'task_start_date',
+                name: 'start_date',
+                class: 'datepicker form-control required',
+                value: @task.start_date }
 
       .col-lg-4.col-md-4.col-sm-4.form-group
         .row
           .col-lg-6.col-md-6.col-sm-6.col-xs-6
-            %label{:for => 'task_start_time'}
+            %label{for: 'task_start_time'}
               = I18n.t("common.from")
-            %input{ :type => 'text',
-                    :id => 'task_start_time',
-                    :name => 'start_time',
-                    :class => 'form-control time',
-                    :value => @task.start_time }
+            %input{ type: 'text',
+                    id: 'task_start_time',
+                    name: 'start_time',
+                    class: 'form-control time',
+                    value: @task.start_time }
 
           .col-lg-6.col-md-6.col-sm-6.col-xs-6
-            %label{:for => 'task_end_time'}
+            %label{for: 'task_end_time'}
               = I18n.t("common.to")
-            %input{ :type => 'text',
-                    :id => 'task_end_time',
-                    :name => 'end_time',
-                    :class => 'form-control time',
-                    :value => @task.end_time }
+            %input{ type: 'text',
+                    id: 'task_end_time',
+                    name: 'end_time',
+                    class: 'form-control time',
+                    value: @task.end_time }
         %small.help-block
           = I18n.t("task.views.times_help")
 
       .col-lg-4.col-md-4.col-sm-4.form-group
-        %label{:for => 'task_duration'}
+        %label{for: 'task_duration'}
           = I18n.t('task.views.duration')
         .input-group
-          %input{ :type => 'number',
-                  :name => 'duration',
-                  :class => 'form-control',
-                  :id => 'task_duration',
-                  :min => 0,
-                  :max => 1440,
-                  :value => @task.duration}
+          %input{ type: 'number',
+                  name: 'duration',
+                  class: 'form-control',
+                  id: 'task_duration',
+                  min: 0,
+                  max: 1440,
+                  value: @task.duration}
           .input-group-addon
             .icon-time
         %small.help-block
@@ -81,27 +81,27 @@
 
     .row
       .col-lg-12.form-group
-        %div{'data-slider-value' => @task.slider_values, :class => 'timesheet_timeline'}
+        %div{'data-slider-value' => @task.slider_values, class: 'timesheet_timeline'}
 
     .row
       .col-lg-6.col-md-6.col-sm-6.form-group
-        %label{:for => 'task_type'}
+        %label{for: 'task_type'}
           = I18n.t('task.views.task_type')
-        %select{:name => 'task_type_id',
-                :id => 'task_type',
-                :class => 'form-control required'}
+        %select{name: 'task_type_id',
+                id: 'task_type',
+                class: 'form-control required'}
           - for t in App.TaskType.all()
             - if @task.task_type_id == t.id
-              %option{:value => t.id, :selected => true}
+              %option{value: t.id, selected: true}
                 = t.title
             - else
-              %option{:value => t.id}
+              %option{value: t.id}
                 = t.title
 
         %small#task_type_description.help-block
 
       .col-lg-6.col-md-6.col-sm-6.form-group
-        %label{:for => 'task_value'}
+        %label{for: 'task_value'}
           = I18n.t('common.value')
         .input-group
 
@@ -112,17 +112,17 @@
             - else
               - classes.push('btn-danger')
 
-            %button{:type => 'button', :class => classes.join(" "), :name => 'reset_value'}
+            %button{type: 'button', class: classes.join(" "), name: 'reset_value'}
               .icon-refresh
 
-          %input{ :type => 'number',
-                  :step => 0.01,
-                  :id => 'task_value',
-                  :class => 'form-control',
-                  :min => 0,
-                  :max => 99999999.99,
-                  :name => 'value',
-                  :value => @task.value }
+          %input{ type: 'number',
+                  step: 0.01,
+                  id: 'task_value',
+                  class: 'form-control',
+                  min: 0,
+                  max: 99999999.99,
+                  name: 'value',
+                  value: @task.value }
           .input-group-addon
             != @partial('select_currency')(currency: @task.value_currency, name: 'value_currency', value: @task.value)
 
@@ -134,12 +134,12 @@
 
     .row
       .col-lg-12.form-group
-        %label{:for => 'task_description'}
+        %label{for: 'task_description'}
           = I18n.t('common.description')
-        %textarea{:name => 'description',
-                  :id => 'task_description',
-                  :rows => 5,
-                  :class => 'form-control required'}
+        %textarea{name: 'description',
+                  id: 'task_description',
+                  rows: 5,
+                  class: 'form-control required'}
           = @task.description
 
   .row
@@ -149,7 +149,7 @@
 
       .btn-group
         - unless @task.isNew?()
-          %button{:name => "task-destroy",
-                  :class => 'btn btn-danger' }
+          %button{name: "task-destroy",
+                  class: 'btn btn-danger' }
             .icon-remove
             = I18n.t("common.destroy")

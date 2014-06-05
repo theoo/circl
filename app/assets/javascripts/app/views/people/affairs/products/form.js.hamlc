@@ -6,81 +6,81 @@
 
     .row
       .col-md-6.autocompleted.form-group
-        %label{:for => 'person_affair_product_search'}
+        %label{for: 'person_affair_product_search'}
           = I18n.t('product.views.product_search')
-        %input{ :type => 'search',
-                :id => 'person_affair_product_search',
-                :name => 'product',
-                :class => 'form-control required',
-                :value => @product.key,
-                :action => '/settings/products/search'}
-        %input{:type => 'hidden',
-               :name => 'product_id',
-               :value => @product.product_id}
+        %input{ type: 'search',
+                id: 'person_affair_product_search',
+                name: 'product',
+                class: 'form-control required',
+                value: @product.key,
+                action: '/settings/products/search'}
+        %input{type: 'hidden',
+               name: 'product_id',
+               value: @product.product_id}
 
       .col-md-6.autocompleted.form-group
-        %label{:for => 'person_affair_product_program_search'}
+        %label{for: 'person_affair_product_program_search'}
           = I18n.t('product_program.views.program_search')
-        %input{ :type => 'search',
-                :id => 'person_affair_product_program_search',
-                :name => 'program',
-                :class => 'form-control required',
-                :value => @product.program_key,
-                :action => '/settings/product_programs/search'}
-        %input{:type => 'hidden',
-               :name => 'program_id',
-               :value => @product.program_id}
+        %input{ type: 'search',
+                id: 'person_affair_product_program_search',
+                name: 'program',
+                class: 'form-control required',
+                value: @product.program_key,
+                action: '/settings/product_programs/search'}
+        %input{type: 'hidden',
+               name: 'program_id',
+               value: @product.program_id}
     .row
       .col-md-6.autocompleted.form-group
-        %label{:for => 'person_affair_product_parent'}
+        %label{for: 'person_affair_product_parent'}
           = I18n.t('common.parent')
-        %input{ :type => 'search',
-                :id => 'person_affair_product_parent',
-                :name => 'parent',
-                :class => 'form-control',
-                :value => @product.parent_key,
-                :action => "/people/#{@person_id}/affairs/#{@affair_id}/products/search"}
-        %input{:type => 'hidden',
-               :name => 'parent_id',
-               :value => @product.parent_id}
+        %input{ type: 'search',
+                id: 'person_affair_product_parent',
+                name: 'parent',
+                class: 'form-control',
+                value: @product.parent_key,
+                action: "/people/#{@person_id}/affairs/#{@affair_id}/products/search"}
+        %input{type: 'hidden',
+               name: 'parent_id',
+               value: @product.parent_id}
 
       .col-md-3.form-group
-        %label{:for => 'person_affair_product_position'}
+        %label{for: 'person_affair_product_position'}
           = I18n.t('product.views.position')
-        %input{ :type => 'number',
-                :step => 1,
-                :id => 'person_affair_product_position',
-                :name => 'position',
-                :class => 'form-control number',
-                :value => @product.position }
+        %input{ type: 'number',
+                step: 1,
+                id: 'person_affair_product_position',
+                name: 'position',
+                class: 'form-control number',
+                value: @product.position }
 
     .row
       .col-md-4.form-group
-        %label{:for => 'person_affair_product_quantity'}
+        %label{for: 'person_affair_product_quantity'}
           = I18n.t('product.views.quantity')
         .input-group
-          %input{ :type => 'number',
-                  :step => 0.001,
-                  :id => 'person_affair_product_quantity',
-                  :name => 'quantity',
-                  :class => 'form-control required',
-                  :value => @product.quantity }
+          %input{ type: 'number',
+                  step: 0.001,
+                  id: 'person_affair_product_quantity',
+                  name: 'quantity',
+                  class: 'form-control required',
+                  value: @product.quantity }
           .input-group-addon
             #affair-product-unit
               = @product.unit_symbol
 
       .col-md-4.form-group
-        %label{:for => 'person_affair_product_bid_percentage'}
+        %label{for: 'person_affair_product_bid_percentage'}
           = I18n.t('product.views.bid')
         .input-group
-          %input{ :type => 'number',
-                  :step => 0.01,
-                  :id => 'person_affair_product_bid_percentage',
-                  :class => 'form-control',
-                  :min => 0,
-                  :max => 100,
-                  :name => 'bid_percentage',
-                  :value => @product.bid_percentage }
+          %input{ type: 'number',
+                  step: 0.01,
+                  id: 'person_affair_product_bid_percentage',
+                  class: 'form-control',
+                  min: 0,
+                  max: 100,
+                  name: 'bid_percentage',
+                  value: @product.bid_percentage }
           .input-group-addon %
 
       .col-md-4
@@ -98,23 +98,23 @@
       .col-lg-12
         .pull-right
           - if @product.isNew()
-            %button{:type => 'submit', :class => 'btn btn-primary'}
+            %button{type: 'submit', class: 'btn btn-primary'}
               .icon-plus
               = I18n.t('common.add')
           - else
             .btn-group
-              %button{:name => 'cancel', :class => 'btn btn-default'}
+              %button{name: 'cancel', class: 'btn btn-default'}
                 .icon-undo
                 = I18n.t('common.cancel')
-              %button{:type => 'submit', :class => 'btn btn-primary'}
+              %button{type: 'submit', class: 'btn btn-primary'}
                 .icon-download-alt
                 = I18n.t('common.save')
 
 
         - unless @product.isNew()
-          %button{:type => 'button',
-                  :class => 'btn btn-danger',
-                  :name => 'person-affair-product-destroy'}
+          %button{type: 'button',
+                  class: 'btn btn-danger',
+                  name: 'person-affair-product-destroy'}
             .icon-remove
             = I18n.t("common.destroy")
 - else
@@ -125,6 +125,6 @@
         = I18n.t("common.incomplete")
 
       .text-right
-        %a{:href => '/settings#affairs', :class => 'btn btn-warning'}
+        %a{href: '/settings#affairs', class: 'btn btn-warning'}
           = I18n.t("product.notices.no_existing_product_button")
           .icon-chevron-right

@@ -1,6 +1,6 @@
-%form{ :method =>'get', :action => '/admin/invoices/export' }
+%form{ method:'get', action: '/admin/invoices/export' }
   .modal-header
-    %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+    %button{type: 'button', class: 'close', :data-dismiss => 'modal'}
       &times;
     %h4.modal-title
       = I18n.t('invoice.views.export')
@@ -13,80 +13,80 @@
     .row
       .col-lg-6
         .autocompleted.form-group
-          %label{:for => 'admin_invoices_subscription_title'}
+          %label{for: 'admin_invoices_subscription_title'}
             = I18n.t('invoice.views.subscription_title')
-          %input{:type => 'search',
-                 :name => 'subscription_title',
-                 :value => '',
-                 :id => 'admin_invoices_subscription_title',
-                 :class => 'form-control',
-                 :action => '/admin/subscriptions/search'}
-          %input{:type => 'hidden',
-                 :name => 'subscription_id',
-                 :value => ''}
+          %input{type: 'search',
+                 name: 'subscription_title',
+                 value: '',
+                 id: 'admin_invoices_subscription_title',
+                 class: 'form-control',
+                 action: '/admin/subscriptions/search'}
+          %input{type: 'hidden',
+                 name: 'subscription_id',
+                 value: ''}
 
       .col-lg-6
         .form-group
-          %label{:for => 'admin_invoices_type'}
+          %label{for: 'admin_invoices_type'}
             = I18n.t('common.toolbox_template')
-          %select{:name => 'type',
-                  :id => 'admin_invoices_type',
-                  :class => 'form-control'}
+          %select{name: 'type',
+                  id: 'admin_invoices_type',
+                  class: 'form-control'}
             - for l in ['banana', 'git', 'office_maker', 'csv']
-              %option{:value => l}= l
+              %option{value: l}= l
 
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'admin_invoices_account'}
+          %label{for: 'admin_invoices_account'}
             = I18n.t('invoice.views.account')
-          %input{ :type => 'text',
-                  :id => 'admin_invoices_account',
-                  :step => '1',
-                  :class => 'form-control required',
-                  :name => 'account',
-                  :value => @account }
+          %input{ type: 'text',
+                  id: 'admin_invoices_account',
+                  step: '1',
+                  class: 'form-control required',
+                  name: 'account',
+                  value: @account }
 
       .col-lg-6
         .form-group
-          %label{:for => 'admin_invoices_counterpart_account'}
+          %label{for: 'admin_invoices_counterpart_account'}
             = I18n.t('invoice.views.counterpart_account')
-          %input{ :type => 'text',
-                  :step => '1',
-                  :id => 'admin_invoices_counterpart_account',
-                  :class => 'form-control required',
-                  :name => 'counterpart_account',
-                  :value => @counterpart_account }
+          %input{ type: 'text',
+                  step: '1',
+                  id: 'admin_invoices_counterpart_account',
+                  class: 'form-control required',
+                  name: 'counterpart_account',
+                  value: @counterpart_account }
 
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'admin_invoices_from'}
+          %label{for: 'admin_invoices_from'}
             = I18n.t('common.from')
-          %input{ :type => 'text',
-                  :name => 'from',
-                  :id => 'admin_invoices_from',
-                  :class => 'datepicker required form-control',
-                  :value => '' }
+          %input{ type: 'text',
+                  name: 'from',
+                  id: 'admin_invoices_from',
+                  class: 'datepicker required form-control',
+                  value: '' }
 
       .col-lg-6
         .form-group
-          %label{:for => 'admin_invoices_to'}
+          %label{for: 'admin_invoices_to'}
             = I18n.t('common.to')
-          %input{ :type => 'text',
-                  :name => 'to',
-                  :id => 'admin_invoices_to',
-                  :class => 'datepicker required form-control',
-                  :value => '' }
+          %input{ type: 'text',
+                  name: 'to',
+                  id: 'admin_invoices_to',
+                  class: 'datepicker required form-control',
+                  value: '' }
 
   .modal-footer
     .row
       .col-lg-12
-        %button{:type => 'button', :class => 'btn btn-default', :data-dismiss => 'modal'}
+        %button{type: 'button', class: 'btn btn-default', :data-dismiss => 'modal'}
           .icon-chevron-left
           = I18n.t("common.close")
 
-        %button{:type => 'submit',
-                :class => 'btn btn-primary'}
+        %button{type: 'submit',
+                class: 'btn btn-primary'}
           .icon-cloud-download
           = I18n.t('common.download')

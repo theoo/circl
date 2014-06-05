@@ -8,7 +8,7 @@
 
   %tbody
     - for role in App.Role.all()
-      %tr{:data-id => role.id, :class => 'item'}
+      %tr{:data-id => role.id, class: 'item'}
         %td= role.id
         %td= role.name
         %td.number= role.permissions_count
@@ -20,5 +20,5 @@
     %br
     %br
     .text-right
-      %a{:name => 'settings-roles-reindexing-notice', :class => 'btn btn-info'}
+      %a{name: 'settings-roles-reindexing-notice', class: 'btn btn-info'}
         = I18n.t("settings.views.search_attributes")

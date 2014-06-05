@@ -12,7 +12,7 @@
     - for rate in App.TaskRate.all()
       - classes = ['item']
       - classes.push 'success' if ! rate.archive
-      %tr{:data-id => rate.id, :class => classes.join(" ")}
+      %tr{:data-id => rate.id, class: classes.join(" ")}
         %td= rate.id
         %td
           %b= rate.title

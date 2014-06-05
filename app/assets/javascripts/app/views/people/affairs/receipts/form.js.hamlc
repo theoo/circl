@@ -7,53 +7,53 @@
     .row
       .col-sm-8
         .autocompleted.form-group
-          %label{:for => 'affair_receipt_invoice_title'}
+          %label{for: 'affair_receipt_invoice_title'}
             = I18n.t('receipt.views.invoice')
-          %input{:type => 'search',
-                 :name => 'invoice',
-                 :class => 'required form-control',
-                 :id => 'affair_receipt_invoice_title',
-                 :value => @receipt.invoice_title,
-                 :action => "/people/#{@person_id}/affairs/#{@affair_id}/invoices/search"}
-          %input{:type => 'hidden',
-                 :name => 'invoice_id',
-                 :value => @receipt.invoice_id}
+          %input{type: 'search',
+                 name: 'invoice',
+                 class: 'required form-control',
+                 id: 'affair_receipt_invoice_title',
+                 value: @receipt.invoice_title,
+                 action: "/people/#{@person_id}/affairs/#{@affair_id}/invoices/search"}
+          %input{type: 'hidden',
+                 name: 'invoice_id',
+                 value: @receipt.invoice_id}
 
       .col-sm-4
         .form-group
-          %label{:for => 'affair_receipt_means_of_payment'}
+          %label{for: 'affair_receipt_means_of_payment'}
             = I18n.t('receipt.views.means_of_payment')
-          %input{ :type => 'text',
-                  :name => 'means_of_payment',
-                  :id => 'affair_receipt_means_of_payment',
-                  :class => 'form-control',
-                  :value => @receipt.means_of_payment}
+          %input{ type: 'text',
+                  name: 'means_of_payment',
+                  id: 'affair_receipt_means_of_payment',
+                  class: 'form-control',
+                  value: @receipt.means_of_payment}
 
     .row
       .col-sm-6
         .form-group
-          %label{:for => 'affair_receipt_value'}
+          %label{for: 'affair_receipt_value'}
             = I18n.t('common.value')
           .input-group
-            %input{ :type => 'number',
-                    :step => 0.01,
-                    :min => 0,
-                    :max => 99999999.99,
-                    :class => 'required form-control',
-                    :name => 'value',
-                    :value => @receipt.value }
+            %input{ type: 'number',
+                    step: 0.01,
+                    min: 0,
+                    max: 99999999.99,
+                    class: 'required form-control',
+                    name: 'value',
+                    value: @receipt.value }
             .input-group-addon
               != @partial('select_currency')(currency: @receipt.value_currency, name: 'value_currency')
 
       .col-sm-6
         .form-group
-          %label{:for => 'affair_receipt_value_date'}
+          %label{for: 'affair_receipt_value_date'}
             = I18n.t('receipt.views.value_date')
-          %input{:type => 'text',
-                 :name => 'value_date',
-                 :id => 'affair_receipt_value_date',
-                 :class => 'datepicker required form-control',
-                 :value => @receipt.value_date }
+          %input{type: 'text',
+                 name: 'value_date',
+                 id: 'affair_receipt_value_date',
+                 class: 'datepicker required form-control',
+                 value: @receipt.value_date }
 
     .row
       .col-sm-12
@@ -62,7 +62,7 @@
 
         .btn-group
           - unless @receipt.isNew()
-            %button{:name => "receipt-destroy",
-                    :class => 'btn btn-danger' }
+            %button{name: "receipt-destroy",
+                    class: 'btn btn-danger' }
               .icon-remove
               = I18n.t('common.destroy')

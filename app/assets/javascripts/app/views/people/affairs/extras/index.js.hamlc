@@ -9,7 +9,7 @@
 
   %tbody
     - for extra in App.PersonAffairExtra.all()
-      %tr{:data-id => extra.id, :class => 'item', :id => extra.id}
+      %tr{:data-id => extra.id, class: 'item', id: extra.id}
         %td.small-number= extra.position
         %td.small-number= extra.quantity
         %td
@@ -25,23 +25,23 @@
   .panel-footer
     .form-inline
       .form-group
-        %label{:for => 'affair_extras_template', :class => 'sr-only'}
+        %label{for: 'affair_extras_template', class: 'sr-only'}
           = I18n.t('affair.views.template')
         - if App.GenericTemplate.category('Extra').length > 0
-          %select{:name => 'generic_template_id',
-                  :id => 'affair_extras_template',
-                  :class => 'form-control'}
+          %select{name: 'generic_template_id',
+                  id: 'affair_extras_template',
+                  class: 'form-control'}
             - for h in _.sortBy(App.GenericTemplate.category('Extra'), (t) -> t.title)
-              %option{:value => h.id}= h.title
+              %option{value: h.id}= h.title
 
         - else
-          %a{:href => '/settings#templates', :class => 'btn btn-warning'}
+          %a{href: '/settings#templates', class: 'btn btn-warning'}
             = I18n.t("common.add_new_template")
 
         .btn-group
-          %button{:type => 'button',
+          %button{type: 'button',
                   :data-toggle => 'dropdown',
-                  :class => 'btn btn-default dropdown-toggle' }
+                  class: 'btn btn-default dropdown-toggle' }
             .icon-paper-clip
             = I18n.t("common.documents")
             .caret
@@ -49,18 +49,18 @@
           %ul.dropdown-menu
             - if App.GenericTemplate.category('Extra').length > 0
               %li
-                %a{:href => '#', :name => 'affair-extras-preview'}
+                %a{href: '#', name: 'affair-extras-preview'}
                   .icon-eye-open
                   = I18n.t('common.preview')
               %li
-                %a{:href => '#', :name => 'affair-extras-pdf'}
+                %a{href: '#', name: 'affair-extras-pdf'}
                   .icon-download-alt
                   = I18n.t('common.pdf')
               %li
-                %a{:href => '#', :name => 'affair-extras-odt'}
+                %a{href: '#', name: 'affair-extras-odt'}
                   .icon-download-alt
                   = I18n.t('common.odt')
             %li
-              %a{:href => '#', :name => 'affair-extras-csv'}
+              %a{href: '#', name: 'affair-extras-csv'}
                 .icon-file-text
                 = I18n.t('common.csv')

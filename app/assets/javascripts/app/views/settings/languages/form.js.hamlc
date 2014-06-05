@@ -7,22 +7,22 @@
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'settings_language_name'}
+          %label{for: 'settings_language_name'}
             = I18n.t('common.name')
-          %input{ :type => 'text',
-                  :name => 'name',
-                  :id => 'settings_language_name',
-                  :value => @language.name,
-                  :class => 'form-control required' }
+          %input{ type: 'text',
+                  name: 'name',
+                  id: 'settings_language_name',
+                  value: @language.name,
+                  class: 'form-control required' }
       .col-lg-6
         .form-group
-          %label{:for => 'settings_language_code'}
+          %label{for: 'settings_language_code'}
             = I18n.t('language.views.code')
-          %input{ :type => 'text',
-                  :name => 'code',
-                  :id => 'settings_language_code',
-                  :value => @language.code,
-                  :class => 'form-control' }
+          %input{ type: 'text',
+                  name: 'code',
+                  id: 'settings_language_code',
+                  value: @language.code,
+                  class: 'form-control' }
 
     .row
       .col-lg-12
@@ -31,27 +31,27 @@
 
         - unless @language.isNew()
           .btn-group
-            %button{:type => 'button',
-                    :class => 'btn btn-danger',
-                    :name => 'settings-language-destroy'}
+            %button{type: 'button',
+                    class: 'btn btn-danger',
+                    name: 'settings-language-destroy'}
               .icon-remove
               = I18n.t("common.destroy")
 
             .btn-group
               %button{:data-toggle => 'dropdown',
-                      :type => 'button',
-                      :class => 'btn btn-default dropdown-toggle' }
+                      type: 'button',
+                      class: 'btn btn-default dropdown-toggle' }
                 .icon-group
                 = I18n.t('language.views.actions.view_members')
                 .caret
 
               %ul.dropdown-menu
                 %li
-                  %a{:href => '#', :name => 'settings-language-view-main-members'}
+                  %a{href: '#', name: 'settings-language-view-main-members'}
                     .icon-eye-open
                     = I18n.t('language.views.actions.view_members_as_main_language')
                 %li
-                  %a{:href => '#', :name => 'settings-language-view-members'}
+                  %a{href: '#', name: 'settings-language-view-members'}
                     .icon-eye-open
                     = I18n.t('language.views.actions.view_members_as_secondary_language')
 

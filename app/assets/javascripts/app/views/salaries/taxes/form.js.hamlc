@@ -7,64 +7,64 @@
     .row
       .col-lg-3.col-sm-6
         .form-group
-          %label{:for => 'tax_title'}
+          %label{for: 'tax_title'}
             %br
             = I18n.t('common.title')
-          %input{ :type => 'text',
-                  :name => 'title',
-                  :id => 'tax_title',
-                  :value => @tax.title,
-                  :class => 'form-control' }
+          %input{ type: 'text',
+                  name: 'title',
+                  id: 'tax_title',
+                  value: @tax.title,
+                  class: 'form-control' }
 
       .col-lg-3.col-sm-6
         .form-group
-          %label{:for => 'tax_model'}
+          %label{for: 'tax_model'}
             %br
             = I18n.t('tax.views.model')
-          %select{:name => 'model',
-                  :id => 'tax_model',
-                  :class => 'form-control'}
+          %select{name: 'model',
+                  id: 'tax_model',
+                  class: 'form-control'}
             - for model in @all_models
               - if @tax.model == model
-                %option{:value => model, :selected => true}= model
+                %option{value: model, selected: true}= model
               - else
-                %option{:value => model}= model
+                %option{value: model}= model
 
       .col-lg-2.col-sm-4
         .form-group
-          %label{:for => 'tax_employee_account'}
+          %label{for: 'tax_employee_account'}
             = I18n.t('tax.views.employee_account')
-          %input{ :type => 'text',
-                  :name => 'employee_account',
-                  :id => 'tax_employee_account',
-                  :value => @tax.employee_account,
-                  :class => 'form-control' }
+          %input{ type: 'text',
+                  name: 'employee_account',
+                  id: 'tax_employee_account',
+                  value: @tax.employee_account,
+                  class: 'form-control' }
       .col-lg-2.col-sm-4
         .form-group
-          %label{:for => 'tax_employer_account'}
+          %label{for: 'tax_employer_account'}
             = I18n.t('tax.views.employer_account')
-          %input{ :type => 'text',
-                  :name => 'employer_account',
-                  :id => 'tax_employer_account',
-                  :value => @tax.employer_account,
-                  :class => 'form-control' }
+          %input{ type: 'text',
+                  name: 'employer_account',
+                  id: 'tax_employer_account',
+                  value: @tax.employer_account,
+                  class: 'form-control' }
 
       .col-lg-2.col-sm-4
         .form-group
-          %label{:for => 'tax_exporter_group'}
+          %label{for: 'tax_exporter_group'}
             = I18n.t('tax.views.exporter_group')
           - available_groups = { none: I18n.t("common.none"), exporter_avs_group: 'AVS', exporter_lpp_group: 'LPP', exporter_is_group: 'IS' }
           - # only one group can be set as true
           - for group, name of available_groups
-            %input{:type => 'hidden', :name => group, :value => 'false'}
-          %select{:name => 'exporter_group',
-                  :id => 'tax_exporter_group',
-                  :class => 'form-control'}
+            %input{type: 'hidden', name: group, value: 'false'}
+          %select{name: 'exporter_group',
+                  id: 'tax_exporter_group',
+                  class: 'form-control'}
             - for group, name of available_groups
               - if @tax[group] == true
-                %option{:value => group, :selected => true}= name
+                %option{value: group, selected: true}= name
               - else
-                %option{:value => group}= name
+                %option{value: group}= name
     .row
       .col-lg-12
         .pull-right
@@ -72,13 +72,13 @@
 
         .btn-group
           - unless @tax.isNew?()
-            %button{:name => "tax-destroy",
-                    :class => 'btn btn-danger' }
+            %button{name: "tax-destroy",
+                    class: 'btn btn-danger' }
               .icon-remove
               = I18n.t("common.destroy")
 
-            %button{:name => "tax-upload",
-                    :class => 'btn btn-default' }
+            %button{name: "tax-upload",
+                    class: 'btn btn-default' }
               .icon-cloud-upload
               = I18n.t('common.upload')
 

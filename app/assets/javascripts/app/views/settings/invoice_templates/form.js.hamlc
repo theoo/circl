@@ -7,67 +7,67 @@
     .row
       .col-lg-8
         .form-group
-          %label{:for => 'settings_invoice_template_title'}
+          %label{for: 'settings_invoice_template_title'}
             = I18n.t('common.title')
-          %input{ :type => 'text',
-                  :name => 'title',
-                  :id => 'settings_invoice_template_title',
-                  :value => @invoice_template.title,
-                  :class => 'required form-control' }
+          %input{ type: 'text',
+                  name: 'title',
+                  id: 'settings_invoice_template_title',
+                  value: @invoice_template.title,
+                  class: 'required form-control' }
 
       .col-lg-4
         .form-group
-          %label{:for => 'settings_invoice_template_language'}
+          %label{for: 'settings_invoice_template_language'}
             = I18n.t('invoice_template.views.language')
-          %select{:name => 'language_id',
-                  :id => 'settings_invoice_template_language',
-                  :class => 'required form-control'}
+          %select{name: 'language_id',
+                  id: 'settings_invoice_template_language',
+                  class: 'required form-control'}
             - for l in App.Language.all()
               - if @invoice_template.language_id == l.id
-                %option{:value => l.id, :selected => true}= l.name
+                %option{value: l.id, selected: true}= l.name
               - else
-                %option{:value => l.id}= l.name
+                %option{value: l.id}= l.name
           .help-block
             = I18n.t("invoice_template.views.language_notice")
 
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'settings_invoice_template_bvr_account'}
+          %label{for: 'settings_invoice_template_bvr_account'}
             = I18n.t('invoice_template.views.bvr_account_number')
-          %input{ :type => 'text',
-                  :id => 'settings_invoice_template_bvr_account',
-                  :class => 'form-control',
-                  :name => 'bvr_account',
-                  :value => @invoice_template.bvr_account }
+          %input{ type: 'text',
+                  id: 'settings_invoice_template_bvr_account',
+                  class: 'form-control',
+                  name: 'bvr_account',
+                  value: @invoice_template.bvr_account }
 
         .form-group
-          %label{:for => 'settings_invoice_template_bvr_address'}
+          %label{for: 'settings_invoice_template_bvr_address'}
             = I18n.t('invoice_template.views.bvr_address')
-          %textarea{:name => 'bvr_address',
-                    :id => 'settings_invoice_template_bvr_address',
-                    :rows => 4,
-                    :class => 'form-control'}
+          %textarea{name: 'bvr_address',
+                    id: 'settings_invoice_template_bvr_address',
+                    rows: 4,
+                    class: 'form-control'}
             = @invoice_template.bvr_address
 
       .col-lg-6
         .checkbox
-          %label{:for => 'settings_invoice_template_with_bvr'}
-            %input{ :type => 'checkbox',
-              :id => 'settings_invoice_template_with_bvr',
-              :name => 'with_bvr',
-              :checked => @invoice_template.with_bvr,
-              :value => 1 }
+          %label{for: 'settings_invoice_template_with_bvr'}
+            %input{ type: 'checkbox',
+              id: 'settings_invoice_template_with_bvr',
+              name: 'with_bvr',
+              checked: @invoice_template.with_bvr,
+              value: 1 }
             = I18n.t('invoice_template.views.with_bvr')
 
         .checkbox
-          %label{:for => 'settings_invoice_template_show_invoice_value'}
+          %label{for: 'settings_invoice_template_show_invoice_value'}
             = I18n.t('invoice_template.views.show_invoice_value')
-            %input{ :type => 'checkbox',
-              :id => 'settings_invoice_template_show_invoice_value',
-              :name => 'show_invoice_value',
-              :checked => @invoice_template.show_invoice_value,
-              :value => 1 }
+            %input{ type: 'checkbox',
+              id: 'settings_invoice_template_show_invoice_value',
+              name: 'show_invoice_value',
+              checked: @invoice_template.show_invoice_value,
+              value: 1 }
 
     .row
       .col-lg-12
@@ -76,13 +76,13 @@
 
         - unless @invoice_template.isNew()
           .btn-group
-            %button{:type => 'button',
-                    :name => 'settings-invoice-template-destroy',
-                    :class => 'btn btn-danger'}
+            %button{type: 'button',
+                    name: 'settings-invoice-template-destroy',
+                    class: 'btn btn-danger'}
               .icon-remove
               = I18n.t("common.destroy")
-            %button{:type => 'button',
-                    :name => 'settings-invoice-template-edit',
-                    :class => 'btn btn-default'}
+            %button{type: 'button',
+                    name: 'settings-invoice-template-edit',
+                    class: 'btn btn-default'}
               .icon-file
               = I18n.t("invoice_template.views.actions.edit_template")

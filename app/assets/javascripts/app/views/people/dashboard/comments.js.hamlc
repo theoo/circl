@@ -9,7 +9,7 @@
       - classes = ['item']
       - classes.push 'warning' if comment.is_closed
 
-      %tr{:data-id => comment.resource_id, :class => classes.join(" ")}
+      %tr{:data-id => comment.resource_id, class: classes.join(" ")}
         %td= comment.created_at
         %td
           %b= comment.resource_name

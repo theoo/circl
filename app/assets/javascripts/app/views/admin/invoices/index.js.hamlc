@@ -1,4 +1,4 @@
-%table.datatable{ :action => '/admin/invoices' }
+%table.datatable{ action: '/admin/invoices' }
   %thead
     %tr
       %th= I18n.t('common.id')
@@ -10,6 +10,6 @@
 
 
 .panel-footer
-  %button{ :type => 'button', :name => 'admin-invoices-export', :class => 'btn btn-default'}
+  %button{ type: 'button', name: 'admin-invoices-export', class: 'btn btn-default'}
     .icon-cloud-upload
     = I18n.t('common.toolbox_export')

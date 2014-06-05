@@ -1,4 +1,4 @@
-%table{:name => 'settings_role_selected_permissions', :class => 'datatable'}
+%table{name: 'settings_role_selected_permissions', class: 'datatable'}
   %thead
     %tr
       %th= I18n.t('permission.views.action')
@@ -8,12 +8,12 @@
 
   %tbody
     - for permission in App.RolePermission.all()
-      %tr{:data-id => permission.id, :class => 'item'}
+      %tr{:data-id => permission.id, class: 'item'}
         %td= permission.action
         %td= permission.subject
         %td= permission.hash_conditions
         %td.ignore-click
-          %button{:type => 'button',
-                  :class => 'btn btn-danger btn-xs',
-                  :name => 'role-permission-destroy'}
+          %button{type: 'button',
+                  class: 'btn btn-danger btn-xs',
+                  name: 'role-permission-destroy'}
             .icon-remove

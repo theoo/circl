@@ -8,12 +8,12 @@
       %th.desc= I18n.t('common.updated_at')
   %tbody
     - for template in App.GenericTemplate.all()
-      %tr{:data-id => template.id, :class => 'item' }
+      %tr{:data-id => template.id, class: 'item' }
         %td
           - if template.thumb_url
-            %img{:src => template.thumb_url, :alt => 'thumbnail', :class => 'template-thumbnail'}
+            %img{src: template.thumb_url, alt: 'thumbnail', class: 'template-thumbnail'}
           - else
-            %img{:src => "/assets/missing_thumbnail.png", :alt => 'thumbnail', :class => 'template-thumbnail'}
+            %img{src: "/assets/missing_thumbnail.png", alt: 'thumbnail', class: 'template-thumbnail'}
         %td= @class_names[template.class_name]
         %td= template.title
         %td.number= template.association_count

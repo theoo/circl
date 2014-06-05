@@ -13,7 +13,7 @@
         - for tax in App.SalaryTax.all()
           %th= tax.title
         %th= I18n.t('item.views.category')
-        %th{:style => 'min-width: 130px', :class => 'ignore-click'}= I18n.t('common.actions')
+        %th{style: 'min-width: 130px', class: 'ignore-click'}= I18n.t('common.actions')
 
     %tbody
       - for item, index in @items
@@ -21,45 +21,45 @@
           %td.handle
             .icon-resize-vertical
           %td
-            %input{ :name => "items[#{index}][id]", :type => 'hidden', :value => item.id }
-            %input{ :name => "items[#{index}][position]", :type => 'hidden', :value => item.position }
+            %input{ name: "items[#{index}][id]", type: 'hidden', value: item.id }
+            %input{ name: "items[#{index}][position]", type: 'hidden', value: item.position }
 
-            %input{ :name => "items[#{index}][title]",
-                    :type => 'text',
-                    :class => 'form-control',
-                    :value => item.title }
+            %input{ name: "items[#{index}][title]",
+                    type: 'text',
+                    class: 'form-control',
+                    value: item.title }
           %td.col-xs-2
             .input-group
-              %input{ :name => "items[#{index}][value]",
-                      :type => 'number',
-                      :step => 0.01,
-                      :class => 'form-control',
-                      :value => item.value }
+              %input{ name: "items[#{index}][value]",
+                      type: 'number',
+                      step: 0.01,
+                      class: 'form-control',
+                      value: item.value }
               .input-group-addon
                 = item.value_currency
           - for tax in App.SalaryTax.all()
             %td.tax
-              %input{ :name => "items[#{index}][tax_ids][]",
-                      :type => 'checkbox',
-                      :checked => (tax.id in item.tax_ids),
-                      :value => tax.id,
-                      :class => 'normal' }
+              %input{ name: "items[#{index}][tax_ids][]",
+                      type: 'checkbox',
+                      checked: (tax.id in item.tax_ids),
+                      value: tax.id,
+                      class: 'normal' }
           %td
-            %input{ :name => "items[#{index}][category]",
-                    :type => 'text',
-                    :class => 'form-control',
-                    :value => item.category }
+            %input{ name: "items[#{index}][category]",
+                    type: 'text',
+                    class: 'form-control',
+                    value: item.category }
           %td.text-right
             -# .btn-group
-            %button{:type => 'button',
-                    :name => 'destroy-item',
-                    :class => 'btn btn-danger' }
+            %button{type: 'button',
+                    name: 'destroy-item',
+                    class: 'btn btn-danger' }
               .icon-remove
 
               = I18n.t("common.destroy")
-            -# %button{:type => 'button',
-            -#         :name => 'adjust-item',
-            -#         :class => 'btn btn-default' }
+            -# %button{type: 'button',
+            -#         name: 'adjust-item',
+            -#         class: 'btn btn-default' }
             -#   .icon-cog
             -#   = I18n.t("common.adjust")
 
@@ -72,30 +72,30 @@
         - else
           %td
         %td
-          %input{ :name => "items[#{unique_id}][position]", :type => 'hidden', :value => unique_id }
-          %input{ :name => "items[#{unique_id}][title]",
-                  :class => 'form-control',
-                  :type => 'text' }
+          %input{ name: "items[#{unique_id}][position]", type: 'hidden', value: unique_id }
+          %input{ name: "items[#{unique_id}][title]",
+                  class: 'form-control',
+                  type: 'text' }
         %td
           .input-group
-            %input{ :name => "items[#{unique_id}][value]",
-                    :type => 'number',
-                    :step => 0.01,
-                    :class => 'form-control' }
+            %input{ name: "items[#{unique_id}][value]",
+                    type: 'number',
+                    step: 0.01,
+                    class: 'form-control' }
             .input-group-addon
               = @salary.yearly_salary_currency
 
         - for tax in App.SalaryTax.all()
           %td.tax
-            %input{ :name => "items[#{unique_id}][tax_ids][]",
-                    :type => 'checkbox',
-                    :checked => false,
-                    :value => tax.id,
-                    :class => 'normal' }
+            %input{ name: "items[#{unique_id}][tax_ids][]",
+                    type: 'checkbox',
+                    checked: false,
+                    value: tax.id,
+                    class: 'normal' }
         %td
-          %input{ :name => "items[#{unique_id}][category]",
-                  :class => 'form-control',
-                  :type => 'text' }
+          %input{ name: "items[#{unique_id}][category]",
+                  class: 'form-control',
+                  type: 'text' }
         %td
 
   .panel-footer

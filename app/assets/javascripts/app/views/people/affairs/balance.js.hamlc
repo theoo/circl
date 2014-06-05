@@ -2,15 +2,15 @@
   .col-lg-12
     &nbsp;
     .progress
-      %span{:style => "width: #{@paid}%", :class => 'progress-bar progress-bar-success'}
+      %span{style: "width: #{@paid}%", class: 'progress-bar progress-bar-success'}
         - if @affair
           = @affair.receipts_value?.to_view()
       - if @affair
         - if @overpaid
-          %span{:style => "width: #{100 - @paid}%", :class => 'progress-bar progress-bar-warning'}
+          %span{style: "width: #{100 - @paid}%", class: 'progress-bar progress-bar-warning'}
             - if @affair
               = (@affair.receipts_value - @affair.invoices_value_with_taxes)?.to_view()
         - else
-          %span{:style => "width: #{100 - @paid}%", :class => 'progress-bar progress-bar-danger'}
+          %span{style: "width: #{100 - @paid}%", class: 'progress-bar progress-bar-danger'}
             - if @affair
               = (@affair.invoices_value_with_taxes - @affair.receipts_value)?.to_view()

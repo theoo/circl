@@ -6,6 +6,6 @@
 
     .text-right
       %br
-      %a{:href => '/settings#affairs', :class => 'btn btn-warning'}
+      %a{href: '/settings#affairs', class: 'btn btn-warning'}
         = I18n.t("task.notices.no_existing_task_type_button")
         .icon-chevron-right

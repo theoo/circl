@@ -9,85 +9,85 @@
         .row
           .col-sm-9
             .form-group
-              %label{:for => 'affair_title'}
+              %label{for: 'affair_title'}
                 = I18n.t('common.title')
-              %input{:type => 'text',
-                     :name => 'title',
-                     :id => 'affair_title',
-                     :class => 'required form-control',
-                     :value => @affair.title}
+              %input{type: 'text',
+                     name: 'title',
+                     id: 'affair_title',
+                     class: 'required form-control',
+                     value: @affair.title}
           .col-sm-3
             %br
             .checkbox
               %label.control-label
-                %input{ :type => 'checkbox',
-                        :id => 'affair_estimate',
-                        :name => 'estimate',
-                        :checked => @affair.estimate,
-                        :value => 1 }
+                %input{ type: 'checkbox',
+                        id: 'affair_estimate',
+                        name: 'estimate',
+                        checked: @affair.estimate,
+                        value: 1 }
                 = I18n.t('affair.views.estimate')
 
         .row
           .col-sm-9
             .form-group.autocompleted
-              %label{:for => 'affair_parent'}
+              %label{for: 'affair_parent'}
                 = I18n.t('common.parent')
-              %input{ :type => 'search',
-                      :name => 'parent',
-                      :id => 'affair_parent',
-                      :class => 'form-control',
-                      :value => @affair.parent_title,
-                      :action => "/people/#{@person_id}/affairs/search"}
+              %input{ type: 'search',
+                      name: 'parent',
+                      id: 'affair_parent',
+                      class: 'form-control',
+                      value: @affair.parent_title,
+                      action: "/people/#{@person_id}/affairs/search"}
 
-              %input{ :type => 'hidden',
-                      :name => 'parent_id',
-                      :value => @affair.parent_id }
+              %input{ type: 'hidden',
+                      name: 'parent_id',
+                      value: @affair.parent_id }
           .col-sm-3
 
         .row
           .col-lg-12
             .form-group
-              %label{:for => 'affair_description'}
+              %label{for: 'affair_description'}
                 = I18n.t('common.description')
-              %textarea{:name => 'description',
-                        :rows => 6,
-                        :id => 'affair_description',
-                        :class => 'form-control'}
+              %textarea{name: 'description',
+                        rows: 6,
+                        id: 'affair_description',
+                        class: 'form-control'}
                 = @affair.description
 
         .row
           .col-lg-12
             .form-group
-              %label{:for => 'affair_footer'}
+              %label{for: 'affair_footer'}
                 = I18n.t('affair.views.footer')
-              %textarea{:name => 'footer',
-                        :rows => 3,
-                        :id => 'affair_footer',
-                        :class => 'form-control'}
+              %textarea{name: 'footer',
+                        rows: 3,
+                        id: 'affair_footer',
+                        class: 'form-control'}
                 = @affair.footer
 
         .row
           .col-lg-6
             .form-group
-              %label{:for => 'affair_conditions'}
+              %label{for: 'affair_conditions'}
                 = I18n.t('affair.views.conditions')
-              %select{:name => 'condition_id',
-                      :class => 'form-control'}
-                %option{:value => undefined}= I18n.t("common.custom")
+              %select{name: 'condition_id',
+                      class: 'form-control'}
+                %option{value: undefined}= I18n.t("common.custom")
                 - for h in App.AffairsCondition.all()
                   - if h.id == @affair.condition_id
-                    %option{:value => h.id, :selected => true}= h.title
+                    %option{value: h.id, selected: true}= h.title
                   - else
-                    %option{:value => h.id}= h.title
+                    %option{value: h.id}= h.title
           .col-lg-6
 
         .row
           .col-lg-12
             .form-group
-              %textarea{:name => 'conditions',
-                        :rows => 3,
-                        :id => 'affair_conditions',
-                        :class => 'form-control'}
+              %textarea{name: 'conditions',
+                        rows: 3,
+                        id: 'affair_conditions',
+                        class: 'form-control'}
                 = @affair.conditions
 
       .col-md-6
@@ -103,106 +103,106 @@
               %tbody
                 %tr
                   %td.col-sm-4
-                    %label{:for => 'affair_receiver', :class => 'required'}
+                    %label{for: 'affair_receiver', class: 'required'}
                       = I18n.t('affair.views.receiver')
                   %td
                     .autocompleted
-                      %input{:type => 'search',
-                             :name => 'receiver',
-                             :id => 'affair_receiver',
-                             :class => 'form-control',
-                             :value => @affair.receiver_name,
-                             :action => '/people/search'}
+                      %input{type: 'search',
+                             name: 'receiver',
+                             id: 'affair_receiver',
+                             class: 'form-control',
+                             value: @affair.receiver_name,
+                             action: '/people/search'}
 
-                      %input{:type => 'hidden',
-                             :name => 'receiver_id',
-                             :value => @affair.receiver_id}
+                      %input{type: 'hidden',
+                             name: 'receiver_id',
+                             value: @affair.receiver_id}
                   %td
 
                 %tr
                   %td
-                    %label{:for => 'affair_buyer', :class => 'required'}
+                    %label{for: 'affair_buyer', class: 'required'}
                       = I18n.t('affair.views.buyer')
                   %td
                     .autocompleted
-                      %input{:type => 'search',
-                             :name => 'buyer',
-                             :id => 'affair_buyer',
-                             :class => 'form-control',
-                             :value => @affair.buyer_name,
-                             :action => '/people/search'}
+                      %input{type: 'search',
+                             name: 'buyer',
+                             id: 'affair_buyer',
+                             class: 'form-control',
+                             value: @affair.buyer_name,
+                             action: '/people/search'}
 
-                      %input{:type => 'hidden',
-                             :name => 'buyer_id',
-                             :value => @affair.buyer_id}
+                      %input{type: 'hidden',
+                             name: 'buyer_id',
+                             value: @affair.buyer_id}
                   %td
 
                 %tr
                   %td
-                    %label{:for => 'affair_seller', :class => 'required'}
+                    %label{for: 'affair_seller', class: 'required'}
                       = I18n.t('affair.views.seller')
                   %td
                     .autocompleted
-                      %input{:type => 'search',
-                             :name => 'seller',
-                             :id => 'affair_seller',
-                             :class => 'form-control',
-                             :value => @affair.seller_name,
-                             :action => '/people/search'}
+                      %input{type: 'search',
+                             name: 'seller',
+                             id: 'affair_seller',
+                             class: 'form-control',
+                             value: @affair.seller_name,
+                             action: '/people/search'}
 
-                      %input{:type => 'hidden',
-                             :name => 'seller_id',
-                             :value => @affair.seller_id}
+                      %input{type: 'hidden',
+                             name: 'seller_id',
+                             value: @affair.seller_id}
                   %td
 
 
                 - for s in @affair.affairs_stakeholders
-                  %tr{'data-id' => s.id, :class => 'item'}
+                  %tr{'data-id' => s.id, class: 'item'}
                     %td.col-sm-4
-                      %input{ :name => 'stakeholders[][title]',
-                              :class => 'form-control',
-                              :value => s.title,
-                              :type => 'text' }
+                      %input{ name: 'stakeholders[][title]',
+                              class: 'form-control',
+                              value: s.title,
+                              type: 'text' }
 
                     %td
-                      %input{ :name => "stakeholders[][id]", :type => 'hidden', :value => s.id }
+                      %input{ name: "stakeholders[][id]", type: 'hidden', value: s.id }
                       .autocompleted
-                        %input{ :name => "stakeholders[][person]",
-                                :type => 'search',
-                                :value => s.person_name,
-                                :class => 'form-control',
-                                :action => '/people/search' }
+                        %input{ name: "stakeholders[][person]",
+                                type: 'search',
+                                value: s.person_name,
+                                class: 'form-control',
+                                action: '/people/search' }
 
-                        %input{ :type => 'hidden',
-                                :name => "stakeholders[][person_id]",
-                                :value => s.person_id }
+                        %input{ type: 'hidden',
+                                name: "stakeholders[][person_id]",
+                                value: s.person_id }
 
                     %td
-                      %button{:type => 'button',
-                              :name => 'remove_item',
-                              :class => 'btn btn-danger'}
+                      %button{type: 'button',
+                              name: 'remove_item',
+                              class: 'btn btn-danger'}
                         .icon-remove
 
-                %tr{'data-name' => 'stakeholder_item_template', :style => 'display: none;'}
+                %tr{'data-name' => 'stakeholder_item_template', style: 'display: none;'}
                   %td
-                    %input{ :name => 'stakeholders[][title]',
-                            :class => 'form-control',
-                            :type => 'text' }
+                    %input{ name: 'stakeholders[][title]',
+                            class: 'form-control',
+                            type: 'text' }
 
                   %td
                     .autocompleted
-                      %input{ :name => "stakeholders[][person]",
-                              :type => 'search',
-                              :class => 'form-control',
-                              :action => '/people/search' }
+                      %input{ name: "stakeholders[][person]",
+                              type: 'search',
+                              class: 'form-control',
+                              action: '/people/search' }
 
-                      %input{ :type => 'hidden',
-                              :name => "stakeholders[][person_id]" }
+                      %input{ type: 'hidden',
+                              name: "stakeholders[][person_id]" }
 
                   %td
-                    %button{:type => 'button',
-                            :name => 'remove_item',
-                            :class => 'btn btn-danger'}
+                    %button{type: 'button',
+                            name: 'remove_item',
+                            class: 'btn btn-danger'}
                       .icon-remove
 
 
@@ -210,9 +210,9 @@
                   %td
                   %td
                   %td
-                    %button{:type => 'button',
-                            :name => 'add_item',
-                            :class => 'btn btn-default'}
+                    %button{type: 'button',
+                            name: 'add_item',
+                            class: 'btn btn-default'}
                       .icon-plus
 
 
@@ -220,7 +220,7 @@
           .row
             .col-sm-6
               .form-group
-                %label{:for => 'person_affair_value'}
+                %label{for: 'person_affair_value'}
                   = I18n.t('common.value')
                 .input-group
                   .input-group-btn
@@ -230,17 +230,17 @@
                     - else
                       - classes.push('btn-danger')
 
-                    %button{:type => 'button', :class => classes.join(" "), :name => 'reset_value'}
+                    %button{type: 'button', class: classes.join(" "), name: 'reset_value'}
                       .icon-refresh
 
-                  %input{ :type => 'number',
-                          :step => 0.01,
-                          :id => 'person_affair_value',
-                          :class => 'form-control required',
-                          :min => 0,
-                          :max => 99999999.99,
-                          :name => 'value',
-                          :value => @affair.value }
+                  %input{ type: 'number',
+                          step: 0.01,
+                          id: 'person_affair_value',
+                          class: 'form-control required',
+                          min: 0,
+                          max: 99999999.99,
+                          name: 'value',
+                          value: @affair.value }
 
                   .input-group-addon
                     != @partial('select_currency')(currency: @affair.value_currency, name: 'value_currency', value: @affair.value)
@@ -250,11 +250,11 @@
                 %label
                 .checkbox
                   %label.control-label
-                    %input{ :type => 'checkbox',
-                            :id => 'person_affair_custom_value_with_taxes',
-                            :name => 'custom_value_with_taxes',
-                            :checked => false,
-                            :value => 1 }
+                    %input{ type: 'checkbox',
+                            id: 'person_affair_custom_value_with_taxes',
+                            name: 'custom_value_with_taxes',
+                            checked: false,
+                            value: 1 }
                     = I18n.t('affair.views.custom_value_with_taxes')
 
           .row
@@ -279,25 +279,25 @@
             .col-sm-6
               .list-group
                 - if @affair.subscriptions_count > 0
-                  %a{:href => '#person_affair_subscriptions', :class => 'list-group-item'}
+                  %a{href: '#person_affair_subscriptions', class: 'list-group-item'}
                     .badge= @affair.subscriptions_count
                     = I18n.t('affair.views.subscriptions') + " :"
                     = @affair.subscriptions_value?.to_view(@affair.subscriptions_value_currency)
 
                 - if @affair.tasks_count > 0
-                  %a{:href => '#person_affair_tasks', :class => 'list-group-item'}
+                  %a{href: '#person_affair_tasks', class: 'list-group-item'}
                     .badge= @affair.tasks_count
                     = I18n.t('affair.views.tasks') + " :"
                     = @affair.tasks_value?.to_view(@affair.tasks_value_currency)
 
                 - if @affair.products_count > 0
-                  %a{:href => '#person_affair_products', :class => 'list-group-item'}
+                  %a{href: '#person_affair_products', class: 'list-group-item'}
                     .badge= @affair.products_count
                     = I18n.t('affair.views.products') + " :"
                     = @affair.products_value?.to_view(@affair.products_value_currency)
 
                 - if @affair.extras_count > 0
-                  %a{:href => '#person_affair_extras', :class => 'list-group-item'}
+                  %a{href: '#person_affair_extras', class: 'list-group-item'}
                     .badge= @affair.extras_count
                     = I18n.t('affair.views.extras') + " :"
                     = @affair.extras_value?.to_view(@affair.extras_value_currency)
@@ -305,23 +305,23 @@
             .col-sm-6
               .list-group
                 - if @affair.products_count > 0
-                  %a{:href => '#person_affair_products', :class => 'list-group-item list-group-item-warning'}
+                  %a{href: '#person_affair_products', class: 'list-group-item list-group-item-warning'}
                     .badge= @affair.arts_count
                     = I18n.t('affair.views.arts') + " :"
                     = @affair.arts_value?.to_view(@affair.arts_value_currency)
 
                 - if App.ApplicationSetting.value('use_vat') == "true"
-                  %a{:href => '#balance', :class => 'list-group-item list-group-item-warning'}
+                  %a{href: '#balance', class: 'list-group-item list-group-item-warning'}
                     .badge= @affair.vat_count
                     = I18n.t('affair.views.vat') + " :"
                     = @affair.vat_value?.to_view(@affair.vat_value_currency)
 
-                %a{:href => '#balance', :class => 'list-group-item'}
+                %a{href: '#balance', class: 'list-group-item'}
                   .badge= @affair.invoices_count
                   = I18n.t('affair.views.invoices') + " :"
                   = @affair.invoices_value?.to_view(@affair.invoices_value_currency)
 
-                %a{:href => '#balance', :class => 'list-group-item'}
+                %a{href: '#balance', class: 'list-group-item'}
                   .badge= @affair.receipts_count
                   = I18n.t('affair.views.receipts') + " :"
                   = @affair.receipts_value?.to_view(@affair.receipts_value_currency)
@@ -331,8 +331,8 @@
         .col-sm-4
           - unless @affair.isNew?()
             .btn-group
-              %a{:name => "affair-destroy",
-                 :class => 'btn btn-danger' }
+              %a{name: "affair-destroy",
+                 class: 'btn btn-danger' }
                 .icon-remove
                 = I18n.t('common.destroy')
 
@@ -340,31 +340,31 @@
           - unless @affair.isNew?()
             .form-inline
               .form-group
-                %select{:name => 'generic_template_id',
-                        :id => 'affair_template',
-                        :class => 'form-control'}
+                %select{name: 'generic_template_id',
+                        id: 'affair_template',
+                        class: 'form-control'}
                   - for h in _.sortBy(App.GenericTemplate.category('Affair'), (t) -> t.title)
-                    %option{:value => h.id}= h.title
+                    %option{value: h.id}= h.title
 
               .btn-group
                 %a{ :data-toggle => 'dropdown',
-                    :type => 'button',
-                    :class => 'btn btn-default dropdown-toggle' }
+                    type: 'button',
+                    class: 'btn btn-default dropdown-toggle' }
                   .icon-paper-clip
                   = I18n.t('common.documents')
                   .caret
 
                 %ul.dropdown-menu
                   %li
-                    %a{:href => '#', :name => 'affair-preview-pdf'}
+                    %a{href: '#', name: 'affair-preview-pdf'}
                       .icon-eye-open
                       = I18n.t('common.preview')
                   %li
-                    %a{:href => '#', :name => 'affair-download-pdf'}
+                    %a{href: '#', name: 'affair-download-pdf'}
                       .icon-download-alt
                       = I18n.t('common.pdf')
                   %li
-                    %a{:href => '#', :name => 'affair-download-odt'}
+                    %a{href: '#', name: 'affair-download-odt'}
                       .icon-download-alt
                       = I18n.t('common.odt')
 
@@ -376,8 +376,8 @@
       .row
         .col-sm-12
           .pull-right
-            %button{:name => "affair-show-owner",
-                    :class => 'btn btn-primary' }
+            %button{name: "affair-show-owner",
+                    class: 'btn btn-primary' }
               .icon-eye-open
               = I18n.t('affair.views.actions.show_owner')
 

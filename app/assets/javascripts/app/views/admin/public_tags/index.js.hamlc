@@ -8,7 +8,7 @@
 
   %tbody
     - for tag in App.PublicTag.all()
-      %tr{:data-id => tag.id, :class => 'item'}
+      %tr{:data-id => tag.id, class: 'item'}
         %td= tag.id
         %td= tag.name
         %td= tag.parent_name

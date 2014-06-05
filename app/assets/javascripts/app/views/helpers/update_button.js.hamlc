@@ -2,6 +2,6 @@
   - title = I18n.t('common.create')
 - else
   - title = I18n.t('common.update')
-%button{:type => 'submit', :class => 'btn btn-primary'}
+%button{type: 'submit', class: 'btn btn-primary'}
   .icon-download-alt
   = title

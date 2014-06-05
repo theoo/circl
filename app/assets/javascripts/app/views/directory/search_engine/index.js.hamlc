@@ -7,7 +7,7 @@
 
 // fake_action is overloaded in DirectorySearchEngine#Index.render() method.
 // It's used to load the remote callback (from Ui.datatable_params) and format rows nicely.
-%table{:id => 'results', :action => 'fake_action'}
+%table{id: 'results', action: 'fake_action'}
   %thead
     %tr
       - if @query?.selected_attributes
@@ -22,22 +22,22 @@
 .panel-footer
   .btn-group
     .btn-group
-      %button{:type => 'button',
+      %button{type: 'button',
               :data-toggle => 'dropdown',
-              :class => 'btn btn-default dropdown-toggle' }
+              class: 'btn btn-default dropdown-toggle' }
         .icon-paper-clip
         = I18n.t("common.export")
         .caret
 
       %ul.dropdown-menu
         %li
-          %a{:href => '#', :name => 'directory-export-to-csv'}
+          %a{href: '#', name: 'directory-export-to-csv'}
             .icon-file-text
             = I18n.t('common.csv')
 
     - if @query?.search_string and @results_count < 5000
-      %a{ :href => '#',
-          :name => 'directory-map',
-          :class => 'btn btn-default'}
+      %a{ href: '#',
+          name: 'directory-map',
+          class: 'btn btn-default'}
         .icon-map-marker
         = I18n.t('directory.views.show_on_a_map')

@@ -8,7 +8,7 @@
 
   %tbody
     - for ec in App.PersonEmploymentContract.all()
-      %tr{:data-id => ec.id, :class => 'item' }
+      %tr{:data-id => ec.id, class: 'item' }
         %td= ec.interval_starts_on
         %td= ec.interval_ends_on
         %td.number= ec.percentage

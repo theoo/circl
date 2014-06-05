@@ -8,7 +8,7 @@
 
   %tbody
     - for lang in App.Language.all()
-      %tr{:data-id => lang.id, :class => 'item'}
+      %tr{:data-id => lang.id, class: 'item'}
         %td= lang.id
         %td= lang.name
         %td= lang.code

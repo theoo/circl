@@ -8,7 +8,7 @@
 
   %tbody
     - for task in App.PersonTask.all()
-      %tr{:data-id => task.id, :class => 'item'}
+      %tr{:data-id => task.id, class: 'item'}
         %td= task.id
         %td
           = task.start_date
@@ -35,23 +35,23 @@
   .panel-footer
     .form-inline
       .form-group
-        %label{:for => 'affair_tasks_template', :class => 'sr-only'}
+        %label{for: 'affair_tasks_template', class: 'sr-only'}
           = I18n.t('affair.views.template')
         - if App.GenericTemplate.category('Task').length > 0
-          %select{:name => 'generic_template_id',
-                  :id => 'affair_tasks_template',
-                  :class => 'form-control'}
+          %select{name: 'generic_template_id',
+                  id: 'affair_tasks_template',
+                  class: 'form-control'}
             - for h in _.sortBy(App.GenericTemplate.category('Task'), (t) -> t.title)
-              %option{:value => h.id}= h.title
+              %option{value: h.id}= h.title
 
         - else
-          %a{:href => '/settings#templates', :class => 'btn btn-warning'}
+          %a{href: '/settings#templates', class: 'btn btn-warning'}
             = I18n.t("common.add_new_template")
 
         .btn-group
-          %button{:type => 'button',
+          %button{type: 'button',
                   :data-toggle => 'dropdown',
-                  :class => 'btn btn-default dropdown-toggle' }
+                  class: 'btn btn-default dropdown-toggle' }
             .icon-paper-clip
             = I18n.t("common.documents")
             .caret
@@ -59,18 +59,18 @@
           %ul.dropdown-menu
             - if App.GenericTemplate.category('Task').length > 0
               %li
-                %a{:href => '#', :name => 'affair-tasks-preview'}
+                %a{href: '#', name: 'affair-tasks-preview'}
                   .icon-eye-open
                   = I18n.t('common.preview')
               %li
-                %a{:href => '#', :name => 'affair-tasks-pdf'}
+                %a{href: '#', name: 'affair-tasks-pdf'}
                   .icon-download-alt
                   = I18n.t('common.pdf')
               %li
-                %a{:href => '#', :name => 'affair-tasks-odt'}
+                %a{href: '#', name: 'affair-tasks-odt'}
                   .icon-download-alt
                   = I18n.t('common.odt')
             %li
-              %a{:href => '#', :name => 'affair-tasks-csv'}
+              %a{href: '#', name: 'affair-tasks-csv'}
                 .icon-file-text
                 = I18n.t('common.csv')

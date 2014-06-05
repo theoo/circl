@@ -1,30 +1,30 @@
-.header{:style => "width: 190mm; height: 27mm; z-index: 2; padding: 5mm 5mm 5mm 15mm;"}
-  %img{:alt => "CIRCL", :height => "155", :src => "/assets/logo.png", :style => "float: right;", :title => "CIRCL", :width => "180"}/
-  %table{:border => "0", :style => "width: 90mm;"}
+.header{style: "width: 190mm; height: 27mm; z-index: 2; padding: 5mm 5mm 5mm 15mm;"}
+  %img{alt: "CIRCL", height: "155", src: "/assets/logo.png", style: "float: right;", title: "CIRCL", width: "180"}/
+  %table{border: "0", style: "width: 90mm;"}
     %tbody
       %tr
-        %td{:style => "width: 25mm;"}
-          %span{:style => "font-size: small;"} &nbsp;
+        %td{style: "width: 25mm;"}
+          %span{style: "font-size: small;"} &nbsp;
         %td
-          %span{:style => "font-size: small;"}
+          %span{style: "font-size: small;"}
       %tr
-        %td{:style => "width: 25mm;"}
-          %span{:style => "font-size: small;"} n&deg; de facture:
+        %td{style: "width: 25mm;"}
+          %span{style: "font-size: small;"} n&deg; de facture:
         %td
-          %span{:style => "font-size: small;"} #INVOICE_ID
-      %tr
-        %td
-          %span{:style => "font-size: small;"} n&deg; de client:
-        %td
-          %span{:style => "font-size: small;"} #INVOICE_OWNER_ID
+          %span{style: "font-size: small;"} #INVOICE_ID
       %tr
         %td
-          %span{:style => "font-size: small;"} date:
+          %span{style: "font-size: small;"} n&deg; de client:
         %td
-          %span{:style => "font-size: small;"} #INVOICE_DATE
+          %span{style: "font-size: small;"} #INVOICE_OWNER_ID
+      %tr
+        %td
+          %span{style: "font-size: small;"} date:
+        %td
+          %span{style: "font-size: small;"} #INVOICE_DATE
 
-.text{:style => "width: 190mm; height: 135mm; z-index: 0; text-align: justify; padding: 5mm 5mm 5mm 15mm;"}
-  .address{:style => "width: 87mm; height: 43mm; float: right; padding: 10mm 5mm 5mm 15mm;"} #INVOICE_ADDRESS
+.text{style: "width: 190mm; height: 135mm; z-index: 0; text-align: justify; padding: 5mm 5mm 5mm 15mm;"}
+  .address{style: "width: 87mm; height: 43mm; float: right; padding: 10mm 5mm 5mm 15mm;"} #INVOICE_ADDRESS
   Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
   %br
   %br
@@ -34,7 +34,7 @@
   %br
   \#SUBSCRIPTIONS{ title, interval_starts_on, interval_ends_on, value | created_at | table }
 
-.footer{:style => "width: 190mm; height: 5mm; padding-right: 15mm; padding-left: 5mm; text-align: center;"}
-  %span{:style => "font-size: small;"}
+.footer{style: "width: 190mm; height: 5mm; padding-right: 15mm; padding-left: 5mm; text-align: center;"}
+  %span{style: "font-size: small;"}
     %strong Company
     | Rue du Paradis-fiscal 7 | 1200 Gen&egrave;ve | T&eacute;l. +41 22 345 67 89 | Email info@company.com

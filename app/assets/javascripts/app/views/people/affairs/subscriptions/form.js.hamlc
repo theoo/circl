@@ -8,17 +8,17 @@
       .row
         .col-lg-12
           .autocompleted.form-group
-            %label{:for => 'affair_subscription_title'}
+            %label{for: 'affair_subscription_title'}
               = I18n.t('subscription.views.subscription')
-            %input{:type => 'search',
-                   :name => 'subscription',
-                   :id => 'affair_subscription_title',
-                   :value => '',
-                   :class => 'required form-control',
-                   :action => '/admin/subscriptions/search'}
-            %input{:type => 'hidden',
-              :name => 'subscription_id',
-              :value => ''}
+            %input{type: 'search',
+                   name: 'subscription',
+                   id: 'affair_subscription_title',
+                   value: '',
+                   class: 'required form-control',
+                   action: '/admin/subscriptions/search'}
+            %input{type: 'hidden',
+              name: 'subscription_id',
+              value: ''}
 
       .row
         .col-lg-12

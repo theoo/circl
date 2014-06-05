@@ -14,7 +14,7 @@
       - classes.push 'warning' if item.parent_id
 
       - # id is required for datatable reordering
-      %tr{:data-id => item.id, :class => classes.join(" "), :id => item.id}
+      %tr{:data-id => item.id, class: classes.join(" "), id: item.id}
         - # %td= item.category
         %td.small-number= item.position
         %td.small-number= item.quantity + " " + I18n.t("product.units.#{item.unit_symbol}.symbol")
@@ -43,23 +43,23 @@
   .panel-footer
     .form-inline
       .form-group
-        %label{:for => 'affair_products_template', :class => 'sr-only'}
+        %label{for: 'affair_products_template', class: 'sr-only'}
           = I18n.t('affair.views.template')
         - if App.GenericTemplate.category('Product').length > 0
-          %select{:name => 'generic_template_id',
-                  :id => 'affair_products_template',
-                  :class => 'form-control'}
+          %select{name: 'generic_template_id',
+                  id: 'affair_products_template',
+                  class: 'form-control'}
             - for h in _.sortBy(App.GenericTemplate.category('Product'), (t) -> t.title)
-              %option{:value => h.id}= h.title
+              %option{value: h.id}= h.title
 
         - else
-          %a{:href => '/settings#templates', :class => 'btn btn-warning'}
+          %a{href: '/settings#templates', class: 'btn btn-warning'}
             = I18n.t("common.add_new_template")
 
         .btn-group
-          %button{:type => 'button',
+          %button{type: 'button',
                   :data-toggle => 'dropdown',
-                  :class => 'btn btn-default dropdown-toggle' }
+                  class: 'btn btn-default dropdown-toggle' }
             .icon-paper-clip
             = I18n.t("common.documents")
             .caret
@@ -67,18 +67,18 @@
           %ul.dropdown-menu
             - if App.GenericTemplate.category('Product').length > 0
               %li
-                %a{:href => '#', :name => 'affair-products-preview'}
+                %a{href: '#', name: 'affair-products-preview'}
                   .icon-eye-open
                   = I18n.t('common.preview')
               %li
-                %a{:href => '#', :name => 'affair-products-pdf'}
+                %a{href: '#', name: 'affair-products-pdf'}
                   .icon-download-alt
                   = I18n.t('common.pdf')
               %li
-                %a{:href => '#', :name => 'affair-products-odt'}
+                %a{href: '#', name: 'affair-products-odt'}
                   .icon-download-alt
                   = I18n.t('common.odt')
             %li
-              %a{:href => '#', :name => 'affair-products-csv'}
+              %a{href: '#', name: 'affair-products-csv'}
                 .icon-file-text
                 = I18n.t('common.csv')

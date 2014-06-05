@@ -6,7 +6,7 @@
       %th= I18n.t('job.views.members_count')
   %tbody
     - for job in App.Job.all()
-      %tr{:data-id => job.id, :class => 'item'}
+      %tr{:data-id => job.id, class: 'item'}
         %td= job.id
         %td= job.name
         %td.number= job.members_count

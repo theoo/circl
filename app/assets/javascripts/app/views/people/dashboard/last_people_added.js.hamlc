@@ -8,7 +8,7 @@
   %tbody
     - for person in @people
 
-      %tr{:data-id => person.id, :class => 'item'}
+      %tr{:data-id => person.id, class: 'item'}
         %td= person.id
         %td= person.created_at
         %td
@@ -19,6 +19,6 @@
           - else if person.mobile != ""
             = person.mobile + ", "
           - if person.email
-            %a{:href => "mailto:#{person.email}"}= person.email
+            %a{href: "mailto:#{person.email}"}= person.email
           %br
           = person.address

@@ -1,4 +1,4 @@
-%table.datatable{ :action => '/admin/subscriptions' }
+%table.datatable{ action: '/admin/subscriptions' }
   %thead
     %tr
       %th= I18n.t('common.id')
@@ -16,9 +16,9 @@
   .row
     .col-lg-12
       %form
-        %button{:type => 'button',
-                :name => 'subscription-tag-tool',
-                :class => 'btn btn-default' }
+        %button{type: 'button',
+                name: 'subscription-tag-tool',
+                class: 'btn btn-default' }
           .icon-tags
           &nbsp;
           = I18n.t('subscription.views.tag_tool.tag_tool')

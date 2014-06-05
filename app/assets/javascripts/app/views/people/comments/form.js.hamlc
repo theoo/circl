@@ -7,25 +7,25 @@
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'comment_title', :class => 'label-control'}
+          %label{for: 'comment_title', class: 'label-control'}
             = I18n.t('common.title')
-          %input{ :type => 'text',
-                  :name => 'title',
-                  :id => 'comment_title',
-                  :class => 'required form-control',
-                  :value => @comment.title }
+          %input{ type: 'text',
+                  name: 'title',
+                  id: 'comment_title',
+                  class: 'required form-control',
+                  value: @comment.title }
 
         .form-group
-          %label{:for => 'comment_description', :class => 'label-control'}
+          %label{for: 'comment_description', class: 'label-control'}
             = I18n.t('common.description')
-          %textarea{:name => 'description',
-                    :id => 'comment_description',
-                    :rows => 5,
-                    :class => 'required form-control'}
+          %textarea{name: 'description',
+                    id: 'comment_description',
+                    rows: 5,
+                    class: 'required form-control'}
             = @comment.description
 
-        %input{:type => 'hidden', :name => 'resource_type', :value => 'Person'}
-        %input{:type => 'hidden', :name => 'resource_id', :value => @comment.person_id}
+        %input{type: 'hidden', name: 'resource_type', value: 'Person'}
+        %input{type: 'hidden', name: 'resource_id', value: @comment.person_id}
 
     .row
       .col-lg-12
@@ -34,18 +34,18 @@
 
         .btn-group
           - unless @comment.isNew?()
-            %button{:name => "comment-destroy",
-                    :class => 'btn btn-danger' }
+            %button{name: "comment-destroy",
+                    class: 'btn btn-danger' }
               .icon-remove
               = I18n.t("common.destroy")
 
             - if @comment.is_closed
-              %button{:name => "comment-reopen",
-                      :class => 'btn btn-default' }
+              %button{name: "comment-reopen",
+                      class: 'btn btn-default' }
                 .icon-folder-open
                 = I18n.t("comment.views.actions.reopen")
             - else
-              %button{:name => "comment-close",
-                      :class => 'btn btn-default' }
+              %button{name: "comment-close",
+                      class: 'btn btn-default' }
                 .icon-minus-sign
                 = I18n.t("comment.views.actions.close")

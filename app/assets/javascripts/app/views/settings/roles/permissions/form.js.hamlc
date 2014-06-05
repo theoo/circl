@@ -11,32 +11,32 @@
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'settings_role_permission_action'}
+          %label{for: 'settings_role_permission_action'}
             = I18n.t('permission.views.action')
-          %input{ :type => 'text',
-                  :name => 'action',
-                  :id => 'settings_role_permission_action',
-                  :class => 'form-control',
-                  :value => @permission.action }
+          %input{ type: 'text',
+                  name: 'action',
+                  id: 'settings_role_permission_action',
+                  class: 'form-control',
+                  value: @permission.action }
 
       .col-lg-6
         .form-group
-          %label{:for => 'settings_role_permission_subject'}
+          %label{for: 'settings_role_permission_subject'}
             = I18n.t('permission.views.subject')
-          %input{ :type => 'text',
-                  :id => 'settings_role_permission_subject',
-                  :class => 'form-control',
-                  :name => 'subject',
-                  :value => @permission.subject }
+          %input{ type: 'text',
+                  id: 'settings_role_permission_subject',
+                  class: 'form-control',
+                  name: 'subject',
+                  value: @permission.subject }
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'settings_role_permission_hash_conditions'}
+          %label{for: 'settings_role_permission_hash_conditions'}
             = I18n.t('permission.views.hash_conditions')
-          %textarea{:name => 'hash_conditions',
-                    :id => 'settings_role_permission_hash_conditions',
-                    :rows => 4,
-                    :class => 'form-control'}
+          %textarea{name: 'hash_conditions',
+                    id: 'settings_role_permission_hash_conditions',
+                    rows: 4,
+                    class: 'form-control'}
             = @permission.hash_conditions
 
     .row

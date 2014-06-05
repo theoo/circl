@@ -7,54 +7,54 @@
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'settings_search_attribute_name'}
+          %label{for: 'settings_search_attribute_name'}
             = I18n.t('common.name')
-          %input{ :type => 'text',
-                  :name => 'name',
-                  :id => 'settings_search_attribute_name',
-                  :value => @search_attribute.name,
-                  :class => 'form-control required' }
+          %input{ type: 'text',
+                  name: 'name',
+                  id: 'settings_search_attribute_name',
+                  value: @search_attribute.name,
+                  class: 'form-control required' }
       .col-lg-6
 
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'settings_search_attribute_model'}
+          %label{for: 'settings_search_attribute_model'}
             = I18n.t('search_attribute.views.model')
-          %input{ :type => 'text',
-                  :name => 'model',
-                  :id => 'settings_search_attribute_model',
-                  :value => @search_attribute.model,
-                  :class => 'form-control required' }
+          %input{ type: 'text',
+                  name: 'model',
+                  id: 'settings_search_attribute_model',
+                  value: @search_attribute.model,
+                  class: 'form-control required' }
       .col-lg-6
         .form-group
-          %label{:for => 'settings_search_attribute_group'}
+          %label{for: 'settings_search_attribute_group'}
             = I18n.t('search_attribute.views.group')
-          %input{ :type => 'text',
-                  :name => 'group',
-                  :id => 'settings_search_attribute_group',
-                  :value => @search_attribute.group,
-                  :class => 'form-control' }
+          %input{ type: 'text',
+                  name: 'group',
+                  id: 'settings_search_attribute_group',
+                  value: @search_attribute.group,
+                  class: 'form-control' }
 
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'settings_search_attribute_indexing'}
+          %label{for: 'settings_search_attribute_indexing'}
             = I18n.t('search_attribute.views.indexing')
-          %textarea{:name => 'indexing',
-                    :id => 'settings_search_attribute_indexing',
-                    :rows => 5,
-                    :class => 'form-control required' }
+          %textarea{name: 'indexing',
+                    id: 'settings_search_attribute_indexing',
+                    rows: 5,
+                    class: 'form-control required' }
             = @search_attribute.indexing
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'settings_search_attribute_mapping'}
+          %label{for: 'settings_search_attribute_mapping'}
             = I18n.t('search_attribute.views.mapping')
-          %textarea{:name => 'mapping',
-                    :id => 'settings_search_attribute_mapping',
-                    :rows => 5,
-                    :class => 'form-control required' }
+          %textarea{name: 'mapping',
+                    id: 'settings_search_attribute_mapping',
+                    rows: 5,
+                    class: 'form-control required' }
             = JSON.stringify(@search_attribute.mapping, null, 4)
 
     .row
@@ -63,8 +63,8 @@
           != @partial('save_and_cancel_buttons')(@search_attribute)
 
         - unless @search_attribute.isNew()
-          %button{:type => 'button',
-                  :class => 'btn btn-danger',
-                  :name => 'settings-search-attribute-destroy'}
+          %button{type: 'button',
+                  class: 'btn btn-danger',
+                  name: 'settings-search-attribute-destroy'}
             .icon-remove
             = I18n.t("common.destroy")

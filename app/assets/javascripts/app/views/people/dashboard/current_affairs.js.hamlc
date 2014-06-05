@@ -8,7 +8,7 @@
   %tbody
     - for affair in @affairs
 
-      %tr{:data-id => affair.id, :class => 'item'}
+      %tr{:data-id => affair.id, class: 'item'}
         %td= affair.id
         %td= affair.updated_at
         %td

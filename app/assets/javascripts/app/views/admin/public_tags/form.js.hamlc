@@ -7,26 +7,26 @@
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'admin_public_tag_name'}
+          %label{for: 'admin_public_tag_name'}
             = I18n.t('common.name')
-          %input{ :type => 'text',
-                  :id => 'tag_name',
-                  :name => 'name',
-                  :class => 'required form-control',
-                  :value => @tag.name }
+          %input{ type: 'text',
+                  id: 'tag_name',
+                  name: 'name',
+                  class: 'required form-control',
+                  value: @tag.name }
       .col-lg-6
         .form-group.autocompleted
-          %label{:for => 'admin_public_tag_parent_id'}
+          %label{for: 'admin_public_tag_parent_id'}
             = I18n.t('common.parent')
-          %input{ :type => 'search',
-                  :id => 'admin_public_tag_parent_id',
-                  :name => 'parent',
-                  :class => 'form-control',
-                  :value => @tag.parent_name,
-                  :action => '/admin/public_tags/search' }
-          %input{ :type => 'hidden',
-                  :name => 'parent_id',
-                  :value => @tag.parent_id }
+          %input{ type: 'search',
+                  id: 'admin_public_tag_parent_id',
+                  name: 'parent',
+                  class: 'form-control',
+                  value: @tag.parent_name,
+                  action: '/admin/public_tags/search' }
+          %input{ type: 'hidden',
+                  name: 'parent_id',
+                  value: @tag.parent_id }
 
     .row
       .col-lg-12
@@ -35,33 +35,33 @@
 
         - unless @tag.isNew()
           .btn-group
-            %button{:name => "tag-destroy",
-                    :class => 'btn btn-danger' }
+            %button{name: "tag-destroy",
+                    class: 'btn btn-danger' }
               .icon-remove
               = I18n.t('common.destroy')
 
             .btn-group
               %button{:data-toggle => 'dropdown',
-                      :type => 'button',
-                      :class => 'btn btn-default dropdown-toggle' }
+                      type: 'button',
+                      class: 'btn btn-default dropdown-toggle' }
                 .icon-user
                 = I18n.t('common.members')
                 .caret
 
               %ul.dropdown-menu
                 %li
-                  %a{:href => '#', :name => 'tag-view-members'}
+                  %a{href: '#', name: 'tag-view-members'}
                     .icon-eye-open
                     = I18n.t('tag.views.actions.view_tag_members')
                 %li.divider
                 %li
-                  %a{:href => '#', :name => 'tag-add-members'}
+                  %a{href: '#', name: 'tag-add-members'}
                     .icon-plus
                     = I18n.t('tag.views.actions.add_members')
 
                 - if @tag.members_count > 0
                   %li
-                    %a{:href => '#', :name => 'tag-remove-members'}
+                    %a{href: '#', name: 'tag-remove-members'}
                       .icon-minus
                       = I18n.t('tag.views.actions.remove_all_members')
 

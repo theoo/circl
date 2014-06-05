@@ -1,7 +1,7 @@
 .panel-body
   %h3= I18n.t("permission.views.available_permissions")
 
-%table{:name => 'settings_role_available_permissions', :class => 'datatable'}
+%table{name: 'settings_role_available_permissions', class: 'datatable'}
   %thead
     %tr
       %th= I18n.t('permission.views.action')
@@ -9,6 +9,6 @@
 
   %tbody
     - for permission in @available_permissions
-      %tr{:data-id => permission.id, :class => 'item'}
+      %tr{:data-id => permission.id, class: 'item'}
         %td= permission.action
         %td= permission.subject

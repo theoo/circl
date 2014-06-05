@@ -1,6 +1,6 @@
 
-%form{ :method =>'get',
-       :action => '/admin/bank_import_histories/export.csv' }
+%form{ method:'get',
+       action: '/admin/bank_import_histories/export.csv' }
   .modal-body
     %h3= I18n.t("bank_import_history.views.export_title")
     .row
@@ -11,31 +11,31 @@
       .col-lg-2
       .col-lg-4
         .form-group
-          %label{:for => 'admin_bankfile_history_export_from'}
+          %label{for: 'admin_bankfile_history_export_from'}
             = I18n.t('common.from')
-          %input{ :type => 'text',
-                  :id => 'admin_bankfile_history_export_from',
-                  :name => 'from',
-                  :class => 'datepicker required form-control' }
+          %input{ type: 'text',
+                  id: 'admin_bankfile_history_export_from',
+                  name: 'from',
+                  class: 'datepicker required form-control' }
 
       .col-lg-4
         .form-group
-          %label{:for => 'admin_bankfile_history_export_to'}
+          %label{for: 'admin_bankfile_history_export_to'}
             = I18n.t('common.to')
-          %input{ :type => 'text',
-                  :id => 'admin_bankfile_history_export_to',
-                  :name => 'to',
-                  :class => 'datepicker required form-control' }
+          %input{ type: 'text',
+                  id: 'admin_bankfile_history_export_to',
+                  name: 'to',
+                  class: 'datepicker required form-control' }
       .col-lg-2
 
   .modal-footer
     .row
       .col-lg-12
-        %button{:type => 'button', :class => 'btn btn-default', :data-dismiss => 'modal'}
+        %button{type: 'button', class: 'btn btn-default', :data-dismiss => 'modal'}
           .icon-chevron-left
           = I18n.t("common.close")
 
-        %button{ :type => 'submit',
-                :class => 'btn btn-primary' }
+        %button{ type: 'submit',
+                class: 'btn btn-primary' }
           .icon-cloud-download
           = I18n.t('common.download')

@@ -23,130 +23,130 @@
             .col-lg-6
               .form-group
                 // Allow salary creation only it at least one reference exists
-                %label{:for => 'person_salary_parent_id'}
+                %label{for: 'person_salary_parent_id'}
                   = I18n.t('salary.views.reference')
-                %select{:name => 'parent_id',
-                        :id => 'person_salary_parent_id',
-                        :class => 'form-control required'}
+                %select{name: 'parent_id',
+                        id: 'person_salary_parent_id',
+                        class: 'form-control required'}
                   - for r in App.PersonSalary.references()
                     - if @salary.parent_id == r.id and not @new_reference_selected
-                      %option{:value => r.id, :selected => true}= r.title
+                      %option{value: r.id, selected: true}= r.title
                     - else
-                      %option{:value => r.id}= r.title
+                      %option{value: r.id}= r.title
 
                   - if @new_reference_selected
-                    %option{:value => 'new', :selected => true}
+                    %option{value: 'new', selected: true}
                       = I18n.t("salary.views.actions.new_reference")
                   - else
-                    %option{:value => 'new'}
+                    %option{value: 'new'}
                       = I18n.t("salary.views.actions.new_reference")
 
             .col-lg-6
               .form-group
-                %label{:for => 'person_template'}
+                %label{for: 'person_template'}
                   = I18n.t('salary.views.template')
-                %select{:name => 'generic_template_id',
-                        :id => 'person_template',
-                        :class => 'form-control required'}
+                %select{name: 'generic_template_id',
+                        id: 'person_template',
+                        class: 'form-control required'}
                   - for h in _.sortBy(App.GenericTemplate.category('Salaries::Salary'), (s) -> s.title)
                     - if @salary.generic_template_id == h.id
-                      %option{:value => h.id, :selected => true}= h.title
+                      %option{value: h.id, selected: true}= h.title
                     - else
-                      %option{:value => h.id}= h.title
+                      %option{value: h.id}= h.title
 
           .row
             .col-lg-6
               .form-group
-                %label{ :for => 'person_salary_title'}
+                %label{ for: 'person_salary_title'}
                   = I18n.t('common.title')
-                %input{ :name => 'title',
-                        :type => 'text',
-                        :id => 'person_salary_title',
-                        :value => @salary.title,
-                        :class => "form-control required" }
+                %input{ name: 'title',
+                        type: 'text',
+                        id: 'person_salary_title',
+                        value: @salary.title,
+                        class: "form-control required" }
 
             .col-lg-6
               .form-group
-                %label{:for => 'person_salary_created_at'}
+                %label{for: 'person_salary_created_at'}
                   = I18n.t('common.created_at')
-                %input{ :type => 'text',
-                        :name => 'created_at',
-                        :id => 'person_salary_created_at',
-                        :class => 'datepicker form-control',
-                        :value => @salary.created_at }
+                %input{ type: 'text',
+                        name: 'created_at',
+                        id: 'person_salary_created_at',
+                        class: 'datepicker form-control',
+                        value: @salary.created_at }
 
           .row
             .col-lg-6
               .form-group
-                %label{:for => 'person_salary_from'}
+                %label{for: 'person_salary_from'}
                   = I18n.t('common.from')
-                %input{:type => 'text',
-                       :name => 'from',
-                       :id => 'person_salary_from',
-                       :class => 'datepicker form-control required',
-                       :value => @salary.from }
+                %input{type: 'text',
+                       name: 'from',
+                       id: 'person_salary_from',
+                       class: 'datepicker form-control required',
+                       value: @salary.from }
 
             .col-lg-6
               .form-group
-                %label{:for => 'person_salary_to'}
+                %label{for: 'person_salary_to'}
                   = I18n.t('common.to')
-                %input{ :type => 'text',
-                        :name => 'to',
-                        :id => 'person_salary_to',
-                        :class => 'datepicker form-control required',
-                        :value => @salary.to }
+                %input{ type: 'text',
+                        name: 'to',
+                        id: 'person_salary_to',
+                        class: 'datepicker form-control required',
+                        value: @salary.to }
 
           .row
             .col-lg-6
               .form-group
-                %label{:for => 'person_salary_activity_rate'}
+                %label{for: 'person_salary_activity_rate'}
                   = I18n.t('salary.views.activity_rate')
                 .input-group
-                  %input{ :name => 'activity_rate',
-                          :type => 'number',
-                          :id => 'person_salary_activity_rate',
-                          :min => 0,
-                          :max => 100,
-                          :step => 1,
-                          :class => 'form-control required',
-                          :value => @salary.activity_rate }
+                  %input{ name: 'activity_rate',
+                          type: 'number',
+                          id: 'person_salary_activity_rate',
+                          min: 0,
+                          max: 100,
+                          step: 1,
+                          class: 'form-control required',
+                          value: @salary.activity_rate }
                   .input-group-addon %
 
             .col-lg-6
               .form-group
-                %label{:for => 'person_salary_children_count'}
+                %label{for: 'person_salary_children_count'}
                   = I18n.t('salary.views.children_count')
-                %input{ :name => 'children_count',
-                        :id => 'person_salary_children_count',
-                        :type => 'number',
-                        :min => 0,
-                        :step => 1,
-                        :class => 'form-control required',
-                        :value => @salary.children_count }
+                %input{ name: 'children_count',
+                        id: 'person_salary_children_count',
+                        type: 'number',
+                        min: 0,
+                        step: 1,
+                        class: 'form-control required',
+                        value: @salary.children_count }
 
           .row
             .col-lg-6
               .form-group
-                %label{ :for => 'salary_is_married', :class => 'label-control' }
+                %label{ for: 'salary_is_married', class: 'label-control' }
                   = I18n.t('salary.views.civil_status')
                 .checkbox
-                  %input{ :name => 'married',
-                          :id => 'salary_is_married',
-                          :type => 'checkbox',
-                          :checked => @salary.married,
-                          :value => 1 }
+                  %input{ name: 'married',
+                          id: 'salary_is_married',
+                          type: 'checkbox',
+                          checked: @salary.married,
+                          value: 1 }
                   = I18n.t('salary.views.married')
 
             .col-lg-6
               .form-group
-                %label{ :for => 'salary_is_paid', :class => 'label-control' }
+                %label{ for: 'salary_is_paid', class: 'label-control' }
                   = I18n.t('common.paid')
                 .checkbox
-                  %input{ :name => 'paid',
-                          :id => 'salary_is_paid',
-                          :type => 'checkbox',
-                          :checked => @salary.paid,
-                          :value => 1 }
+                  %input{ name: 'paid',
+                          id: 'salary_is_paid',
+                          type: 'checkbox',
+                          checked: @salary.paid,
+                          value: 1 }
                   = I18n.t('common.paid')
 
           - if @salary.is_reference
@@ -156,16 +156,16 @@
             .row
               .col-lg-6
                 .form-group
-                  %label{:for => 'person_salary_yearly_salary'}
+                  %label{for: 'person_salary_yearly_salary'}
                     = I18n.t('salary.views.annual_earning_total')
                   .input-group
-                    %input{ :name => 'yearly_salary',
-                            :type => 'number',
-                            :id => 'person_salary_yearly_salary',
-                            :min => 0.0,
-                            :class => 'form-control',
-                            :step => 0.01,
-                            :value => @salary.yearly_salary }
+                    %input{ name: 'yearly_salary',
+                            type: 'number',
+                            id: 'person_salary_yearly_salary',
+                            min: 0.0,
+                            class: 'form-control',
+                            step: 0.01,
+                            value: @salary.yearly_salary }
 
                     .input-group-addon
                       != @partial('select_currency')(currency: @salary.yearly_salary_currency, name: 'yearly_salary_currency', value: @salary.yearly_salary)
@@ -178,15 +178,15 @@
 
               .col-lg-6
                 .form-group
-                  %label{:for => 'person_salary_yearly_salary_count'}
+                  %label{for: 'person_salary_yearly_salary_count'}
                     = I18n.t('salary.views.montly_salaries_count')
-                  %input{ :name => 'yearly_salary_count',
-                          :id => 'person_salary_yearly_salary_count',
-                          :type => 'number',
-                          :min => 1,
-                          :step => 1,
-                          :class => 'form-control required',
-                          :value => @salary.yearly_salary_count }
+                  %input{ name: 'yearly_salary_count',
+                          id: 'person_salary_yearly_salary_count',
+                          type: 'number',
+                          min: 1,
+                          step: 1,
+                          class: 'form-control required',
+                          value: @salary.yearly_salary_count }
 
                   - if @salary.yearly_salary and @salary.yearly_salary_count
                     .help-block
@@ -199,33 +199,33 @@
             .row
               .col-lg-4
                 .form-group
-                  %label{:for => 'person_salary_brut_account'}
+                  %label{for: 'person_salary_brut_account'}
                     = I18n.t('salary.views.brut_account')
-                  %input{ :name => 'brut_account',
-                          :id => 'person_salary_brut_account',
-                          :class => 'form-control',
-                          :type => 'text',
-                          :value => @salary.brut_account }
+                  %input{ name: 'brut_account',
+                          id: 'person_salary_brut_account',
+                          class: 'form-control',
+                          type: 'text',
+                          value: @salary.brut_account }
 
               .col-lg-4
                 .form-group
-                  %label{:for => 'person_salary_net_account'}
+                  %label{for: 'person_salary_net_account'}
                     = I18n.t('salary.views.net_account')
-                  %input{ :name => 'net_account',
-                          :id => 'person_salary_net_account',
-                          :class => 'form-control',
-                          :type => 'text',
-                          :value => @salary.net_account }
+                  %input{ name: 'net_account',
+                          id: 'person_salary_net_account',
+                          class: 'form-control',
+                          type: 'text',
+                          value: @salary.net_account }
 
               .col-lg-4
                 .form-group
-                  %label{:for => 'person_salary_employer_account'}
+                  %label{for: 'person_salary_employer_account'}
                     = I18n.t('salary.views.employer_account')
-                  %input{ :name => 'employer_account',
-                          :id => 'person_salary_employer_account',
-                          :class => 'form-control',
-                          :type => 'text',
-                          :value => @salary.employer_account }
+                  %input{ name: 'employer_account',
+                          id: 'person_salary_employer_account',
+                          class: 'form-control',
+                          type: 'text',
+                          value: @salary.employer_account }
 
 
           .row
@@ -235,30 +235,30 @@
 
               .btn-group
                 - unless @salary.isNew?()
-                  %button{:name => "salary-destroy",
-                          :class => 'btn btn-danger' }
+                  %button{name: "salary-destroy",
+                          class: 'btn btn-danger' }
                     .icon-remove
                     = I18n.t("common.destroy")
 
                   .btn-group
                     %button{:data-toggle => 'dropdown',
-                            :type => 'button',
-                            :class => 'btn btn-default dropdown-toggle' }
+                            type: 'button',
+                            class: 'btn btn-default dropdown-toggle' }
                       .icon-paper-clip
                       = I18n.t("common.documents")
                       .caret
 
                     %ul.dropdown-menu
                       %li
-                        %a{:href => '#', :name => 'salary-preview-pdf'}
+                        %a{href: '#', name: 'salary-preview-pdf'}
                           .icon-eye-open
                           = I18n.t('common.preview')
                       %li
-                        %a{:href => '#', :name => 'salary-download-pdf'}
+                        %a{href: '#', name: 'salary-download-pdf'}
                           .icon-download-alt
                           = I18n.t('common.pdf')
                       %li
-                        %a{:href => '#', :name => 'salary-download-odt'}
+                        %a{href: '#', name: 'salary-download-odt'}
                           .icon-download-alt
                           = I18n.t('common.odt')
 

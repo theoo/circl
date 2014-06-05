@@ -8,7 +8,7 @@
 
   %tbody
     - for task in App.PersonTask.all()
-      %tr{:data-id => task.id, :class => 'item'}
+      %tr{:data-id => task.id, class: 'item'}
         %td= task.id
         %td= task.start_date
         %td

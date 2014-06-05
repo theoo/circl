@@ -10,12 +10,12 @@
           - id = _.uniqueId('role')
           - checked = App.PersonRole.all().map( (r) -> return r.id ).indexOf(role.id) != -1
           .checkbox
-            %input{ :type => 'checkbox',
-                    :id => id,
-                    :name => 'roles_ids[]',
-                    :checked => checked,
-                    :value => role.id }
-            %label{:for => id}= role.name
+            %input{ type: 'checkbox',
+                    id: id,
+                    name: 'roles_ids[]',
+                    checked: checked,
+                    value: role.id }
+            %label{for: id}= role.name
 
   .panel-footer
     .row

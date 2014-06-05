@@ -1,14 +1,14 @@
 %ul#person_salaries_nav.nav.nav-tabs
   %li
-    %a{:href => '#person_salaries_index', :data-toggle => 'tab'}
+    %a{href: '#person_salaries_index', :data-toggle => 'tab'}
       = I18n.t('salary.views.salaries')
   %li
-    %a{:href => '#person_salary_references_index', :data-toggle => 'tab'}
+    %a{href: '#person_salary_references_index', :data-toggle => 'tab'}
       = I18n.t('salary.views.references')
 
 .tab-content
   #person_salaries_index.tab-pane.active
-    %table{:name => "person_salaries", :class => "datatable"}
+    %table{name: "person_salaries", class: "datatable"}
       %thead
         %tr
           %th= I18n.t('common.id')
@@ -20,7 +20,7 @@
 
       %tbody
         - for salary in App.PersonSalary.instances()
-          %tr{:data-id => salary.id, :class => 'item'}
+          %tr{:data-id => salary.id, class: 'item'}
             %td= salary.id
             %td= salary.reference_title
             %td= salary.title
@@ -29,7 +29,7 @@
             %td= I18n.t("common." + salary.paid)
 
   #person_salary_references_index.tab-pane
-    %table{:name => "person_salary_references", :class => "datatable"}
+    %table{name: "person_salary_references", class: "datatable"}
       %thead
         %tr
           %th= I18n.t('common.id')
@@ -40,7 +40,7 @@
 
       %tbody
         - for salary in App.PersonSalary.references()
-          %tr{:data-id => salary.id, :class => 'item'}
+          %tr{:data-id => salary.id, class: 'item'}
             %td= salary.id
             %td= salary.title
             %td.number= salary.activity_rate + " %"

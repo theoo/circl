@@ -7,7 +7,7 @@
 
   %tbody
     - for currency in App.Currency.all()
-      %tr{:data-id => currency.id, :class => 'item'}
+      %tr{:data-id => currency.id, class: 'item'}
         %td= currency.iso_code
         %td= currency.name
         %td= currency.symbol

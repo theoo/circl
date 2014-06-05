@@ -9,107 +9,107 @@
     .row
       .col-lg-3.col-md-6
         .form-group.autocompleted
-          %label{:for => 'admin_receipts_owner_name'}
+          %label{for: 'admin_receipts_owner_name'}
             = I18n.t('receipt.views.owner')
-          %input{ :type => 'search',
-                  :id => 'admin_receipts_owner_name',
-                  :name => 'owner',
-                  :autofocus => 'autofocus',
-                  :value => @receipt.owner_name,
-                  :action => '/people/search',
-                  :class => 'form-control required'}
-          %input{ :type => 'hidden',
-                  :name => 'owner_id',
-                  :value => @receipt.owner_id}
+          %input{ type: 'search',
+                  id: 'admin_receipts_owner_name',
+                  name: 'owner',
+                  autofocus: 'autofocus',
+                  value: @receipt.owner_name,
+                  action: '/people/search',
+                  class: 'form-control required'}
+          %input{ type: 'hidden',
+                  name: 'owner_id',
+                  value: @receipt.owner_id}
 
       .col-lg-2.col-md-3
         .form-group
-          %label{:for => 'admin_receipts_value_date'}
+          %label{for: 'admin_receipts_value_date'}
             = I18n.t('receipt.views.value_date')
-          %input{:type => 'text',
-                 :name => 'value_date',
-                 :id => 'admin_receipts_value_date',
-                 :class => 'form-control datepicker required',
-                 :value => @receipt.value_date }
+          %input{type: 'text',
+                 name: 'value_date',
+                 id: 'admin_receipts_value_date',
+                 class: 'form-control datepicker required',
+                 value: @receipt.value_date }
 
       .col-lg-3.col-md-3
         .form-group
-          %label{:for => 'admin_receipts_value'}
+          %label{for: 'admin_receipts_value'}
             = I18n.t('common.value')
           .input-group
-            %input{ :type => 'number',
-                    :id => 'admin_receipts_value',
-                    :class => 'form-control required',
-                    :step => 0.01,
-                    :min => 0,
-                    :max => 1000000,
-                    :name => "value",
-                    :value => @receipt.value }
+            %input{ type: 'number',
+                    id: 'admin_receipts_value',
+                    class: 'form-control required',
+                    step: 0.01,
+                    min: 0,
+                    max: 1000000,
+                    name: "value",
+                    value: @receipt.value }
             .input-group-addon
               != @partial('select_currency')(currency: @receipt.value_currency, name: 'value_currency', value: @receipt.value)
 
       .col-lg-2.col-md-3
         .form-group
-          %label{:for => 'admin_receipts_means_of_payment'}
+          %label{for: 'admin_receipts_means_of_payment'}
             = I18n.t('receipt.views.means_of_payment')
-          %input{:type => 'text',
-                 :name => 'means_of_payment',
-                 :id => 'admin_receipts_means_of_payment',
-                 :class => 'form-control',
-                 :value => @receipt.means_of_payment }
+          %input{type: 'text',
+                 name: 'means_of_payment',
+                 id: 'admin_receipts_means_of_payment',
+                 class: 'form-control',
+                 value: @receipt.means_of_payment }
 
       .col-lg-2.col-md-3
         .form-group
-          %label{:for => 'admin_invoices_template_id'}
+          %label{for: 'admin_invoices_template_id'}
             = I18n.t('receipt.views.invoice_template')
-          %select{:name => 'invoice_template_id',
-                  :id => 'admin_invoices_template_id',
-                  :class => 'form-control required'}
+          %select{name: 'invoice_template_id',
+                  id: 'admin_invoices_template_id',
+                  class: 'form-control required'}
             - for invoice_template in App.InvoiceTemplate.all()
-              %option{:value => invoice_template.id}= invoice_template.title
+              %option{value: invoice_template.id}= invoice_template.title
 
     .row
       .col-lg-3.col-md-6
         .form-group.autocompleted
-          %label{:for => 'admin_receipts_subscription_title'}
+          %label{for: 'admin_receipts_subscription_title'}
             = I18n.t('receipt.views.subscription_title')
-          %input{:type => 'search',
-                 :name => 'subscription',
-                 :id => 'admin_receipts_subscription_title',
-                 :value => '',
-                 :action => '/admin/subscriptions/search',
-                 :class => 'form-control required'}
-          %input{:type => 'hidden',
-                 :name => 'subscription_id',
-                 :value => @receipt.subscription_id}
+          %input{type: 'search',
+                 name: 'subscription',
+                 id: 'admin_receipts_subscription_title',
+                 value: '',
+                 action: '/admin/subscriptions/search',
+                 class: 'form-control required'}
+          %input{type: 'hidden',
+                 name: 'subscription_id',
+                 value: @receipt.subscription_id}
       .col-lg-3.col-md-6
         .form-group.autocompleted
-          %label{:for => 'admin_receipts_affair_title'}
+          %label{for: 'admin_receipts_affair_title'}
             = I18n.t('receipt.views.affair_title')
-          %input{:type => 'search',
-                 :name => 'affair',
-                 :id => 'admin_receipts_affair_title',
-                 :value => @receipt.affair_title,
-                 :disabled => 'disabled',
-                 :class => 'form-control',
-                 :action => '/people/x/affairs/search'}
-          %input{:type => 'hidden',
-                 :name => 'affair_id',
-                 :value => @receipt.affair_id}
+          %input{type: 'search',
+                 name: 'affair',
+                 id: 'admin_receipts_affair_title',
+                 value: @receipt.affair_title,
+                 disabled: 'disabled',
+                 class: 'form-control',
+                 action: '/people/x/affairs/search'}
+          %input{type: 'hidden',
+                 name: 'affair_id',
+                 value: @receipt.affair_id}
       .col-lg-3.col-md-6
         .form-group.autocompleted
-          %label{:for => 'admin_receipts_invoice_title'}
+          %label{for: 'admin_receipts_invoice_title'}
             = I18n.t('receipt.views.invoice_title')
-          %input{:type => 'search',
-                 :name => 'invoice',
-                 :id => 'admin_receipts_invoice_title',
-                 :value => @receipt.invoice_title,
-                 :disabled => 'disabled',
-                 :class => 'form-control',
-                 :action => '/people/x/invoices/search'}
-          %input{:type => 'hidden',
-                 :name => 'invoice_id',
-                 :value => @receipt.invoice_id}
+          %input{type: 'search',
+                 name: 'invoice',
+                 id: 'admin_receipts_invoice_title',
+                 value: @receipt.invoice_title,
+                 disabled: 'disabled',
+                 class: 'form-control',
+                 action: '/people/x/invoices/search'}
+          %input{type: 'hidden',
+                 name: 'invoice_id',
+                 value: @receipt.invoice_id}
       .col-lg-3
 
     .row

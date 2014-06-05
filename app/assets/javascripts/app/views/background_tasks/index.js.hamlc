@@ -15,7 +15,7 @@
           = background_task.title
         %td= I18n.t("background_task.views.statuses." + background_task.status)
         %td.ignore-click
-          %button{:type => 'button',
-                  :class => 'btn btn-danger btn-xs',
-                  :name => 'background-task-destroy'}
+          %button{type: 'button',
+                  class: 'btn btn-danger btn-xs',
+                  name: 'background-task-destroy'}
             .icon-remove

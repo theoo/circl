@@ -7,23 +7,23 @@
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'settings_job_name'}
+          %label{for: 'settings_job_name'}
             = I18n.t('common.name')
-          %input{ :type => 'text',
-                  :name => 'name',
-                  :id => 'settings_job_name',
-                  :value => @job.name,
-                  :class => 'form-control required' }
+          %input{ type: 'text',
+                  name: 'name',
+                  id: 'settings_job_name',
+                  value: @job.name,
+                  class: 'form-control required' }
       .col-lg-6
 
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'settings_job_description'}
+          %label{for: 'settings_job_description'}
             = I18n.t('common.description')
-          %textarea{:name => 'description',
-                    :rows => 5,
-                    :class => 'form-control' }
+          %textarea{name: 'description',
+                    rows: 5,
+                    class: 'form-control' }
             = @job.description
 
     .row
@@ -33,14 +33,14 @@
 
         - unless @job.isNew()
           .btn-group
-            %button{:type => 'button',
-                    :class => 'btn btn-danger',
-                    :name => 'settings-job-destroy'}
+            %button{type: 'button',
+                    class: 'btn btn-danger',
+                    name: 'settings-job-destroy'}
               .icon-remove
               = I18n.t("common.destroy")
 
-            %button{:type => 'button',
-                    :class => 'btn btn-default',
-                    :name => 'settings-job-view-members'}
+            %button{type: 'button',
+                    class: 'btn btn-default',
+                    name: 'settings-job-view-members'}
               .icon-group
               = I18n.t('job.views.actions.view_members')

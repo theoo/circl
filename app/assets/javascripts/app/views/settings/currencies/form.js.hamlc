@@ -7,88 +7,88 @@
 
     .row
       .col-sm-12.form-group
-        %label{:for => 'settings_currency_name'}
+        %label{for: 'settings_currency_name'}
           = I18n.t('common.name')
-        %input{ :type => 'text',
-                :name => 'name',
-                :id => 'settings_currency_name',
-                :value => @currency.name,
-                :class => 'form-control' }
+        %input{ type: 'text',
+                name: 'name',
+                id: 'settings_currency_name',
+                value: @currency.name,
+                class: 'form-control' }
 
     .row
       .col-sm-4.form-group
-        %label{:for => 'settings_currency_iso_code'}
+        %label{for: 'settings_currency_iso_code'}
           = I18n.t('currency.views.iso_code')
-        %input{ :type => 'text',
-                :name => 'iso_code',
-                :id => 'settings_currency_iso_code',
-                :value => @currency.iso_code,
-                :class => 'form-control' }
+        %input{ type: 'text',
+                name: 'iso_code',
+                id: 'settings_currency_iso_code',
+                value: @currency.iso_code,
+                class: 'form-control' }
 
       .col-sm-4.form-group
-        %label{:for => 'settings_currency_iso_numeric'}
+        %label{for: 'settings_currency_iso_numeric'}
           = I18n.t('currency.views.iso_numeric')
-        %input{ :type => 'text',
-                :name => 'iso_numeric',
-                :id => 'settings_currency_iso_numeric',
-                :value => @currency.iso_numeric,
-                :class => 'form-control' }
+        %input{ type: 'text',
+                name: 'iso_numeric',
+                id: 'settings_currency_iso_numeric',
+                value: @currency.iso_numeric,
+                class: 'form-control' }
 
       .col-sm-4.form-group
-        %label{:for => 'settings_currency_symbol'}
+        %label{for: 'settings_currency_symbol'}
           = I18n.t('currency.views.symbol')
-        %input{ :type => 'text',
-                :name => 'symbol',
-                :id => 'settings_currency_symbol',
-                :value => @currency.symbol,
-                :class => 'form-control' }
+        %input{ type: 'text',
+                name: 'symbol',
+                id: 'settings_currency_symbol',
+                value: @currency.symbol,
+                class: 'form-control' }
 
     .row
       .col-sm-4.form-group
-        %label{:for => 'settings_currency_subunit'}
+        %label{for: 'settings_currency_subunit'}
           = I18n.t('currency.views.subunit')
-        %input{ :type => 'text',
-                :name => 'subunit',
-                :id => 'settings_currency_subunit',
-                :value => @currency.subunit,
-                :class => 'form-control' }
+        %input{ type: 'text',
+                name: 'subunit',
+                id: 'settings_currency_subunit',
+                value: @currency.subunit,
+                class: 'form-control' }
 
       .col-sm-4.form-group
-        %label{:for => 'settings_currency_subunit_to_unit'}
+        %label{for: 'settings_currency_subunit_to_unit'}
           = I18n.t('currency.views.subunit_to_unit')
-        %input{ :type => 'text',
-                :name => 'subunit_to_unit',
-                :id => 'settings_currency_subunit_to_unit',
-                :value => @currency.subunit_to_unit,
-                :class => 'form-control' }
+        %input{ type: 'text',
+                name: 'subunit_to_unit',
+                id: 'settings_currency_subunit_to_unit',
+                value: @currency.subunit_to_unit,
+                class: 'form-control' }
 
       .col-sm-4.form-group
-        %label{:for => 'settings_currency_priority'}
+        %label{for: 'settings_currency_priority'}
           = I18n.t('currency.views.priority')
-        %input{ :type => 'text',
-                :name => 'priority',
-                :id => 'settings_currency_priority',
-                :value => @currency.priority,
-                :class => 'form-control' }
+        %input{ type: 'text',
+                name: 'priority',
+                id: 'settings_currency_priority',
+                value: @currency.priority,
+                class: 'form-control' }
 
     .row
       .col-sm-4.form-group
-        %label{:for => 'settings_currency_separator'}
+        %label{for: 'settings_currency_separator'}
           = I18n.t('currency.views.separator')
-        %input{ :type => 'text',
-                :name => 'separator',
-                :id => 'settings_currency_separator',
-                :value => @currency.separator,
-                :class => 'form-control' }
+        %input{ type: 'text',
+                name: 'separator',
+                id: 'settings_currency_separator',
+                value: @currency.separator,
+                class: 'form-control' }
 
       .col-sm-4.form-group
-        %label{:for => 'settings_currency_delimiter'}
+        %label{for: 'settings_currency_delimiter'}
           = I18n.t('currency.views.delimiter')
-        %input{ :type => 'text',
-                :name => 'delimiter',
-                :id => 'settings_currency_delimiter',
-                :value => @currency.delimiter,
-                :class => 'form-control' }
+        %input{ type: 'text',
+                name: 'delimiter',
+                id: 'settings_currency_delimiter',
+                value: @currency.delimiter,
+                class: 'form-control' }
 
       .col-sm-4
 
@@ -98,8 +98,8 @@
           != @partial('save_and_cancel_buttons')(@currency)
 
         - unless @currency.isNew()
-          %a{:type => 'button',
-              :class => 'btn btn-danger',
-              :name => 'settings-currency-destroy'}
+          %a{type: 'button',
+              class: 'btn btn-danger',
+              name: 'settings-currency-destroy'}
             .icon-remove
             = I18n.t("common.destroy")

@@ -7,7 +7,7 @@
 
   %tbody
     - for curreny_rate in App.CurrencyRate.all()
-      %tr{:data-id => curreny_rate.id, :class => 'item'}
+      %tr{:data-id => curreny_rate.id, class: 'item'}
         %td= curreny_rate.from_currency_iso_code
         %td= curreny_rate.to_currency_iso_code
         %td= curreny_rate.rate

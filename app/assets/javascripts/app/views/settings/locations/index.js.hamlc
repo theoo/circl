@@ -1,4 +1,4 @@
-%table.datatable{ :action => '/settings/locations' }
+%table.datatable{ action: '/settings/locations' }
   %thead
     %tr
       %th= I18n.t('common.name')

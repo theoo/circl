@@ -11,7 +11,7 @@
     - for program in App.ProductProgram.all()
       - classes = ['item']
       - classes.push 'success' if ! program.archive
-      %tr{:data-id => program.id, :class => classes.join(" ")}
+      %tr{:data-id => program.id, class: classes.join(" ")}
         %td= program.id
         %td= program.key
         %td= program.program_group

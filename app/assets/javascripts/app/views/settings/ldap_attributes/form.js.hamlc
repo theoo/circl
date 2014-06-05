@@ -7,22 +7,22 @@
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'settings_ldap_attribute_name'}
+          %label{for: 'settings_ldap_attribute_name'}
             = I18n.t('common.name')
-          %input{ :type => 'text',
-                  :name => 'name',
-                  :id => 'settings_ldap_attribute_name',
-                  :value => @ldap_attribute.name,
-                  :class => 'form-control required' }
+          %input{ type: 'text',
+                  name: 'name',
+                  id: 'settings_ldap_attribute_name',
+                  value: @ldap_attribute.name,
+                  class: 'form-control required' }
       .col-lg-6
         .form-group
-          %label{:for => 'settings_ldap_attribute_mapping'}
+          %label{for: 'settings_ldap_attribute_mapping'}
             = I18n.t('ldap_attribute.views.mapping')
-          %input{ :type => 'text',
-                  :name => 'mapping',
-                  :id => 'settings_ldap_attribute_mapping',
-                  :value => @ldap_attribute.mapping,
-                  :class => 'form-control required' }
+          %input{ type: 'text',
+                  name: 'mapping',
+                  id: 'settings_ldap_attribute_mapping',
+                  value: @ldap_attribute.mapping,
+                  class: 'form-control required' }
 
     .row
       .col-lg-12
@@ -30,8 +30,8 @@
           != @partial('save_and_cancel_buttons')(@ldap_attribute)
 
         - unless @ldap_attribute.isNew()
-          %button{:type => 'button',
-                  :class => 'btn btn-danger',
-                  :name => 'settings-ldap-attribute-destroy'}
+          %button{type: 'button',
+                  class: 'btn btn-danger',
+                  name: 'settings-ldap-attribute-destroy'}
             .icon-remove
             = I18n.t("common.destroy")

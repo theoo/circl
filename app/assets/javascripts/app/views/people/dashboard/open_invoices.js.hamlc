@@ -9,7 +9,7 @@
   %tbody
     - for invoice in @invoices
 
-      %tr{:data-id => invoice.id, :class => 'item'}
+      %tr{:data-id => invoice.id, class: 'item'}
         %td= invoice.affair_id
         %td= invoice.created_at
         %td= invoice.age

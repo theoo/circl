@@ -19,5 +19,5 @@
         %td.number= s.value.to_view(s.value_currency) if s.value
         %td= s.created_at
         %td
-          %button{:name => 'subscription-destroy', :class => 'btn btn-danger btl-xs'}
+          %button{name: 'subscription-destroy', class: 'btn btn-danger btl-xs'}
             .icon-remove

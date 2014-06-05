@@ -1,4 +1,4 @@
-%table.datatable{ :action => '/settings/products' }
+%table.datatable{ action: '/settings/products' }
   %thead
     %tr.item
       %th= I18n.t('common.id')

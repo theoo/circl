@@ -7,7 +7,7 @@
 
   %tbody
     - for attr in App.LdapAttribute.all()
-      %tr{:data-id => attr.id, :class => 'item' }
+      %tr{:data-id => attr.id, class: 'item' }
         %td= attr.id
         %td= attr.name
         %td= attr.mapping
@@ -17,9 +17,9 @@
     = I18n.t("ldap_attribute.notices.ldap_will_be_inaccessible_during_the_reindexing")
 
 .panel-footer
-  %a{ :href => '/settings/ldap_attributes/synchronize',
+  %a{ href: '/settings/ldap_attributes/synchronize',
       'data-method' => 'post',
-      :class => 'btn btn-default',
-      :rel => 'nofollow' }
+      class: 'btn btn-default',
+      rel: 'nofollow' }
     .icon-refresh
     = I18n.t('common.synchronize')

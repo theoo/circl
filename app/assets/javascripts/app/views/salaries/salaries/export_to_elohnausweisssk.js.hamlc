@@ -1,10 +1,10 @@
 .modal-header
-  %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+  %button{type: 'button', class: 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
     = I18n.t('common.export')
 
-%form{ :method =>'get', :action => '/salaries/salaries/export_certificates' }
+%form{ method:'get', action: '/salaries/salaries/export_certificates' }
   .modal-body
     .row
       .col-lg-12
@@ -13,25 +13,25 @@
     .row
       .col-lg-3
       .col-lg-6
-        %label{:for => 'export_certificates_year'}
+        %label{for: 'export_certificates_year'}
           = I18n.t('common.year')
-        %select{:name => 'year',
-                :id => 'export_certificates_year',
-                :class => 'form-control'}
+        %select{name: 'year',
+                id: 'export_certificates_year',
+                class: 'form-control'}
           - for y in [@from...@to]
-            %option{:value => y}= y
-          %option{:value => @to, :selected => true}= y
+            %option{value: y}= y
+          %option{value: @to, selected: true}= y
       .col-lg-3
 
   .modal-footer
-    %button{:type => 'button',
-            :class => 'btn btn-default',
+    %button{type: 'button',
+            class: 'btn btn-default',
             :data-dismiss => 'modal'}
       .icon-chevron-left
       = I18n.t("common.close")
 
-    %button{:type => 'submit',
-            :name => 'export',
-            :class => 'btn btn-primary'}
+    %button{type: 'submit',
+            name: 'export',
+            class: 'btn btn-primary'}
       .icon-cloud-download
       = I18n.t('common.download')

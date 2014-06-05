@@ -17,9 +17,9 @@
 
           .text-right
             %br
-            %button{:type => 'button',
-                    :name => 'directory-custom-action',
-                    :class => 'btn btn-primary'}
+            %button{type: 'button',
+                    name: 'directory-custom-action',
+                    class: 'btn btn-primary'}
               = I18n.t("common.next")
               .icon-chevron-right
       .col-lg-2
@@ -30,17 +30,17 @@
 
   .row
     .col-lg-8.col-md-8
-      %label{:for => 'search_string'}
+      %label{for: 'search_string'}
         %h1= I18n.t('directory.views.search_the_directory')
 
     .col-lg-4.col-md-4
       .form-group
-        %label{:for => 'directory_presets_selector'}
+        %label{for: 'directory_presets_selector'}
           %small
             = I18n.t('directory.views.fields.presets')
         .input-group
-          %select{:id => 'directory_presets_selector',
-                  :class => 'form-control input-sm'}
+          %select{id: 'directory_presets_selector',
+                  class: 'form-control input-sm'}
             %option
               %i= I18n.t("directory.views.new_preset")
 
@@ -49,9 +49,9 @@
               %option{:data-id => query_preset.id}
                 = query_preset.name
           .input-group-btn
-            %button{:type => 'button',
-                    :name => 'directory-preset-edit',
-                    :class => 'btn btn-default btn-sm' }
+            %button{type: 'button',
+                    name: 'directory-preset-edit',
+                    class: 'btn btn-default btn-sm' }
               .icon-pencil
 
   .row
@@ -59,15 +59,15 @@
       %form
         .form-group
           .input-group
-            %input{ :type => 'search',
-                    :name => 'search_string',
-                    :id => 'search_string',
-                    :class => 'form-control input-lg',
-                    :value => @query_preset.query?.search_string }
+            %input{ type: 'search',
+                    name: 'search_string',
+                    id: 'search_string',
+                    class: 'form-control input-lg',
+                    value: @query_preset.query?.search_string }
             .input-group-btn
-              %button{:type => 'submit',
-                      :name => 'directory-search',
-                      :class => 'btn btn-default btn-lg'}
+              %button{type: 'submit',
+                      name: 'directory-search',
+                      class: 'btn btn-default btn-lg'}
                 .icon-search
                 -# @title
 

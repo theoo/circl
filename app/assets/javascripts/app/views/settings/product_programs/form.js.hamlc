@@ -7,56 +7,56 @@
     .row
       .col-sm-6
         .form-group
-          %label{:for => 'settings_product_program_key'}
+          %label{for: 'settings_product_program_key'}
             = I18n.t('common.key')
-          %input{:type => 'text',
-                 :name => 'key',
-                 :id => 'settings_product_program_key',
-                 :class => 'form-control required',
-                 :value => @product_program.key}
+          %input{type: 'text',
+                 name: 'key',
+                 id: 'settings_product_program_key',
+                 class: 'form-control required',
+                 value: @product_program.key}
 
       .col-sm-6
         .form-group.autocompleted
-          %label{:for => 'settings_product_program_program_group', :class => 'control-label'}
+          %label{for: 'settings_product_program_program_group', class: 'control-label'}
             = I18n.t('product_program.views.program_group')
-          %input{ :type => 'search',
-                  :name => 'program_group',
-                  :id => 'settings_product_program_program_group',
-                  :class => 'form-control required',
-                  :value => @product_program.program_group,
-                  :action => '/settings/product_programs/program_group_search' }
+          %input{ type: 'search',
+                  name: 'program_group',
+                  id: 'settings_product_program_program_group',
+                  class: 'form-control required',
+                  value: @product_program.program_group,
+                  action: '/settings/product_programs/program_group_search' }
 
     .row
       .col-md-12
         .form-group
-          %label{:for => 'settings_product_program_title'}
+          %label{for: 'settings_product_program_title'}
             = I18n.t('common.title')
-          %input{:type => 'text',
-                 :name => 'title',
-                 :id => 'settings_product_program_title',
-                 :class => 'form-control',
-                 :value => @product_program.title}
+          %input{type: 'text',
+                 name: 'title',
+                 id: 'settings_product_program_title',
+                 class: 'form-control',
+                 value: @product_program.title}
 
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'settings_product_program_description'}
+          %label{for: 'settings_product_program_description'}
             = I18n.t('common.description')
-          %textarea{:name => 'description',
-                    :rows => 4,
-                    :id => 'settings_product_program_description',
-                    :class => 'form-control'}
+          %textarea{name: 'description',
+                    rows: 4,
+                    id: 'settings_product_program_description',
+                    class: 'form-control'}
             = @product_program.description
 
     .row
       .col-lg-12
         .checkbox
           %label.control-label
-            %input{ :type => 'checkbox',
-                    :id => 'settings_product_program_archive',
-                    :name => 'archive',
-                    :checked => @product_program.archive,
-                    :value => 1 }
+            %input{ type: 'checkbox',
+                    id: 'settings_product_program_archive',
+                    name: 'archive',
+                    checked: @product_program.archive,
+                    value: 1 }
             = I18n.t('common.archive')
 
     .row
@@ -65,8 +65,8 @@
           != @partial('save_and_cancel_buttons')(@product_program)
 
         - unless @product_program.isNew()
-          %button{:type => 'button',
-                  :class => 'btn btn-danger',
-                  :name => 'settings-product-program-destroy'}
+          %button{type: 'button',
+                  class: 'btn btn-danger',
+                  name: 'settings-product-program-destroy'}
             .icon-remove
             = I18n.t("common.destroy")

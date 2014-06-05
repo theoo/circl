@@ -7,77 +7,77 @@
     .row
       .col-lg-6
         .form-group.autocompleted
-          %label{:for => 'settings_location_parent_name'}
+          %label{for: 'settings_location_parent_name'}
             = I18n.t('common.parent')
-          %input{ :type => 'search',
-                  :name => 'parent',
-                  :id => 'setting_location_parent_name',
-                  :value => @location.parent_name,
-                  :action => '/settings/locations/search',
-                  :class => 'form-control required' }
-          %input{ :type => 'hidden',
-                  :name => 'parent_id',
-                  :id => 'setting_location_parent_id',
-                  :value => @location.parent_id }
+          %input{ type: 'search',
+                  name: 'parent',
+                  id: 'setting_location_parent_name',
+                  value: @location.parent_name,
+                  action: '/settings/locations/search',
+                  class: 'form-control required' }
+          %input{ type: 'hidden',
+                  name: 'parent_id',
+                  id: 'setting_location_parent_id',
+                  value: @location.parent_id }
       .col-lg-6
         .form-group
-          %label{:for => 'settings_location_name'}
+          %label{for: 'settings_location_name'}
             = I18n.t('common.name')
-          %input{ :type => 'text',
-                  :name => 'name',
-                  :id => 'settings_location_name',
-                  :value => @location.name,
-                  :class => 'form-control required' }
+          %input{ type: 'text',
+                  name: 'name',
+                  id: 'settings_location_name',
+                  value: @location.name,
+                  class: 'form-control required' }
 
     .row
       .col-sm-6
         .form-group
-          %label{:for => 'settings_location_post_code_or_zip'}
+          %label{for: 'settings_location_post_code_or_zip'}
             = I18n.t('location.views.post_code_or_zip')
-          %input{ :type => 'text',
-                  :name => 'postal_code_prefix',
-                  :id => 'settings_location_postal_code_prefix',
-                  :value => @location.postal_code_prefix,
-                  :class => 'form-control' }
+          %input{ type: 'text',
+                  name: 'postal_code_prefix',
+                  id: 'settings_location_postal_code_prefix',
+                  value: @location.postal_code_prefix,
+                  class: 'form-control' }
       .col-sm-6
         .form-group
-          %label{:for => 'settings_location_phone_prefix'}
+          %label{for: 'settings_location_phone_prefix'}
             = I18n.t('location.views.phone_prefix')
-          %input{ :type => 'text',
-                  :name => 'phone_prefix',
-                  :id => 'settings_location_phone_prefix',
-                  :value => @location.phone_prefix,
-                  :class => 'form-control' }
+          %input{ type: 'text',
+                  name: 'phone_prefix',
+                  id: 'settings_location_phone_prefix',
+                  value: @location.phone_prefix,
+                  class: 'form-control' }
 
     .row
       .col-sm-4
         .form-group
-          %label{:for => 'settings_location_iso_code_a2'}
+          %label{for: 'settings_location_iso_code_a2'}
             = I18n.t('location.views.iso_alpha2')
-          %input{ :type => 'text',
-                  :name => 'iso_code_a2',
-                  :id => 'settings_location_iso_code_a2',
-                  :value => @location.iso_code_a2,
-                  :class => 'form-control' }
+          %input{ type: 'text',
+                  name: 'iso_code_a2',
+                  id: 'settings_location_iso_code_a2',
+                  value: @location.iso_code_a2,
+                  class: 'form-control' }
       .col-sm-4
         .form-group
-          %label{:for => 'settings_location_iso_code_a3'}
+          %label{for: 'settings_location_iso_code_a3'}
             = I18n.t('location.views.iso_alpha3')
-          %input{ :type => 'text',
-                  :name => 'iso_code_a3',
-                  :id => 'settings_location_iso_code_a3',
-                  :value => @location.iso_code_a3,
-                  :class => 'form-control' }
+          %input{ type: 'text',
+                  name: 'iso_code_a3',
+                  id: 'settings_location_iso_code_a3',
+                  value: @location.iso_code_a3,
+                  class: 'form-control' }
 
       .col-sm-4
         .form-group
-          %label{:for => 'settings_location_iso_code_num'}
+          %label{for: 'settings_location_iso_code_num'}
             = I18n.t('location.views.iso_numerical')
-          %input{ :type => 'text',
-                  :name => 'iso_code_num',
-                  :id => 'settings_location_iso_code_num',
-                  :value => @location.iso_code_num,
-                  :class => 'form-control' }
+          %input{ type: 'text',
+                  name: 'iso_code_num',
+                  id: 'settings_location_iso_code_num',
+                  value: @location.iso_code_num,
+                  class: 'form-control' }
 
     .row
       .col-lg-12
@@ -86,14 +86,14 @@
 
         - unless @location.isNew()
           .btn-group
-            %button{:type => 'button',
-                    :class => 'btn btn-danger',
-                    :name => 'settings-location-destroy'}
+            %button{type: 'button',
+                    class: 'btn btn-danger',
+                    name: 'settings-location-destroy'}
               .icon-remove
               = I18n.t("common.destroy")
 
-            %a{ :type => 'button',
-                :class => 'btn btn-default',
-                :name => 'settings-location-view-members'}
+            %a{ type: 'button',
+                class: 'btn btn-default',
+                name: 'settings-location-view-members'}
               .icon-group
               = I18n.t('location.views.actions.view_members')

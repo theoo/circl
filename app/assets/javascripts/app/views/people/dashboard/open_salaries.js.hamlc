@@ -8,7 +8,7 @@
   %tbody
     - for salary in @salaries
 
-      %tr{:data-id => salary.id, :class => 'item'}
+      %tr{:data-id => salary.id, class: 'item'}
         %td= salary.id
         %td
           %b= salary.person_name

@@ -7,40 +7,40 @@
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'settings_template_title'}
+          %label{for: 'settings_template_title'}
             = I18n.t('common.title')
-          %input{ :type => 'text',
-                  :name => 'title',
-                  :id => 'settings_template_title',
-                  :class => 'form-control',
-                  :value => @template.title }
+          %input{ type: 'text',
+                  name: 'title',
+                  id: 'settings_template_title',
+                  class: 'form-control',
+                  value: @template.title }
 
     .row
       .col-sm-6
         .form-group
-          %label{:for => 'settings_template_language'}
+          %label{for: 'settings_template_language'}
             = I18n.t('template.views.language')
-          %select{:name => 'language_id',
-                  :id => 'settings_template_language',
-                  :class => 'required form-control'}
+          %select{name: 'language_id',
+                  id: 'settings_template_language',
+                  class: 'required form-control'}
             - for l in App.Language.all()
               - if @template.language_id == l.id
-                %option{:value => l.id, :selected => true}= l.name
+                %option{value: l.id, selected: true}= l.name
               - else
-                %option{:value => l.id}= l.name
+                %option{value: l.id}= l.name
 
       .col-sm-6
         .form-group
-          %label{:for => 'settings_template_class_name'}
+          %label{for: 'settings_template_class_name'}
             = I18n.t('template.views.class_name')
-          %select{:name => 'class_name',
-                  :id => 'settings_template_class_name',
-                  :class => 'required form-control'}
+          %select{name: 'class_name',
+                  id: 'settings_template_class_name',
+                  class: 'required form-control'}
             - for mod,trad of @class_names
               - if @template.class_name == mod
-                %option{:value => mod, :selected => true}= trad
+                %option{value: mod, selected: true}= trad
               - else
-                %option{:value => mod}= trad
+                %option{value: mod}= trad
 
     .row
       .col-md-12
@@ -53,23 +53,23 @@
 
         - unless @template.isNew()
           .btn-group
-            %button{:type => 'button',
-                    :name => 'settings-template-destroy',
-                    :class => 'btn btn-danger'}
+            %button{type: 'button',
+                    name: 'settings-template-destroy',
+                    class: 'btn btn-danger'}
               .icon-remove
               = I18n.t("common.destroy")
 
             - classes = ['btn', 'btn-default']
-            %a{ :class => classes.join(" "),
-                :id => 'settings_template_download',
-                :href => @template.odt_url,
-                :title => I18n.t("template.views.download_current_template")}
+            %a{ class: classes.join(" "),
+                id: 'settings_template_download',
+                href: @template.odt_url,
+                title: I18n.t("template.views.download_current_template")}
               .icon-cloud-download
               = I18n.t("common.download")
 
-            %a{ :class => classes.join(" "),
-                :id => 'settings_template_upload',
-                :title => I18n.t("template.views.upload_new_template")}
+            %a{ class: classes.join(" "),
+                id: 'settings_template_upload',
+                title: I18n.t("template.views.upload_new_template")}
               .icon-cloud-upload
               = I18n.t("common.upload")
 

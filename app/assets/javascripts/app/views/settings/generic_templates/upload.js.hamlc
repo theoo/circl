@@ -1,5 +1,5 @@
 .modal-header
-  %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+  %button{type: 'button', class: 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
     = I18n.t('template.views.upload_new_template') + ": " + @template.title
@@ -19,39 +19,39 @@
 
         %ol
           %li
-            %a{:href => '/assets/salary.odt'}
+            %a{href: '/assets/salary.odt'}
               = I18n.t("template.views.salary_template_file")
           %li
-            %a{:href => '/assets/projects.odt'}
+            %a{href: '/assets/projects.odt'}
               = I18n.t("template.views.projects_template_file")
           %li
-            %a{:href => '/assets/statement.odt'}
+            %a{href: '/assets/statement.odt'}
               = I18n.t("template.views.statement_template_file")
           %li
-            %a{:href => '/assets/donation.odt'}
+            %a{href: '/assets/donation.odt'}
               = I18n.t("template.views.donation_template_file")
 
-        %input{ :type => 'hidden', :name => 'template_id', :value => @template.id }
+        %input{ type: 'hidden', name: 'template_id', value: @template.id }
         %br
         %br
 
     .row
       .col-lg-12
         .form-group
-          %label{:for => 'template_upload_file'}
+          %label{for: 'template_upload_file'}
             = I18n.t('common.select_file')
-          %input{ :type => 'file',
-                  :name => 'odt',
-                  :id => 'template_upload_file'}
+          %input{ type: 'file',
+                  name: 'odt',
+                  id: 'template_upload_file'}
 
   .modal-footer
-    %button{:type => 'button',
-            :class => 'btn btn-default',
+    %button{type: 'button',
+            class: 'btn btn-default',
             :data-dismiss => 'modal'}
       .icon-chevron-left
       = I18n.t("common.close")
 
-    %button{:type => 'submit',
-            :class => 'btn btn-primary' }
+    %button{type: 'submit',
+            class: 'btn btn-primary' }
       .icon-cloud-upload
       = I18n.t('common.upload')

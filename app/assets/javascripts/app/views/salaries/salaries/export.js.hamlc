@@ -1,10 +1,10 @@
 .modal-header
-  %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+  %button{type: 'button', class: 'close', :data-dismiss => 'modal'}
     &times;
   %h4.modal-title
     = I18n.t('common.export')
 
-%form{ :method =>'get', :action => '/salaries/salaries/export' }
+%form{ method:'get', action: '/salaries/salaries/export' }
   .modal-body
     .row
       .col-lg-12
@@ -14,19 +14,19 @@
       .col-lg-4
         .checkbox
           %label
-            %input{ :name => 'paid',
-                    :type => 'checkbox',
-                    :checked => true,
-                    :value => 1 }
+            %input{ name: 'paid',
+                    type: 'checkbox',
+                    checked: true,
+                    value: 1 }
             = I18n.t('common.paid')
 
       .col-lg-4
         .checkbox
           %label
-            %input{ :name => 'unpaid',
-                    :type => 'checkbox',
-                    :checked => true,
-                    :value => 1 }
+            %input{ name: 'unpaid',
+                    type: 'checkbox',
+                    checked: true,
+                    value: 1 }
             = I18n.t('common.unpaid')
 
       .col-lg-4
@@ -39,33 +39,33 @@
     .row
       .col-lg-6
         .form-group
-          %label{:for => 'export_from'}
+          %label{for: 'export_from'}
             = I18n.t('common.from')
-          %input{:type => 'text',
-                 :name => 'from',
-                 :id => 'export_from',
-                 :class => 'datepicker required form-control',
-                 :value => @export.from }
+          %input{type: 'text',
+                 name: 'from',
+                 id: 'export_from',
+                 class: 'datepicker required form-control',
+                 value: @export.from }
 
       .col-lg-6
         .form-group
-          %label{:for => 'export_to'}
+          %label{for: 'export_to'}
             = I18n.t('common.to')
-          %input{:type => 'text',
-                 :name => 'to',
-                 :id => 'export_to',
-                 :class => 'datepicker required form-control',
-                 :value => @export.to }
+          %input{type: 'text',
+                 name: 'to',
+                 id: 'export_to',
+                 class: 'datepicker required form-control',
+                 value: @export.to }
 
   .modal-footer
-    %button{:type => 'button',
-            :class => 'btn btn-default',
+    %button{type: 'button',
+            class: 'btn btn-default',
             :data-dismiss => 'modal'}
       .icon-chevron-left
       = I18n.t("common.close")
 
-    %button{:type => 'submit',
-            :name => 'export',
-            :class => 'btn btn-primary'}
+    %button{type: 'submit',
+            name: 'export',
+            class: 'btn btn-primary'}
       .icon-cloud-download
       = I18n.t('common.download')

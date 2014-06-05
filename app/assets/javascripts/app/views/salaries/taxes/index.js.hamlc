@@ -10,7 +10,7 @@
 
   %tbody
     - for tax in App.SalaryTax.all()
-      %tr{:data-id => tax.id, :class => 'item'}
+      %tr{:data-id => tax.id, class: 'item'}
         %td= tax.title
         %td= tax.model
         %td.number= tax.employee_account

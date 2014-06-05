@@ -5,6 +5,6 @@
       %th= I18n.t('common.value')
   %tbody
     - for application_setting in App.ApplicationSetting.all()
-      %tr{:data-id => application_setting.id, :class => 'item' }
+      %tr{:data-id => application_setting.id, class: 'item' }
         %td= application_setting.key
         %td= application_setting.value

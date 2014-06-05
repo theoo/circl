@@ -4,7 +4,7 @@
     .col-lg-12
       .validation_errors_placeholder
 
-%table.datatable{ :action => '/salaries/salaries' }
+%table.datatable{ action: '/salaries/salaries' }
   %thead
     %tr
       %th= I18n.t('common.id')
@@ -28,27 +28,27 @@
 
 .panel-footer
   .btn-group
-    %button{:type => 'button',
+    %button{type: 'button',
             :data-toggle => 'dropdown',
-            :class => 'btn btn-default dropdown-toggle' }
+            class: 'btn btn-default dropdown-toggle' }
       .icon-paper-clip
       = I18n.t("common.export")
       .caret
 
     %ul.dropdown-menu
       %li
-        %a{:href => '#', :name => 'salaries-export'}
+        %a{href: '#', name: 'salaries-export'}
           .icon-file-text
           = I18n.t('common.csv')
       %li
-        %a{:href => '#', :name => 'salaries-export-to-accounting'}
+        %a{href: '#', name: 'salaries-export-to-accounting'}
           .icon-file
           = I18n.t('salary.export.export_to_accounting')
       %li
-        %a{:href => '#', :name => 'salaries-export-to-ocas' }
+        %a{href: '#', name: 'salaries-export-to-ocas' }
           .icon-certificate
           = I18n.t('salary.export.export_to_ocas')
       %li
-        %a{:href => '#', :name => 'salaries-export-to-eLohnausweisSSK'}
+        %a{href: '#', name: 'salaries-export-to-eLohnausweisSSK'}
           .icon-certificate
           = I18n.t('salary.export.export_salary_certificates')

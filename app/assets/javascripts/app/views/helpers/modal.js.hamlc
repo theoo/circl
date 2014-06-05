@@ -1,12 +1,12 @@
 .modal-dialog
   .modal-content
     .modal-header
-      %button{:type => 'button', :class => 'close', :data-dismiss => 'modal'}
+      %button{type: 'button', class: 'close', :data-dismiss => 'modal'}
         &times;
       %h4.modal-title
         Title placeholder
     .modal-body
     .modal-footer
-      %button{:type => 'button', :class => 'btn btn-default', :data-dismiss => 'modal'}
+      %button{type: 'button', class: 'btn btn-default', :data-dismiss => 'modal'}
         .icon-chevron-left
         = I18n.t("common.close")

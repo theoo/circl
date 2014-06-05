@@ -1,4 +1,4 @@
-%select{:name => @.name, :class => 'currency_selector'}
+%select{name: @.name, class: 'currency_selector'}
   - if @.currency
     - currency = @.currency
   - else
@@ -6,11 +6,11 @@
 
   - for c in App.available_currencies
     - if c == currency
-      %option{:value => c, :selected => true}
+      %option{value: c, selected: true}
         = c
     - else
-      %option{:value => c}
+      %option{value: c}
         = c
 
-%input{:type => 'hidden', :name => 'reference_currency', :value => currency}
-%input{:type => 'hidden', :name => 'reference_value', :value => @.value}
+%input{type: 'hidden', name: 'reference_currency', value: currency}
+%input{type: 'hidden', name: 'reference_value', value: @.value}

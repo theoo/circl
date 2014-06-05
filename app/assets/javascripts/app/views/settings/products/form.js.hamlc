@@ -8,123 +8,123 @@
       .row
         .col-sm-3
           .form-group
-            %label{:for => 'settings_product_key'}
+            %label{for: 'settings_product_key'}
               = I18n.t('common.key')
-            %input{:type => 'text',
-                   :name => 'key',
-                   :id => 'settings_product_key',
-                   :class => 'form-control required',
-                   :value => @product.key}
+            %input{type: 'text',
+                   name: 'key',
+                   id: 'settings_product_key',
+                   class: 'form-control required',
+                   value: @product.key}
 
         .col-sm-9
           .form-group
-            %label{:for => 'settings_product_title'}
+            %label{for: 'settings_product_title'}
               = I18n.t('common.title')
-            %input{:type => 'text',
-                   :name => 'title',
-                   :id => 'settings_product_title',
-                   :class => 'form-control',
-                   :value => @product.title}
+            %input{type: 'text',
+                   name: 'title',
+                   id: 'settings_product_title',
+                   class: 'form-control',
+                   value: @product.title}
 
       .row
         .col-lg-12
           .form-group
-            %label{:for => 'settings_product_description'}
+            %label{for: 'settings_product_description'}
               = I18n.t('common.description')
-            %textarea{:name => 'description',
-                      :rows => 4,
-                      :id => 'settings_product_description',
-                      :class => 'form-control'}
+            %textarea{name: 'description',
+                      rows: 4,
+                      id: 'settings_product_description',
+                      class: 'form-control'}
               = @product.description
       .row
         .col-sm-6
           .autocompleted.form-group
-            %label{:for => 'settings_product_provider_id'}
+            %label{for: 'settings_product_provider_id'}
               = I18n.t('product.views.provider')
-            %input{:type => 'search',
-                   :name => 'provider',
-                   :id => 'settings_product_provider_id',
-                   :class => 'form-control',
-                   :value => @product.provider_name,
-                   :action => '/people/search'}
-            %input{:type => 'hidden',
-                   :name => 'provider_id',
-                   :value => @product.provider_id}
+            %input{type: 'search',
+                   name: 'provider',
+                   id: 'settings_product_provider_id',
+                   class: 'form-control',
+                   value: @product.provider_name,
+                   action: '/people/search'}
+            %input{type: 'hidden',
+                   name: 'provider_id',
+                   value: @product.provider_id}
 
         .col-sm-6
           .autocompleted.form-group
-            %label{:for => 'settings_product_after_sale_id'}
+            %label{for: 'settings_product_after_sale_id'}
               = I18n.t('product.views.after_sale')
-            %input{:type => 'search',
-                   :name => 'after_sale',
-                   :id => 'settings_product_after_sale_id',
-                   :class => 'form-control',
-                   :value => @product.after_sale_name,
-                   :action => '/people/search'}
-            %input{:type => 'hidden',
-                   :name => 'after_sale_id',
-                   :value => @product.after_sale_id}
+            %input{type: 'search',
+                   name: 'after_sale',
+                   id: 'settings_product_after_sale_id',
+                   class: 'form-control',
+                   value: @product.after_sale_name,
+                   action: '/people/search'}
+            %input{type: 'hidden',
+                   name: 'after_sale_id',
+                   value: @product.after_sale_id}
 
       .row
         .col-sm-6
           .autocompleted.form-group
-            %label{:for => 'settings_product_category'}
+            %label{for: 'settings_product_category'}
               = I18n.t('product.views.category')
-            %input{:type => 'search',
-                   :name => 'category',
-                   :id => 'settings_product_category',
-                   :class => 'form-control',
-                   :value => @product.category,
-                   :action => '/settings/products/category_search'}
+            %input{type: 'search',
+                   name: 'category',
+                   id: 'settings_product_category',
+                   class: 'form-control',
+                   value: @product.category,
+                   action: '/settings/products/category_search'}
 
         .col-sm-6
 
       .row
         .col-sm-6
           .form-group
-            %label{:for => 'settings_product_unit_symbol'}
+            %label{for: 'settings_product_unit_symbol'}
               = I18n.t('product.views.unit')
-            %select{:name => 'unit_symbol',
-                    :id => 'settings_product_unit_symbol',
-                    :class => 'required form-control'}
+            %select{name: 'unit_symbol',
+                    id: 'settings_product_unit_symbol',
+                    class: 'required form-control'}
               - for l in Object.keys(I18n.t("product.units"))
                 - if @product.unit_symbol == l
-                  %option{:value => l, :selected => true}= "[#{l}] " + I18n.t("product.units.#{l}.title")
+                  %option{value: l, selected: true}= "[#{l}] " + I18n.t("product.units.#{l}.title")
                 - else
-                  %option{:value => l}= "[#{l}] " + I18n.t("product.units.#{l}.title")
+                  %option{value: l}= "[#{l}] " + I18n.t("product.units.#{l}.title")
 
         .col-sm-6
           .form-group
-            %label{:for => 'settings_product_price_to_unit_rate'}
+            %label{for: 'settings_product_price_to_unit_rate'}
               = I18n.t('product.views.price_to_unit_rate')
-            %input{:type => 'number',
-                   :step => 0.01,
-                   :min => 0,
-                   :max => 99999999.99,
-                   :name => 'price_to_unit_rate',
-                   :id => 'settings_product_price_to_unit_rate',
-                   :class => 'form-control required',
-                   :value => @product.price_to_unit_rate}
+            %input{type: 'number',
+                   step: 0.01,
+                   min: 0,
+                   max: 99999999.99,
+                   name: 'price_to_unit_rate',
+                   id: 'settings_product_price_to_unit_rate',
+                   class: 'form-control required',
+                   value: @product.price_to_unit_rate}
 
       .row
         .col-md-6
           .checkbox
             %label.control-label
-              %input{ :type => 'checkbox',
-                      :id => 'settings_product_archive',
-                      :name => 'archive',
-                      :checked => @product.archive,
-                      :value => 1 }
+              %input{ type: 'checkbox',
+                      id: 'settings_product_archive',
+                      name: 'archive',
+                      checked: @product.archive,
+                      value: 1 }
               = I18n.t('common.archive')
 
         .col-md-6
           .checkbox
             %label.control-label
-              %input{ :type => 'checkbox',
-                      :id => 'settings_product_has_accessories',
-                      :name => 'has_accessories',
-                      :checked => @product.has_accessories,
-                      :value => 1 }
+              %input{ type: 'checkbox',
+                      id: 'settings_product_has_accessories',
+                      name: 'has_accessories',
+                      checked: @product.has_accessories,
+                      value: 1 }
               = I18n.t('product.views.has_accessories')
       .row
         .col-lg-12
@@ -140,12 +140,12 @@
 
         != @partial('product_variant_item')(context: @, object: {stub: true})
 
-        %tr{'data-name' => 'variant_add', :class => 'row'}
+        %tr{'data-name' => 'variant_add', class: 'row'}
           %td.col-lg-11
           %td.col-lg-1
-            %button{:type => 'button',
-                    :name => 'add_variant',
-                    :class => 'btn btn-default'}
+            %button{type: 'button',
+                    name: 'add_variant',
+                    class: 'btn btn-default'}
               .icon-plus
 
     .panel-body
@@ -155,9 +155,9 @@
             != @partial('save_and_cancel_buttons')(@product)
 
           - unless @product.isNew()
-            %button{:type => 'button',
-                    :class => 'btn btn-danger',
-                    :name => 'settings-product-destroy'}
+            %button{type: 'button',
+                    class: 'btn btn-danger',
+                    name: 'settings-product-destroy'}
               .icon-remove
               = I18n.t("common.destroy")
 - else

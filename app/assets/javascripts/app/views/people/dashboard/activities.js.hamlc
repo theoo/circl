@@ -14,7 +14,7 @@
           :data-content => activity.formatted_data,
           :data-placement => 'auto bottom',
           :data-trigger => 'click',
-          :class => 'item'}
+          class: 'item'}
         %td= activity.created_at
         %td= activity.action
         %td= activity.resource_type

@@ -1,4 +1,4 @@
-%form{:role => 'form'}
+%form{role: 'form'}
   .panel-body
 
     .row
@@ -16,183 +16,183 @@
 
         .row
           .col-lg-8.col-md-6.col-sm-8.form-group
-            %label{:for => 'organization_name', :class => 'control-label'}
+            %label{for: 'organization_name', class: 'control-label'}
               = I18n.t('person.views.organization_name')
-            %input{:type => 'text',
-                   :id => 'person_organization_name',
-                   :name => 'organization_name',
-                   :class => 'form-control',
-                   :value => @person.organization_name}
+            %input{type: 'text',
+                   id: 'person_organization_name',
+                   name: 'organization_name',
+                   class: 'form-control',
+                   value: @person.organization_name}
 
           .col-lg-4.col-md-6.col-sm-4
             %br
             .checkbox
               %label.control-label
-                %input{ :type => 'checkbox',
-                        :id => 'person_is_an_org',
-                        :name => 'is_an_organization',
-                        :checked => @person.is_an_organization,
-                        :value => 1 }
+                %input{ type: 'checkbox',
+                        id: 'person_is_an_org',
+                        name: 'is_an_organization',
+                        checked: @person.is_an_organization,
+                        value: 1 }
                 = I18n.t('person.views.is_an_organization')
 
         .row
           .col-sm-6.form-group.autocompleted
-            %label{:for => 'person_title', :class => 'control-label'}
+            %label{for: 'person_title', class: 'control-label'}
               = I18n.t('common.title')
-            %input{ :type => 'search',
-                    :id => 'person_title',
-                    :class => 'form-control',
-                    :name => 'title',
-                    :value => @person.title,
-                    :action => '/people/title_search' }
+            %input{ type: 'search',
+                    id: 'person_title',
+                    class: 'form-control',
+                    name: 'title',
+                    value: @person.title,
+                    action: '/people/title_search' }
 
           .col-sm-6
             %br
             .checkbox
               %label.control-label
-                %input{ :type => 'checkbox',
-                  :id => 'person_is_hidden',
-                  :name => 'hidden',
-                  :checked => @person.hidden,
-                  :value => 1 }
+                %input{ type: 'checkbox',
+                  id: 'person_is_hidden',
+                  name: 'hidden',
+                  checked: @person.hidden,
+                  value: 1 }
                 = I18n.t('person.views.hidden')
 
         .row
           .col-sm-6.form-group
-            %label{:for => 'person_first_name', :class => 'control-label'}
+            %label{for: 'person_first_name', class: 'control-label'}
               = I18n.t('person.views.first_name')
-            %input{ :type => 'text',
-                    :id => 'person_first_name',
-                    :name => 'first_name',
-                    :class => 'form-control',
-                    :value => @person.first_name }
+            %input{ type: 'text',
+                    id: 'person_first_name',
+                    name: 'first_name',
+                    class: 'form-control',
+                    value: @person.first_name }
 
           .col-sm-6.form-group
-            %label{:for => 'person_last_name', :class => 'control-label'}
+            %label{for: 'person_last_name', class: 'control-label'}
               = I18n.t('person.views.last_name')
-            %input{ :type => 'text',
-                    :id => 'person_last_name',
-                    :name => 'last_name',
-                    :class => 'form-control',
-                    :value => @person.last_name }
+            %input{ type: 'text',
+                    id: 'person_last_name',
+                    name: 'last_name',
+                    class: 'form-control',
+                    value: @person.last_name }
 
         .row
           .col-sm-6.form-group
-            %label{:for => 'person_email', :class => 'control-label'}
+            %label{for: 'person_email', class: 'control-label'}
               = I18n.t('person.views.email')
             .input-group
-              %input{ :type => 'email',
-                      :id => 'person_email',
-                      :name => 'email',
-                      :class => 'form-control',
-                      :value => @person.email}
+              %input{ type: 'email',
+                      id: 'person_email',
+                      name: 'email',
+                      class: 'form-control',
+                      value: @person.email}
               .input-group-btn
-                %a{:name => 'person_email_button', :class => 'btn btn-default'}
+                %a{name: 'person_email_button', class: 'btn btn-default'}
                   .icon-envelope
 
           .col-sm-6.form-group
-            %label{:for => 'person_second_email', :class => 'control-label'}
+            %label{for: 'person_second_email', class: 'control-label'}
               = I18n.t('person.views.second_email')
             .input-group
-              %input{ :type => 'email',
-                      :id => 'person_second_email',
-                      :name => 'second_email',
-                      :class => 'form-control',
-                      :value => @person.second_email}
+              %input{ type: 'email',
+                      id: 'person_second_email',
+                      name: 'second_email',
+                      class: 'form-control',
+                      value: @person.second_email}
               .input-group-btn
-                %a{:name => 'person_second_email_button', :class => 'btn btn-default'}
+                %a{name: 'person_second_email_button', class: 'btn btn-default'}
                   .icon-envelope
 
       .col-md-6
         .row
           .col-sm-6.form-group
-            %label{:for => 'person_address', :class => 'control-label'}
+            %label{for: 'person_address', class: 'control-label'}
               = I18n.t('person.views.address')
-            %textarea{:name => 'address',
-                      :id => 'person_address',
-                      :rows => 4,
-                      :class => 'form-control'}
+            %textarea{name: 'address',
+                      id: 'person_address',
+                      rows: 4,
+                      class: 'form-control'}
               = @person.address
 
           .col-sm-6
             .form-group.autocompleted
-              %label{:for => 'person_location', :class => 'control-label'}
+              %label{for: 'person_location', class: 'control-label'}
                 = I18n.t('person.views.location')
-              %input{ :type => 'search',
-                      :id => 'person_location',
-                      :name => 'location_name',
-                      :class => 'form-control',
-                      :value => @person.location_name,
-                      :action => '/settings/locations/search' }
-              %input{ :type => 'hidden',
-                      :name => 'location_id',
-                      :value => @person.location_id }
+              %input{ type: 'search',
+                      id: 'person_location',
+                      name: 'location_name',
+                      class: 'form-control',
+                      value: @person.location_name,
+                      action: '/settings/locations/search' }
+              %input{ type: 'hidden',
+                      name: 'location_id',
+                      value: @person.location_id }
 
             .form-group
-              %label{:for => 'person_geographic_coordinates', :class => 'control-label'}
+              %label{for: 'person_geographic_coordinates', class: 'control-label'}
                 = I18n.t('person.views.geographic_coordinates')
               .input-group
-                %input{ :type => 'text',
-                        :id => 'person_geographic_coordinates',
-                        :name => 'geographic_coordinates',
-                        :class => 'form-control',
-                        :disabled => true,
-                        :value => @person.geographic_coordinates }
+                %input{ type: 'text',
+                        id: 'person_geographic_coordinates',
+                        name: 'geographic_coordinates',
+                        class: 'form-control',
+                        disabled: true,
+                        value: @person.geographic_coordinates }
                 .input-group-btn
                   %a#person_map.btn.btn-default
                     .icon-map-marker
 
         .row
           .col-sm-6.form-group
-            %label{:for => 'person_phone', :class => 'control-label'}
+            %label{for: 'person_phone', class: 'control-label'}
               = I18n.t('person.views.phone')
             .input-group
-              %input{ :type => 'tel',
-                      :id => 'person_phone',
-                      :class => 'form-control',
-                      :name => 'phone',
-                      :value => @person.phone }
+              %input{ type: 'tel',
+                      id: 'person_phone',
+                      class: 'form-control',
+                      name: 'phone',
+                      value: @person.phone }
               .input-group-btn
-                %a{:name => 'person_phone_button', :class => 'btn btn-default'}
+                %a{name: 'person_phone_button', class: 'btn btn-default'}
                   .icon-phone
 
           .col-sm-6.form-group
-            %label{:for => 'person_second_phone', :class => 'control-label'}
+            %label{for: 'person_second_phone', class: 'control-label'}
               = I18n.t('person.views.second_phone')
             .input-group
-              %input{ :type => 'tel',
-                      :id => 'person_second_phone',
-                      :class => 'form-control',
-                      :name => 'second_phone',
-                      :value => @person.second_phone }
+              %input{ type: 'tel',
+                      id: 'person_second_phone',
+                      class: 'form-control',
+                      name: 'second_phone',
+                      value: @person.second_phone }
               .input-group-btn
-                %a{:name => 'person_second_phone_button', :class => 'btn btn-default'}
+                %a{name: 'person_second_phone_button', class: 'btn btn-default'}
                   .icon-phone
 
         .row
           .col-sm-6.form-group
-            %label{:for => 'person_mobile', :class => 'control-label'}
+            %label{for: 'person_mobile', class: 'control-label'}
               = I18n.t('person.views.mobile')
             .input-group
-              %input{ :type => 'tel',
-                      :id => 'person_mobile',
-                      :class => 'form-control',
-                      :name => 'mobile',
-                      :value => @person.mobile }
+              %input{ type: 'tel',
+                      id: 'person_mobile',
+                      class: 'form-control',
+                      name: 'mobile',
+                      value: @person.mobile }
               .input-group-btn
-                %a{:name => 'person_mobile_button', :class => 'btn btn-default'}
+                %a{name: 'person_mobile_button', class: 'btn btn-default'}
                   .icon-phone
 
           .col-sm-6.form-group
-            %label{:for => 'person_communication_language', :class => 'control-label'}
+            %label{for: 'person_communication_language', class: 'control-label'}
               = I18n.t('language.views.communication_language')
-            %select{:name => 'main_communication_language_id',
-                    :class => 'form-control required'}
+            %select{name: 'main_communication_language_id',
+                    class: 'form-control required'}
               - for l in App.Language.all()
                 - if @person.main_communication_language_id == l.id
-                  %option{:value => l.id, :selected => true}= l.name
+                  %option{value: l.id, selected: true}= l.name
                 - else
-                  %option{:value => l.id}= l.name
+                  %option{value: l.id}= l.name
 
     .row
       .col-md-6
@@ -216,75 +216,75 @@
             .col-sm-6
               .row
                 .col-sm-12.form-group
-                  %label{:for => 'person_birth_date', :class => 'control-label'}
+                  %label{for: 'person_birth_date', class: 'control-label'}
                     = I18n.t('person.views.birth_date')
-                  %input{ :type => 'text',
-                          :id => 'person_birth_date',
-                          :name => 'birth_date',
-                          :class => 'datepicker form-control',
-                          :value => @person.birth_date }
+                  %input{ type: 'text',
+                          id: 'person_birth_date',
+                          name: 'birth_date',
+                          class: 'datepicker form-control',
+                          value: @person.birth_date }
 
               .row
                 .col-sm-12.form-group
-                  %label{:for => 'person_bank_information', :class => 'control-label'}
+                  %label{for: 'person_bank_information', class: 'control-label'}
                     = I18n.t('person.views.bank_informations')
-                  %textarea{:name => 'bank_informations',
-                            :id => 'person_bank_information',
-                            :rows => 4,
-                            :class => 'form-control'}
+                  %textarea{name: 'bank_informations',
+                            id: 'person_bank_information',
+                            rows: 4,
+                            class: 'form-control'}
                     = @person.bank_informations
 
             .col-sm-6
               .row
                 .col-sm-12.form-group.autocompleted
-                  %label{:for => 'person_nationality', :class => 'control-label'}
+                  %label{for: 'person_nationality', class: 'control-label'}
                     = I18n.t('person.views.nationality')
-                  %input{ :type => 'search',
-                          :id => 'person_nationality',
-                          :class => 'form-control',
-                          :name => 'nationality',
-                          :value => @person.nationality,
-                          :action => '/people/nationality_search'
+                  %input{ type: 'search',
+                          id: 'person_nationality',
+                          class: 'form-control',
+                          name: 'nationality',
+                          value: @person.nationality,
+                          action: '/people/nationality_search'
 
               .row
                 .col-sm-12.form-group
-                  %label{:for => 'person_avs_number', :class => 'control-label'}
+                  %label{for: 'person_avs_number', class: 'control-label'}
                     = I18n.t('person.views.avs_number')
-                  %input{ :type => 'text',
-                          :id => 'person_avs_number',
-                          :class => 'form-control',
-                          :name => 'avs_number',
-                          :value => @person.avs_number}
+                  %input{ type: 'text',
+                          id: 'person_avs_number',
+                          class: 'form-control',
+                          name: 'avs_number',
+                          value: @person.avs_number}
 
               .row
                 .col-sm-12.form-group
-                  %label{:for => 'person_gender', :class => 'control-label'}
+                  %label{for: 'person_gender', class: 'control-label'}
                     = I18n.t('person.views.gender')
-                  %select{:id => 'person_gender',
-                          :class => 'form-control',
-                          :name => 'gender'}
+                  %select{id: 'person_gender',
+                          class: 'form-control',
+                          name: 'gender'}
                     - if @person.gender
-                      %option{:value => 1, :selected => true}= I18n.t("person.views.male")
-                      %option{:value => 0}= I18n.t("person.views.female")
+                      %option{value: 1, selected: true}= I18n.t("person.views.male")
+                      %option{value: 0}= I18n.t("person.views.female")
                     - else
-                      %option{:value => 1}= I18n.t("person.views.male")
-                      %option{:value => 0, :selected => true}= I18n.t("person.views.female")
+                      %option{value: 1}= I18n.t("person.views.male")
+                      %option{value: 0, selected: true}= I18n.t("person.views.female")
 
       .col-md-6
         .row
           .col-sm-6
             .form-group.autocompleted
-              %label{:for => 'person_job', :class => 'control-label'}
+              %label{for: 'person_job', class: 'control-label'}
                 = I18n.t('person.views.job')
-              %input{ :type => 'search',
-                      :id => 'person_job',
-                      :name => 'job_name',
-                      :class => 'form-control',
-                      :value => @person.job_name,
-                      :action => '/settings/jobs/search' }
-              %input{ :type => 'hidden',
-                      :name => 'job_id',
-                      :value => @person.job_id }
+              %input{ type: 'search',
+                      id: 'person_job',
+                      name: 'job_name',
+                      class: 'form-control',
+                      value: @person.job_name,
+                      action: '/settings/jobs/search' }
+              %input{ type: 'hidden',
+                      name: 'job_id',
+                      value: @person.job_id }
 
         - if @can.person.authenticate_using_token
 
@@ -292,23 +292,23 @@
 
           .row
             .col-sm-6.form-group
-              %label{:for => 'person_api', :class => 'control-label'}
+              %label{for: 'person_api', class: 'control-label'}
                 = I18n.t('person.views.autentication_token')
-              %input{ :type => 'text',
-                      :id => 'person_api',
-                      :class => 'form-control',
-                      :name => 'authentication_token',
-                      :value => @person.authentication_token,
-                      :disabled => 'disabled'}
+              %input{ type: 'text',
+                      id: 'person_api',
+                      class: 'form-control',
+                      name: 'authentication_token',
+                      value: @person.authentication_token,
+                      disabled: 'disabled'}
 
             .col-sm-6.form-group
               %br
                 .checkbox
-                  %label{:for => 'person_generate_auth_token', :class => 'control-label'}
-                    %input{ :type => 'checkbox',
-                            :name => 'generate_authentication_token',
-                            :id => 'person_generate_auth_token',
-                            :checked => false }
+                  %label{for: 'person_generate_auth_token', class: 'control-label'}
+                    %input{ type: 'checkbox',
+                            name: 'generate_authentication_token',
+                            id: 'person_generate_auth_token',
+                            checked: false }
                     = I18n.t('person.views.generate_authentication_token')
 
 
