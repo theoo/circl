@@ -4,21 +4,21 @@
       %ul#sub_nav.nav.navbar-nav
         - if can? :index, Directory
           %li
-            %a{:href => '#searchengine_tab'}
+            %a{href: '#searchengine_tab'}
               = I18n.t('common.directory')
 
         - if can? :manage, Person
           %li
-            %a{:href => '#tools_tab'}
+            %a{href: '#tools_tab'}
               = I18n.t('directory.views.tools')
 
       // pull-right = XS
       .pull-right
         .navbar-right.btn-group
           - if can? :create, Person
-            %a{ :href => new_person_path,
-                :class => 'btn btn-default navbar-btn',
-                :id => 'directory-add-person' }
+            %a{ href: new_person_path,
+                class: 'btn btn-default navbar-btn',
+                id: 'directory-add-person' }
               .icon-user
               .hidden-inline-xs
                 = I18n.t('directory.views.add_person')
@@ -27,9 +27,9 @@
             - # 00000000000000000000000000000000-us0 is the default value, not valid in real world
             - if ApplicationSetting.value(:mailchimp_api_key) != "00000000000000000000000000000000-us0"
               = link_to(directory_mailchimp_path,
-                :method => :post,
-                :class => 'btn btn-danger navbar-btn',
-                :confirm => I18n.t("common.are_you_sure")) do
+                method: :post,
+                class: 'btn btn-danger navbar-btn',
+                confirm: I18n.t("common.are_you_sure")) do
                 .icon-refresh
                 .hidden-inline-xs
                   = I18n.t('directory.views.sync_mailchimp')
@@ -37,8 +37,8 @@
               - # Disable mailchimp sync button
               - # TODO print a nice modal window and link to config + doc to setup mailchimp
               = link_to("#",
-                :class => 'btn btn-default navbar-btn',
-                :disabled => true ) do
+                class: 'btn btn-default navbar-btn',
+                disabled: true ) do
                 .icon-refresh
                 .hidden-inline-xs
                   = I18n.t('directory.views.sync_mailchimp')
@@ -53,29 +53,29 @@
           - if flash[:error] or flash[:alert] or flash[:notice]
             - flash_messages
 
-          %input{ :id => "directory_json_query",
-            :name => "directory_json_query",
-            :type => "hidden",
-            :value => @query.to_json.html_safe }
+          %input{ id: "directory_json_query",
+            name: "directory_json_query",
+            type: "hidden",
+            value: @query.to_json.html_safe }
 
-          %input{ :id => "directory_results_count",
-            :type => "hidden",
-            :value => @results_count }
+          %input{ id: "directory_results_count",
+            type: "hidden",
+            value: @results_count }
 
           - # custom action (see index.js)
           - if @custom_action
-            %input{ :id => "directory_custom_action_url",
-              :type => "hidden",
-              :value => @custom_action[:url].html_safe }
-            %input{ :id => "directory_custom_action_title",
-              :type => "hidden",
-              :value => @custom_action[:title].html_safe }
-            %input{ :id => "directory_custom_action_message",
-              :type => "hidden",
-              :value => @custom_action[:message].html_safe }
-            %input{ :id => "directory_custom_action_disabled",
-              :type => "hidden",
-              :value => @custom_action[:disabled].html_safe }
+            %input{ id: "directory_custom_action_url",
+              type: "hidden",
+              value: @custom_action[:url].html_safe }
+            %input{ id: "directory_custom_action_title",
+              type: "hidden",
+              value: @custom_action[:title].html_safe }
+            %input{ id: "directory_custom_action_message",
+              type: "hidden",
+              value: @custom_action[:message].html_safe }
+            %input{ id: "directory_custom_action_disabled",
+              type: "hidden",
+              value: @custom_action[:disabled].html_safe }
 
         .col-lg-3
 
@@ -91,7 +91,7 @@
                 .panel-title
                   = I18n.t('directory.views.import_people')
 
-              = form_tag(directory_confirm_people_path, :multipart => true) do
+              = form_tag(directory_confirm_people_path, multipart: true) do
                 .panel-body
                   .row
                     .col-lg-12
@@ -103,16 +103,16 @@
                   .row
                     .col-lg-6
                       .form-group
-                        %label{:for => 'directory_import_people'}
+                        %label{for: 'directory_import_people'}
                           = I18n.t('common.select_file')
-                        %input{:type => :file, :id => 'directory_import_people', :name => :people_file}
+                        %input{type: :file, id: 'directory_import_people', name: :people_file}
 
                 .panel-footer
                   .row
                     .col-lg-12
                       .pull-right
-                        %button{:type => :submit,
-                              :class => 'btn btn-primary'}
+                        %button{type: :submit,
+                              class: 'btn btn-primary'}
                           .glyphicon.glyphicon-cloud-upload
                           = I18n.t('common.upload')
 

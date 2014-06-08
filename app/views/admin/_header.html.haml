@@ -6,7 +6,7 @@
         #tab_name
 
     // extra-small resolutions
-    %button{:class => 'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '#secondary_navigation'}
+    %button{class: 'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '#secondary_navigation'}
       .icon-bar
       .icon-bar
       .icon-bar
@@ -16,15 +16,15 @@
       %ul#sub_nav.nav.navbar-nav
         - if can? :update, PrivateTag
           %li
-            %a{:href => '#tags_tab'}
+            %a{href: '#tags_tab'}
               = I18n.t('admin.views.tags')
 
         - if can? :update, Affair
           %li
-            %a{:href => '#affairs_tab'}
+            %a{href: '#affairs_tab'}
               = I18n.t('admin.views.affairs')
 
         - if can? :update, Invoice
           %li
-            %a{:href => '#finances_tab'}
+            %a{href: '#finances_tab'}
               = I18n.t('admin.views.finances')

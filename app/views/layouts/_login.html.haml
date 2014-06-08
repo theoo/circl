@@ -8,7 +8,7 @@
 
   - if person_signed_in?
     %li.dropdown
-      %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown', :class => 'btn btn-inline'}
+      %a{class: 'dropdown-toggle', 'data-toggle' => 'dropdown', class: 'btn btn-inline'}
         .icon-user
         = current_person.name
         .icon-caret-down
@@ -32,7 +32,7 @@
 
         %li
           = link_to destroy_person_session_path,
-            :method => 'delete',
-            :class => 'button' do
+            method: 'delete',
+            class: 'button' do
             .icon-power-off
             = I18n.t('person.views.logout')

@@ -1,14 +1,14 @@
 !!! 5
-%html{:lang => I18n.locale}
+%html{lang: I18n.locale}
   %head
-    %meta{"http-equiv" => "content-type", :content => "text/html;charset=UTF-8"}
+    %meta{"http-equiv" => "content-type", content: "text/html;charset=UTF-8"}
 
     // SOURCE http://getbootstrap.com/css/
-    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
 
     %title= "CIRCL"
     = favicon_link_tag
-    = stylesheet_link_tag 'main', 'pdf_common', 'custom_fonts', 'leaflet', :media => 'all'
+    = stylesheet_link_tag 'main', 'pdf_common', 'custom_fonts', 'leaflet', media: 'all'
     = javascript_include_tag "i18n.js" # part of i18n-js gem
     = javascript_include_tag "i18n/#{I18n.locale}.js"
     = javascript_include_tag "i18n/datatables/#{I18n.locale}.js"
@@ -25,4 +25,4 @@
   %body#template-editor
     ~ yield
 
-    = render :partial => 'layouts/footer'
+    = render partial: 'layouts/footer'

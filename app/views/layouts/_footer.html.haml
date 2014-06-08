@@ -4,10 +4,10 @@
       .col-lg-12
         .well
           = I18n.t("common.a_webapp_developped_by")
-          = link_to "Complex IT sàrl", nil, :href => "http://www.complex.ch"
+          = link_to "Complex IT sàrl", nil, href: "http://www.complex.ch"
           ,
           = I18n.t("common.released_under")
-          = link_to "GNU Affero General Public License", nil, :href => "http://www.gnu.org/licenses/agpl.html"
+          = link_to "GNU Affero General Public License", nil, href: "http://www.gnu.org/licenses/agpl.html"
           %br
           - if ApplicationSetting.value(:application_id)
             = I18n.t("common.this_application_unique_id")

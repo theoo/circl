@@ -5,4 +5,4 @@
   = I18n.t("subscription.mail.please_find_a_link_to_access_the_subscription_pdf")
   = "\"" + @subscription.title + "\""
 
-%a{:href => @subscription.pdf_public_url }= @subscription.pdf_public_url
+%a{href: @subscription.pdf_public_url }= @subscription.pdf_public_url

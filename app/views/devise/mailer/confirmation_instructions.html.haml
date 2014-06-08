@@ -3,4 +3,4 @@
   = @resource.name
   = '!'
 %p= I18n.t("devise.mail.you_can_confirm_your_account_through_the_link_below")
-%p= link_to I18n.t("devise.mail.confirm_my_account"), confirmation_url(@resource, :confirmation_token => @resource.confirmation_token)
+%p= link_to I18n.t("devise.mail.confirm_my_account"), confirmation_url(@resource, confirmation_token: @resource.confirmation_token)

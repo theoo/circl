@@ -6,7 +6,7 @@
         #tab_name
 
     // extra-small resolutions
-    %button{:class => 'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '#secondary_navigation'}
+    %button{class: 'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '#secondary_navigation'}
       .icon-bar
       .icon-bar
       .icon-bar
@@ -16,7 +16,7 @@
       %ul#sub_nav.nav.navbar-nav
         - if can? :read, @person
           %li
-            %a{:href => '#info_tab'}
+            %a{href: '#info_tab'}
               - if @person.new_record?
                 %i
                   = I18n.t("person.views.new_contact")
@@ -25,25 +25,25 @@
 
         - if can? :read, Affair
           %li
-            %a{:href => '#affairs_tab'}
+            %a{href: '#affairs_tab'}
               = I18n.t('person.views.affairs')
               .badge= @person.affairs.empty? ? nil : @person.affairs.count
 
         - if can? :read, Salaries::Salary
           %li
-            %a{:href => '#salaries_tab'}
+            %a{href: '#salaries_tab'}
               = I18n.t('person.views.salaries')
               .badge= @person.salaries.empty? ? nil : @person.salaries.count
 
         - if can? :read, Role
           %li
-            %a{:href => '#permissions_tab'}
+            %a{href: '#permissions_tab'}
               = I18n.t('person.views.permissions')
               .badge= @person.roles.empty? ? nil : @person.roles.count
 
         - if can? :read, Activity
           %li
-            %a{:href => '#activities_tab'}
+            %a{href: '#activities_tab'}
               = I18n.t('person.views.activities')
               .badge= @person.comments_edited_by_others.empty? ? nil : @person.comments_edited_by_others.count
 
@@ -52,7 +52,7 @@
         .navbar-right.btn-group
           - if can? :change_password, @person and ! @person.new_record?
             = link_to change_password_person_path(@person),
-                :class => 'btn btn-default navbar-btn' do
+                class: 'btn btn-default navbar-btn' do
               .icon-lock
               .hidden-inline-sm.hidden-inline-xs
                 = I18n.t('person.views.change_password')
@@ -60,9 +60,9 @@
 
           - if can? :destroy, @person and ! @person.new_record?
             = link_to person_path(@person),
-                :method => :delete,
-                :confirm => I18n.t('common.are_you_sure'),
-                :class => 'btn btn-danger navbar-btn' do
+                method: :delete,
+                confirm: I18n.t('common.are_you_sure'),
+                class: 'btn btn-danger navbar-btn' do
               .icon-remove
               .hidden-inline-sm.hidden-inline-xs
                 = I18n.t('person.views.destroy')

@@ -1,9 +1,9 @@
 - # TODO move some translation to bank_import_history.yml
 
-= render :partial => 'admin/header'
+= render partial: 'admin/header'
 
 .container
-  = form_tag(import_admin_bank_import_histories_path, :method => :post) do
+  = form_tag(import_admin_bank_import_histories_path, method: :post) do
     .row
       .col-lg-12
         .panel.panel-default
@@ -32,14 +32,14 @@
                   - next if line_number == :errors # bypass general errors
                   - next if line_number == :summary # bypass summary
 
-                  - class_mapping = { :correct => 'success',
-                                      :rectification => 'active',
-                                      :already_imported => 'warning',
-                                      :error => 'danger' }
+                  - class_mapping = { correct: 'success',
+                                      rectification: 'active',
+                                      already_imported: 'warning',
+                                      error: 'danger' }
 
                   - if info[:receipt].is_a? Receipt
                     - receipt = info[:receipt]
-                    %tr{ :class => class_mapping[info[:status].to_sym] }
+                    %tr{ class: class_mapping[info[:status].to_sym] }
                       %td
                         = line_number
                       %td
@@ -64,14 +64,14 @@
                       %td= check_box_tag('receipts[][selected]',
                                           true,
                                           receipt.new_record? || info[:status] == 'rectification',
-                                          :class => 'normal')
+                                          class: 'normal')
                   - if info[:status] == 'error'
-                    %tr{ :class => class_mapping[info[:status].to_sym] }
+                    %tr{ class: class_mapping[info[:status].to_sym] }
                       %td
                         = line_number
                       %td
                         = info[:errors][:message]
-                      %td{:colspan => 5, :title => info[:errors][:decoded_line].inspect}
+                      %td{colspan: 5, title: info[:errors][:decoded_line].inspect}
                         = info[:errors][:line]
                       %td= I18n.t "receipt.import_status." + info[:status]
                       %td
@@ -80,9 +80,9 @@
                         = hidden_field_tag "errors[][line]", info[:errors][:line]
 
                 - unless @infos[:summary].empty?
-                  %tr{ :class => "bvr_summary" }
-                    %td{:colspan => 3}
-                    %td{:colspan => 2}
+                  %tr{ class: "bvr_summary" }
+                    %td{colspan: 3}
+                    %td{colspan: 2}
                       = I18n.t("common.file") + ":"
                       %b= @file_name
                     %td
@@ -110,4 +110,4 @@
 
           .panel-footer
             .text-right
-              = submit_tag I18n.t('admin.views.proceed_with_import'), :class => 'btn btn-primary'
+              = submit_tag I18n.t('admin.views.proceed_with_import'), class: 'btn btn-primary'

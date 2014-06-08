@@ -4,7 +4,7 @@
   .row
     .col-lg-12
       .text-center
-        = image_tag('logo.png', :alt => 'Directory')
+        = image_tag('logo.png', alt: 'Directory')
 
   .row
     .col-lg-12
@@ -24,25 +24,25 @@
             = I18n.t("devise.views.request_new_password_explanation")
 
           = form_for(resource,
-            :as => resource_name,
-            :url => password_path(resource_name),
-            :html => { :method => :post }) do |f|
+            as: resource_name,
+            url: password_path(resource_name),
+            html: { method: :post }) do |f|
             - devise_error_messages!
 
             .row
               .col-lg-2
               .col-lg-8
                 .form-group
-                  = f.label :email, :for => 'person_email'
-                  = f.email_field :email, :class => 'form-control'
+                  = f.label :email, for: 'person_email'
+                  = f.email_field :email, class: 'form-control'
               .col-lg-2
 
             .row
               .col-lg-12
                 .pull-right
-                  = f.submit I18n.t('devise.views.request_new_password'), :class => 'btn btn-primary'
+                  = f.submit I18n.t('devise.views.request_new_password'), class: 'btn btn-primary'
 
                 = link_to I18n.t("devise.views.back_to_login_page"),
                           new_person_session_path,
-                          :class => 'btn btn-default'
+                          class: 'btn btn-default'
     .col-lg-3.col-md-3.col-sm-2

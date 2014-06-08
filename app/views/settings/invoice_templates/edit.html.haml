@@ -1,8 +1,8 @@
 
-%nav.navbar.navbar-default.navbar-static-top.navbar-inverse{:role => "navigation"}
+%nav.navbar.navbar-default.navbar-static-top.navbar-inverse{role: "navigation"}
   .row
     .navbar-header.col-md-1
-      %span{:class => 'navbar-brand', :style => 'padding: 0 0 0 15px'}
+      %span{class: 'navbar-brand', style: 'padding: 0 0 0 15px'}
         = image_tag 'logo_mini_white.png'
 
     .navbar-brand.col-md-11
@@ -11,8 +11,8 @@
 
 .container
   = form_for @invoice_template,
-    :as => 'invoice_template',
-    :url => settings_invoice_template_path(@invoice_template) do |f|
+    as: 'invoice_template',
+    url: settings_invoice_template_path(@invoice_template) do |f|
     = f.hidden_field :id
     = f.hidden_field :with_bvr
     .row
@@ -27,9 +27,9 @@
 
     .row
       .col-lg-9
-        %label{:class => 'required'}
+        %label{class: 'required'}
           = I18n.t("invoice_template.views.body")
-        = f.text_area :html, :rows => 25, :id => "body", :class => 'wysiwyg'
+        = f.text_area :html, rows: 25, id: "body", class: 'wysiwyg'
         %br
       .col-lg-3
         %label= I18n.t('invoice_template.views.placeholders.placeholders')

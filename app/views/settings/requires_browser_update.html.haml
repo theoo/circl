@@ -3,7 +3,7 @@
 %head
   %title
     = "CIRCL: " + I18n.t("common.requires_browser_update")
-  %style{ :type => "text/css" }
+  %style{ type: "text/css" }
     :sass
       body
         font-family: "Open Sans", Arial
@@ -28,15 +28,15 @@
     %table
       %tr
         %td
-          = link_to image_tag('browsers/chrome.png'), "http://www.google.com/chrome", :target => '_blank', :title => 'Chrome'
+          = link_to image_tag('browsers/chrome.png'), "http://www.google.com/chrome", target: '_blank', title: 'Chrome'
         %td
-          = link_to image_tag('browsers/firefox.png'), "http://www.mozilla.org/firefox", :target => '_blank', :title => 'Firefox'
+          = link_to image_tag('browsers/firefox.png'), "http://www.mozilla.org/firefox", target: '_blank', title: 'Firefox'
 
       %tr
         %td
-          = link_to image_tag('browsers/opera.png'), "http://www.opera.com", :target => '_blank', :title => 'Opera'
+          = link_to image_tag('browsers/opera.png'), "http://www.opera.com", target: '_blank', title: 'Opera'
         %td
-          = link_to image_tag('browsers/konqueror.png'), "http://www.konqueror.org/", :target => '_blank', :title => 'Konqueror'
+          = link_to image_tag('browsers/konqueror.png'), "http://www.konqueror.org/", target: '_blank', title: 'Konqueror'
 
     // = I18n.t("common.browser.mobile_browsers")
 

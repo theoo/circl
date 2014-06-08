@@ -1,12 +1,12 @@
 !!! 5
-%html{:lang => I18n.locale}
+%html{lang: I18n.locale}
   %head
-    %meta{"http-equiv" => "content-type", :content => "text/html;charset=UTF-8"}
+    %meta{"http-equiv" => "content-type", content: "text/html;charset=UTF-8"}
 
     // SOURCE http://getbootstrap.com/css/
-    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
-    %meta{:name => 'current_user', :content => @current_person.to_json}
-    %meta{:name => 'available_currencies', :content => Currency.all.map(&:iso_code).to_json}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
+    %meta{name: 'current_user', content: @current_person.to_json}
+    %meta{name: 'available_currencies', content: Currency.all.map(&:iso_code).to_json}
     = csrf_meta_tag
 
     %title= "CIRCL"
@@ -28,10 +28,10 @@
       Spine.Model.host = '#{request.protocol}#{request.host_with_port}';
 
   %body
-    = render :partial => 'layouts/header'
+    = render partial: 'layouts/header'
 
     ~ yield
 
-    = render :partial => 'layouts/footer'
+    = render partial: 'layouts/footer'
 
     #dialogs

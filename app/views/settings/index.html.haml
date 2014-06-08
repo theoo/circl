@@ -6,7 +6,7 @@
         #tab_name
 
     // extra-small resolutions
-    %button{:class => 'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '#secondary_navigation'}
+    %button{class: 'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '#secondary_navigation'}
       .icon-bar
       .icon-bar
       .icon-bar
@@ -16,37 +16,37 @@
       %ul#sub_nav.nav.navbar-nav
         - if can? :manage, Language
           %li
-            %a{:href => '#properties_tab'}
+            %a{href: '#properties_tab'}
               = I18n.t('settings.views.attributes')
 
         - if can? :manage, InvoiceTemplate
           %li
-            %a{:href => '#templates_tab'}
+            %a{href: '#templates_tab'}
               = I18n.t('settings.views.templates')
 
         - if can? :manage, SearchAttribute
           %li
-            %a{:href => '#searchengine_tab'}
+            %a{href: '#searchengine_tab'}
               = I18n.t('settings.views.search_engine')
 
         - if can? :manage, Role
           %li
-            %a{:href => '#privileges_tab'}
+            %a{href: '#privileges_tab'}
               = I18n.t('settings.views.privileges')
 
         - if can? :manage, Affair
           %li
-            %a{:href => '#affairs_tab'}
+            %a{href: '#affairs_tab'}
               = I18n.t('settings.views.affairs')
 
         - if can? :manage, Currency
           %li
-            %a{:href => '#currencies_tab'}
+            %a{href: '#currencies_tab'}
               = I18n.t('settings.views.currencies')
 
         - if can? :manage, ApplicationSetting
           %li
-            %a{:href => '#advanced_tab'}
+            %a{href: '#advanced_tab'}
               = I18n.t('settings.views.advanced')
 
 .container

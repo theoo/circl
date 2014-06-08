@@ -1,9 +1,9 @@
 !!! 5
-%html{:lang => I18n.locale}
+%html{lang: I18n.locale}
   %head
-    %meta{:charset => 'utf-8'}
-    %meta{'http-equiv' => 'content-type', :content => 'text/html; charset=utf-8'}
-    = stylesheet_link_tag 'pdf_common', 'custom_fonts', :media => 'all'
+    %meta{charset: 'utf-8'}
+    %meta{'http-equiv' => 'content-type', content: 'text/html; charset=utf-8'}
+    = stylesheet_link_tag 'pdf_common', 'custom_fonts', media: 'all'
 
   %body
     = yield(:layout)

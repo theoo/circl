@@ -1,7 +1,7 @@
-%nav.navbar.navbar-default.navbar-static-top.navbar-inverse{:role => "navigation"}
+%nav.navbar.navbar-default.navbar-static-top.navbar-inverse{role: "navigation"}
   .row
     .navbar-header.col-md-1
-      %span{:class => 'navbar-brand', :style => 'padding: 0 0 0 15px'}
+      %span{class: 'navbar-brand', style: 'padding: 0 0 0 15px'}
         = image_tag 'logo_mini_white.png'
 
     .navbar-brand.col-md-11
@@ -20,8 +20,8 @@
   .row
     .col-xs-12
       #map_container
-        %input{:type => 'hidden', :name => 'map_markers', :value => @map[:markers].to_json}
-        %input{:type => 'hidden', :name => 'map_config', :value => @map[:config].to_json}
+        %input{type: 'hidden', name: 'map_markers', value: @map[:markers].to_json}
+        %input{type: 'hidden', name: 'map_config', value: @map[:config].to_json}
 
   - if @person
     .row
@@ -29,16 +29,16 @@
       .col-md-6
         %form
           .form-group
-            %label{:for => 'person_geographic_coordinates'}
+            %label{for: 'person_geographic_coordinates'}
               = I18n.t("person.views.geographic_coordinates")
             .input-group
-              %input{ :id => 'person_geographic_coordinates',
-                      :class => 'form-control',
-                      :type => 'text',
-                      :value => @person.geographic_coordinates}
+              %input{ id: 'person_geographic_coordinates',
+                      class: 'form-control',
+                      type: 'text',
+                      value: @person.geographic_coordinates}
               .input-group-btn
-                %button{:type => 'submit',
-                        :name => 'update-person-geographic-coordinates',
-                        :class => 'btn btn-primary'}
+                %button{type: 'submit',
+                        name: 'update-person-geographic-coordinates',
+                        class: 'btn btn-primary'}
                   = I18n.t("common.update")
       .col-md-3

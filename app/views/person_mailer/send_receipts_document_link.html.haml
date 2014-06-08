@@ -3,10 +3,10 @@
 
 = I18n.t('person.mail.admin_receipts_were_generated_explanation') + ":"
 
-%a{:href => @document.public_url }= @document.public_url
+%a{href: @document.public_url }= @document.public_url
 
 %br
 %br
 
 = I18n.t("common.this_document_will_be_accessible_for_this_duration",
-  :duration => distance_of_time_in_words_to_now(Time.now - @document.validity_time))
+  duration: distance_of_time_in_words_to_now(Time.now - @document.validity_time))

@@ -4,16 +4,16 @@
       // pull-right = XS
       .pull-right
         .navbar-right.btn-group
-          %a{ :href => 'https://www.circl.ch/#support',
-              :target => 'circl_support',
-              :class => 'btn btn-default navbar-btn' }
+          %a{ href: 'https://www.circl.ch/#support',
+              target: 'circl_support',
+              class: 'btn btn-default navbar-btn' }
             .icon-question
             .hidden-inline-xs
               = I18n.t('person.dashboard.tech_support')
 
-          %a{ :href => 'https://doc.circl.ch',
-              :target => 'circl_doc',
-              :class => 'btn btn-primary navbar-btn' }
+          %a{ href: 'https://doc.circl.ch',
+              target: 'circl_doc',
+              class: 'btn btn-primary navbar-btn' }
             .icon-book
             .hidden-inline-xs
               = I18n.t('person.dashboard.help')
@@ -27,7 +27,7 @@
 
       = hidden_field :person, :id
       - # Used to trigger Dashboard Spine controller instead of PersonEdit
-      %input{:type => 'hidden', :id => 'dashboard', :value => true}
+      %input{type: 'hidden', id: 'dashboard', value: true}
 
     .col-lg-3
 

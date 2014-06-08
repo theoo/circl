@@ -6,7 +6,7 @@
         #tab_name
 
     // extra-small resolutions
-    %button{:class => 'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '#secondary_navigation'}
+    %button{class: 'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '#secondary_navigation'}
       .icon-bar
       .icon-bar
       .icon-bar
@@ -16,12 +16,12 @@
       %ul#sub_nav.nav.navbar-nav
         - if can? :read, Salaries::Salary
           %li
-            %a{:href => '#payroll_tab'}
+            %a{href: '#payroll_tab'}
               = I18n.t('common.salaries')
 
         - if can? :create, Salaries::Tax
           %li
-            %a{:href => '#deductions_tab'}
+            %a{href: '#deductions_tab'}
               = I18n.t('salary.views.taxes')
 
 .container
