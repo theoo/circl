@@ -216,7 +216,12 @@ Directory::Application.routes.draw do
     end
   end
   namespace :settings do
-    resources :application_settings
+    resources :application_settings do
+      collection do
+        post 'restart'
+      end
+    end
+
     resources :affairs_conditions
 
     resources :currencies do

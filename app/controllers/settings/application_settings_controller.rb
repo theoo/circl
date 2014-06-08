@@ -76,4 +76,14 @@ class Settings::ApplicationSettingsController < ApplicationController
     end
   end
 
+  def restart
+    # Touch and wait...
+    FileUtils.touch([Rails.root, "tmp/restart.txt"]).join("/")
+    flash[:notice] = I18n.t("application_setting.notices.application_restarted")
+
+    respond_to do |format|
+      format.html { redirect_to settings_path(anchor: :advanced) }
+    end
+  end
+
 end

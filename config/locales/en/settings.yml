@@ -17,6 +17,7 @@ en:
       privileges: Privileges
       product_programs: product programs
       products: products
+      restart_application: Restart CIRCL
       roles: Roles
       search_attributes: Search attributes
       search_engine: Search engine

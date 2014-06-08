@@ -184,3 +184,17 @@
                 .panel-title
                   = I18n.t('settings.views.application_settings')
         .col-lg-6
+          - if can? :restart, ApplicationSetting
+            #settings_application_settings.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.restart_application')
+              .panel-body
+                .alert.alert-warning
+                  != I18n.t("application_setting.notices.restart_warning")
+
+                = form_tag restart_settings_application_settings_path do
+                  %center
+                    %button{ type: "submit",
+                      class: 'btn btn btn-danger' }
+                      = I18n.t("application_setting.views.restart")

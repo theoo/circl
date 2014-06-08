@@ -4,5 +4,14 @@ en:
     errors:
       cant_change_key: The key cannot be modified.
       missing_attribute: The following key is not defined '%{key}'
+    notice:
+      application_restarted: CIRCL has restarted.
+    notices:
+      application_restarted: Application has restarted.
+      restart_warning: "<b>Warning!</b><br/> Restarting the application may cause services (Web,
+        LDAP, etc.) to be temporarly unavailable. The duration of this interruption may vary with
+        the current configuration setup. Please <b> do not restart</b> if there is running backgroud
+        tasks."
     views:
       key: key
+      restart: Restart CIRCL
