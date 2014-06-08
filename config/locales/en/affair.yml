@@ -24,6 +24,7 @@ en:
       computed_value_is: The computed value is
       computed_value_with_taxes_is: The computed value with taxes is
       conditions: conditions
+      create_variant: create variant
       custom_value_with_taxes: The fixed value is all taxes included
       document_export: Documents generation
       estimate: estimate
@@ -67,4 +68,5 @@ en:
       title: title
       update_date: last update
       value_with_taxes_is: The value with taxes is
+      variant_prefix: Variant
       vat: VAT

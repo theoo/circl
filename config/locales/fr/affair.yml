@@ -24,6 +24,7 @@ fr:
       computed_value_is: La valeur HT calculée est
       computed_value_with_taxes_is: La valeur TTC calculée est
       conditions: conditions
+      create_variant: créer une variante
       custom_value_with_taxes: la valeur fixée est TTC
       document_export: Génération de documents
       estimate: devis
@@ -67,4 +68,5 @@ fr:
       title: titre
       update_date: dernière mise à jour
       value_with_taxes_is: La valeur TTC est
+      variant_prefix: Variante
       vat: TVA

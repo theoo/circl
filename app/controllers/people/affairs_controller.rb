@@ -26,7 +26,15 @@ class People::AffairsController < ApplicationController
   monitor_changes :@affair
 
   def index
-    @affairs = Affair.where("owner_id = ? OR buyer_id = ? OR receiver_id = ?", *([@person.id]*3)).uniq
+    # Stored proc and this code require more work to be used:
+    # -> datatables_controller and Spine should be updated
+    # @affairs = Affair
+    #   .from("person_affairs_as_tree() affairs")
+    #   .where("owner_id = ? OR buyer_id = ? OR receiver_id = ?", *([@person.id]*3))
+
+    @affairs = Affair
+      .select("DISTINCT(affairs.*)")
+      .where("owner_id = ? OR buyer_id = ? OR receiver_id = ?", *([@person.id]*3))
 
     respond_to do |format|
       format.json do
@@ -71,10 +79,16 @@ class People::AffairsController < ApplicationController
   end
 
   def create
-
     success = false
+    parent_ids = {}
+    @parent = Affair.find params[:parent_id] unless params[:parent_id].blank?
 
     Affair.transaction do
+      @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])
+
+      # raise the error and rollback transaction if validation fails
+      @affair.save!
+
       # append stakeholders
       params[:affairs_stakeholders].each do |s|
         stakeholder = @affair.affairs_stakeholders.new(
@@ -88,11 +102,43 @@ class People::AffairsController < ApplicationController
         end
       end
 
-      @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])
+      # Copy tasks, products, extras and subscriptions if it has a parent.
+      if @parent
+        @parent.tasks.each do |t|
+          nt = t.dup
+          nt.affair = @affair
+          nt.save!
+          nt
+        end
+
+        @parent.product_items.each do |t|
+          nt = t.dup
+          nt.affair = @affair
+          nt.save!
+          parent_ids[t.id] = nt.id
+          nt
+        end
+        @affair.product_items.where("parent_id is not null").each do |t|
+          t.update_attributes!(parent_id: parent_ids[t.parent_id])
+        end
+
+        @parent.extras.each do |t|
+          nt = t.dup
+          nt.affair = @affair
+          nt.save!
+          nt
+        end
+
+        # HABTM
+        @affair.subscriptions = @parent.subscriptions
+
+        @affair.value = @parent.value
+
+      end
 
       success = @affair.save
 
-    end
+    end # transaction
 
     respond_to do |format|
       if success

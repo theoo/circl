@@ -34,7 +34,6 @@
                 = I18n.t('common.parent')
               %input{ type: 'search',
                       name: 'parent',
-                      id: 'affair_parent',
                       class: 'form-control',
                       value: @affair.parent_title,
                       action: "/people/#{@person_id}/affairs/search"}
@@ -335,6 +334,10 @@
                  class: 'btn btn-danger' }
                 .icon-remove
                 = I18n.t('common.destroy')
+              %a{name: "affair-copy",
+                 class: 'btn btn-default' }
+                .icon-copy
+                = I18n.t('affair.views.create_variant')
 
         .col-sm-4
           - unless @affair.isNew?()

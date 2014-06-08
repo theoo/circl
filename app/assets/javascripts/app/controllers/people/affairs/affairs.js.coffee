@@ -89,24 +89,58 @@ class New extends App.ExtendedController
   constructor: (params) ->
     @person_id = params.person_id if params.person_id
     Person.bind('refresh', @render)
+    @template = {}
     super
 
   active: (params) =>
-    @render()
+    @person = Person.find(@person_id) if Person.exists(@person_id)
+
+    if params
+      if params.parent_id
+        @parent_id = params.parent_id
+
+        if params.type == 'copy'
+          # create a new child based on its parent's data
+          # parent_id is the current Affair which is clicked, already local
+          parent = PersonAffair.find(@parent_id)
+          @template =
+            owner_id:             parent.owner_id
+            owner_name:           parent.owner_name
+            buyer_id:             parent.buyer_id
+            buyer_name:           parent.buyer_name
+            receiver_id:          parent.receiver_id
+            receiver_name:        parent.receiver_name
+            seller_id:            parent.seller_id
+            seller_name:          parent.seller_name
+            title:                I18n.t("affair.views.variant_prefix") +  ": " + parent.title
+            description:          parent.description
+            value_in_cents:       parent.value_in_cents
+            value_currency:       parent.currency
+            estimate:             parent.estimate?
+            parent_id:            parent.id
+            parent_title:         parent.title
+            footer:               parent.footer
+            conditions:           parent.conditions
+            condition_id:         parent.condition_id
+            affairs_stakeholders: parent.affairs_stakeholders
+
+          @render()
+          # Lock the parent field so user cannot change it by mistake
+          @el.find("input[name='parent']").button(disabled: true)
+
+    else
+      @template =
+        affairs_stakeholders: []
+        seller_id: App.current_user.id
+        seller_name: App.current_user.name
+
+      @template.owner_id = @template.buyer_id = @template.receiver_id = @person.id
+      @template.owner_name = @template.buyer_name = @template.receiver_name = @person.name
+
+      @render()
 
   render: =>
-    return unless Person.exists(@person_id)
-    @person = Person.find(@person_id)
-    @affair = new PersonAffair
-      conditions: App.ApplicationSetting.value("default_affair_conditions")
-      affairs_stakeholders: []
-    @affair.owner_id = @affair.buyer_id = @affair.receiver_id = @person.id
-    @affair.owner_name = @affair.buyer_name = @affair.receiver_name = @person.name
-
-    @current_user = App.current_user
-    @affair.seller_id = @current_user.id
-    @affair.seller_name = @current_user.name
-
+    @affair = new PersonAffair(@template)
     @html @view('people/affairs/form')(@)
 
   submit: (e) =>
@@ -135,6 +169,7 @@ class Edit extends App.ExtendedController
     'click button[name="cancel"]': 'cancel'
     'click button[name="affair-show-owner"]': 'show_owner'
     'click a[name="affair-destroy"]': 'destroy'
+    'click a[name="affair-copy"]': 'copy'
     'click button[name=reset_value]': 'reset_value'
     'click a[name="affair-preview-pdf"]': 'preview'
     'click a[name="affair-download-pdf"]': 'pdf'
@@ -312,6 +347,10 @@ class Edit extends App.ExtendedController
 
     win.modal('show')
 
+  copy: (e) ->
+    e.preventDefault()
+    @trigger 'copy', {parent_id: @id, type: 'copy'}
+
 
 class Index extends App.ExtendedController
   events:
@@ -480,6 +519,10 @@ class App.PersonAffairs extends Spine.Controller
     @new.bind 'edit', (id) =>
       @edit.active(id: id, person_id: @person_id)
       @index.active(affair_id: id, person_id: @person_id)
+
+    @edit.bind 'copy', (params) =>
+      @new.active(params)
+      @edit.hide()
 
     @index.bind 'edit', (id) =>
       @edit.active(id: id, person_id: @person_id)

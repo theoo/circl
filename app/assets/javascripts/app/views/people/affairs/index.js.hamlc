@@ -2,6 +2,7 @@
   %thead
     %tr
       %th= I18n.t('common.id')
+      %th= I18n.t('common.parent')
       %th= I18n.t('common.title')
       %th= I18n.t('common.value')
       %th= I18n.t('affair.views.invoices_value')
@@ -34,6 +35,7 @@
           :data-trigger => 'hover'}
 
         %td= affair.id
+        %td= affair.parent_id
         %td= affair.title
 
         %td.number
@@ -41,9 +43,9 @@
             %strike.text-danger= affair.computed_value?.to_view(affair.computed_value_currency)
             .text-danger
               = (affair.value - affair.computed_value)?.to_view(affair.value_currency)
-            = affair.value?.to_view(affair.value_currency)
+            %div= affair.value?.to_view(affair.value_currency)
           - else
-            = affair.value?.to_view(affair.value_currency)
+            %div= affair.value?.to_view(affair.value_currency)
 
           - if App.ApplicationSetting.value('use_vat') == "true"
             %i= "+" + affair.vat_value?.to_view(affair.value_currency)
