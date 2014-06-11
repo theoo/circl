@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140604164134) do
+ActiveRecord::Schema.define(:version => 20140611100213) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -211,19 +211,20 @@ ActiveRecord::Schema.define(:version => 20140604164134) do
   add_index "extras", ["vat_in_cents"], :name => "index_extras_on_vat_in_cents"
 
   create_table "generic_templates", :force => true do |t|
-    t.string   "title",                 :null => false
+    t.string   "title",                                    :null => false
     t.string   "snapshot_file_name"
     t.string   "snapshot_content_type"
     t.integer  "snapshot_file_size"
     t.datetime "snapshot_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "language_id",           :null => false
+    t.integer  "language_id",                              :null => false
     t.string   "class_name"
     t.string   "odt_file_name"
     t.string   "odt_content_type"
     t.integer  "odt_file_size"
     t.datetime "odt_updated_at"
+    t.boolean  "plural",                :default => false, :null => false
   end
 
   add_index "generic_templates", ["language_id"], :name => "index_salaries_salary_templates_on_language_id"

@@ -26,11 +26,11 @@
       .form-group
         %label{for: 'affair_invoices_template', class: 'sr-only'}
           = I18n.t('affair.views.template')
-        - if App.GenericTemplate.category('Invoice').length > 0
+        - if App.GenericTemplate.category('Invoice', true).length > 0
           %select{name: 'generic_template_id',
                   id: 'affair_invoices_template',
                   class: 'form-control'}
-            - for h in _.sortBy(App.GenericTemplate.category('Invoice'), (t) -> t.title)
+            - for h in _.sortBy(App.GenericTemplate.category('Invoice', true), (t) -> t.title)
               %option{value: h.id}= h.title
 
         - else

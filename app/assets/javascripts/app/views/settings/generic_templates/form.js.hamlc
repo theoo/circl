@@ -29,6 +29,9 @@
               - else
                 %option{value: l.id}= l.name
 
+          %small.help-block
+            = I18n.t("invoice_template.views.language_notice")
+
       .col-sm-6
         .form-group
           %label{for: 'settings_template_class_name'}
@@ -41,6 +44,18 @@
                 %option{value: mod, selected: true}= trad
               - else
                 %option{value: mod}= trad
+
+        .checkbox
+          %label{for: 'settings_template_plural'}
+            %input{ type: 'checkbox',
+              id: 'settings_template_plural',
+              name: 'plural',
+              checked: @template.plural,
+              value: 1 }
+            = I18n.t('template.views.plural')
+
+        %small.help-block
+          = I18n.t("template.views.plural_explanation")
 
     .row
       .col-md-12

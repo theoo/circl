@@ -16,7 +16,7 @@
 
 class App.GenericTemplate extends Spine.Model
 
-  @configure 'GenericTemplate', 'title', 'language_id', 'class_name', 'odt'
+  @configure 'GenericTemplate', 'title', 'language_id', 'class_name', 'odt', 'plural'
 
   @extend Spine.Model.Ajax
   @url: ->
@@ -25,9 +25,9 @@ class App.GenericTemplate extends Spine.Model
   constructor: ->
     super
 
-  @category: (cat) ->
+  @category: (cat, plural = false) ->
     _.filter @all(), (gt) ->
-      gt.class_name == cat
+      gt.class_name == cat && gt.plural == plural
 
   @count_category: (cat) ->
     ary = @category(cat)

@@ -173,6 +173,7 @@ class Edit extends App.ExtendedController
     'click button[name=reset_value]': 'reset_value'
     'click a[name="affair-preview-pdf"]': 'preview'
     'click a[name="affair-download-pdf"]': 'pdf'
+    'click a[name="affair-download-odt"]': 'odt'
     'change select[name="condition_id"]': 'update_conditions'
     'click button[name="remove_item"]': 'remove_value_item'
     'click button[name="add_item"]': 'add_value_item'

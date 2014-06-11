@@ -31,11 +31,11 @@
       .form-group
         %label{for: 'affair_receipts_template', class: 'sr-only'}
           = I18n.t('affair.views.template')
-        - if App.GenericTemplate.category('Receipt').length > 0
+        - if App.GenericTemplate.category('Receipt', true).length > 0
           %select{name: 'generic_template_id',
                   id: 'affair_receipts_template',
                   class: 'form-control'}
-            - for h in _.sortBy(App.GenericTemplate.category('Receipt'), (t) -> t.title)
+            - for h in _.sortBy(App.GenericTemplate.category('Receipt', true), (t) -> t.title)
               %option{value: h.id}= h.title
 
         - else

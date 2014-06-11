@@ -19,6 +19,8 @@ en:
       footer: footer
       header: header
       language: language
+      plural: plural ressource
+      plural_explanation: It's a list of items and not the item itself
       projects_template_file: (Affairs) Projects template example
       salary_template_file: Salary template example
       statement_template_file: (Invoices) Statement of a project template example

@@ -45,11 +45,11 @@
       .form-group
         %label{for: 'affair_products_template', class: 'sr-only'}
           = I18n.t('affair.views.template')
-        - if App.GenericTemplate.category('Product').length > 0
+        - if App.GenericTemplate.category('Product', true).length > 0
           %select{name: 'generic_template_id',
                   id: 'affair_products_template',
                   class: 'form-control'}
-            - for h in _.sortBy(App.GenericTemplate.category('Product'), (t) -> t.title)
+            - for h in _.sortBy(App.GenericTemplate.category('Product', true), (t) -> t.title)
               %option{value: h.id}= h.title
 
         - else

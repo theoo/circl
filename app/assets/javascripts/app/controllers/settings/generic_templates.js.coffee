@@ -46,14 +46,14 @@ class New extends ClassNamesExtention
     @render()
 
   render: ->
-    @template = new GenericTemplate()
+    @template = new GenericTemplate(plural: false)
     @html @view('settings/generic_templates/form')(@)
 
   submit: (e) ->
     e.preventDefault()
     data = $(e.target).serializeObject()
     @template.load(data)
-    @template.body = @view('settings/generic_templates/template')()
+    @template.plural = data.plural?
     @save_with_notifications @template, (id) =>
       @trigger 'edit', id
 
@@ -81,6 +81,7 @@ class Edit extends ClassNamesExtention
     e.preventDefault()
     data = $(e.target).serializeObject()
     @template.load(data)
+    @template.plural = data.plural?
     @save_with_notifications @template
 
   edit_template: (e) ->

@@ -19,6 +19,8 @@ fr:
       footer: Pied de page
       header: Entête
       language: langue
+      plural: ressource plurielle
+      plural_explanation: Il s'agit d'une liste d'éléments et non de l'élément lui-même.
       projects_template_file: Modèle de projets (affairs) pour exemple
       salary_template_file: Modèle de salaire pour exemple
       statement_template_file: Modèle de relevé de compte (factures) pour exemple
