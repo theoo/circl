@@ -46,7 +46,7 @@
             .caret
 
           %ul.dropdown-menu
-            - if App.GenericTemplate.category('Invoice').length > 0
+            - if App.GenericTemplate.category('Invoice', true).length > 0
               %li
                 %a{href: '#', name: 'affair-invoices-preview'}
                   .icon-eye-open

@@ -65,7 +65,7 @@
             .caret
 
           %ul.dropdown-menu
-            - if App.GenericTemplate.category('Product').length > 0
+            - if App.GenericTemplate.category('Product', true).length > 0
               %li
                 %a{href: '#', name: 'affair-products-preview'}
                   .icon-eye-open

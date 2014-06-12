@@ -42,13 +42,13 @@ class People::Affairs::ReceiptsController < ApplicationController
         fields << 'value_date'
         fields << 'means_of_payment'
         fields << 'value'
-        fields << 'created_at.to_date'
+        fields << 'created_at.try(:to_date)'
         fields << 'owner.first_name'
         fields << 'owner.last_name'
         fields << 'owner.full_address'
         fields << 'owner.try(:location).try(:postal_code_prefix)'
         fields << 'owner.try(:location).try(:country).try(:name)'
-        fields << 'owner.main_communication_language.name'
+        fields << 'owner.main_communication_language.try(:name)'
         fields << 'owner.email'
         render inline: csv_ify(@receipts, fields)
       end

@@ -157,7 +157,7 @@ class ApplicationController < ActionController::Base
       # content
       ary.each do |object|
         line = []
-        fields.each {|f| line << eval("object." + f) } # FIXME huge security issue here
+        fields.each {|f| line << eval("object." + f) } # FIXME could be a security issue
         csv << line
       end
     end

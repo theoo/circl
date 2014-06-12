@@ -223,8 +223,12 @@ class People::AffairsController < ApplicationController
     if params[:term].blank?
       result = []
     else
-      param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @affairs.where("affairs.title ~* ?", param)
+      if params[:term].is_i?
+        result = @affairs.where("affairs.id = ?", params[:term])
+      else
+        param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
+        result = @affairs.where("affairs.title ~* ?", param)
+      end
     end
 
     respond_to do |format|
@@ -233,9 +237,9 @@ class People::AffairsController < ApplicationController
           desc = " "
           if t.estimate
             desc += "<i>" + I18n.t("affair.views.estimate") + "</i>"
-            desc += " - " + t.description unless t.description.empty?
+            desc += " - " + t.description unless t.description.blank?
           else
-            desc += t.description
+            desc += t.description if t.description
           end
           { id: t.id,
             label: t.title,

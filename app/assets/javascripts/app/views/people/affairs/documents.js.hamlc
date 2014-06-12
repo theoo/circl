@@ -152,11 +152,15 @@
         .form-group
           %label{for: 'person_affairs_document_export_template'}
             = I18n.t('affair.views.template')
-          %select{name: 'generic_template_id',
-                  id: 'person_affairs_document_export_template',
-                  class: 'form-control required'}
-            - for h in _.sortBy(App.GenericTemplate.category(@template_class, true), (t) -> t.title)
-              %option{value: h.id}= h.title
+          - if App.GenericTemplate.category(@template_class, true).length > 0
+            %select{name: 'generic_template_id',
+                    id: 'person_affairs_document_export_template',
+                    class: 'form-control required'}
+              - for h in _.sortBy(App.GenericTemplate.category(@template_class, true), (t) -> t.title)
+                %option{value: h.id}= h.title
+          - else
+            %a{href: '/settings#templates', class: 'btn btn-warning', name: 'generic_template_id'}
+              = I18n.t("common.add_new_template")
 
         .form-group
           %label{for: "person_affairs_document_export_format"}

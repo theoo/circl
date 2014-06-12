@@ -181,8 +181,7 @@ class Index extends App.ExtendedController
 
   csv: (e) ->
     e.preventDefault()
-    @template_id = @el.find("#affair_receipts_template").val()
-    window.location = PersonAffairReceipt.url() + ".csv?template_id=#{@template_id}"
+    window.location = PersonAffairReceipt.url() + ".csv"
 
   pdf: (e) ->
     e.preventDefault()

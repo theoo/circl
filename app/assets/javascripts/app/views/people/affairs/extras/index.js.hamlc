@@ -47,7 +47,7 @@
             .caret
 
           %ul.dropdown-menu
-            - if App.GenericTemplate.category('Extra').length > 0
+            - if App.GenericTemplate.category('Extra', true).length > 0
               %li
                 %a{href: '#', name: 'affair-extras-preview'}
                   .icon-eye-open

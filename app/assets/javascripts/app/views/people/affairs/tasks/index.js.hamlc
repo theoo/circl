@@ -39,7 +39,6 @@
           = I18n.t('affair.views.template')
         - if App.GenericTemplate.category('Task', true).length > 0
           %select{name: 'generic_template_id',
-                  id: 'affair_tasks_template',
                   class: 'form-control'}
             - for h in _.sortBy(App.GenericTemplate.category('Task', true), (t) -> t.title)
               %option{value: h.id}= h.title
@@ -57,7 +56,7 @@
             .caret
 
           %ul.dropdown-menu
-            - if App.GenericTemplate.category('Task').length > 0
+            - if App.GenericTemplate.category('Task', true).length > 0
               %li
                 %a{href: '#', name: 'affair-tasks-preview'}
                   .icon-eye-open

@@ -40,7 +40,7 @@ class People::Affairs::InvoicesController < ApplicationController
       format.csv do
         fields = []
         fields << 'title'
-        fields << 'created_at.to_date'
+        fields << 'created_at.try(:to_date)'
         fields << 'value'
         fields << 'owner.first_name'
         fields << 'owner.last_name'
