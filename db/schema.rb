@@ -631,6 +631,7 @@ ActiveRecord::Schema.define(:version => 20140611100213) do
     t.string   "cert_others_title",                                        :default => "",    :null => false
     t.text     "cert_notes",                                               :default => "",    :null => false
     t.string   "employer_account",                                         :default => ""
+    t.text     "comments"
     t.string   "yearly_salary_currency",                                   :default => "CHF", :null => false
   end
 
@@ -693,6 +694,7 @@ ActiveRecord::Schema.define(:version => 20140611100213) do
     t.boolean  "archive",            :default => false, :null => false
   end
 
+  add_index "salaries_taxes", ["archive"], :name => "index_salaries_taxes_on_archive"
   add_index "salaries_taxes", ["exporter_avs_group"], :name => "index_salaries_taxes_on_exporter_avs_group"
   add_index "salaries_taxes", ["exporter_is_group"], :name => "index_salaries_taxes_on_exporter_is_group"
   add_index "salaries_taxes", ["exporter_lpp_group"], :name => "index_salaries_taxes_on_exporter_lpp_group"

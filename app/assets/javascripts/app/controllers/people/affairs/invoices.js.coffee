@@ -53,7 +53,7 @@ class New extends App.ExtendedController
     if @can?.invoice.create && Person.exists(@person_id) && PersonAffair.exists(@affair_id)
       @person = Person.find(@person_id)
       @affair = PersonAffair.find(@affair_id)
-      @invoice = new PersonAffairInvoice(value: 0)
+      @invoice = new PersonAffairInvoice(value: 0, cancelled: false, offered: false)
       @invoice.printed_address = @affair.buyer_address
       @invoice.title = @affair.title
       @invoice.description = @affair.description
@@ -77,7 +77,10 @@ class New extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @invoice.fromForm(e.target)
+    data = $(e.target).serializeObject()
+    @invoice.load(data)
+    @invoice.cancelled = data.cancelled?
+    @invoice.offered = data.offered?
     @save_with_notifications @invoice, =>
       PersonAffair.fetch(id: @affair_id)
       @render()
@@ -126,7 +129,10 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @invoice.fromForm(e.target)
+    data = $(e.target).serializeObject()
+    @invoice.load(data)
+    @invoice.cancelled = data.cancelled?
+    @invoice.offered = data.offered?
     @save_with_notifications @invoice, @update_callback
 
   destroy: (e) ->

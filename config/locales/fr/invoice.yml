@@ -13,11 +13,13 @@ fr:
       age: age
       balance_value: balance
       buyer: payeur
+      cancelled: annulée
       conditions: conditions
       counterpart_account: contrepartie
       export: export des factures
       invoice_date: date de la facture
       invoice_value: valeur de la facture
+      offered: offerte
       printed_address: adresse imprimée
       status: statut
       statuses:

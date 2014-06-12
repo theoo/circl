@@ -40,7 +40,7 @@
               = @invoice.description
 
       .row
-        .col-sm-12
+        .col-sm-9
           .form-group
             %label{for: 'person_affair_invoice_conditions'}
               = I18n.t('invoice.views.conditions')
@@ -49,6 +49,26 @@
                       rows: 3,
                       class: 'form-control'}
               = @invoice.conditions
+
+        .col-sm-3
+          %br
+          .checkbox
+            %label{for: 'person_affair_invoice_offered'}
+              %input{ type: 'checkbox',
+                id: 'person_affair_invoice_offered',
+                name: 'offered',
+                checked: @invoice.offered,
+                value: 1 }
+              = I18n.t('invoice.views.offered')
+
+          .checkbox
+            %label{for: 'person_affair_invoice_cancelled'}
+              %input{ type: 'checkbox',
+                id: 'person_affair_invoice_cancelled',
+                name: 'cancelled',
+                checked: @invoice.cancelled,
+                value: 1 }
+              = I18n.t('invoice.views.cancelled')
 
       .row
         .col-sm-7

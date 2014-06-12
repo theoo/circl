@@ -13,11 +13,13 @@ en:
       age: age
       balance_value: balance value
       buyer: buyer
+      cancelled: cancelled
       conditions: conditions
       counterpart_account: counterpart account
       export: export
       invoice_date: invoice date
       invoice_value: invoice value
+      offered: offered
       printed_address: printed address
       status: status
       statuses:

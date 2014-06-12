@@ -428,16 +428,25 @@ class Invoice < ActiveRecord::Base
 
   private
 
+  # State machine
   def update_statuses
     statuses = []
-    statuses << :open if open?
-    statuses << :underpaid if underpaid?
-    statuses << :cancelled if cancelled
+    # Underpaid
+    if cancelled
+      statuses << :cancelled if cancelled
+    else
+      statuses << :open if open?
+      statuses << :underpaid if underpaid?
+    end
 
+    # Paid or overpaid
     # TODO How an invoice could be paid and open in the same time ?
-    statuses << :paid if paid?
-    statuses << :overpaid if overpaid?
-    statuses << :offered if offered
+    if offered
+      statuses << :offered if offered
+    else
+      statuses << :paid if paid?
+      statuses << :overpaid if overpaid?
+    end
 
     self.reset_statuses(statuses)
   end
