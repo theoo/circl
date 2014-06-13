@@ -285,9 +285,8 @@ class Edit extends App.ExtendedController
 
   cancel: (e) ->
     e.preventDefault()
-    @el.parent().find("tr[data-id=#{@affair.id}]").removeClass('active')
     @unload_dependencies()
-    @hide()
+    super(e)
 
   show_owner: (e) ->
     window.location = "/people/#{@affair.owner_id}#affairs"

@@ -51,6 +51,7 @@ class App.ExtendedController extends Spine.Controller
 
   cancel: (e) ->
     e.preventDefault()
+    @el.parent().find("tr[data-id=#{$(e.target).attr('data-id')}]").removeClass('active')
     @hide()
 
   # stacked windows

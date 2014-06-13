@@ -66,7 +66,7 @@ class Edit extends App.ExtendedController
   cancel: (e) ->
     e.preventDefault()
     @unload_dependencies()
-    @hide()
+    super(e)
 
   destroy: (e) ->
     e.preventDefault()

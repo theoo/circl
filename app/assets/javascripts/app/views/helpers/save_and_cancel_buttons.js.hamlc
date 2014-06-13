@@ -6,7 +6,7 @@
   // when hitting 'enter' on a form the first button is triggered
   %button{type: 'submit', style: "visibility: hidden;"}
   .btn-group
-    %button{name: 'cancel', class: 'btn btn-default'}
+    %button{name: 'cancel', class: 'btn btn-default', 'data-id' => @id}
       .icon-undo
       = I18n.t('common.close')
     %button{type: 'submit', class: 'btn btn-primary'}
