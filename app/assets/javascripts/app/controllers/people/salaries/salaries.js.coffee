@@ -155,6 +155,11 @@ class Edit extends App.ExtendedController
     @render()
     @show()
 
+  cancel: (e) =>
+    e.preventDefault()
+    @unload_dependencies
+    super(e)
+
   load_dependencies: =>
     if @id
       # Required by items and tax_data
