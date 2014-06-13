@@ -31,7 +31,7 @@ fr:
       extras: Extras
       footer: commentaires
       format: format
-      invoice_names_filter: filtre pour le nom des factures
+      subscription_names_filter: filtre pour le nom des inscriptions
       invoices: Factures
       invoices_count: nombre de factures
       invoices_value: valeur des factures

@@ -90,6 +90,7 @@ fr:
       change_password_for: Changer le mot de pass de <b>%{person}</b>
       comments: Commentaires
       communication_languages: Langues de communications secondaires
+      coordinates_format: Le format des coordonnées est 46.1997577723502, 6.13464653491974
       current_password: mot de passe actuel
       destroy: supprimer
       email: email
@@ -128,3 +129,5 @@ fr:
       this_person_uniq_id: Identifiant unique de cette personne (ID)
       translation_aptitudes: Aptitudes de traduction
       update_password: mettre à jour le mot de passe
+      website: adresse du site internet (URL)
+

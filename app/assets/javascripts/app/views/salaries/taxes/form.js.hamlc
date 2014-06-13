@@ -65,6 +65,18 @@
                 %option{value: group, selected: true}= name
               - else
                 %option{value: group}= name
+
+    .row
+      .col-lg-12
+        .checkbox
+          %label.control-label
+            %input{ :type => 'checkbox',
+                    :id => 'tax_employee_archive',
+                    :name => 'archive',
+                    :checked => @tax.archive,
+                    :value => 1 }
+            = I18n.t('common.archive')
+
     .row
       .col-lg-12
         .pull-right

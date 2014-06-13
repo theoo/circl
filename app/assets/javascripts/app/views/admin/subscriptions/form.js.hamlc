@@ -53,23 +53,21 @@
           .row
             .col-sm-6
               .form-group
-                %label{for: 'admin_subscription_interval_starts_on'}
+                %label
                   = I18n.t('common.from')
-                %input{type: 'text',
-                       name: 'interval_starts_on',
-                       id: 'admin_subscription_interval_starts_on',
-                       class: 'datepicker form-control',
-                       value: @subscription.interval_starts_on }
+                %input{:type => 'text',
+                       :name => 'interval_starts_on',
+                       :class => 'datepicker form-control',
+                       :value => @subscription.interval_starts_on }
 
             .col-sm-6
               .form-group
-                %label{for: 'admin_subscription_interval_ends_on'}
+                %label
                   = I18n.t('common.to')
-                %input{type: 'text',
-                       name: 'interval_ends_on',
-                       id: 'admin_subscription_interval_ends_on',
-                       class: 'datepicker form-control',
-                       value: @subscription.interval_ends_on }
+                %input{:type => 'text',
+                       :name => 'interval_ends_on',
+                       :class => 'datepicker form-control',
+                       :value => @subscription.interval_ends_on }
 
         .col-lg-6
           %h3= I18n.t('subscription.views.values_title')

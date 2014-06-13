@@ -17,7 +17,10 @@
 
     %tbody
       - for data, tax_id in @tax_data
-        %tr{:data-position => tax_id}
+        - tax = App.SalaryTax.find(data.tax_id)
+        - classes = []
+        - classes.push "danger" if tax.archive
+        %tr{:data-position => tax_id, :class => classes.join(" ")}
           %td.handle
             .icon-resize-vertical
           %td

@@ -10,7 +10,9 @@
 
   %tbody
     - for tax in App.SalaryTax.all()
-      %tr{:data-id => tax.id, class: 'item'}
+      - classes = ['item']
+      - classes.push 'success' unless tax.archive
+      %tr{:data-id => tax.id, :class => classes.join(" ")}
         %td= tax.title
         %td= tax.model
         %td.number= tax.employee_account

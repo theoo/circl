@@ -103,6 +103,21 @@
                 %a{name: 'person_second_email_button', class: 'btn btn-default'}
                   .icon-envelope
 
+        .row
+          .col-sm-12.form-group
+            %label{:for => 'person_website', :class => 'control-label'}
+              = I18n.t('person.views.website')
+            .input-group
+              %input{ :type => 'website',
+                      :id => 'person_website',
+                      :name => 'website',
+                      :class => 'form-control',
+                      :placeholder => 'http://www.example.com',
+                      :value => @person.website}
+              .input-group-btn
+                %a{:name => 'person_website_button', :class => 'btn btn-default'}
+                  .icon-globe
+
       .col-md-6
         .row
           .col-sm-6.form-group
@@ -193,6 +208,21 @@
                   %option{value: l.id, selected: true}= l.name
                 - else
                   %option{value: l.id}= l.name
+
+        .row
+          .col-sm-6
+            .form-group.autocompleted
+              %label{:for => 'person_job', :class => 'control-label'}
+                = I18n.t('person.views.job')
+              %input{ :type => 'search',
+                      :id => 'person_job',
+                      :name => 'job_name',
+                      :class => 'form-control',
+                      :value => @person.job_name,
+                      :action => '/settings/jobs/search' }
+              %input{ :type => 'hidden',
+                      :name => 'job_id',
+                      :value => @person.job_id }
 
     .row
       .col-md-6

@@ -119,12 +119,13 @@
     .row
       .col-lg-12
         .form-group
-          %label{for: 'admin_receipts_documents_invoices_filter'}
-            = I18n.t('affair.views.invoice_names_filter')
-          %input{type: 'text',
-                 name: 'invoices_filter',
-                 id: 'admin_receipts_documents_invoices_filter',
-                 class: 'form-control'}
+          %label{:for => 'admin_receipts_documents_subscriptions_filter'}
+            = I18n.t('affair.views.subscription_names_filter')
+          %input{:type => 'text',
+                 :name => 'subscriptions_filter',
+                 :id => 'admin_receipts_documents_subscriptions_filter',
+                 :class => 'form-control'}
+
           %small.help-block
             = I18n.t('affair.notices.regexp')
 

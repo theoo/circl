@@ -19,7 +19,8 @@ class App.PersonSalary extends Spine.Model
   @configure 'PersonSalary', 'parent_id', 'person_id', 'generic_template_id',
              'activity_rate', 'from', 'to', 'title', 'is_reference', 'yearly_salary_currency',
              'married', 'children_count', 'yearly_salary', 'yearly_salary_count',
-             'paid', 'brut_account', 'net_account', 'employer_account', 'created_at'
+             'paid', 'brut_account', 'net_account', 'employer_account', 'created_at',
+             'comments'
 
   @extend Spine.Model.Ajax
 

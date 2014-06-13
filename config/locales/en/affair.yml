@@ -31,7 +31,7 @@ en:
       extras: Extras
       footer: comments
       format: format
-      invoice_names_filter: invoice names filter
+      subscription_names_filter: subscription names filter
       invoices: Invoices
       invoices_count: invoice count
       invoices_value: values of invoices

@@ -208,6 +208,7 @@ class Salaries::Salary < ActiveRecord::Base
   validate :ensure_person_have_required_fields, if: :person
   validate :ensure_interval_dates_are_for_the_same_year, if: [:from, :to]
   validate :ensure_from_date_is_before_to_date, if: [:from, :to]
+  validate :ensure_taxes_have_data_for_the_given_interval, if: [:from, :to]
   validates_numericality_of :activity_rate,
                             greater_than_or_equal_to: 0,
                             less_than_or_equal_to: 100,
@@ -223,7 +224,7 @@ class Salaries::Salary < ActiveRecord::Base
   end
 
   def taxed_items_total
-    taxed_items.map(&:value).sum
+    taxed_items.map(&:value).sum.to_money
   end
 
   def untaxed_items
@@ -236,7 +237,7 @@ class Salaries::Salary < ActiveRecord::Base
   end
 
   def untaxed_items_total
-    untaxed_items.map(&:value).sum
+    untaxed_items.map(&:value).sum.to_money
   end
 
   def pdf_up_to_date?
@@ -267,9 +268,9 @@ class Salaries::Salary < ActiveRecord::Base
 
   def init_items
     wage = yearly_salary && yearly_salary_count ? self.yearly_salary / self.yearly_salary_count : 1000.to_money(self.yearly_salary_currency)
-    taxes = Salaries::Tax.all
+    taxes = Salaries::Tax.where(archive: false).all
     item = Salaries::Item.new(title: I18n.t("salary.views.generic_template_item_title"),
-                              category: I18n.t("salary.views.generic_template_item_category"), 
+                              category: I18n.t("salary.views.generic_template_item_category"),
                               position: 0,
                               value: wage,
                               taxes: taxes)
@@ -305,7 +306,7 @@ class Salaries::Salary < ActiveRecord::Base
   def create_missing_tax_data
     next_pos = tax_data.size
     existing_ids = tax_data.map(&:tax_id)
-    Salaries::Tax.all.reject{ |t| existing_ids.include?(t.id) }.each do |tax|
+    Salaries::Tax.where(archive: false).reject{ |t| existing_ids.include?(t.id) }.each do |tax|
       data = tax_data.build(tax: tax, position: next_pos)
       data.reset
       data.save!
@@ -398,7 +399,7 @@ class Salaries::Salary < ActiveRecord::Base
   end
 
   def net_salary
-    gross_pay - employee_value_total
+    gross_pay + untaxed_items_total - employee_value_total
   end
 
   def employer_value_total
@@ -527,7 +528,6 @@ class Salaries::Salary < ActiveRecord::Base
                  I18n.t('salary.errors.from_and_to_dates_should_be_in_the_same_year'))
       false
     end
-
   end
 
   def ensure_from_date_is_before_to_date
@@ -538,7 +538,24 @@ class Salaries::Salary < ActiveRecord::Base
                  I18n.t('salary.errors.to_date_should_be_after_from_date'))
       false
     end
+  end
 
+  def ensure_taxes_have_data_for_the_given_interval
+    taxes_without_data = []
+    Salaries::Tax.where(:archive => false).each do |tax|
+      # NOTE Salary have to be in the same year, check validation above
+      if tax.model.constantize.where(:tax_id => tax.id, :year => to.year).count == 0
+        taxes_without_data << tax.title
+      end
+    end
+
+    unless taxes_without_data.empty?
+      errors.add(:base,
+                 I18n.t('salary.errors.missing_tax_data_for_the_given_year',
+                  :taxes => taxes_without_data.join(", "),
+                  :year => to.year))
+      false
+    end
   end
 
 end

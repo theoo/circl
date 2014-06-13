@@ -228,7 +228,7 @@ class Admin::ReceiptsController < ApplicationController
                                                                    to: to,
                                                                    format: params[:format],
                                                                    generic_template_id: params[:generic_template_id],
-                                                                   invoices_filter: params[:invoices_filter],
+                                                                   subscriptions_filter: params[:subscriptions_filter],
                                                                    unit_value: params[:unit_value],
                                                                    global_value: params[:global_value],
                                                                    unit_overpaid: params[:unit_overpaid],

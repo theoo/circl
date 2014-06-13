@@ -90,6 +90,7 @@ en:
       change_password_for: change password for
       comments: comments
       communication_languages: communication languages
+      coordinrates_format: Coordinate format is 46.1997577723502, 6.13464653491974
       current_password: current password
       destroy: destroy
       email: email
@@ -128,3 +129,4 @@ en:
       this_person_uniq_id: this person uniq
       translation_aptitudes: translation aptitudes
       update_password: update password
+      website: website url

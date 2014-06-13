@@ -64,7 +64,7 @@ fr:
       subscription: inscription
       tag_tool:
         member: membre
-        members_following_theses_attributes: members following theses attributes
+        members_following_theses_attributes: Les membres suivants les attributs suivants
         of_a: d'une inscription
         private_tag_name: nom du tag privé
         subscription_at_this_date: à la date suivante

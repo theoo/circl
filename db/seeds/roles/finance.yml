@@ -29,9 +29,6 @@
 - subject: Salaries
   action: manage
 
-- subject: Template
-  action: manage
-
 - subject: Salaries::Item
   action: manage
 

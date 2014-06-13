@@ -61,7 +61,6 @@ class SearchEngineExtention extends App.ExtendedController
           ary.push @.trim()
         @custom_action.disabled = ary
 
-
   toggle_edit: (e) ->
     e.preventDefault()
     $("#presets_summary").collapse("toggle")
@@ -429,6 +428,7 @@ class Index extends App.ExtendedController
     'click tr button[name=directory-person-change-password]': 'change_password'
     'click a[name=directory-export-to-csv]': 'export_to_csv'
     'click a[name=directory-map]': 'open_map'
+    'datatable_redraw': 'table_redraw'
 
   constructor: (params) ->
     super
@@ -446,6 +446,13 @@ class Index extends App.ExtendedController
             'phone' ]
         attribues_order:
           [ 'created_at' ]
+
+    # Ensure datatable show a page where there is content
+    panel_name = "datatable/directory"
+    datatable_config = JSON.parse(localStorage.getItem(panel_name))
+    if datatable_config? and datatable_config.iLength < datatable_config.iStart
+      datatable_config.iStart = 0
+      localStorage.setItem(panel_name, JSON.stringify(datatable_config))
 
   active: (params) ->
     @render()
@@ -481,6 +488,25 @@ class Index extends App.ExtendedController
     Ui.datatable_localstorage(table)
     table.dataTable Ui.datatable_params(table, extended_params)
     Ui.datatable_appareance(table, {sorting: false})
+
+    # Disable some element if in a custom action
+    if $('#directory_custom_action_url').length > 0
+      @el.undelegate 'tr.item td:not(.ignore-click)', 'click'
+      @el.undelegate 'tr button[name=directory-person-destroy]', 'click'
+      @el.undelegate 'tr button[name=directory-person-change-password]', 'click'
+      @el.undelegate 'a[name=directory-export-to-csv]', 'click'
+      @el.undelegate 'a[name=directory-map]', 'click'
+
+      @el.find('.panel-footer').hide()
+
+      $("#secondary_navigation a").addClass('disabled')
+
+  table_redraw: =>
+    # Disable some element if in a custom action
+    if $('#directory_custom_action_url').length > 0
+      @el.find('button[name=directory-person-destroy]').attr("disabled", "disabled")
+      @el.find('button[name=directory-person-change-password]').attr("disabled", "disabled")
+      @el.find('tr.item').removeClass('item')
 
   export_to_csv: (e) =>
     e.preventDefault()

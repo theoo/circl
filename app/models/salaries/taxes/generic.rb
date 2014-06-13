@@ -105,42 +105,64 @@ class Salaries::Taxes::Generic < ActiveRecord::Base
     data = where(tax_id: tax.id, year: year).first
     raise RuntimeError, 'Cannot find tax data' unless data
 
-    if infos.yearly_salary && (data.salary_from_in_cents? || data.salary_to_in_cents?)
-      from = data.salary_from
-      to = data.salary_to || infos.yearly_salary
-      to = infos.yearly_salary if to > infos.yearly_salary
-      if from >= to
-        taxed_value = 0
+    if data
+      if infos.yearly_salary && (data.salary_from_in_cents? || data.salary_to_in_cents?)
+        from = data.salary_from
+        to = data.salary_to || infos.yearly_salary
+        to = infos.yearly_salary if to > infos.yearly_salary
+        if from >= to
+          taxed_value = 0
+        else
+          range = to - from
+          ratio = Rational(range.cents, infos.yearly_salary.cents)
+          taxed_value = reference_value * ratio.to_f
+        end
       else
-        range = to - from
-        ratio = Rational(range.cents, infos.yearly_salary.cents)
-        taxed_value = reference_value * ratio.to_f
+        taxed_value = reference_value
       end
+
+      taxed_value = taxed_value.to_money
+
+      # TODO
+      # create a helper class foo_data for the employee/employer (:attr_accessor %w{percent value use_percent})
+      # create another helper class that uses two foo_data as `composed_of` that splits fields
+      # over the appropriate db fields
+      {
+        taxed_value: taxed_value,
+        employer:
+        {
+          percent: data.employer_percent,
+          value: taxed_value * (data.employee_percent / 100),
+          use_percent: true
+        },
+        employee:
+        {
+          percent: data.employee_percent,
+          value: taxed_value * (data.employee_percent / 100),
+          use_percent: true
+        }
+      }
+
     else
-      taxed_value = reference_value
+
+      {
+        :taxed_value => reference_value,
+        :employer =>
+        {
+          :percent => 0,
+          :value   => 0.to_money,
+          :use_percent  => true
+        },
+        :employee =>
+        {
+          :percent => 0,
+          :value   => 0.to_money,
+          :use_percent  => true
+        }
+      }
+
     end
 
-    taxed_value = taxed_value.to_money
-
-    # TODO
-    # create a helper class foo_data for the employee/employer (:attr_accessor %w{percent value use_percent})
-    # create another helper class that uses two foo_data as `composed_of` that splits fields
-    # over the appropriate db fields
-    {
-      taxed_value: taxed_value,
-      employer:
-      {
-        percent: data.employer_percent,
-        value: taxed_value * (data.employee_percent / 100),
-        use_percent: true
-      },
-      employee:
-      {
-        percent: data.employee_percent,
-        value: taxed_value * (data.employee_percent / 100),
-        use_percent: true
-      }
-    }
   end
 
   def self.process_data(tax, data)

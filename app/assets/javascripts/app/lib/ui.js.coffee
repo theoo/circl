@@ -43,6 +43,9 @@ class Ui
     # $(document).delegate 'input[type="date"]', 'click', (e) ->
     #  e.preventDefault() # disable HTML5 default behavior
 
+    # If an ID is given to the datepicker, ensure it's really unique
+    # and not in a hidden form (like it is with spine new/edit paradigm)
+
     $(document).delegate 'input.datepicker', 'focus', ->
       $(@).datepicker
         inline: true
@@ -570,8 +573,9 @@ class Ui
       content_css: ['/assets/custom_fonts.css', '/assets/pdf_common.css', '/assets/pdf_edit.css']
       plugins: 'fullscreen,table,autolink,lists,spellchecker,pagebreak,layer,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,noneditable,visualblocks,visualchars,nonbreaking,template,anchor,charmap,hr,image,link,emoticons,code,textcolor'
       theme: 'modern'
-      browser_spellcheck : true
-      object_resizing : true
+      browser_spellcheck: true
+      object_resizing: true
+      relative_urls: false
       visual: true
       menubar: false
       toolbar1: "save cancel | undo redo | cut copy paste searchreplace | link image | table | charmap hr pagebreak | visualaid visualblocks visualchars | code"

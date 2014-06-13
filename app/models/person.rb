@@ -281,12 +281,17 @@ class Person < ActiveRecord::Base
   validates_uniqueness_of :second_email, if: :has_second_email?
   validates_format_of :email, with: FormatValidations::EMAIL_REGEX, if: :has_email?
   validates_format_of :second_email, with: FormatValidations::EMAIL_REGEX, if: :has_second_email?
+  validates :website, format: URI::regexp(%w(http https)), unless: 'website.blank?'
   validate :avs_number_format
   validate :second_email_is_different, if: lambda { has_email? && has_second_email? }
   validate :has_org_name_if_is_an_org_is_set
   validate :main_language_is_not_in_communication_languages
   validates_strength_of :password, with: :email, if: lambda { !password.blank? }
   validates_confirmation_of :password
+
+  validates :latitude, :inclusion => 0..90, :if => 'latitude'
+  validates :longitude, :inclusion => -180..180, :if => 'longitude'
+
 
   # Validate fields of type 'string' length
   validates_length_of :organization_name, maximum: 255
@@ -350,7 +355,7 @@ class Person < ActiveRecord::Base
         p.first_name         = row[0]
         p.last_name          = row[1]
         p.title              = row[2]
-        p.is_an_organization = ['1', 'true'].include?(row[3])
+        p.is_an_organization = ['1', 'true', 'True'].include?(row[3])
         p.organization_name  = row[4]
         p.address            = row[5]
         p.phone              = row[8]
@@ -362,7 +367,7 @@ class Person < ActiveRecord::Base
         p.nationality        = row[15]
         p.avs_number         = row[16]
         p.bank_informations  = row[17]
-        p.hidden             = ['1', 'true'].include?(row[24])
+        p.hidden             = ['1', 'true', 'True'].include?(row[24])
 
         p.valid?
 

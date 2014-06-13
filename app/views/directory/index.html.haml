@@ -1,4 +1,16 @@
 #secondary_navbar.navbar.navbar-default.navbar-static-top
+
+  .navbar-header
+    .visible-xs
+      .navbar-brand
+        #tab_name
+
+    // extra-small resolutions
+    %button{:class => 'navbar-toggle', 'data-toggle' => 'collapse', 'data-target' => '#secondary_navigation'}
+      .icon-bar
+      .icon-bar
+      .icon-bar
+
   .container
     #secondary_navigation.collapse.navbar-collapse
       %ul#sub_nav.nav.navbar-nav

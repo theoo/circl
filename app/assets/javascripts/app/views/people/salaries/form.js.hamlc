@@ -67,34 +67,31 @@
 
             .col-lg-6
               .form-group
-                %label{for: 'person_salary_created_at'}
+                %label
                   = I18n.t('common.created_at')
-                %input{ type: 'text',
-                        name: 'created_at',
-                        id: 'person_salary_created_at',
-                        class: 'datepicker form-control',
-                        value: @salary.created_at }
+                %input{ :type => 'text',
+                        :name => 'created_at',
+                        :class => 'datepicker form-control',
+                        :value => @salary.created_at }
 
           .row
             .col-lg-6
               .form-group
-                %label{for: 'person_salary_from'}
+                %label
                   = I18n.t('common.from')
-                %input{type: 'text',
-                       name: 'from',
-                       id: 'person_salary_from',
-                       class: 'datepicker form-control required',
-                       value: @salary.from }
+                %input{:type => 'text',
+                       :name => 'from',
+                       :class => 'datepicker form-control required',
+                       :value => @salary.from }
 
             .col-lg-6
               .form-group
-                %label{for: 'person_salary_to'}
+                %label
                   = I18n.t('common.to')
-                %input{ type: 'text',
-                        name: 'to',
-                        id: 'person_salary_to',
-                        class: 'datepicker form-control required',
-                        value: @salary.to }
+                %input{ :type => 'text',
+                        :name => 'to',
+                        :class => 'datepicker form-control required',
+                        :value => @salary.to }
 
           .row
             .col-lg-6
@@ -148,6 +145,17 @@
                           checked: @salary.paid,
                           value: 1 }
                   = I18n.t('common.paid')
+
+            .col-lg-12
+              .form-group
+                %label{ :for => 'salary_comments', :class => 'label-control' }
+                  = I18n.t('salary.views.comments')
+
+                %textarea{:name => 'comments',
+                          :id => 'salary_comments',
+                          :rows => 3,
+                          :class => 'form-control'}
+                  = @salary.comments
 
           - if @salary.is_reference
             .row

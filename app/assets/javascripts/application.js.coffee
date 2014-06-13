@@ -126,4 +126,3 @@ Date.prototype.to_view = (date)->
 String.prototype.to_date = ->
   ary = @.split("-").reverse()
   new Date(parseInt(ary[0]), parseInt(ary[1]) - 1, parseInt(ary[2]))
-  "1-1-2013"
