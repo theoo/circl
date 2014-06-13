@@ -28,10 +28,9 @@ class People::TasksController < ApplicationController
 
   def index
     authorize! :index, ::Task
-    @tasks = @person.executed_tasks
 
     respond_to do |format|
-      format.json { render json: @tasks }
+      format.json { render json: ExecutedTasksDatatable.new(view_context, @person) }
     end
   end
 

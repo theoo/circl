@@ -24,6 +24,7 @@ class Admin::InvoicesController < ApplicationController
 
   def index
     authorize! :index, Invoice
+
     respond_to do |format|
       format.json { render json: InvoicesDatatable.new(view_context) }
     end

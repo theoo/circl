@@ -100,7 +100,8 @@ class Invoice < ActiveRecord::Base
 
   scope :open_invoices, Proc.new {
     mask = Invoice.statuses_value_for(:open)
-    where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+    where("(invoices.status::bit(16) & ?::bit(16))::int = ? AND invoices.created_at < now()",
+      mask, mask)
   }
 
   ###################
@@ -360,6 +361,14 @@ class Invoice < ActiveRecord::Base
     balance_value < 0
   end
 
+  def translated_statuses
+    get_statuses.map{|s| I18n.t("invoice.views.statuses." + s.to_s)}.join(", ")
+  end
+
+  def translated_age
+    helper.distance_of_time_in_words_to_now(created_at)
+  end
+
   # Attributes overridden - JSON API
   def as_json(options = nil)
     h = super(options)
@@ -377,12 +386,12 @@ class Invoice < ActiveRecord::Base
     h[:vat]              = vat.try(:to_f)
     h[:value_with_taxes] = value_with_taxes.try(:to_f)
     h[:created_at]       = created_at.to_date
-    h[:age]              = helper.distance_of_time_in_words_to_now(created_at)
+    h[:age]              = translated_age
 
     h[:receipts_value]   = receipts_value.try(:to_f)
     h[:balance_value]    = balance_value.try(:to_f)
 
-    h[:statuses]         = get_statuses.map{|s| I18n.t("invoice.views.statuses." + s.to_s)}.join(", ")
+    h[:statuses]         = translated_statuses
 
     h[:errors]           = errors
 

@@ -16,17 +16,22 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class InvoicesDatatable
+class OpenInvoicesDatatable
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
+
+  include ApplicationHelper
+  include Haml::Helpers
 
   def initialize(view)
     @view = view
+
+    init_haml_helpers
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Invoice.count,
+      iTotalRecords: Invoice.open_invoices.count,
       iTotalDisplayRecords: invoices.total_entries,
       aaData: data
     }
@@ -36,15 +41,34 @@ class InvoicesDatatable
 
   def data
     invoices.map do |invoice|
+
+      description = capture_haml do
+        haml_concat invoice.buyer.try(:name)
+
+        if invoice.buyer.try(:id) != invoice.owner.try(:id)
+          haml_concat "/"
+          haml_tag :i, I18n.t("invoice.views.owner") + ": " + invoice.owner.try(:name)
+        end
+
+        if invoice.buyer.try(:id) != invoice.receiver.try(:id)
+          haml_concat "/"
+          haml_tag :i, I18n.t("invoice.views.receiver") + ": " + invoice.receiver.try(:name)
+        end
+
+        haml_tag :br
+        haml_tag :b, invoice.affair.try(:title)
+        haml_tag :br
+        haml_concat invoice.value.to_view
+        haml_tag :i, invoice.translated_statuses
+        haml_tag :br
+        haml_concat invoice.description.gsub(/\n/, "<br />")
+      end
+
       {
         0 => invoice.id,
-        1 => invoice.buyer.name,
-        2 => invoice.title,
-        3 => invoice.value.to_view,
-        4 => invoice.translated_statuses,
-        5 => invoice.created_at,
-        'id' => invoice.id,
-        'number_columns' => [3]
+        1 => invoice.created_at.to_s + "<br />" + invoice.translated_age,
+        2 => description,
+        'id' => invoice.buyer.id
       }
     end
   end
@@ -54,9 +78,8 @@ class InvoicesDatatable
   end
 
   def fetch_invoices
-    invoices = Invoice.select('invoices.*')
-                      .joins(affair: :owner)
-                      .group('invoices.id, affairs.id')
+    invoices = Invoice.open_invoices.select('invoices.*')
+                    .joins(:affair)
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       if param.is_i?
@@ -82,7 +105,7 @@ class InvoicesDatatable
   end
 
   def sort_column
-    columns = %w{id affairs.buyer_id title value_in_cents status created_at}
+    columns = %w{id created_at description}
     columns[params[:iSortCol_0].to_i]
   end
 

@@ -64,3 +64,6 @@
 
 - subject: CurrencyRate
   action: manage
+
+- subject: Dashboard
+  action: manage

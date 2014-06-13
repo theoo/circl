@@ -17,10 +17,10 @@
 PersonTask = App.PersonTask
 TaskType   = App.TaskType
 
-$.fn.task = ->
+$.fn.task_id = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
-  PersonTask.find(elementID)
+  elementID
 
 class New extends App.TimesheetExtention
 
@@ -116,13 +116,19 @@ class Index extends App.ExtendedController
     @render()
 
   render: =>
-    @html @view('people/tasks/index')(@)
+    @html @view('people/dashboard/timesheet')(@)
 
   edit: (e) ->
     e.preventDefault()
-    @task = $(e.target).task()
-    @activate_in_list(e.target)
-    @trigger 'edit', @task.id
+
+    id = $(e.target).task_id()
+
+    PersonTask.one 'refresh', =>
+      @task = PersonTask.find(id)
+      @activate_in_list(e.target)
+      @trigger 'edit', @task.id
+
+    PersonTask.fetch(id: id)
 
   table_redraw: =>
     if @task

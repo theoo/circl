@@ -1,22 +1,5 @@
-%table.table.table-hover.clickable
+%table.datatable{ action: App.PersonComment.url() }
   %thead
     %tr
       %th.desc= I18n.t('common.created_at')
       %th= I18n.t('comment.views.comment')
-
-  %tbody
-    - for comment in @comments
-      - classes = ['item']
-      - classes.push 'warning' if comment.is_closed
-
-      %tr{:data-id => comment.resource_id, class: classes.join(" ")}
-        %td= comment.created_at
-        %td
-          %b= comment.resource_name
-          = "- "
-          %i= comment.title
-          %br
-          - if comment.description.length > 250
-            != comment.description.replace(/\n/g, '<br/>').substring(0, 250).trim() + "..."
-          - else
-            != comment.description.replace(/\n/g, '<br/>')

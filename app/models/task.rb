@@ -108,7 +108,7 @@ class Task < ActiveRecord::Base
     h[:affair_title]            = affair.try(:title)
     h[:owner_name]              = owner.try(:name)
     h[:executer_name]           = executer.try(:name)
-    h[:duration_in_words]       = helper.distance_of_time_in_words(duration * 60)
+    h[:duration_in_words]       = translated_duration
     h[:value]                   = value.to_f
     h[:value_currency]          = value.currency.try(:iso_code)
     h[:computed_value]          = compute_value.to_f
@@ -123,6 +123,10 @@ class Task < ActiveRecord::Base
 
   def duration_in_hours
     duration / 60.0
+  end
+
+  def translated_duration
+    helper.distance_of_time_in_words(duration * 60)
   end
 
   def compute_value

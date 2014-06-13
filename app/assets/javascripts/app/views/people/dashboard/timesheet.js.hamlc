@@ -1,0 +1,7 @@
+%table.datatable{ action: App.PersonTask.url() }
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th= I18n.t('common.date')
+      %th= I18n.t('task.views.duration')
+      %th= I18n.t('common.description')

@@ -16,18 +16,23 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class InvoicesDatatable
+class OpenCommentsDatatable
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
+
+  include ApplicationHelper
+  include Haml::Helpers
 
   def initialize(view)
     @view = view
+
+    init_haml_helpers
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Invoice.count,
-      iTotalDisplayRecords: invoices.total_entries,
+      iTotalRecords: Comment.open_comments.count,
+      iTotalDisplayRecords: comments.total_entries,
       aaData: data
     }
   end
@@ -35,42 +40,50 @@ class InvoicesDatatable
   private
 
   def data
-    invoices.map do |invoice|
-      {
-        0 => invoice.id,
-        1 => invoice.buyer.name,
-        2 => invoice.title,
-        3 => invoice.value.to_view,
-        4 => invoice.translated_statuses,
-        5 => invoice.created_at,
-        'id' => invoice.id,
-        'number_columns' => [3]
+    comments.map do |comment|
+
+      description = capture_haml do
+        haml_tag :b, comment.resource.try(:name)
+        haml_concat "-"
+        haml_tag :i, comment.title
+        haml_tag :br
+        if comment.description.length > 250
+          haml_concat comment.description[0...250].gsub(/\n/, "<br />") + "..."
+        else
+          haml_concat comment.description.gsub(/\n/, "<br />")
+        end
+      end
+
+      h ={
+        0 => comment.created_at,
+        1 => description,
+        'id' => comment.person_id
       }
+
+      h
     end
   end
 
-  def invoices
-    @invoices ||= fetch_invoices
+  def comments
+    @comments ||= fetch_comments
   end
 
-  def fetch_invoices
-    invoices = Invoice.select('invoices.*')
-                      .joins(affair: :owner)
-                      .group('invoices.id, affairs.id')
+  def fetch_comments
+    comments = Comment.open_comments.order("#{sort_column} #{sort_direction}")
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
+      param = "^#{param}"
       if param.is_i?
-        invoices = invoices.where("invoices.id = ?", param)
+        comments = comments.where( "comments.id = ?", param)
       else
-        invoices = invoices.where("people.last_name ~* ? OR
-                                   people.first_name ~* ? OR
-                                   affairs.title ~* ?",
-                                   *([param] * 3))
+        comments = comments
+          .where( "comments.description ~* ? OR
+                    comments.title ~* ?",
+                    *([param]*2))
       end
     end
-    invoices = invoices.order("#{sort_column} #{sort_direction}")
-    invoices = invoices.page(page).per_page(per_page)
-    invoices
+    comments = comments.page(page).per_page(per_page)
+    comments
   end
 
   def page
@@ -82,7 +95,7 @@ class InvoicesDatatable
   end
 
   def sort_column
-    columns = %w{id affairs.buyer_id title value_in_cents status created_at}
+    columns = %w{created_at title}
     columns[params[:iSortCol_0].to_i]
   end
 

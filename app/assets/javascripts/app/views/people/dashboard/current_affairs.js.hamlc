@@ -1,54 +1,6 @@
-%table.datatable
+%table.datatable{ action: App.Affair.url() }
   %thead
     %tr
-      %th= I18n.t('common.id')
-      %th.desc= I18n.t('affair.views.update_date')
+      %th{style: "width: 40px;"}= I18n.t('common.id')
+      %th{style: "width: 100px;"}= I18n.t('affair.views.update_date')
       %th= I18n.t('common.description')
-
-  %tbody
-    - for affair in @affairs
-
-      %tr{:data-id => affair.id, class: 'item'}
-        %td= affair.id
-        %td= affair.updated_at
-        %td
-          %b= affair.owner_name
-          \-
-          %i= affair.title
-          - if affair.description.length > 0
-            %br
-            = affair.description
-
-          - if affair.subscriptions_count > 0
-            %br
-            .badge= affair.subscriptions_count
-            = I18n.t('affair.views.subscriptions') + " :"
-            = affair.subscriptions_value.to_view(affair.subscriptions_value_currency)
-
-          - if affair.tasks_count > 0
-            %br
-            .badge= affair.tasks_count
-            = I18n.t('affair.views.tasks') + " :"
-            = affair.tasks_value.to_view(affair.tasks_value_currency)
-
-          - if affair.products_count > 0
-            %br
-            .badge= affair.products_count
-            = I18n.t('affair.views.products') + " :"
-            = affair.products_value.to_view(affair.products_value_currency)
-
-          - if affair.extras_count > 0
-            %br
-            .badge= affair.extras_count
-            = I18n.t('affair.views.extras') + " :"
-            = affair.extras_value.to_view(affair.extras_value_currency)
-
-          %br
-          .badge= affair.invoices_count
-          = I18n.t('affair.views.invoices') + " :"
-          = affair.invoices_value.to_view(affair.invoices_value_currency)
-
-          %br
-          .badge= affair.receipts_count
-          = I18n.t('affair.views.receipts') + " :"
-          = affair.receipts_value.to_view(affair.receipts_value_currency)

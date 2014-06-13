@@ -41,3 +41,9 @@
 
 - subject: CurrencyRate
   action: index
+
+- subject: Dashboard
+  action: open_invoices
+
+- subject: Dashboard
+  action: open_salaries

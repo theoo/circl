@@ -36,3 +36,12 @@
 
 - subject: GenericTemplate
   action: count
+
+- subject: Dashboard
+  action: comments
+
+- subject: Dashboard
+  action: activities
+
+- subject: Dashboard
+  action: current_affairs

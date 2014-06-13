@@ -62,6 +62,8 @@ class Comment < ActiveRecord::Base
   # Validate fields of type 'text' length
   validates_length_of :description, maximum: 65536
 
+  scope :open_comments, Proc.new { where(is_closed: false) }
+
 
   ########################
   ### INSTANCE METHODS ###

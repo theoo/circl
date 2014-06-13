@@ -1,25 +1,6 @@
-%table.datatable 
+%table.datatable{ action: App.Invoice.url() }
   %thead
     %tr
       %th= I18n.t('common.id')
-      %th.desc= I18n.t('common.created_at')
-      %th.desc= I18n.t('invoice.views.age')
+      %th= I18n.t('common.created_at')
       %th= I18n.t('common.description')
-
-  %tbody
-    - for invoice in @invoices
-
-      %tr{:data-id => invoice.id, class: 'item'}
-        %td= invoice.affair_id
-        %td= invoice.created_at
-        %td= invoice.age
-        %td
-          %b= invoice.owner_name
-          \-
-          %i= invoice.affair_title
-          %br
-            = invoice.value
-            \-
-            %i= invoice.statuses
-            %br
-              = invoice.description

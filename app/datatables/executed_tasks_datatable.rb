@@ -16,18 +16,24 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class InvoicesDatatable
+class ExecutedTasksDatatable
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
 
-  def initialize(view)
+  include ApplicationHelper
+  include Haml::Helpers
+
+  def initialize(view, person)
     @view = view
+    @person = person
+
+    init_haml_helpers
   end
 
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Invoice.count,
-      iTotalDisplayRecords: invoices.total_entries,
+      iTotalRecords: @person.executed_tasks.count,
+      iTotalDisplayRecords: tasks.total_entries,
       aaData: data
     }
   end
@@ -35,42 +41,55 @@ class InvoicesDatatable
   private
 
   def data
-    invoices.map do |invoice|
-      {
-        0 => invoice.id,
-        1 => invoice.buyer.name,
-        2 => invoice.title,
-        3 => invoice.value.to_view,
-        4 => invoice.translated_statuses,
-        5 => invoice.created_at,
-        'id' => invoice.id,
-        'number_columns' => [3]
+    tasks.map do |task|
+
+      description = capture_haml do
+        haml_tag :b, task.owner.try(:name)
+        haml_concat "-"
+        haml_tag :i, task.affair.try(:title)
+        haml_tag :br
+        if task.description.length > 250
+          haml_concat task.description[0...250].gsub(/\n/, "<br />") + "..."
+        else
+          haml_concat task.description.gsub(/\n/, "<br />")
+        end
+      end
+
+      duration = capture_haml do
+        haml_concat task.duration.to_s + " min"
+        haml_tag :br
+        haml_concat "(#{task.translated_duration})"
+      end
+
+      h ={
+        0 => task.id,
+        1 => task.created_at,
+        2 => duration,
+        3 => description,
+        'id' => task.id
       }
+
+      h
     end
   end
 
-  def invoices
-    @invoices ||= fetch_invoices
+  def tasks
+    @tasks ||= fetch_tasks
   end
 
-  def fetch_invoices
-    invoices = Invoice.select('invoices.*')
-                      .joins(affair: :owner)
-                      .group('invoices.id, affairs.id')
+  def fetch_tasks
+    tasks = @person.executed_tasks.order("#{sort_column} #{sort_direction}").limit(100)
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
+      param = "^#{param}"
       if param.is_i?
-        invoices = invoices.where("invoices.id = ?", param)
+        tasks = tasks.where( "tasks.id = ?", param)
       else
-        invoices = invoices.where("people.last_name ~* ? OR
-                                   people.first_name ~* ? OR
-                                   affairs.title ~* ?",
-                                   *([param] * 3))
+        tasks = tasks.where( "tasks.description ~*", param)
       end
     end
-    invoices = invoices.order("#{sort_column} #{sort_direction}")
-    invoices = invoices.page(page).per_page(per_page)
-    invoices
+    tasks = tasks.page(page).per_page(per_page)
+    tasks
   end
 
   def page
@@ -82,7 +101,7 @@ class InvoicesDatatable
   end
 
   def sort_column
-    columns = %w{id affairs.buyer_id title value_in_cents status created_at}
+    columns = %w{id created_at duration description}
     columns[params[:iSortCol_0].to_i]
   end
 

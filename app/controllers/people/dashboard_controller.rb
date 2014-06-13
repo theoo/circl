@@ -18,7 +18,7 @@
 
 class People::DashboardController < ApplicationController
 
-  load_resource :person
+  load_and_authorize_resource :person
 
   layout false
 
@@ -31,10 +31,8 @@ class People::DashboardController < ApplicationController
   end
 
   def comments
-    @comments = Comment.order("created_at desc").limit(10)
-
     respond_to do |format|
-      format.json { render json: @comments }
+      format.json { render json: OpenCommentsDatatable.new(view_context) }
     end
   end
 
@@ -55,18 +53,14 @@ class People::DashboardController < ApplicationController
   end
 
   def open_invoices
-    @open_invoices = Invoice.open_invoices.order("created_at desc").limit(10)
-
     respond_to do |format|
-      format.json { render json: @open_invoices }
+      format.json { render json: OpenInvoicesDatatable.new(view_context) }
     end
   end
 
   def current_affairs
-    @current_affairs = Affair.open_affairs("created_at desc").limit(10)
-
     respond_to do |format|
-      format.json { render json: @current_affairs }
+      format.json { render json: OpenAffairsDatatable.new(view_context) }
     end
   end
 
@@ -74,7 +68,7 @@ class People::DashboardController < ApplicationController
     @open_salaries = Salaries::Salary.unpaid_salaries.order("created_at desc").limit(10)
 
     respond_to do |format|
-      format.json { render json: @open_salaries }
+      format.json { render json: OpenSalariesDatatable.new(view_context) }
     end
   end
 end

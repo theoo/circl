@@ -11,6 +11,9 @@
 - subject: Invoice
   action: manage
 
+- subject: Invoice
+  action: open_invoices
+
 - subject: PrivateTag
   action: manage
 
@@ -43,3 +46,6 @@
 
 - subject: Subscription
   action: manage
+
+- subject: Dashboard
+  action: 

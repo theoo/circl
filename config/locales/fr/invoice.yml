@@ -20,8 +20,10 @@ fr:
       invoice_date: date de la facture
       invoice_value: valeur de la facture
       offered: offerte
+      owner: propriétaire
       printed_address: adresse imprimée
       status: statut
+      receiver: receveur
       statuses:
         cancelled: annulée
         offered: offerte

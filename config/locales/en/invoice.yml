@@ -20,7 +20,9 @@ en:
       invoice_date: invoice date
       invoice_value: invoice value
       offered: offered
+      owner: owner
       printed_address: printed address
+      receiver: receiver
       status: status
       statuses:
         cancelled: cancelled
