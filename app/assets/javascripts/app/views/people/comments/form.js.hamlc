@@ -25,12 +25,12 @@
             = @comment.description
 
         %input{type: 'hidden', name: 'resource_type', value: 'Person'}
-        %input{type: 'hidden', name: 'resource_id', value: @comment.person_id}
+        %input{type: 'hidden', name: 'resource_id', value: @comment.resource_id}
 
     .row
       .col-lg-12
         .pull-right
-          != @partial("update_button")(@comment)
+          != @partial('save_and_cancel_buttons')(@comment)
 
         .btn-group
           - unless @comment.isNew?()

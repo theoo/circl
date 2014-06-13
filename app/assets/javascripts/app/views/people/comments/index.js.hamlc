@@ -1,19 +1,6 @@
-%table.datatable
+%table.datatable{action: App.PersonComment.url() }
   %thead
     %tr
       %th.desc= I18n.t('common.created_at')
       %th= I18n.t('comment.views.editor')
       %th= I18n.t('comment.views.comment')
-
-  %tbody
-    - for comment in App.PersonComment.all()
-      - classes = ['item']
-      - classes.push 'warning' if comment.is_closed
-
-      %tr{:data-id => comment.id, class: classes.join(" ")}
-        %td= comment.created_at
-        %td= comment.person_name
-        %td
-          %b= comment.title
-          %br
-          != comment.description.replace(/\n/g, '<br/>')

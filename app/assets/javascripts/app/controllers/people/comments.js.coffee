@@ -16,10 +16,10 @@
 
 PersonComment = App.PersonComment
 
-$.fn.comment = ->
+$.fn.comment_id = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
-  PersonComment.find(elementID)
+  elementID
 
 class New extends App.ExtendedController
   events:
@@ -29,7 +29,7 @@ class New extends App.ExtendedController
     super
 
   render: =>
-    @comment = new PersonComment(person_id: @person_id)
+    @comment = new PersonComment(resource_id: @person_id)
     @html @view('people/comments/form')(@)
 
   submit: (e) ->
@@ -42,6 +42,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click button[name="cancel"]': 'cancel'
     'click button[name="comment-reopen"]': 'reopen'
     'click button[name="comment-close"]': 'close'
     'click button[name="comment-destroy"]': 'destroy'
@@ -97,9 +98,14 @@ class Index extends App.ExtendedController
     @activate_in_list(target)
 
   edit: (e) ->
-    @comment = $(e.target).comment()
-    @activate_in_list(e.target)
-    @trigger 'edit', @comment.id
+    id = $(e.target).comment_id()
+
+    PersonComment.one 'refresh', =>
+      @comment = PersonComment.find(id)
+      @activate_in_list(e.target)
+      @trigger 'edit', @comment.id
+
+    PersonComment.fetch(id: id)
 
 class App.PersonComments extends Spine.Controller
   className: 'comments'

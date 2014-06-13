@@ -30,7 +30,7 @@ class People::CommentsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render json: @comments }
+      format.json { render json: PersonCommentsDatatable.new(view_context, @person) }
     end
   end
 
