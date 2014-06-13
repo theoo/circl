@@ -24,10 +24,10 @@ PersonAffairInvoice = App.PersonAffairInvoice
 PersonAffairReceipt = App.PersonAffairReceipt
 AffairsCondition = App.AffairsCondition
 
-$.fn.affair = ->
+$.fn.affair_id = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
-  PersonAffair.find(elementID)
+  elementID
 
 # Modules
 ConditionsController =
@@ -87,10 +87,10 @@ class New extends App.ExtendedController
     'click button[name="add_item"]': 'add_value_item'
 
   constructor: (params) ->
+    super
     @person_id = params.person_id if params.person_id
     Person.bind('refresh', @render)
     @template = {}
-    super
 
   active: (params) =>
     @person = Person.find(@person_id) if Person.exists(@person_id)
@@ -285,6 +285,7 @@ class Edit extends App.ExtendedController
 
   cancel: (e) ->
     e.preventDefault()
+    @el.parent().find("tr[data-id=#{@affair.id}]").removeClass('active')
     @unload_dependencies()
     @hide()
 
@@ -374,13 +375,27 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('people/affairs/index')(@)
-    @el.find("tr.warning").popover()
 
   edit: (e) ->
     e.preventDefault()
-    @affair = $(e.target).affair()
-    @activate_in_list(e.target)
-    @trigger 'edit', @affair.id
+    id = $(e.target).affair_id()
+
+    if $(e.target).parent("tr").hasClass("info")
+      # Foreign affair
+      App.Affair.one 'refresh', =>
+        @affair = App.Affair.find(id)
+        window.location = "/people/" + @affair.owner_id + "#affairs"
+
+      App.Affair.fetch(id: id)
+
+    else
+      # Normal affair
+      PersonAffair.one 'refresh', =>
+        @affair = PersonAffair.find(id)
+        @activate_in_list(e.target)
+        @trigger 'edit', @affair.id
+
+      PersonAffair.fetch(id: id)
 
   table_redraw: =>
     if @affair
@@ -532,6 +547,7 @@ class App.PersonAffairs extends Spine.Controller
 
     @edit.bind 'destroyError', (id, errors) =>
       PersonAffair.one 'refresh', =>
+        @edit.active id: id
         @edit.render_errors errors
       PersonAffair.fetch(id: id)
 

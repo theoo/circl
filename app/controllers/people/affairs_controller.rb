@@ -26,19 +26,9 @@ class People::AffairsController < ApplicationController
   monitor_changes :@affair
 
   def index
-    # Stored proc and this code require more work to be used:
-    # -> datatables_controller and Spine should be updated
-    # @affairs = Affair
-    #   .from("person_affairs_as_tree() affairs")
-    #   .where("owner_id = ? OR buyer_id = ? OR receiver_id = ?", *([@person.id]*3))
-
-    @affairs = Affair
-      .select("DISTINCT(affairs.*)")
-      .where("owner_id = ? OR buyer_id = ? OR receiver_id = ?", *([@person.id]*3))
-
     respond_to do |format|
       format.json do
-        render json: @affairs
+        render json: PersonAffairsDatatable.new(view_context, @person)
       end
     end
   end
@@ -87,7 +77,7 @@ class People::AffairsController < ApplicationController
       @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])
 
       # raise the error and rollback transaction if validation fails
-      @affair.save!
+      raise ActiveRecord::Rollback unless @affair.save
 
       # append stakeholders
       params[:affairs_stakeholders].each do |s|
@@ -107,25 +97,27 @@ class People::AffairsController < ApplicationController
         @parent.tasks.each do |t|
           nt = t.dup
           nt.affair = @affair
-          nt.save!
+          raise ActiveRecord::Rollback unless nt.save
           nt
         end
 
         @parent.product_items.each do |t|
           nt = t.dup
           nt.affair = @affair
-          nt.save!
+          raise ActiveRecord::Rollback unless nt.save
           parent_ids[t.id] = nt.id
           nt
         end
         @affair.product_items.where("parent_id is not null").each do |t|
-          t.update_attributes!(parent_id: parent_ids[t.parent_id])
+          unless t.update_attributes(parent_id: parent_ids[t.parent_id])
+            raise ActiveRecord::Rollback
+          end
         end
 
         @parent.extras.each do |t|
           nt = t.dup
           nt.affair = @affair
-          nt.save!
+          raise ActiveRecord::Rollback unless nt.save
           nt
         end
 

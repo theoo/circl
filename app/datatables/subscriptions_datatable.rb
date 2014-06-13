@@ -113,7 +113,8 @@ class SubscriptionsDatatable
   end
 
   def sort_column
-    columns = %w{id parent_id title id count(invoices.*) count(receipts.*) invoices.value_in_cents receipts.value_in_cents id created_at}
+    columns = %w{id parent_id title id count(invoices.*) count(receipts.*) invoices.value_in_cents
+      receipts.value_in_cents id created_at}
     columns[params[:iSortCol_0].to_i]
   end
 

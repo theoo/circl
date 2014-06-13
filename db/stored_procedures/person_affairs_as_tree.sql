@@ -8,15 +8,12 @@ CREATE FUNCTION person_affairs_as_tree() RETURNS table(
   buyer_id int,
   condition_id int,
   title text,
-  description text,
   value_in_cents bigint,
   value_currency varchar,
   created_at timestamp,
   updated_at timestamp,
   status int,
   estimate boolean,
-  footer text,
-  conditions text,
   sort integer[]
    ) AS $$
 
@@ -30,15 +27,12 @@ CREATE FUNCTION person_affairs_as_tree() RETURNS table(
         affairs.buyer_id,
         affairs.condition_id,
         affairs.title,
-        affairs.description,
         affairs.value_in_cents,
         affairs.value_currency,
         affairs.created_at,
         affairs.updated_at,
         affairs.status,
         affairs.estimate,
-        affairs.footer,
-        affairs.conditions,
         array[affairs.id] as sort
       FROM affairs
       WHERE parent_id is null
@@ -52,15 +46,12 @@ CREATE FUNCTION person_affairs_as_tree() RETURNS table(
         a.buyer_id,
         a.condition_id,
         a.title,
-        a.description,
         a.value_in_cents,
         a.value_currency,
         a.created_at,
         a.updated_at,
         a.status,
         a.estimate,
-        a.footer,
-        a.conditions,
         t.sort || a.id
       FROM tree t, affairs a
       WHERE a.parent_id = t.id )

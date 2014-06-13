@@ -46,7 +46,7 @@ class AffairsDatatable
         4 => affair.receipts_count, # sql shortcut
         5 => affair.invoices_sum.to_money.to_view, # sql shortcut
         6 => affair.receipts_sum.to_money.to_view, # sql shortcut
-        7 => affair.get_statuses.map{|s| I18n.t("affair.views.statuses." + s.to_s)}.join(", "),
+        7 => affair.translated_statuses,
         8 => affair.created_at,
         'id' => affair.id,
         'actions' => [ I18n.t('affair.views.actions.edit_affair') ],
