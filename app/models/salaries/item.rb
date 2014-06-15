@@ -89,6 +89,7 @@ class Salaries::Item < ActiveRecord::Base
 
   validates_presence_of :title
   validates_presence_of :value
+  # TODO Validate presence of tax data
 
   # Validate fields of type 'string' length
   validates_length_of :title, maximum: 255

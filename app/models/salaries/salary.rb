@@ -542,7 +542,9 @@ class Salaries::Salary < ActiveRecord::Base
 
   def ensure_taxes_have_data_for_the_given_interval
     taxes_without_data = []
-    Salaries::Tax.where(:archive => false).each do |tax|
+    # NOTE It is not a matter of archive, the selected taxes must have data.
+    # selected_tax_data.joins(:tax).where("salaries_taxes.archive is false").map(&:tax).each do |tax|
+    selected_tax_data.joins(:tax).map(&:tax).each do |tax|
       # NOTE Salary have to be in the same year, check validation above
       if tax.model.constantize.where(:tax_id => tax.id, :year => to.year).count == 0
         taxes_without_data << tax.title
