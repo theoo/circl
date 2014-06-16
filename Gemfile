@@ -60,7 +60,7 @@ gem 'devise-encryptable', '0.1.1'
 gem 'cancan', '1.6.7'
 
 ### Finances
-gem 'money', '6.1.0'
+gem 'money', '6.0.1'
 gem 'monetize', '0.1.3'
 
 ### MailChimp
