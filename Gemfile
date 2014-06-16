@@ -96,6 +96,6 @@ group :development, :test do
   ### Misc
   gem 'debugger', '1.1.3'
   gem 'rails-dev-boost'
-
+  gem 'rb-inotify', '>= 0.8.8'
   gem 'spork-rails'
 end
