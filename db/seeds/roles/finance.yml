@@ -44,5 +44,8 @@
 - subject: Subscription
   action: manage
 
-- subject: Dashboard
-  action: 
+- subject: Person
+  action: dashboard_open_invoices
+
+- subject: Person
+  action: dashboard_open_salaries

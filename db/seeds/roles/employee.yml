@@ -37,11 +37,11 @@
 - subject: GenericTemplate
   action: count
 
-- subject: Dashboard
-  action: comments
+- subject: Person
+  action: dashboard_comments
 
-- subject: Dashboard
-  action: activities
+- subject: Person
+  action: dashboard_activities
 
-- subject: Dashboard
-  action: current_affairs
+- subject: Person
+  action: dashboard_current_affairs

@@ -47,5 +47,5 @@
 - subject: TranslationAptitude
   action: manage
 
-- subject: Dashboard
-  action: last_people_added
+- subject: Person
+  action: dashboard_last_people_added

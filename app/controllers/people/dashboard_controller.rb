@@ -18,11 +18,12 @@
 
 class People::DashboardController < ApplicationController
 
-  load_and_authorize_resource :person
+  load_resource :person
 
   layout false
 
   def index
+    authorize! :dashboard_index, @person
     @person = params[:id] ? Person.find(params[:id]) : current_person
 
     respond_to do |format|
@@ -31,12 +32,14 @@ class People::DashboardController < ApplicationController
   end
 
   def comments
+    authorize! :dashboard_comments, @person
     respond_to do |format|
       format.json { render json: OpenCommentsDatatable.new(view_context) }
     end
   end
 
   def activities
+    authorize! :dashboard_activities, @person
     @activities = @person.activities.order("created_at desc").limit(10)
 
     respond_to do |format|
@@ -45,6 +48,7 @@ class People::DashboardController < ApplicationController
   end
 
   def last_people_added
+    authorize! :dashboard_last_people_added, @person
     @last_people_added = Person.order("created_at desc").limit(10)
 
     respond_to do |format|
@@ -53,18 +57,21 @@ class People::DashboardController < ApplicationController
   end
 
   def open_invoices
+    authorize! :dashboard_open_invoices, @person
     respond_to do |format|
       format.json { render json: OpenInvoicesDatatable.new(view_context) }
     end
   end
 
   def current_affairs
+    authorize! :dashboard_current_affairs, @person
     respond_to do |format|
       format.json { render json: OpenAffairsDatatable.new(view_context) }
     end
   end
 
   def open_salaries
+    authorize! :dashboard_open_salaries, @person
     @open_salaries = Salaries::Salary.unpaid_salaries.order("created_at desc").limit(10)
 
     respond_to do |format|
