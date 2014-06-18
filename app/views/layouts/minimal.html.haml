@@ -5,6 +5,9 @@
 
     // SOURCE http://getbootstrap.com/css/
     %meta{name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"}
+    %meta{name: 'current_user', content: @current_person.to_json}
+    %meta{name: 'available_currencies', content: Currency.all.map(&:iso_code).to_json}
+    = csrf_meta_tag
 
     %title= "CIRCL"
     = favicon_link_tag
@@ -20,7 +23,8 @@
                         params[:controller] + ".js.coffee" ].join("/")
       = javascript_include_tag 'controllers/' + params[:controller]
 
-    = csrf_meta_tag
+    :javascript
+      Spine.Model.host = '#{request.protocol}#{request.host_with_port}';
 
   %body#template-editor
     ~ yield

@@ -23,7 +23,6 @@
                         params[:controller] + ".js.coffee" ].join("/")
       = javascript_include_tag 'controllers/' + params[:controller]
 
-
     :javascript
       Spine.Model.host = '#{request.protocol}#{request.host_with_port}';
 
