@@ -73,6 +73,8 @@ class Edit extends App.ExtendedController
     'click a[name=person_second_phone_button]': 'call_to'
     'click a[name=person_mobile_button]': 'call_to'
     'click a[name=person_website_button]': 'link_to'
+    'focusin input[name=website]': 'append_http'
+    'focusout input[name=website]': 'remove_http'
 
   constructor: (params) ->
     super
@@ -121,6 +123,18 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     url = $(e.target).closest(".input-group").find("input").val()
     window.open(url, 'person_website')
+
+  append_http: (e) ->
+    e.preventDefault()
+    input = $(e.target)
+    if input.val() == ""
+      input.val("http://www.")
+
+  remove_http: (e) ->
+    e.preventDefault()
+    input = $(e.target)
+    if input.val() == "http://www."
+      input.val("")
 
 class App.People extends Spine.Controller
   className: 'person'
