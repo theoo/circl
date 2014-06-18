@@ -36,7 +36,7 @@ class BackgroundTasks::UpdateIndexForPeople < BackgroundTask
  end
 
   def process!
-    people = Person.find(options[:people_ids])
+    people = Person.where(id: options[:people_ids])
     people.each do |person|
       person.update_index
     end
