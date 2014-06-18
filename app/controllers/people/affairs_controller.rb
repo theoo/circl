@@ -518,6 +518,12 @@ class People::AffairsController < ApplicationController
     end
   end
 
+  def count
+    respond_to do |format|
+      format.json { render json: {count: @person.affairs.count} }
+    end
+  end
+
   private
 
   def validate_export_input(params)

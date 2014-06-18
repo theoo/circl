@@ -22,6 +22,8 @@ class App.Subscription extends Spine.Model
     'created_at', 'status'
 
   @extend Spine.Model.Ajax
+  @extend Spine.Extensions.RemoteCount
+
   @url: ->
     "#{Spine.Model.host}/admin/subscriptions"
 
@@ -29,13 +31,3 @@ class App.Subscription extends Spine.Model
 
   constructor: ->
     super
-
-  @fetch_count: ->
-    get_callback = (data) =>
-      @_count = data
-      @trigger "count_fetched"
-
-    $.get(@url() + "/count", get_callback, 'json')
-
-  @count: ->
-    @_count.count if @_count

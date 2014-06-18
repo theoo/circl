@@ -20,6 +20,7 @@ class App.PersonComment extends Spine.Model
             'resource_name', 'title', 'description', 'is_closed', 'created_at'
 
   @extend Spine.Model.Ajax
+  @extend Spine.Extensions.RemoteCount
 
   constructor: ->
     super

@@ -36,7 +36,7 @@ Directory::Application.routes.draw do
 
     resources :affairs, :controller => 'people/affairs' do
       collection do
-        get 'search', 'affairs', 'invoices', 'receipts'
+        get 'search', 'count', 'affairs', 'invoices', 'receipts'
       end
 
       resources :extras, :controller => 'people/affairs/extras' do
@@ -67,7 +67,11 @@ Directory::Application.routes.draw do
       resources :tasks, :controller => 'people/affairs/tasks'
     end
 
-    resources :comments, :controller => 'people/comments'
+    resources :comments, :controller => 'people/comments' do
+      collection do
+        get 'count'
+      end
+    end
 
     resources :communication_languages, :controller => 'people/communication_languages', :only => :index do
       collection do

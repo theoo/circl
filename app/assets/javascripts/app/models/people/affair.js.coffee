@@ -22,6 +22,7 @@ class App.PersonAffair extends Spine.Model
              'conditions', 'condition_id', 'affairs_stakeholders'
 
   @extend Spine.Model.Ajax
+  @extend Spine.Extensions.RemoteCount
 
   constructor: ->
     super

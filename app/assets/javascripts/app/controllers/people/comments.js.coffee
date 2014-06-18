@@ -21,7 +21,16 @@ $.fn.comment_id = ->
   elementID ||= $(@).parents('[data-id]').data('id')
   elementID
 
+LocalUi =
+  update_badge: ->
+    PersonComment.one 'count_fetched', ->
+      $('a[href=#activities_tab] .badge').html PersonComment.count()
+    PersonComment.fetch_count()
+
 class New extends App.ExtendedController
+
+  @include LocalUi
+
   events:
     'submit form': 'submit'
 
@@ -36,10 +45,12 @@ class New extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @comment.fromForm(e.target), =>
       @render()
-      # Update badge
-      $('a[href=#activities_tab] .badge').html PersonComment.count()
+      @update_badge()
 
 class Edit extends App.ExtendedController
+
+  @include LocalUi
+
   events:
     'submit form': 'submit'
     'click button[name="cancel"]': 'cancel'
@@ -65,19 +76,22 @@ class Edit extends App.ExtendedController
     @save_with_notifications @comment.fromForm(e.target), @hide
 
   reopen: (e) ->
+    e.preventDefault()
     @comment.is_closed = false
     @save_with_notifications @comment
 
   close: (e) ->
+    e.preventDefault()
     @comment.is_closed = true
     @save_with_notifications @comment
 
   destroy: (e) ->
+    e.preventDefault()
     if confirm(I18n.t("common.are_you_sure"))
       @destroy_with_notifications @comment, =>
         @hide()
-        # Update badge
-        $('a[href=#activities_tab] .badge').html PersonComment.count()
+        @update_badge()
+
 
 class Index extends App.ExtendedController
   events:
@@ -98,6 +112,7 @@ class Index extends App.ExtendedController
     @activate_in_list(target)
 
   edit: (e) ->
+    e.preventDefault()
     id = $(e.target).comment_id()
 
     PersonComment.one 'refresh', =>

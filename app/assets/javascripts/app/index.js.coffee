@@ -29,6 +29,9 @@
 #= require_tree ./controllers
 #= require_tree ./views
 
+# A nice place for extensions
+Spine.Extensions = {}
+
 class @App extends Spine.Controller
 
   constructor: (params) ->

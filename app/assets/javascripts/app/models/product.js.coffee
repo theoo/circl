@@ -21,17 +21,9 @@ class App.Product extends Spine.Model
               "unit_symbol", "price_to_unit_rate"
 
   @extend Spine.Model.Ajax
+  @extend Spine.Extensions.RemoteCount
+
   @url: -> "#{Spine.Model.host}/settings/products"
 
   constructor: ->
     super
-
-  @fetch_count: ->
-    get_callback = (data) =>
-      @_count = data
-      @trigger "count_fetched"
-
-    $.get("#{Spine.Model.host}/settings/products/count", get_callback, 'json')
-
-  @count: ->
-    @_count.count if @_count

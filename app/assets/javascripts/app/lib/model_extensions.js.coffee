@@ -14,16 +14,14 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class App.InvoiceTemplate extends Spine.Model
+Spine.Extensions.RemoteCount =
 
-  @configure 'InvoiceTemplate', 'title', 'html', 'with_bvr', 'show_invoice_value',
-              'bvr_address', 'bvr_account', 'thumb_url', 'language_id'
+  fetch_count: ->
+    get_callback = (data) =>
+      @_count = data
+      @trigger "count_fetched"
 
-  @extend Spine.Model.Ajax
-  @extend Spine.Extensions.RemoteCount
+    $.get(@url() + "/count", get_callback, 'json')
 
-  @url: ->
-    "#{Spine.Model.host}/settings/invoice_templates"
-
-  constructor: ->
-    super
+  count: ->
+    @_count.count if @_count

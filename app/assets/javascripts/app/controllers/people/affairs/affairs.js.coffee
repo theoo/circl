@@ -74,11 +74,17 @@ StakeholdersController =
 
     return values
 
+LocalUi =
+  update_badge: ->
+    PersonAffair.one 'count_fetched', ->
+      $('a[href=#affairs_tab] .badge').html PersonAffair.count()
+    PersonAffair.fetch_count()
 
 class New extends App.ExtendedController
 
   @include ConditionsController
   @include StakeholdersController
+  @include LocalUi
 
   events:
     'submit form': 'submit'
@@ -148,8 +154,7 @@ class New extends App.ExtendedController
 
     redirect_to_edit = (id) =>
       @trigger('edit', id)
-      # Update badge
-      $('a[href=#affairs_tab] .badge').html PersonAffair.count()
+      @update_badge()
 
     data = $(e.target).serializeObject()
     @affair.load(data)
@@ -163,6 +168,7 @@ class Edit extends App.ExtendedController
 
   @include ConditionsController
   @include StakeholdersController
+  @include LocalUi
 
   events:
     'submit form': 'submit'
@@ -296,8 +302,7 @@ class Edit extends App.ExtendedController
       @unload_dependencies()
       @destroy_with_notifications @affair, (id) =>
         @hide()
-        # Update badge
-        $('a[href=#affairs_tab] .badge').html PersonAffair.count()
+        @update_badge()
 
   reset_value: (e) ->
     e.preventDefault()

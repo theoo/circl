@@ -51,7 +51,11 @@ class Edit extends App.ExtendedController
     ajax_success = (data, textStatus, jqXHR) =>
       @render_success()
 
+      # Update count badge
+      @el.parent('.panel').find('.panel-heading .badge').html(data.length)
+
     PersonPrivateTag.ajax().ajax(settings).error(ajax_error).success(ajax_success)
+
 
 class App.PersonPrivateTags extends Spine.Controller
   className: 'private_tags'

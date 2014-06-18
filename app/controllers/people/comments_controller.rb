@@ -21,9 +21,9 @@ class People::CommentsController < ApplicationController
   layout false
 
   load_resource :person
-  before_filter :load_comments, only: :index
+  before_filter :load_comments, only: [:index, :count]
   before_filter :create_comment, only: :create
-  before_filter :load_comment, except: [:index, :create]
+  before_filter :load_comment, except: [:index, :create, :count]
   authorize_resource
 
   monitor_changes :@comment
@@ -74,6 +74,11 @@ class People::CommentsController < ApplicationController
     end
   end
 
+  def count
+    respond_to do |format|
+      format.json { render json: {count: @comments.count} }
+    end
+  end
 
   private
 

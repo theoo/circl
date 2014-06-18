@@ -52,6 +52,9 @@ class Edit extends App.ExtendedController
       PersonCommunicationLanguage.refresh(data, clear: true)
       @render_success()
 
+      # Update count badge
+      @el.parent('.panel').find('.panel-heading .badge').html(data.length)
+
     settings =
       url: PersonCommunicationLanguage.url(),
       type: 'PUT',
