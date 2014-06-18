@@ -61,7 +61,7 @@ class OpenInvoicesDatatable
         haml_concat invoice.value.to_view
         haml_tag :i, invoice.translated_statuses
         haml_tag :br
-        haml_concat invoice.description.gsub(/\n/, "<br />")
+        haml_concat invoice.description.gsub(/\n/, "<br />") if invoice.description
       end
 
       {
