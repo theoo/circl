@@ -75,10 +75,27 @@ class Settings::LocationsController < ApplicationController
     result = []
     unless params[:term].blank?
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      param = "^#{param}"
-      result = @locations.where("locations.postal_code_prefix ~* ? OR
-                                 locations.name ~* ?",
-                                 *([param] * 2)).limit(50)
+      details = param.split(" ")
+
+      # The expected format is ZIP(numeric) Location(alpha)
+      if details.size > 1
+        zip = details[0] if details[0].to_i != 0
+        loc = details[1..-1].join(" ")
+      end
+
+
+      if zip and loc
+        result = @locations.where("locations.postal_code_prefix ~* ? AND
+                                   locations.name ~* ?",
+                                   zip, loc).limit(50)
+
+
+      else
+        param = "^#{param}"
+        result = @locations.where("locations.postal_code_prefix ~* ? OR
+                                   locations.name ~* ?",
+                                   *([param] * 2)).limit(50)
+      end
     end
 
     respond_to do |format|
