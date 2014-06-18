@@ -198,6 +198,23 @@
                 %a{name: 'person_mobile_button', class: 'btn btn-default'}
                   .icon-phone
 
+          .col-sm-6
+
+        .row
+          .col-sm-6
+            .form-group.autocompleted
+              %label{for: 'person_job', class: 'control-label'}
+                = I18n.t('person.views.job')
+              %input{ type: 'search',
+                      id: 'person_job',
+                      name: 'job_name',
+                      class: 'form-control',
+                      value: @person.job_name,
+                      action: '/settings/jobs/search' }
+              %input{ type: 'hidden',
+                      name: 'job_id',
+                      value: @person.job_id }
+
           .col-sm-6.form-group
             %label{for: 'person_communication_language', class: 'control-label'}
               = I18n.t('language.views.communication_language')
@@ -208,21 +225,6 @@
                   %option{value: l.id, selected: true}= l.name
                 - else
                   %option{value: l.id}= l.name
-
-        .row
-          .col-sm-6
-            .form-group.autocompleted
-              %label{:for => 'person_job', :class => 'control-label'}
-                = I18n.t('person.views.job')
-              %input{ :type => 'search',
-                      :id => 'person_job',
-                      :name => 'job_name',
-                      :class => 'form-control',
-                      :value => @person.job_name,
-                      :action => '/settings/jobs/search' }
-              %input{ :type => 'hidden',
-                      :name => 'job_id',
-                      :value => @person.job_id }
 
     .row
       .col-md-6
@@ -300,23 +302,8 @@
                       %option{value: 1}= I18n.t("person.views.male")
                       %option{value: 0, selected: true}= I18n.t("person.views.female")
 
-      .col-md-6
-        .row
-          .col-sm-6
-            .form-group.autocompleted
-              %label{for: 'person_job', class: 'control-label'}
-                = I18n.t('person.views.job')
-              %input{ type: 'search',
-                      id: 'person_job',
-                      name: 'job_name',
-                      class: 'form-control',
-                      value: @person.job_name,
-                      action: '/settings/jobs/search' }
-              %input{ type: 'hidden',
-                      name: 'job_id',
-                      value: @person.job_id }
-
-        - if @can.person.authenticate_using_token
+      - if @can.person.authenticate_using_token
+        .col-md-6
 
           %h3= I18n.t('person.views.api')
 
