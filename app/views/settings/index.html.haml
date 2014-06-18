@@ -196,5 +196,7 @@
                 = form_tag restart_settings_application_settings_path do
                   %center
                     %button{ type: "submit",
+                      "data-confirm" => I18n.t("common.are_you_sure"),
+                      rel: 'nofollow',
                       class: 'btn btn btn-danger' }
                       = I18n.t("application_setting.views.restart")
