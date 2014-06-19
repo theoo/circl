@@ -14,7 +14,7 @@ en:
     notices:
       add_members_email_will_be_sent: The member import process has started, a report will be sent to you at %{email} upon completion.
       people_imported: The selected persons have been imported, a report has been sent to you at %{email}.
-      result_return_only_one_person: As only one person matched to your search, you have been redirected to the edition page.
+      result_return_only_one_person: Only one contact found.
     views:
       actions:
         change_person_password: Reset the person's password

@@ -14,7 +14,7 @@ fr:
     notices:
       add_members_email_will_be_sent: Le processus d'import des membres à commencé, un rapport sera envoyé par email à %{email} lorsqu'il sera fini.
       people_imported: Les personnes ont été importées, un rapport a été envoyé par email à %{email}.
-      result_return_only_one_person: Le résultat ne retournant qu'une personne votre requête à été redirigée vers l'édition.
+      result_return_only_one_person: Un seul contact trouvé.
     views:
       actions:
         change_person_password: changer le mot de passe
