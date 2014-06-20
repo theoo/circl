@@ -31,7 +31,6 @@ en:
       extras: Extras
       footer: comments
       format: format
-      subscription_names_filter: subscription names filter
       invoices: Invoices
       invoices_count: invoice count
       invoices_value: values of invoices
@@ -57,6 +56,7 @@ en:
         partially_paid: partially paid
         to_be_billed: to bill
         underpaid: underpaid
+      subscription_names_filter: subscription names filter
       subscriptions: subscriptions
       tasks: Services
       taxes: taxes
@@ -67,6 +67,13 @@ en:
       threshold_value_unit: value threshold
       title: title
       update_date: last update
+      value:
+        bid: bid
+        computed: computed
+        value: value
+        vat: VAT
+        with_taxes: w/ taxes
+        without_taxes: wo/ taxes
       value_with_taxes_is: The value with taxes is
       variant_prefix: Variant
       vat: VAT

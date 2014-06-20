@@ -22,8 +22,8 @@ fr:
       offered: offerte
       owner: propriétaire
       printed_address: adresse imprimée
-      status: statut
       receiver: receveur
+      status: statut
       statuses:
         cancelled: annulée
         offered: offerte

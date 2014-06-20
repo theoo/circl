@@ -210,7 +210,7 @@ class Ui
 
           # apply special style to number columns
           if data.number_columns
-            tds = $(row).find('td')
+            tds = $(row).find('>td')
             for i in data.number_columns
               $(tds[i]).addClass('number')
 

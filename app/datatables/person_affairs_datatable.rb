@@ -67,20 +67,62 @@ class PersonAffairsDatatable
       end
 
       value = capture_haml do
-        if affair.value != affair.compute_value
-          haml_tag "strike.text-danger", affair.compute_value.to_view
-          haml_tag ".text-danger", (affair.value - affair.compute_value).to_view
-          haml_tag :div, affair.value.to_view
-        else
-          haml_tag :div, affair.value.to_view
-        end
+        haml_tag "table.affair_value" do
+          if ApplicationSetting.value('use_vat') == "true"
+            without_taxes_translation = I18n.t("affair.views.value.without_taxes")
+          else
+            without_taxes_translation = I18n.t("affair.views.value.value")
+          end
 
-        if ApplicationSetting.value('use_vat') == "true"
-          haml_tag :i, "+" + affair.vat_value.to_view
-        end
-      end
+          if affair.value != affair.compute_value
 
-      {
+            haml_tag :tr do
+              haml_tag :td do
+                haml_tag "strike.text-danger", affair.compute_value.to_view
+              end
+              haml_tag :td, I18n.t("affair.views.value.computed")
+            end
+
+            haml_tag :tr do
+              haml_tag :td do
+                haml_tag ".text-danger", (affair.value - affair.compute_value).to_view
+              end
+              haml_tag :td, I18n.t("affair.views.value.bid")
+            end
+
+            haml_tag :tr do
+              haml_tag :td, affair.value.to_view
+              haml_tag :td, without_taxes_translation
+            end
+
+          else
+
+            haml_tag :tr do
+              haml_tag :td, affair.value.to_view
+              haml_tag :td, without_taxes_translation
+            end
+
+          end
+
+          if ApplicationSetting.value('use_vat') == "true"
+
+            haml_tag :tr do
+              haml_tag :td, affair.vat_value.to_view
+              haml_tag :td, I18n.t("affair.views.value.vat")
+            end
+
+            haml_tag :tr do
+              haml_tag :td, affair.value_with_taxes.to_view
+              haml_tag :td, I18n.t("affair.views.value.with_taxes")
+            end
+
+          end
+
+        end # table
+
+      end # value
+
+      h = {
         0 => affair.id,
         1 => affair.parent_id,
         2 => description,

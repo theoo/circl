@@ -31,7 +31,6 @@ fr:
       extras: Extras
       footer: commentaires
       format: format
-      subscription_names_filter: filtre pour le nom des inscriptions
       invoices: Factures
       invoices_count: nombre de factures
       invoices_value: valeur des factures
@@ -57,6 +56,7 @@ fr:
         partially_paid: partiellement payée
         to_be_billed: à facturer
         underpaid: sous-payée
+      subscription_names_filter: filtre pour le nom des inscriptions
       subscriptions: Inscriptions
       tasks: Services
       taxes: taxes
@@ -67,6 +67,13 @@ fr:
       threshold_value_unit: valeur limite
       title: titre
       update_date: dernière mise à jour
+      value:
+        bid: remise
+        computed: calculé
+        value: valeur
+        vat: TVA
+        with_taxes: TTC
+        without_taxes: HT
       value_with_taxes_is: La valeur TTC est
       variant_prefix: Variante
       vat: TVA
