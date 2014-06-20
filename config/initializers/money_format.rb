@@ -55,12 +55,13 @@ if ActiveRecord::Base.connection.table_exists? 'currencies' \
   Money.default_currency = Money::Currency.new(ApplicationSetting.value("default_currency"))
 
   module MoneyClassExtention
+
+    # Force default currency format for all devises
     def to_view
-      #default_currency = Money.default_currency
-      #format(:thousands_separator => default_currency.separator,
-      #  :decimal_mark => default_currency.delimiter,
-      #  :with_currency => false)
-      format
+      default_currency = Money.default_currency
+      format(:thousands_separator => default_currency.delimiter,
+        :decimal_mark => default_currency.separator,
+        :with_currency => false)
     end
 
     # Force currency to default currency
