@@ -32,5 +32,7 @@
 #= require hamlcoffee
 #= require app
 #= require_tree ./datatables
+#= require ./flot/jquery.flot
+#= require ./flot/jquery.flot.categories
 
 $ = jQuery

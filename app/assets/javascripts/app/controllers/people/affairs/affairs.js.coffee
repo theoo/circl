@@ -440,17 +440,6 @@ class Balance extends App.ExtendedController
     if params
       @affair_id = params.affair_id if params.affair_id
 
-    if @affair_id and PersonAffair.exists(@affair_id)
-      @affair = PersonAffair.find(@affair_id)
-
-      # Compute balance
-      if @affair.invoices_value_with_taxes >= @affair.receipts_value
-        @overpaid = false
-        @paid = 100 / @affair.invoices_value_with_taxes * @affair.receipts_value
-      else
-        @overpaid = true
-        @paid = 100 / @affair.receipts_value * @affair.invoices_value_with_taxes
-
     @render()
 
   deactive: (params) =>
@@ -459,6 +448,47 @@ class Balance extends App.ExtendedController
 
   render: =>
     @html @view('people/affairs/balance')(@)
+
+    # TODO Improve display
+    if @affair_id and PersonAffair.exists(@affair_id)
+      @affair = PersonAffair.find(@affair_id)
+      rawData = [
+        [@affair.value_with_taxes, 2],
+        [@affair.invoices_value_with_taxes, 1],
+        [@affair.receipts_value, 0]
+      ]
+
+      dataSet = [{ label: false, data: rawData, color: "#000" }]
+      ticks = [
+        [2, I18n.t("person.views.affairs")],
+        [1, I18n.t("affair.views.invoices")],
+        [0, I18n.t("affair.views.receipts")]
+      ]
+
+      options =
+        series:
+            stack: true
+            bars:
+              show: true
+        bars:
+          barWidth: 0.8
+          align: 'center'
+          horizontal: true
+          lineWidth: 1
+        xaxis:
+            color: "black"
+        yaxis:
+            axisLabel: false
+            ticks: ticks
+            color: "black"
+        grid:
+          hoverable: true
+          borderWidth: 0
+          borderColor: null
+
+      progress = @el.find(".progress")
+      progress.css(height: "100px")
+      $.plot(progress, dataSet, options);
 
 class DocumentsMachine extends App.ExtendedController
   events:
