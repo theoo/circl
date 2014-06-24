@@ -103,7 +103,18 @@ class Edit extends App.ExtendedController
     @person.load(data)
     @person.is_an_organization = data.is_an_organization?
     @person.hidden = data.hidden?
-    @save_with_notifications @person, @render
+    @save_with_notifications @person, =>
+      @render()
+      @update_name_titles()
+
+  update_name_titles: =>
+    title = $("#pagination_title")
+    if title.length > 0
+      title.html @person.name
+
+    title = $("a[href=#info_tab]")
+    if title.length > 0
+      title.html @person.name
 
   open_map: (e) ->
     e.preventDefault()

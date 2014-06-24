@@ -20,7 +20,7 @@
         .col-md-4.col-sm-4.col-xs-4.text-center
           .hidden-sm.hidden-xs
             %h2{style: 'margin: 8px 0 0 0;'}
-              = link_to @person.name, @person
+              = link_to @person.name, @person, id: "pagination_title"
           .visible-sm.visible-xs
             %div{style: 'height: 27px;'} &nbsp;
 
