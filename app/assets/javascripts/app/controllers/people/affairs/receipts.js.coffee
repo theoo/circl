@@ -105,7 +105,7 @@ class Edit extends App.ExtendedController
 
   update_callback: =>
     @hide()
-    PersonAffair.fetch(id: @affair_id)
+    PersonAffair.fetch(id: @affair.id)
     PersonAffairInvoice.fetch()
 
   submit: (e) ->

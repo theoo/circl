@@ -487,7 +487,6 @@ class Balance extends App.ExtendedController
           borderColor: null
 
       progress = @el.find(".progress")
-      progress.css(height: "100px")
       $.plot(progress, dataSet, options);
 
 class DocumentsMachine extends App.ExtendedController

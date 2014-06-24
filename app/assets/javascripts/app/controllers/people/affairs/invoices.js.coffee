@@ -125,7 +125,7 @@ class Edit extends App.ExtendedController
       @highlight_vat()
 
   update_callback: =>
-    PersonAffair.fetch(id: @affair_id)
+    PersonAffair.fetch(id: @affair.id)
     PersonAffairReceipt.fetch()
     @hide()
 
