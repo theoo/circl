@@ -57,7 +57,7 @@ class OpenCommentsDatatable
       h ={
         0 => comment.created_at,
         1 => description,
-        'id' => comment.person_id
+        'id' => comment.resource_id
       }
 
       h

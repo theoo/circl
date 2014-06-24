@@ -90,10 +90,13 @@ class OpenAffairsDatatable
         haml_concat affair.receipts_value.to_view
       end
 
+      # TODO do not cut in a middle of a word
+      small_description = description.size > 500 ? description[0..500] + "..." : description
+
       {
-        0 => affair.id,
+        0 => affair.owner_id,
         1 => affair.updated_at,
-        2 => description,
+        2 => small_description,
         'id' => affair.owner_id
       }
     end

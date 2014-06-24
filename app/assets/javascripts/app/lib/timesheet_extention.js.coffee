@@ -56,8 +56,7 @@ class App.TimesheetExtention extends App.ExtendedController
     # client is selected
     @owner_field.autocomplete('option', 'select', (e, ui) =>
       @owner_id_field.val ui.item.id
-      # set affairs search url
-      @affair_field.autocomplete({source: '/people/' + ui.item.id + '/affairs/search'})
+      @set_affairs_search_url(ui.item.id)
       @enable_affair_selection()
     )
 
@@ -80,6 +79,9 @@ class App.TimesheetExtention extends App.ExtendedController
     @el.find(".slider").width("100%")
 
     @update_task_type_description()
+
+  set_affairs_search_url: (id) ->
+    @affair_field.autocomplete({source: '/people/' + id + '/affairs/search'})
 
   disable_affair_selection: ->
     @affair_field.val("")

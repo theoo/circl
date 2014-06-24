@@ -31,10 +31,8 @@ class Index extends App.ExtendedController
 
   show: (e) ->
     e.preventDefault()
-
     id = $(e.target).parents('[data-id]').data('id')
-    a = Affair.find(id)
-    window.location = "#{Spine.Model.host}/people/#{a.owner_id}#affairs"
+    window.location = "#{Spine.Model.host}/people/#{id}#affairs"
 
 class App.DashboardCurrentAffairs extends Spine.Controller
   className: 'current_affairs'

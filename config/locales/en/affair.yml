@@ -3,6 +3,7 @@ en:
   affair:
     errors:
       cant_delete_affair_who_has_invoices: An affair with an invoice linked to it cannot be deleted.
+      parent_id_cannot_be_self: Parent cannot be the current affair.
       unable_to_compute_value_without_taxes_if_extras_have_different_vat_values: It's impossible to compute the value without taxes if the affair has extras with differents VAT values.
       wrong_date: wrong date
     notices:

@@ -43,7 +43,7 @@ class OpenInvoicesDatatable
     invoices.map do |invoice|
 
       description = capture_haml do
-        haml_concat invoice.buyer.try(:name)
+        haml_tag :b, invoice.buyer.try(:name)
 
         if invoice.buyer.try(:id) != invoice.owner.try(:id)
           haml_concat "/"
@@ -55,8 +55,8 @@ class OpenInvoicesDatatable
           haml_tag :i, I18n.t("invoice.views.receiver") + ": " + invoice.receiver.try(:name)
         end
 
-        haml_tag :br
-        haml_tag :b, invoice.affair.try(:title)
+        haml_concat "-"
+        haml_tag :i, invoice.affair.try(:title)
         haml_tag :br
         haml_concat invoice.value.to_view
         haml_tag :i, invoice.translated_statuses

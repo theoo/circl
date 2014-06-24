@@ -86,6 +86,8 @@ class Edit extends App.TimesheetExtention
 
     super
 
+    @set_affairs_search_url(@task.executer_id)
+
   submit: (e) ->
     e.preventDefault()
     @task.fromForm(e.target)
