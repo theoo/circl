@@ -57,8 +57,10 @@ class New extends App.ExtendedController
       @invoice.printed_address = @affair.buyer_address
       @invoice.title = @affair.title
       @invoice.description = @affair.description
-      @invoice.value = (@affair.value - @affair.invoices_value).toFixed(2)
       @invoice.created_at = (new Date).to_view()
+      # re-calculate invoices_value instead of using information from rails
+      invoices_value = PersonAffairInvoice.all().reduce(((sum, i) -> sum + i.value), 0)
+      @invoice.value = (@affair.value - invoices_value).toFixed(2)
     else
       @invoice = new PersonAffairInvoice(value: 0)
 
@@ -325,7 +327,9 @@ class App.PersonAffairInvoices extends Spine.Controller
       @edit.active(id: id)
 
     @edit.bind 'show', => @new.hide()
-    @edit.bind 'hide', => @new.show()
+    @edit.bind 'hide', =>
+      @new.show()
+      @new.render()
 
     @edit.bind 'error', (id, errors) =>
       @edit.active id: id
