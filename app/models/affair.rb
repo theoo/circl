@@ -121,7 +121,6 @@ class Affair < ActiveRecord::Base
   attr_accessor :custom_value_with_taxes
   attr_accessor :generic_template
 
-
   ###################
   ### VALIDATIONS ###
   ###################
@@ -134,6 +133,7 @@ class Affair < ActiveRecord::Base
   # Validate fields of type 'text' length
   validates_length_of :description, maximum: 65536
   validate :vat_calculation_availability, if: 'custom_value_with_taxes'
+  validate :parent_id_is_not_self, if: 'parent_id'
 
   ########################
   #### CLASS METHODS #####
@@ -512,6 +512,14 @@ class Affair < ActiveRecord::Base
     unless invoices.empty?
       errors.add(:base,
                  I18n.t('affair.errors.cant_delete_affair_who_has_invoices'))
+      false
+    end
+  end
+
+  def parent_id_is_not_self
+    if id == parent_id
+      errors.add(:base,
+                 I18n.t('affair.errors.parent_id_cannot_be_self'))
       false
     end
   end

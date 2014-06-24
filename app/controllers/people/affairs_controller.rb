@@ -153,7 +153,7 @@ class People::AffairsController < ApplicationController
 
     Affair.transaction do
       # remove parent if not sent
-      params[:parent_id] = nil unless params[:parent_id]
+      params[:parent_id] = nil if ! params[:parent_id] or ! params[:parent_name]
 
       # raise the error and rollback transaction if validation fails
       raise ActiveRecord::Rollback unless @affair.update_attributes(params[:affair])
