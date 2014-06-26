@@ -63,7 +63,7 @@ class ExecutedTasksDatatable
 
       h ={
         0 => task.id,
-        1 => task.created_at,
+        1 => task.start_date,
         2 => duration,
         3 => description,
         'id' => task.id

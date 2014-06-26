@@ -213,7 +213,7 @@ class App.TimesheetExtention extends App.ExtendedController
     start_time = @start_field.val()
 
     # start date is a datetime
-    new Date(d[2], d[1], d[0], @time_to_hours(start_time), @time_to_minutes(start_time))
+    new Date(d[2], d[1] - 1, d[0], @time_to_hours(start_time), @time_to_minutes(start_time))
 
   update_task_type_description: (e) ->
     id = @task_type_field.val()
