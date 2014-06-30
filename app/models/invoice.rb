@@ -276,11 +276,16 @@ class Invoice < ActiveRecord::Base
 
   # Returns the reference number for BVRs, the upper and shorter line.
   def bvr_reference_number(options = {})
-    ref  = ApplicationSetting.value(:application_id).rjust(6, '0')  # application id
+    if invoice_template.account_identification.blank?
+      ref = ApplicationSetting.value(:application_id).rjust(6, '0') # application id
+    else
+      ref = invoice_template.account_identification
+    end
+
     ref += created_at.strftime('%d%m%y').rjust(6, '0')              # today's date
     ref += owner.id.to_s.rjust(6, '0')                              # owner id
     ref += id.to_s.rjust(6, '0')                                    # invoice id
-    ref += '00'                                                     # digits available
+    ref += '00'                                                     # available digits
     ref += ref.to_i.mod10rec.to_s                                   # checksum
 
     raise RuntimeError, "bvr_ref error #{ref.size} != 27" unless ref.size == 27

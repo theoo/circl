@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140630064405) do
+ActiveRecord::Schema.define(:version => 20140630090823) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -232,19 +232,20 @@ ActiveRecord::Schema.define(:version => 20140630064405) do
   add_index "generic_templates", ["odt_updated_at"], :name => "index_generic_templates_on_odt_updated_at"
 
   create_table "invoice_templates", :force => true do |t|
-    t.string   "title",                 :default => "",    :null => false
-    t.text     "html",                  :default => "",    :null => false
+    t.string   "title",                  :default => "",    :null => false
+    t.text     "html",                   :default => "",    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "with_bvr",              :default => false
-    t.text     "bvr_address",           :default => ""
-    t.string   "bvr_account",           :default => ""
+    t.boolean  "with_bvr",               :default => false
+    t.text     "bvr_address",            :default => ""
+    t.string   "bvr_account",            :default => ""
     t.string   "snapshot_file_name"
     t.string   "snapshot_content_type"
     t.integer  "snapshot_file_size"
     t.datetime "snapshot_updated_at"
-    t.boolean  "show_invoice_value",    :default => true
-    t.integer  "language_id",                              :null => false
+    t.boolean  "show_invoice_value",     :default => true
+    t.integer  "language_id",                               :null => false
+    t.string   "account_identification"
   end
 
   add_index "invoice_templates", ["language_id"], :name => "index_invoice_templates_on_language_id"

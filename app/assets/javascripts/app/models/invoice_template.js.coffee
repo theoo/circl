@@ -17,7 +17,7 @@
 class App.InvoiceTemplate extends Spine.Model
 
   @configure 'InvoiceTemplate', 'title', 'html', 'with_bvr', 'show_invoice_value',
-              'bvr_address', 'bvr_account', 'thumb_url', 'language_id'
+              'bvr_address', 'bvr_account', 'thumb_url', 'language_id', 'account_identification'
 
   @extend Spine.Model.Ajax
   @extend Spine.Extensions.RemoteCount

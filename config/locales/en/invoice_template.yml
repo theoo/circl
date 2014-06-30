@@ -8,6 +8,7 @@ en:
       can_not_delete_if_subscriptions_are_subscribed: can not delete if subscriptions are subscribed
       failed_to_substitute_iterator: ERROR WHILE SUBSTITUTING PLACEHOLDER "%{iterator}"
     views:
+      account_identification: account-id n°
       actions:
         edit_template: edit template
       body: body

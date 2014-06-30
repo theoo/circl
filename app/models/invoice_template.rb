@@ -69,6 +69,10 @@ class InvoiceTemplate < ActiveRecord::Base
   validates_length_of :html, maximum: 65536
   validates_length_of :bvr_address, maximum: 65536
 
+  validates_length_of :account_identification,
+                      is: 6,
+                      allow_blank: true
+
   #################
   ### RELATIONS ###
   #################

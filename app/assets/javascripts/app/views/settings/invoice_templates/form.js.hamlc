@@ -69,6 +69,15 @@
               checked: @invoice_template.show_invoice_value,
               value: 1 }
 
+        .form-group
+          %label{for: 'settings_invoice_template_account_identification'}
+            = I18n.t('invoice_template.views.account_identification')
+          %input{ type: 'text',
+                  id: 'settings_invoice_template_account_identification',
+                  class: 'form-control',
+                  name: 'account_identification',
+                  value: @invoice_template.account_identification }
+
     .row
       .col-lg-12
         .pull-right
