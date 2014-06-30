@@ -257,7 +257,7 @@ class Invoice < ActiveRecord::Base
 
       bvr_values = []
       if invoice_template.show_invoice_value
-        bvr_values = value_in_cents.to_s.split('').reverse.map.with_index do |digit, index|
+        bvr_values = value_with_taxes.cents.to_s.split('').reverse.map.with_index do |digit, index|
           "<div class=\"digit#{index + 1}\">#{digit}</div>"
         end
       end
@@ -308,15 +308,15 @@ class Invoice < ActiveRecord::Base
     account_tokens[0] = account_tokens[0].rjust(2, '0')
     account_tokens[1] = account_tokens[1].rjust(6, '0')
 
-    codeline  = '01'                                # type (01: CHF BVR)
-    codeline += value_in_cents.to_s.rjust(10, '0')  # value
-    codeline += codeline.to_i.mod10rec.to_s         # checksum
-    codeline += '>'                                 # separator
-    codeline += bvr_reference_number                # reference number
-    codeline += '+'                                 # separator
-    codeline += ' '                                 # space
-    codeline += account_tokens.join                 # account
-    codeline += '>'                                 # separator
+    codeline  = '01'                                        # type (01: CHF BVR)
+    codeline += value_with_taxes.cents.to_s.rjust(10, '0')  # value
+    codeline += codeline.to_i.mod10rec.to_s                 # checksum
+    codeline += '>'                                         # separator
+    codeline += bvr_reference_number                        # reference number
+    codeline += '+'                                         # separator
+    codeline += ' '                                         # space
+    codeline += account_tokens.join                         # account
+    codeline += '>'                                         # separator
 
     raise RuntimeError, "bvr_codeline error #{codeline.size} != 53" unless codeline.size == 53
     codeline

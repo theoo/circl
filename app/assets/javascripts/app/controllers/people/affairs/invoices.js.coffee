@@ -64,10 +64,12 @@ class New extends App.ExtendedController
     else
       @invoice = new PersonAffairInvoice(value: 0)
 
-    @invoice.conditions = App.ApplicationSetting.value("default_invoice_conditions")
-
     if @affair_id and PersonAffair.exists(@affair_id)
       @affair = PersonAffair.find(@affair_id)
+      @invoice.conditions = @affair.conditions
+    else
+      # FIXME Does it really makes sense ? Perhaps it's better to remove this setting
+      @invoice.conditions = App.ApplicationSetting.value("default_invoice_conditions")
 
     @html @view('people/affairs/invoices/form')(@)
     @adjust_vat()

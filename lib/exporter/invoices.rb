@@ -47,7 +47,7 @@ module Exporter
 
       {
         :id                         => invoice.id,
-        :date                       => invoice.created_at,
+        :date                       => invoice.created_at.to_date,
         :title                      => invoice.title,
         :description                => desc_for(invoice),
         :value                      => invoice.value_with_taxes.to_f,
