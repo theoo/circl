@@ -272,8 +272,8 @@ module BankImporter
         hash[:unknown3]       = matches.captures[8]
 
         # Add goodies to speed up/ease import/export
-        hash[:owner_name]  = Person.where(:id => hash[:owner_id]).first.try(:name)
-        hash[:value]            = Money.new(hash[:value_in_cents]).to_view
+        hash[:owner_name]     = Person.where(:id => hash[:owner_id]).first.try(:name)
+        hash[:value]          = Money.new(hash[:value_in_cents]).to_view
 
         hash
       end
