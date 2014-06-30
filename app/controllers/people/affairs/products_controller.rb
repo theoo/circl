@@ -160,7 +160,7 @@ class People::Affairs::ProductsController < ApplicationController
             id: @affair.product_items.where(product_id: t.id).first.id,
             label: t.key,
             title: t.title,
-            desc: t.description
+            desc: t.description.exerpt
           }
         }
       end

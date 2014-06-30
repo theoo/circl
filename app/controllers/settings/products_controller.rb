@@ -158,14 +158,14 @@ class Settings::ProductsController < ApplicationController
         { id: p.id,
           label: p.key,
           title: p.title,
-          desc: p.description,
+          desc: p.description.exerpt,
           program_key: p.available_programs.first.key,
           program_id: p.available_programs.first.id }
       else
         { id: p.id,
           label: p.key,
           title: p.title,
-          desc: p.description }
+          desc: p.description.exerpt }
       end
     end
 
@@ -206,7 +206,7 @@ class Settings::ProductsController < ApplicationController
         render json: result.map{ |t| { id: t.id,
           label: t.key,
           title: t.title,
-          desc: t.description }}
+          desc: t.description.exerpt }}
       end
     end
   end

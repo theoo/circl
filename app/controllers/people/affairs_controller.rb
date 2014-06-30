@@ -229,7 +229,7 @@ class People::AffairsController < ApplicationController
           desc = " "
           if t.estimate
             desc += "<i>" + I18n.t("affair.views.estimate") + "</i>"
-            desc += " - " + t.description unless t.description.blank?
+            desc += " - " + t.description.exerpt unless t.description.blank?
           else
             desc += t.description if t.description
           end

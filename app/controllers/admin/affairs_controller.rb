@@ -35,6 +35,7 @@ class Admin::AffairsController < ApplicationController
     end
   end
 
+  # FIXME Same method in people/affairs_controller. DRY
   def search
     if params[:term].blank?
       result = []
@@ -44,7 +45,19 @@ class Admin::AffairsController < ApplicationController
     end
 
     respond_to do |format|
-      format.json { render json: result.map{|t| {id: t.id, label: t.title}}}
+      format.json do
+        render json: result.map{|t|
+          desc = " "
+          if t.estimate
+            desc += "<i>" + I18n.t("affair.views.estimate") + "</i>"
+            desc += " - " + t.description.exerpt unless t.description.blank?
+          else
+            desc += t.description if t.description
+          end
+          { id: t.id,
+            label: t.title,
+            desc: desc }}
+      end
     end
   end
 

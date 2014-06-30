@@ -113,7 +113,7 @@ class Settings::ProductProgramsController < ApplicationController
         render json: result.map{ |t| { id: t.id,
           label: t.key,
           title: t.title,
-          desc: t.description }}
+          desc: t.description.exerpt }}
       end
     end
   end
