@@ -1,3 +1,6 @@
+body
+  margin: 0
+
 b, strong
   font-weight: bolder
 
@@ -40,12 +43,24 @@ i, em
   .summary
     text-transform: capitalize
 
+#boundaries, #boundaries_with_bvr
+  position: absolute
+  top: 0
+  width: 210mm
+  overflow: hidden
+
+#boundaries
+  height: 297mm
+
+#boundaries_with_bvr
+  height: 190mm
+
 // BVRs
 .bvr, .bvr-placeholder
   position: absolute
   width: 210mm
-  height: 104mm //
-  top: 193mm // should be 190mm rendering behave strangely
+  height: 106mm
+  top: 190mm // should be 190mm rendering behave strangely
   font-family: "OCR-B"
   font-size: 10pt
   div

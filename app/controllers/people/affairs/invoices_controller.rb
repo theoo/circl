@@ -165,6 +165,10 @@ class People::Affairs::InvoicesController < ApplicationController
   def build_from_template(invoice, html = 'html')
     html = invoice.invoice_template.send(html).dup
 
+    boundaries_class_name = invoice.invoice_template.with_bvr ? "boundaries" : "boundaries_class_name"
+    html.prepend "<div id='#{boundaries_class_name}'>"
+    html += "</div>"
+
     # Add bvr if requested
     if invoice.invoice_template.with_bvr
       @invoice_template = invoice.invoice_template
