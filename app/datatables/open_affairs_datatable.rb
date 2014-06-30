@@ -31,7 +31,7 @@ class OpenAffairsDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Affair.open_affairs.count,
+      iTotalRecords: Affair.effectives.open_affairs.count,
       iTotalDisplayRecords: affairs.total_entries,
       aaData: data
     }
@@ -94,7 +94,7 @@ class OpenAffairsDatatable
       small_description = description.size > 500 ? description[0..500] + "..." : description
 
       {
-        0 => affair.owner_id,
+        0 => affair.id,
         1 => affair.updated_at,
         2 => small_description,
         'id' => affair.owner_id
@@ -108,7 +108,7 @@ class OpenAffairsDatatable
 
   # TODO: improve search like "Firstname Lastname", actually returns zero results.
   def fetch_affairs
-    affairs = Affair.open_affairs.joins(:owner)
+    affairs = Affair.effectives.open_affairs.joins(:owner)
     affairs = affairs.order("#{sort_column} #{sort_direction}")
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes

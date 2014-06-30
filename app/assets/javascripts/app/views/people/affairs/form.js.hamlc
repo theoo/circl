@@ -7,7 +7,7 @@
     .row
       .col-md-6
         .row
-          .col-sm-9
+          .col-sm-12
             .form-group
               %label{for: 'affair_title'}
                 = I18n.t('common.title')
@@ -16,19 +16,9 @@
                      id: 'affair_title',
                      class: 'required form-control',
                      value: @affair.title}
-          .col-sm-3
-            %br
-            .checkbox
-              %label.control-label
-                %input{ type: 'checkbox',
-                        id: 'affair_estimate',
-                        name: 'estimate',
-                        checked: @affair.estimate,
-                        value: 1 }
-                = I18n.t('affair.views.estimate')
 
         .row
-          .col-sm-9
+          .col-sm-12
             .form-group.autocompleted
               %label{for: 'affair_parent'}
                 = I18n.t('common.parent')
@@ -41,7 +31,37 @@
               %input{ type: 'hidden',
                       name: 'parent_id',
                       value: @affair.parent_id }
-          .col-sm-3
+
+        .row
+          .col-sm-4
+            %br
+            .checkbox
+              %label.control-label
+                %input{ type: 'checkbox',
+                        id: 'affair_estimate',
+                        name: 'estimate',
+                        checked: @affair.estimate,
+                        value: 1 }
+                = I18n.t('affair.views.estimate')
+
+          .col-sm-4
+            %br
+            .checkbox
+              %label.control-label
+                %input{ type: 'checkbox',
+                        id: 'affair_unbillable',
+                        name: 'unbillable',
+                        checked: @affair.unbillable,
+                        value: 1 }
+                = I18n.t('affair.views.statuses.unbillable')
+
+          .col-sm-4.form-group
+            %label
+              = I18n.t('common.date')
+            %input{ type: 'text',
+                    name: 'created_at',
+                    class: 'datepicker form-control required',
+                    value: @affair.created_at }
 
         .row
           .col-lg-12

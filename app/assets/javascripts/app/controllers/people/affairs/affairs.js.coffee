@@ -123,6 +123,7 @@ class New extends App.ExtendedController
             value_in_cents:       parent.value_in_cents
             value_currency:       parent.currency
             estimate:             parent.estimate?
+            unbillable:           parent.unbillable?
             parent_id:            parent.id
             parent_title:         parent.title
             footer:               parent.footer
@@ -137,6 +138,7 @@ class New extends App.ExtendedController
     else
       @template =
         affairs_stakeholders: []
+        unbillable: false
         seller_id: App.current_user.id
         seller_name: App.current_user.name
 
@@ -161,6 +163,7 @@ class New extends App.ExtendedController
     @affair.affairs_stakeholders = @fetch_items()
     @affair.value_currency = App.ApplicationSetting.value("default_currency") unless @affair.value_currency
     @affair.estimate = data.estimate?
+    @affair.unbillable = data.unbillable?
     @affair.custom_value_with_taxes = data.custom_value_with_taxes?
     @save_with_notifications @affair, redirect_to_edit
 
@@ -286,6 +289,7 @@ class Edit extends App.ExtendedController
     @affair.load(data)
     @affair.affairs_stakeholders = @fetch_items()
     @affair.estimate = data.estimate?
+    @affair.unbillable = data.unbillable?
     @affair.custom_value_with_taxes = data.custom_value_with_taxes?
     @save_with_notifications @affair
 

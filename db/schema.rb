@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140611100213) do
+ActiveRecord::Schema.define(:version => 20140630064405) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20140611100213) do
     t.text     "conditions"
     t.integer  "seller_id",                   :default => 1,     :null => false
     t.integer  "condition_id"
+    t.boolean  "unbillable",                  :default => false, :null => false
   end
 
   add_index "affairs", ["buyer_id"], :name => "index_affairs_on_buyer_id"

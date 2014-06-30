@@ -113,9 +113,12 @@ class Affair < ActiveRecord::Base
   money :value
 
   scope :open_affairs, Proc.new {
-    mask = Affair.statuses_value_for(:open)
+    mask = Affair.statuses_value_for(:to_be_billed)
     where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
   }
+
+  scope :estimates, Proc.new { where estimate: true }
+  scope :effectives, Proc.new { where estimate: false}
 
   # Used to calculate value from value with taxes
   attr_accessor :custom_value_with_taxes
@@ -174,6 +177,7 @@ class Affair < ActiveRecord::Base
   # attributes overridden - JSON API
   def as_json(options = nil)
     h = super(options)
+    h[:created_at]                         = created_at.to_date # Override datetime
     h[:parent_title]                       = parent.try(:title)
     h[:owner_name]                         = owner.try(:name)
     h[:owner_address]                      = owner.try(:address_for_bvr)
@@ -438,6 +442,8 @@ class Affair < ActiveRecord::Base
     statuses = []
     if cancelled?
       statuses << :cancelled
+    elsif unbillable
+      statuses << :paid # NOTE is that the best reflection of its status ?
     else
       statuses << :open if open?
       statuses << :underpaid if underpaid?
