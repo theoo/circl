@@ -46,6 +46,7 @@ en:
         invoice_buyer_organization_name: Invoice buyer organization name
         invoice_buyer_title: Invoice buyer title
         invoice_buyer_title_and_full_name: Invoice buyer title and full name
+        invoice_conditions: Invoice conditions
         invoice_currency: Invoice value currency name
         invoice_currency_iso_code: Invoice value currency iso code (CHF, EUR, USD, GBP, ...)
         invoice_currency_symbol: Invoice value currency symbol (F, €, $, £, ...)

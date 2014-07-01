@@ -200,6 +200,7 @@ class Invoice < ActiveRecord::Base
                       'INVOICE_DAY_WORD'                   => I18n.l(created_at, format: "%A"),
                       'INVOICE_MONTH_WORD'                 => I18n.l(created_at, format: "%B"),
                       'INVOICE_DESCRIPTION'                => description.to_s,
+                      'INVOICE_CONDITIONS'                 => conditions.to_s,
                       'INVOICE_ID'                         => id.to_s,
                       'INVOICE_TITLE'                      => title.to_s,
                       'INVOICE_VALUE_WITH_TAXES'           => value_with_taxes.to_doc,
@@ -234,9 +235,9 @@ class Invoice < ActiveRecord::Base
                       'AFFAIR_VALUE_WITH_TAXES'            => affair.value_with_taxes.to_doc,
                       'AFFAIR_VALUE'                       => affair.value.to_doc,
                       'AFFAIR_VAT_VALUE'                   => affair.vat_value.to_doc,
-                      'AFFAIR_DESCRIPTION'                 => affair.description,
-                      'AFFAIR_FOOTER'                      => affair.footer,
-                      'AFFAIR_CONDITIONS'                  => affair.conditions,
+                      'AFFAIR_DESCRIPTION'                 => affair.description.to_s,
+                      'AFFAIR_FOOTER'                      => affair.footer.to_s,
+                      'AFFAIR_CONDITIONS'                  => affair.conditions.to_s,
                       'AFFAIR_SELLER_NAME'                 => affair.seller.try(:name)
                     }
 
@@ -405,7 +406,6 @@ class Invoice < ActiveRecord::Base
 
   # Checks if pdf is up to date.
   def pdf_up_to_date?
-    return false
     return false unless pdf_updated_at
 
     # Check if pdf requires an update because invoice is newer

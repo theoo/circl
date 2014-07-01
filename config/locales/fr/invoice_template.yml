@@ -37,7 +37,7 @@ fr:
         bvr_value: Valeur formatée pour le BVR
         extras: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, title, description, value, value_in_cents, value_currency, quantity, quantity, position, created_at, updated_at'
         invoice_address: Adresse du destinataire de la facture
-        invoice_balance_value: Invoice balance value
+        invoice_balance_value: Balance de la facture
         invoice_buyer_first_name: Prénom du payeur de la facture
         invoice_buyer_full_name: Nom complet du payeur de la facture
         invoice_buyer_id: Identifiant unique du payeur de la facture
@@ -46,9 +46,10 @@ fr:
         invoice_buyer_organization_name: Nom de l'organisation du payeur de la facture
         invoice_buyer_title: Titre du payeur de la facture
         invoice_buyer_title_and_full_name: Titre et nom complet du payeur de la facture
-        invoice_currency: Invoice value currency name
-        invoice_currency_iso_code: Invoice value currency iso code (CHF, EUR, USD, GBP, ...)
-        invoice_currency_symbol: Invoice value currency symbol (F, €, $, £, ...)
+        invoice_conditions: Conditions de la facture
+        invoice_currency: Nom de la devise de la facture
+        invoice_currency_iso_code: Code iso de la devise de la facture (CHF, EUR, USD, GBP, ...)
+        invoice_currency_symbol: Symbol de la devise de la facture (F, €, $, £, ...)
         invoice_date: Date d'émission de la facture
         invoice_day_numeric: Jour d'émission de la facture, au format numérique
         invoice_day_word: Jour d'émission de la facture, en toutes lettres
@@ -56,7 +57,7 @@ fr:
         invoice_id: Identifiant unique de la facture (ID)
         invoice_month_numeric: Mois d'émission de la facture, au format numérique
         invoice_month_word: Mois d'émission de la facture, en toutes lettres
-        invoice_overpaid_value: Invoice overpaid value
+        invoice_overpaid_value: Surpaiement de la facture
         invoice_owner_first_name: Prénom du propriétaire de la facture
         invoice_owner_full_name: Nom complet du propriétaire de la facture
         invoice_owner_id: Identifiant unique du propriétaire de la facture
@@ -65,7 +66,7 @@ fr:
         invoice_owner_organization_name: Nom de l'organisation du propriétaire de la facture
         invoice_owner_title: Titre du propriétaire de la facture
         invoice_owner_title_and_full_name: Titre et nom complet du propriétaire de la facture
-        invoice_receipts_value: Invoice receipts sum value
+        invoice_receipts_value: Valeur totale des reçus de la facture
         invoice_receiver_first_name: Prénom du receveur des préstations
         invoice_receiver_full_name: Nom complet du receveur des préstations
         invoice_receiver_id: Identifiant unique du receveur des préstations
