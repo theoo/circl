@@ -43,7 +43,8 @@ class Admin::InvoicesController < ApplicationController
     respond_to do |format|
       format.html do
         if from && to
-          invoices = Invoice.where('created_at >= ? AND created_at <= ?', from, to).order(:created_at)
+          # NOTE to_time allow rails to search UTC date which may be different between summer and winter
+          invoices = Invoice.where('created_at >= ? AND created_at <= ?', from.to_time, to.to_time).order(:created_at)
           exporter = Exporter::Factory.new( :invoices,
                                             params[:type].to_sym,
                                             { account: params["account"], counterpart_account: params['counterpart_account'] })

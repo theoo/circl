@@ -144,7 +144,7 @@ class Salaries::SalariesController < ApplicationController
       format.html do
         if from && to
           salaries = salaries_arel
-            .where('salaries.from >= ? AND salaries.to <= ?', from, to)
+            .where('salaries.from >= ? AND salaries.to <= ?', from.to_time, to.to_time)
             .order('salaries.from ASC')
           exporter = Exporter::Factory.new( :salaries,
                                             :salary_details )
