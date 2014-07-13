@@ -33,7 +33,7 @@ if ActiveRecord::Base.connection.table_exists? 'application_settings' \
       if ApplicationSetting.where(:key => mf.to_s).count != 1
         message = "Application settings are not set proprely for environnement '#{Rails.env}'. "
         message << "Ensure key '#{mf}' is present (#{ApplicationSetting.where(:key => mf.to_s).count}) "
-        message << "or run rake db:seed:application_settings:reset and readjust values."
+        message << "or run 'rake db:upgrade force_application_settings=true' and readjust values."
 
         raise ArgumentError, message
       end
