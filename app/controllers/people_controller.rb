@@ -241,6 +241,28 @@ class PeopleController < ApplicationController
     end
   end
 
+  def duplicates_report
+    @report = []
+    Person.duplicates.each do |p|
+      @report << Person.where(first_name: p.first_name, last_name: p.last_name)
+    end
+
+    respond_to do |format|
+      format.html { } # TODO
+
+      format.json do
+        render json: @report
+      end
+
+      format.csv do
+        render inline: csv_ify(@report.flatten,
+          [:id, :first_name, :last_name, :email, :phone, :address,
+            'location.try(:postal_code_prefix)', 'location.try(:name)',
+            'private_tags.map{|t| t.name}.join(", ")', 'public_tags.map{|t| t.name}.join(", ")'])
+      end
+    end
+  end
+
   private
 
   def check_and_update_attributes

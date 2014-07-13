@@ -249,6 +249,11 @@ class Person < ActiveRecord::Base
   scope :hidden, where(hidden: true)
   scope :visible, where("hidden is NULL OR hidden IN ('false', 'f', '0')")
 
+  scope :duplicates, find_by_sql("SELECT id\
+    FROM (SELECT *, row_number() over (partition BY first_name, last_name ORDER BY first_name)\
+      AS rnum FROM people) t\
+    WHERE t.rnum > 1 AND first_name != ''")
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :encryptable, :lockable,

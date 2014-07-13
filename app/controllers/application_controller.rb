@@ -152,12 +152,12 @@ class ApplicationController < ActionController::Base
     CSV.generate(encoding: 'UTF-8') do |csv|
       # header
       # TODO: i18n?
-      csv << fields.map{|e| e.humanize}
+      csv << fields.map{|e| e.to_s.humanize}
 
       # content
       ary.each do |object|
         line = []
-        fields.each {|f| line << eval("object." + f) } # FIXME could be a security issue
+        fields.each {|f| line << eval("object." + f.to_s) } # FIXME could be a security issue
         csv << line
       end
     end

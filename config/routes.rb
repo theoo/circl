@@ -21,7 +21,7 @@ Directory::Application.routes.draw do
     end
 
     collection do
-      get 'paginate', 'search', 'title_search', 'nationality_search'
+      get 'paginate', 'search', 'title_search', 'nationality_search', 'duplicates_report'
     end
 
     resources :dashboard, :controller => 'people/dashboard', :only => :index do
