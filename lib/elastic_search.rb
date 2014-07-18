@@ -57,14 +57,14 @@ module ElasticSearch
       end
       by '_score', 'desc'
     end
-    #search.highlight *selected_attributes, :options => { :tag => '<b>' }
+    search.highlight *selected_attributes, :options => { :tag => '<b>' }
     search.from(from)
     search.size(per_page)
     search.filter :terms, { :accessible_by => current_person.roles.map(&:name) } if current_person
     search.results
   end
 
-  # FIXME This should not be accessible from the outside
+  # FIXME This should not be accessible from outside of the class
   def self.exclude_hidden(search_string)
     # exclude "hidden" people by default.
     # This can be overrided by setting explicitly "AND hidden:true" or "AND hidden:all"
@@ -151,7 +151,7 @@ module ElasticSearch
           person = object if object and object.is_a? Person
 
           if person.new_record? # If validation failed, it may try to update anyways.
-            return false # returning false would prevent association from beeing saved.
+            return false # returning false should prevent association from beeing saved.
           else
             BackgroundTasks::UpdateIndexForPeople.schedule(:people_ids => [person.id])
           end

@@ -45,14 +45,21 @@ class DirectoryController < ApplicationController
   def index
     authorize! :index, Directory
 
+    # In case this query redirect to a custom action after people selection.
     @custom_action = params[:custom_action] if params[:custom_action]
 
-    @query = HashWithIndifferentAccess.new((QueryPreset.count == 0) ? QueryPreset.new.query : QueryPreset.order(:id).first.query)
+    # Set the query preset as a template for the current query
+    if QueryPreset.count == 0
+      @query = HashWithIndifferentAccess.new QueryPreset.new.query
+    else
+      @query = HashWithIndifferentAccess.new QueryPreset.order(:id).first.query
+    end
 
     person = false
 
     if params[:query]
 
+      # Merge the current query to the previously selected query preset template
       if params[:query].is_a? HashWithIndifferentAccess
         @query.merge!(HashWithIndifferentAccess.new(params[:query]))
       elsif params[:query].is_a? String
@@ -61,28 +68,22 @@ class DirectoryController < ApplicationController
         raise ArgumentError, "invalid query".inspect
       end
 
+      # Validates query
       if @query[:selected_attributes] and @query[:selected_attributes].size > 0
         if ! @query[:search_string].blank?
-          people = ElasticSearch::search( @query[:search_string],
-                                          @query[:selected_attributes],
-                                          @query[:attributes_order],
-                                          @current_person)
-
-          # Check if query returns only one person and set person if so
-          if people.size == 1
-            person = people.first.load
-          end
           @results_count = ElasticSearch::count(@query[:search_string])
         end
       else
-        raise Tire::Search::SearchRequestFailed, I18n.t('directory.errors.you_need_to_select_at_least_one_attribute_to_display')
+        raise Tire::Search::SearchRequestFailed,
+          I18n.t('directory.errors.you_need_to_select_at_least_one_attribute_to_display')
       end
 
     end
 
     respond_to do |format|
       format.html do
-        if person and not @custom_action
+        if @results_count == 1 and not @custom_action
+          person = es_search.first
           flash[:notice] = I18n.t("directory.notices.result_return_only_one_person")
           redirect_to person_path(person)
         else
@@ -99,12 +100,12 @@ class DirectoryController < ApplicationController
       end
 
       format.xml do
-        people.map!{ |p| p.load }
+        es_search.map!{ |p| p.load }
         render xml: people.to_xml
       end
 
       format.csv do
-        people = people.map do |p|
+        people = es_search.map do |p|
           @query[:selected_attributes].each_with_object(OpenStruct.new(p.to_hash)) do |f, o|
             o.send("#{f}=", relation_to_string(o.send(f)))
           end
@@ -139,7 +140,6 @@ class DirectoryController < ApplicationController
       @query.merge!(HashWithIndifferentAccess.new(JSON.parse(params[:query])))
       if @query[:selected_attributes] && @query[:selected_attributes].size > 0
         if ! @query[:search_string].blank?
-          # Check if query returns only one person and set person if so
           people = ElasticSearch::search( @query[:search_string],
                                           @query[:selected_attributes],
                                           @query[:attributes_order],
@@ -265,6 +265,16 @@ class DirectoryController < ApplicationController
 
   def mailchimp_synchronizing?
     File.exists? Mailchimp::LOCK_FILE
+  end
+
+  # Effectively search in ES with the giver attributes
+  def es_search
+    if ! @query[:search_string].blank?
+      ElasticSearch::search( @query[:search_string],
+        @query[:selected_attributes],
+        @query[:attributes_order],
+        @current_person)
+    end
   end
 
 end

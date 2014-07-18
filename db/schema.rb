@@ -634,8 +634,8 @@ ActiveRecord::Schema.define(:version => 20140718151558) do
     t.string   "cert_others_title",                                        :default => "",    :null => false
     t.text     "cert_notes",                                               :default => "",    :null => false
     t.string   "employer_account",                                         :default => ""
-    t.text     "comments"
     t.string   "yearly_salary_currency",                                   :default => "CHF", :null => false
+    t.text     "comments"
   end
 
   add_index "salaries", ["is_reference"], :name => "index_salaries_on_is_template"
