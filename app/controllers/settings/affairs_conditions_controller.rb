@@ -52,7 +52,7 @@ class Settings::AffairsConditionsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @affairs_condition.update_attributes(params[:application_setting])
+      if @affairs_condition.update_attributes(params[:affairs_condition])
         format.json { render json: @affairs_condition }
       else
         format.json { render json: @affairs_condition.errors, status: :unprocessable_entity }

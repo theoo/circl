@@ -215,6 +215,7 @@ class @Settings extends App
 
       @subapp($('#settings_task_types'), 'SettingsTaskTypes')
       @subapp($('#settings_task_rates'), 'SettingsTaskRates')
+      @subapp($('#settings_conditions'), 'SettingsConditions')
 
       @subapp($('#settings_products'), 'SettingsProducts')
       @subapp($('#settings_product_programs'), 'SettingsProductPrograms')

@@ -1,0 +1,19 @@
+%table.datatable
+  %thead
+    %tr
+      %th= I18n.t('common.id')
+      %th= I18n.t('common.title')
+      %th= I18n.t('affairs_condition.views.affairs')
+
+  %tbody
+    - for type in App.Condition.all()
+      - classes = ['item']
+      - classes.push 'success' if ! type.archive
+      %tr{:data-id => type.id, class: classes.join(" ")}
+        %td= type.id
+        %td
+          %b= type.title
+          %br
+          = type.description
+        %td
+          = type.affairs_count

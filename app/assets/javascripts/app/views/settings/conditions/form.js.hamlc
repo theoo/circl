@@ -1,0 +1,48 @@
+.panel-body
+  %form
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
+
+    .row
+      .col-md-9
+        .form-group
+          %label{for: 'settings_condition_title'}
+            = I18n.t('common.title')
+          %input{ type: 'text',
+                  name: 'title',
+                  id: 'settings_condition_title',
+                  value: @condition.title,
+                  class: 'form-control required' }
+      .col-lg-3
+        %br
+        .checkbox
+          %label.control-label
+            %input{ type: 'checkbox',
+                    id: 'settings_condition_archive',
+                    name: 'archive',
+                    checked: @condition.archive,
+                    value: 1 }
+            = I18n.t('common.archive')
+
+    .row
+      .col-lg-12.form-group
+        %label{for: 'settings_condition_description'}
+          = I18n.t('common.description')
+        %textarea{name: 'description',
+                  rows: 4,
+                  id: 'settings_condition_description',
+                  class: 'form-control required'}
+          = @condition.description
+
+    .row
+      .col-lg-12
+        .pull-right
+          != @partial('save_and_cancel_buttons')(@condition)
+
+        - unless @condition.isNew()
+          %button{type: 'button',
+                  class: 'btn btn-danger',
+                  name: 'settings-condition-destroy'}
+            .icon-remove
+            = I18n.t("common.destroy")

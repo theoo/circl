@@ -4,6 +4,8 @@ class AffairsCondition < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
+  include ChangesTracker
+
   #####################
   ### MISCEALLENOUS ###
   #####################
@@ -16,7 +18,7 @@ class AffairsCondition < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  has_many :affairs
+  has_many :affairs, foreign_key: :condition_id
 
   ###################
   ### VALIDATIONS ###
@@ -28,5 +30,11 @@ class AffairsCondition < ActiveRecord::Base
   ########################
   ### INSTANCE METHODS ###
   ########################
+
+  def as_json(options = nil)
+    h = super(options)
+    h[:affairs_count] = affairs.count
+    h
+  end
 
 end

@@ -1,5 +1,7 @@
 ---
 - title: "30 jours"
   description: "Confirmation par le paiement de l'acompte dans un délai de 30 jours."
+  archive: false
 - title: "15 jours"
   description: "Confirmation par le paiement de l'acompte dans un délai de 15 jours."
+  archive: false

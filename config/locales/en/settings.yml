@@ -4,6 +4,7 @@ en:
     views:
       advanced: Advanced
       affairs: Affairs
+      affairs_conditions: Affairs conditions
       application_settings: Application settings
       attributes: Attributes
       currencies: Currencies

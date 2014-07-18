@@ -5,7 +5,7 @@
         .validation_errors_placeholder
 
     .row
-      .col-md-6
+      .col-md-9
         .form-group
           %label{for: 'settings_task_type_title'}
             = I18n.t('common.title')
@@ -14,7 +14,17 @@
                   id: 'settings_task_type_title',
                   value: @task_type.title,
                   class: 'form-control required' }
-      .col-md-6
+      .col-md-3
+        %br
+        .checkbox
+          %label.control-label
+            %input{ type: 'checkbox',
+                    id: 'settings_task_type_archive',
+                    name: 'archive',
+                    checked: @task_type.archive,
+                    value: 1 }
+            = I18n.t('common.archive')
+
 
     .row
       .col-sm-6.form-group
@@ -51,22 +61,11 @@
       .col-lg-12.form-group
         %label{for: 'settings_task_type_description'}
           = I18n.t('common.description')
-        %input{ type: 'text',
-                name: 'description',
-                id: 'settings_task_type_description',
-                value: @task_type.description,
-                class: 'form-control' }
-
-    .row
-      .col-lg-12
-        .checkbox
-          %label.control-label
-            %input{ type: 'checkbox',
-                    id: 'settings_task_type_archive',
-                    name: 'archive',
-                    checked: @task_type.archive,
-                    value: 1 }
-            = I18n.t('common.archive')
+        %textarea{name: 'description',
+                  rows: 4,
+                  id: 'settings_task_type_description',
+                  class: 'form-control required'}
+          = @task_type.description
 
     .row
       .col-lg-12

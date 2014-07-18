@@ -147,6 +147,12 @@
                 .panel-title
                   = I18n.t('settings.views.task_rates')
 
+          - if can? :manage, AffairsCondition
+            #settings_conditions.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.affairs_conditions')
+
         .col-md-6
           - if can? :manage, Product
             #settings_products.panel.panel-default

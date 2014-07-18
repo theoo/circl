@@ -36,11 +36,11 @@
         .form-group
           %label{for: 'settings_task_rate_description'}
             = I18n.t('common.description')
-          %input{ type: 'text',
-                  name: 'description',
-                  id: 'settings_task_rate_description',
-                  value: @task_rate.description,
-                  class: 'form-control' }
+          %textarea{name: 'description',
+                    rows: 4,
+                    id: 'settings_task_rate_description',
+                    class: 'form-control required'}
+            = @task_rate.description
 
     .row
       .col-lg-12

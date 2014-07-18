@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140630090823) do
+ActiveRecord::Schema.define(:version => 20140718151558) do
 
   create_table "affairs", :force => true do |t|
     t.integer  "owner_id",                                       :null => false
@@ -47,8 +47,9 @@ ActiveRecord::Schema.define(:version => 20140630090823) do
   add_index "affairs", ["value_in_cents"], :name => "index_affairs_on_value_in_cents"
 
   create_table "affairs_conditions", :force => true do |t|
-    t.string "title"
-    t.text   "description"
+    t.string  "title"
+    t.text    "description"
+    t.boolean "archive",     :default => false, :null => false
   end
 
   create_table "affairs_products_programs", :force => true do |t|

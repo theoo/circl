@@ -67,3 +67,6 @@
 
 - subject: Dashboard
   action: manage
+
+- subject: AffairsCondition
+  action: manage
