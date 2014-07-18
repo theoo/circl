@@ -429,6 +429,15 @@
   group: Relations
 
 - model: Person
+  name: task_rate
+  indexing: task_rate.try(:as_indexed_json)
+  mapping:
+    type: object
+    properties: TaskRate.mapping
+    include_in_all: false
+  group: Relations
+
+- model: Person
   name: communication_languages
   indexing: communication_languages.map(&:as_indexed_json)
   mapping:

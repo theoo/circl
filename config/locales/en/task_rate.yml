@@ -4,6 +4,8 @@ en:
     errors:
       cannot_destroy_if_client_present: It is not possible to destroy a task rate which has associated clients.
     views:
+      actions:
+        view_members: view members
       people_count: customers
       please_select_a_rate: Please select a rate
       rate: rate

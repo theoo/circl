@@ -44,6 +44,7 @@ class Edit extends App.ExtendedController
     'submit form': 'submit'
     'click button[name="cancel"]': 'cancel'
     'click button[name=settings-task-rate-destroy]': 'destroy'
+    'click a[name=settings-task-rate-view-members]': 'view_members'
 
   constructor: ->
     super
@@ -69,6 +70,10 @@ class Edit extends App.ExtendedController
   destroy: (e) ->
     if confirm(I18n.t('common.are_you_sure'))
       @destroy_with_notifications @task_rate, @hide
+
+  view_members: (e) ->
+    e.preventDefault()
+    Directory.search(search_string: "task_rate.id:#{@task_rate.id}")
 
 class Index extends App.ExtendedController
   events:

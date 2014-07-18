@@ -23,6 +23,9 @@ class TaskRate < ActiveRecord::Base
   ################
 
   include ChangesTracker
+  include ElasticSearch::Mapping
+  include ElasticSearch::Indexing
+  include ElasticSearch::AutomaticPeopleReindexing
   extend  MoneyComposer
 
   #################
