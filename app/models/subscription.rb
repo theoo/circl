@@ -164,7 +164,6 @@ class Subscription < ActiveRecord::Base
                               WHERE r.invoice_id = invoices.id
                               HAVING invoices.value_in_cents < SUM(r.value_in_cents))
                               - invoices.value_in_cents) as val")
-                    .order(:id)
                     .group("invoices.id")
                     .select(&:val) # remove null values (nil)
                     .map{|i| i.val.to_i } # convert given strings to integers
