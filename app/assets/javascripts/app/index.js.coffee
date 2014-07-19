@@ -48,6 +48,7 @@ class @App extends Spine.Controller
       App.Currency.fetch()
     App.ApplicationSetting.fetch()
 
+    @sub_nav = $("#sub_nav")
 
   subapp: (element, class_name, extra_params = {}) ->
     # TODO Raise a message if application controller cannot be found.
@@ -59,6 +60,7 @@ class @App extends Spine.Controller
     element.data('controller', instance)
     instance.activate()
 
+
   @authenticity_token: -> $('meta[name="csrf-token"]').attr('content')
 
   # Named user here to prevent confusion with person, which is the current
@@ -68,6 +70,7 @@ class @App extends Spine.Controller
 
   @available_currencies =
     JSON.parse($('meta[name="available_currencies"]').attr('content'))
+
 
 class @Dashboard extends App
 
@@ -109,30 +112,51 @@ class @PersonEdit extends App
         # new person
         @subapp($('#person'), 'People')
 
+      # And tabs content
       App.Person.one 'refresh', =>
-        @subapp($('#person'), 'People')
-        @subapp($('#person_communication_languages'), 'PersonCommunicationLanguages')
-        @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
-        @subapp($('#person_private_tags'), 'PersonPrivateTags')
-        @subapp($('#person_public_tags'), 'PersonPublicTags')
-        @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
-        @subapp($('#person_roles'), 'PersonRoles')
-        @subapp($('#person_comments'), 'PersonComments')
-        @subapp($('#person_activities'), 'PersonActivities')
+        @sub_nav.one 'info', =>
+          @subapp($('#person'), 'People')
+          @subapp($('#person_communication_languages'), 'PersonCommunicationLanguages')
+          # @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
+          @subapp($('#person_private_tags'), 'PersonPrivateTags')
+          @subapp($('#person_public_tags'), 'PersonPublicTags')
+
+        @sub_nav.one 'salaries', =>
+          @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
+
+        @sub_nav.one 'permissions', =>
+          @subapp($('#person_roles'), 'PersonRoles')
+
+        @sub_nav.one 'activities', =>
+          @subapp($('#person_comments'), 'PersonComments')
+          @subapp($('#person_activities'), 'PersonActivities')
 
         App.GenericTemplate.one 'refresh', =>
-          @subapp($('#person_affairs'), 'PersonAffairs')
-          @subapp($('#person_affair_task_rates'), 'PersonAffairTaskRates')
-          @subapp($('#person_affair_tasks'), 'PersonAffairTasks')
-          @subapp($('#person_affair_products'), 'PersonAffairProducts')
-          @subapp($('#person_affair_extras'), 'PersonAffairExtras')
-          @subapp($('#person_affair_subscriptions'), 'PersonAffairSubscriptions')
-          @subapp($('#person_affair_invoices'), 'PersonAffairInvoices')
-          @subapp($('#person_affair_receipts'), 'PersonAffairReceipts')
+          @sub_nav.one 'affairs', =>
+            @subapp($('#person_affairs'), 'PersonAffairs')
+            @subapp($('#person_affair_task_rates'), 'PersonAffairTaskRates')
+            @subapp($('#person_affair_tasks'), 'PersonAffairTasks')
+            @subapp($('#person_affair_products'), 'PersonAffairProducts')
+            @subapp($('#person_affair_extras'), 'PersonAffairExtras')
+            @subapp($('#person_affair_subscriptions'), 'PersonAffairSubscriptions')
+            @subapp($('#person_affair_invoices'), 'PersonAffairInvoices')
+            @subapp($('#person_affair_receipts'), 'PersonAffairReceipts')
 
-          @subapp($('#person_salaries'), 'PersonSalaries')
-          @subapp($('#person_salary_items'), 'PersonSalaryItems')
-          @subapp($('#person_salary_tax_datas'), 'PersonSalaryTaxDatas')
+          @sub_nav.one 'salaries', =>
+            @subapp($('#person_salaries'), 'PersonSalaries')
+            @subapp($('#person_salary_items'), 'PersonSalaryItems')
+            @subapp($('#person_salary_tax_datas'), 'PersonSalaryTaxDatas')
+
+          # add anchor to pagination so the tab remains the same.
+          on_tab_change_callback = (e) ->
+            $("#pagination a").each (index, el) ->
+              anchor = location.hash.split('#')
+              if anchor
+                url = $(el).attr('href').split("#")[0]
+                $(el).attr('href', [url, anchor[1]].join("#"))
+
+          # Finally, load tabs
+          Ui.load_tabs $(document), on_tab_change_callback
 
         App.GenericTemplate.fetch()
 
@@ -177,14 +201,20 @@ class @Admin extends App
     super
 
     @el.one 'dependencies_preloaded', =>
-      @subapp($('#admin_private_tags'), 'AdminPrivateTags')
-      @subapp($('#admin_public_tags'), 'AdminPublicTags')
+      @sub_nav.one 'tags', =>
+        @subapp($('#admin_private_tags'), 'AdminPrivateTags')
+        @subapp($('#admin_public_tags'), 'AdminPublicTags')
 
       App.GenericTemplate.one 'refresh', =>
-        @subapp($('#admin_affairs'), 'AdminAffairs')
-        @subapp($('#admin_subscriptions'), 'AdminSubscriptions')
-        @subapp($('#admin_invoices'), 'AdminInvoices')
-        @subapp($('#admin_receipts'), 'AdminReceipts')
+        @sub_nav.one 'affairs', =>
+          @subapp($('#admin_affairs'), 'AdminAffairs')
+          @subapp($('#admin_subscriptions'), 'AdminSubscriptions')
+        @sub_nav.one 'finances', =>
+          @subapp($('#admin_invoices'), 'AdminInvoices')
+          @subapp($('#admin_receipts'), 'AdminReceipts')
+
+        # Finally, load tabs
+        Ui.load_tabs $(document)
 
       App.GenericTemplate.fetch()
 
@@ -192,8 +222,13 @@ class @Salaries extends App
 
   constructor: (params) ->
     super
-    @subapp($('#salaries_salaries'), 'Salaries')
-    @subapp($('#salaries_taxes'), 'SalariesTaxes')
+    @sub_nav.one 'payroll', =>
+      @subapp($('#salaries_salaries'), 'Salaries')
+    @sub_nav.one 'deductions', =>
+      @subapp($('#salaries_taxes'), 'SalariesTaxes')
+
+    # Finally, load tabs
+    Ui.load_tabs $(document)
 
 class @Settings extends App
 
@@ -201,26 +236,37 @@ class @Settings extends App
     super
 
     @el.one 'dependencies_preloaded', =>
-      @subapp($('#settings_locations'), 'SettingsLocations')
-      @subapp($('#settings_languages'), 'SettingsLanguages')
-      @subapp($('#settings_jobs'), 'SettingsJobs')
+      @sub_nav.one 'properties', =>
+        @subapp($('#settings_locations'), 'SettingsLocations')
+        @subapp($('#settings_languages'), 'SettingsLanguages')
+        @subapp($('#settings_jobs'), 'SettingsJobs')
 
-      @subapp($('#settings_invoice_templates'), 'SettingsInvoiceTemplates')
-      @subapp($('#settings_generic_templates'), 'SettingsGenericTemplates')
+      @sub_nav.one 'templates', =>
+        @subapp($('#settings_invoice_templates'), 'SettingsInvoiceTemplates')
+        @subapp($('#settings_generic_templates'), 'SettingsGenericTemplates')
 
-      @subapp($('#settings_search_attributes'), 'SettingsSearchAttributes')
-      @subapp($('#settings_ldap_attributes'), 'SettingsLdapAttributes')
-      @subapp($('#settings_roles'), 'SettingsRoles')
-      @subapp($('#settings_role_permissions'), 'SettingsRolePermissions')
+      @sub_nav.one 'searchengine', =>
+        @subapp($('#settings_search_attributes'), 'SettingsSearchAttributes')
+        @subapp($('#settings_ldap_attributes'), 'SettingsLdapAttributes')
 
-      @subapp($('#settings_task_types'), 'SettingsTaskTypes')
-      @subapp($('#settings_task_rates'), 'SettingsTaskRates')
-      @subapp($('#settings_conditions'), 'SettingsConditions')
+      @sub_nav.one 'privileges', =>
+        @subapp($('#settings_roles'), 'SettingsRoles')
+        @subapp($('#settings_role_permissions'), 'SettingsRolePermissions')
 
-      @subapp($('#settings_products'), 'SettingsProducts')
-      @subapp($('#settings_product_programs'), 'SettingsProductPrograms')
+      @sub_nav.one 'affairs', =>
+        @subapp($('#settings_task_types'), 'SettingsTaskTypes')
+        @subapp($('#settings_task_rates'), 'SettingsTaskRates')
+        @subapp($('#settings_conditions'), 'SettingsConditions')
 
-      @subapp($('#settings_currencies'), 'SettingsCurrencies')
-      @subapp($('#settings_currency_rates'), 'SettingsCurrencyRates')
+        @subapp($('#settings_products'), 'SettingsProducts')
+        @subapp($('#settings_product_programs'), 'SettingsProductPrograms')
 
-      @subapp($('#settings_application_settings'), 'SettingsApplicationSettings')
+      @sub_nav.one 'currencies', =>
+        @subapp($('#settings_currencies'), 'SettingsCurrencies')
+        @subapp($('#settings_currency_rates'), 'SettingsCurrencyRates')
+
+      @sub_nav.one 'advanced', =>
+        @subapp($('#settings_application_settings'), 'SettingsApplicationSettings')
+
+      # Finaly, load tabs
+      Ui.load_tabs $(document)

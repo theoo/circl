@@ -287,20 +287,22 @@ class Ui
 
 
   load_tabs: (context, on_tab_change_callback = undefined) ->
-    rewrite_url_anchor = (anchor_name) ->
-      hash = anchor_name.split('#')
-      if hash.length > 1
-        tab = hash[1].split("_")[0]
-        location.hash = tab if tab
-
     nav = context.find("#sub_nav")
     nav.find("a").click (e) ->
       e.preventDefault()
       $(@).tab('show')
 
-    nav.find("a").on 'shown.bs.tab', (e) ->
+    get_tab_name = (tab) ->
+      hash = tab.attr('href').split('#')
+      hash[1].split("_")[0] if hash.length > 1
+
+    title = nav.find("a")
+
+    title.on 'shown.bs.tab', (e) ->
+      tab_name = get_tab_name($(e.target))
+
       # Update url location in browser
-      rewrite_url_anchor $(e.target).attr('href')
+      location.hash = tab_name if tab_name
 
       # Update info tab name
       $("#tab_name").html(nav.find("li.active a").html())
@@ -308,6 +310,11 @@ class Ui
       # Run callback if given
       if on_tab_change_callback
         on_tab_change_callback()
+
+    title.one 'show.bs.tab', (e) ->
+      tab_name = get_tab_name($(e.target))
+      # Trigger tab content loading
+      nav.trigger tab_name
 
     anchor = location.hash.split('#')
     anchor = anchor[1] if anchor
