@@ -80,7 +80,7 @@ class People::AffairsController < ApplicationController
       raise ActiveRecord::Rollback unless @affair.save
 
       # append stakeholders
-      if params[:affairs_stakeholders]
+      unless params[:affairs_stakeholders].blank?
         params[:affairs_stakeholders].each do |s|
           stakeholder = @affair.affairs_stakeholders.new(
             person_id: s[:person_id],
@@ -161,28 +161,35 @@ class People::AffairsController < ApplicationController
       raise ActiveRecord::Rollback unless @affair.update_attributes(params[:affair])
 
       # Only keep values that are returned
-      sent_ids = params[:affairs_stakeholders].map{|v| v[:id].to_i}
+      if params[:affairs_stakeholders].blank?
+        sent_ids = []
+      else
+        sent_ids = params[:affairs_stakeholders].map{|v| v[:id].to_i}
+      end
+
       recorded_ids = @affair.affairs_stakeholders.map(&:id)
       surplus_values = recorded_ids - sent_ids
       AffairsStakeholder.destroy surplus_values
 
       # and append or update stakeholders
-      params[:affairs_stakeholders].each do |s|
-        if @affair.affairs_stakeholders.exists?(s[:id])
-          stakeholder = @affair.affairs_stakeholders.find(s[:id])
-          stakeholder.person_id = s[:person_id]
-          stakeholder.title = s[:title]
-        else
-          stakeholder = @affair.affairs_stakeholders.new(
-            person_id: s[:person_id],
-            title: s[:title] )
-        end
-
-        unless stakeholder.save
-          stakeholder.errors.messages.each do |k,v|
-            @affair.errors.add(("stakeholders[][" + k.to_s + "]").to_sym, v.join(", "))
+      unless params[:affairs_stakeholders].blank?
+        params[:affairs_stakeholders].each do |s|
+          if @affair.affairs_stakeholders.exists?(s[:id])
+            stakeholder = @affair.affairs_stakeholders.find(s[:id])
+            stakeholder.person_id = s[:person_id]
+            stakeholder.title = s[:title]
+          else
+            stakeholder = @affair.affairs_stakeholders.new(
+              person_id: s[:person_id],
+              title: s[:title] )
           end
-          raise ActiveRecord::Rollback
+
+          unless stakeholder.save
+            stakeholder.errors.messages.each do |k,v|
+              @affair.errors.add(("stakeholders[][" + k.to_s + "]").to_sym, v.join(", "))
+            end
+            raise ActiveRecord::Rollback
+          end
         end
       end
 
