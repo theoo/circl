@@ -19,6 +19,11 @@
       %th.ignore-sort
       %th.ignore-sort
 
+  %tbody
+    %tr
+      %td.placeholder{colspan: (@query?.selected_attributes.length)}
+        .icon-spin.icon-4x.icon-gear
+
 .panel-footer
   .btn-group
     .btn-group

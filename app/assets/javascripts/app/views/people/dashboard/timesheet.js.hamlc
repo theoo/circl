@@ -5,3 +5,7 @@
       %th= I18n.t('common.date')
       %th= I18n.t('task.views.duration')
       %th= I18n.t('common.description')
+  %tbody
+    %tr
+      %td.placeholder{colspan: 4}
+        .icon-spin.icon-4x.icon-gear

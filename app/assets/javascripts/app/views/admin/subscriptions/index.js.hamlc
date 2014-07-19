@@ -11,6 +11,10 @@
       %th= I18n.t('subscription.views.receipts_value')
       %th= I18n.t('subscription.views.overpaid_value')
       %th.desc= I18n.t('common.created_at')
+  %tbody
+    %tr
+      %td.placeholder{colspan: 10}
+        .icon-spin.icon-4x.icon-gear
 
 .panel-footer
   .row

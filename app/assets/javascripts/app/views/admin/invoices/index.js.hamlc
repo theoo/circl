@@ -7,6 +7,10 @@
       %th.number= I18n.t('common.value')
       %th= I18n.t('invoice.views.status')
       %th.desc= I18n.t('common.created_at')
+    %tbody
+      %tr
+        %td.placeholder{colspan: 6}
+          .icon-spin.icon-4x.icon-gear
 
 
 .panel-footer

@@ -4,4 +4,7 @@
       %th= I18n.t('common.id')
       %th= I18n.t('common.description')
       %th= I18n.t('common.value')
-
+  %tbody
+    %tr
+      %td.placeholder{colspan: 3}
+        .icon-spin.icon-4x.icon-gear

@@ -7,3 +7,7 @@
       %th= I18n.t('product.views.variants')
       %th= I18n.t('product.views.category')
       %th.desc= I18n.t('common.updated_at')
+  %tbody
+    %tr
+      %td.placeholder{colspan: 6}
+        .icon-spin.icon-4x.icon-gear

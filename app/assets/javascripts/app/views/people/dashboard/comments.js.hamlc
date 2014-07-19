@@ -3,3 +3,7 @@
     %tr
       %th.desc= I18n.t('common.created_at')
       %th= I18n.t('comment.views.comment')
+  %tbody
+    %tr
+      %td.placeholder{colspan: 2}
+        .icon-spin.icon-4x.icon-gear

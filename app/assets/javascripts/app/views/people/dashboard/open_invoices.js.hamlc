@@ -4,3 +4,7 @@
       %th= I18n.t('common.id')
       %th= I18n.t('common.created_at')
       %th= I18n.t('common.description')
+  %tbody
+    %tr
+      %td.placeholder{colspan: 3}
+        .icon-spin.icon-4x.icon-gear

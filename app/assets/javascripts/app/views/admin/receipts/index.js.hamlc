@@ -8,6 +8,10 @@
       %th.number= I18n.t('common.value')
       %th= I18n.t('receipt.views.value_date')
       %th.desc= I18n.t('common.created_at')
+    %tbody
+      %tr
+        %td.placeholder{colspan: 7}
+          .icon-spin.icon-4x.icon-gear
 
 .panel-footer
   .btn-group

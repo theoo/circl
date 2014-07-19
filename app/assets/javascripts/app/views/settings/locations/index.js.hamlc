@@ -5,3 +5,7 @@
       %th= I18n.t('common.parent')
       %th= I18n.t('location.views.postal_code_prefix')
       %th= I18n.t('common.members')
+  %tbody
+    %tr
+      %td.placeholder{colspan: 4}
+        .icon-spin.icon-4x.icon-gear

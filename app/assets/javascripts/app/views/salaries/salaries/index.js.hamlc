@@ -25,6 +25,10 @@
         = I18n.t('common.download')
       %th.ignore-sort.ignore-click
         = I18n.t('common.destroy')
+  %tbody
+    %tr
+      %td.placeholder{colspan: 12}
+        .icon-spin.icon-4x.icon-gear
 
 .panel-footer
   .btn-group

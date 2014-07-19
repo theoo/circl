@@ -9,6 +9,10 @@
       %th.number= I18n.t('affair.views.receipts_value')
       %th= I18n.t('affair.views.status')
       %th.desc= I18n.t('common.created_at')
+  %tbody
+    %tr
+      %td.placeholder{colspan: 8}
+        .icon-spin.icon-4x.icon-gear
 
 - if App.PersonAffair.all().length > 0
   .panel-footer

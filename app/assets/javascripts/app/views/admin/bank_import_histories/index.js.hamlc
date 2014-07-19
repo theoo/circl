@@ -8,3 +8,7 @@
       %th= I18n.t('bank_import_history.views.file_name')
       %th.desc= I18n.t('bank_import_history.views.media_date')
       %th= I18n.t('bank_import_history.views.reference_line')
+  %tbody
+    %tr
+      %td.placeholder{colspan: 3}
+        .icon-spin.icon-4x.icon-gear

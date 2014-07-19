@@ -10,3 +10,7 @@
       %th= I18n.t('common.paid')
       %th= I18n.t('affair.views.status')
       %th.desc= I18n.t('common.created_at')
+    %tbody
+      %tr
+        %td.placeholder{colspan: 9}
+          .icon-spin.icon-4x.icon-gear
