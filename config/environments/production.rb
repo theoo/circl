@@ -51,4 +51,6 @@ Directory::Application.configure do
 
   SQL_REGEX_KEYWORD = '~*' # postgresql, case insensitive
 
+  # RAILS UPDATES
+  
 end

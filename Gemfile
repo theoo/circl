@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.1'
+gem 'rails', '3.2.17'
 gem 'tilt', '1.3.7'
 
 ### database
@@ -33,7 +33,6 @@ gem 'json', '1.7.3'
 gem 'will_paginate', '3.0.3'
 gem 'haml_coffee_assets', '1.1.0'
 
-gem 'sass-rails', '3.1.0'
 gem 'haml-rails', '0.3.4'
 gem 'spine-rails', '0.1.0'
 
@@ -42,10 +41,12 @@ gem 'geoip', '1.3.3'
 gem 'geokit', '1.7.1'
 
 group :assets do
-  # gem 'uglifier'
+  gem 'sass-rails',   '~> 3.2.6'
+  gem 'coffee-rails', '~> 3.2.2'
+  gem 'uglifier',     '>= 1.0.3'
+
   gem 'sass', '3.2.1'
   gem 'haml', '3.1.6'
-  gem 'coffee-script', '2.2.0'
   gem 'eco', '1.0.0'
   gem 'execjs', '1.4.0'
   gem 'therubyracer', '0.10.1'
@@ -87,11 +88,7 @@ group :development, :test do
   gem 'syntax', '1.0.0'
 
   ### IRB
-  gem 'jazz_hands', "0.3.1"
-  # gem 'wirble', '0.1.3'
-  # gem 'hirb', '0.6.2'
-  # gem 'awesome_print', '1.0.2', :require => 'ap'
-  # gem 'interactive_editor', '0.0.10'
+  gem 'jazz_hands', "0.3.0"
 
   ### Misc
   gem 'debugger', '1.1.3'
