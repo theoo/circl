@@ -80,15 +80,17 @@ class People::AffairsController < ApplicationController
       raise ActiveRecord::Rollback unless @affair.save
 
       # append stakeholders
-      params[:affairs_stakeholders].each do |s|
-        stakeholder = @affair.affairs_stakeholders.new(
-          person_id: s[:person_id],
-          title: s[:title] )
-        unless stakeholder.save
-          stakeholder.errors.messages.each do |k,v|
-            @affair.errors.add(("stakeholders[][" + k.to_s + "]").to_sym, v.join(", "))
+      if params[:affairs_stakeholders]
+        params[:affairs_stakeholders].each do |s|
+          stakeholder = @affair.affairs_stakeholders.new(
+            person_id: s[:person_id],
+            title: s[:title] )
+          unless stakeholder.save
+            stakeholder.errors.messages.each do |k,v|
+              @affair.errors.add(("stakeholders[][" + k.to_s + "]").to_sym, v.join(", "))
+            end
+            raise ActiveRecord::Rollback
           end
-          raise ActiveRecord::Rollback
         end
       end
 
