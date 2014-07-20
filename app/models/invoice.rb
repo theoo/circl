@@ -49,7 +49,7 @@ class Invoice < ActiveRecord::Base
   # Monetize deprecation warning
   require 'monetize/core_extensions'
 
-  include ChangesTracker
+  # include ChangesTracker
   include StatusExtention
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::TagHelper
@@ -98,7 +98,7 @@ class Invoice < ActiveRecord::Base
   money :value
   money :vat
 
-  scope :open_invoices, Proc.new {
+  scope :open_invoices, -> {
     mask = Invoice.statuses_value_for(:open)
     where("(invoices.status::bit(16) & ?::bit(16))::int = ? AND invoices.created_at < now()",
       mask, mask)

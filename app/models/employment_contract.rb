@@ -38,7 +38,7 @@ class EmploymentContract < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
 
   #################
   ### CALLBACKS ###

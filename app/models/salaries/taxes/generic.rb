@@ -42,13 +42,13 @@
 # TODO refactor this into a polymorphic association
 class Salaries::Taxes::Generic < ActiveRecord::Base
 
-  set_table_name :salaries_taxes_generic
+  self.table_name = :salaries_taxes_generic
 
   ################
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
   extend  MoneyComposer

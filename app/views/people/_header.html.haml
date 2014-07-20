@@ -61,7 +61,7 @@
           - if can? :destroy, @person and ! @person.new_record?
             = link_to person_path(@person),
                 method: :delete,
-                confirm: I18n.t('common.are_you_sure'),
+                data: { confirm: I18n.t('common.are_you_sure') },
                 class: 'btn btn-danger navbar-btn' do
               .icon-remove
               .hidden-inline-sm.hidden-inline-xs

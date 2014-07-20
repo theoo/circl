@@ -44,7 +44,7 @@ class SubscriptionValue < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   extend  MoneyComposer
 
 

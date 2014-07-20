@@ -21,7 +21,7 @@
 
   %tbody
     %tr
-      %td.placeholder{colspan: (@query?.selected_attributes.length)}
+      %td.placeholder{colspan: (@query?.selected_attributes.length + 1)}
         .icon-spin.icon-4x.icon-gear
 
 .panel-footer

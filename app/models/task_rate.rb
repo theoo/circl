@@ -22,7 +22,7 @@ class TaskRate < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
   include ElasticSearch::AutomaticPeopleReindexing
@@ -43,8 +43,8 @@ class TaskRate < ActiveRecord::Base
   # Money
   money :value
 
-  scope :actives, Proc.new { where(archive: false)}
-  scope :archived, Proc.new { where(archive: true)}
+  scope :actives,  -> { where(archive: false)}
+  scope :archived, -> { where(archive: true)}
 
   ###################
   ### VALIDATIONS ###

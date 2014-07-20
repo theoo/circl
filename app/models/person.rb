@@ -69,7 +69,7 @@ class Person < ActiveRecord::Base
   ################
 
   # Inclusion order matter
-  include ChangesTracker
+  # include ChangesTracker
   include Tire::Model::Callbacks
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
@@ -152,7 +152,8 @@ class Person < ActiveRecord::Base
             dependent: :destroy
   accepts_nested_attributes_for :translation_aptitudes
 
-  monitored_habtm :roles,
+  # monitored_habtm :roles,
+  has_and_belongs_to_many :roles,
                   after_add: :update_elasticsearch_index,
                   after_remove: :update_elasticsearch_index
   has_many  :people_roles # for permissions
@@ -161,13 +162,17 @@ class Person < ActiveRecord::Base
             through: :roles,
             uniq: true
 
-  monitored_habtm :public_tags,
+  # monitored_habtm :public_tags,
+  has_and_belongs_to_many :public_tags,
                   uniq: true,
+                  join_table: 'people_public_tags',
                   after_add: :update_elasticsearch_index,
                   after_remove: :update_elasticsearch_index
 
-  monitored_habtm :private_tags,
+  # monitored_habtm :private_tags,
+  has_and_belongs_to_many :private_tags,
                   uniq: true,
+                  join_table: 'people_private_tags',
                   after_add: :update_elasticsearch_index,
                   after_remove: :update_elasticsearch_index
 
@@ -175,7 +180,8 @@ class Person < ActiveRecord::Base
   has_many  :people_private_tags # for permissions
 
   # secondary communication languages
-  monitored_habtm :communication_languages,
+  # monitored_habtm :communication_languages,
+  has_and_belongs_to_many :communication_languages,
                   class_name: 'Language',
                   join_table: 'people_communication_languages',
                   uniq: true,
@@ -243,21 +249,21 @@ class Person < ActiveRecord::Base
 
 
   ##################
-  ### NAMESCOPES ###
+  ### SCOPES ###
   ##################
 
-  scope :hidden, where(hidden: true)
-  scope :visible, where("hidden is NULL OR hidden IN ('false', 'f', '0')")
+  scope :hidden,  -> { where(hidden: true) }
+  scope :visible, -> { where("hidden is NULL OR hidden IN ('false', 'f', '0')") }
 
-  scope :duplicates, find_by_sql("SELECT id\
+  scope :duplicates, -> { find_by_sql("SELECT id\
     FROM (SELECT *, row_number() over (partition BY first_name, last_name ORDER BY first_name)\
       AS rnum FROM people) t\
-    WHERE t.rnum > 1 AND first_name != ''")
+    WHERE t.rnum > 1 AND first_name != ''") }
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :encryptable, :lockable,
-         :recoverable, :rememberable, :trackable, :timeoutable, :token_authenticatable
+         :recoverable, :rememberable, :trackable, :timeoutable
 
 
   ###################
@@ -702,7 +708,14 @@ class Person < ActiveRecord::Base
     end
 
     if renew_authentication_token == true
-      reset_authentication_token # devise method
+      self.authentication_token = generate_authentication_token 
+    end
+  end
+
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless Person.where(authentication_token: token).first
     end
   end
 
@@ -835,7 +848,7 @@ class Person < ActiveRecord::Base
   end
 
   def main_language_is_not_in_communication_languages
-    if communication_languages.index(main_communication_language)
+    if communication_languages.to_a.index(main_communication_language)
       errors.add(:main_communication_language,
                  I18n.t('person.errors.main_language_already_in_communication_languages'))
       return false

@@ -32,14 +32,13 @@
 #++
 
 class Permission < ActiveRecord::Base
-  
+
   ################
   ### INCLUDES ###
   ################
 
+  # include ChangesTracker
   include Reflection
-  include ChangesTracker
-
 
   #################
   ### RELATIONS ###

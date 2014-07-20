@@ -22,4 +22,5 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Directory::Application.config.secret_token = 'f0082c60968d6aa739170d320afecdf7b221962fe0b37b8e497be23c8efb9a3ce4d48e30e2bfe4594fc2da64e3ca6b3128dff0e469204c66afa24defb6e2a7d4'
+CIRCL::Application.config.secret_token = 'f0082c60968d6aa739170d320afecdf7b221962fe0b37b8e497be23c8efb9a3ce4d48e30e2bfe4594fc2da64e3ca6b3128dff0e469204c66afa24defb6e2a7d4'
+CIRCL::Application.config.secret_key_base = 'daa24edf712654355fb3da9d928f13b6f964fbee07d33fbf44d36f1e32091e2efb94df446f1a96ef15682094fa8e3fcfec69e4596a17cf298fe789bd8261257d'

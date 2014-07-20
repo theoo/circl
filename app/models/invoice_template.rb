@@ -43,7 +43,7 @@ class InvoiceTemplate < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
 
   #################
   ### CALLBACKS ###

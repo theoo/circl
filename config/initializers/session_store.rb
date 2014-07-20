@@ -21,4 +21,7 @@
 # Use the database for sessions instead of the cookie-based default,
 # which shouldn't be used to store highly confidential information
 # (create the session table with "rails generate session_migration")
-Directory::Application.config.session_store :active_record_store
+CIRCL::Application.config.session_store :active_record_store
+
+# https://github.com/plataformatec/devise/issues/2734#issuecomment-39364922
+ActiveRecord::SessionStore::Session.attr_accessible :data, :session_id

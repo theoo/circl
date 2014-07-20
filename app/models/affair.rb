@@ -43,7 +43,7 @@ class Affair < ActiveRecord::Base
   # Monetize deprecation warning
   require 'monetize/core_extensions'
 
-  include ChangesTracker
+  # include ChangesTracker
   include StatusExtention
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
@@ -105,20 +105,21 @@ class Affair < ActiveRecord::Base
 
   has_many :affairs_subscriptions # for permissions
 
-  monitored_habtm :subscriptions,
+  # monitored_habtm :subscriptions,
+  has_and_belongs_to_many :subscriptions,
                   after_add: :update_on_prestation_alteration,
                   after_remove: :update_on_prestation_alteration
 
   # Money
   money :value
 
-  scope :open_affairs, Proc.new {
+  scope :open_affairs, -> {
     mask = Affair.statuses_value_for(:to_be_billed)
     where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
   }
 
-  scope :estimates, Proc.new { where estimate: true }
-  scope :effectives, Proc.new { where estimate: false}
+  scope :estimates,  -> { where estimate: true }
+  scope :effectives, -> { where estimate: false}
 
   # Used to calculate value from value with taxes
   attr_accessor :custom_value_with_taxes

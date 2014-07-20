@@ -39,7 +39,7 @@ class SearchAttribute < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
 
   #################
   ### CALLBACK  ###
@@ -67,8 +67,8 @@ class SearchAttribute < ActiveRecord::Base
   validates_length_of :mapping, maximum: 65535
   validates_length_of :group, maximum: 255
 
-  scope :searchable, where("#{table_name}.group <> ''")
-  scope :orderable, searchable.where("#{table_name}.mapping NOT LIKE '%object%'")
+  scope :searchable, -> { where("#{table_name}.group <> ''") }
+  scope :orderable,  -> { searchable.where("#{table_name}.mapping NOT LIKE '%object%'") }
 
   ########################
   ### INSTANCE METHODS ###

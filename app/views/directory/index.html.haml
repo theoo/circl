@@ -41,7 +41,7 @@
               = link_to(directory_mailchimp_path,
                 method: :post,
                 class: 'btn btn-danger navbar-btn',
-                confirm: I18n.t("common.are_you_sure")) do
+                data: { confirm: I18n.t("common.are_you_sure")} ) do
                 .icon-refresh
                 .hidden-inline-xs
                   = I18n.t('directory.views.sync_mailchimp')

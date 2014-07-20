@@ -100,7 +100,7 @@
 
 class Salaries::Salary < ActiveRecord::Base
 
-  set_table_name 'salaries'
+  self.table_name = :salaries
 
   #################
   ### CALLBACKS ###
@@ -115,7 +115,7 @@ class Salaries::Salary < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::TagHelper
   include ElasticSearch::Mapping
@@ -182,9 +182,9 @@ class Salaries::Salary < ActiveRecord::Base
   ### SCOPE ###
   #############
 
-  scope :references, where(is_reference: true)
-  scope :instances, where(is_reference: false)
-  scope :unpaid_salaries, where(paid: false)
+  scope :references, -> { where(is_reference: true) }
+  scope :instances, -> { where(is_reference: false) }
+  scope :unpaid_salaries, -> { where(paid: false) }
 
   #################
   ### Relations ###

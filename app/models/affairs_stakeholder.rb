@@ -16,7 +16,7 @@ class AffairsStakeholder < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  default_scope Proc.new { order(:id) }
+  default_scope { order(:id) }
 
   belongs_to :person
   belongs_to :affair

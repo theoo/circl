@@ -36,7 +36,7 @@
 class GenericTemplate < ActiveRecord::Base
 
   # templates table name is a reserved words
-  set_table_name 'generic_templates'
+  self.table_name = :generic_templates
 
   ###################
   ### CALLBACKS #####
@@ -48,7 +48,7 @@ class GenericTemplate < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
 

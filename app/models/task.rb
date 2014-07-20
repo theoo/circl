@@ -51,7 +51,7 @@ class Task < ActiveRecord::Base
     @h || TaskHelper.new
   end
 
-  include ChangesTracker
+  # include ChangesTracker
   extend  MoneyComposer
 
   #################
@@ -73,7 +73,7 @@ class Task < ActiveRecord::Base
   belongs_to  :task_type
   belongs_to  :salary, class_name: 'Salaries::Salary'
 
-  scope :availables, Proc.new { where(archive: false)}
+  scope :availables, -> { where(archive: false)}
 
   # Money
   money :value

@@ -51,7 +51,6 @@ class People::Affairs::SubscriptionsController < ApplicationController
   def create
     authorize! :create, @affair => self.class.model
 
-    # validate_params(:subscription_id)
     respond_to do |format|
       if ! params[:subscription_id].empty?
         subscription = Subscription.find params[:subscription_id]

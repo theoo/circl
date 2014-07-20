@@ -4,7 +4,7 @@ class AffairsCondition < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
 
   #####################
   ### MISCEALLENOUS ###

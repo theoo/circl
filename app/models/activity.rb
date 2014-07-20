@@ -38,14 +38,14 @@ class Activity < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
 
 
   #####################
   ### MISCEALLENOUS ###
   #####################
 
-  set_table_name 'logs'
+  self.table_name = :logs
 
   serialize :data, Hash
 
