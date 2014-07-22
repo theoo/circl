@@ -57,7 +57,8 @@ class Invoice < ActiveRecord::Base
   include ElasticSearch::Indexing
   extend  MoneyComposer
 
-  # Yes, it's bad to load helper in a model...
+  # TODO: Move this to jsbuilder
+  # Yes, it's bad to load view helper in a model...
   class InvoiceHelper
     include ActionView::Helpers::DateHelper
   end

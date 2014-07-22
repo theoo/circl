@@ -36,6 +36,7 @@ gem 'haml_coffee_assets', '1.1.0'
 gem 'sass-rails', '3.1.0'
 gem 'haml-rails', '0.3.4'
 gem 'spine-rails', '0.1.0'
+gem 'dotiw', '1.1.1'
 
 ### maps
 gem 'geoip', '1.3.3'
@@ -75,6 +76,8 @@ gem 'rails_exception_handler', "~> 2"
 
 ### custom gem
 # gem 'plugin', :path => 'path/to/circl/plugin'
+# gem 'shipit', :path => '../circl_plugins/shipit'
+gem 'bulthaup', :path => '../circl_plugins/bulthaup'
 
 ### development console and testing
 group :development, :test do

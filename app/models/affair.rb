@@ -49,6 +49,15 @@ class Affair < ActiveRecord::Base
   include ElasticSearch::Indexing
   extend  MoneyComposer
 
+  # TODO: Move this to jsbuilder
+  class InvoiceHelper
+    include ActionView::Helpers::DateHelper
+  end
+
+  def helper
+    @h || InvoiceHelper.new
+  end
+
   #################
   ### CALLBACKS ###
   #################
@@ -200,6 +209,7 @@ class Affair < ActiveRecord::Base
     h[:tasks_count]                        = tasks.count
     h[:tasks_value]                        = tasks_value.to_f
     h[:tasks_value_currency]               = tasks_value.currency.try(:iso_code)
+    h[:tasks_duration_translation]         = helper.distance_of_time(tasks_duration.minutes)
     h[:products_count]                     = product_items.count
     h[:products_value]                     = product_items_value.to_f
     h[:products_value_currency]            = product_items_value.currency.try(:iso_code)

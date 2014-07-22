@@ -81,13 +81,14 @@ class New extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
+
     data = $(e.target).serializeObject()
     @invoice.load(data)
     @invoice.cancelled = data.cancelled?
     @invoice.offered = data.offered?
     @save_with_notifications @invoice, =>
       PersonAffair.fetch(id: @affair_id)
-      @render()
+      @trigger('edit', @invoice.id)
 
 class Edit extends App.ExtendedController
   events:
@@ -126,23 +127,23 @@ class Edit extends App.ExtendedController
     if App.ApplicationSetting.value('use_vat') == "true"
       @highlight_vat()
 
-  update_callback: =>
-    PersonAffair.fetch(id: @affair.id)
-    PersonAffairReceipt.fetch()
-    @hide()
-
   submit: (e) ->
     e.preventDefault()
     data = $(e.target).serializeObject()
     @invoice.load(data)
     @invoice.cancelled = data.cancelled?
     @invoice.offered = data.offered?
-    @save_with_notifications @invoice, @update_callback
+    @save_with_notifications @invoice, =>
+      PersonAffair.fetch(id: @affair.id)
+      PersonAffairReceipt.fetch()
 
   destroy: (e) ->
     e.preventDefault()
     if confirm(I18n.t('common.are_you_sure'))
-      @destroy_with_notifications @invoice, @update_callback
+      @destroy_with_notifications @invoice, =>
+        PersonAffair.fetch(id: @affair.id)
+        PersonAffairReceipt.fetch()
+        @hide()
 
   pdf: (e) ->
     e.preventDefault()
@@ -208,6 +209,9 @@ class Index extends App.ExtendedController
 
   active: (params) ->
     @can = params.can if params.can
+    if params
+      @person_id = params.person_id
+      @invoice = PersonAffairInvoice.find(params.invoice_id) if params.invoice_id
     @render()
 
   render: =>
@@ -327,6 +331,10 @@ class App.PersonAffairInvoices extends Spine.Controller
 
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
+
+    @new.bind 'edit', (id) =>
+      @edit.active(id: id, person_id: @person_id)
+      @index.active(invoice_id: id, person_id: @person_id)
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', =>

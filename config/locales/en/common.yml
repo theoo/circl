@@ -112,3 +112,8 @@ en:
     vat: VAT
     weak: weak
     year: year
+  hours: hours
+  minutes: minutes
+  months: months
+  seconds: seconds
+  years: years

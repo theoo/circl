@@ -283,6 +283,11 @@ class Edit extends App.ExtendedController
     @affair = PersonAffair.find(@id)
     @html @view('people/affairs/form')(@)
 
+    # tooltips
+    @el.find("a[href=#person_affair_tasks]").tooltip
+      placement: 'bottom'
+      title: @affair.tasks_duration_translation
+
   submit: (e) ->
     e.preventDefault()
     data = $(e.target).serializeObject()

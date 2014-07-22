@@ -114,3 +114,8 @@ fr:
     vat: TVA
     weak: faible
     year: année
+  hours: heures
+  minutes: minutes
+  months: mois
+  seconds: secondes
+  years: années

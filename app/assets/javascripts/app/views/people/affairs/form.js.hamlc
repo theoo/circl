@@ -304,7 +304,7 @@
                     = @affair.subscriptions_value?.to_view(@affair.subscriptions_value_currency)
 
                 - if @affair.tasks_count > 0
-                  %a{href: '#person_affair_tasks', class: 'list-group-item'}
+                  %a{ href: '#person_affair_tasks', class: 'list-group-item' }
                     .badge= @affair.tasks_count
                     = I18n.t('affair.views.tasks') + " :"
                     = @affair.tasks_value?.to_view(@affair.tasks_value_currency)

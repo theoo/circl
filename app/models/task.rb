@@ -42,7 +42,7 @@ class Task < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  # Yes, it's bad to load helper in a model...
+  # TODO: Move this to jsbuilder
   class TaskHelper
     include ActionView::Helpers::DateHelper
   end
@@ -126,7 +126,7 @@ class Task < ActiveRecord::Base
   end
 
   def translated_duration
-    helper.distance_of_time_in_words(duration * 60)
+    helper.distance_of_time(duration.minutes)
   end
 
   def compute_value
