@@ -3,6 +3,7 @@
     %tr
       %th= I18n.t('common.id')
       %th.desc= I18n.t('common.date')
+      %th= I18n.t('task.views.executer_name')
       %th= I18n.t('common.description')
       %th= I18n.t('common.value')
 
@@ -10,8 +11,8 @@
     - for task in App.PersonTask.all()
       %tr{:data-id => task.id, class: 'item'}
         %td= task.id
-        %td
-          = task.start_date
+        %td= task.start_date
+        %td= task.executer_name
         %td
           %b= task.duration + " min"
           \-

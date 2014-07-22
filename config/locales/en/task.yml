@@ -34,7 +34,7 @@ en:
       duration: duration
       duration_help: duration help
       end_date: end date
-      executer_name: executer name
+      executer_name: executer
       owner: client
       start_date: start date
       task_rate: task rate
