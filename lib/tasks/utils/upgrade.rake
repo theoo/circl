@@ -23,9 +23,9 @@ namespace :db do
   									'db:seed:application_settings:upgrade',
   									'db:seed:search_attributes:upgrade',
   									'db:seed:roles:upgrade',
+                    'db:seed:upgrade',
                     'db:seed:invoice_templates:snapshots:reset',
-                    'db:seed:generic_templates:snapshots:reset',
-                    'db:seed:upgrade'
+                    'db:seed:generic_templates:snapshots:reset'
                   ]
 
   task :upgrade_helper => :environment do
