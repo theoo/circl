@@ -63,9 +63,9 @@ class Salaries::Tax < ActiveRecord::Base
 
   # monitored_habtm :items,
   has_and_belongs_to_many :items,
+                  -> { order(:position) },
                   class_name: 'Salaries::Item',
-                  join_table: 'salaries_items_taxes',
-                  order: :position
+                  join_table: 'salaries_items_taxes'
   has_many :tax_data,
            class_name: 'Salaries::TaxData'
 

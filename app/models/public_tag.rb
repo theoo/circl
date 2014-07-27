@@ -54,7 +54,7 @@ class PublicTag < ActiveRecord::Base
   acts_as_tree
 
   has_and_belongs_to_many :people,
-                          uniq: true,
+                          -> { uniq },
                           after_add: :update_elasticsearch_index,
                           after_remove: :update_elasticsearch_index
 

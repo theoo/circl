@@ -54,9 +54,9 @@ class Language < ActiveRecord::Base
   has_many  :salaries_templates
 
   has_and_belongs_to_many :communication_people, #communication_languages
+                          -> { uniq },
                           class_name: 'Person',
                           join_table: 'people_communication_languages',
-                          uniq: true,
                           after_add: :update_elasticsearch_index,
                           after_remove: :update_elasticsearch_index
 

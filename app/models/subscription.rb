@@ -65,11 +65,26 @@ class Subscription < ActiveRecord::Base
 
   acts_as_tree
 
-  has_and_belongs_to_many :affairs, uniq: true
-  has_many  :invoices, through: :affairs, uniq: true
-  has_many  :receipts, through: :affairs, uniq: true
-  has_many  :people,   through: :invoices, source: :owner, uniq: true
-  has_many  :values,   class_name: 'SubscriptionValue', order: 'position ASC'
+  has_and_belongs_to_many :affairs,
+                          -> { uniq }
+
+  has_many  :invoices,
+            -> { uniq },
+            through: :affairs
+
+  has_many  :receipts,
+            -> { uniq },
+            through: :affairs
+
+  has_many  :people,
+            -> { uniq },
+            through: :invoices,
+            source: :owner
+
+  has_many  :values,
+            -> { order('position ASC') },
+            class_name: 'SubscriptionValue'
+
   belongs_to :invoice_template
 
   has_attached_file :pdf

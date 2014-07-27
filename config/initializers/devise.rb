@@ -180,10 +180,6 @@ Devise.setup do |config|
   # REST_AUTH_SITE_KEY to pepper)
   config.encryptor = :ldapsha1 # special auth method described in ldapsha1_ecryptor initializer. (without salt nor pepper, life is sweeter)
 
-  # ==> Configuration for :token_authenticatable
-  # Defines name of the authentication token params key
-  config.token_authentication_key = :auth_token
-
   # ==> Scopes configuration
   # Turn scoped views on. Before rendering "sessions/new", it will first check for
   # "users/sessions/new". It's turned off by default because it's slower if you

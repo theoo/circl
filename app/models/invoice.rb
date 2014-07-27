@@ -81,15 +81,36 @@ class Invoice < ActiveRecord::Base
   #################
 
   belongs_to  :affair
+
   belongs_to  :invoice_template
-  has_many    :receipts, dependent: :destroy
-  has_one     :owner, through: :affair
-  has_one     :buyer, through: :affair
-  has_one     :receiver, through: :affair
-  has_many    :subscriptions, through: :affair, uniq: true
-  has_many    :tasks,         through: :affair, uniq: true
-  has_many    :product_items, through: :affair, uniq: true
-  has_many    :extras,        through: :affair, uniq: true
+
+  has_many    :receipts,
+              dependent: :destroy
+
+  has_one     :owner,
+              through: :affair
+
+  has_one     :buyer,
+              through: :affair
+
+  has_one     :receiver,
+              through: :affair
+
+  has_many    :subscriptions,
+              -> { uniq },
+               through: :affair
+
+  has_many    :tasks,
+              -> { uniq },
+               through: :affair
+
+  has_many    :product_items,
+              -> { uniq },
+               through: :affair
+
+  has_many    :extras,
+              -> { uniq },
+               through: :affair
 
   # paperclip
   has_attached_file :pdf

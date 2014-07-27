@@ -52,7 +52,7 @@ class Role < ActiveRecord::Base
 
   has_many  :permissions, dependent: :destroy
   has_and_belongs_to_many :people,
-                          uniq: true,
+                          -> { uniq },
                           after_add: :update_elasticsearch_index,
                           after_remove: :update_elasticsearch_index
 

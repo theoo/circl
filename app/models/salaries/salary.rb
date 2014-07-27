@@ -141,12 +141,12 @@ class Salaries::Salary < ActiveRecord::Base
 
   belongs_to :person
   has_many   :items,
+             -> { order(:position) },
              class_name: 'Salaries::Item',
-             order: :position,
              dependent: :destroy
   has_many   :tax_data,
+             -> { order(:position) },
              class_name: 'Salaries::TaxData',
-             order: :position,
              dependent: :destroy
   has_many   :tasks,
              class_name: '::Task'

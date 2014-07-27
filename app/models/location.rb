@@ -54,6 +54,8 @@ class Location < ActiveRecord::Base
   #################
 
   has_many :people
+
+  # TODO: Raises deprecation warning
   acts_as_tree
 
   ###################

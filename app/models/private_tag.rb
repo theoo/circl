@@ -51,13 +51,15 @@ class PrivateTag < ActiveRecord::Base
   # FIXME: Incompatible with person's HABTM
   # default_scope { order('name ASC') }
 
+  # TODO Raises deprecations warnings
   acts_as_tree
 
   has_and_belongs_to_many :people,
-                          uniq: true,
+                          -> { uniq },
                           after_add: :update_elasticsearch_index,
                           after_remove: :update_elasticsearch_index
-  has_many :subscription_values, order: 'position ASC'
+  has_many :subscription_values, 
+           -> { order('position ASC') }
 
   ###################
   ### VALIDATIONS ###

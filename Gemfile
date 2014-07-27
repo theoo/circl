@@ -14,7 +14,7 @@ gem 'protected_attributes'
 gem 'pg'
 
 # acts as tree
-gem 'acts_as_tree', '1.1.0'
+gem 'acts_as_tree', '2.0.0'
 
 # elasticsearch
 gem 'tire', '0.6.2'

@@ -66,49 +66,76 @@ class Affair < ActiveRecord::Base
   #################
 
   # Relations
-  belongs_to  :owner, class_name: 'Person', foreign_key: 'owner_id'
-  belongs_to  :buyer, class_name: 'Person', foreign_key: 'buyer_id'
-  belongs_to  :receiver, class_name: 'Person', foreign_key: 'receiver_id'
-  belongs_to  :seller, class_name: 'Person', foreign_key: 'seller_id'
+  belongs_to  :owner,
+              class_name: 'Person',
+              foreign_key: 'owner_id'
 
-  belongs_to  :condition, class_name: 'AffairsCondition'
+  belongs_to  :buyer,
+              class_name: 'Person',
+              foreign_key: 'buyer_id'
 
-  has_one     :parent, class_name: 'Affair', primary_key: 'parent_id', foreign_key: 'id'
-  has_many    :children, class_name: 'Affair', foreign_key: 'parent_id'
+  belongs_to  :receiver,
+              class_name: 'Person',
+              foreign_key: 'receiver_id'
+  belongs_to  :seller,
+              class_name: 'Person',
+              foreign_key: 'seller_id'
 
-  has_many    :invoices, dependent: :destroy
-  has_many    :receipts, through: :invoices, uniq: true
+  belongs_to  :condition,
+              class_name: 'AffairsCondition'
 
-  has_many    :extras,  dependent: :destroy,
-                        order: :position
-                       #after_add: :update_on_prestation_alteration,
-                       #after_remove: :update_on_prestation_alteration
+  has_one     :parent,
+              class_name: 'Affair',
+              primary_key: 'parent_id',
+              foreign_key: 'id'
 
-  has_many    :tasks, dependent: :destroy,
-                      order: 'start_date ASC'
-                      #after_add: :update_on_prestation_alteration,
-                      #after_remove: :update_on_prestation_alteration
+  has_many    :children,
+              class_name: 'Affair',
+              foreign_key: 'parent_id'
 
-  has_many    :product_items, class_name: 'AffairsProductsProgram',
-                              dependent: :destroy,
-                              order: :position
-                              #after_add: :update_on_prestation_alteration,
-                              #after_remove: :update_on_prestation_alteration
+  has_many    :invoices,
+              dependent: :destroy
 
-  has_many    :products, through: :product_items
-  has_many    :programs, through: :product_items
+  has_many    :receipts,
+              -> { uniq },
+              through: :invoices
+
+  has_many    :extras,
+              -> { order(:position) },
+              dependent: :destroy
+              #after_add: :update_on_prestation_alteration,
+              #after_remove: :update_on_prestation_alteration
+
+  has_many    :tasks,
+              -> { order('start_date ASC') },
+              dependent: :destroy
+              #after_add: :update_on_prestation_alteration,
+              #after_remove: :update_on_prestation_alteration
+
+  has_many    :product_items,
+              -> { order(:position) },
+              class_name: 'AffairsProductsProgram',
+              dependent: :destroy
+              #after_add: :update_on_prestation_alteration,
+              #after_remove: :update_on_prestation_alteration
+
+  has_many    :products,
+              through: :product_items
+  has_many    :programs,
+              through: :product_items
 
   has_many    :affairs_stakeholders
+
   has_many    :stakeholders,
               through: :affairs_stakeholders,
               source: :person
 
-  has_many :affairs_subscriptions # for permissions
+  has_many    :affairs_subscriptions # for permissions
 
   # monitored_habtm :subscriptions,
   has_and_belongs_to_many :subscriptions,
-                  after_add: :update_on_prestation_alteration,
-                  after_remove: :update_on_prestation_alteration
+              after_add: :update_on_prestation_alteration,
+              after_remove: :update_on_prestation_alteration
 
   # Money
   money :value
