@@ -485,7 +485,7 @@ class Affair < ActiveRecord::Base
     # It may have some custom search attributes which
     # depends on this affair through it's relations.
     # so update relations' indices no mater what changes
-    unless tracked_changes.empty?
+    unless self.changes.empty?
       # update current relations' indices
       owner.update_index
       if buyer != owner
@@ -494,18 +494,18 @@ class Affair < ActiveRecord::Base
       end
 
       # and former relations' indices
-      if tracked_changes.keys.index('buyer_id')
+      if self.changes.keys.index('buyer_id')
         # 0:original, 1:new value == self.buyer_id
-        buyer_id = tracked_changes['buyer_id'][0]
+        buyer_id = self.changes['buyer_id'][0]
         if Person.exists?(buyer_id) # in case former person doesn't exists
           p = Person.find(buyer_id)
           p.update_index
         end
       end
 
-      if tracked_changes.keys.index('receiver_id')
+      if self.changes.keys.index('receiver_id')
         # 0:original, 1:new value == self.receiver_id
-        receiver_id = tracked_changes['receiver_id'][0]
+        receiver_id = self.changes['receiver_id'][0]
         if Person.exists?(receiver_id)
           p = Person.find(receiver_id)
           p.update_index

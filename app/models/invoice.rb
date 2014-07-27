@@ -476,7 +476,7 @@ class Invoice < ActiveRecord::Base
 
   # Updates the search engine
   def update_elasticsearch
-    owner.update_index unless tracked_changes.empty?
+    owner.update_index unless self.changes.empty?
   end
 
   # Callback method to reset printed_address field if empty.

@@ -106,7 +106,7 @@ class Person < ActiveRecord::Base
 
   # LDAP
   if Rails.configuration.ldap_enabled
-    after_save :ldap_update, unless: "tracked_changes.empty?"
+    after_save :ldap_update, unless: "self.changes.empty?"
     before_destroy :ldap_remove
   end
 

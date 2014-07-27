@@ -84,7 +84,7 @@ class Language < ActiveRecord::Base
   end
 
   def reindex_people_if_needed
-    reindex_people unless tracked_changes.empty?
+    reindex_people unless self.changes.empty?
     true
   end
 

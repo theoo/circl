@@ -180,7 +180,7 @@ class Task < ActiveRecord::Base
   end
 
   def update_elasticsearch
-    person.update_index unless tracked_changes.empty?
+    person.update_index unless self.changes.empty?
   end
 
 end

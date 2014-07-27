@@ -191,7 +191,7 @@ class ApplicationController < ActionController::Base
   #   return unless record.errors.empty?
 
   #   action = params[:action]
-  #   data = (action == 'create' || record.destroyed?) ? record.attributes : record.tracked_changes
+  #   data = (action == 'create' || record.destroyed?) ? record.attributes : record.changes
   #   return if data.empty?
 
   #   log_activity(action, record, data)

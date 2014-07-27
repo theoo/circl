@@ -159,7 +159,7 @@ class Receipt < ActiveRecord::Base
   private
 
   def update_elasticsearch
-    owner.update_index unless tracked_changes.empty?
+    owner.update_index unless self.changes.empty?
   end
 
 end
