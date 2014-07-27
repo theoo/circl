@@ -209,10 +209,10 @@
                 .panel-title
                   = I18n.t('person.views.comments')
 
-        .col-md-6
-          - if can? :read, @person => Activity
-            #person_activities.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('person.views.activities')
+        / .col-md-6
+        /   - if can? :read, @person => Activity
+        /     #person_activities.panel.panel-default
+        /       .panel-heading
+        /         .panel-title
+        /           = I18n.t('person.views.activities')
 
