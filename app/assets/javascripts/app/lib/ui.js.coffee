@@ -35,6 +35,7 @@ class Ui
     @bind_datepicker()
     @bind_currency_selector()
     @setup_datatable()
+    @load_back_on_top()
 
 #--- delegated to events ---
   bind_datepicker: ->
@@ -347,6 +348,24 @@ class Ui
         $(div).removeClass('label-danger label-warning label-success')
               .addClass(strength_class)
               .html(strength_title)
+
+  load_back_on_top: () ->
+    offset = 220
+    duration = 500
+    button = $("<a href=\"#\" class=\"back-to-top\"><i class=\"icon icon-angle-up\"></i></a>")
+    button.appendTo "body"
+    jQuery(window).scroll ->
+      if jQuery(@).scrollTop() > offset
+        jQuery(".back-to-top").fadeIn duration
+      else
+        jQuery(".back-to-top").fadeOut duration
+
+    jQuery(".back-to-top").click (e) ->
+      e.preventDefault()
+      jQuery("html, body").animate scrollTop: 0 , duration
+      false
+    console.log "loaded"
+
 
 #--- Autocompleters ---
   load_autocompleters: (context) ->
