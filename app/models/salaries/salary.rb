@@ -182,8 +182,8 @@ class Salaries::Salary < ActiveRecord::Base
   ### SCOPE ###
   #############
 
-  scope :references, -> { where(is_reference: true) }
-  scope :instances, -> { where(is_reference: false) }
+  scope :reference_salaries, -> { where(is_reference: true) }
+  scope :instance_salaries, -> { where(is_reference: false) }
   scope :unpaid_salaries, -> { where(paid: false) }
 
   #################
