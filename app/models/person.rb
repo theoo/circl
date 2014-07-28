@@ -163,33 +163,36 @@ class Person < ActiveRecord::Base
             -> { uniq },
             through: :roles
 
+  has_many  :people_public_tags # for permissions
+  has_many  :people_private_tags # for permissions
+
   # monitored_habtm :public_tags,
-  has_and_belongs_to_many :public_tags,
+  has_many  :public_tags,
             -> { uniq },
-            join_table: 'people_public_tags',
+            class_name: 'PublicTag',
+            through: :people_public_tags,
             after_add: :update_elasticsearch_index,
             after_remove: :update_elasticsearch_index
 
   # monitored_habtm :private_tags,
-  has_and_belongs_to_many :private_tags,
+  has_many  :private_tags,
             -> { uniq },
-            join_table: 'people_private_tags',
+            class_name: 'PrivateTag',
+            through: :people_private_tags,
             after_add: :update_elasticsearch_index,
             after_remove: :update_elasticsearch_index
-
-  has_many  :people_public_tags # for permissions
-  has_many  :people_private_tags # for permissions
 
   # secondary communication languages
+  has_many  :people_communication_languages # for permissions
+
   # monitored_habtm :communication_languages,
-  has_and_belongs_to_many :communication_languages,
+  has_many  :communication_languages,
             -> { uniq },
             class_name: 'Language',
-            join_table: 'people_communication_languages',
+            through: :people_communication_languages,
+            source: :language,
             after_add: :update_elasticsearch_index,
             after_remove: :update_elasticsearch_index
-
-  has_many  :people_communication_languages # for permissions
 
   # Financial
   has_many  :affairs,

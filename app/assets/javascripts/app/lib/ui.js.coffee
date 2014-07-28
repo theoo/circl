@@ -348,56 +348,6 @@ class Ui
               .addClass(strength_class)
               .html(strength_title)
 
-#--- ui tools ---
-  unpin_widget: (widget) ->
-
-    hide_on_close = false
-    # check widget current status
-    if widget.hasClass('folded')
-      # not using show_content_of here because I don't want to update cookies
-      # and have effects
-      widget.trigger('unfolded')
-      hide_on_close = true
-
-    widget_id = widget.attr('id')
-    title = widget.find('>legend').text()
-    content = widget.find(".content")
-
-    # callback when closing the fullscreen widget
-    repin_widget = (win) =>
-      # restore content to original widget
-      widget.append $(win).find(".content")
-      # if initial widget status was folded, then hide the content
-      if hide_on_close
-        widget.trigger('folded')
-        content.css(display: 'none') # this override deactivate() Spine method
-
-    window_options =
-      fullscreen: true,
-      draggable: false,
-      remove_on_close: false,
-      remove_callback: repin_widget
-
-    window = @stack_window('fullscreen_widget_' + widget_id, window_options)
-    fullscreen_widget = $(window)
-    fullscreen_widget.addClass('fullscreen_widget')
-
-    fullscreen_widget.modal({title: title})
-    # move widget content to fullscreen widget
-    fullscreen_widget.append content
-    # this override deactivate() Spine method
-    content.css(display: 'block')
-
-    fullscreen_widget.modal('show')
-
-  cookie_name: 'folding'
-
-  retrieve_cookie: ->
-    cookie = $.cookie(@cookie_name)
-    values = []
-    values = cookie.split('&') if cookie
-    return values
-
 #--- Autocompleters ---
   load_autocompleters: (context) ->
     context.find('div.autocompleted').each (index, div) ->
