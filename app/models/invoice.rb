@@ -143,6 +143,9 @@ class Invoice < ActiveRecord::Base
                     numericality: { less_than_or_equal: 99999999.99 }, # BVR limit
                     allow_nil: true
 
+  validates_attachment :pdf,
+    content_type: { content_type: "application/pdf" }
+
   #####################
   ### CLASS METHODS ###
   #####################

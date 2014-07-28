@@ -4,8 +4,8 @@ gem 'rails', '4.1.4'
 gem 'tilt', '1.4.1'
 
 # Servers
-# gem 'foreman'
-# gem 'thin'
+gem 'foreman'
+gem 'passenger'
 gem 'activerecord-session_store', '0.1.0'
 # TODO: Move from protected attributes to Strong Parameters
 gem 'protected_attributes', '1.0.8'
@@ -33,9 +33,6 @@ gem 'recursive-open-struct', '0.4.5'
 # password validation
 gem 'password_strength', '0.3.2'
 
-# Rails 3.1 - Asset Pipeline
-# gem 'json', '1.7.3'
-
 ### Views/UI specific
 gem 'will_paginate', '3.0.7'
 gem 'haml_coffee_assets', '1.1.0'
@@ -45,8 +42,8 @@ gem 'haml-rails', '0.5.3'
 gem 'spine-rails', '0.1.0'
 gem 'coffee-rails', '4.0.1'
 
-# gem 'jquery-turbolinks'
-# gem 'turbolinks'
+gem 'jquery-turbolinks', '2.0.2'
+gem 'turbolinks', '2.2.2'
 
 # gem 'jbuilder'
 gem 'execjs', '1.4.0'

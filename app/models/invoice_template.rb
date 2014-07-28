@@ -51,6 +51,21 @@ class InvoiceTemplate < ActiveRecord::Base
 
   before_destroy :ensure_there_is_no_invoices, :ensure_there_is_no_subscriptions
 
+  #################
+  ### RELATIONS ###
+  #################
+
+  belongs_to :language
+  has_many :invoices
+  has_many :subscriptions, through: :subscription_values
+  has_many :subscription_values
+
+  has_attached_file :snapshot,
+    default_url: '/images/missing_thumbnail.png',
+    default_style: :thumb,
+    use_timestamp: true,
+    styles: {medium: "420x594>",thumb: "105x147>"}
+
   ###################
   ### VALIDATIONS ###
   ###################
@@ -73,19 +88,9 @@ class InvoiceTemplate < ActiveRecord::Base
                       is: 6,
                       allow_blank: true
 
-  #################
-  ### RELATIONS ###
-  #################
-
-  belongs_to :language
-  has_many :invoices
-  has_many :subscriptions, through: :subscription_values
-  has_many :subscription_values
-  has_attached_file :snapshot,
-    default_url: '/images/missing_thumbnail.png',
-    default_style: :thumb,
-    use_timestamp: true,
-    styles: {medium: "420x594>",thumb: "105x147>"}
+  validates_attachment :snapshot,
+    content_type: { content_type: "image/png" },
+    size: { in: 0..1.megabytes }
 
   ########################
   ### INSTANCE METHODS ###

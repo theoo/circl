@@ -80,8 +80,13 @@ class GenericTemplate < ActiveRecord::Base
   # Validate fields of type 'string' length
   validates_length_of :title, maximum: 255
 
-  validates_attachment :odt, content_type: { content_type: "application/vnd.oasis.opendocument.text" },
-                              size: { in: 0..1.megabytes }
+  validates_attachment :odt,
+    content_type: { content_type: "application/vnd.oasis.opendocument.text" },
+    size: { in: 0..1.megabytes }
+
+  validates_attachment :snapshot,
+    content_type: { content_type: "image/png" },
+    size: { in: 0..1.megabytes }
 
 
   ########################

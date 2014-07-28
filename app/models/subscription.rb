@@ -105,6 +105,9 @@ class Subscription < ActiveRecord::Base
   # Validate fields of type 'text' length
   validates_length_of :description, maximum: 65536
 
+  validates_attachment :pdf,
+    content_type: { content_type: "application/pdf" }
+
   ########################
   ### INSTANCE METHODS ###
   ########################

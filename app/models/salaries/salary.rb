@@ -214,6 +214,9 @@ class Salaries::Salary < ActiveRecord::Base
                             less_than_or_equal_to: 100,
                             only_integer: false
 
+  validates_attachment :pdf,
+    content_type: { content_type: "application/pdf" }
+
   ########################
   ### INSTANCE METHODS ###
   ########################

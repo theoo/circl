@@ -14,11 +14,13 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+#= require turbolinks
 #= require jquery
 #= require jquery-ujs
 #= require jquery.cookie
 #= require jquery.iframe-transport
 #= require jquery_serialize_object
+#= require jquery.turbolinks
 #
 #= require extensions
 #
