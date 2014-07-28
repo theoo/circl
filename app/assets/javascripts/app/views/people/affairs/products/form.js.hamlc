@@ -5,7 +5,7 @@
         .validation_errors_placeholder
 
     .row
-      .col-md-6.autocompleted.form-group
+      .col-md-12.autocompleted.form-group
         %label{for: 'person_affair_product_search'}
           = I18n.t('product.views.product_search')
         %input{ type: 'search',
@@ -18,7 +18,8 @@
                name: 'product_id',
                value: @product.product_id}
 
-      .col-md-6.autocompleted.form-group
+    .row
+      .col-md-12.autocompleted.form-group
         %label{for: 'person_affair_product_program_search'}
           = I18n.t('product_program.views.program_search')
         %input{ type: 'search',
