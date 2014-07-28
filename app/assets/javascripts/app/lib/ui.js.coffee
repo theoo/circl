@@ -364,7 +364,6 @@ class Ui
       e.preventDefault()
       jQuery("html, body").animate scrollTop: 0 , duration
       false
-    console.log "loaded"
 
 
 #--- Autocompleters ---

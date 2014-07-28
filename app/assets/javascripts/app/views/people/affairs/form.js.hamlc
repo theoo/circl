@@ -338,7 +338,7 @@
                 %a{href: '#balance', class: 'list-group-item'}
                   .badge= @affair.invoices_count
                   = I18n.t('affair.views.invoices') + " :"
-                  = @affair.invoices_value?.to_view(@affair.invoices_value_currency)
+                  = @affair.invoices_value_with_taxes?.to_view(@affair.invoices_value_with_taxes_currency)
 
                 %a{href: '#balance', class: 'list-group-item'}
                   .badge= @affair.receipts_count

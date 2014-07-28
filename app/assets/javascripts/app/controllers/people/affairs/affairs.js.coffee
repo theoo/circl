@@ -456,17 +456,37 @@ class Balance extends App.ExtendedController
     # TODO Improve display
     if @affair_id and PersonAffair.exists(@affair_id)
       @affair = PersonAffair.find(@affair_id)
-      rawData = [
-        [@affair.value_with_taxes, 2],
-        [@affair.invoices_value_with_taxes, 1],
-        [@affair.receipts_value, 0]
+
+      invoice_tick = I18n.t("affair.views.invoices")
+      if @affair.value_with_taxes > @affair.invoices_value_with_taxes
+        invoices_color = "#f00"
+        invoice_tick = invoice_tick + " (-#{(@affair.value_with_taxes - @affair.invoices_value_with_taxes).toFixed(2)})"
+      else if @affair.value_with_taxes == @affair.invoices_value_with_taxes
+        invoices_color = "#0f0"
+      else if @affair.value_with_taxes < @affair.invoices_value_with_taxes
+        invoices_color = "#00f"
+        invoice_tick = invoice_tick + " (+#{(@affair.invoices_value_with_taxes - @affair.value_with_taxes).toFixed(2)})"
+
+      receipt_tick = I18n.t("affair.views.receipts")
+      if @affair.invoices_value_with_taxes > @affair.receipts_value
+        receipts_color = "#f00"
+        receipt_tick = receipt_tick + " (-#{(@affair.invoices_value_with_taxes - @affair.receipts_value).toFixed(2)})"
+      else if @affair.invoices_value_with_taxes == @affair.receipts_value
+        receipts_color = "#0f0"
+      else if @affair.invoices_value_with_taxes < @affair.receipts_value
+        receipts_color = "#00f"
+        receipt_tick = receipt_tick + " (+#{(@affair.receipts_value - @affair.invoices_value_with_taxes).toFixed(2)})"
+
+      data = [
+        { data: [[@affair.value_with_taxes, 2]], color: "#000" }
+        { data: [[@affair.invoices_value_with_taxes, 1]], color: invoices_color }
+        { data: [[@affair.receipts_value, 0]], color: receipts_color }
       ]
 
-      dataSet = [{ label: false, data: rawData, color: "#000" }]
       ticks = [
-        [2, I18n.t("person.views.affairs")],
-        [1, I18n.t("affair.views.invoices")],
-        [0, I18n.t("affair.views.receipts")]
+        [2, I18n.t("person.views.affairs")]
+        [1, invoice_tick]
+        [0, receipt_tick]
       ]
 
       options =
@@ -479,6 +499,7 @@ class Balance extends App.ExtendedController
           align: 'center'
           horizontal: true
           lineWidth: 1
+          label: false
         xaxis:
             color: "black"
         yaxis:
@@ -491,7 +512,7 @@ class Balance extends App.ExtendedController
           borderColor: null
 
       progress = @el.find(".progress")
-      $.plot(progress, dataSet, options);
+      $.plot(progress, data, options);
 
 class DocumentsMachine extends App.ExtendedController
   events:
