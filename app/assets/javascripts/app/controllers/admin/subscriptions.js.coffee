@@ -183,7 +183,7 @@ class New extends ValueItemsController
 class Edit extends ValueItemsController
   events:
     'submit form': 'submit'
-    'click button[name="cancel"]': 'cancel'
+    'click a[name="cancel"]': 'cancel'
     'click button[name="remove_item"]':  'remove_value_item'
     'click button[name="add_item"]':     'add_value_item'
     'click button[name=subscription-destroy]':                'destroy'

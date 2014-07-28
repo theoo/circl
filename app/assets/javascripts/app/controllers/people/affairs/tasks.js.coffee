@@ -98,7 +98,7 @@ class Edit extends App.TimesheetExtention
 
   events:
     'submit form': 'submit'
-    'click button[name="cancel"]': 'cancel'
+    'click a[name="cancel"]': 'cancel'
     'click button[name=task-destroy]': 'destroy'
     'slide': 'on_slide_change'
     'keyup #task_duration': 'on_duration_change'

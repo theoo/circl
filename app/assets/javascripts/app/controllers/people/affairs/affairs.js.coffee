@@ -175,7 +175,7 @@ class Edit extends App.ExtendedController
 
   events:
     'submit form': 'submit'
-    'click button[name="cancel"]': 'cancel'
+    'click a[name="cancel"]': 'cancel'
     'click button[name="affair-show-owner"]': 'show_owner'
     'click a[name="affair-destroy"]': 'destroy'
     'click a[name="affair-copy"]': 'copy'
