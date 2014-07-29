@@ -81,12 +81,10 @@ class GenericTemplate < ActiveRecord::Base
   validates_length_of :title, maximum: 255
 
   validates_attachment :odt,
-    content_type: { content_type: "application/vnd.oasis.opendocument.text" },
-    size: { in: 0..1.megabytes }
+    content_type: { content_type: /^application\// }
 
   validates_attachment :snapshot,
-    content_type: { content_type: "image/png" },
-    size: { in: 0..1.megabytes }
+    content_type: { content_type: [ /^image\//, "application/pdf" ] }
 
 
   ########################

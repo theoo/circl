@@ -89,8 +89,7 @@ class InvoiceTemplate < ActiveRecord::Base
                       allow_blank: true
 
   validates_attachment :snapshot,
-    content_type: { content_type: "image/png" },
-    size: { in: 0..1.megabytes }
+    content_type: { content_type: /^image\// }
 
   ########################
   ### INSTANCE METHODS ###
