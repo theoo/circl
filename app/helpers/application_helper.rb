@@ -21,7 +21,7 @@ module ApplicationHelper
   # build the container for flash messages
   def flash_messages
     if flash[:notice]
-      haml_tag :div, class: 'alert alert-info' do
+      haml_tag :div, class: 'alert alert-info timoutable' do
         haml_tag :button, class: 'close', "data-dismiss" => "alert", "aria-hidden" => true do
           haml_concat "&times;"
         end

@@ -23,6 +23,7 @@ class People::DashboardController < ApplicationController
   layout false
 
   def index
+    flash.notice = "coucou"
     authorize! :dashboard_index, @person
     @person = params[:id] ? Person.find(params[:id]) : current_person
 

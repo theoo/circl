@@ -25,6 +25,7 @@ class Ui
     @load_number_precision(context)
     @load_password_strength(context)
     @override_rails(context)
+    @timout_info_alerts(context)
 
     # FIXME http://getbootstrap.com/javascript/#tooltips the event
     # should be trigged without calling this line (?)
@@ -130,8 +131,13 @@ class Ui
         parent.append input_group
 
   override_rails: (context) ->
-    $('.field_with_errors').each ->
+    context.find('.field_with_errors').each ->
       $(@).closest('.form-group').addClass('has-error')
+
+  timout_info_alerts: (context) ->
+    context.find('.alert.alert-info.timoutable').each (i, e) ->
+      # Wait 5 seconds and fadeOut the message in 1 second
+      setTimeout( (-> $(e).fadeOut(1000); return), 5000 )
 
   datatable_bootstrap_classes: (table) ->
     # Extend table with bootstrap classes
