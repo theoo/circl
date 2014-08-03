@@ -31,7 +31,7 @@ class People::Affairs::InvoicesController < ApplicationController
     @invoices = @affair.invoices
 
     if params[:template_id]
-      @affair.generic_template = GenericTemplate.find params[:template_id]
+      @affair.template = GenericTemplate.find params[:template_id]
     end
 
     respond_to do |format|
@@ -85,9 +85,11 @@ class People::Affairs::InvoicesController < ApplicationController
 
       # Render HTML but don't build PDF.
       format.html do
-        html = build_from_template(@invoice)
-        html.assets_to_full_path!
-        render inline: html, layout: 'preview'
+        # TODO Merge this
+        # html = build_from_template(@invoice)
+        # render inline: html, layout: 'preview'
+        generator = AttachmentGenerator.new(@invoice)
+        render inline: generator.html, layout: 'preview'
       end
 
       # Call Background task to build pdf through invoice model.
@@ -158,248 +160,14 @@ class People::Affairs::InvoicesController < ApplicationController
   # PDF generation
   #
 
-  ##
-  # Returns an HTML page (that can be used to build a PDF)
-  # with its placeholders substituted.
-  #
-  def build_from_template(invoice, html = 'html')
-    html = invoice.invoice_template.send(html).dup
+  def build_from_template(i, html = '')
 
-    boundaries_class_name = invoice.invoice_template.with_bvr ? "boundaries" : "boundaries_class_name"
-    html.prepend "<div id='#{boundaries_class_name}'>"
-    html += "</div>"
-
-    # Add bvr if requested
-    if invoice.invoice_template.with_bvr
-      @invoice_template = invoice.invoice_template
-      html << render_to_string("bvr")
-    end
-
-    invoice.placeholders[:simples].each do |p, v|
-      html.gsub!("##{p}", v) if html.match("#{p}")
-    end
-
-    invoice.placeholders[:iterators].each do |p, v|
-      regex = "##{p}#{TEMPLATES_PLACEHOLDER_OPTIONS_REGEX}"
-      ph = html.match(regex).to_s
-      # substitute only if a placeholder matches
-      unless ph.blank?
-        begin
-          opts = ph.match(TEMPLATES_PLACEHOLDER_OPTIONS_REGEX)[1].split("|")
-          fields = opts[0].split(",").map{|o| o.strip.to_sym unless o.blank?}.select{|o| ! o.nil?}
-          order  = opts[1].strip if opts.size > 0
-          join   = opts[2] if opts.size > 1
-
-          iterator = "build_#{p.downcase}_list(invoice, fields: fields, order: order, join: join)"
-          # TODO ensure that what is evaluated is safe
-          sub = eval iterator
-
-          html.gsub!(ph, sub)
-        rescue Exception => e
-          error = I18n.t("invoice_template.errors.failed_to_substitute_iterator", iterator: p)
-          error += "<br />"
-          error += CGI::escapeHTML(e.inspect)
-          html.gsub!(ph, error)
-         end
-      end
-    end
-
-
+    @invoice = i
+    html = render_to_string("bvr") if @invoice.invoice_template.with_bvr
     html
+
   end
-
-  ##
-  # Returns subscriptions as an HTML fragment build from the given options.
-  #
-  # Available options:
-  #
-  # *fields*:: <tt>+id, parent_id, title, description, 'value', interval_starts_on, interval_ends_on, created_at, updated_at+</tt>
-  # *order*::  <tt>+:interval_starts_on+, any available attributes</tt>
-  # *joins*::  <tt>+:table+, any kind of string as separator, like ", "</tt>
-  #
-  def build_subscriptions_list(invoice, options = {})
-    defaults = {fields: ['id', 'parent_id', 'title', 'description',
-                            'interval_starts_on', 'interval_ends_on',
-                            'created_at', 'updated_at', 'value'],
-                order: 'interval_starts_on ASC',
-                join: :table }
-
-    defaults.each{|k,v| options[k] = v if options[k].blank? }
-
-    html = ""
-
-    if options[:join].to_s.strip == 'table'
-      html << render_to_string( partial: 'subscriptions.html',
-                                locals: {subscriptions: invoice.subscriptions,
-                                            invoice: invoice,
-                                            options: options})
-    else
-      invoice.subscriptions.order(options[:order]).each do |s|
-        fields = options[:fields].map do |f|
-          if f == :value
-            field = value_for(invoice.buyer)
-          else
-            field = s.send(f)
-          end
-          field = field.to_date if field.is_a? Time
-          field = field.to_view if field.is_a? Money
-          field.to_s
-        end
-        html << fields.join(options[:join]) + "<br />"
-      end
-    end
-
-    html
-  end
-
-  ##
-  # Returns services as an HTML fragment build from the given options.
-  #
-  # Available options:
-  #
-  # TODO
-  #
-  # available = ['id', 'executer_name', 'description', 'duration', 'start_date', 'created_at', 'updated_at', 'task_type_title', 'task_type_description', 'task_type_ratio', 'task_type_value', 'value', 'value_in_cents', 'value_currency', 'position']
-  def build_tasks_list(invoice, options = {})
-    defaults = {fields: ['executer_name', 'task_type_title', 'description', 'start_date', 'duration', 'value'],
-                order: 'start_date ASC',
-                join: :table }
-
-    defaults.each{|k,v| options[k] = v if options[k].blank? }
-
-    html = ""
-    html << build_join_for(invoice, 'tasks', options)
-    html
-  end
-
-  ##
-  # Returns products as an HTML fragment build from the given options.
-  #
-  # Available options:
-  #
-  # TODO
-  #
-  # available = ['id', 'parent_id', 'created_at', 'updated_at', 'key', 'title', 'description', 'category', 'quantity', 'value', 'value_in_cents', 'value_currency']
-  def build_product_items_list(invoice, options = {})
-    defaults = {fields: ['key', 'title', 'description', 'quantity', 'value'],
-                order: 'position ASC',
-                join: :table }
-
-    defaults.each{|k,v| options[k] = v if options[k].blank? }
-
-    html = ""
-    html << build_join_for(invoice, 'product_items', options)
-    html
-  end
-
-  ##
-  # Returns extras as an HTML fragment build from the given options.
-  #
-  # Available options:
-  #
-  # TODO
-  #
-  # available = ['id', 'title', 'description', 'value', 'value_in_cents', 'value_currency', 'quantity', 'position', 'created_at', 'updated_at']
-  def build_extras_list(invoice, options = {})
-    defaults = {fields: ['title', 'description', 'quantity', 'value'],
-                order: 'position ASC',
-                join: :table }
-
-    defaults.each{|k,v| options[k] = v if options[k].blank? }
-
-    html = ""
-    html << build_join_for(invoice, 'extras', options)
-    html
-  end
-
-  ##
-  # Returns receipts as an HTML fragment build from the given options.
-  #
-  # Available options:
-  #
-  # *fields*:: <tt>+id, invoice_id, value, value_date, means_of_payment, created_at, updated_at</tt>
-  # *order*::  <tt>+:interval_starts_on+, any available attributes</tt>
-  # *joins*::  <tt>+:table+, any kind of string as separator, like ", "</tt>
-  #
-  def build_receipts_list(invoice, options = {})
-    defaults = {fields: ['id', 'invoice_id', 'value', 'value_date',
-                            'means_of_payment', 'created_at', 'updated_at'],
-                order: 'value_date ASC',
-                join: :table }
-
-    defaults.each{|k,v| options[k] = v if options[k].blank? }
-
-    html = ""
-    html << build_join_for(invoice, 'receipts', options)
-    html
-  end
-
-  ##
-  # Returns receipts as an HTML fragment build from the given options.
-  #
-  # Available options:
-  #
-  # *fields*:: <tt>+id, invoice_id, value, value_date, means_of_payment, created_at, updated_at</tt>
-  # *order*::  <tt>+:interval_starts_on+, any available attributes</tt>
-  # *joins*::  <tt>+:table+, any kind of string as separator, like ", "</tt>
-  #
-  def build_affair_receipts_list(invoice, options = {})
-    defaults = {fields: ['id', 'invoice_id', 'value', 'value_date',
-                            'means_of_payment', 'created_at', 'updated_at'],
-                order: 'value_date ASC',
-                join: :table,
-                translation_path: 'receipt' }
-
-    defaults.each{|k,v| options[k] = v if options[k].blank? }
-
-    html = ""
-    html << build_join_for(invoice, 'affair_receipts', options)
-    html
-  end
-
 
   private
-
-  def build_join_for(invoice, object_name, options)
-
-    raise ArgumentError, "An invoice is required as first parameter." unless invoice.is_a? Invoice
-
-    [:order, :fields, :join].each do |opt|
-      raise ArgumentError, "options[:#{opt}] is required." unless options[opt]
-    end
-
-    begin
-      objects = invoice.send(object_name)
-    rescue Exception => e
-      raise ArgumentError, "object name: #{object_name} is not a valid method."
-    end
-
-    options[:translation_path] ||= object_name.singularize
-
-    html = ""
-
-    # print table or join only if there is objects
-    if objects.size > 0
-      if options[:join].to_s.strip == 'table'
-        html << render_to_string( partial: "generic",
-                                  locals: {objects: objects,
-                                              object_name: object_name,
-                                              options: options})
-      else
-          objects.order(options[:order]).each do |s|
-            fields = options[:fields].map do |f|
-              field = s.send(f)
-              field = field.to_date if field.is_a? Time
-              field = field.to_view if field.is_a? Money
-              field.to_s
-            end
-            html << fields.join(options[:join]) + "<br />"
-          end
-      end
-    end
-
-    html
-
-  end
 
 end

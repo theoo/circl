@@ -36,7 +36,7 @@ class People::AffairsController < ApplicationController
   def show
 
     if params[:template_id]
-      @affair.generic_template = GenericTemplate.find params[:template_id]
+      @affair.template = GenericTemplate.find params[:template_id]
     end
 
     respond_to do |format|
@@ -287,7 +287,7 @@ class People::AffairsController < ApplicationController
         if params[:format] != 'csv'
           # build generator using selected generic template
           fake_object = OpenStruct.new
-          fake_object.generic_template = GenericTemplate.find params[:generic_template_id]
+          fake_object.template = GenericTemplate.find params[:generic_template_id]
           fake_object.person = @person
           fake_object.affairs = @affairs
 
@@ -385,7 +385,7 @@ class People::AffairsController < ApplicationController
         if params[:format] != 'csv'
           # build generator using selected generic template
           fake_object = OpenStruct.new
-          fake_object.generic_template = GenericTemplate.find params[:generic_template_id]
+          fake_object.template = GenericTemplate.find params[:generic_template_id]
           fake_object.person = @person
           fake_object.invoices = @invoices
 
@@ -476,7 +476,7 @@ class People::AffairsController < ApplicationController
         if params[:format] != 'csv'
           # build generator using selected generic template
           fake_object = OpenStruct.new
-          fake_object.generic_template = GenericTemplate.find params[:generic_template_id]
+          fake_object.template = GenericTemplate.find params[:generic_template_id]
           fake_object.person = @person
           fake_object.receipts = @receipts
 

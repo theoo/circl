@@ -150,7 +150,7 @@ class Affair < ActiveRecord::Base
 
   # Used to calculate value from value with taxes
   attr_accessor :custom_value_with_taxes
-  attr_accessor :generic_template
+  attr_accessor :template
 
   ###################
   ### VALIDATIONS ###

@@ -151,6 +151,8 @@ class Salaries::Salary < ActiveRecord::Base
   has_many   :tasks,
              class_name: '::Task'
 
+  alias_method :template, :generic_template
+
   # Money
   money :yearly_salary
 

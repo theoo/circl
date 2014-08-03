@@ -90,8 +90,17 @@
                     class: 'btn btn-danger'}
               .icon-remove
               = I18n.t("common.destroy")
-            %button{type: 'button',
-                    name: 'settings-invoice-template-edit',
-                    class: 'btn btn-default'}
-              .icon-file
-              = I18n.t("invoice_template.views.actions.edit_template")
+
+            - classes = ['btn', 'btn-default']
+            %a{ class: classes.join(" "),
+                id: 'settings_invoice_template_download',
+                href: @invoice_template.odt_url,
+                title: I18n.t("template.views.download_current_template")}
+              .icon-cloud-download
+              = I18n.t("common.download")
+
+            %a{ class: classes.join(" "),
+                id: 'settings_invoice_template_upload',
+                title: I18n.t("template.views.upload_new_template")}
+              .icon-cloud-upload
+              = I18n.t("common.upload")

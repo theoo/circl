@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140718151558) do
+ActiveRecord::Schema.define(version: 20140803165156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -250,6 +250,10 @@ ActiveRecord::Schema.define(version: 20140718151558) do
     t.boolean  "show_invoice_value",     default: true
     t.integer  "language_id",                            null: false
     t.string   "account_identification"
+    t.string   "odt_file_name"
+    t.string   "odt_content_type"
+    t.integer  "odt_file_size"
+    t.datetime "odt_updated_at"
   end
 
   add_index "invoice_templates", ["language_id"], name: "index_invoice_templates_on_language_id", using: :btree
@@ -637,8 +641,8 @@ ActiveRecord::Schema.define(version: 20140718151558) do
     t.string   "cert_others_title",                                     default: "",    null: false
     t.text     "cert_notes",                                            default: "",    null: false
     t.string   "employer_account",                                      default: ""
-    t.string   "yearly_salary_currency",                                default: "CHF", null: false
     t.text     "comments"
+    t.string   "yearly_salary_currency",                                default: "CHF", null: false
   end
 
   add_index "salaries", ["is_reference"], name: "index_salaries_on_is_template", using: :btree

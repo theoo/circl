@@ -46,6 +46,8 @@ class Settings::GenericTemplatesController < ApplicationController
   def create
     respond_to do |format|
       if @generic_template.save
+        @generic_template.take_snapshot
+        @generic_template.reload
         format.json { render json: @generic_template }
       else
         format.json { render json: @generic_template.errors, status: :unprocessable_entity }
@@ -63,6 +65,8 @@ class Settings::GenericTemplatesController < ApplicationController
   def update
     respond_to do |format|
       if @generic_template.update_attributes(params[:generic_template])
+        @generic_template.take_snapshot
+        @generic_template.reload
         format.json { render json: @generic_template }
         format.html do
           flash[:notice] = I18n.t("common.notices.successfully_updated")
@@ -83,7 +87,7 @@ class Settings::GenericTemplatesController < ApplicationController
       if @generic_template.destroy
         format.json { render json: {} }
       else
-        format.json { render json: @generic_template.errors, status: :unprocessable_entity}
+        format.json { render json: @generic_template.errors, status: :unprocessable_entity }
       end
     end
   end

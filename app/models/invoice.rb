@@ -125,6 +125,8 @@ class Invoice < ActiveRecord::Base
       mask, mask)
   }
 
+  alias_method :template, :invoice_template
+
   ###################
   ### VALIDATIONS ###
   ###################
@@ -205,99 +207,6 @@ class Invoice < ActiveRecord::Base
   ########################
   ### INSTANCE METHODS ###
   ########################
-
-  # Returns a hash of placeholders and values.
-  def placeholders
-    # internationlize dates
-    I18n.locale = invoice_template.language.symbol
-
-    h = {}
-    # NOTE don't forget to add translation manualy. rake i18n:import_missing_translations won't parse this code.
-    # NOTE Be careful with name colision, INVOICE_TITLE and INVOICE_TITLE_AND_SOMETHING won't work correctly.
-    h[:simples] =   {
-                      'LOCALE'                             => I18n.locale.to_s,
-                      'INVOICE_ADDRESS'                    => simple_format(printed_address),
-                      'INVOICE_DATE'                       => created_at.to_date.to_s,
-                      'INVOICE_DAY_NUMERIC'                => I18n.l(created_at, format: "%d"),
-                      'INVOICE_MONTH_NUMERIC'              => created_at.strftime("%m"),
-                      'INVOICE_YEAR_NUMERIC'               => created_at.strftime("%Y"),
-                      'INVOICE_DAY_WORD'                   => I18n.l(created_at, format: "%A"),
-                      'INVOICE_MONTH_WORD'                 => I18n.l(created_at, format: "%B"),
-                      'INVOICE_DESCRIPTION'                => description.to_s,
-                      'INVOICE_CONDITIONS'                 => conditions.to_s,
-                      'INVOICE_ID'                         => id.to_s,
-                      'INVOICE_TITLE'                      => title.to_s,
-                      'INVOICE_VALUE_WITH_TAXES'           => value_with_taxes.to_doc,
-                      'INVOICE_VALUE'                      => value.to_doc,
-                      'INVOICE_VAT'                        => vat.to_doc,
-                      'INVOICE_BALANCE_VALUE'              => balance_value.to_doc,
-                      'INVOICE_RECEIPTS_VALUE'             => receipts_value.to_doc,
-                      'INVOICE_OVERPAID_VALUE'             => overpaid_value.to_doc,
-                      'INVOICE_OWNER_ID'                   => owner.id.to_s,
-                      'INVOICE_OWNER_TITLE'                => owner.title.to_s,
-                      'INVOICE_OWNER_NAME'                 => owner.name,
-                      'INVOICE_OWNER_ORGANIZATION_NAME'    => owner.organization_name,
-                      'INVOICE_OWNER_FIRST_NAME'           => owner.first_name,
-                      'INVOICE_OWNER_LAST_NAME'            => owner.last_name,
-                      'INVOICE_OWNER_FULL_NAME'            => owner.full_name,
-                      'INVOICE_BUYER_ID'                   => buyer.id.to_s,
-                      'INVOICE_BUYER_TITLE'                => buyer.title.to_s,
-                      'INVOICE_BUYER_NAME'                 => buyer.name,
-                      'INVOICE_BUYER_ORGANIZATION_NAME'    => buyer.organization_name,
-                      'INVOICE_BUYER_FIRST_NAME'           => buyer.first_name,
-                      'INVOICE_BUYER_LAST_NAME'            => buyer.last_name,
-                      'INVOICE_BUYER_FULL_NAME'            => buyer.full_name,
-                      'INVOICE_RECEIVER_ID'                => receiver.id.to_s,
-                      'INVOICE_RECEIVER_TITLE'             => receiver.title.to_s,
-                      'INVOICE_RECEIVER_NAME'              => receiver.name,
-                      'INVOICE_RECEIVER_ORGANIZATION_NAME' => receiver.organization_name,
-                      'INVOICE_RECEIVER_FIRST_NAME'        => receiver.first_name,
-                      'INVOICE_RECEIVER_LAST_NAME'         => receiver.last_name,
-                      'INVOICE_RECEIVER_FULL_NAME'         => receiver.full_name,
-                      'AFFAIR_ID'                          => affair.id.to_s,
-                      'AFFAIR_TITLE'                       => affair.title,
-                      'AFFAIR_VALUE_WITH_TAXES'            => affair.value_with_taxes.to_doc,
-                      'AFFAIR_VALUE'                       => affair.value.to_doc,
-                      'AFFAIR_VAT_VALUE'                   => affair.vat_value.to_doc,
-                      'AFFAIR_DESCRIPTION'                 => affair.description.to_s,
-                      'AFFAIR_FOOTER'                      => affair.footer.to_s,
-                      'AFFAIR_CONDITIONS'                  => affair.conditions.to_s,
-                      'AFFAIR_SELLER_NAME'                 => affair.seller.try(:name)
-                    }
-
-    h[:iterators] = {
-                      'EXTRAS'                            => extras,
-                      'PRODUCT_ITEMS'                     => product_items,
-                      'AFFAIR_RECEIPTS'                   => affair.receipts,
-                      'RECEIPTS'                          => receipts,
-                      'SUBSCRIPTIONS'                     => subscriptions,
-                      'TASKS'                             => tasks
-                    }
-
-    # BVR stuff, if requested
-    if invoice_template.with_bvr
-      bvr_codelines = bvr_codeline(invoice_template.bvr_account).split('').map.with_index do |char, index|
-        "<div class=\"char#{index + 1}\">#{char}</div>"
-      end
-
-      bvr_values = []
-      if invoice_template.show_invoice_value
-        bvr_values = value_with_taxes.cents.to_s.split('').reverse.map.with_index do |digit, index|
-          "<div class=\"digit#{index + 1}\">#{digit}</div>"
-        end
-      end
-
-      h[:simples].merge!({'BVR_REFERENCE_NUMBER'        => bvr_reference_number,
-                          'BVR_SPACED_REFERENCE_NUMBER' => bvr_reference_number(with_spaces: true),
-                          'BVR_ADDRESS'                 => invoice_template.bvr_address.to_s,
-                          'BVR_ACCOUNT'                 => invoice_template.bvr_account.to_s,
-                          'BVR_CODELINE'                => bvr_codelines.join,
-                          'BVR_VALUE'                   => bvr_values.join })
-    end
-
-    h
-
-  end
 
   # Returns the reference number for BVRs, the upper and shorter line.
   def bvr_reference_number(options = {})
@@ -430,6 +339,8 @@ class Invoice < ActiveRecord::Base
 
   # Checks if pdf is up to date.
   def pdf_up_to_date?
+    return false unless pdf?
+
     return false unless pdf_updated_at
 
     # Check if pdf requires an update because invoice is newer

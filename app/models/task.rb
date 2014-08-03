@@ -140,15 +140,6 @@ class Task < ActiveRecord::Base
     value.exchange_to(value_currency)
   end
 
-  # Proxy, mostly used for placeholders substitutions
-  %w(title description ratio value).each do |m|
-    define_method('task_type_' + m){ task_type.send(m) }
-  end
-
-  %w(name).each do |m|
-    define_method('executer_' + m){ executer.send(m) }
-  end
-
   private
 
   def set_value

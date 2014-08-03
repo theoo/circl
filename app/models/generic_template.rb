@@ -105,7 +105,7 @@ class GenericTemplate < ActiveRecord::Base
       pdf_path = odt.path.gsub(/\.odt$/,".pdf")
       pdf_file = File.open(pdf_path, "r")
 
-      # will be converted in png when calling :thump
+      # will be converted in png when calling :thumb
       self.snapshot = pdf_file
       self.save
     end

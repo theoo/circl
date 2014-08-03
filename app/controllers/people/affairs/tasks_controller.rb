@@ -29,7 +29,7 @@ class People::Affairs::TasksController < ApplicationController
     @tasks = @affair.tasks
 
     if params[:template_id]
-      @affair.generic_template = GenericTemplate.find params[:template_id]
+      @affair.template = GenericTemplate.find params[:template_id]
     end
 
     respond_to do |format|
