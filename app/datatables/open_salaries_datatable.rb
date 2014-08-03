@@ -31,7 +31,7 @@ class OpenSalariesDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Salaries::Salary.instances.unpaid_salaries.count,
+      iTotalRecords: Salaries::Salary.instance_salaries.unpaid_salaries.count,
       iTotalDisplayRecords: salaries.total_entries,
       aaData: data
     }
@@ -69,7 +69,7 @@ class OpenSalariesDatatable
   end
 
   def fetch_salaries
-    salaries = Salaries::Salary.instances.unpaid_salaries.order("#{sort_column} #{sort_direction}")
+    salaries = Salaries::Salary.instance_salaries.unpaid_salaries.order("#{sort_column} #{sort_direction}")
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       param = "^#{param}"
