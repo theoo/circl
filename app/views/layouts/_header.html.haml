@@ -46,7 +46,7 @@
 
             - if can? :index, Directory
               %li{class: ('active' if request.path == directory_path)}
-                = link_to I18n.t('common.directory'), directory_path, 'data-no-turbolink' => true
+                = link_to I18n.t('common.directory'), directory_path
 
             - if can? :index, Admin
               %li{class: ('active' if request.path == admin_path)}

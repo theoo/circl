@@ -320,7 +320,7 @@ class Ui
 
     title.one 'show.bs.tab', (e) ->
       tab_name = get_tab_name($(e.target))
-      # Trigger tab content loading
+      # Trigger tab content loading (which is caught in index.js.coffee)
       nav.trigger tab_name
 
     anchor = location.hash.split('#')
