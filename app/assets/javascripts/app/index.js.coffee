@@ -123,6 +123,7 @@ class @PersonEdit extends App
 
         @sub_nav.one 'salaries', =>
           @subapp($('#person_employment_contracts'), 'PersonEmploymentContracts')
+          @subapp($('#person_salaries_statistics'), 'PersonSalariesStatistics')
 
         @sub_nav.one 'permissions', =>
           @subapp($('#person_roles'), 'PersonRoles')

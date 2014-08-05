@@ -160,21 +160,24 @@
     #salaries_tab.tab-pane
       .row
         .col-md-6
-          - if can? :read, @person => Salaries::Salary
+          - if can? :manage, @person => Salaries::Salary
             #person_salaries.panel.panel-primary
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.salaries')
 
         .col-md-6
-          - if can? :read, @person => EmploymentContract
+          - if can? :manage, @person => EmploymentContract
             #person_employment_contracts.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.employment_contracts')
+
+          - if can? :statistics, Salaries::Salary
+            #person_salaries_statistics
       .row
         .col-lg-12
-          - if can? :read, @person => Salaries::Salary
+          - if can? :manage, @person => Salaries::Salary
             .panel.panel-default
               .panel-heading
                 .panel-title
@@ -183,7 +186,7 @@
 
       .row
         .col-lg-12
-          - if can? :read, @person => Salaries::Salary
+          - if can? :manage, @person => Salaries::Salary
             .panel.panel-default
               .panel-heading
                 .panel-title
@@ -193,7 +196,7 @@
     #permissions_tab.tab-pane
       .row
         .col-md-6
-          - if can? :read, @person => PeopleRole
+          - if can? :manage, @person => PeopleRole
             #person_roles.panel.panel-default
               .panel-heading
                 .panel-title
@@ -203,14 +206,14 @@
     #activities_tab.tab-pane
       .row
         .col-md-6
-          - if can? :read, @person => Comment
+          - if can? :manage, @person => Comment
             #person_comments.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.comments')
 
         / .col-md-6
-        /   - if can? :read, @person => Activity
+        /   - if can? :manage, @person => Activity
         /     #person_activities.panel.panel-default
         /       .panel-heading
         /         .panel-title

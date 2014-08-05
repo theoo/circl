@@ -1,0 +1,9 @@
+
+.panel.panel-default
+  .panel-heading
+    .panel-title
+      = I18n.t('person.views.statistics')
+
+  .panel-body
+    Statistic
+    plop

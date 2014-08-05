@@ -176,4 +176,14 @@ class People::Salaries::SalariesController < ApplicationController
     end
   end
 
+  def statistics
+    params[:from]
+    params[:to]
+    params[:step]
+
+    respond_to do |format|
+      format.json { render json: params.inspect }
+    end
+  end
+
 end

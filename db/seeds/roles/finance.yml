@@ -35,6 +35,9 @@
 - subject: Salaries::Salary
   action: manage
 
+- subject: Salaries::Salary
+  action: statistics
+
 - subject: Salaries::Tax
   action: manage
 

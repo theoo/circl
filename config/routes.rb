@@ -94,6 +94,10 @@ CIRCL::Application.routes.draw do
         put 'update_items', 'update_tax_data'
       end
 
+      collection do
+        post 'statistics'
+      end
+
       resources :items, :controller => 'people/salaries/items', :only => [ :index ] do
         member do
           get 'compute_value_for_next_salaries', 'compute_value_for_this_salary'
