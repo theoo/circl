@@ -265,16 +265,17 @@
                     != @partial('select_currency')(currency: @affair.value_currency, name: 'value_currency', value: @affair.value)
 
             .col-sm-6
-              .form-group
-                %label
-                .checkbox
-                  %label.control-label
-                    %input{ type: 'checkbox',
-                            id: 'person_affair_custom_value_with_taxes',
-                            name: 'custom_value_with_taxes',
-                            checked: false,
-                            value: 1 }
-                    = I18n.t('affair.views.custom_value_with_taxes')
+              - if App.ApplicationSetting.value('use_vat') == "true"
+                .form-group
+                  %label
+                  .checkbox
+                    %label.control-label
+                      %input{ type: 'checkbox',
+                              id: 'person_affair_custom_value_with_taxes',
+                              name: 'custom_value_with_taxes',
+                              checked: false,
+                              value: 1 }
+                      = I18n.t('affair.views.custom_value_with_taxes')
 
           .row
             .col-sm-6
@@ -287,12 +288,13 @@
                     = I18n.t("affair.views.bid_value")
                     = (@affair.computed_value - @affair.value)?.to_view(@affair.value_currency)
             .col-sm-6
-              %small.help-block
-                = I18n.t("affair.views.computed_value_with_taxes_is")
-                = @affair.computed_value_with_taxes?.to_view(@affair.computed_value_with_taxes_currency)
-                %br
-                = I18n.t("affair.views.value_with_taxes_is")
-                = @affair.value_with_taxes?.to_view(@affair.value_with_taxes_currency)
+              - if App.ApplicationSetting.value('use_vat') == "true"
+                %small.help-block
+                  = I18n.t("affair.views.computed_value_with_taxes_is")
+                  = @affair.computed_value_with_taxes?.to_view(@affair.computed_value_with_taxes_currency)
+                  %br
+                  = I18n.t("affair.views.value_with_taxes_is")
+                  = @affair.value_with_taxes?.to_view(@affair.value_with_taxes_currency)
 
           .row
             .col-sm-6

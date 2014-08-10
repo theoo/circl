@@ -235,7 +235,7 @@ class Edit extends ValueItemsController
     e.preventDefault()
 
     query       = {search_string: "subscriptions.id: #{@subscription.id}"}
-    url         = "#{Subscription.url()}/#{@subscription.id}.pdf"
+    url         = "#{Subscription.url()}/#{@subscription.id}/show.pdf"
     title       = I18n.t('subscription.views.sort_people_for_pdf_generation_of') + " <i>" + @subscription.title + "</i>"
     message     = I18n.t('subscription.views.sort_people_message')
     disabled    = 'search_string, selected_attributes'

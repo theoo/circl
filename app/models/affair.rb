@@ -320,6 +320,8 @@ class Affair < ActiveRecord::Base
   end
 
   def vat_value(forced_value = self.value)
+    return 0.to_money if ApplicationSetting.value('use_vat') != "true"
+
     # Variable VAT, extract extras with different vat rate
     extra_with_different_vat_rate = extras.each_with_object([]) do |i,a|
       a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f
@@ -348,8 +350,7 @@ class Affair < ActiveRecord::Base
 
   def compute_value_with_taxes
     val = compute_value
-    taxes = vat_value(val)
-    val + taxes
+    val + vat_value(val)
   end
 
   def value_with_taxes
