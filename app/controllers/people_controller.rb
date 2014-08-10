@@ -93,6 +93,7 @@ class PeopleController < ApplicationController
 
     respond_to do |format|
       if @person.save
+        flash.notice = I18n.t("person.notices.successfully_created_explanation", name: @person.name)
         format.json { render json: @person }
       else
         format.json { render json: @person.errors, status: :unprocessable_entity }

@@ -1,5 +1,4 @@
 $(document).ready ->
-
   # action map
   if $("#map_container").length > 0
     id = $('#person_id').val()

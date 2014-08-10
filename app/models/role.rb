@@ -51,10 +51,14 @@ class Role < ActiveRecord::Base
   #################
 
   has_many  :permissions, dependent: :destroy
-  has_and_belongs_to_many :people,
-                          -> { uniq },
-                          after_add: :update_elasticsearch_index,
-                          after_remove: :update_elasticsearch_index
+
+  has_many  :people_roles # for permissions
+  has_many  :people,
+            -> { uniq },
+            class_name: 'Person',
+            through: :people_roles,
+            after_add: :update_elasticsearch_index,
+            after_remove: :update_elasticsearch_index
 
   ###################
   ### VALIDATIONS ###

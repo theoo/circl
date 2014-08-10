@@ -153,11 +153,13 @@ class Person < ActiveRecord::Base
   accepts_nested_attributes_for :translation_aptitudes
 
   # monitored_habtm :roles,
-  has_and_belongs_to_many :roles,
+  has_many  :people_roles # for permissions
+  has_many  :roles,
+            -> { uniq },
+            class_name: 'Role',
+            through: :people_roles,
             after_add: :update_elasticsearch_index,
             after_remove: :update_elasticsearch_index
-
-  has_many  :people_roles # for permissions
 
   has_many  :permissions,
             -> { uniq },

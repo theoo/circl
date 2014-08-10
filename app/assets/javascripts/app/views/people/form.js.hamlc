@@ -6,7 +6,7 @@
       .col-lg-6
         - if @person.isNew()
           .alert.alert-info
-            != I18n.t("person.views.identifier_explanation")
+            != I18n.t("person.notices.identifier_explanation")
 
         .validation_errors_placeholder
       .col-lg-3

@@ -182,20 +182,6 @@
   group: Person
 
 - model: Person
-  name: website
-  indexing: website
-  mapping:
-    type: multi_field
-    fields:
-      email:
-        type: string
-        analyzer: snowball
-      sort:
-        type: string
-        analyzer: string_lowercase
-  group: Person
-
-- model: Person
   name: second_email
   indexing: second_email
   mapping:

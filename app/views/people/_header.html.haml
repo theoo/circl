@@ -23,25 +23,25 @@
               - else
                 = @person.name
 
-        - if can? :read, Affair
+        - if can? :read, Affair and @person.id
           %li
             %a{href: '#affairs_tab'}
               = I18n.t('person.views.affairs')
               .badge= @person.affairs.empty? ? nil : @person.affairs.count
 
-        - if can? :read, Salaries::Salary
+        - if can? :read, Salaries::Salary and @person.id
           %li
             %a{href: '#salaries_tab'}
               = I18n.t('person.views.salaries')
               .badge= @person.salaries.empty? ? nil : @person.salaries.count
 
-        - if can? :read, Role
+        - if can? :read, Role and @person.id
           %li
             %a{href: '#permissions_tab'}
               = I18n.t('person.views.permissions')
               .badge= @person.roles.empty? ? nil : @person.roles.count
 
-        - if can? :read, Activity
+        - if can? :read, Activity and @person.id
           %li
             %a{href: '#activities_tab'}
               = I18n.t('person.views.activities')

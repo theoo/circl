@@ -101,6 +101,7 @@ class @PersonEdit extends App
 
   constructor: (params) ->
     super
+    
 
     @el.one 'dependencies_preloaded', =>
       # everything depend on this person
@@ -111,6 +112,7 @@ class @PersonEdit extends App
       else
         # new person
         @subapp($('#person'), 'People')
+        Ui.load_tabs $(document)
 
       # And tabs content
       App.Person.one 'refresh', =>

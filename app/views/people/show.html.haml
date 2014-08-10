@@ -66,7 +66,7 @@
 
       .row
         .col-md-4
-          - if can? :read, @person => PeopleCommunicationLanguage
+          - if can? :read, @person => PeopleCommunicationLanguage and @person.id
             #person_communication_languages.panel.panel-default
               .panel-heading
                 .panel-title
@@ -74,7 +74,7 @@
                   .pull-right.badge= @person.communication_languages.empty? ? nil : @person.communication_languages.count
 
         .col-md-4
-          - if can? :read, @person => PeoplePrivateTag
+          - if can? :read, @person => PeoplePrivateTag and @person.id
             - if PrivateTag.count > 0
               #person_private_tags.panel.panel-default
                 .panel-heading
@@ -83,7 +83,7 @@
                     .pull-right.badge= @person.private_tags.empty? ? nil : @person.private_tags.count
 
         .col-md-4
-          - if can? :read, @person => PeoplePublicTag
+          - if can? :read, @person => PeoplePublicTag and @person.id
             - if PublicTag.count > 0
               #person_public_tags.panel.panel-default
                 .panel-heading

@@ -10,7 +10,6 @@ namespace :db do
           task :create => :environment do
             print "Creating invoice_templates:#{name}... "
             h = YAML.load_file(file)
-            h['html'] = Haml::Engine.new(File.read([Rails.root, "app/assets/javascripts/app/views/settings/invoice_templates/template.js.hamlc"].join("/"))).render
             InvoiceTemplate.create!(h)
             puts 'done!'
           end
