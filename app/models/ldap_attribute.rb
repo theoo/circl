@@ -35,8 +35,7 @@ class LdapAttribute < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
-
+  # include ChangesTracker
 
   ###################
   ### VALIDATIONS ###

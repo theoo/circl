@@ -144,7 +144,11 @@ class PersonAffairsDatatable
 
   # TODO: improve search like "Firstname Lastname", actually returns zero results.
   def fetch_affairs
-    affairs = Affair.select('a.*')
+    affairs = Affair.select('a.*,
+                            COUNT(invoices.id) as invoices_count,
+                            COUNT(receipts.id) as receipts_count,
+                            COALESCE(SUM(invoices.value_in_cents)/100.0, 0.0) as invoices_sum,
+                            COALESCE(SUM(receipts.value_in_cents)/100.0, 0.0) as receipts_sum')
                     .from("person_affairs_as_tree() a")
                     .where("owner_id = ? OR buyer_id = ? OR receiver_id = ?", *([@person.id]*3))
                     .joins('LEFT JOIN invoices ON invoices.affair_id = a.id')

@@ -85,13 +85,15 @@ class PeopleController < ApplicationController
 
   def create
 
-    check_and_update_attributes
+    find_or_create_job
+    validates_permissions_on_params
 
     # FIXME: strange behavior here, callbacks before_save not working so I have to force it to nil (cancan set it to "")
-    @person.authentication_token = nil unless params[:person][:generate_authentication_token]
+    @person.authentication_token = nil unless params[:generate_authentication_token]
 
     respond_to do |format|
       if @person.save
+        flash.notice = I18n.t("person.notices.successfully_created_explanation", name: @person.name)
         format.json { render json: @person }
       else
         format.json { render json: @person.errors, status: :unprocessable_entity }
@@ -101,10 +103,11 @@ class PeopleController < ApplicationController
 
   def update
 
-    check_and_update_attributes
+    find_or_create_job
+    validates_permissions_on_params
 
     respond_to do |format|
-      if @person.update_attributes(params[:person])
+      if @person.update_attributes(person_params)
         format.json do
           options = {}
           options[:restricted_attributes] = can?(:restricted_attributes, @person)
@@ -157,14 +160,14 @@ class PeopleController < ApplicationController
   end
 
   def update_password
-    current_password = params[:person].delete(:current_password)
+    current_password = params.delete(:current_password)
     if @person == current_person && !@person.valid_password?(current_password)
       @person.errors.add(:current_password, I18n.t('person.errors.invalid_current_password'))
-      @person.assign_attributes params[:person]
+      @person.assign_attributes person_params
     end
 
     respond_to do |format|
-      if @person.errors.empty? && @person.update_attributes(params[:person])
+      if @person.errors.empty? && @person.update_attributes(person_params)
         format.html { redirect_to person_path(@person) }
       else
         format.html { render 'change_password', layout: 'application' }
@@ -265,24 +268,65 @@ class PeopleController < ApplicationController
 
   private
 
-  def check_and_update_attributes
-    if params[:job]
-      if params[:job][:name].blank?
-        params[:person][:job_id] = nil
-      else
-        # TODO I suggest we remove this and let admins create jobs before they edit people
-        job = Job.find_or_create_by_name(params[:job][:name])
-        params[:person][:job_id] = job.id
+    def find_or_create_job
+      if params[:job]
+        if params[:job][:name].blank?
+          params[:job_id] = nil
+        else
+          # TODO I suggest we remove this and let admins create jobs before they edit people
+          job = Job.find_or_create_by_name(params[:job][:name])
+          params[:job_id] = job.id
+        end
       end
     end
 
-    unless can?(:restricted_attributes, @person)
-      Person::RESTRICTED_ATTRIBUTES.each { |s| params[:person].delete(s) }
+    def validates_permissions_on_params
+
+      unless can?(:restricted_attributes, @person)
+        Person::RESTRICTED_ATTRIBUTES.each { |s| person_params.delete(s) }
+      end
+
+      if can?(:authenticate_using_token, @person) and params[:generate_authentication_token]
+        params[:renew_authentication_token] = true
+      end
     end
 
-    if can?(:authenticate_using_token, @person) and params[:generate_authentication_token]
-      params[:person][:renew_authentication_token] = true
+    def person_params
+      params.permit(
+        :address,
+        :address_for_bvr,
+        :authentication_token,
+        :avs_number,
+        :bank_informations,
+        :birth_date,
+        :communication_language_ids,
+        :created_at,
+        :email,
+        :errors,
+        :first_name,
+        :gender,
+        :renew_authentication_token,
+        :geographic_coordinates,
+        :hidden,
+        :id,
+        :is_an_organization,
+        :job_id,
+        :last_name,
+        :latitude,
+        :location_id,
+        :longitude,
+        :main_communication_language_id,
+        :mobile,
+        :nationality,
+        :organization_name,
+        :phone,
+        :second_email,
+        :second_phone,
+        :task_rate_id,
+        :title,
+        :updated_at,
+        :website
+        )
     end
-  end
 
 end

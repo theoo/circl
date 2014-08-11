@@ -1,13 +1,10 @@
-Directory::Application.configure do
+CIRCL::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
   # every request.  This slows down response time but is perfect for development
   # since you don't have to restart the webserver when you make code changes.
   config.cache_classes = false
-
-  # Log error messages when you accidentally call methods on nil.
-  config.whiny_nils = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -33,4 +30,9 @@ Directory::Application.configure do
   # SQL_REGEX_KEYWORD = 'REGEXP' # mysql
   SQL_REGEX_KEYWORD = '~*' # postgresql, case insensitive
 
+  # RAILS UPDATES
+  # Raise exception on mass assignment protection for Active Record models
+  config.active_record.mass_assignment_sanitizer = :strict
+
+  config.eager_load = false
 end

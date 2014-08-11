@@ -41,7 +41,7 @@ class Receipt < ActiveRecord::Base
   # Monetize deprecation warning
   require 'monetize/core_extensions'
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
   extend  MoneyComposer
@@ -61,11 +61,21 @@ class Receipt < ActiveRecord::Base
 
   belongs_to :invoice
 
-  has_one :affair, through: :invoice
-  has_one :owner, through: :affair
-  has_one :buyer, through: :affair
-  has_one :receiver, through: :affair
-  has_many :subscriptions, through: :affair, uniq: true
+  has_one :affair,
+          through: :invoice
+
+  has_one :owner,
+          through: :affair
+
+  has_one :buyer,
+          through: :affair
+
+  has_one :receiver,
+          through: :affair
+
+  has_many :subscriptions,
+          -> { uniq },
+          through: :affair
 
   # money
   money :value
@@ -159,7 +169,7 @@ class Receipt < ActiveRecord::Base
   private
 
   def update_elasticsearch
-    owner.update_index unless tracked_changes.empty?
+    owner.update_index unless self.changes.empty?
   end
 
 end

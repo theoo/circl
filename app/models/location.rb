@@ -44,7 +44,7 @@ class Location < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
   include ElasticSearch::AutomaticPeopleReindexing
@@ -54,6 +54,8 @@ class Location < ActiveRecord::Base
   #################
 
   has_many :people
+
+  # TODO: Raises deprecation warning
   acts_as_tree
 
   ###################

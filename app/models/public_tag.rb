@@ -33,7 +33,7 @@ class PublicTag < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
   include ElasticSearch::AutomaticPeopleReindexing
@@ -48,12 +48,13 @@ class PublicTag < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  default_scope order('name ASC')
+  # FIXME: Incompatible with person's HABTM
+  # default_scope { order('name ASC') }
 
   acts_as_tree
 
   has_and_belongs_to_many :people,
-                          uniq: true,
+                          -> { uniq },
                           after_add: :update_elasticsearch_index,
                           after_remove: :update_elasticsearch_index
 

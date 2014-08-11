@@ -5,4 +5,4 @@ require File.expand_path('../config/application', __FILE__)
 require 'rake'
 include Rake::DSL
 
-Directory::Application.load_tasks
+CIRCL::Application.load_tasks

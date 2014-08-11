@@ -43,7 +43,7 @@ class Affair < ActiveRecord::Base
   # Monetize deprecation warning
   require 'monetize/core_extensions'
 
-  include ChangesTracker
+  # include ChangesTracker
   include StatusExtention
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
@@ -75,63 +75,91 @@ class Affair < ActiveRecord::Base
   #################
 
   # Relations
-  belongs_to  :owner, class_name: 'Person', foreign_key: 'owner_id'
-  belongs_to  :buyer, class_name: 'Person', foreign_key: 'buyer_id'
-  belongs_to  :receiver, class_name: 'Person', foreign_key: 'receiver_id'
-  belongs_to  :seller, class_name: 'Person', foreign_key: 'seller_id'
+  belongs_to  :owner,
+              class_name: 'Person',
+              foreign_key: 'owner_id'
 
-  belongs_to  :condition, class_name: 'AffairsCondition'
+  belongs_to  :buyer,
+              class_name: 'Person',
+              foreign_key: 'buyer_id'
 
-  has_one     :parent, class_name: 'Affair', primary_key: 'parent_id', foreign_key: 'id'
-  has_many    :children, class_name: 'Affair', foreign_key: 'parent_id'
+  belongs_to  :receiver,
+              class_name: 'Person',
+              foreign_key: 'receiver_id'
+  belongs_to  :seller,
+              class_name: 'Person',
+              foreign_key: 'seller_id'
 
-  has_many    :invoices, dependent: :destroy
-  has_many    :receipts, through: :invoices, uniq: true
+  belongs_to  :condition,
+              class_name: 'AffairsCondition'
 
-  has_many    :extras,  dependent: :destroy,
-                        order: :position
-                       #after_add: :update_on_prestation_alteration,
-                       #after_remove: :update_on_prestation_alteration
+  has_one     :parent,
+              class_name: 'Affair',
+              primary_key: 'parent_id',
+              foreign_key: 'id'
 
-  has_many    :tasks, dependent: :destroy,
-                      order: 'start_date ASC'
-                      #after_add: :update_on_prestation_alteration,
-                      #after_remove: :update_on_prestation_alteration
+  has_many    :children,
+              class_name: 'Affair',
+              foreign_key: 'parent_id'
 
-  has_many    :product_items, class_name: 'AffairsProductsProgram',
-                              dependent: :destroy,
-                              order: :position
-                              #after_add: :update_on_prestation_alteration,
-                              #after_remove: :update_on_prestation_alteration
+  has_many    :invoices,
+              dependent: :destroy
 
-  has_many    :products, through: :product_items
-  has_many    :programs, through: :product_items
+  has_many    :receipts,
+              -> { uniq },
+              through: :invoices
+
+  has_many    :extras,
+              -> { order(:position) },
+              dependent: :destroy
+              #after_add: :update_on_prestation_alteration,
+              #after_remove: :update_on_prestation_alteration
+
+  has_many    :tasks,
+              -> { order('start_date ASC') },
+              dependent: :destroy
+              #after_add: :update_on_prestation_alteration,
+              #after_remove: :update_on_prestation_alteration
+
+  has_many    :product_items,
+              -> { order(:position) },
+              class_name: 'AffairsProductsProgram',
+              dependent: :destroy
+              #after_add: :update_on_prestation_alteration,
+              #after_remove: :update_on_prestation_alteration
+
+  has_many    :products,
+              through: :product_items
+  has_many    :programs,
+              through: :product_items
 
   has_many    :affairs_stakeholders
+
   has_many    :stakeholders,
               through: :affairs_stakeholders,
               source: :person
 
-  has_many :affairs_subscriptions # for permissions
+  has_many    :affairs_subscriptions # for permissions
 
-  monitored_habtm :subscriptions,
-                  after_add: :update_on_prestation_alteration,
-                  after_remove: :update_on_prestation_alteration
+  # monitored_habtm :subscriptions,
+  has_and_belongs_to_many :subscriptions,
+              after_add: :update_on_prestation_alteration,
+              after_remove: :update_on_prestation_alteration
 
   # Money
   money :value
 
-  scope :open_affairs, Proc.new {
+  scope :open_affairs, -> {
     mask = Affair.statuses_value_for(:to_be_billed)
     where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
   }
 
-  scope :estimates, Proc.new { where estimate: true }
-  scope :effectives, Proc.new { where estimate: false}
+  scope :estimates,  -> { where estimate: true }
+  scope :effectives, -> { where estimate: false}
 
   # Used to calculate value from value with taxes
   attr_accessor :custom_value_with_taxes
-  attr_accessor :generic_template
+  attr_accessor :template
 
   ###################
   ### VALIDATIONS ###
@@ -302,6 +330,8 @@ class Affair < ActiveRecord::Base
   end
 
   def vat_value(forced_value = self.value)
+    return 0.to_money if ApplicationSetting.value('use_vat') != "true"
+
     # Variable VAT, extract extras with different vat rate
     extra_with_different_vat_rate = extras.each_with_object([]) do |i,a|
       a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f
@@ -330,8 +360,7 @@ class Affair < ActiveRecord::Base
 
   def compute_value_with_taxes
     val = compute_value
-    taxes = vat_value(val)
-    val + taxes
+    val + vat_value(val)
   end
 
   def value_with_taxes
@@ -494,7 +523,7 @@ class Affair < ActiveRecord::Base
     # It may have some custom search attributes which
     # depends on this affair through it's relations.
     # so update relations' indices no mater what changes
-    unless tracked_changes.empty?
+    unless self.changes.empty?
       # update current relations' indices
       owner.update_index
       if buyer != owner
@@ -503,18 +532,18 @@ class Affair < ActiveRecord::Base
       end
 
       # and former relations' indices
-      if tracked_changes.keys.index('buyer_id')
+      if self.changes.keys.index('buyer_id')
         # 0:original, 1:new value == self.buyer_id
-        buyer_id = tracked_changes['buyer_id'][0]
+        buyer_id = self.changes['buyer_id'][0]
         if Person.exists?(buyer_id) # in case former person doesn't exists
           p = Person.find(buyer_id)
           p.update_index
         end
       end
 
-      if tracked_changes.keys.index('receiver_id')
+      if self.changes.keys.index('receiver_id')
         # 0:original, 1:new value == self.receiver_id
-        receiver_id = tracked_changes['receiver_id'][0]
+        receiver_id = self.changes['receiver_id'][0]
         if Person.exists?(receiver_id)
           p = Person.find(receiver_id)
           p.update_index

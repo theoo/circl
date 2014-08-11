@@ -22,7 +22,7 @@ class ProductProgram < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
   extend  MoneyComposer
@@ -43,8 +43,8 @@ class ProductProgram < ActiveRecord::Base
   has_many :products, through: :product_items
   has_many :affairs,  through: :product_items
 
-  scope :actives, Proc.new { where(archive: false)}
-  scope :archived, Proc.new { where(archive: true)}
+  scope :actives,  -> { where(archive: false)}
+  scope :archived, -> { where(archive: true)}
 
   ###################
   ### VALIDATIONS ###

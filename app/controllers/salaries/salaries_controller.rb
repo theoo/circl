@@ -131,7 +131,7 @@ class Salaries::SalariesController < ApplicationController
     to   = Date.parse(params[:to]) if validate_date_format(params[:to])
 
     # select all salaries which are not references
-    salaries_arel = Salaries::Salary.where(is_reference: false)
+    salaries_arel = Salaries::Salary.instance_salaries
 
     # select paid or not
     if params[:paid] and not params[:unpaid]
@@ -171,7 +171,7 @@ class Salaries::SalariesController < ApplicationController
     to   = Date.parse(params[:to]) if validate_date_format(params[:to])
 
     # select all salaries which are not references
-    salaries_arel = Salaries::Salary.where(is_reference: false)
+    salaries_arel = Salaries::Salary.instance_salaries
 
     # select paid or not
     if params[:paid] and not params[:unpaid]

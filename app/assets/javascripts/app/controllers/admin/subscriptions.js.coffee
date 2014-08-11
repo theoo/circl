@@ -183,7 +183,7 @@ class New extends ValueItemsController
 class Edit extends ValueItemsController
   events:
     'submit form': 'submit'
-    'click button[name="cancel"]': 'cancel'
+    'click a[name="cancel"]': 'cancel'
     'click button[name="remove_item"]':  'remove_value_item'
     'click button[name="add_item"]':     'add_value_item'
     'click button[name=subscription-destroy]':                'destroy'
@@ -235,7 +235,7 @@ class Edit extends ValueItemsController
     e.preventDefault()
 
     query       = {search_string: "subscriptions.id: #{@subscription.id}"}
-    url         = "#{Subscription.url()}/#{@subscription.id}.pdf"
+    url         = "#{Subscription.url()}/#{@subscription.id}/show.pdf"
     title       = I18n.t('subscription.views.sort_people_for_pdf_generation_of') + " <i>" + @subscription.title + "</i>"
     message     = I18n.t('subscription.views.sort_people_message')
     disabled    = 'search_string, selected_attributes'

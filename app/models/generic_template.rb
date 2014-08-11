@@ -36,7 +36,7 @@
 class GenericTemplate < ActiveRecord::Base
 
   # templates table name is a reserved words
-  set_table_name 'generic_templates'
+  self.table_name = :generic_templates
 
   ###################
   ### CALLBACKS #####
@@ -48,7 +48,7 @@ class GenericTemplate < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
 
@@ -80,8 +80,11 @@ class GenericTemplate < ActiveRecord::Base
   # Validate fields of type 'string' length
   validates_length_of :title, maximum: 255
 
-  validates_attachment :odt, content_type: { content_type: "application/vnd.oasis.opendocument.text" },
-                              size: { in: 0..1.megabytes }
+  validates_attachment :odt,
+    content_type: { content_type: /^application\// }
+
+  validates_attachment :snapshot,
+    content_type: { content_type: [ /^image\//, "application/pdf" ] }
 
 
   ########################
@@ -102,7 +105,7 @@ class GenericTemplate < ActiveRecord::Base
       pdf_path = odt.path.gsub(/\.odt$/,".pdf")
       pdf_file = File.open(pdf_path, "r")
 
-      # will be converted in png when calling :thump
+      # will be converted in png when calling :thumb
       self.snapshot = pdf_file
       self.save
     end

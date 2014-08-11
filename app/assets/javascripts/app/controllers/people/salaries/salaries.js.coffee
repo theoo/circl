@@ -117,7 +117,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
-    'click button[name="cancel"]': 'cancel'
+    'click a[name="cancel"]': 'cancel'
     'change #person_salary_parent_id':     'reference_selected'
     'click a[name="salary-download-pdf"]': 'pdf'
     'click a[name="salary-download-odt"]': 'odt'

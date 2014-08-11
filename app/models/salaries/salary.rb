@@ -100,7 +100,7 @@
 
 class Salaries::Salary < ActiveRecord::Base
 
-  set_table_name 'salaries'
+  self.table_name = :salaries
 
   #################
   ### CALLBACKS ###
@@ -115,7 +115,7 @@ class Salaries::Salary < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::TagHelper
   include ElasticSearch::Mapping
@@ -141,15 +141,17 @@ class Salaries::Salary < ActiveRecord::Base
 
   belongs_to :person
   has_many   :items,
+             -> { order(:position) },
              class_name: 'Salaries::Item',
-             order: :position,
              dependent: :destroy
   has_many   :tax_data,
+             -> { order(:position) },
              class_name: 'Salaries::TaxData',
-             order: :position,
              dependent: :destroy
   has_many   :tasks,
              class_name: '::Task'
+
+  alias_method :template, :generic_template
 
   # Money
   money :yearly_salary
@@ -182,9 +184,9 @@ class Salaries::Salary < ActiveRecord::Base
   ### SCOPE ###
   #############
 
-  scope :references, where(is_reference: true)
-  scope :instances, where(is_reference: false)
-  scope :unpaid_salaries, where(paid: false)
+  scope :reference_salaries, -> { where(is_reference: true) }
+  scope :instance_salaries, -> { where(is_reference: false) }
+  scope :unpaid_salaries, -> { where(paid: false) }
 
   #################
   ### Relations ###
@@ -213,6 +215,9 @@ class Salaries::Salary < ActiveRecord::Base
                             greater_than_or_equal_to: 0,
                             less_than_or_equal_to: 100,
                             only_integer: false
+
+  validates_attachment :pdf,
+    content_type: { content_type: "application/pdf" }
 
   ########################
   ### INSTANCE METHODS ###

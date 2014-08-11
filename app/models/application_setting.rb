@@ -36,7 +36,7 @@ class ApplicationSetting < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
 
   ###################
   ### VALIDATIONS ###
@@ -56,7 +56,7 @@ class ApplicationSetting < ActiveRecord::Base
   #####################
 
   def self.value(key, options = {silent: false})
-    setting = find(:first, conditions: {key: key})
+    setting = where(key: key).first
     if setting
       setting.value
     elsif ! options[:silent]

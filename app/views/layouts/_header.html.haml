@@ -46,22 +46,18 @@
 
             - if can? :index, Directory
               %li{class: ('active' if request.path == directory_path)}
-                = link_to I18n.t('common.directory'),
-                          directory_path
+                = link_to I18n.t('common.directory'), directory_path
 
             - if can? :index, Admin
               %li{class: ('active' if request.path == admin_path)}
-                = link_to I18n.t('common.administration'),
-                          admin_path
+                = link_to I18n.t('common.administration'), admin_path
 
             - if can? :index, Salaries
               %li{class: ('active' if request.path == salaries_path)}
-                = link_to I18n.t('common.salaries'),
-                          salaries_path
+                = link_to I18n.t('common.salaries'), salaries_path
 
             - if can? :index, Setting
               %li{class: ('active' if request.path == settings_path)}
-                = link_to I18n.t('common.settings'),
-                          settings_path
+                = link_to I18n.t('common.settings'), settings_path
 
 

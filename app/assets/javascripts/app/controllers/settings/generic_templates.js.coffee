@@ -60,9 +60,8 @@ class New extends ClassNamesExtention
 class Edit extends ClassNamesExtention
   events:
     'submit form' : 'submit'
-    'click button[name="cancel"]': 'cancel'
+    'click a[name="cancel"]': 'cancel'
     'click button[name=settings-template-destroy]': 'destroy'
-    'click button[name=settings-template-edit]': 'edit_template'
     'click #settings_template_upload': 'stack_upload_window'
 
   active: (params) ->
@@ -74,8 +73,8 @@ class Edit extends ClassNamesExtention
     @show()
     @template = GenericTemplate.find(@id)
     @html @view('settings/generic_templates/form')(@)
-    $("#settings_template_download").tooltip(placement: 'bottom', container: 'body')
-    $("#settings_template_upload").tooltip(placement: 'bottom', container: 'body')
+    @el.find("#settings_template_download").tooltip(placement: 'bottom', container: 'body')
+    @el.find("#settings_template_upload").tooltip(placement: 'bottom', container: 'body')
 
   submit: (e) =>
     e.preventDefault()
@@ -83,10 +82,6 @@ class Edit extends ClassNamesExtention
     @template.load(data)
     @template.plural = data.plural?
     @save_with_notifications @template
-
-  edit_template: (e) ->
-    e.preventDefault()
-    window.open "#{GenericTemplate.url()}/#{@template.id}/edit.html", "template"
 
   destroy: (e) ->
     e.preventDefault()
@@ -102,7 +97,7 @@ class Edit extends ClassNamesExtention
     win.append modal
     win.modal(keyboard: true, show: false)
 
-    controller = new App.UploadOdt({el: win.find('.modal-content'); id: @template.id})
+    controller = new App.UploadGenericOdt({el: win.find('.modal-content'); id: @template.id})
 
     controller.activate()
     win.modal('show')
@@ -133,7 +128,7 @@ class Index extends ClassNamesExtention
 
     @activate_in_list(target)
 
-class App.UploadOdt extends App.ExtendedController
+class App.UploadGenericOdt extends App.ExtendedController
   events:
     'submit form': 'send'
 

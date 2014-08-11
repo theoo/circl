@@ -14,11 +14,13 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# require turbolinks
 #= require jquery
 #= require jquery-ujs
 #= require jquery.cookie
 #= require jquery.iframe-transport
 #= require jquery_serialize_object
+# require jquery.turbolinks
 #
 #= require extensions
 #
@@ -36,3 +38,25 @@
 #= require ./flot/jquery.flot.categories
 
 $ = jQuery
+
+# quick search
+$(document).ready ->
+  $("form#quick_search").on 'submit', (e) ->
+    e.preventDefault()
+    search_string = $('form#quick_search input[type=search]').val()
+    if(search_string.match(/^\d+$/g) != null)
+      window.location = '/people/' + search_string
+    else
+      Directory.search({ search_string: search_string })
+
+  # This overrides HTML5 behavior which doesn't clear inputs on focus but when typing
+  $("#quick_search input[type='search']").on 'focus', (e) ->
+    $(e.target).attr('placeholder', '')
+
+  # This resets the placeholder when clicking on the clear button
+  $("#quick_search input[type='search']").on 'search', (e) ->
+    $(e.target).attr('placeholder', I18n.t('directory.views.quick_search_placeholder'))
+
+  # Reveal content
+  $("body").css('margin-left': 0)
+  $("body").animate({opacity: 1}, 500)

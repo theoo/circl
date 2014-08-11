@@ -4,6 +4,7 @@
 .rvmrc
 /Gemfile.lock
 /config/configuration.yml
+/config/secrets.yml
 /config/database.yml
 /config/hirb.yml
 /config/mailchimp.yml
@@ -16,5 +17,6 @@
 /tags
 /tmp/*
 /public/system
+/bin
 .ruby-version
 .ruby-gemset

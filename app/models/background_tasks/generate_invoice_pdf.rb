@@ -40,28 +40,53 @@ class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
   end
 
   def process!
-    invoice = Invoice.find(options[:invoice_id])
-    affair  = invoice.affair
-    person  = invoice.owner
+    @invoice = Invoice.find(options[:invoice_id])
 
-    controller = People::Affairs::InvoicesController.new
-    html = controller.render_to_string( inline: controller.build_from_template(invoice),
-                                        layout: 'pdf.html.haml')
-    html.assets_to_full_path!
-
-    file = Tempfile.new(['invoice', '.pdf'], encoding: 'ascii-8bit')
-    file.binmode
-
-    # Using path instead of url so it works in dev mode too.
-    kit = PDFKit.new(html)
-
-    file.write(kit.to_pdf)
+    # GENERATE INVOICE FROM ODT TEMPLATE
+    file = Tempfile.new(['invoice_body', '.pdf'], encoding: 'ascii-8bit')
+    generator = AttachmentGenerator.new(@invoice)
+    generator.pdf { |o,pdf| file.write pdf.read }
     file.flush
-    invoice.pdf = file
-    invoice.save
+
+    if @invoice.invoice_template.with_bvr
+      # GENERATE BVR
+      controller = People::Affairs::InvoicesController.new
+      html = controller.render_to_string( inline: controller.build_from_template(@invoice), layout: 'pdf.html.haml')
+      html.assets_to_full_path!
+
+      bvr = Tempfile.new(['invoice_bvr', '.pdf'], encoding: 'ascii-8bit')
+      bvr.binmode
+
+      # Using path instead of url so it works in dev mode too.
+      kit = PDFKit.new(html)
+
+      bvr.write(kit.to_pdf)
+      bvr.flush
+
+      # MERGE INVOICE AND BVR
+      document = Tempfile.new(["invoice_document", '.pdf'], encoding: 'ascii-8bit')
+
+      # FIXME invert file and bvr files in pdftk so if body content is too long it doesn't
+      # overlap on BVR. Currently wkhtmltopdf always print a white background instead of a transparent one.
+      # --no-background doesn't seams to make any changes.
+      script = Tempfile.new(['script', '.sh'], encoding: 'ascii-8bit')
+      script.write("#!/bin/bash\n")
+      script.write("pdftk #{file.path} background #{bvr.path} output #{document.path}\n")
+      script.flush
+
+      system "chmod +x #{script.path}"
+      system "bash #{script.path}"
+
+      script.unlink
+
+      file = document
+    end
+
+    @invoice.pdf = file
+    @invoice.save!
 
     # this won't touch updated_at column
-    invoice.update_column(:pdf_updated_at, Time.now)
+    @invoice.update_column(:pdf_updated_at, Time.now)
 
     file.unlink
   end

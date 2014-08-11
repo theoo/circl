@@ -53,7 +53,7 @@ class Edit extends App.ExtendedController
 
   events:
     'submit form': 'submit'
-    'click button[name="cancel"]': 'cancel'
+    'click a[name="cancel"]': 'cancel'
     'click button[name="comment-reopen"]': 'reopen'
     'click button[name="comment-close"]': 'close'
     'click button[name="comment-destroy"]': 'destroy'

@@ -38,14 +38,6 @@ class BackgroundTasks::GenerateInvoiceTemplateJpg < BackgroundTask
 
   def process!
     invoice_template = InvoiceTemplate.find(options[:invoice_template_id])
-
-    controller = Settings::InvoiceTemplatesController.new
-    html = controller.render_to_string inline: invoice_template.html,
-      layout: 'preview.html.haml',
-      formats: [:jpg]
-
-    html.assets_to_full_path!
-
-    invoice_template.take_snapshot(html)
+    invoice_template.take_snapshot
   end
 end

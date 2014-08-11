@@ -55,14 +55,6 @@ class App.ExtendedController extends Spine.Controller
     @hide()
 
   # stacked windows
-  open: =>
-    $(@el).modal('show')
-    @trigger 'open'
-
-  close: =>
-    $(@el).modal('hide')
-    @trigger 'close'
-
   reset_notifications: ->
     # remove previous errors
     $(@el).find('.has-error').each (index, field_with_error) ->

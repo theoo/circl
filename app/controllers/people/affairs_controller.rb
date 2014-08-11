@@ -36,7 +36,7 @@ class People::AffairsController < ApplicationController
   def show
 
     if params[:template_id]
-      @affair.generic_template = GenericTemplate.find params[:template_id]
+      @affair.template = GenericTemplate.find params[:template_id]
     end
 
     respond_to do |format|
@@ -80,15 +80,17 @@ class People::AffairsController < ApplicationController
       raise ActiveRecord::Rollback unless @affair.save
 
       # append stakeholders
-      params[:affairs_stakeholders].each do |s|
-        stakeholder = @affair.affairs_stakeholders.new(
-          person_id: s[:person_id],
-          title: s[:title] )
-        unless stakeholder.save
-          stakeholder.errors.messages.each do |k,v|
-            @affair.errors.add(("stakeholders[][" + k.to_s + "]").to_sym, v.join(", "))
+      unless params[:affairs_stakeholders].blank?
+        params[:affairs_stakeholders].each do |s|
+          stakeholder = @affair.affairs_stakeholders.new(
+            person_id: s[:person_id],
+            title: s[:title] )
+          unless stakeholder.save
+            stakeholder.errors.messages.each do |k,v|
+              @affair.errors.add(("stakeholders[][" + k.to_s + "]").to_sym, v.join(", "))
+            end
+            raise ActiveRecord::Rollback
           end
-          raise ActiveRecord::Rollback
         end
       end
 
@@ -159,28 +161,35 @@ class People::AffairsController < ApplicationController
       raise ActiveRecord::Rollback unless @affair.update_attributes(params[:affair])
 
       # Only keep values that are returned
-      sent_ids = params[:affairs_stakeholders].map{|v| v[:id].to_i}
+      if params[:affairs_stakeholders].blank?
+        sent_ids = []
+      else
+        sent_ids = params[:affairs_stakeholders].map{|v| v[:id].to_i}
+      end
+
       recorded_ids = @affair.affairs_stakeholders.map(&:id)
       surplus_values = recorded_ids - sent_ids
       AffairsStakeholder.destroy surplus_values
 
       # and append or update stakeholders
-      params[:affairs_stakeholders].each do |s|
-        if @affair.affairs_stakeholders.exists?(s[:id])
-          stakeholder = @affair.affairs_stakeholders.find(s[:id])
-          stakeholder.person_id = s[:person_id]
-          stakeholder.title = s[:title]
-        else
-          stakeholder = @affair.affairs_stakeholders.new(
-            person_id: s[:person_id],
-            title: s[:title] )
-        end
-
-        unless stakeholder.save
-          stakeholder.errors.messages.each do |k,v|
-            @affair.errors.add(("stakeholders[][" + k.to_s + "]").to_sym, v.join(", "))
+      unless params[:affairs_stakeholders].blank?
+        params[:affairs_stakeholders].each do |s|
+          if @affair.affairs_stakeholders.exists?(s[:id])
+            stakeholder = @affair.affairs_stakeholders.find(s[:id])
+            stakeholder.person_id = s[:person_id]
+            stakeholder.title = s[:title]
+          else
+            stakeholder = @affair.affairs_stakeholders.new(
+              person_id: s[:person_id],
+              title: s[:title] )
           end
-          raise ActiveRecord::Rollback
+
+          unless stakeholder.save
+            stakeholder.errors.messages.each do |k,v|
+              @affair.errors.add(("stakeholders[][" + k.to_s + "]").to_sym, v.join(", "))
+            end
+            raise ActiveRecord::Rollback
+          end
         end
       end
 
@@ -278,7 +287,7 @@ class People::AffairsController < ApplicationController
         if params[:format] != 'csv'
           # build generator using selected generic template
           fake_object = OpenStruct.new
-          fake_object.generic_template = GenericTemplate.find params[:generic_template_id]
+          fake_object.template = GenericTemplate.find params[:generic_template_id]
           fake_object.person = @person
           fake_object.affairs = @affairs
 
@@ -376,7 +385,7 @@ class People::AffairsController < ApplicationController
         if params[:format] != 'csv'
           # build generator using selected generic template
           fake_object = OpenStruct.new
-          fake_object.generic_template = GenericTemplate.find params[:generic_template_id]
+          fake_object.template = GenericTemplate.find params[:generic_template_id]
           fake_object.person = @person
           fake_object.invoices = @invoices
 
@@ -467,7 +476,7 @@ class People::AffairsController < ApplicationController
         if params[:format] != 'csv'
           # build generator using selected generic template
           fake_object = OpenStruct.new
-          fake_object.generic_template = GenericTemplate.find params[:generic_template_id]
+          fake_object.template = GenericTemplate.find params[:generic_template_id]
           fake_object.person = @person
           fake_object.receipts = @receipts
 

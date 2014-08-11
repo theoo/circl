@@ -46,7 +46,7 @@ class Subscription < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
   include ElasticSearch::AutomaticPeopleReindexing
@@ -65,11 +65,26 @@ class Subscription < ActiveRecord::Base
 
   acts_as_tree
 
-  has_and_belongs_to_many :affairs, uniq: true
-  has_many  :invoices, through: :affairs, uniq: true
-  has_many  :receipts, through: :affairs, uniq: true
-  has_many  :people,   through: :invoices, source: :owner, uniq: true
-  has_many  :values,   class_name: 'SubscriptionValue', order: 'position ASC'
+  has_and_belongs_to_many :affairs,
+                          -> { uniq }
+
+  has_many  :invoices,
+            -> { uniq },
+            through: :affairs
+
+  has_many  :receipts,
+            -> { uniq },
+            through: :affairs
+
+  has_many  :people,
+            -> { uniq },
+            through: :invoices,
+            source: :owner
+
+  has_many  :values,
+            -> { order('position ASC') },
+            class_name: 'SubscriptionValue'
+
   belongs_to :invoice_template
 
   has_attached_file :pdf
@@ -89,6 +104,9 @@ class Subscription < ActiveRecord::Base
 
   # Validate fields of type 'text' length
   validates_length_of :description, maximum: 65536
+
+  validates_attachment :pdf,
+    content_type: { content_type: "application/pdf" }
 
   ########################
   ### INSTANCE METHODS ###
@@ -164,7 +182,6 @@ class Subscription < ActiveRecord::Base
                               WHERE r.invoice_id = invoices.id
                               HAVING invoices.value_in_cents < SUM(r.value_in_cents))
                               - invoices.value_in_cents) as val")
-                    .order(:id)
                     .group("invoices.id")
                     .select(&:val) # remove null values (nil)
                     .map{|i| i.val.to_i } # convert given strings to integers

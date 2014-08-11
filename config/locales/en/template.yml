@@ -18,6 +18,8 @@ en:
       example_files_title: Example files
       footer: footer
       header: header
+      invoice_with_bvr_file: Invoice template with BVR
+      invoice_without_bvr_file: Invoice template without BVR
       language: language
       plural: plural ressource
       plural_explanation: It's a list of items and not the item itself

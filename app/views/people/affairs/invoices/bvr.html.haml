@@ -1,18 +1,25 @@
+#boundaries_with_bvr
+
 .bvr
   .bvr_organisation_address1
-    %pre #BVR_ADDRESS
+    %pre= @invoice.invoice_template.bvr_address.to_s
   .bvr_organisation_address2
-    %pre #BVR_ADDRESS
-  .bvr_member_address1 #INVOICE_ADDRESS
-  .bvr_member_address2 #INVOICE_ADDRESS
-  .bvr_account1 #BVR_ACCOUNT
-  .bvr_account2 #BVR_ACCOUNT
-  - if @invoice_template.show_invoice_value
-    .bvr_value1 #BVR_VALUE
-    .bvr_value2 #BVR_VALUE
+    %pre= @invoice.invoice_template.bvr_address.to_s
+  .bvr_member_address1= simple_format(@invoice.printed_address)
+  .bvr_member_address2= simple_format(@invoice.printed_address)
+  .bvr_account1= @invoice.invoice_template.bvr_account.to_s
+  .bvr_account2= @invoice.invoice_template.bvr_account.to_s
+  - if @invoice.invoice_template.show_invoice_value
+    / FIXME Not DRY
+    .bvr_value1
+      - @invoice.value_with_taxes.cents.to_s.split('').reverse.each.with_index do |digit, index|
+        %div{class: "digit#{index + 1}"}= digit
+    .bvr_value2
   - else
     .bvr_value1
     .bvr_value2
-  .bvr_reference_number1 #BVR_REFERENCE_NUMBER
-  .bvr_reference_number2 #BVR_SPACED_REFERENCE_NUMBER
-  .bvr_codeline #BVR_CODELINE
+  .bvr_reference_number1= @invoice.bvr_reference_number
+  .bvr_reference_number2= @invoice.bvr_reference_number(with_spaces: true)
+  .bvr_codeline
+    - @invoice.bvr_codeline(@invoice.invoice_template.bvr_account).split('').each.with_index do |char, index|
+      %div{class: "char#{index + 1}"}= char

@@ -74,8 +74,10 @@ en:
       subscription_were_merged: subscription were merged
       subscription_were_updated: subscription were updated
     notices:
+      identifier_explanation: ! '<h3>Start with an identifier</h3> The identifier should contain at least with one of the three following requirements: <ul><li>an organization name</li><li>a first name/last name pair</li><li>an email address</li></ul>'
       not_enough_information_to_point_this_person_on_a_map: There is not enough information to point this contact's address on a map.
       not_enough_information_to_render_a_map: There is not enough information about this contact's address to generate a map.
+      successfully_created_explanation: ! "<h3><i>%{name}</i> has successfully been created</h3> You can now set tags, affairs, salaries, etc to this contact."
     views:
       account_settings: account settings
       activities: activities
@@ -102,7 +104,6 @@ en:
       generate_authentication_token: generate authentication token
       geographic_coordinates: geographic coordinates
       hidden: hidden
-      identifier_explanation: identifier explanation
       is_an_organization: is an organization
       job: job
       last_name: last name

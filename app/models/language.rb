@@ -33,7 +33,7 @@ class Language < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
 
@@ -54,9 +54,9 @@ class Language < ActiveRecord::Base
   has_many  :salaries_templates
 
   has_and_belongs_to_many :communication_people, #communication_languages
+                          -> { uniq },
                           class_name: 'Person',
                           join_table: 'people_communication_languages',
-                          uniq: true,
                           after_add: :update_elasticsearch_index,
                           after_remove: :update_elasticsearch_index
 
@@ -84,7 +84,7 @@ class Language < ActiveRecord::Base
   end
 
   def reindex_people_if_needed
-    reindex_people unless tracked_changes.empty?
+    reindex_people unless self.changes.empty?
     true
   end
 

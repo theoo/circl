@@ -93,7 +93,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
-    'click button[name="cancel"]': 'cancel'
+    'click a[name="cancel"]': 'cancel'
     'click a[name="invoice-download-pdf"]': 'pdf'
     'click a[name="invoice-preview-pdf"]': 'preview'
     'click a[name="invoice-destroy"]': 'destroy'

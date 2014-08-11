@@ -33,7 +33,7 @@ class QueryPreset < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
 
   #################
   ### CALLBACKS ###
@@ -45,7 +45,7 @@ class QueryPreset < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  default_scope order('name ASC')
+  default_scope { order('name ASC') }
   serialize :query
 
   ###################

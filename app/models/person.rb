@@ -69,7 +69,7 @@ class Person < ActiveRecord::Base
   ################
 
   # Inclusion order matter
-  include ChangesTracker
+  # include ChangesTracker
   include Tire::Model::Callbacks
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
@@ -106,7 +106,7 @@ class Person < ActiveRecord::Base
 
   # LDAP
   if Rails.configuration.ldap_enabled
-    after_save :ldap_update, unless: "tracked_changes.empty?"
+    after_save :ldap_update, unless: "self.changes.empty?"
     before_destroy :ldap_remove
   end
 
@@ -117,6 +117,7 @@ class Person < ActiveRecord::Base
   # Common
   belongs_to  :job
   belongs_to  :location
+  belongs_to  :task_rate
   belongs_to  :main_communication_language,
               class_name: 'Language'
 
@@ -125,16 +126,14 @@ class Person < ActiveRecord::Base
 
   # logs what this "user" have done (to any entry)
   has_many    :activities,
-              order: 'created_at DESC',
-              limit: '100',
+              -> { order('created_at DESC').limit(100) },
               dependent: :destroy
 
   # logs what this person's entry have undergone
   has_many    :alterations,
+              -> { order('created_at DESC').limit(100) },
               class_name: 'Activity',
               as: :resource,
-              order: 'created_at DESC',
-              limit: '100',
               dependent: :destroy
 
   # comments made by this person
@@ -150,114 +149,129 @@ class Person < ActiveRecord::Base
 
   has_many  :translation_aptitudes,
             dependent: :destroy
+
   accepts_nested_attributes_for :translation_aptitudes
 
-  monitored_habtm :roles,
-                  after_add: :update_elasticsearch_index,
-                  after_remove: :update_elasticsearch_index
+  # monitored_habtm :roles,
   has_many  :people_roles # for permissions
+  has_many  :roles,
+            -> { uniq },
+            class_name: 'Role',
+            through: :people_roles,
+            after_add: :update_elasticsearch_index,
+            after_remove: :update_elasticsearch_index
 
   has_many  :permissions,
-            through: :roles,
-            uniq: true
-
-  monitored_habtm :public_tags,
-                  uniq: true,
-                  after_add: :update_elasticsearch_index,
-                  after_remove: :update_elasticsearch_index
-
-  monitored_habtm :private_tags,
-                  uniq: true,
-                  after_add: :update_elasticsearch_index,
-                  after_remove: :update_elasticsearch_index
+            -> { uniq },
+            through: :roles
 
   has_many  :people_public_tags # for permissions
   has_many  :people_private_tags # for permissions
 
-  # secondary communication languages
-  monitored_habtm :communication_languages,
-                  class_name: 'Language',
-                  join_table: 'people_communication_languages',
-                  uniq: true,
-                  after_add: :update_elasticsearch_index,
-                  after_remove: :update_elasticsearch_index
+  # monitored_habtm :public_tags,
+  has_many  :public_tags,
+            -> { uniq },
+            class_name: 'PublicTag',
+            through: :people_public_tags,
+            after_add: :update_elasticsearch_index,
+            after_remove: :update_elasticsearch_index
 
+  # monitored_habtm :private_tags,
+  has_many  :private_tags,
+            -> { uniq },
+            class_name: 'PrivateTag',
+            through: :people_private_tags,
+            after_add: :update_elasticsearch_index,
+            after_remove: :update_elasticsearch_index
+
+  # secondary communication languages
   has_many  :people_communication_languages # for permissions
 
+  # monitored_habtm :communication_languages,
+  has_many  :communication_languages,
+            -> { uniq },
+            class_name: 'Language',
+            through: :people_communication_languages,
+            source: :language,
+            after_add: :update_elasticsearch_index,
+            after_remove: :update_elasticsearch_index
+
   # Financial
-  has_many    :affairs,
-              foreign_key: :owner_id,
-              dependent: :destroy
+  has_many  :affairs,
+            foreign_key: :owner_id,
+            dependent: :destroy
 
-  has_many    :affairs_as_buyer,
-              class_name: 'Affair',
-              foreign_key: :buyer_id
+  has_many  :affairs_as_buyer,
+            class_name: 'Affair',
+            foreign_key: :buyer_id
 
-  has_many    :affairs_as_receiver,
-              class_name: 'Affair',
-              foreign_key: :receiver_id
+  has_many  :affairs_as_receiver,
+            class_name: 'Affair',
+            foreign_key: :receiver_id
 
-  has_many    :affairs_stakeholders
-  has_many    :affairs_as_stakeholder,
-              through: :affairs_stakeholders,
-              source: :affair,
-              uniq: true
+  has_many  :affairs_stakeholders
+  has_many  :affairs_as_stakeholder,
+            -> { uniq },
+            through: :affairs_stakeholders,
+            source: :affair
 
-  has_many    :invoices,
-              through: :affairs,
-              foreign_key: 'owner_id',
-              uniq: true
+  has_many  :invoices,
+            -> { uniq },
+            through: :affairs,
+            foreign_key: 'owner_id'
 
-  has_many    :receipts,
-              through: :invoices,
-              uniq: true
+  has_many  :receipts,
+            -> { uniq },
+            through: :invoices
 
-  has_many    :subscriptions,
-              through: :affairs,
-              uniq: true
+  has_many  :subscriptions,
+            -> { uniq },
+            through: :affairs
+
 
   # Salaries
-  has_many    :salaries,
-              class_name: 'Salaries::Salary',
-              dependent: :destroy
+  has_many  :salaries,
+            class_name: 'Salaries::Salary',
+            dependent: :destroy
 
-  has_many    :background_tasks
+  has_many  :background_tasks
 
   # tasks this person have edited
-  has_many    :executed_tasks,
-              class_name: '::Task',
-              foreign_key: 'executer_id',
-              dependent: :destroy
+  has_many  :executed_tasks,
+            class_name: '::Task',
+            foreign_key: 'executer_id',
+            dependent: :destroy
 
   # tasks made for this person, the client
-  has_many    :tasks,
-              through: :affairs
+  has_many  :tasks,
+            through: :affairs
 
-  has_many    :products_to_sell,  class_name: 'Product',
-                                  foreign_key: :provider_id
+  has_many  :products_to_sell,
+            class_name: 'Product',
+            foreign_key: :provider_id
 
-  has_many    :products_to_maintain,  class_name: 'Product',
-                                      foreign_key: :after_sale_id
+  has_many  :products_to_maintain,
+            class_name: 'Product',
+            foreign_key: :after_sale_id
 
-  belongs_to  :task_rate
 
 
   ##################
-  ### NAMESCOPES ###
+  ### SCOPES ###
   ##################
 
-  scope :hidden, where(hidden: true)
-  scope :visible, where("hidden is NULL OR hidden IN ('false', 'f', '0')")
+  scope :hidden,  -> { where(hidden: true) }
+  scope :visible, -> { where("hidden is NULL OR hidden IN ('false', 'f', '0')") }
 
-  scope :duplicates, find_by_sql("SELECT id\
+  scope :duplicates, -> { find_by_sql("SELECT id\
     FROM (SELECT *, row_number() over (partition BY first_name, last_name ORDER BY first_name)\
       AS rnum FROM people) t\
-    WHERE t.rnum > 1 AND first_name != ''")
+    WHERE t.rnum > 1 AND first_name != ''") }
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :encryptable, :lockable,
-         :recoverable, :rememberable, :trackable, :timeoutable, :token_authenticatable
+         :recoverable, :rememberable, :trackable, :timeoutable
 
 
   ###################
@@ -702,7 +716,14 @@ class Person < ActiveRecord::Base
     end
 
     if renew_authentication_token == true
-      reset_authentication_token # devise method
+      self.authentication_token = generate_authentication_token
+    end
+  end
+
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless Person.where(authentication_token: token).first
     end
   end
 
@@ -835,7 +856,7 @@ class Person < ActiveRecord::Base
   end
 
   def main_language_is_not_in_communication_languages
-    if communication_languages.index(main_communication_language)
+    if communication_languages.to_a.index(main_communication_language)
       errors.add(:main_communication_language,
                  I18n.t('person.errors.main_language_already_in_communication_languages'))
       return false

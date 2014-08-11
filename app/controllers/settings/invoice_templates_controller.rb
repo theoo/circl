@@ -33,12 +33,9 @@ class Settings::InvoiceTemplatesController < ApplicationController
   def show
     respond_to do |format|
       format.json { render json: @invoice_template }
-      format.html do
-        render inline: @invoice_template.html, layout: 'preview.html.haml'
-      end
       format.jpg do
         unless @invoice_template.snapshot.path and File.exists? @invoice_template.snapshot.path
-          BackgroundTasks::GenerateInvoiceTemplateJpg.process!(invoice_template_id: @invoice_template.id)
+          @invoice_template.take_snapshot
           @invoice_template.reload
         end
         redirect_to @invoice_template.snapshot.url
@@ -49,7 +46,7 @@ class Settings::InvoiceTemplatesController < ApplicationController
   def create
     respond_to do |format|
       if @invoice_template.save
-        BackgroundTasks::GenerateInvoiceTemplateJpg.process!(invoice_template_id: @invoice_template.id)
+        @invoice_template.take_snapshot
         @invoice_template.reload
         format.json { render json: @invoice_template }
       else
@@ -68,7 +65,7 @@ class Settings::InvoiceTemplatesController < ApplicationController
   def update
     respond_to do |format|
       if @invoice_template.update_attributes(params[:invoice_template])
-        BackgroundTasks::GenerateInvoiceTemplateJpg.process!(invoice_template_id: @invoice_template.id)
+        @invoice_template.take_snapshot
         @invoice_template.reload
         format.json { render json: @invoice_template }
         format.html do
@@ -95,14 +92,19 @@ class Settings::InvoiceTemplatesController < ApplicationController
     end
   end
 
-  def placeholders
+  def upload_odt
     authorize! :manage, InvoiceTemplate
 
-    it = InvoiceTemplate.new(language: @current_person.main_communication_language)
-    placeholders = it.placeholders
+    @invoice_template = InvoiceTemplate.find params[:id]
+    @invoice_template.odt = params[:odt]
 
     respond_to do |format|
-      format.json { render json: placeholders }
+      if @invoice_template.save
+        @invoice_template.take_snapshot
+        format.json { render json: @invoice_template }
+      else
+        format.json { render json: {errors: @invoice_template.errors}, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -111,4 +113,5 @@ class Settings::InvoiceTemplatesController < ApplicationController
       format.json { render json: {count: InvoiceTemplate.count} }
     end
   end
+
 end

@@ -59,7 +59,7 @@
                     - key = Object.keys(pair)[0]
                     - value = pair[key]
                     %li.orderable{'data-name' => key, 'data-order' => value}
-                      - missing_translation = "<i class='text-danger'>" + key.humanize() + "</i>"
+                      - missing_translation = "<i class='text-danger'>" + key?.humanize() + "</i>"
                       != I18n.t("activerecord.attributes.person." + key, defaultValue: missing_translation )
                 - else
                   %li{class: 'placeholder orderable'}= I18n.t('directory.views.fields.drag_and_drop_me')
@@ -73,7 +73,7 @@
 
             - for group in App.SearchAttribute.groups()
               %h4
-                - missing_translation = "<i class='text-danger'>" + group.humanize() + "</i>"
+                - missing_translation = "<i class='text-danger'>" + group?.humanize() + "</i>"
                 != I18n.t("activerecord.models." + group.toLowerCase(), defaultValue: missing_translation )
               .draggable
                 %dl.dl-horizontal

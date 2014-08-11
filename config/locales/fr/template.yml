@@ -18,6 +18,8 @@ fr:
       example_files_title: Fichier d'exemple
       footer: Pied de page
       header: Entête
+      invoice_with_bvr_file: Modèle de facture avec BVR
+      invoice_without_bvr_file: Modèle de facture sans BVR
       language: langue
       plural: ressource plurielle
       plural_explanation: Il s'agit d'une liste d'éléments et non de l'élément lui-même.

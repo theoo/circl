@@ -91,6 +91,9 @@ html
   overflow-x: hidden
   overflow-y: scroll
 
+body
+  opacity: 0
+
 a.btn
   box-sizing: content-box
 
@@ -159,8 +162,6 @@ table.datatable, table.clickable
 
 .pagination-footer
   text-align: center
-
-.datatable
 
 // timesheet
 
@@ -300,25 +301,6 @@ table.sortable.table-condensed
   cursor: not-allowed
   background-color: #e7e7e7
 
-
-// template editing
-
-#template-editor
-
-  .container
-    width: 100% !important
-    max-width: none
-
-  .pdf-placeholders, .wk-placeholders
-    overflow-y: scroll
-    margin-bottom: 15px
-
-  .pdf-placeholders
-    max-height: 600px
-
-  .wk-placeholders
-    max-height: 250px
-
 // maps
 #map_container
   margin-bottom: 15px
@@ -335,6 +317,24 @@ table.sortable.table-condensed
   min-height: 500px
   border-radius: 5px
 
-  h1
+.back-to-top
+  position: fixed
+  bottom: 0
+  right: 0px
+  text-decoration: none
+  color: #FFF
+  background-color: rgba(39, 41, 48, 0.8)
+  font-size: 12px
+  padding: 9px 12px
+  display: none
 
->>>>>>> Fix error pages templates
+.back-to-top i
+  font-size: 15px
+
+.back-to-top:hover
+  color: #FFF
+  background-color: rgba(39, 41, 48, 1)
+
+.back-to-top:focus
+  color: #FFF
+

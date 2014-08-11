@@ -22,7 +22,7 @@ class Product < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
 
@@ -51,8 +51,8 @@ class Product < ActiveRecord::Base
   has_many :programs, through: :product_items
   has_many :affairs,  through: :product_items
 
-  scope :actives, Proc.new { where(archive: false)}
-  scope :archived, Proc.new { where(archive: true)}
+  scope :actives,  -> { where(archive: false)}
+  scope :archived, -> { where(archive: true)}
 
 
   ###################

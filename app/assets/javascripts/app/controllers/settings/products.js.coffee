@@ -71,7 +71,7 @@ class VariantsController extends App.ExtendedController
 class New extends VariantsController
   events:
     'submit form': 'submit'
-    'click button[name="cancel"]': 'cancel'
+    'click a[name="cancel"]': 'cancel'
     'click button[name="remove_variant"]':  'remove_variant'
     'click button[name="add_variant"]':     'add_variant'
 
@@ -100,7 +100,7 @@ class New extends VariantsController
 class Edit extends VariantsController
   events:
     'submit form': 'submit'
-    'click button[name="cancel"]': 'cancel'
+    'click a[name="cancel"]': 'cancel'
     'click button[name=settings-product-destroy]': 'destroy'
     'click button[name="remove_variant"]':  'remove_variant'
     'click button[name="add_variant"]':     'add_variant'

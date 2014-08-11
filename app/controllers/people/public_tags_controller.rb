@@ -30,10 +30,9 @@ class People::PublicTagsController < ApplicationController
 
   def index
     authorize! :index, self.class.model
-    @people_public_tags = @person.people_public_tags
 
     respond_to do |format|
-      format.json { render json: @people_public_tags }
+      format.json { render json: @person.public_tags }
     end
   end
 
@@ -41,12 +40,18 @@ class People::PublicTagsController < ApplicationController
     authorize! [:create, :destroy], @person => self.class.model
 
     respond_to do |format|
-      if @person.update_attributes(public_tag_ids: params[:public_tag_ids])
-        format.json  { render json: @person.people_public_tags }
+      if @person.update_attributes(public_tags_params)
+        format.json  { render json: @person.public_tags }
       else
         format.json { render json: @person.errors, status: :unprocessable_entity}
       end
     end
   end
+
+  private
+
+    def public_tags_params
+      params.permit(public_tag_ids: [])
+    end
 
 end

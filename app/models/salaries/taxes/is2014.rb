@@ -44,13 +44,13 @@
 # TODO refactor this into a polymorphic association
 class Salaries::Taxes::Is2014 < ActiveRecord::Base
 
-  set_table_name :salaries_taxes_is2014
+  self.table_name = :salaries_taxes_is2014
 
   ################
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
   extend  MoneyComposer

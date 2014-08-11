@@ -43,13 +43,32 @@ class InvoiceTemplate < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
 
   #################
   ### CALLBACKS ###
   #################
 
   before_destroy :ensure_there_is_no_invoices, :ensure_there_is_no_subscriptions
+
+  #################
+  ### RELATIONS ###
+  #################
+
+  belongs_to :language
+  has_many :invoices
+  has_many :subscriptions, through: :subscription_values
+  has_many :subscription_values
+
+  has_attached_file :odt,
+                    default_url: '/assets/invoice_with_bvr.odt',
+                    use_timestamp: true
+
+  has_attached_file :snapshot,
+                    default_url: '/images/missing_thumbnail.png',
+                    default_style: :thumb,
+                    use_timestamp: true,
+                    styles: {medium: ["420x594>", :png], thumb: ["105x147>", :png]}
 
   ###################
   ### VALIDATIONS ###
@@ -73,61 +92,44 @@ class InvoiceTemplate < ActiveRecord::Base
                       is: 6,
                       allow_blank: true
 
-  #################
-  ### RELATIONS ###
-  #################
+  validates_attachment :odt,
+    content_type: { content_type: /^application\// }
 
-  belongs_to :language
-  has_many :invoices
-  has_many :subscriptions, through: :subscription_values
-  has_many :subscription_values
-  has_attached_file :snapshot,
-    default_url: '/images/missing_thumbnail.png',
-    default_style: :thumb,
-    use_timestamp: true,
-    styles: {medium: "420x594>",thumb: "105x147>"}
+  validates_attachment :snapshot,
+    content_type: { content_type: [ /^image\//, "application/pdf" ] }
 
   ########################
   ### INSTANCE METHODS ###
   ########################
 
-  # Returns a list of all available placeholders for an invoice.
-  def placeholders
-    # Stub
-    i = Invoice.new(invoice_template: self,
-                    owner: Person.new,
-                    buyer: Person.new,
-                    receiver: Person.new,
-                    created_at: Time.now)
-    p = i.placeholders
-    h = {}
-    %w(simples iterators).each { |i| h[i] = p[i.to_sym].keys.sort }
-    h
-  end
-
   def thumb_url
     snapshot.url(:thumb) if snapshot_file_name
   end
 
-  def take_snapshot(html)
-    kit = IMGKit.new(html).to_jpg
-    file = Tempfile.new(["snapshot_#{self.id.to_s}", 'jpg'], 'tmp', encoding: 'ascii-8bit')
-    file.binmode
-    file.write(kit)
-    file.flush
-    self.snapshot = file
-    self.save!
-    file.unlink
+  def take_snapshot
+    # TODO move to AttachmentGenerator
+    # Convert to PDF in the same dir
+    if odt.try(:path)
+      system("lowriter --headless --convert-to pdf \"#{odt.path}\" --outdir \"#{odt.path.gsub(/([^\/]+.odt)$/, "")}\"")
+
+      # Open new file
+      pdf_path = odt.path.gsub(/\.odt$/,".pdf")
+      pdf_file = File.open(pdf_path, "r")
+
+      # will be converted in png when calling :thumb
+      self.snapshot = pdf_file
+      self.save
+    end
   end
 
   def as_json(options = nil)
     h = super(options)
 
     h[:thumb_url] = thumb_url
+    h[:odt_url] = odt.url
 
     h[:language_name] = language.try(:name)
     h[:invoices_count] = invoices.count
-    h[:placeholders] = placeholders
     h[:errors] = errors
 
     h

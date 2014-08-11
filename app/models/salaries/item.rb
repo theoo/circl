@@ -53,7 +53,7 @@ class Salaries::Item < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
   extend  MoneyComposer
@@ -64,7 +64,9 @@ class Salaries::Item < ActiveRecord::Base
 
   belongs_to :salary,
              class_name: 'Salaries::Salary'
-  monitored_habtm :taxes,
+
+  # monitored_habtm :taxes,
+  has_and_belongs_to_many :taxes,
                   class_name: 'Salaries::Tax',
                   join_table: 'salaries_items_taxes'
 
@@ -80,8 +82,8 @@ class Salaries::Item < ActiveRecord::Base
   #### SCOPE ####
   ###############
 
-  default_scope order('position ASC')
-  scope :with_category, where('length(category) > 0')
+  default_scope { order('position ASC') }
+  scope :with_category, -> { where('length(category) > 0') }
 
   ###################
   ### VALIDATIONS ###

@@ -51,7 +51,7 @@ class Task < ActiveRecord::Base
     @h || TaskHelper.new
   end
 
-  include ChangesTracker
+  # include ChangesTracker
   extend  MoneyComposer
 
   #################
@@ -73,7 +73,7 @@ class Task < ActiveRecord::Base
   belongs_to  :task_type
   belongs_to  :salary, class_name: 'Salaries::Salary'
 
-  scope :availables, Proc.new { where(archive: false)}
+  scope :availables, -> { where(archive: false)}
 
   # Money
   money :value
@@ -140,15 +140,6 @@ class Task < ActiveRecord::Base
     value.exchange_to(value_currency)
   end
 
-  # Proxy, mostly used for placeholders substitutions
-  %w(title description ratio value).each do |m|
-    define_method('task_type_' + m){ task_type.send(m) }
-  end
-
-  %w(name).each do |m|
-    define_method('executer_' + m){ executer.send(m) }
-  end
-
   private
 
   def set_value
@@ -180,7 +171,7 @@ class Task < ActiveRecord::Base
   end
 
   def update_elasticsearch
-    person.update_index unless tracked_changes.empty?
+    person.update_index unless self.changes.empty?
   end
 
 end

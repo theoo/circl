@@ -1,6 +1,6 @@
-Directory::Application.routes.draw do
+CIRCL::Application.routes.draw do
 
-  match 'requires_browser_update' => 'settings#requires_browser_update'
+  get 'requires_browser_update' => 'settings#requires_browser_update'
 
   unauthenticated :person do
     devise_scope :person do
@@ -59,10 +59,8 @@ Directory::Application.routes.draw do
 
       resources :receipts, :controller => 'people/affairs/receipts'
 
+      delete 'communication_languages' => 'people/subscriptions#destroy' # Spine
       resources :subscriptions, :controller => 'people/affairs/subscriptions' do
-        collection do
-          delete 'destroy' #spine posts on this by default
-        end
       end
       resources :tasks, :controller => 'people/affairs/tasks'
     end
@@ -73,35 +71,31 @@ Directory::Application.routes.draw do
       end
     end
 
+    put 'communication_languages' => 'people/communication_languages#update' # Spine
     resources :communication_languages, :controller => 'people/communication_languages', :only => :index do
-      collection do
-        put 'update' # spine posts on this by default
-      end
     end
 
     resources :employment_contracts, :controller => 'people/employment_contracts'
 
+    put 'private_tags' => 'people/private_tags#update' # Spine
     resources :private_tags, :controller => 'people/private_tags', :only => :index do
-      collection do
-        put 'update' # spine posts on this by default
-      end
     end
 
+    put 'public_tags' => 'people/public_tags#update' # Spine
     resources :public_tags, :controller => 'people/public_tags', :only => :index do
-      collection do
-        put 'update' # spine posts on this by default
-      end
     end
 
+    put 'roles' => 'people/roles#update' # Spine
     resources :roles, :controller => 'people/roles', :only => :index do
-      collection do
-        put 'update' # spine posts on this by default
-      end
     end
 
     resources :salaries, :controller => 'people/salaries/salaries' do
       member do
         put 'update_items', 'update_tax_data'
+      end
+
+      collection do
+        post 'statistics'
       end
 
       resources :items, :controller => 'people/salaries/items', :only => [ :index ] do
@@ -122,7 +116,7 @@ Directory::Application.routes.draw do
     resources :translation_aptitudes, :controller => 'people/translation_aptitudes'
   end
 
-  match 'salaries' => 'salaries#index'
+  get 'salaries' => 'salaries#index'
   namespace :salaries do
     resources :salaries, :except => [:edit] do
       member do
@@ -144,15 +138,15 @@ Directory::Application.routes.draw do
   end
 
   match 'directory' => 'directory#index', :via => [:get, :post]
-  match 'directory/mailchimp' => 'directory#mailchimp', :via => :post
-  match 'directory/map' => 'directory#map', :via => :get
-  match 'directory/confirm_people' => 'directory#confirm_people', :via => :post
-  match 'directory/import_people' => 'directory#import_people', :via => :post
+  post 'directory/mailchimp' => 'directory#mailchimp'
+  get 'directory/map' => 'directory#map'
+  post 'directory/confirm_people' => 'directory#confirm_people'
+  post 'directory/import_people' => 'directory#import_people'
   namespace :directory do
     resources :query_presets
   end
 
-  match 'admin' => 'admin#index'
+  get 'admin' => 'admin#index'
   namespace :admin do
     resources :affairs do
       collection do
@@ -252,6 +246,9 @@ Directory::Application.routes.draw do
     resources :invoice_templates do
       collection do
         get 'placeholders', 'count'
+      end
+      member do
+        post 'upload_odt'
       end
     end
 

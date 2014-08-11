@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
+  before_filter :authenticate_person_from_token!
   before_filter :authenticate_person!
   before_filter :set_locale
   before_filter :route_browser
@@ -172,48 +173,40 @@ class ApplicationController < ActionController::Base
     language.scan(/^[a-z]{2}/).first if language
   end
 
+  # TODO: Re-enable monitor change and ChangesTracker with a version which allows rollback
+  # Monitor changes disabled
   def self.monitor_changes(instance_name, options = { only: [:create, :update, :destroy] })
-    class << self; attr_accessor :monitored_instance_name end
-    self.monitored_instance_name = instance_name
-    after_filter :log_activity_automatically, options
+    return # disabled
+    # class << self; attr_accessor :monitored_instance_name end
+    # self.monitored_instance_name = instance_name
+    # after_filter :log_activity_automatically, options
   end
 
-  def monitored_instance
-    instance_variable_get(self.class.monitored_instance_name)
-  end
+  # def monitored_instance
+  #   instance_variable_get(self.class.monitored_instance_name)
+  # end
 
-  def log_activity_automatically
-    record = monitored_instance()
-    return unless record.errors.empty?
+  # def log_activity_automatically
+  #   record = monitored_instance
+  #   return unless record.errors.empty?
 
-    action = params[:action]
-    data = (action == 'create' || record.destroyed?) ? record.attributes : record.tracked_changes
-    return if data.empty?
+  #   action = params[:action]
+  #   data = (action == 'create' || record.destroyed?) ? record.attributes : record.changes
+  #   return if data.empty?
 
-    log_activity(action, record, data)
-  end
+  #   log_activity(action, record, data)
+  # end
 
-  def log_action(resource, data)
-    log_activity(params[:action], resource, data)
-  end
+  # def log_action(resource, data)
+  #   log_activity(params[:action], resource, data)
+  # end
 
-  def log_activity(action, resource, data)
-    Activity.create! action: action,
-                     data: data,
-                     person: current_person,
-                     resource: resource
-  end
-
-  # parameters validation
-  def validate_params(required_parameters)
-    if required_parameters.is_a? Symbol
-      required_parameters = [required_parameters]
-    end
-
-    validate_presence_of required_parameters, params
-
-    true
-  end
+  # def log_activity(action, resource, data)
+  #   Activity.create! action: action,
+  #                    data: data,
+  #                    person: current_person,
+  #                    resource: resource
+  # end
 
   private
 
@@ -232,6 +225,21 @@ class ApplicationController < ActionController::Base
           raise InvalidParameters, "Missing parameter: " + re.inspect
         end
       end
+    end
+  end
+
+
+  # Token authentication replacement (Devise removed its support)
+  def authenticate_person_from_token!
+    person_token = params[:person_token].presence
+    person       = person_token && Person.where(authentication_token: person_token.to_s).size > 0
+
+    if person
+      # Notice we are passing store false, so the person is not
+      # actually stored in the session and a token is needed
+      # for every request. If you want the token to work as a
+      # sign in token, you can simply remove store: false.
+      sign_in person, store: false
     end
   end
 

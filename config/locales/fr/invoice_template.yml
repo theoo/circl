@@ -9,8 +9,6 @@ fr:
       failed_to_substitute_iterator: ERREUR LORS DE LA SUBSTITUTION DE L'ITÉRATEUR "%{iterator}"
     views:
       account_identification: n° compte-identification
-      actions:
-        edit_template: modifier le modèle
       body: corps du texte
       bvr_account: compte BVR
       bvr_account_number: numéro de compte BVR
@@ -18,74 +16,6 @@ fr:
       invoices: factures
       language: langue du modèle
       language_notice: localisation des attributs
-      placeholders:
-        affair_conditions: Conditions de l'affaire
-        affair_description: Description de l'affaire
-        affair_footer: Pied de page ou commentaires de l'affaire
-        affair_id: ID de l'affaire
-        affair_receipts: ! 'Itérateur des reçus de l''affaire. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
-        affair_seller_name: Nom du vendeur de l'affaire
-        affair_title: Titre de l'affaire
-        affair_value: Valeur de l'affaire
-        affair_value_with_taxes: Valeur de l'affaire avec les taxes
-        affair_vat_value: Valeur TVA de l'affaire
-        bvr_account: Compte BVR
-        bvr_address: Adresse de l'émetteur affichée sur le BVR
-        bvr_codeline: ligne codée pour le scan
-        bvr_reference_number: ligne de référence du BVR
-        bvr_spaced_reference_number: ligne de référence du BVR séparée par des espaces
-        bvr_value: Valeur formatée pour le BVR
-        extras: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, title, description, value, value_in_cents, value_currency, quantity, quantity, position, created_at, updated_at'
-        invoice_address: Adresse du destinataire de la facture
-        invoice_balance_value: Balance de la facture
-        invoice_buyer_first_name: Prénom du payeur de la facture
-        invoice_buyer_full_name: Nom complet du payeur de la facture
-        invoice_buyer_id: Identifiant unique du payeur de la facture
-        invoice_buyer_last_name: Nom de famille du payeur de la facture
-        invoice_buyer_name: Identifiant du payeur de la facture (nom de l'organisation ou nom complet)
-        invoice_buyer_organization_name: Nom de l'organisation du payeur de la facture
-        invoice_buyer_title: Titre du payeur de la facture
-        invoice_buyer_title_and_full_name: Titre et nom complet du payeur de la facture
-        invoice_conditions: Conditions de la facture
-        invoice_currency: Nom de la devise de la facture
-        invoice_currency_iso_code: Code iso de la devise de la facture (CHF, EUR, USD, GBP, ...)
-        invoice_currency_symbol: Symbol de la devise de la facture (F, €, $, £, ...)
-        invoice_date: Date d'émission de la facture
-        invoice_day_numeric: Jour d'émission de la facture, au format numérique
-        invoice_day_word: Jour d'émission de la facture, en toutes lettres
-        invoice_description: Description de la facture
-        invoice_id: Identifiant unique de la facture (ID)
-        invoice_month_numeric: Mois d'émission de la facture, au format numérique
-        invoice_month_word: Mois d'émission de la facture, en toutes lettres
-        invoice_overpaid_value: Surpaiement de la facture
-        invoice_owner_first_name: Prénom du propriétaire de la facture
-        invoice_owner_full_name: Nom complet du propriétaire de la facture
-        invoice_owner_id: Identifiant unique du propriétaire de la facture
-        invoice_owner_last_name: Nom de famille du propriétaire de la facture
-        invoice_owner_name: Identifiant du propriétaire de la facture (nom de l'organisation ou nom complet)
-        invoice_owner_organization_name: Nom de l'organisation du propriétaire de la facture
-        invoice_owner_title: Titre du propriétaire de la facture
-        invoice_owner_title_and_full_name: Titre et nom complet du propriétaire de la facture
-        invoice_receipts_value: Valeur totale des reçus de la facture
-        invoice_receiver_first_name: Prénom du receveur des préstations
-        invoice_receiver_full_name: Nom complet du receveur des préstations
-        invoice_receiver_id: Identifiant unique du receveur des préstations
-        invoice_receiver_last_name: Nom de famille du receveur des préstations
-        invoice_receiver_name: Identifiant du receveur des préstations (nom de l'organisation ou nom complet)
-        invoice_receiver_organization_name: Nom de l'organisation du receveur des préstations
-        invoice_receiver_title: Titre du receveur des préstations
-        invoice_receiver_title_and_full_name: Titre et nom complet du receveur des préstations
-        invoice_title: titre de la facture
-        invoice_value: valeur de la facture
-        invoice_value_with_taxes: valeur de la facture avec TVA
-        invoice_vat: TVA
-        invoice_year_numeric: Année d'émission de la facture
-        locale: Code de la langue du modèle
-        placeholders: substituants
-        product_items: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, parent_id, created_at, updated_at, key, title, description, category, quantity, value, value_in_cents, value_currency'
-        receipts: ! 'Itérateur des reçus lié à la facture. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, invoice_id, value, value_date, means_of_payment, created_at, updated_at'
-        subscriptions: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, parend_id, title, description, value, interval_starts_on, interval_ends_on, created_at, updated_at'
-        tasks: ! 'Itérateur des inscriptions. Options: { attributs | ordre de tri | séparateur, ''table''}, Attributs: id, executer_name, description, duration, start_date, created_at, updated_at, task_type_title, task_type_description, task_type_ratio, task_type_value, value, value_in_cents, value_currency, position'
       show_invoice_value: imprimer avec la valeure de la facture
       thumb: aperçu
       with_bvr: imprimer le BVR

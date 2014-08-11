@@ -25,6 +25,7 @@ class Ui
     @load_number_precision(context)
     @load_password_strength(context)
     @override_rails(context)
+    @timout_info_alerts(context)
 
     # FIXME http://getbootstrap.com/javascript/#tooltips the event
     # should be trigged without calling this line (?)
@@ -35,6 +36,7 @@ class Ui
     @bind_datepicker()
     @bind_currency_selector()
     @setup_datatable()
+    @load_back_on_top()
 
 #--- delegated to events ---
   bind_datepicker: ->
@@ -129,8 +131,13 @@ class Ui
         parent.append input_group
 
   override_rails: (context) ->
-    $('.field_with_errors').each ->
+    context.find('.field_with_errors').each ->
       $(@).closest('.form-group').addClass('has-error')
+
+  timout_info_alerts: (context) ->
+    context.find('.alert.alert-info.timoutable').each (i, e) ->
+      # Wait 5 seconds and fadeOut the message in 1 second
+      setTimeout( (-> $(e).fadeOut(1000); return), 5000 )
 
   datatable_bootstrap_classes: (table) ->
     # Extend table with bootstrap classes
@@ -313,7 +320,7 @@ class Ui
 
     title.one 'show.bs.tab', (e) ->
       tab_name = get_tab_name($(e.target))
-      # Trigger tab content loading
+      # Trigger tab content loading (which is caught in index.js.coffee)
       nav.trigger tab_name
 
     anchor = location.hash.split('#')
@@ -348,55 +355,22 @@ class Ui
               .addClass(strength_class)
               .html(strength_title)
 
-#--- ui tools ---
-  unpin_widget: (widget) ->
+  load_back_on_top: () ->
+    offset = 220
+    duration = 500
+    button = $("<a href=\"#\" class=\"back-to-top\"><i class=\"icon icon-angle-up\"></i></a>")
+    button.appendTo "body"
+    jQuery(window).scroll ->
+      if jQuery(@).scrollTop() > offset
+        jQuery(".back-to-top").fadeIn duration
+      else
+        jQuery(".back-to-top").fadeOut duration
 
-    hide_on_close = false
-    # check widget current status
-    if widget.hasClass('folded')
-      # not using show_content_of here because I don't want to update cookies
-      # and have effects
-      widget.trigger('unfolded')
-      hide_on_close = true
+    jQuery(".back-to-top").click (e) ->
+      e.preventDefault()
+      jQuery("html, body").animate scrollTop: 0 , duration
+      false
 
-    widget_id = widget.attr('id')
-    title = widget.find('>legend').text()
-    content = widget.find(".content")
-
-    # callback when closing the fullscreen widget
-    repin_widget = (win) =>
-      # restore content to original widget
-      widget.append $(win).find(".content")
-      # if initial widget status was folded, then hide the content
-      if hide_on_close
-        widget.trigger('folded')
-        content.css(display: 'none') # this override deactivate() Spine method
-
-    window_options =
-      fullscreen: true,
-      draggable: false,
-      remove_on_close: false,
-      remove_callback: repin_widget
-
-    window = @stack_window('fullscreen_widget_' + widget_id, window_options)
-    fullscreen_widget = $(window)
-    fullscreen_widget.addClass('fullscreen_widget')
-
-    fullscreen_widget.modal({title: title})
-    # move widget content to fullscreen widget
-    fullscreen_widget.append content
-    # this override deactivate() Spine method
-    content.css(display: 'block')
-
-    fullscreen_widget.modal('show')
-
-  cookie_name: 'folding'
-
-  retrieve_cookie: ->
-    cookie = $.cookie(@cookie_name)
-    values = []
-    values = cookie.split('&') if cookie
-    return values
 
 #--- Autocompleters ---
   load_autocompleters: (context) ->

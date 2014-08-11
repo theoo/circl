@@ -22,7 +22,7 @@ class AffairsProductsProgram < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
   extend  MoneyComposer
@@ -117,11 +117,6 @@ class AffairsProductsProgram < ActiveRecord::Base
     end
   end
 
-  # Proxy, mostly used for placeholders substitutions
-  %w(key title description category).each do |m|
-    define_method(m){ product.send(m) }
-  end
-
   private
 
   def set_position_if_none_given
@@ -150,9 +145,9 @@ class AffairsProductsProgram < ActiveRecord::Base
     last_child = parent.children.order(:position).map(&:id)
     last_child.delete(self.id) unless new_record?
     if last_child.size > 0
-      i = siblings.index(affair.product_items.find(last_child.last)) + 1
+      i = siblings.to_a.index(affair.product_items.find(last_child.last)) + 1
     else
-      i = siblings.index(parent) + 1
+      i = siblings.to_a.index(parent) + 1
     end
 
     self.position = i

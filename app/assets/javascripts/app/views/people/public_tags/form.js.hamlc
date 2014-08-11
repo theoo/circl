@@ -1,5 +1,5 @@
 - has_tag = (tag) =>
-  - return App.PersonPublicTag.select((public_tag) -> public_tag.public_tag_id == tag.id).length > 0
+  - return App.PersonPublicTag.select((public_tag) -> public_tag.id == tag.id).length > 0
 
 - display_tag = (tag) =>
   - id = _.uniqueId('public_tag')

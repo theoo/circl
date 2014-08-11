@@ -43,7 +43,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
-    'click button[name="cancel"]': 'cancel'
+    'click a[name="cancel"]': 'cancel'
     'click a[name=settings-currency-destroy]': 'destroy'
 
   constructor: ->

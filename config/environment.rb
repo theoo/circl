@@ -7,4 +7,4 @@ Encoding.default_external = Encoding::UTF_8
 Encoding.default_internal = Encoding::UTF_8
 
 # Initialize the rails application
-Directory::Application.initialize!
+CIRCL::Application.initialize!

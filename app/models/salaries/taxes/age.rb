@@ -40,13 +40,13 @@
 # TODO refactor this into a polymorphic association
 class Salaries::Taxes::Age < ActiveRecord::Base
 
-  set_table_name :salaries_taxes_age
+  self.table_name = :salaries_taxes_age
 
   ################
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
 

@@ -1,4 +1,4 @@
-Directory::Application.configure do
+CIRCL::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # The production environment is meant for finished, "live" apps.
@@ -33,7 +33,6 @@ Directory::Application.configure do
   config.assets.compile = true
 
   # Compress assets
-  config.assets.compress = true
   config.assets.css_compressor = :yui
   config.assets.js_compressor = :yui
 
@@ -50,5 +49,8 @@ Directory::Application.configure do
   config.active_support.deprecation = :notify
 
   SQL_REGEX_KEYWORD = '~*' # postgresql, case insensitive
+
+  # RAILS UPDATES
+  config.eager_load = true
 
 end

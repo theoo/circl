@@ -34,7 +34,7 @@ class TaskType < ActiveRecord::Base
   ### INCLUDES ###
   ################
 
-  include ChangesTracker
+  # include ChangesTracker
   extend  MoneyComposer
 
   #################
@@ -50,8 +50,8 @@ class TaskType < ActiveRecord::Base
 
   has_many :tasks, dependent: :nullify
 
-  scope :actives, Proc.new { where(archive: false)}
-  scope :archived, Proc.new { where(archive: true)}
+  scope :actives,  -> { where(archive: false)}
+  scope :archived, -> { where(archive: true)}
 
   money :value
 
