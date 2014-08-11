@@ -12,7 +12,9 @@ module SeedHelper
             task :create => :environment do
               print "Creating #{name}... "
               YAML.load_file("#{Rails.root}/db/seeds/#{name}.yml").each do |h|
-                name.to_s.singularize.camelize.constantize.create!(h)
+                klass = options[:class_name].constantize if options[:class_name]
+                klass ||= name.to_s.singularize.camelize.constantize
+                klass.create!(h)
               end
               puts 'done!'
             end
@@ -22,7 +24,9 @@ module SeedHelper
             desc "destroys #{name}"
             task :destroy => :environment do
               print "Destroying #{name}... "
-              name.to_s.singularize.camelize.constantize.destroy_all
+              klass = options[:class_name].constantize if options[:class_name]
+              klass ||= name.to_s.singularize.camelize.constantize
+              klass.destroy_all
               puts 'done!'
             end
           end
@@ -32,9 +36,13 @@ module SeedHelper
             task :upgrade => :environment do
               print "Upgrading #{name}... "
               YAML.load_file("#{Rails.root}/db/seeds/#{name}.yml").each do |h|
+
+                klass = options[:class_name].constantize if options[:class_name]
+                klass ||= name.to_s.singularize.camelize.constantize
+
                 h.keys.each do |k|
-                  if name.to_s.singularize.camelize.constantize.where(k.to_sym => h[k]).size == 0
-                    name.to_s.singularize.camelize.constantize.create!(h)
+                  if klass.where(k.to_sym => h[k]).size == 0
+                    klass.create!(h)
                   end
                 end
               end

@@ -11,6 +11,7 @@ tasks = %w{languages
            locations
            ldap_attributes
            search_attributes
+           salaries_taxes
            generic_templates
            invoice_templates
            task_types

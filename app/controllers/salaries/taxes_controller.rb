@@ -48,6 +48,7 @@ class Salaries::TaxesController < ApplicationController
   end
 
   def create
+    @tax = Salaries::Tax.new(params[:tax])
     respond_to do |format|
       if @tax.save
         format.json { render json: @tax }

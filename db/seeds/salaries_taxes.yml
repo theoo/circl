@@ -1,0 +1,81 @@
+---
+- title: AANP
+  model: "Salaries::Taxes::Generic"
+  employee_account: 1234
+  exporter_avs_group: false
+  exporter_lpp_group: false
+  exporter_is_group: false
+  employer_account: 1234
+  archive: false
+
+- title: AC
+  model: "Salaries::Taxes::Generic"
+  employee_account: 1234
+  exporter_avs_group: true
+  exporter_lpp_group: false
+  exporter_is_group: false
+  employer_account: 1234
+  archive: false
+
+- title: AC Sol
+  model: "Salaries::Taxes::Generic"
+  employee_account: 1234
+  exporter_avs_group: true
+  exporter_lpp_group: false
+  exporter_is_group: false
+  employer_account: 1234
+  archive: false
+
+- title: AF
+  model: "Salaries::Taxes::Generic"
+  employee_account: 1234
+  exporter_avs_group: true
+  exporter_lpp_group: false
+  exporter_is_group: false
+  employer_account: 1234
+  archive: false
+
+- title: AMAT
+  model: "Salaries::Taxes::Generic"
+  employee_account: 1234
+  exporter_avs_group: true
+  exporter_lpp_group: false
+  exporter_is_group: false
+  employer_account: 1234
+  archive: false
+
+- title: AMAL
+  model: "Salaries::Taxes::Generic"
+  employee_account: 1234
+  exporter_avs_group: false
+  exporter_lpp_group: false
+  exporter_is_group: false
+  employer_account: 1234
+  archive: true
+
+- title: AVS AI APG
+  model: "Salaries::Taxes::Generic"
+  employee_account: 1234
+  exporter_avs_group: true
+  exporter_lpp_group: false
+  exporter_is_group: false
+  employer_account: 1234
+  archive: false
+
+- title: IS
+  model: "Salaries::Taxes::Is2014"
+  employee_account: 1234
+  exporter_avs_group: false
+  exporter_lpp_group: false
+  exporter_is_group: true
+  employer_account: 1234
+  archive: false
+
+- title: LPP
+  model: "Salaries::Taxes::Age"
+  employee_account: 1234
+  exporter_avs_group: false
+  exporter_lpp_group: true
+  exporter_is_group: false
+  employer_account: 1234
+  archive: false
