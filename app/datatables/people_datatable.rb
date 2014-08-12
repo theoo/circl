@@ -73,7 +73,7 @@ class PeopleDatatable
 
       h[@query[:selected_attributes].size] = person._score
       h['id'] = person.id
-      h['action_columns'] = ((index+1)..(index+2))
+      h['action_columns'] = ((index+1)..(index+2)).to_a
       h
     end
   end
