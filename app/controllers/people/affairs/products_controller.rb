@@ -177,7 +177,7 @@ class People::Affairs::ProductsController < ApplicationController
     success = false
 
     AffairsProductsProgram.transaction do
-      siblings = @affair.product_items.all
+      siblings = @affair.product_items.all.to_a
       p = siblings.delete_at params[:fromPosition].to_i - 1
       siblings.insert(params[:toPosition].to_i - 1, p)
       siblings.delete(nil) # If there is holes in list they will be replace by nil
