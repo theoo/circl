@@ -5,5 +5,42 @@
       = I18n.t('person.views.statistics')
 
   .panel-body
-    Statistic
-    plop
+
+    .row
+      .col-md-12
+        GRAPH
+
+    .row
+      .col-md-4
+        .form-group
+          %label
+            = I18n.t('common.from')
+          %input{:type => 'text',
+                 :name => 'from',
+                 :class => 'datepicker form-control required',
+                 :value => @params.from }
+
+      .col-md-4
+        .form-group
+          %label
+            = I18n.t('common.to')
+          %input{ :type => 'text',
+                  :name => 'to',
+                  :class => 'datepicker form-control required',
+                  :value => @params.to }
+
+      .col-md-4
+        .form-group
+          // Allow salary creation only it at least one reference exists
+          %label
+            = I18n.t('common.step')
+          %select{name: 'step',
+                  class: 'form-control required'}
+            - for r in ["day", "week", "month", "year"]
+              %option{value: r}= I18n.t("datetime.prompts." + r)
+    .row
+      .col-lg-12
+        .pull-right
+          %button{name: "statistics-update", class: 'btn btn-primary' }
+            .icon-remove
+            = I18n.t("common.update")

@@ -181,6 +181,14 @@ class People::Salaries::SalariesController < ApplicationController
     params[:to]
     params[:step]
 
+    tasks = @person.executed_tasks.order("updated_at DESC")
+      .where("updated_at BETWEEN ? AND ?", params[:from], params[:to])
+      .select("TIMESTAMP WITH TIME ZONE 'epoch' + INTERVAL '1 second' * round((extract('epoch' from timestamp) / 300) * 300 as timestamp, *")
+      .group("round(extract('epoch' from timestamp) / 300)")
+
+    # Sum by step
+    # I'M HERE
+
     respond_to do |format|
       format.json { render json: params.inspect }
     end
