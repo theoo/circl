@@ -31,6 +31,7 @@
         %input{type: 'hidden',
                name: 'program_id',
                value: @product.program_id}
+
     .row
       .col-md-6.autocompleted.form-group
         %label{for: 'person_affair_product_parent'}
@@ -45,15 +46,15 @@
                name: 'parent_id',
                value: @product.parent_id}
 
-      .col-md-3.form-group
-        %label{for: 'person_affair_product_position'}
-          = I18n.t('product.views.position')
-        %input{ type: 'number',
-                step: 1,
-                id: 'person_affair_product_position',
-                name: 'position',
-                class: 'form-control number',
-                value: @product.position }
+      .col-md-6.autocompleted.form-group
+        %label{for: 'person_affair_product_category'}
+          = I18n.t('common.category')
+        %input{ type: 'search',
+                id: 'person_affair_product_category',
+                name: 'category',
+                class: 'form-control',
+                value: @product.category,
+                action: "/people/#{@person_id}/affairs/#{@affair_id}/products/categories"}
 
     .row
       .col-md-4.form-group
@@ -83,6 +84,16 @@
                   name: 'bid_percentage',
                   value: @product.bid_percentage }
           .input-group-addon %
+
+      .col-md-4.form-group
+        %label{for: 'person_affair_product_position'}
+          = I18n.t('product.views.position')
+        %input{ type: 'number',
+                step: 1,
+                id: 'person_affair_product_position',
+                name: 'position',
+                class: 'form-control number',
+                value: @product.position }
 
       .col-md-4
         - if @product.value and @product.value != @product.bid_price

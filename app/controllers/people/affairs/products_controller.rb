@@ -16,6 +16,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
+# TODO Rename product in item to prevent confusion
+
 class People::Affairs::ProductsController < ApplicationController
 
   layout false
@@ -144,8 +146,6 @@ class People::Affairs::ProductsController < ApplicationController
   def search
     authorize! :read, @person => AffairsProductsProgram
 
-    @affair_product_programAffairsProductsProgram
-
     hash = {}
     if ! params[:term].blank?
       result = []
@@ -163,6 +163,28 @@ class People::Affairs::ProductsController < ApplicationController
             desc: t.description.exerpt
           }
         }
+      end
+    end
+
+    respond_to do |format|
+      format.json { render json: hash }
+    end
+  end
+
+  def categories
+    authorize! :read, @person => AffairsProductsProgram
+
+    hash = {}
+    if ! params[:term].blank?
+      result = []
+      param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
+
+      # FIXME Use SQL
+      result = @affair.product_items.map(&:category).uniq
+      result.delete(nil)
+
+      if result
+        hash = result.map{ |t| {label: t} }
       end
     end
 
@@ -200,6 +222,7 @@ class People::Affairs::ProductsController < ApplicationController
 
   private
 
+  # TODO Migrate to require().permit()
   def update_instance(prod)
     # remove relations if not sent
     prod[:parent_id] = nil unless prod[:parent_id]
@@ -211,6 +234,7 @@ class People::Affairs::ProductsController < ApplicationController
       program_id: prod[:program_id],
       product_id: prod[:product_id],
       position: prod[:position],
+      category: prod[:category],
       bid_percentage: prod[:bid_percentage],
       quantity: prod[:quantity])
   end

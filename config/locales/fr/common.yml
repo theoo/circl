@@ -18,6 +18,7 @@ fr:
       mobile_browsers: navigateurs mobiles
       multiplateform_browsers: navigateurs multiplateforme
     cancel: annuler
+    category: catégorie
     close: fermer
     create: créer
     created_at: création

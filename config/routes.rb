@@ -53,7 +53,7 @@ CIRCL::Application.routes.draw do
 
       resources :products, :controller => 'people/affairs/products' do
         collection do
-          get 'search', 'change_order'
+          get 'search', 'change_order', 'categories'
         end
       end
 

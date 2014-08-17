@@ -18,6 +18,7 @@ en:
       mobile_browsers: mobile browsers
       multiplateform_browsers: crossform browsers
     cancel: cancel
+    category: category
     close: close
     create: create
     created_at: created at

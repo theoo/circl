@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140803165156) do
+ActiveRecord::Schema.define(version: 20140817153320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,10 +65,12 @@ ActiveRecord::Schema.define(version: 20140803165156) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "bid_percentage"
+    t.string   "category"
   end
 
   add_index "affairs_products_programs", ["affair_id", "product_id", "position"], name: "affairs_products_programs_unique_position", using: :btree
   add_index "affairs_products_programs", ["affair_id"], name: "index_affairs_products_programs_on_affair_id", using: :btree
+  add_index "affairs_products_programs", ["category"], name: "index_affairs_products_programs_on_category", using: :btree
   add_index "affairs_products_programs", ["parent_id"], name: "index_affairs_products_programs_on_parent_id", using: :btree
   add_index "affairs_products_programs", ["product_id"], name: "index_affairs_products_programs_on_product_id", using: :btree
   add_index "affairs_products_programs", ["program_id"], name: "index_affairs_products_programs_on_program_id", using: :btree

@@ -33,6 +33,10 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   before_validation :set_position_if_none_given, if: Proc.new {|i| i.position.blank? }
 
+  before_save do
+    self.category ||= product.category
+  end
+
   #################
   ### RELATIONS ###
   #################
@@ -77,7 +81,6 @@ class AffairsProductsProgram < ActiveRecord::Base
     h[:key]                = product.try(:key)
     h[:title]              = variant.title.blank? ? product.title : [product.title, variant.title].join(" / ")
     h[:description]        = product.try(:description)
-    h[:category]           = product.try(:category)
     h[:value]              = value.to_f
     h[:value_currency]     = value.currency.try(:iso_code)
     h[:bid_price]          = bid_price.to_f

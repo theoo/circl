@@ -33,6 +33,7 @@ class PersonAffairProductExtention extends App.ExtendedController
     @program_field = @el.find("#person_affair_product_program_search")
     @program_id_field = @el.find("input[name=program_id]")
     @product_unit_symbol = @el.find("#affair-product-unit")
+    @product_category = @el.find("#person_affair_product_category")
 
   product_selected: (e, ui) =>
     @product_id_field.val ui.item.id
@@ -43,6 +44,7 @@ class PersonAffairProductExtention extends App.ExtendedController
       prod = App.Product.find(ui.item.id)
       symbol = I18n.t("product.units.#{prod.unit_symbol}.symbol")
       @product_unit_symbol.html(symbol)
+      @product_category.val prod.category
 
     App.Product.fetch(id: ui.item.id)
 
