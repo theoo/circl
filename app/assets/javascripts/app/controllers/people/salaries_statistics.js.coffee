@@ -18,20 +18,35 @@ class App.PersonSalariesStatistics extends Spine.Controller
 
   className: 'salaries_statistics'
 
+  events:
+    'click button[name=statistics-update]': 'update'
+
   constructor: (params) ->
     super
 
     @person_id = params.person_id
     @url = "#{Spine.Model.host}/people/#{@person_id}/salaries/statistics.json"
+
+    # Defaults
+    d = new Date
     @params =
-      from: "2014-06-01"
-      to: "2014-06-30"
-      step: "day"
+      from: "01-01-" + d.getFullYear()
+      to: "31-12-" + d.getFullYear()
+      step: "month"
 
     @append(@)
 
   render: =>
     @html @view('people/salaries/statistics')(@)
+
+  update: (e) ->
+    e.preventDefault()
+    @params =
+      from: $('input[name=from]').val()
+      to: $('input[name=to]').val()
+      step: $('select[name=step]').val()
+    @render()
+
 
   activate: ->
     super

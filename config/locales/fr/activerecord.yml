@@ -418,6 +418,7 @@ fr:
       minute: Minute
       month: Mois
       second: Seconde
+      week: Semaine
       year: Année
   helpers:
     select:
