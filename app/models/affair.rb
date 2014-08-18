@@ -111,22 +111,22 @@ class Affair < ActiveRecord::Base
 
   has_many    :extras,
               -> { order(:position) },
-              dependent: :destroy
-              #after_add: :update_on_prestation_alteration,
-              #after_remove: :update_on_prestation_alteration
+              dependent: :destroy,
+              after_add: :update_on_prestation_alteration,
+              after_remove: :update_on_prestation_alteration
 
   has_many    :tasks,
               -> { order('start_date ASC') },
-              dependent: :destroy
-              #after_add: :update_on_prestation_alteration,
-              #after_remove: :update_on_prestation_alteration
+              dependent: :destroy,
+              after_add: :update_on_prestation_alteration,
+              after_remove: :update_on_prestation_alteration
 
   has_many    :product_items,
               -> { order(:position) },
               class_name: 'AffairsProductsProgram',
-              dependent: :destroy
-              #after_add: :update_on_prestation_alteration,
-              #after_remove: :update_on_prestation_alteration
+              dependent: :destroy,
+              after_add: :update_on_prestation_alteration,
+              after_remove: :update_on_prestation_alteration
 
   has_many    :products,
               through: :product_items
