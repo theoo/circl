@@ -39,17 +39,39 @@ class App.PersonSalariesStatistics extends Spine.Controller
   render: =>
     @html @view('people/salaries/statistics')(@)
 
+    if @data
+      options =
+        series:
+            stack: true
+            bars:
+              show: true
+        bars:
+          barWidth: 0.8
+          align: 'center'
+          horizontal: true
+          lineWidth: 1
+          label: false
+        xaxis:
+            color: "black"
+        yaxis:
+            axisLabel: false
+            ticks: ticks
+            color: "black"
+        grid:
+          hoverable: true
+          borderWidth: 0
+          borderColor: null
+
+      stats = @el.find("#person_tasks_stats")
+      $.plot(stats, data, options);
+
+
   update: (e) ->
     e.preventDefault()
     @params =
       from: $('input[name=from]').val()
       to: $('input[name=to]').val()
       step: $('select[name=step]').val()
-    @render()
-
-
-  activate: ->
-    super
 
     $.ajax(
       type: "POST"
@@ -59,6 +81,11 @@ class App.PersonSalariesStatistics extends Spine.Controller
       )
       .done( (data) ->
         console.log data
+        # @render()
       )
+
+  activate: ->
+    super
+
 
     @render()

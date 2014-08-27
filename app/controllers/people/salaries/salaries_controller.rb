@@ -177,20 +177,48 @@ class People::Salaries::SalariesController < ApplicationController
   end
 
   def statistics
-    params[:from]
-    params[:to]
-    params[:step]
+    # Validate dates and step
+    from = Date.parse(params[:from]).to_time.beginning_of_day if validate_date_format(params[:from])
+    to   = Date.parse(params[:to]).to_time.end_of_day if validate_date_format(params[:to])
+    raise ArgumentError, "Invalid step, try day, week, month or year" unless %w(day week month year).index params[:step]
+    step = params[:step]
 
-    tasks = @person.executed_tasks.order("updated_at DESC")
-      .where("updated_at BETWEEN ? AND ?", params[:from], params[:to])
-      .select("TIMESTAMP WITH TIME ZONE 'epoch' + INTERVAL '1 second' * round((extract('epoch' from timestamp) / 300) * 300 as timestamp, *")
-      .group("round(extract('epoch' from timestamp) / 300)")
+    # FIXME: extract data in one query
+    # tasks = @person.executed_tasks.order("updated_at DESC")
+    #   .where("updated_at BETWEEN ? AND ?", params[:from], params[:to])
+    #   .select("TIMESTAMP WITH TIME ZONE 'epoch' + INTERVAL '1 second' * round((extract('epoch' from timestamp) / 300) * 300 as timestamp, *")
+    #   .group("round(extract('epoch' from timestamp) / 300)")
 
-    # Sum by step
-    # I'M HERE
+    tasks = []
+    data = []
+
+    while from < to
+      to_step = from + 1.send(step)
+
+      tasks << @person.tasks
+        .where("tasks.start_date BETWEEN ? AND ?", from, to_step - 1.second)
+        .to_a
+
+      from = to_step
+    end
+    raise ArgumentError, tasks.inspect
+
+    # data = [
+    #   { data: [[@affair.value_with_taxes, 2]], color: "#000" }
+    #   { data: [[@affair.invoices_value_with_taxes, 1]], color: invoices_color }
+    #   { data: [[@affair.receipts_value, 0]], color: receipts_color }
+    # ]
+
+    # ticks = [
+    #   [2, I18n.t("person.views.affairs")]
+    #   [1, invoice_tick]
+    #   [0, receipt_tick]
+    # ]
+
+    # I M HERE, curriously the year is 2013 here and 2014 in view...
 
     respond_to do |format|
-      format.json { render json: params.inspect }
+      format.json { render json: data }
     end
   end
 
