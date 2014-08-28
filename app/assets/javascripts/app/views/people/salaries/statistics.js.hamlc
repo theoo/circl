@@ -8,7 +8,7 @@
 
     .row
       .col-md-12
-        #person_tasks_stats
+        #person_tasks_stats{style: 'height: 200px;'}
 
     .row
       .col-md-4
@@ -37,10 +37,8 @@
           %select{name: 'step',
                   class: 'form-control required'}
             - for r in ["day", "week", "month", "year"]
-              %option{value: r}= I18n.t("datetime.prompts." + r)
-    .row
-      .col-lg-12
-        .pull-right
-          %button{name: "statistics-update", class: 'btn btn-primary' }
-            .icon-refresh
-            = I18n.t("common.update")
+              - if @params.step == r
+                %option{value: r, selected: true}= I18n.t("datetime.prompts." + r)
+              - else
+                %option{value: r}= I18n.t("datetime.prompts." + r)
+

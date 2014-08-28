@@ -36,6 +36,7 @@
 #= require_tree ./datatables
 #= require ./flot/jquery.flot
 #= require ./flot/jquery.flot.categories
+#= require ./flot/jquery.flot.tooltip
 
 $ = jQuery
 

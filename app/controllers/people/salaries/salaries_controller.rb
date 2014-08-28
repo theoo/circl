@@ -30,6 +30,14 @@ class People::Salaries::SalariesController < ApplicationController
 
   monitor_changes :@salary
 
+  class TimeHelper
+    include ActionView::Helpers::DateHelper
+  end
+
+  def helper
+    @h || TimeHelper.new
+  end
+
   def index
     respond_to do |format|
       format.json { render json: @salaries }
@@ -183,39 +191,46 @@ class People::Salaries::SalariesController < ApplicationController
     raise ArgumentError, "Invalid step, try day, week, month or year" unless %w(day week month year).index params[:step]
     step = params[:step]
 
-    # FIXME: extract data in one query
+    # FIXME: extract data in one query, maybe
     # tasks = @person.executed_tasks.order("updated_at DESC")
     #   .where("updated_at BETWEEN ? AND ?", params[:from], params[:to])
     #   .select("TIMESTAMP WITH TIME ZONE 'epoch' + INTERVAL '1 second' * round((extract('epoch' from timestamp) / 300) * 300 as timestamp, *")
     #   .group("round(extract('epoch' from timestamp) / 300)")
 
-    tasks = []
     data = []
 
     while from < to
       to_step = from + 1.send(step)
 
-      tasks << @person.tasks
+      duration = @person.executed_tasks
         .where("tasks.start_date BETWEEN ? AND ?", from, to_step - 1.second)
-        .to_a
+        .select(:duration)
+        .map(&:duration)
+        .sum
+
+      case step
+        when 'day'
+          index = I18n.l(from, format: "%j")
+          label = I18n.l(from.to_date, format: :short)
+
+        when 'week'
+          index = I18n.l(from, format: "%U").to_i + 1
+          label = index.to_s
+
+        when 'month'
+          index = from.month
+          label = I18n.l(from, format: "%B")
+
+        when 'year'
+          index = from.year
+          label = I18n.l(from, format: "%Y")
+      end
+
+      label += ", " + helper.distance_of_time(duration * 60, :accumulate_on => :hours)
+      data << { data: [[index, duration]], label: label}
 
       from = to_step
     end
-    raise ArgumentError, tasks.inspect
-
-    # data = [
-    #   { data: [[@affair.value_with_taxes, 2]], color: "#000" }
-    #   { data: [[@affair.invoices_value_with_taxes, 1]], color: invoices_color }
-    #   { data: [[@affair.receipts_value, 0]], color: receipts_color }
-    # ]
-
-    # ticks = [
-    #   [2, I18n.t("person.views.affairs")]
-    #   [1, invoice_tick]
-    #   [0, receipt_tick]
-    # ]
-
-    # I M HERE, curriously the year is 2013 here and 2014 in view...
 
     respond_to do |format|
       format.json { render json: data }

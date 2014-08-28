@@ -19,7 +19,7 @@ class App.PersonSalariesStatistics extends Spine.Controller
   className: 'salaries_statistics'
 
   events:
-    'click button[name=statistics-update]': 'update'
+    'change select[name=step]': 'update'
 
   constructor: (params) ->
     super
@@ -40,52 +40,56 @@ class App.PersonSalariesStatistics extends Spine.Controller
     @html @view('people/salaries/statistics')(@)
 
     if @data
+
+      stats = @el.find("#person_tasks_stats")
+
       options =
+        legend:
+          show: false
         series:
-            stack: true
-            bars:
-              show: true
+          stack: true
+          bars:
+            show: true
         bars:
-          barWidth: 0.8
           align: 'center'
-          horizontal: true
           lineWidth: 1
           label: false
         xaxis:
-            color: "black"
+          ticks: []
         yaxis:
-            axisLabel: false
-            ticks: ticks
-            color: "black"
+          ticks: []
         grid:
           hoverable: true
           borderWidth: 0
           borderColor: null
+        tooltip: true
+        tooltipOpts:
+          content: "%s"
 
-      stats = @el.find("#person_tasks_stats")
-      $.plot(stats, data, options);
+      $.plot(stats, @data, options)
 
 
   update: (e) ->
     e.preventDefault()
     @params =
-      from: $('input[name=from]').val()
-      to: $('input[name=to]').val()
-      step: $('select[name=step]').val()
+      from: @el.find('input[name=from]').val()
+      to: @el.find('input[name=to]').val()
+      step: @el.find('select[name=step]').val()
 
+    @fetch()
+
+  fetch: ->
     $.ajax(
       type: "POST"
       url: @url
       data: @params
       dataType: "json"
       )
-      .done( (data) ->
-        console.log data
-        # @render()
+      .done( (data) =>
+        @data = data
+        @render()
       )
 
   activate: ->
     super
-
-
-    @render()
+    @fetch()

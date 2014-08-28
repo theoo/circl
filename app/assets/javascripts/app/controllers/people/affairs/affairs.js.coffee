@@ -496,9 +496,9 @@ class Balance extends App.ExtendedController
 
       options =
         series:
-            stack: true
-            bars:
-              show: true
+          stack: true
+          bars:
+            show: true
         bars:
           barWidth: 0.8
           align: 'center'
@@ -506,11 +506,11 @@ class Balance extends App.ExtendedController
           lineWidth: 1
           label: false
         xaxis:
-            color: "black"
+          color: "black"
         yaxis:
-            axisLabel: false
-            ticks: ticks
-            color: "black"
+          axisLabel: false
+          ticks: ticks
+          color: "black"
         grid:
           hoverable: true
           borderWidth: 0
