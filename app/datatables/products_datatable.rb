@@ -79,7 +79,8 @@ class ProductsDatatable
   end
 
   def sort_column
-    columns = %w{id key description variants category updated_at}
+    # TODO: Order variants
+    columns = %w{id key description id category updated_at}
     columns[params[:iSortCol_0].to_i]
   end
 

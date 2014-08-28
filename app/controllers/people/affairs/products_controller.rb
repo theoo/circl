@@ -92,11 +92,15 @@ class People::Affairs::ProductsController < ApplicationController
   def create
     authorize! :create, @person => AffairsProductsProgram
 
-    @product = @affair.product_items.new
+    # If @affair.product_items << OBJ is used, then update_on_prestation_alteration is called
+    # which will fail as long as the product item is not saved.
+    @product = AffairsProductsProgram.new(affair_id: @affair.id)
     update_instance(params)
 
     respond_to do |format|
       if @product.save
+        # Triggered manually here
+        @affair.update_on_prestation_alteration
         format.json { render json: @product }
       else
         format.json { render json: @product.errors, status: :unprocessable_entity }

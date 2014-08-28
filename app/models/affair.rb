@@ -443,14 +443,14 @@ class Affair < ActiveRecord::Base
     product_items_for_category(cat).map(&:value).sum.to_money(value_currency)
   end
 
-  private
-
   # Buffer method used to update value and statuses information after habtm relationship
   # alteration.
   def update_on_prestation_alteration(record = nil)
     self.update_attribute(:value, compute_value)
     self.update_attribute(:status, update_statuses)
   end
+
+  private
 
   def update_value
     self.value = compute_value
