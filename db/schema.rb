@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140817153320) do
+ActiveRecord::Schema.define(version: 20140901123145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -390,6 +390,7 @@ ActiveRecord::Schema.define(version: 20140817153320) do
     t.float    "latitude"
     t.float    "longitude"
     t.string   "website"
+    t.string   "alias_name",                                 default: ""
   end
 
   add_index "people", ["authentication_token"], name: "index_people_on_authentication_token", unique: true, using: :btree
@@ -643,8 +644,8 @@ ActiveRecord::Schema.define(version: 20140817153320) do
     t.string   "cert_others_title",                                     default: "",    null: false
     t.text     "cert_notes",                                            default: "",    null: false
     t.string   "employer_account",                                      default: ""
-    t.text     "comments"
     t.string   "yearly_salary_currency",                                default: "CHF", null: false
+    t.text     "comments"
   end
 
   add_index "salaries", ["is_reference"], name: "index_salaries_on_is_template", using: :btree
@@ -706,7 +707,6 @@ ActiveRecord::Schema.define(version: 20140817153320) do
     t.boolean  "archive",            default: false, null: false
   end
 
-  add_index "salaries_taxes", ["archive"], name: "index_salaries_taxes_on_archive", using: :btree
   add_index "salaries_taxes", ["exporter_avs_group"], name: "index_salaries_taxes_on_exporter_avs_group", using: :btree
   add_index "salaries_taxes", ["exporter_is_group"], name: "index_salaries_taxes_on_exporter_is_group", using: :btree
   add_index "salaries_taxes", ["exporter_lpp_group"], name: "index_salaries_taxes_on_exporter_lpp_group", using: :btree

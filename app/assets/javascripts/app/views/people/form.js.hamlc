@@ -46,7 +46,15 @@
                     value: @person.title,
                     action: '/people/title_search' }
 
-          .col-sm-6
+          .col-sm-4
+            %label{for: 'person_alias_name', class: 'control-label'}
+              = I18n.t('person.views.alias')
+            %input{ type: 'search',
+                    id: 'person_alias_name',
+                    class: 'form-control',
+                    name: 'alias_name',
+                    value: @person.alias_name }
+          .col-sm-2
             %br
             .checkbox
               %label.control-label

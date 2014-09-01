@@ -359,6 +359,20 @@
         type: float
   group: Person
 
+- model: Person
+  name: alias_name
+  indexing: alias_name
+  mapping:
+    type: multi_field
+    fields:
+      alias_name:
+        type: string
+        index: not_analyzed
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
 # Relations
 - model: Person
   name: job

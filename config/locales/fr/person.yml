@@ -83,6 +83,7 @@ fr:
       activities: Activités
       address: adresse
       affairs: Affaires
+      alias: alias
       api: API
       autentication_token: jeton d'authentification
       avs_number: numéro AVS

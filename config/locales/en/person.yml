@@ -83,6 +83,7 @@ en:
       activities: activities
       address: address
       affairs: affairs
+      alias: alias
       api: api
       autentication_token: autentication token
       avs_number: avs number
