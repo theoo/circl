@@ -118,6 +118,7 @@ fr:
         affairs: affaires
         affairs_as_buyer: affaires en temps que payeur
         affairs_as_receiver: affaires en temps que receveur
+        alias_name: alias
         authentication_token: jeton d'authentification
         avs_number: numéro AVS
         bank_informations: informations bancaires
@@ -176,6 +177,7 @@ fr:
         unpaid_affairs: affaires impayées
         unpaid_subscriptions: inscriptions impayées
         updated_at: date de mise à jour
+        website: site web
       private_tag:
         id: ID
         name: name

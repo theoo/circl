@@ -325,7 +325,8 @@ class PeopleController < ApplicationController
         :task_rate_id,
         :title,
         :updated_at,
-        :website
+        :website,
+        :alias_name
         )
     end
 

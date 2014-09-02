@@ -118,6 +118,7 @@ en:
         affairs: affairs
         affairs_as_buyer: affairs as buyer
         affairs_as_receiver: affairs as receiver
+        alias_name: alias
         authentication_token: authentication token
         avs_number: social number (AVS)
         bank_informations: bank information
@@ -176,6 +177,7 @@ en:
         unpaid_affairs: unpaid affairs
         unpaid_subscriptions: unpaid subscriptions
         updated_at: last update
+        website: website
       private_tag:
         id: ID
         name: name
