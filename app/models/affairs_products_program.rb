@@ -33,6 +33,10 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   before_validation :set_position_if_none_given, if: Proc.new {|i| i.position.blank? }
 
+  before_create do
+    self.cached_value ||= value
+  end
+
   before_save do
     self.category ||= product.category
   end
@@ -66,6 +70,7 @@ class AffairsProductsProgram < ActiveRecord::Base
                             only_integer: false,
                             unless: "bid_percentage.blank?"
 
+  money :cached_value
 
   ########################
   #### CLASS METHODS #####
@@ -110,6 +115,10 @@ class AffairsProductsProgram < ActiveRecord::Base
     else
       0.to_money
     end
+  end
+
+  def reset_cached_value
+    update_attributes cached_value: value
   end
 
   def bid_price

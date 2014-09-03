@@ -35,6 +35,10 @@ class Product < ActiveRecord::Base
     self.unit_symbol ||= "pc" # units are defined in translations
   end
 
+  after_save do
+    self.variants.create(selling_price: 0, program_group: 'UNIT') unless self.variants.count > 0
+  end
+
   #################
   ### RELATIONS ###
   #################

@@ -92,28 +92,32 @@ class Settings::ProductsController < ApplicationController
       params[:product][:after_sale_id] = nil unless params[:product][:after_sale_id]
 
       # Only keep variants that are returned
-      surplus_variants = @product.variants.map(&:id) - params[:variants].map{|v| v[:id].to_i}
-      ProductVariant.destroy surplus_variants
+      if params[:variants]
+        surplus_variants = @product.variants.map(&:id) - params[:variants].map{|v| v[:id].to_i}
+        ProductVariant.destroy surplus_variants
 
-      # append or update variants
-      params[:variants].each do |v|
-        if @product.variants.exists?(v[:id])
-          pv = @product.variants.find(v[:id])
-          pv.assign_attributes(v)
-        else
-          pv = @product.variants.new(v)
-        end
-
-        pv.buying_price = Money.new(v[:buying_price].to_f * 100, v[:buying_price_currency])
-        pv.selling_price = Money.new(v[:selling_price].to_f * 100, v[:selling_price_currency])
-        pv.art = Money.new(v[:art].to_f * 100, v[:art_currency])
-
-        unless pv.save
-          pv.errors.messages.each do |k,v|
-            @product.errors.add(("variants[][" + k.to_s + "]").to_sym, v.join(", "))
+        # append or update variants
+        params[:variants].each do |v|
+          if @product.variants.exists?(v[:id])
+            pv = @product.variants.find(v[:id])
+            pv.assign_attributes(v)
+          else
+            pv = @product.variants.new(v)
           end
-          raise ActiveRecord::Rollback
+
+          pv.buying_price = Money.new(v[:buying_price].to_f * 100, v[:buying_price_currency])
+          pv.selling_price = Money.new(v[:selling_price].to_f * 100, v[:selling_price_currency])
+          pv.art = Money.new(v[:art].to_f * 100, v[:art_currency])
+
+          unless pv.save
+            pv.errors.messages.each do |k,v|
+              @product.errors.add(("variants[][" + k.to_s + "]").to_sym, v.join(", "))
+            end
+            raise ActiveRecord::Rollback
+          end
         end
+      else
+        @product.variants = []
       end
 
       # raise the error and rollback transaction if validation fails

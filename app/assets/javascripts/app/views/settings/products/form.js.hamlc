@@ -130,6 +130,7 @@
         .col-lg-12
           %h3= I18n.t("product_variant.views.variant_selection_title")
 
+    / FIXME: refresh after edit. Server may send a differnt array than sent (if you remove all items for instance)
     %table.table.table-condensed.sortable
       %tbody
         - if @product.variants and @product.variants.length > 0
