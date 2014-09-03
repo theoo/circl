@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(version: 20140903125346) do
     t.datetime "updated_at"
     t.float    "bid_percentage"
     t.string   "category"
-    t.integer  "value_in_cents", default: 0, null: false
-    t.integer  "value_currency", default: 0, null: false
+    t.integer  "value_in_cents", default: 0,     null: false
+    t.string   "value_currency", default: "CHF", null: false
   end
 
   add_index "affairs_products_programs", ["affair_id", "product_id", "position"], name: "affairs_products_programs_unique_position", using: :btree

@@ -60,6 +60,7 @@ class Extra < ActiveRecord::Base
 
   # Validate fields of type 'text' length
   validates_length_of :description, maximum:  65535
+  
   ########################
   #### CLASS METHODS #####
   ########################

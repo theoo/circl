@@ -252,7 +252,7 @@ class Affair < ActiveRecord::Base
     h[:computed_value_currency]            = compute_value.currency.try(:iso_code)
     h[:computed_value_with_taxes]          = compute_value_with_taxes.try(:to_f)
     h[:computed_value_with_taxes_currency] = compute_value_with_taxes.currency.try(:iso_code)
-    h[:arts_count]                         = product_items.each_with_object([]){|i,a| a << i if i.variant.art > 0}.size
+    h[:arts_count]                         = arts_count
     h[:arts_value]                         = arts_value.try(:to_f)
     h[:arts_value_currency]                = arts_value.currency.try(:iso_code)
     h[:vat_count]                          = extras.each_with_object([]){|i,a| a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f}.size + 1
@@ -326,7 +326,13 @@ class Affair < ActiveRecord::Base
   end
 
   def arts_value
-    product_items.map{|i| i.variant.art.to_money(value_currency) * i.quantity}.sum.to_money
+    # See AffairsProductsProgram#variant definition
+    sum = 0.to_money
+    product_items.each do |i|
+      v = i.variant
+      sum += v.art.to_money(value_currency) * i.quantity if v
+    end
+    sum.to_money(value_currency)
   end
 
   def vat_value(forced_value = self.value)
@@ -345,6 +351,10 @@ class Affair < ActiveRecord::Base
     sum += extras_diff_vat
 
     sum
+  end
+
+  def arts_count
+    product_items.each_with_object([]){|i,a| a << i if i.variant and i.variant.art > 0}.size
   end
 
   # It will set this affair's value to the computed value of all provisions and

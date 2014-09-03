@@ -30,6 +30,7 @@ en:
       invalid_current_password: invalid current password
       main_language_already_in_communication_languages: main language already in communication languages
       no_second_email_if_no_primary_email: no second email if no primary email
+      only_letters: Only allows letters
       organization_not_ticked_but_no_person_info: organization not ticked but no person info
       second_email_should_be_different: second email should be different
       the_required_information_about_this_employee_are_not_satisfied: the required information about this employee are not satisfied

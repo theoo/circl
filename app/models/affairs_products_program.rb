@@ -99,6 +99,7 @@ class AffairsProductsProgram < ActiveRecord::Base
   ### INSTANCE METHODS ###
   ########################
 
+  # In some rare case, a given item may not have a corresponding program_group, which then returns a nil object.
   def variant
     if program
       product.variants.where(program_group: program.program_group).first
