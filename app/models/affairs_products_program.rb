@@ -33,13 +33,11 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   before_validation :set_position_if_none_given, if: Proc.new {|i| i.position.blank? }
 
-  before_create do
-    self.cached_value ||= value
-  end
-
   before_save do
     self.category ||= product.category
   end
+
+  before_save :update_value, if: 'value_in_cents.blank?'
 
   #################
   ### RELATIONS ###
@@ -70,7 +68,7 @@ class AffairsProductsProgram < ActiveRecord::Base
                             only_integer: false,
                             unless: "bid_percentage.blank?"
 
-  money :cached_value
+  money :value
 
   ########################
   #### CLASS METHODS #####
@@ -109,16 +107,12 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   # The value of an item depends on its variant and its program
   # An item may not have value (free accessories)
-  def value
+  def compute_value
     if variant
       variant.selling_price * quantity / product.price_to_unit_rate
     else
       0.to_money
     end
-  end
-
-  def reset_cached_value
-    update_attributes cached_value: value
   end
 
   def bid_price
@@ -130,6 +124,10 @@ class AffairsProductsProgram < ActiveRecord::Base
   end
 
   private
+
+  def update_value
+    self.value = compute_value
+  end
 
   def set_position_if_none_given
     last_item = self.affair.product_items.order(:position).last

@@ -118,7 +118,6 @@ class Product < ActiveRecord::Base
     self.unit_symbol
   end
 
-
   ########################
   ### INSTANCE METHODS ###
   ########################
