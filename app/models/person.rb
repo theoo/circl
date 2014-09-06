@@ -12,7 +12,7 @@
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   GNU Affero General Public License for more details.
 
-  You should have received a copy of the GNU Affero General Public License
+  You should have a received copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
@@ -326,7 +326,8 @@ class Person < ActiveRecord::Base
   validates_length_of :avs_number, maximum: 255
 
   validates :alias_name,
-    format: { with: /\A[a-zA-Z]+\z/, message: I18n.t("person.errors.only_letters") },
+    # TODO reenable
+    #format: { with: /\A[a-zA-Z\-_\d]+\z/, message: I18n.t("person.errors.only_letters") },
     length: { maximum: 25 }
 
   # Validate fields of type 'text' length

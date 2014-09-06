@@ -36,6 +36,16 @@ class AffairsDatatable
 
   def data
     affairs.map do |affair|
+
+      classes = []
+      # Colorize active affairs
+      if ! affair.has_status?(:cancelled) \
+        and ! affair.has_status?(:offered) \
+        and ! affair.has_status?(:paid)
+        classes.push("success") unless affair.estimate
+        classes.push("warning") if affair.estimate
+      end
+
       {
         0 => affair.id,
         1 => affair.title,
@@ -50,6 +60,7 @@ class AffairsDatatable
         8 => affair.created_at,
         'id' => affair.id,
         'actions' => [ I18n.t('affair.views.actions.edit_affair') ],
+        'classes' => classes.join(" "),
         'number_columns' => [5,6,7,8]
       }
     end
