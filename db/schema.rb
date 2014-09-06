@@ -66,8 +66,8 @@ ActiveRecord::Schema.define(version: 20140903125346) do
     t.datetime "updated_at"
     t.float    "bid_percentage"
     t.string   "category"
-    t.integer  "value_in_cents", default: 0, null: false
-    t.integer  "value_currency", default: 0, null: false
+    t.integer  "value_in_cents", default: 0,     null: false
+    t.string   "value_currency", default: "CHF", null: false
   end
 
   add_index "affairs_products_programs", ["affair_id", "product_id", "position"], name: "affairs_products_programs_unique_position", using: :btree
@@ -646,8 +646,8 @@ ActiveRecord::Schema.define(version: 20140903125346) do
     t.string   "cert_others_title",                                     default: "",    null: false
     t.text     "cert_notes",                                            default: "",    null: false
     t.string   "employer_account",                                      default: ""
-    t.string   "yearly_salary_currency",                                default: "CHF", null: false
     t.text     "comments"
+    t.string   "yearly_salary_currency",                                default: "CHF", null: false
   end
 
   add_index "salaries", ["is_reference"], name: "index_salaries_on_is_template", using: :btree
@@ -709,6 +709,7 @@ ActiveRecord::Schema.define(version: 20140903125346) do
     t.boolean  "archive",            default: false, null: false
   end
 
+  add_index "salaries_taxes", ["archive"], name: "index_salaries_taxes_on_archive", using: :btree
   add_index "salaries_taxes", ["exporter_avs_group"], name: "index_salaries_taxes_on_exporter_avs_group", using: :btree
   add_index "salaries_taxes", ["exporter_is_group"], name: "index_salaries_taxes_on_exporter_is_group", using: :btree
   add_index "salaries_taxes", ["exporter_lpp_group"], name: "index_salaries_taxes_on_exporter_lpp_group", using: :btree

@@ -421,22 +421,18 @@ class Affair < ActiveRecord::Base
   def product_items_for_category(cat)
     if cat
       product_items
-        .joins(:product)
-        .where("products.category = ?", cat)
+        .where("affairs_products_programs.category = ?", cat)
     else
       product_items
         .joins(:product)
-        .where("products.category is null")
+        .where("affairs_products_programs.category is null")
     end
   end
 
   def product_items_categories
-    Product
-      .joins(:product_items)
-      .where("affairs_products_programs.affair_id = ?", id)
-      .select("DISTINCT category")
-      .order("category")
+    product_items
       .map(&:category)
+      .uniq
   end
 
   def product_items_category_value_for(cat)
