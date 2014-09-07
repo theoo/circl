@@ -536,62 +536,6 @@ class Ui
 
     return(win)
 
-#--- wysiwyg ---
-  load_wysiwyg: (context) ->
-    return if context.find('textarea.wysiwyg').size() <= 0
-
-    body_class = ["a4_page"]
-    body_class.push "with_bvr" if $("#invoice_template_with_bvr").val() == "t"
-
-    tinyMCE.baseURL = "/assets/tinymce"
-    tinyMCE.init
-      mode: 'specific_textareas'
-      schema: 'html5'
-      editor_selector: 'wysiwyg'
-      valid_children : '+body[style]'
-      language: I18n.locale
-      body_class: body_class.join(" ")
-      content_css: ['/assets/custom_fonts.css', '/assets/pdf_common.css', '/assets/pdf_edit.css']
-      plugins: 'fullscreen,table,autolink,lists,spellchecker,pagebreak,layer,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,noneditable,visualblocks,visualchars,nonbreaking,template,anchor,charmap,hr,image,link,emoticons,code,textcolor'
-      theme: 'modern'
-      browser_spellcheck: true
-      object_resizing: true
-      relative_urls: false
-      visual: true
-      menubar: false
-      toolbar1: "save cancel | undo redo | cut copy paste searchreplace | link image | table | charmap hr pagebreak | visualaid visualblocks visualchars | code"
-      toolbar2: "styleselect formatselect fontselect fontsizeselect forecolor backcolor"
-      toolbar3: "bold italic subscript superscript | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent"
-      statusbar: true
-      font_formats: "Andale Mono=andale mono,times;"+
-        "Arial=arial,helvetica,sans-serif;"+
-        "Arial Black=arial black,avant garde;"+
-        "Book Antiqua=book antiqua,palatino;"+
-        "Comic Sans MS=comic sans ms,sans-serif;"+
-        "Courier New=courier new,courier;"+
-        "Georgia=georgia,palatino;"+
-        "Helvetica=helvetica;"+
-        "Impact=impact,chicago;"+
-        "Symbol=symbol;"+
-        "Tahoma=tahoma,arial,helvetica,sans-serif;"+
-        "Terminal=terminal,monaco;"+
-        "Times New Roman=times new roman,times;"+
-        "Trebuchet MS=trebuchet ms,geneva;"+
-        "Verdana=verdana,geneva;"+
-        "Webdings=webdings;"+
-        "Wingdings=wingdings,zapf dingbats;"+
-        "Helvetica Neue Light=Helvetica Neue Light;"+
-        "Helvetica Neue Italic=Helvetica Neue Italic;"+
-        "Helvetica Neue Cap=Helvetica Neue Cap;"+
-        "Calibri=Calibri;"+
-        "Arial Narrow=Arial Narrow;"+
-        "OCR-B=OCR-B;"+
-        "Rotis=Rotis;"+
-        "Rotis Extra Bold=Rotis Extra Bold;"+
-        "Rotis Italic=Rotis Italic;"+
-        "Rotis Light=Rotis Light;"+
-        "Rotis Light Italic=Rotis Light Italic"
-
   load_map: (container_string, save_callback = undefined) ->
     map_container = $("#" + container_string)
     map_height = $(document).height() - 265
