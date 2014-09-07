@@ -21,7 +21,7 @@ fr:
       add_person: ajouter un contact
       custom_action_introduction: Vous avez été redirigé sur la page du moteur de recherche pour effectuer une action spéciale.
       custom_action_warning: Vous pouvez rechercher dans l'annuaire de manière ordinaire, lorsque le résultat de la recherche vous conviendra, cliquez sur 'continuer' vous poursuivre le processus en cours.
-      edit_preset_filters: Édition des filtres du pré-réglage
+      edit_preset_filters: "Édition des filtres du pré-réglage"
       fields:
         available_attributes: Attributs disponibles
         drag_and_drop_me: glisser-déposer ici

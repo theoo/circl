@@ -25,7 +25,7 @@ fr:
       the_following_members_were_already_in_the_subscription: Les membres suivants étaient déjà dans l'inscription
       the_following_members_were_updated: Les membres suivants ont étés mis à jour
     notices:
-      members_added: ! '%{members_count} personnes ont été ajoutées à l''inscription. Veuillez attendre la fin de l''exécution de la tâche d''arrière plan avant de modifier l''inscription concernée.'
+      members_added: "%{members_count} personnes ont été ajoutées à l'inscription. Veuillez attendre la fin de l'exécution de la tâche d'arrière plan avant de modifier l'inscription concernée."
       no_existing_invoice_template_alert: Il n'existe pas de modèle de facture, veuillez en créer avant de poursuivre avec la création d'inscription.
       no_existing_subscription_alert: Il n'existe pas d'inscription, veuillez en créer pour en ajouter à une affaire.
     pdf:
@@ -67,7 +67,7 @@ fr:
         members_following_theses_attributes: Les membres suivants les attributs suivants
         of_a: d'une inscription
         private_tag_name: nom du tag privé
-        subscription_at_this_date: à la date suivante
+        subscription_at_this_date: "à la date suivante"
         tag_name_missing: nom du tag privé manquant
         tag_tool: outil à tagger
         tag_with: tagger avec

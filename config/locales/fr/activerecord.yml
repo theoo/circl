@@ -251,9 +251,9 @@ fr:
         from_language_id: de la langue
         id: ID
         person_id: ID de la personne
-        to_language_id: à la langue
+        to_language_id: "à la langue"
     errors:
-      format: ! '%{attribute} %{message}'
+      format: "%{attribute} %{message}"
       messages:
         accepted: doit être accepté(e)
         blank: ne peut pas être vide
@@ -271,7 +271,7 @@ fr:
         not_a_number: n'est pas un nombre
         not_an_integer: doit être un nombre entier
         odd: doit être impair
-        record_invalid: ! 'La validation a échoué : %{errors}'
+        record_invalid: 'La validation a échoué : %{errors}'
         taken: n'est pas disponible
         too_long:
           one: est trop long (pas plus d'un caractère)
@@ -288,10 +288,10 @@ fr:
             name:
               cannot_contain_comma: Ne peut pas contenir de virgule
       template:
-        body: ! 'Veuillez vérifier les champs suivants : '
+        body: 'Veuillez vérifier les champs suivants : '
         header:
-          one: ! 'Une erreur a empêché l''enregistrement du formulaire:'
-          other: ! '%{count} erreurs ont empêché l''enregistrement du formulaire:'
+          one: 'Une erreur a empêché l''enregistrement du formulaire:'
+          other: "%{count} erreurs ont empêché l'enregistrement du formulaire:"
     models:
       activity: Activité
       affair: Affaire
@@ -333,7 +333,7 @@ fr:
     - ven
     - sam
     abbr_month_names:
-    -
+    - 
     - jan.
     - fév.
     - mar.
@@ -355,11 +355,11 @@ fr:
     - vendredi
     - samedi
     formats:
-      default: ! '%d-%m-%Y'
-      long: ! '%e %B %Y'
-      short: ! '%e %b'
+      default: "%d-%m-%Y"
+      long: "%e %B %Y"
+      short: "%e %b"
     month_names:
-    -
+    - 
     - janvier
     - février
     - mars
@@ -404,16 +404,16 @@ fr:
         other: plus de %{count} ans
       x_days:
         one: 1 jour
-        other: ! '%{count} jours'
+        other: "%{count} jours"
       x_minutes:
         one: 1 minute
-        other: ! '%{count} minutes'
+        other: "%{count} minutes"
       x_months:
         one: 1 mois
-        other: ! '%{count} mois'
+        other: "%{count} mois"
       x_seconds:
         one: 1 seconde
-        other: ! '%{count} secondes'
+        other: "%{count} secondes"
     prompts:
       day: Jour
       hour: Heure
@@ -432,22 +432,22 @@ fr:
   number:
     currency:
       format:
-        delimiter: ! ' '
-        format: ! '%n %u'
+        delimiter: " "
+        format: "%n %u"
         precision: 2
-        separator: ! ','
+        separator: ","
         significant: false
         strip_insignificant_zeros: false
-        unit: €
+        unit: "€"
     format:
-      delimiter: ! ' '
+      delimiter: " "
       precision: 3
-      separator: ! ','
+      separator: ","
       significant: false
       strip_insignificant_zeros: false
     human:
       decimal_units:
-        format: ! '%n %u'
+        format: "%n %u"
         units:
           billion: milliard
           million: million
@@ -461,7 +461,7 @@ fr:
         significant: true
         strip_insignificant_zeros: true
       storage_units:
-        format: ! '%n %u'
+        format: "%n %u"
         units:
           byte:
             one: octet
@@ -478,13 +478,13 @@ fr:
         delimiter: ''
   support:
     array:
-      last_word_connector: ! ' et '
-      two_words_connector: ! ' et '
-      words_connector: ! ', '
+      last_word_connector: " et "
+      two_words_connector: " et "
+      words_connector: ", "
   time:
     am: am
     formats:
-      default: ! '%d %B %Y %H:%M:%S'
-      long: ! '%A %d %B %Y %H:%M'
-      short: ! '%d %b %H:%M'
+      default: "%d %B %Y %H:%M:%S"
+      long: "%A %d %B %Y %H:%M"
+      short: "%d %b %H:%M"
     pm: pm

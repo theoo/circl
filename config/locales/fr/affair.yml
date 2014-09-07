@@ -55,7 +55,7 @@ fr:
         overpaid: surpayée
         paid: payée
         partially_paid: partiellement payée
-        to_be_billed: à facturer
+        to_be_billed: "à facturer"
         unbillable: non facturable
         underpaid: sous-payée
       subscription_names_filter: filtre pour le nom des inscriptions

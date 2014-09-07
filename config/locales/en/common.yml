@@ -42,7 +42,7 @@ en:
       failed_to_destroy: Failed to destroy.
       failed_to_retrieve_data: Failed to retrieve data.
       failed_to_update: Failed to update.
-      from_should_be_before_to: ! '''from'' should be before ''to'''
+      from_should_be_before_to: "'from' should be before 'to'"
       if_you_think_it_s_a_bug: If you think it is a bug, please contact us at <a href='mailto:support@circl.ch'>support@circl.ch</a>
       invalid_date: invalid date
       invalid_phone: Invalid phone number format, you must use the following "+11 22 333 44 55" (7 to 18 digits).

@@ -86,10 +86,10 @@ class New extends PersonAffairProductExtention
     @product.fromForm(e.target)
     @save_with_notifications @product, =>
       @render()
-      PersonAffairProductsProgram.refresh([], clear: true)
-      PersonAffairProductsProgram.fetch()
       PersonAffairProductsCategory.refresh([], clear: true)
       PersonAffairProductsCategory.fetch()
+      PersonAffairProductsProgram.refresh([], clear: true)
+      PersonAffairProductsProgram.fetch()
       PersonAffair.fetch(id: @affair_id)
 
 class Edit extends PersonAffairProductExtention
@@ -158,6 +158,7 @@ class Index extends App.ExtendedController
   constructor: (params) ->
     super
     PersonAffairProductsProgram.bind('refresh', @render)
+    PersonAffairProductsCategory.bind('refresh', @render)
 
   active: (params) ->
     if params

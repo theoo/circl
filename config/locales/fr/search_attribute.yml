@@ -3,7 +3,7 @@ fr:
   search_attribute:
     errors:
       mapping_doesnt_look_like_a_hash: La représentation ne semble pas être un 'Hash' correcte.
-      not_json: ! 'Mauvais protocole (attendu: JSON)'
+      not_json: 'Mauvais protocole (attendu: JSON)'
     notices:
       search_engine_will_be_inaccessible_during_the_reindexing: Le moteur de recherche sera inaxessible durant la réindexation. Cette opération peut prendre quelques minutes jusqu'à des heures selon les annuaires.
     views:
