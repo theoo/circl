@@ -184,7 +184,7 @@ class People::Affairs::ProductsController < ApplicationController
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
 
       # FIXME Use SQL
-      result = @affair.product_items.map(&:category).uniq
+      result = @affair.product_categories.map(&:title)
       result.delete(nil)
 
       if result
@@ -200,20 +200,8 @@ class People::Affairs::ProductsController < ApplicationController
   def change_order
     authorize! :update, @person => AffairsProductsProgram
     @product = AffairsProductsProgram.find(params[:id])
-    success = false
 
-    AffairsProductsProgram.transaction do
-      siblings = @affair.product_items.all.to_a
-      p = siblings.delete_at params[:fromPosition].to_i - 1
-      siblings.insert(params[:toPosition].to_i - 1, p)
-      siblings.delete(nil) # If there is holes in list they will be replace by nil
-      siblings.each_with_index do |s, i|
-        u = AffairsProductsProgram.find(s.id)
-        u.update_attributes(position: i + 1)
-      end
-
-      success = true
-    end
+    success = AffairsProductsProgram.update_position(@product.id, params[:fromPosition].to_i, params[:toPosition].to_i)
 
     respond_to do |format|
       if success
@@ -238,9 +226,15 @@ class People::Affairs::ProductsController < ApplicationController
       program_id: prod[:program_id],
       product_id: prod[:product_id],
       position: prod[:position],
-      category: prod[:category],
       bid_percentage: prod[:bid_percentage],
       quantity: prod[:quantity])
+
+    if ! prod[:category].blank? and prod[:category] != @product.category.try(:title)
+      cat = @product.affair.product_categories.where(title: prod[:category]).first
+      cat ||= @product.affair.product_categories.create!(title: prod[:category])
+      @product.category = cat
+      @product.position = nil # Reset position so it goesn at the end of the category list.
+    end
   end
 
 end

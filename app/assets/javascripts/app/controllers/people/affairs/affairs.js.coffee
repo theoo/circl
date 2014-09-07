@@ -19,6 +19,7 @@ PersonAffair = App.PersonAffair
 PersonAffairSubscription = App.PersonAffairSubscription
 PersonTask = App.PersonTask
 PersonAffairProductsProgram = App.PersonAffairProductsProgram
+PersonAffairProductsCategory = App.PersonAffairProductsCategory
 PersonAffairExtra = App.PersonAffairExtra
 PersonAffairInvoice = App.PersonAffairInvoice
 PersonAffairReceipt = App.PersonAffairReceipt
@@ -215,13 +216,23 @@ class Edit extends App.ExtendedController
       PersonTask.refresh([], clear: true)
       PersonTask.fetch()
 
-      # # Products
+      # Products
       person_affair_products_ctrl = $("#person_affair_products").data('controller')
       person_affair_products_ctrl.activate(person_id: @person_id, affair_id: @id)
+
+      PersonAffairProductsCategory.url = =>
+        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/product_categories"
+      PersonAffairProductsCategory.refresh([], clear: true)
+
       PersonAffairProductsProgram.url = =>
         "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/products"
-      PersonAffairProductsProgram.refresh([], clear: true)
-      PersonAffairProductsProgram.fetch()
+
+      PersonAffairProductsCategory.one 'refresh', =>
+        PersonAffairProductsProgram.refresh([], clear: true)
+        PersonAffairProductsProgram.fetch()
+
+      PersonAffairProductsCategory.fetch()
+
 
       # Extras
       person_affair_extras_ctrl = $("#person_affair_extras").data('controller')

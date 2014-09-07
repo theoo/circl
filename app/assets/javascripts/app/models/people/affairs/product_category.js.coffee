@@ -14,19 +14,16 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class App.PersonAffairProductsProgram extends Spine.Model
+class App.PersonAffairProductsCategory extends Spine.Model
 
-  @configure 'PersonAffairProductsProgram', "parent_id", "affair_id", "product_id", "program_id",
-    "parent_key", "affair_title", "program_key", "bid_percentage", 'category',
-    "position", "quantity", "created_at", "updated_at", 'description', 'key', 'value'
+  @configure 'PersonAffairProductsCategory', "title", "position"
 
   @extend Spine.Model.Ajax
 
   @url: -> undefined
 
-  @for_category: (category_id) ->
-    (c for c in @all() when c.category_id == category_id)
+  @ordered: ->
+    _.sortBy(@all(), (c) -> c.position)
 
   constructor: ->
     super
-

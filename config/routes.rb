@@ -57,12 +57,26 @@ CIRCL::Application.routes.draw do
         end
       end
 
-      resources :receipts, :controller => 'people/affairs/receipts'
+      resources :product_categories,
+        controller: "people/affairs/product_categories",
+        only: [:index] do
+
+        collection do
+          post 'update'
+        end
+
+      end
+
+      resources :receipts,
+        controller: 'people/affairs/receipts'
 
       delete 'communication_languages' => 'people/subscriptions#destroy' # Spine
-      resources :subscriptions, :controller => 'people/affairs/subscriptions' do
-      end
-      resources :tasks, :controller => 'people/affairs/tasks'
+
+      resources :subscriptions,
+        controller: 'people/affairs/subscriptions'
+
+      resources :tasks,
+        controller: 'people/affairs/tasks'
     end
 
     resources :comments, :controller => 'people/comments' do

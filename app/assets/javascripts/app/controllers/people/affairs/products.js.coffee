@@ -17,6 +17,7 @@
 Person = App.Person
 PersonAffair = App.PersonAffair
 PersonAffairProductsProgram = App.PersonAffairProductsProgram
+PersonAffairProductsCategory = App.PersonAffairProductsCategory
 ProductProgram = App.ProductProgram
 Permissions = App.Permissions
 
@@ -87,6 +88,8 @@ class New extends PersonAffairProductExtention
       @render()
       PersonAffairProductsProgram.refresh([], clear: true)
       PersonAffairProductsProgram.fetch()
+      PersonAffairProductsCategory.refresh([], clear: true)
+      PersonAffairProductsCategory.fetch()
       PersonAffair.fetch(id: @affair_id)
 
 class Edit extends PersonAffairProductExtention
@@ -118,6 +121,7 @@ class Edit extends PersonAffairProductExtention
     @program_field.autocomplete source: '/settings/products/' + @product.product_id + '/programs'
 
     @show()
+
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>
@@ -130,6 +134,8 @@ class Edit extends PersonAffairProductExtention
       @hide()
       PersonAffairProductsProgram.refresh([], clear: true)
       PersonAffairProductsProgram.fetch()
+      PersonAffairProductsCategory.refresh([], clear: true)
+      PersonAffairProductsCategory.fetch()
       PersonAffair.fetch(id: @affair_id)
 
   destroy: (e) ->
@@ -154,7 +160,11 @@ class Index extends App.ExtendedController
     PersonAffairProductsProgram.bind('refresh', @render)
 
   active: (params) ->
-    @can = params.can if params.can
+    if params
+      @person_id = params.person_id if params.person_id
+      @affair_id = params.affair_id if params.affair_id
+      @affair = App.PersonAffair.find(@affair_id) if @affair_id
+      @can = params.can if params.can
     @render()
 
   render: =>
@@ -170,6 +180,37 @@ class Index extends App.ExtendedController
         sRequestType: "GET"
         iIndexColumn: 0
         fnSuccess: refresh_index)
+
+    first_category = PersonAffairProductsCategory.ordered()[0]
+    if first_category
+      @el.find("#person_affairs_products_category_#{first_category.id}")
+        .addClass("active")
+      @el.find("#person_affairs_products_nav a[href='#person_affairs_products_category_#{first_category.id}']")
+        .closest("li")
+        .addClass("active")
+
+    nav = @el.find("#person_affairs_products_nav")
+    update_category_position = (e) ->
+      ul = $(e.target).find("li")
+      order = $.map ul, (val, i) ->
+        $(val).data("id")
+
+      settings =
+        url: PersonAffairProductsCategory.url() + "/update",
+        type: 'POST',
+        data: {ids: order}
+
+      ajax_success = (data, textStatus, jqXHR) =>
+        PersonAffairProductsCategory.refresh([], clear: true)
+        PersonAffairProductsCategory.fetch()
+
+      # FIXME Add error validation
+      Spine.Ajax.queue =>
+        $.ajax(settings).success(ajax_success)
+
+
+    nav.sortable(
+      stop: update_category_position)
 
   edit: (e) ->
     @id = $(e.target).product()
@@ -263,7 +304,7 @@ class App.PersonAffairProducts extends Spine.Controller
       ProductProgram.one 'names_fetched', =>
         Permissions.get { person_id: @person_id, can: { invoice: ['create', 'update'] }}, (data) =>
           @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
-          @index.active {can: data}
+          @index.active {can: data, affair_id: @affair_id, person_id: @person_id}
           @edit.active {can: data}
           @edit.hide()
 

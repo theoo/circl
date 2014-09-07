@@ -5,7 +5,7 @@
         .validation_errors_placeholder
 
     .row
-      .col-md-12.autocompleted.form-group
+      .col-md-6.autocompleted.form-group
         %label{for: 'person_affair_product_search'}
           = I18n.t('product.views.product_search')
         %input{ type: 'search',
@@ -18,8 +18,7 @@
                name: 'product_id',
                value: @product.product_id}
 
-    .row
-      .col-md-12.autocompleted.form-group
+      .col-md-6.autocompleted.form-group
         %label{for: 'person_affair_product_program_search'}
           = I18n.t('product_program.views.program_search')
         %input{ type: 'search',
@@ -33,7 +32,7 @@
                value: @product.program_id}
 
     .row
-      .col-md-6.autocompleted.form-group
+      .col-md-3.autocompleted.form-group
         %label{for: 'person_affair_product_parent'}
           = I18n.t('common.parent')
         %input{ type: 'search',
@@ -46,7 +45,7 @@
                name: 'parent_id',
                value: @product.parent_id}
 
-      .col-md-6.autocompleted.form-group
+      .col-md-3.autocompleted.form-group
         %label{for: 'person_affair_product_category'}
           = I18n.t('common.category')
         %input{ type: 'search',
@@ -56,8 +55,7 @@
                 value: @product.category,
                 action: "/people/#{@person_id}/affairs/#{@affair_id}/products/categories"}
 
-    .row
-      .col-md-4.form-group
+      .col-md-2.form-group
         %label{for: 'person_affair_product_quantity'}
           = I18n.t('product.views.quantity')
         .input-group
@@ -71,7 +69,7 @@
             #affair-product-unit
               = @product.unit_symbol
 
-      .col-md-4.form-group
+      .col-md-2.form-group
         %label{for: 'person_affair_product_bid_percentage'}
           = I18n.t('product.views.bid')
         .input-group
@@ -85,7 +83,7 @@
                   value: @product.bid_percentage }
           .input-group-addon %
 
-      .col-md-4.form-group
+      .col-md-2.form-group
         %label{for: 'person_affair_product_position'}
           = I18n.t('product.views.position')
         %input{ type: 'number',
@@ -96,15 +94,18 @@
                 value: @product.position }
 
       .col-md-4
+      .col-md-2
         - if @product.value and @product.value != @product.bid_price
-          %label= I18n.t('product.views.normal_price')
-          %br
-          = @product.value.to_view(@product.value_currency)
-      .col-md-4
+          %small.help-block
+            = I18n.t('product.views.normal_price') + ": "
+            = @product.value.to_view(@product.value_currency)
+      .col-md-2
         - if @product.bid_price and @product.value != @product.bid_price
-          %label= I18n.t('product.views.bid_price')
-          %br
-          = @product.bid_price.to_view(@product.bid_price_currency)
+          %small.help-block
+            .text-danger
+              = I18n.t('product.views.bid_price') + ": "
+              = @product.bid_price.to_view(@product.bid_price_currency)
+      .col-md-4
 
     .row
       .col-lg-12

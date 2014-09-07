@@ -93,6 +93,7 @@ en:
     table:
       position: pos.
       quantity: qty.
+      unit_value: unit price
     template: template
     this_application_unique_id: This application unique ID is
     this_document_will_be_accessible_for_this_duration: This document will be accessible during %{duration}.

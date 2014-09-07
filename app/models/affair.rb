@@ -133,6 +133,11 @@ class Affair < ActiveRecord::Base
   has_many    :programs,
               through: :product_items
 
+  has_many    :product_categories,
+              -> { order(:position).uniq },
+              class_name: "AffairsProductsCategory",
+              dependent: :destroy
+
   has_many    :affairs_stakeholders
 
   has_many    :stakeholders,

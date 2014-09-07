@@ -49,3 +49,5 @@
   value: 'pay to confirm order'
 - key: default_invoice_conditions
   value: '10 days'
+- key: default_product_category_name
+  value: 'Product'

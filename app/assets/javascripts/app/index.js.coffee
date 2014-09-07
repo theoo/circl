@@ -101,7 +101,6 @@ class @PersonEdit extends App
 
   constructor: (params) ->
     super
-    
 
     @el.one 'dependencies_preloaded', =>
       # everything depend on this person

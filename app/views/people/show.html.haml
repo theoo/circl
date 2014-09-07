@@ -107,18 +107,19 @@
                 .panel-title
                   = I18n.t('person.views.affairs')
 
+        .col-md-12
+          - if can? :read, @person => Affair
+            #person_affair_products.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('affair.views.products')
+
         .col-md-6
           - if can? :read, @person => Affair
             #person_affair_subscriptions.panel.panel-default
               .panel-heading
                 .panel-title
                   = I18n.t('affair.views.subscriptions')
-
-          - if can? :read, @person => Affair
-            #person_affair_extras.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('affair.views.extras')
 
           - if can? :read, @person => TaskRate
             #person_affair_task_rates.panel.panel-default
@@ -134,10 +135,10 @@
                   = I18n.t('affair.views.tasks')
 
           - if can? :read, @person => Affair
-            #person_affair_products.panel.panel-default
+            #person_affair_extras.panel.panel-default
               .panel-heading
                 .panel-title
-                  = I18n.t('affair.views.products')
+                  = I18n.t('affair.views.extras')
 
       .well
         #balance

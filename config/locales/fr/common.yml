@@ -95,6 +95,7 @@ fr:
     table:
       position: pos.
       quantity: qte.
+      unit_value: prix unitaire
     template: modèle
     this_application_unique_id: L'identifiant unique de cette application est
     this_document_will_be_accessible_for_this_duration: Ce document sera accessible durant %{duration}.

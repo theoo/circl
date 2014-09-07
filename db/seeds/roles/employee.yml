@@ -25,6 +25,9 @@
 - subject: AffairsProductsProgram
   action: manage
 
+- subject: AffairsProductsCategory
+  action: manage
+
 - subject: Extra
   action: manage
 
