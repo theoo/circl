@@ -66,12 +66,13 @@ class AffairsProductsCategory < ActiveRecord::Base
   private
 
   def set_position_if_none_given
-    last_item = self.affair.product_categories.order(:position).last
-    if last_item
-      self.position = last_item.position + 1
-    else
-      self.position = 1
+    if affair
+      last_item = affair.product_categories.order(:position).last
+      if last_item
+        self.position = last_item.position + 1
+      end
     end
+    self.position ||= 1
   end
 
 end

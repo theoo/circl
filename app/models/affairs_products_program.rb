@@ -31,7 +31,6 @@ class AffairsProductsProgram < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
-  before_validation :set_position_if_none_given, if: Proc.new {|i| i.position.blank? }
 
   before_validation do
     unless category
@@ -43,6 +42,8 @@ class AffairsProductsProgram < ActiveRecord::Base
       end
     end
   end
+
+  before_validation :set_position_if_none_given, if: Proc.new {|i| i.position.blank? }
 
   before_save :update_value, if: 'value_in_cents.blank?'
 

@@ -42,7 +42,7 @@ class OpenSalariesDatatable
   def data
     salaries.map do |salary|
       description = capture_haml do
-        haml_tag :b, salary.person_name
+        haml_tag :b, salary.person.try(:name)
         haml_concat "-"
         haml_tag :i, salary.title
         haml_tag :br
