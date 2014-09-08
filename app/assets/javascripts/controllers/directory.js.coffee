@@ -2,6 +2,7 @@ $(document).ready ->
 
   # testing markers instead of container because to page may return and empty array of markers
   if $("[name=map_markers]").length > 0
+    $('html').height("100%")
     Ui.load_map('map_container')
 
   if $('#directory_json_query').length > 0

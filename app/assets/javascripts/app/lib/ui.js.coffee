@@ -537,7 +537,7 @@ class Ui
     return(win)
 
   load_map: (container_string, save_callback = undefined) ->
-    map_container = $("#" + container_string)
+    map_container = $(container_string)
     map_height = $(document).height() - 265
     map_height = 300 if map_height < 300
 
@@ -546,7 +546,7 @@ class Ui
     coordinates = $($.parseJSON $("[name=map_markers]").val())
     config = $.parseJSON $("[name=map_config]").val()
 
-    map = L.map(container_string)
+    map = L.map(container_string, {zoom: 16})
     markers = []
 
     # There is one marker

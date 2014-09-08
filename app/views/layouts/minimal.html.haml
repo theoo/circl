@@ -20,10 +20,8 @@
     :javascript
       Spine.Model.host = '#{request.protocol}#{request.host_with_port}';
 
-  %body#template-editor
+  %body.fullscreen
     ~ yield
-
-    = render partial: 'layouts/footer'
 
     - # optional controller's javascript file (not common)
     - if File.exists? [ Rails.root,

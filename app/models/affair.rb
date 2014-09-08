@@ -434,20 +434,7 @@ class Affair < ActiveRecord::Base
   end
 
   def product_items_for_category(cat)
-    if cat
-      product_items
-        .where("affairs_products_programs.category = ?", cat)
-    else
-      product_items
-        .joins(:product)
-        .where("affairs_products_programs.category is null")
-    end
-  end
-
-  def product_items_categories
-    product_items
-      .map(&:category)
-      .uniq
+    product_categories.where(title: cat).first.product_items
   end
 
   def product_items_category_value_for(cat)

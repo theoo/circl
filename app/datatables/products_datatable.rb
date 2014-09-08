@@ -60,11 +60,15 @@ class ProductsDatatable
     products = Product.order("#{sort_column} #{sort_direction}")
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      param = "^#{param}"
-      products = products.where( "products.key ~* ? OR
-                                  products.title ~* ? OR
-                                  products.description ~* ?",
-                                  *([param]*3))
+      if param.is_i?
+        products = products.where( "products.id = ?", param)
+      else
+        param = "^#{param}"
+        products = products.where( "products.key ~* ? OR
+                                    products.title ~* ? OR
+                                    products.description ~* ?",
+                                    *([param]*3))
+      end
     end
     products = products.page(page).per_page(per_page)
     products
