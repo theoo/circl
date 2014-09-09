@@ -8,8 +8,9 @@ $(document).ready ->
         url: "#{App.Person.url()}/#{id}",
         type: 'PUT',
         data:
-          latitude: latlng.lat,
-          longitude: latlng.lng
+          person:
+            latitude: latlng.lat,
+            longitude: latlng.lng
 
       ajax_error = (xhr, statusText, error) =>
         ph.removeClass "alert-success"

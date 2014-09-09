@@ -49,11 +49,17 @@ class PersonCommentsDatatable
         haml_concat comment.description
       end
 
+      classes = []
+      if ! comment.is_closed
+        classes << 'success'
+      end
+
       h ={
         0 => comment.created_at,
         1 => comment.person.try(:name),
         2 => description,
-        'id' => comment.id
+        'id' => comment.id,
+        'classes' => classes.join(" ")
       }
 
       h

@@ -292,7 +292,9 @@ class PeopleController < ApplicationController
     end
 
     def person_params
-      params.permit(
+      params
+        .require(:person)
+        .permit(
         :address,
         :address_for_bvr,
         :authentication_token,
@@ -326,7 +328,9 @@ class PeopleController < ApplicationController
         :title,
         :updated_at,
         :website,
-        :alias_name
+        :alias_name,
+        :password,
+        :password_confirmation
         )
     end
 
