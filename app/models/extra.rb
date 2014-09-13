@@ -48,8 +48,8 @@ class Extra < ActiveRecord::Base
   ###################
 
   validates :title, presence: true
-  validates :value, presence: true,
-                    numericality: { less_than_or_equal: 99999999.99, greater_than: 0 }
+  validates :value, presence: true
+                    # numericality: { less_than_or_equal: 99999999.99, greater_than: 0 }
   validates :position, presence: true
   # Unable to validae uniqueness when reordering
   # , uniqueness: { scope: :affair_id }
@@ -60,7 +60,7 @@ class Extra < ActiveRecord::Base
 
   # Validate fields of type 'text' length
   validates_length_of :description, maximum:  65535
-  
+
   ########################
   #### CLASS METHODS #####
   ########################
@@ -80,6 +80,10 @@ class Extra < ActiveRecord::Base
 
   def total_value
     value * quantity
+  end
+
+  def compute_vat
+    value / 100.0 * vat_percentage
   end
 
   ########################

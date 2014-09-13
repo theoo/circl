@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140907123110) do
+ActiveRecord::Schema.define(version: 20140913170144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -219,7 +219,7 @@ ActiveRecord::Schema.define(version: 20140907123110) do
     t.datetime "updated_at"
     t.integer  "vat_in_cents",   default: 0,     null: false
     t.string   "vat_currency",   default: "CHF", null: false
-    t.integer  "vat_percentage"
+    t.float    "vat_percentage"
   end
 
   add_index "extras", ["affair_id"], name: "index_extras_on_affair_id", using: :btree
@@ -290,7 +290,7 @@ ActiveRecord::Schema.define(version: 20140907123110) do
     t.boolean  "offered",                       default: false, null: false
     t.integer  "vat_in_cents",                  default: 0,     null: false
     t.string   "vat_currency",                  default: "CHF", null: false
-    t.integer  "vat_percentage"
+    t.float    "vat_percentage"
     t.text     "conditions"
   end
 

@@ -37,10 +37,10 @@
                 %td
                   %b= item.title
                   %br
-                  - if item.description.length > 250
-                    != item.description.replace(/\n/g, '<br/>').substring(0, 250).trim() + "..."
+                  - if item.description?.length > 250
+                    != item.description?.replace(/\n/g, '<br/>').substring(0, 250).trim() + "..."
                   - else
-                    != item.description.replace(/\n/g, '<br/>')
+                    != item.description?.replace(/\n/g, '<br/>')
 
                 %td.small-number= item.quantity + " " + I18n.t("product.units.#{item.unit_symbol}.symbol")
                 %td.number

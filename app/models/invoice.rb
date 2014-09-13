@@ -278,6 +278,10 @@ class Invoice < ActiveRecord::Base
     value + vat
   end
 
+  def compute_vat
+    value / 100.0 * vat_percentage
+  end
+
   # Returns true if receipts sum is greater or equal ot invoice value.
   def paid?
     return false if receipts.size == 0

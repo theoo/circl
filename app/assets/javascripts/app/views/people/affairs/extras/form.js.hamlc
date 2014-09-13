@@ -34,7 +34,7 @@
                     step: 0.01,
                     id: 'person_affair_extra_value',
                     class: 'required form-control',
-                    min: 0,
+                    min: -99999999.99,
                     max: 99999999.99,
                     name: 'value',
                     value: @extra.value }
