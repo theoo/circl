@@ -5,7 +5,7 @@
         .validation_errors_placeholder
 
     .row
-      .col-md-6.autocompleted.form-group
+      .col-md-4.autocompleted.form-group
         %label{for: 'person_affair_product_search'}
           = I18n.t('product.views.product_search')
         %input{ type: 'search',
@@ -18,7 +18,7 @@
                name: 'product_id',
                value: @product.product_id}
 
-      .col-md-6.autocompleted.form-group
+      .col-md-4.autocompleted.form-group
         %label{for: 'person_affair_product_program_search'}
           = I18n.t('product_program.views.program_search')
         %input{ type: 'search',
@@ -30,6 +30,16 @@
         %input{type: 'hidden',
                name: 'program_id',
                value: @product.program_id}
+
+      .col-md-4.autocompleted.form-group
+        %label{for: 'person_affair_product_category'}
+          = I18n.t('common.category')
+        %input{ type: 'search',
+                id: 'person_affair_product_category',
+                name: 'category',
+                class: 'form-control',
+                value: @product.category,
+                action: "/people/#{@person_id}/affairs/#{@affair_id}/products/categories"}
 
     .row
       .col-md-3.autocompleted.form-group
@@ -44,16 +54,6 @@
         %input{type: 'hidden',
                name: 'parent_id',
                value: @product.parent_id}
-
-      .col-md-3.autocompleted.form-group
-        %label{for: 'person_affair_product_category'}
-          = I18n.t('common.category')
-        %input{ type: 'search',
-                id: 'person_affair_product_category',
-                name: 'category',
-                class: 'form-control',
-                value: @product.category,
-                action: "/people/#{@person_id}/affairs/#{@affair_id}/products/categories"}
 
       .col-md-2.form-group
         %label{for: 'person_affair_product_quantity'}
@@ -92,6 +92,33 @@
                 name: 'position',
                 class: 'form-control number',
                 value: @product.position }
+
+      .col-sm-3
+        .form-group
+          %label{for: "person_affair_product_value"}
+            = I18n.t('common.value')
+          .input-group
+            .input-group-btn
+              - classes = ['btn', 'btn-default']
+              - if @product.value == @product.computed_value
+                - classes.push('disabled')
+              - else
+                - classes.push('btn-danger')
+
+              %button{type: 'button', class: classes.join(" "), name: 'reset_value'}
+                .icon-refresh
+
+            %input{ type: 'number',
+                    step: 0.01,
+                    id: "person_affair_product_value",
+                    class: 'form-control required',
+                    min: 0,
+                    max: 99999999.99,
+                    name: 'value',
+                    value: @product.value }
+
+            .input-group-addon
+              != @partial('select_currency')(currency: @product.value_currency, name: 'value_currency', value: @product.value)
 
       .col-md-4
       .col-md-2

@@ -14,7 +14,7 @@
           %thead
             %tr
               - # %th.ignore-sort= I18n.t('product.views.category')
-              %th.asc= I18n.t('common.table.position')
+              %th.ignore-sort.asc= I18n.t('common.table.position')
               %th.ignore-sort= I18n.t('common.key')
               %th.ignore-sort= I18n.t('common.description')
               %th.small-number.ignore-sort= I18n.t('common.table.quantity')

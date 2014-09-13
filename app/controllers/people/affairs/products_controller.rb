@@ -221,10 +221,14 @@ class People::Affairs::ProductsController < ApplicationController
     prod[:program_id] = nil unless prod[:program_id]
     prod[:product_id] = nil unless prod[:product_id]
 
+    prod[:value_currency] = ApplicationSetting.value("default_currency") if prod[:value_currency].blank?
+
     @product.assign_attributes(
       parent_id: prod[:parent_id],
       program_id: prod[:program_id],
       product_id: prod[:product_id],
+      value: prod[:value],
+      value_currency: prod[:value_currency],
       position: prod[:position],
       bid_percentage: prod[:bid_percentage],
       quantity: prod[:quantity])

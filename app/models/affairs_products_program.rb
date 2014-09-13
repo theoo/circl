@@ -70,6 +70,9 @@ class AffairsProductsProgram < ActiveRecord::Base
   validates :program_id, presence: true
   validates :category_id, presence: true
   validates :position, presence: true
+  validates :value_currency, presence: true
+  validates :value, presence: true
+  validates :position, presence: true
   # NOTE unable to validate uniqueness when reordering items
   #, uniqueness: { scope: :affair_id }
   validates :quantity, presence: true
@@ -117,20 +120,25 @@ class AffairsProductsProgram < ActiveRecord::Base
   def as_json(options = nil)
     h = super(options)
 
-    h[:program_key]         = program.try(:key)
-    h[:parent_key]          = parent.try(:product).try(:key)
-    h[:has_accessories]     = product.try(:has_accessories)
-    h[:key]                 = product.try(:key)
-    h[:title]               = variant.title.blank? ? product.title : [product.title, variant.title].join(" / ")
-    h[:description]         = product.try(:description)
-    h[:unit_price]          = unit_price.try(:to_f)
-    h[:unit_price_currency] = unit_price.try(:currency).try(:iso_code)
-    h[:value]               = value.to_f
-    h[:value_currency]      = value.currency.try(:iso_code)
-    h[:bid_price]           = bid_price.to_f
-    h[:bid_price_currency]  = bid_price.currency.try(:iso_code)
-    h[:unit_symbol]         = product.try(:unit_symbol)
-    h[:category]            = category.try(:title)
+    # NOTE currently products currency is forced to affair currency
+    affair_currency = affair.try(:value).try(:currency).try(:iso_code)
+
+    h[:program_key]            = program.try(:key)
+    h[:parent_key]             = parent.try(:product).try(:key)
+    h[:has_accessories]        = product.try(:has_accessories)
+    h[:key]                    = product.try(:key)
+    h[:title]                  = variant.title.blank? ? product.title : [product.title, variant.title].join(" / ")
+    h[:description]            = product.try(:description)
+    h[:unit_price]             = unit_price.to_money(affair_currency).try(:to_f)
+    h[:unit_price_currency]    = affair_currency
+    h[:value]                  = value.to_money(affair_currency).to_f
+    h[:value_currency]         = affair_currency
+    h[:bid_price]              = bid_price.to_money(affair_currency).to_f
+    h[:bid_price_currency]     = affair_currency
+    h[:computed_value]          = compute_value.to_money(affair_currency).to_f
+    h[:computed_value_currency] = affair_currency
+    h[:unit_symbol]            = product.try(:unit_symbol)
+    h[:category]               = category.try(:title)
 
     h[:errors]         = errors
 

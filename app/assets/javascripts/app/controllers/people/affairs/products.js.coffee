@@ -97,6 +97,7 @@ class Edit extends PersonAffairProductExtention
     'submit form': 'submit'
     'click a[name="cancel"]': 'cancel'
     'click button[name=person-affair-product-destroy]': 'destroy'
+    'click button[name=reset_value]': 'reset_value'
 
   constructor: ->
     super
@@ -145,6 +146,10 @@ class Edit extends PersonAffairProductExtention
         PersonAffairProductsProgram.refresh([], clear: true)
         PersonAffairProductsProgram.fetch()
         PersonAffair.fetch(id: @affair_id)
+
+  reset_value: (e) ->
+    e.preventDefault()
+    @el.find("#person_affair_product_value").val @product.computed_value
 
 class Index extends App.ExtendedController
   events:
