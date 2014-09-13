@@ -169,7 +169,7 @@ class Settings::ProductsController < ApplicationController
         { id: p.id,
           label: p.key,
           title: p.title,
-          desc: p.description.exerpt }
+          desc: p.description.try(:exerpt) }
       end
     end
 

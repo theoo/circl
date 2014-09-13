@@ -106,6 +106,12 @@ class People::AffairsController < ApplicationController
         @parent.product_items.each do |t|
           nt = t.dup
           nt.affair = @affair
+          if @affair.product_categories.where(title: t.category.title).count == 0
+            cat = @affair.product_categories.create!(title: t.category.title, position: t.category.position)
+          else
+            cat = @affair.product_categories.where(title: t.category.title).first
+          end
+          nt.category = cat
           raise ActiveRecord::Rollback unless nt.save
           parent_ids[t.id] = nt.id
           nt

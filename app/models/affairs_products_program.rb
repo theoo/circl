@@ -47,7 +47,7 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   before_save :update_value, if: 'value_in_cents.blank? || value_in_cents == 0'
 
-  after_save    :remove_empty_categories
+  after_destroy :remove_empty_categories
   # after_destroy :remove_empty_categories # Not working
 
   #################
@@ -224,7 +224,7 @@ class AffairsProductsProgram < ActiveRecord::Base
     # TODO improve SQL
     ids = affair.product_items.map(&:category_id).uniq
     empty_categories = affair.product_categories.where("id NOT IN (?)", ids)
-    AffairsProductsCategory.destroy(empty_categories) unless empty_categories.empty?
+    empty_categories.each{|c| c.destroy} unless empty_categories.empty?
   end
 
 end
