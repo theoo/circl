@@ -96,7 +96,10 @@ class AffairsProductsProgram < ActiveRecord::Base
     item = find(id)
 
     AffairsProductsProgram.transaction do
-      siblings = item.category.product_items.all.to_a
+      # Scope is the affair and not the category
+      # siblings = item.category.product_items.all.to_a
+
+      siblings = item.affair.product_items.all.to_a
 
       if from and to
         p = siblings.delete_at from - 1
@@ -123,22 +126,24 @@ class AffairsProductsProgram < ActiveRecord::Base
     # NOTE currently products currency is forced to affair currency
     affair_currency = affair.try(:value).try(:currency).try(:iso_code)
 
-    h[:program_key]            = program.try(:key)
-    h[:parent_key]             = parent.try(:product).try(:key)
-    h[:has_accessories]        = product.try(:has_accessories)
-    h[:key]                    = product.try(:key)
-    h[:title]                  = variant.title.blank? ? product.title : [product.title, variant.title].join(" / ")
-    h[:description]            = product.try(:description)
-    h[:unit_price]             = unit_price.to_money(affair_currency).try(:to_f)
-    h[:unit_price_currency]    = affair_currency
-    h[:value]                  = value.to_money(affair_currency).to_f
-    h[:value_currency]         = affair_currency
-    h[:bid_price]              = bid_price.to_money(affair_currency).to_f
-    h[:bid_price_currency]     = affair_currency
+    h[:program_key]             = program.try(:key)
+    h[:parent_key]              = parent.try(:product).try(:key)
+    h[:has_accessories]         = product.try(:has_accessories)
+    h[:key]                     = product.try(:key)
+    h[:title]                   = variant.title.blank? ? product.title : [product.title, variant.title].join(" / ")
+    h[:description]             = product.try(:description)
+    h[:unit_price]              = unit_price.to_money(affair_currency).try(:to_f)
+    h[:unit_price_currency]     = affair_currency
+    h[:value]                   = value.to_money(affair_currency).to_f
+    h[:value_currency]          = affair_currency
+    h[:bid_price]               = bid_price.to_money(affair_currency).to_f
+    h[:bid_price_currency]      = affair_currency
     h[:computed_value]          = compute_value.to_money(affair_currency).to_f
     h[:computed_value_currency] = affair_currency
-    h[:unit_symbol]            = product.try(:unit_symbol)
-    h[:category]               = category.try(:title)
+    h[:art]                     = variant ? variant.art.to_money(affair_currency).to_f : nil
+    h[:art_currency]            = affair_currency
+    h[:unit_symbol]             = product.try(:unit_symbol)
+    h[:category]                = category.try(:title)
 
     h[:errors]         = errors
 
@@ -182,7 +187,11 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   def set_position_if_none_given
     # TODO set position within category
-    last_item = category.product_items.order(:position).last
+    # Scope it from the affair and not the category
+    # last_item = category.product_items.order(:position).last
+
+    last_item = affair.product_items.order(:position).last
+
     if last_item
       if parent
         insert_in_list_if_accessory

@@ -13,6 +13,7 @@ en:
       regexp: A regular expression is expected.
       will_match_all_defined_thresholds: will match all defined thresholds
       will_match_all_selected_statuses: will match all selected statuses
+      estimate_value_update_notice: "When set as estimate, modifying prestations will influance affair's value automagically."
     views:
       actions:
         edit_affair: edit affair

@@ -34,6 +34,7 @@ en:
         title: unit
     views:
       after_sale: after sale
+      art: ART
       bid: MISSING_TRANSLATION bid
       bid_price: MISSING_TRANSLATION bid price
       category: MISSING_TRANSLATION category

@@ -68,7 +68,7 @@ if ActiveRecord::Base.connection.table_exists? 'currencies' \
     def to_doc
       m = exchange_to(Money.default_currency.iso_code)
 
-      format(:thousands_separator => Money.default_currency.delimiter,
+      m.format(:thousands_separator => Money.default_currency.delimiter,
         :decimal_mark => Money.default_currency.separator,
         :symbol => '')
     end

@@ -34,6 +34,7 @@ fr:
         title: unité
     views:
       after_sale: après-vente
+      art: TAR
       bid: remise
       bid_price: prix avec remise
       category: catégorie

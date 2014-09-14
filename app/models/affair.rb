@@ -443,9 +443,12 @@ class Affair < ActiveRecord::Base
 
   # Buffer method used to update value and statuses information after habtm relationship
   # alteration.
+  # Only update when affair is an estimate
   def update_on_prestation_alteration(record = nil)
-    self.update_attribute(:value, compute_value)
-    self.update_attribute(:status, update_statuses)
+    if estimate
+      self.update_attribute(:value, compute_value)
+      self.update_attribute(:status, update_statuses)
+    end
   end
 
   private

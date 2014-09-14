@@ -13,6 +13,7 @@ fr:
       regexp: Une expression rationnelle est attendue.
       will_match_all_defined_thresholds: Toutes les limites définies seront employées pour le tri.
       will_match_all_selected_statuses: Tous les status sélectionnés seront employés pour le tri.
+      estimate_value_update_notice: "Pour un devis, une modification des prestations influance la valeur de l'affaire automatiquement."
     views:
       actions:
         edit_affair: modifier l'affaire

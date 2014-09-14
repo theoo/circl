@@ -1,5 +1,10 @@
 - if App.PersonAffairProductsCategory.all().length > 0
   %ul#person_affairs_products_nav.nav.nav-tabs
+    %li
+      %a{href: '#person_affairs_products_category_global', :data-toggle => 'tab'}
+        = I18n.t("common.global").toUpperCase()
+        .badge= App.PersonAffairProductsProgram.all().length
+
     - for cat in App.PersonAffairProductsCategory.ordered()
       %li{"data-id": cat.id}
         %a{href: '#person_affairs_products_category_' + cat.id , :data-toggle => 'tab'}
@@ -7,6 +12,60 @@
           .badge= App.PersonAffairProductsProgram.for_category(cat.id).length
 
   .tab-content
+
+    %div{class: "tab-pane", id: "person_affairs_products_category_global"}
+      %table{name: "product_category_global", class: 'datatable'}
+        %thead
+          %tr
+            - # %th.ignore-sort= I18n.t('product.views.category')
+            %th.ignore-sort.asc= I18n.t('common.table.position')
+            %th.ignore-sort= I18n.t('common.key')
+            %th.ignore-sort= I18n.t('common.description')
+            %th.small-number.ignore-sort= I18n.t('common.table.quantity')
+            %th.small-number.ignore-sort= I18n.t('common.table.unit_value')
+            %th.number.ignore-sort= I18n.t('common.value')
+
+        %tbody
+          - for item in App.PersonAffairProductsProgram.all()
+            - classes = ['item']
+            - classes.push 'warning' if item.parent_id
+
+            - # id is required for datatable reordering
+            %tr{:data-id => item.id, class: classes.join(" "), id: item.id}
+              - # %td= item.category
+              %td.small-number= item.position
+              %td
+                %b= item.key
+                = "/"
+                = item.program_key
+              %td
+                %b= item.title
+                %br
+                - if item.description?.length > 250
+                  != item.description?.replace(/\n/g, '<br/>').substring(0, 250).trim() + "..."
+                - else
+                  != item.description?.replace(/\n/g, '<br/>')
+
+              %td.small-number= item.quantity + " " + I18n.t("product.units.#{item.unit_symbol}.symbol")
+              %td.number
+                = item.unit_price.to_view(@affair?.value_currency)
+              %td.number
+                - if item.value != item.bid_price
+                  %strike.text-danger= item.value.to_view(@affair?.value_currency)
+                  .text-danger
+                    = "-" + item.bid_percentage + "%"
+                  = item.bid_price.to_view(@affair?.value_currency)
+                - else
+                  = item.value.to_view(@affair?.value_currency)
+
+                - if item.art
+                  %br
+                  .help-block
+                    = I18n.t("product.views.art") + ": "
+                    = item.art.to_view(@affair?.value_currency)
+
+
+
     - for cat in App.PersonAffairProductsCategory.all()
       %div{class: "tab-pane", id: "person_affairs_products_category_#{cat.id}"}
 
@@ -53,6 +112,12 @@
                     = item.bid_price.to_view(@affair?.value_currency)
                   - else
                     = item.value.to_view(@affair?.value_currency)
+
+                  - if item.art
+                    %br
+                    .help-block
+                      = I18n.t("product.views.art") + ": "
+                      = item.art.to_view(@affair?.value_currency)
 
   .panel-footer
     .form-inline

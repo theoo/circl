@@ -55,6 +55,7 @@ fr:
     'false': faux
     file: fichier
     from: de
+    global: global
     good: bon
     hour: heure
     id: id
