@@ -19,8 +19,13 @@
 class AffairsDatatable
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
 
+  include ApplicationHelper
+  include Haml::Helpers
+
   def initialize(view)
     @view = view
+
+    init_haml_helpers
   end
 
   def as_json(options = {})
@@ -46,18 +51,25 @@ class AffairsDatatable
         classes.push("warning") if affair.estimate
       end
 
+      if affair.owner == affair.buyer and affair.owner == affair.receiver
+        people = affair.owner.name
+      else
+        people = ["<b>" + I18n.t("affair.views.owner") + "</b>: " + affair.owner.name,
+          "<b>" + I18n.t("affair.views.buyer") + "</b>: " + affair.buyer.name,
+          "<b>" + I18n.t("affair.views.receiver") + "</b>: " + affair.receiver.name].join("<br />")
+      end
+
+      value = affair_value_summary(affair)
+
       {
         0 => affair.id,
         1 => affair.title,
-        2 => [I18n.t("affair.views.owner")  + ": " + affair.owner.name,
-              I18n.t("affair.views.buyer")  + ": " + affair.buyer.name,
-              I18n.t("affair.views.receiver") + ": " + affair.receiver.name].join("<br />"),
-        3 => affair.invoices_count, # sql shortcut
-        4 => affair.receipts_count, # sql shortcut
-        5 => affair.invoices_sum.to_money.to_view, # sql shortcut
-        6 => affair.receipts_sum.to_money.to_view, # sql shortcut
-        7 => affair.translated_statuses,
-        8 => affair.created_at,
+        2 => people,
+        3 => value,
+        4 => "#{affair.invoices_sum.to_money.to_view} (#{affair.invoices_count})",
+        5 => "#{affair.receipts_sum.to_money.to_view} (#{affair.receipts_count})",
+        6 => affair.translated_statuses,
+        7 => affair.created_at,
         'id' => affair.id,
         'actions' => [ I18n.t('affair.views.actions.edit_affair') ],
         'classes' => classes.join(" "),

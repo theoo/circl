@@ -172,7 +172,7 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   def bid_price
     if bid_percentage
-      value - (value / 100 * bid_percentage)
+      (value.to_f - (value.to_f / 100.0 * bid_percentage)).to_money(value_currency)
     else
       value
     end
