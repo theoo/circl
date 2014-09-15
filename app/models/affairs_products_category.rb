@@ -56,6 +56,8 @@ class AffairsProductsCategory < ActiveRecord::Base
   # Attributes overridden - JSON API
   def as_json(options = nil)
     h = super(options)
+    h[:value]          = product_items.map(&:bid_price).sum.to_f
+    h[:value_currency] = affair.value.currency.try(:iso_code)
     h
   end
 

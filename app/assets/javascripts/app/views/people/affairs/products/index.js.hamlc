@@ -1,15 +1,17 @@
 - if App.PersonAffairProductsCategory.all().length > 0
   %ul#person_affairs_products_nav.nav.nav-tabs
-    %li
-      %a{href: '#person_affairs_products_category_global', :data-toggle => 'tab'}
-        = I18n.t("common.global").toUpperCase()
-        .badge= App.PersonAffairProductsProgram.all().length
+    %li.not-sortable
+      %a{href: '#person_affairs_products_category_global', :data-toggle => 'tab', class: 'primary'}
+        %b= I18n.t("common.global")
+        .badge= @affair?.products_count
+        .help-block= @affair?.products_value.to_view(@affair.value_currency)
 
     - for cat in App.PersonAffairProductsCategory.ordered()
       %li{"data-id": cat.id}
         %a{href: '#person_affairs_products_category_' + cat.id , :data-toggle => 'tab'}
           = cat.title
           .badge= App.PersonAffairProductsProgram.for_category(cat.id).length
+          .help-block= cat.value.to_view(cat.value_currency)
 
   .tab-content
 

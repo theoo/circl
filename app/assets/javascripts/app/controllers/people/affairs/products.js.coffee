@@ -189,9 +189,9 @@ class Index extends App.ExtendedController
 
     first_category = PersonAffairProductsCategory.ordered()[0]
     if first_category
-      @el.find("#person_affairs_products_category_#{first_category.id}")
+      @el.find("#person_affairs_products_category_global")
         .addClass("active")
-      @el.find("#person_affairs_products_nav a[href='#person_affairs_products_category_#{first_category.id}']")
+      @el.find("#person_affairs_products_nav a[href='#person_affairs_products_category_global']")
         .closest("li")
         .addClass("active")
 
@@ -216,7 +216,8 @@ class Index extends App.ExtendedController
 
 
     nav.sortable(
-      stop: update_category_position)
+      stop: update_category_position
+      items: 'li:not(.not-sortable)')
 
   edit: (e) ->
     @id = $(e.target).product()

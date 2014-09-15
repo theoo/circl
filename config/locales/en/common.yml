@@ -54,7 +54,7 @@ en:
     'false': 'false'
     file: file
     from: from
-    global: global
+    global: Global
     good: good
     hour: hour
     id: ID
