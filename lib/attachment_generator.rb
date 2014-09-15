@@ -41,7 +41,13 @@ class AttachmentGenerator
     # Convert to PDF in the same dir of odt
     system("lowriter --headless --convert-to pdf \"#{@tmp_file.path}\" --outdir \"#{@tmp_file.path.gsub(/([^\/]+.odt)$/, "")}\"")
     @pdf_path = @tmp_file.path.gsub(/\.odt$/,".pdf")
-    @pdf_file = File.open(@pdf_path, "r")
+
+    if File.exists?(@pdf_path)
+      @pdf_file = File.open(@pdf_path, "r")
+    else
+      @pdf_file = File.open(@general_error_file_path, "r")
+    end
+
     if block_given?
       yield(@object, @pdf_file)
     else
@@ -58,7 +64,13 @@ class AttachmentGenerator
     # Convert to PDF in the same dir of odt
     system("lowriter --headless --convert-to html \"#{@tmp_file.path}\" --outdir \"#{@tmp_file.path.gsub(/([^\/]+.odt)$/, "")}\"")
     @html_path = @tmp_file.path.gsub(/\.odt$/,".html")
-    @html_file = File.open(@html_path, "r")
+
+    if File.exists?(@html_path)
+      @html_file = File.open(@html_path, "r")
+    else
+      @html_file = File.open(@general_error_file_path, "r")
+    end
+
     if block_given?
       yield(@object, @html_file)
     else
@@ -76,7 +88,13 @@ class AttachmentGenerator
   def odt
     prepare
     # Re-read the file
-    @odt_file = File.open(@tmp_file.path, "r")
+
+    if File.exists?(@tmp_file)
+      @odt_file = File.open(@tmp_file, "r")
+    else
+      @odt_file = File.open(@general_error_file_path, "r")
+    end
+
     if block_given?
       yield(@object, @odt_file)
     else
@@ -93,6 +111,8 @@ class AttachmentGenerator
     @tmp_file = Tempfile.new(['pdf_generation' + @object.id.to_s, '.odt'], :encoding => 'ascii-8bit')
     @tmp_file.binmode
 
+    @general_error_file_path = "app/assets/odt/error.pdf"
+
     I18n.locale = @object.template.language.symbol
 
     begin
@@ -105,8 +125,10 @@ class AttachmentGenerator
 
   def cleanup
     # No need to destroy odt_file which is tmp_file
-    File.delete(@pdf_path) if @pdf_file
-    File.delete(@html_path) if @html_file
+    if @pdf_file.path != @general_error_file_path
+      File.delete(@pdf_path) if @pdf_file
+      File.delete(@html_path) if @html_file
+    end
     @tmp_file.unlink
   end
 
