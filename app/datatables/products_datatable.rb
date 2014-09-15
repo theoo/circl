@@ -41,7 +41,7 @@ class ProductsDatatable
       {
         0 => product.id,
         1 => product.key,
-        2 => "<b>" + product.title + "</b><br/>" + product.description,
+        2 => "<b>" + product.title.to_s + "</b><br/>" + product.description.to_s,
         3 => product.variants.count,
         4 => product.category,
         5 => product.updated_at,
