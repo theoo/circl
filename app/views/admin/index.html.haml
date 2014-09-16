@@ -28,13 +28,6 @@
 
     #affairs_tab.tab-pane
       .row
-        .col-lg-12
-          - if can? :update, Subscription
-            #admin_subscriptions.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('admin.views.subscriptions')
-
       .row
         .col-lg-12
           - if can? :update, Affair
@@ -42,6 +35,13 @@
               .panel-heading
                 .panel-title
                   = I18n.t('admin.views.affairs')
+
+        .col-lg-12
+          - if can? :update, Subscription
+            #admin_subscriptions.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('admin.views.subscriptions')
 
     #finances_tab.tab-pane
       .row

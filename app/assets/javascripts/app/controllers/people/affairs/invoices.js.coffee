@@ -136,6 +136,7 @@ class Edit extends App.ExtendedController
     @save_with_notifications @invoice, =>
       PersonAffair.fetch(id: @affair.id)
       PersonAffairReceipt.fetch()
+      @hide()
 
   destroy: (e) ->
     e.preventDefault()
@@ -338,6 +339,7 @@ class App.PersonAffairInvoices extends Spine.Controller
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', =>
+      console.log "hide"
       @new.show()
       @new.render()
 
