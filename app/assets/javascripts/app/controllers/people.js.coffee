@@ -27,6 +27,7 @@ class New extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click #person_map': 'open_map'
+    'click a[name="reset"]': 'reset'
 
   open_map: (e) ->
     e.preventDefault()

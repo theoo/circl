@@ -22,6 +22,8 @@ $.fn.application_setting = ->
   ApplicationSetting.find(elementID)
 
 class New extends App.ExtendedController
+  events:
+    'click a[name="reset"]': 'reset'
 
   render: =>
     @application_setting = new ApplicationSetting()

@@ -54,6 +54,12 @@ class App.ExtendedController extends Spine.Controller
     @el.parent().find("tr[data-id=#{$(e.target).attr('data-id')}]").removeClass('active')
     @hide()
 
+  reset: (e) ->
+    e.preventDefault()
+    @el.find("input").val("")
+    @el.find("textarea").val("")
+    @active()
+
   # stacked windows
   reset_notifications: ->
     # remove previous errors

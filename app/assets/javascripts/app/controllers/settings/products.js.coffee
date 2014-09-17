@@ -74,6 +74,7 @@ class New extends VariantsController
     'click a[name="cancel"]': 'cancel'
     'click button[name="remove_variant"]':  'remove_variant'
     'click button[name="add_variant"]':     'add_variant'
+    'click a[name="reset"]': 'reset'
 
   constructor: ->
     super

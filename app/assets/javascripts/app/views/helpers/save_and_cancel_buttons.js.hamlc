@@ -1,7 +1,11 @@
 - if @isNew? && @isNew()
-  %button{type: 'submit', class: 'btn btn-primary'}
-    .icon-download-alt
-    = I18n.t('common.create')
+  .btn-group
+    %a{name: 'reset', class: 'btn btn-default'}
+      .icon-refresh
+      = I18n.t('common.reset')
+    %button{type: 'submit', class: 'btn btn-primary'}
+      .icon-download-alt
+      = I18n.t('common.create')
 - else
   // when hitting 'enter' on a form the first button is triggered
   %button{type: 'submit', style: "visibility: hidden;"}

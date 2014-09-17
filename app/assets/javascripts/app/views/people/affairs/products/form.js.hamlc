@@ -87,7 +87,7 @@
         %label{for: 'person_affair_product_position'}
           = I18n.t('product.views.position')
         %input{ type: 'number',
-                step: 1,
+                step: "0.01",
                 id: 'person_affair_product_position',
                 name: 'position',
                 class: 'form-control number',

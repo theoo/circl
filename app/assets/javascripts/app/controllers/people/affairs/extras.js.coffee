@@ -24,6 +24,7 @@ class New extends App.ExtendedController
   events:
     'submit form': 'submit'
     'currency_changed select.currency_selector': 'on_currency_change'
+    'click a[name="reset"]': 'reset'
 
   constructor: ->
     super

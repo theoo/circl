@@ -27,6 +27,7 @@ $.fn.get_role = ->
 class New extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click a[name="reset"]': 'reset'
 
   constructor: ->
     super

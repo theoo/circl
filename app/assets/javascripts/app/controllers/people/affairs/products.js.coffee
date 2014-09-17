@@ -56,6 +56,7 @@ class PersonAffairProductExtention extends App.ExtendedController
 class New extends PersonAffairProductExtention
   events:
     'submit form': 'submit'
+    'click a[name="reset"]': 'reset'
 
   constructor: ->
     super

@@ -78,6 +78,7 @@ class AffairsProductsProgram < ActiveRecord::Base
   validates :quantity, presence: true
   # TODO edit if this validation should exists in application settings.
   # validate :uniquness_of_jointure, if: Proc.new {|i| i.new_record?}
+  validate :tree_depth, if: 'parent'
   validates_numericality_of :bid_percentage,
     greater_than_or_equal_to: 0,
     less_than_or_equal_to: 100,
@@ -92,27 +93,53 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   # If no from/to argument are given it will update position of the entire list
   # FIXME not sure the behavior is correct withou from/to
+
+  # from to are array indices
+  def self.change_position(pi, f, t)
+    p = @pis.delete_at f
+    @pis.insert(t, p)
+  end
+
+  def self.fix_children
+    @pis.each do |pi|
+      if pi.parent
+        if pi.position.floor != pi.parent.position.floor
+          change_position(pi, @pis.index(pi), @pis.index(pi.parent) + 1)
+        end
+      end
+    end
+  end
+
   def self.update_position(id, from = nil, to = nil)
     item = find(id)
 
     AffairsProductsProgram.transaction do
-      # Scope is the affair and not the category
-      # siblings = item.category.product_items.all.to_a
+      @pis = item.affair.product_items.to_a
 
-      siblings = item.affair.product_items.all.to_a
+      change_position(item, from - 1, to - 1)
+      fix_children
 
-      if from and to
-        p = siblings.delete_at from - 1
-        siblings.insert(to - 1, p)
-        siblings.delete(nil) # If there is holes in list they will be replace by nil
-      end
-
-      siblings.each_with_index do |s, i|
+      @pis.delete(nil) # If there is holes in list they will be replace by nil
+      @pis.each_with_index do |s, i|
         u = AffairsProductsProgram.find(s.id)
-        u.update_attributes(position: i + 1)
+        if s.parent
+          ipos = @pis.index(s) + 1
+          ppos = @pis.index(s.parent) + 1
+          pos  = ppos + ((ipos - ppos) * 0.01)
+          self.uberlog.debug [ppos, ipos, i, pos].inspect
+
+        else
+          pos = i + 1
+        end
+        u.update_attributes(position: pos)
       end
     end
     true
+  end
+
+  def self.uberlog()
+    return if Rails.env != "development"
+    @unique_logger ||= ActiveSupport::Logger.new("#{Rails.root}/log/uberdebug.log")
   end
 
   ########################
@@ -179,28 +206,27 @@ class AffairsProductsProgram < ActiveRecord::Base
     end
   end
 
+  # override sibilings method so nil parent doesn't returns the whole product_items database
+  def siblings
+    if parent
+      super
+    else
+      s = affair.product_items.where(parent: nil).where("id != ?", id)
+    end
+  end
+
+  def siblings_and_self
+    if parent
+      affair.product_items.where(parent: parent.id)
+    else
+      affair.product_items.where(parent: nil)
+    end
+  end
+
   private
 
   def update_value
     self.value = compute_value
-  end
-
-  def set_position_if_none_given
-    # TODO set position within category
-    # Scope it from the affair and not the category
-    # last_item = category.product_items.order(:position).last
-
-    last_item = affair.product_items.order(:position).last
-
-    if last_item
-      if parent
-        insert_in_list_if_accessory
-      else
-        self.position = last_item.position + 1
-      end
-    else
-      self.position = 1
-    end
   end
 
   def uniquness_of_jointure
@@ -210,22 +236,13 @@ class AffairsProductsProgram < ActiveRecord::Base
     end
   end
 
-  def insert_in_list_if_accessory
-    siblings = affair.product_items.all
+  def set_position_if_none_given
+    last_item = siblings.last
 
-    last_child = parent.children.order(:position).map(&:id)
-    last_child.delete(self.id) unless new_record?
-    if last_child.size > 0
-      i = siblings.to_a.index(affair.product_items.find(last_child.last)) + 1
+    if last_item
+      self.position = last_item.position + 1
     else
-      i = siblings.to_a.index(parent) + 1
-    end
-
-    self.position = i
-    siblings.insert i, self
-
-    siblings.each_with_index do |s, i|
-      s.update_attributes(position: i) unless s == self
+      self.position = 1
     end
   end
 
@@ -234,6 +251,13 @@ class AffairsProductsProgram < ActiveRecord::Base
     ids = affair.product_items.map(&:category_id).uniq
     empty_categories = affair.product_categories.where("id NOT IN (?)", ids)
     empty_categories.each{|c| c.destroy} unless empty_categories.empty?
+  end
+
+  def tree_depth
+    if parent.parent
+      errors.add :base, I18n.t("product_variant.errors.parent_cannot_be_the_child_of_another_product_item")
+      false
+    end
   end
 
 end

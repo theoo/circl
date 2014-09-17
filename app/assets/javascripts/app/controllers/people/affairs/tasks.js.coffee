@@ -32,6 +32,7 @@ class New extends App.TimesheetExtention
     'focus .time': 'select_content'
     'blur .time': 'on_time_change'
     'change select[name=task_type_id]': 'update_task_type_description'
+    'click a[name="reset"]': 'reset'
 
   constructor: (params) ->
     super

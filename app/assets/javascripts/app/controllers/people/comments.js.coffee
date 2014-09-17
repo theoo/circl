@@ -57,6 +57,7 @@ class Edit extends App.ExtendedController
     'click button[name="comment-reopen"]': 'reopen'
     'click button[name="comment-close"]': 'close'
     'click button[name="comment-destroy"]': 'destroy'
+    'click a[name="reset"]': 'reset'
 
   constructor: ->
     super

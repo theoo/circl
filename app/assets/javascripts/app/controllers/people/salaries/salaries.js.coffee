@@ -35,6 +35,7 @@ class New extends App.ExtendedController
   events:
     'submit form': 'submit'
     'change #person_salary_parent_id': 'render'
+    'click a[name="reset"]': 'reset'
 
   constructor: (params) ->
     super

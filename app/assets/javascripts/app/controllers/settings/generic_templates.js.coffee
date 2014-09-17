@@ -38,6 +38,7 @@ class ClassNamesExtention extends App.ExtendedController
 class New extends ClassNamesExtention
   events:
     'submit form' : 'submit'
+    'click a[name="reset"]': 'reset'
 
   constructor: ->
     super

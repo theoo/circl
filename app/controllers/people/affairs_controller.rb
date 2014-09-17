@@ -71,7 +71,7 @@ class People::AffairsController < ApplicationController
   def create
     success = false
     parent_ids = {}
-    @parent = Affair.find params[:parent_id] unless params[:parent_id].blank?
+    @parent = Affair.find params[:parent_id] if not params[:copy_parent].blank? and not params[:parent_id].blank?
 
     Affair.transaction do
       @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])

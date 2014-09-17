@@ -89,6 +89,7 @@ class New extends App.ExtendedController
 
   events:
     'submit form': 'submit'
+    'click a[name="reset"]': 'reset'
     'change select[name="condition_id"]': 'update_conditions'
     'click button[name="remove_item"]': 'remove_value_item'
     'click button[name="add_item"]': 'add_value_item'
@@ -101,6 +102,7 @@ class New extends App.ExtendedController
 
   active: (params) =>
     @person = Person.find(@person_id) if Person.exists(@person_id)
+    @copy_parent = false
 
     if params
       if params.parent_id
@@ -110,6 +112,7 @@ class New extends App.ExtendedController
           # create a new child based on its parent's data
           # parent_id is the current Affair which is clicked, already local
           parent = PersonAffair.find(@parent_id)
+          @copy_parent = "true"
           @template =
             owner_id:             parent.owner_id
             owner_name:           parent.owner_name

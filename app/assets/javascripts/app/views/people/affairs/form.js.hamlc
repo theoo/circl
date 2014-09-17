@@ -403,6 +403,9 @@
 
         .col-sm-4
           .pull-right
+            - if @copy_parent
+              %input{type: 'hidden', name: 'copy_parent', value: 'true'}
+
             != @partial('save_and_cancel_buttons')(@affair)
 
     - else

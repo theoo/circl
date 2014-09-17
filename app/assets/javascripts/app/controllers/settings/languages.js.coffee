@@ -24,6 +24,7 @@ $.fn.language = ->
 class New extends App.ExtendedController
   events:
     'submit form': 'submit'
+    'click a[name="reset"]': 'reset'
 
   render: =>
     @language = new Language()
