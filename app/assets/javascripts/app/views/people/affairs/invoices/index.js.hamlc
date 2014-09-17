@@ -15,8 +15,24 @@
         %td= i.id
         %td= i.buyer_name
         %td= i.title
-        %td.number
-          = i.value_with_taxes?.to_view(i.value_currency)
+        %td
+          - if App.ApplicationSetting.value('use_vat') == "true"
+            - without_taxes_translation = I18n.t("affair.views.value.without_taxes")
+          - else
+            - without_taxes_translation = I18n.t("affair.views.value.value")
+          %table.affair_value
+            %tr
+              %td= i.value?.to_view(i.value_currency)
+              %td= without_taxes_translation
+
+            - if App.ApplicationSetting.value('use_vat') == "true"
+              %tr
+                %td= i.vat?.to_view(i.value_currency)
+                %td= I18n.t("affair.views.value.vat")
+
+              %tr
+                %td= i.value_with_taxes?.to_view(i.value_currency)
+                %td= I18n.t("affair.views.value.with_taxes")
 
         %td.number= i.balance_value?.to_view(i.value_currency)
         %td= i.statuses
