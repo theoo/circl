@@ -17,7 +17,7 @@
         %td= i.title
         %td.number
           = i.value_with_taxes?.to_view(i.value_currency)
-          
+
         %td.number= i.balance_value?.to_view(i.value_currency)
         %td= i.statuses
         %td= i.created_at

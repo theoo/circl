@@ -48,6 +48,7 @@ class AffairsProductsProgram < ActiveRecord::Base
   before_save :update_value, if: 'value_in_cents.blank? || value_in_cents == 0'
 
   after_save :remove_empty_categories
+  after_destroy :remove_empty_categories
 
   #################
   ### RELATIONS ###

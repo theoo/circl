@@ -339,7 +339,6 @@ class App.PersonAffairInvoices extends Spine.Controller
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', =>
-      console.log "hide"
       @new.show()
       @new.render()
 

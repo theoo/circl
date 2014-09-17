@@ -46,4 +46,4 @@ class App.AdminAffairs extends Spine.Controller
 
   activate: ->
     super
-    Affair.fetch()
+    @index.render()
