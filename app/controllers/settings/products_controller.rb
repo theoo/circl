@@ -162,9 +162,9 @@ class Settings::ProductsController < ApplicationController
         { id: p.id,
           label: p.key,
           title: p.title,
-          desc: p.description.exerpt,
-          program_key: p.available_programs.first.key,
-          program_id: p.available_programs.first.id }
+          desc: p.description.try(:exerpt),
+          program_key: p.available_programs.first.try(:key),
+          program_id: p.available_programs.first.try(:id) }
       else
         { id: p.id,
           label: p.key,

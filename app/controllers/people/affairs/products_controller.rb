@@ -158,21 +158,33 @@ class People::Affairs::ProductsController < ApplicationController
       result = Product
         .joins(:product_items)
         .where("affairs_products_programs.affair_id = ?", @affair.id)
-        .where("products.key ~* ? OR products.title ~* ?", param, param)
+
+      if param.is_i?
+        result = result.where("affairs_products_programs.position = ?", param)
+      else
+        result = result.where("products.key ~* ? OR products.title ~* ?", *([param]*2))
+      end
+
       if result
-        hash = result.map{ |t|
-          {
-            id: @affair.product_items.where(product_id: t.id).first.id,
-            label: t.key,
-            title: t.title,
-            desc: t.description.exerpt
-          }
+        hashes = result.map{ |t|
+          @affair.product_items.where(product_id: t.id).map do |pi|
+            unless pi.parent
+              {
+                id: pi.try(:id),
+                label: t.key,
+                title: t.title,
+                desc: "position: " + pi.try(:position).try(:to_s)
+              }
+            end
+          end
         }
+        hashes = hashes.flatten.uniq
+        hashes.delete(nil)
       end
     end
 
     respond_to do |format|
-      format.json { render json: hash }
+      format.json { render json: hashes }
     end
   end
 
@@ -181,15 +193,12 @@ class People::Affairs::ProductsController < ApplicationController
 
     hash = {}
     if ! params[:term].blank?
-      result = []
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
 
-      # FIXME Use SQL
-      result = @affair.product_categories.map(&:title)
-      result.delete(nil)
+      result = @affair.product_categories.where("title ~ ?", param)
 
       if result
-        hash = result.map{ |t| {label: t} }
+        hash = result.map{ |t| {label: t.title} }
       end
     end
 
