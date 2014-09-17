@@ -19,8 +19,12 @@
 class InvoicesDatatable
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
 
+  include ApplicationHelper
+  include Haml::Helpers
+
   def initialize(view)
     @view = view
+    init_haml_helpers
   end
 
   def as_json(options = {})
@@ -40,7 +44,7 @@ class InvoicesDatatable
         0 => invoice.id,
         1 => invoice.buyer.name,
         2 => invoice.title,
-        3 => invoice.value.to_view,
+        3 => invoice_value_summary(invoice),
         4 => invoice.translated_statuses,
         5 => invoice.created_at,
         'id' => invoice.id,

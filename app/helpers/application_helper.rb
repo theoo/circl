@@ -154,5 +154,39 @@ module ApplicationHelper
     end # value
   end
 
+  def invoice_value_summary(invoice)
+
+    capture_haml do
+      haml_tag "table.affair_value" do
+        if ApplicationSetting.value('use_vat') == "true"
+          without_taxes_translation = I18n.t("affair.views.value.without_taxes")
+        else
+          without_taxes_translation = I18n.t("affair.views.value.value")
+        end
+
+        haml_tag :tr do
+          haml_tag :td, invoice.value.to_view
+          haml_tag :td, without_taxes_translation
+        end
+
+        if ApplicationSetting.value('use_vat') == "true"
+
+          haml_tag :tr do
+            haml_tag :td, invoice.vat.to_view
+            haml_tag :td, I18n.t("affair.views.value.vat")
+          end
+
+          haml_tag :tr do
+            haml_tag :td, invoice.value_with_taxes.to_view
+            haml_tag :td, I18n.t("affair.views.value.with_taxes")
+          end
+
+        end
+
+      end # table
+
+    end # value
+  end
+
 
 end
