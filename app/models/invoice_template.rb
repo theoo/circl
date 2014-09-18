@@ -75,7 +75,7 @@ class InvoiceTemplate < ActiveRecord::Base
   ###################
 
   # validations
-  validates_presence_of :title, :html, :language_id
+  validates_presence_of :title, :language_id
   validate :bvr_address_and_account_are_set
   validate :bvr_account_match_requirements
   validates_uniqueness_of :title
