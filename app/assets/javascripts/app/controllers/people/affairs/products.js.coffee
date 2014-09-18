@@ -99,6 +99,8 @@ class Edit extends PersonAffairProductExtention
     'click a[name="cancel"]': 'cancel'
     'click button[name=person-affair-product-destroy]': 'destroy'
     'click button[name=reset_value]': 'reset_value'
+    'change #person_affair_product_bid_percentage': 'clear_value'
+    'change #person_affair_product_quantity': 'clear_value'
 
   constructor: ->
     super
@@ -151,6 +153,10 @@ class Edit extends PersonAffairProductExtention
   reset_value: (e) ->
     e.preventDefault()
     @el.find("#person_affair_product_value").val @product.computed_value
+
+  clear_value: (e) ->
+    e.preventDefault()
+    @el.find("#person_affair_product_value").val null
 
 class Index extends App.ExtendedController
   events:
