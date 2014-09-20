@@ -78,13 +78,29 @@ class New extends VariantsController
 
   constructor: ->
     super
-    ProductProgram.bind 'names_fetched', @render
+    ProductProgram.bind 'names_fetched', @active
 
   active: (params) =>
+    @product = new Product(archive: false, has_accessories: true)
+    if params?.type == 'copy'
+      origin = Product.find(params.product_id)
+      @product.key = origin.key + "-" + I18n.t("common.copy")
+      @product.title = origin.title
+      @product.description = origin.description
+      @product.provider_id = origin.provider_id
+      @product.provider_name = origin.provider_name
+      @product.after_sale_id = origin.after_sale_id
+      @product.after_sale_name = origin.after_sale_name
+      @product.category = origin.category
+      @product.has_accessories = origin.has_accessories
+      @product.archive = origin.archive
+      @product.unit_symbol = origin.unit_symbol
+      @product.price_to_unit_rate = origin.price_to_unit_rate
+      @product.variants = origin.variants
+
     @render()
 
   render: =>
-    @product = new Product(archive: false, has_accessories: true)
     @html @view('settings/products/form')(@)
     @make_item_removable()
     @show()
@@ -105,6 +121,7 @@ class Edit extends VariantsController
     'click button[name=settings-product-destroy]': 'destroy'
     'click button[name="remove_variant"]':  'remove_variant'
     'click button[name="add_variant"]':     'add_variant'
+    'click a[name="product-copy"]': 'copy'
 
   constructor: ->
     super
@@ -132,8 +149,15 @@ class Edit extends VariantsController
 
   destroy: (e) ->
     e.preventDefault()
-    if confirm(I18n.t('common.are_you_sure'))
+    msg = I18n.t('common.are_you_sure') + "\n"
+    msg += I18n.t("product.notices.this_product_will_be_removed_in_all_related_affairs") + "\n"
+    msg += @product.affairs_count + " " + I18n.t("admin.views.affairs")
+    if confirm(msg)
       @destroy_with_notifications @product, @hide
+
+  copy: (e) ->
+    e.preventDefault()
+    @trigger 'copy', {product_id: @id, type: 'copy'}
 
 class Index extends App.ExtendedController
   events:
@@ -181,6 +205,10 @@ class App.SettingsProducts extends Spine.Controller
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()
+
+    @edit.bind 'copy', (params) =>
+      @new.active(params)
+      @edit.hide()
 
     @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id

@@ -156,11 +156,16 @@
             != @partial('save_and_cancel_buttons')(@product)
 
           - unless @product.isNew()
-            %button{type: 'button',
-                    class: 'btn btn-danger',
-                    name: 'settings-product-destroy'}
-              .icon-remove
-              = I18n.t("common.destroy")
+            .btn-group
+              %button{type: 'button',
+                      class: 'btn btn-danger',
+                      name: 'settings-product-destroy'}
+                .icon-remove
+                = I18n.t("common.destroy")
+              %a{name: "product-copy",
+                 class: 'btn btn-default' }
+                .icon-copy
+                = I18n.t('common.copy')
 - else
   .panel-body
     .alert.alert-warning

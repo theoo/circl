@@ -380,7 +380,6 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @trigger 'copy', {parent_id: @id, type: 'copy'}
 
-
 class Index extends App.ExtendedController
   events:
     'click tr.item': 'edit'

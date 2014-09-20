@@ -5,6 +5,7 @@ fr:
       no_existing_product_alert: Le catalogue des produits est vide, veuillez en créer pour en ajouter à une affaire.
       no_existing_product_button: Ajouter un produit
       no_existing_product_program_alert: Il n'existe pas de programme pour le regroupement des tarifs de produit, veuillez en ajouter ci-dessous avant de poursuivre avec la création de produit.
+      this_product_will_be_removed_in_all_related_affairs: Ce produit sera supprimé de toutes les affaires relatives.
     pdf:
       parent_position: position du parent
       parent_product_key: titre du produit parent

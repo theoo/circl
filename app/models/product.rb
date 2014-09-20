@@ -52,8 +52,9 @@ class Product < ActiveRecord::Base
   has_many :product_items, class_name: 'AffairsProductsProgram',
                            dependent: :destroy
 
-  has_many :programs, through: :product_items
-  has_many :affairs,  through: :product_items
+  has_many :programs, -> { uniq }, through: :product_items
+  has_many :affairs, -> { uniq }, through: :product_items
+
 
   scope :actives,  -> { where(archive: false)}
   scope :archived, -> { where(archive: true)}
@@ -82,6 +83,7 @@ class Product < ActiveRecord::Base
     h[:provider_name]   = provider.try(:name)
     h[:after_sale_name] = after_sale.try(:name)
 
+    h[:affairs_count] = affairs.count
     h[:variants_count] = variants.count
 
     h[:variants] = variants.map do |v|

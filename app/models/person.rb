@@ -897,7 +897,7 @@ class Person < ActiveRecord::Base
       if ec.is_running?
         errors.add(:base,
                   I18n.t('person.errors.cant_delete_person_who_has_running_contract'))
-        return false
+        false
       end
     end
   end

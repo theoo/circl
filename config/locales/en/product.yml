@@ -5,6 +5,7 @@ en:
       no_existing_product_alert: No existing product in CIRCL, please click below to add one.
       no_existing_product_button: Add a product
       no_existing_product_program_alert: No existing program, please add one below before continuing.
+      this_product_will_be_removed_in_all_related_affairs: This product will be removed from all related affairs.
     pdf:
       parent_position: parent position
       parent_product_key: parent product key
