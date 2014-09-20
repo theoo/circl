@@ -441,6 +441,24 @@ class Affair < ActiveRecord::Base
     product_items_for_category(cat).map(&:value).sum.to_money(value_currency)
   end
 
+  # This method returns product_items ordered by its current positions and ensure
+  # parent/children numerotation is respected.
+  # It can take an array of product_items and sort it.
+  # TODO lib
+  # TODO only one level, no deep recursion yet but would be nice
+  def product_items_positions(roots = nil)
+    h = {}
+    roots ||= product_items.where(parent_id: nil)
+    roots.each_with_index do |r, i|
+      i += 1
+      h[i] = r
+      if r.children.size > 0
+        r.children.each_with_index{|c, j| h[i + ((j + 1) * 0.01)] = c }
+      end
+    end
+    h
+  end
+
   # Buffer method used to update value and statuses information after habtm relationship
   # alteration.
   # Only update when affair is an estimate

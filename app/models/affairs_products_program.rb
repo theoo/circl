@@ -95,9 +95,9 @@ class AffairsProductsProgram < ActiveRecord::Base
   # FIXME not sure the behavior is correct withou from/to
 
   # from to are array indices
-  def self.change_position(pi, f, t)
-    p = @pis.delete_at f
-    @pis.insert(t, p)
+  def self.change_position(pis, f, t)
+    p = pis.delete_at f
+    pis.insert(t, p)
   end
 
   def self.fix_children
@@ -113,29 +113,45 @@ class AffairsProductsProgram < ActiveRecord::Base
   def self.update_position(id, from = nil, to = nil)
     item = find(id)
 
+    positions = item.affair.product_items_positions
+    # raise ArgumentError, positions.map{|k,v| [k, v.id]}.inspect
+    change_position(positions.values, from - 1, to - 1) if from and to
+
     AffairsProductsProgram.transaction do
-      @pis = item.affair.product_items.to_a
-
-      change_position(item, from - 1, to - 1)
-      fix_children
-
-      @pis.delete(nil) # If there is holes in list they will be replace by nil
-      @pis.each_with_index do |s, i|
-        u = AffairsProductsProgram.find(s.id)
-        if s.parent
-          ipos = @pis.index(s) + 1
-          ppos = @pis.index(s.parent) + 1
-          pos  = ppos + ((ipos - ppos) * 0.01)
-          self.uberlog.debug [ppos, ipos, i, pos].inspect
-
-        else
-          pos = i + 1
-        end
-        u.update_attributes(position: pos)
+      item.affair.product_items_positions(positions).each do |k, v|
+        v.update_attributes(position: k) if v.position != k and v != item
       end
     end
     true
   end
+
+  # def self.update_position(id, from = nil, to = nil)
+  #   item = find(id)
+
+  #   AffairsProductsProgram.transaction do
+  #     @pis = item.affair.product_items.to_a
+
+  #     change_position(item, from - 1, to - 1)
+  #     fix_children
+
+  #     @pis.delete(nil) # If there is holes in list they will be replace by nil
+  #     @pis.each_with_index do |s, i|
+  #       u = AffairsProductsProgram.find(s.id)
+  #       if s.parent
+  #         ipos = @pis.index(s) + 1
+  #         ppos = @pis.index(s.parent) + 1
+  #         pos  = ppos + ((ipos - ppos) * 0.01)
+  #         self.uberlog.debug [ppos, ipos, i, pos].inspect
+
+  #       else
+  #         pos = i + 1
+  #       end
+  #       u.update_attributes(position: pos)
+  #     end
+  #   end
+  #   true
+  # end
+
 
   def self.uberlog()
     return if Rails.env != "development"
