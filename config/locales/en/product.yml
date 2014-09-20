@@ -36,12 +36,14 @@ en:
     views:
       after_sale: after sale
       art: ART
-      bid: MISSING_TRANSLATION bid
-      bid_price: MISSING_TRANSLATION bid price
-      category: MISSING_TRANSLATION category
+      bid: bid
+      bid_price: bid price
+      category: category
+      comments: comments
       has_accessories: has accessories
       key: key
-      normal_price: MISSING_TRANSLATION normal price
+      normal_price: normal price
+      ordered_at: order date
       position: position
       price_to_unit_rate: Price to unit rate
       product_search: product

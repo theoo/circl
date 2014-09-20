@@ -171,6 +171,7 @@ class AffairsProductsProgram < ActiveRecord::Base
     h[:art_currency]            = affair_currency
     h[:unit_symbol]             = product.try(:unit_symbol)
     h[:category]                = category.try(:title)
+    h[:created_at]              = created_at.to_date # Override datetime
 
     h[:errors]         = errors
 

@@ -95,8 +95,8 @@ class People::Affairs::ProductsController < ApplicationController
 
     # If @affair.product_items << OBJ is used, then update_on_prestation_alteration is called
     # which will fail as long as the product item is not saved.
-    @product = AffairsProductsProgram.new(affair_id: @affair.id)
-    update_instance(params)
+    params[:affair_id] = @affair.id
+    @product = AffairsProductsProgram.new(product_params)
 
     respond_to do |format|
       if @product.save
@@ -123,10 +123,9 @@ class People::Affairs::ProductsController < ApplicationController
     authorize! :update, @person => AffairsProductsProgram
 
     @product = @affair.product_items.find(params[:id])
-    update_instance(params)
 
     respond_to do |format|
-      if @product.save
+      if @product.update_attributes(product_params)
         format.json { render json: @product }
       else
         format.json { render json: @product.errors, status: :unprocessable_entity }
@@ -224,31 +223,31 @@ class People::Affairs::ProductsController < ApplicationController
 
   private
 
-  # TODO Migrate to require().permit()
-  def update_instance(prod)
-    # remove relations if not sent
-    prod[:parent_id] = nil unless prod[:parent_id]
-    prod[:program_id] = nil unless prod[:program_id]
-    prod[:product_id] = nil unless prod[:product_id]
+  def product_params
+    params[:value_currency] = ApplicationSetting.value("default_currency") if params[:value_currency].blank?
 
-    prod[:value_currency] = ApplicationSetting.value("default_currency") if prod[:value_currency].blank?
+    p = params.permit(
+        :parent_id,
+        :program_id,
+        :product_id,
+        :value,
+        :value_currency,
+        :position,
+        :bid_percentage,
+        :quantity,
+        :comment,
+        :ordered_at
+      )
 
-    @product.assign_attributes(
-      parent_id: prod[:parent_id],
-      program_id: prod[:program_id],
-      product_id: prod[:product_id],
-      value: prod[:value],
-      value_currency: prod[:value_currency],
-      position: prod[:position],
-      bid_percentage: prod[:bid_percentage],
-      quantity: prod[:quantity])
-
-    if ! prod[:category].blank? and prod[:category] != @product.category.try(:title)
-      cat = @product.affair.product_categories.where(title: prod[:category]).first
-      cat ||= @product.affair.product_categories.create!(title: prod[:category])
+    category = params[:category]
+    if ! category.blank? and category != @product.category.try(:title)
+      cat = @product.affair.product_categories.where(title: category).first
+      cat ||= @product.affair.product_categories.create!(title: category)
       @product.category = cat
       @product.position = nil # Reset position so it goesn at the end of the category list.
     end
+
+    p
   end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140917175530) do
+ActiveRecord::Schema.define(version: 20140920145543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,11 +77,14 @@ ActiveRecord::Schema.define(version: 20140917175530) do
     t.integer  "value_in_cents", default: 0,     null: false
     t.string   "value_currency", default: "CHF", null: false
     t.integer  "category_id"
+    t.text     "comment"
+    t.datetime "ordered_at"
   end
 
   add_index "affairs_products_programs", ["affair_id", "product_id", "position"], name: "affairs_products_programs_unique_position", using: :btree
   add_index "affairs_products_programs", ["affair_id"], name: "index_affairs_products_programs_on_affair_id", using: :btree
   add_index "affairs_products_programs", ["category_id"], name: "index_affairs_products_programs_on_category_id", using: :btree
+  add_index "affairs_products_programs", ["ordered_at"], name: "index_affairs_products_programs_on_ordered_at", using: :btree
   add_index "affairs_products_programs", ["parent_id"], name: "index_affairs_products_programs_on_parent_id", using: :btree
   add_index "affairs_products_programs", ["product_id"], name: "index_affairs_products_programs_on_product_id", using: :btree
   add_index "affairs_products_programs", ["program_id"], name: "index_affairs_products_programs_on_program_id", using: :btree

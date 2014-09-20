@@ -31,6 +31,7 @@
           - for item in App.PersonAffairProductsProgram.all()
             - classes = ['item']
             - classes.push 'warning' if item.parent_id
+            - classes.push 'success' if item.ordered_at
 
             - # id is required for datatable reordering
             %tr{:data-id => item.id, class: classes.join(" "), id: item.id}
@@ -47,6 +48,10 @@
                   != item.description?.replace(/\n/g, '<br/>').substring(0, 250).trim() + "..."
                 - else
                   != item.description?.replace(/\n/g, '<br/>')
+
+                - if item.comment
+                  %pre
+                    = item.comment
 
               %td.small-number= item.quantity + " " + I18n.t("product.units.#{item.unit_symbol}.symbol")
               %td.number

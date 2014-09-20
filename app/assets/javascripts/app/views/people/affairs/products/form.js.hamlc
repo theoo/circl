@@ -120,19 +120,33 @@
             .input-group-addon
               != @partial('select_currency')(currency: @product.value_currency, name: 'value_currency', value: @product.value)
 
-      .col-md-4
+    .row
+      .col-md-5.form-group
+        %label{class: 'label-control'}
+          = I18n.t('product.views.comments')
+        %textarea{name: 'comment',
+                  rows: 3,
+                  class: 'form-control'}
+          = @product.comment
+
+      .col-sm-2.form-group
+        %label
+          = I18n.t('product.views.ordered_at')
+        %input{ type: 'text',
+                name: 'ordered_at',
+                class: 'datepicker form-control',
+                value: @product.ordered_at }
+
       .col-md-2
+
+      .col-md-3
         - if @product.value and @product.value != @product.bid_price
           %small.help-block
             = I18n.t('product.views.normal_price') + ": "
             = @product.value.to_view(@product.value_currency)
-      .col-md-2
-        - if @product.bid_price and @product.value != @product.bid_price
-          %small.help-block
             .text-danger
               = I18n.t('product.views.bid_price') + ": "
               = @product.bid_price.to_view(@product.bid_price_currency)
-      .col-md-4
 
     .row
       .col-lg-12

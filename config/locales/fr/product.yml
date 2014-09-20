@@ -39,9 +39,11 @@ fr:
       bid: remise
       bid_price: prix avec remise
       category: catégorie
+      comments: commentaires
       has_accessories: accessoires
       key: clé
       normal_price: prix normal
+      ordered_at: date de commande
       position: position
       price_to_unit_rate: rapport de conversion du prix
       product_search: produit
