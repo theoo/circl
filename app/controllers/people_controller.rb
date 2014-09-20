@@ -208,18 +208,25 @@ class PeopleController < ApplicationController
       results = []
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      s = param.match(/([[:alpha:]]+)\s+([a-zA-Z]+)/)
-      if s and s.size == 3
-        results = @people.where("people.first_name ~* ? AND
-                                people.last_name ~* ?",
-                                s[1], s[2]).limit(50)
+      # Check if it's an email
+      if param.match(/.*@.*/)
+        results = @people.where("people.email ~* ? OR people.second_email ~* ?", param, param)
       else
-        results = @people.where("people.first_name ~* ? OR
-                                people.last_name ~* ? OR
-                                people.organization_name ~* ? OR
-                                people.alias_name ~* ?",
-                                *([param] * 4)).limit(50)
+        # Check if it looks like a first/last name pair
+        s = param.match(/([[:alpha:]]+)\s+([a-zA-Z]+)/)
+        if s and s.size == 3
+          results = @people.where("people.first_name ~* ? AND
+                                  people.last_name ~* ?",
+                                  s[1], s[2])
+        else
+          results = @people.where("people.first_name ~* ? OR
+                                  people.last_name ~* ? OR
+                                  people.organization_name ~* ? OR
+                                  people.alias_name ~* ?",
+                                  *([param] * 4))
+        end
       end
+      results.limit(10)
     end
 
     a = results.map do |p|

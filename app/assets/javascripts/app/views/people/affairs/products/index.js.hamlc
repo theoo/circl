@@ -4,7 +4,7 @@
       %a{href: '#person_affairs_products_category_global', :data-toggle => 'tab', class: 'primary'}
         %b= I18n.t("common.global")
         .badge= App.PersonAffairProductsProgram.all().length
-        .help-block= App.PersonAffairProductsProgram.all().reduce(((sum, i) -> sum + i.value), 0).to_view(@affair?.value_currency)
+        .help-block= App.PersonAffairProductsProgram.all().reduce(((sum, i) -> sum + i.bid_price), 0).to_view(@affair?.value_currency)
 
     - for cat in App.PersonAffairProductsCategory.ordered()
       %li{"data-id": cat.id}

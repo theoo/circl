@@ -1,7 +1,7 @@
 .panel-body
-  %form
-    .row
-      .col-lg-12.form-group
+  .row
+    .col-lg-12.form-group
+      %form.dashboard_shortcuts_person
         %label{for: 'dashboard_shortcuts_person', class: 'label-control'}
           = I18n.t('common.contact')
         .autocompleted.input-group
@@ -13,10 +13,11 @@
           %input{type: 'hidden',
                  name: 'dashboard_shortcuts_person_id' }
           .input-group-btn
-            %button{ class: 'btn btn-default', name: "dashboard_shortcuts_person_jump" }
+            %button{ class: 'btn btn-default', type: 'submit', name: "dashboard_shortcuts_person_jump" }
               .icon-play
-    .row
-      .col-lg-12.form-group
+  .row
+    .col-lg-12.form-group
+      %form.dashboard_shortcuts_affair
         %label{for: 'dashboard_shortcuts_affair', class: 'label-control'}
           = I18n.t('common.affair')
         .autocompleted.input-group
@@ -28,7 +29,7 @@
           %input{type: 'hidden',
                  name: 'dashboard_shortcuts_affair_id' }
           .input-group-btn
-            %button{ class: 'btn btn-default', name: "dashboard_shortcuts_affair_jump" }
+            %button{ class: 'btn btn-default', type: 'submit', name: "dashboard_shortcuts_affair_jump" }
               .icon-play
 
 

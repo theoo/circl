@@ -18,8 +18,8 @@ Salary = App.Salary
 
 class Index extends App.ExtendedController
   events:
-    'click button[name=dashboard_shortcuts_person_jump]': 'select_person'
-    'click button[name=dashboard_shortcuts_affair_jump]': 'select_affair'
+    'submit form.dashboard_shortcuts_person': 'select_person'
+    'submit form.dashboard_shortcuts_affair': 'select_affair'
 
   constructor: (params) ->
     super
