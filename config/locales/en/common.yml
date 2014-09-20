@@ -9,6 +9,7 @@ en:
     adjust: adjust
     admin: administration
     administration: Administration
+    affair: affair
     apply: apply
     archive: archive
     are_you_sure: Are you sure?
@@ -20,6 +21,7 @@ en:
     cancel: cancel
     category: category
     close: close
+    contact: contact
     create: create
     created_at: created at
     css: CSS

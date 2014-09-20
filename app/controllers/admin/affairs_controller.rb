@@ -31,6 +31,7 @@ class Admin::AffairsController < ApplicationController
 
   def show
     respond_to do |format|
+      format.html { redirect_to person_path(@affair.owner, anchor: 'affairs')}
       format.json { render json: @affair }
     end
   end
@@ -41,7 +42,13 @@ class Admin::AffairsController < ApplicationController
       result = []
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @affairs.where("affairs.title ~* ?", param)
+      if param.is_i?
+        result = @affairs.where("affairs.id = ?", param)
+      else
+        param.gsub!(/\s+/, ".*")
+        result = @affairs.where("affairs.title ~* ?", param)
+      end
+      result = result.limit(10)
     end
 
     respond_to do |format|

@@ -63,6 +63,12 @@
               = I18n.t('person.dashboard.panels.open_salaries')
 
     .col-md-6
+      - if can? :read, @person => Affair
+        #dashboard_shortcuts.panel.panel-default
+          .panel-heading
+            .panel-title
+              = I18n.t('person.dashboard.panels.shortcuts')
+
       -# if can? :read, @person => Person # messages
       -# TODO
       - if false

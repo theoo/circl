@@ -208,14 +208,31 @@ class PeopleController < ApplicationController
       results = []
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      results = @people.where("people.first_name ~* ? OR
-                              people.last_name ~* ? OR
-                              people.organization_name ~* ?",
-                              *([param] * 3)).limit(50)
+      s = param.match(/([[:alpha:]]+)\s+([a-zA-Z]+)/)
+      if s and s.size == 3
+        results = @people.where("people.first_name ~* ? AND
+                                people.last_name ~* ?",
+                                s[1], s[2]).limit(50)
+      else
+        results = @people.where("people.first_name ~* ? OR
+                                people.last_name ~* ? OR
+                                people.organization_name ~* ? OR
+                                people.alias_name ~* ?",
+                                *([param] * 4)).limit(50)
+      end
     end
 
+    a = results.map do |p|
+      if p.is_an_organization
+        { label: p.name, title: p.full_name, desc: p.full_address, id: p.id }
+      else
+        { label: p.name, desc: p.full_address, id: p.id }
+      end
+    end
+
+
     respond_to do |format|
-      format.json { render json: results.map{ |p| { label: p.name, id: p.id }}}
+      format.json { render json: a}
     end
   end
 

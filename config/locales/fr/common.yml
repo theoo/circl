@@ -10,6 +10,7 @@ fr:
     admin: Administration
     administration: Administration
     apply: appliquer
+    affair: affaire
     archive: archive
     are_you_sure: En êtes-vous sur?
     browser:
@@ -20,6 +21,7 @@ fr:
     cancel: annuler
     category: catégorie
     close: fermer
+    contact: contact
     create: créer
     created_at: création
     css: CSS

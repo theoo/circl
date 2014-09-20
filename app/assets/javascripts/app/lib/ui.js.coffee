@@ -409,6 +409,7 @@ class Ui
                 .autocomplete
                   source: text_field.attr('action')
                   select: select_callback
+                  create: (e) -> $(@).prev('.ui-helper-hidden-accessible').remove() # prevent accessibility span creation
                 .data("ui-autocomplete")._renderItem = (ul, item) ->
                   if item.title or item.desc
                     content = $("<a><b>#{item.label}</b></a>")
