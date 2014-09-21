@@ -50,5 +50,6 @@ fr:
       products_list_pdf_title: List des produits pour l'affaire <i>%{affair_title}</i>
       provider: fournisseur
       quantity: quantité
+      reorder: réordrer
       unit: unité
       variants: variantes

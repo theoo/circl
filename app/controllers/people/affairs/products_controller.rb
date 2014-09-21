@@ -206,11 +206,28 @@ class People::Affairs::ProductsController < ApplicationController
     end
   end
 
-  def change_order
+  def change_position
     authorize! :update, @person => AffairsProductsProgram
     @product = AffairsProductsProgram.find(params[:id])
 
-    success = AffairsProductsProgram.update_position(@product.id, params[:fromPosition].to_i, params[:toPosition].to_i)
+    # send table index position
+    success = @product.update_table_index_position(params[:toPosition].to_i - 1)
+    # success = AffairsProductsProgram.update_position(@product.id, params[:fromPosition].to_i, params[:toPosition].to_i)
+
+    respond_to do |format|
+      if success
+        format.json { render json: @affair.product_items.all }
+      else
+        format.json { render json: @product.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def reorder
+    authorize! :update, @person => AffairsProductsProgram
+
+    success = @affair.reorder_product_items!
+
 
     respond_to do |format|
       if success

@@ -459,6 +459,12 @@ class Affair < ActiveRecord::Base
     h
   end
 
+  def reorder_product_items!
+    product_items_positions.each do |pos, prod|
+      prod.update_attributes(position: pos)
+    end
+  end
+
   # Buffer method used to update value and statuses information after habtm relationship
   # alteration.
   # Only update when affair is an estimate

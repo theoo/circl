@@ -50,5 +50,6 @@ en:
       products_list_pdf_title: products list pdf title
       provider: provider
       quantity: quantity
+      reorder: reorder
       unit: unit
       variants: variants

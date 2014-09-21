@@ -166,6 +166,7 @@ class Index extends App.ExtendedController
     'click a[name=affair-products-pdf]': 'pdf'
     'click a[name=affair-products-odt]': 'odt'
     'click a[name=affair-products-preview]': 'preview'
+    'click button[name=affair-product_items-reorder]': 'reorder'
 
   constructor: (params) ->
     super
@@ -189,7 +190,7 @@ class Index extends App.ExtendedController
 
     @el.find('table.datatable')
       .rowReordering(
-        sURL: PersonAffairProductsProgram.url() + "/change_order"
+        sURL: PersonAffairProductsProgram.url() + "/change_position"
         sRequestType: "GET"
         iIndexColumn: 0
         fnSuccess: refresh_index)
@@ -285,6 +286,20 @@ class Index extends App.ExtendedController
       window.open "#{PersonAffairProductsProgram.url()}.html?template_id=#{@template_id}", "affair_products_preview"
 
     win.modal('show')
+
+  reorder: (e) ->
+    e.preventDefault()
+    settings =
+      url: PersonAffairProductsProgram.url() + "/reorder",
+      type: 'POST'
+
+    ajax_success = (data, textStatus, jqXHR) =>
+      PersonAffairProductsProgram.refresh([], clear: true)
+      PersonAffairProductsProgram.fetch()
+
+    # FIXME Add error validation
+    Spine.Ajax.queue =>
+      $.ajax(settings).success(ajax_success)
 
 class App.PersonAffairProducts extends Spine.Controller
   className: 'products'
