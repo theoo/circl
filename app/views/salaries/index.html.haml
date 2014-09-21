@@ -14,15 +14,15 @@
   .container
     #secondary_navigation.collapse.navbar-collapse
       %ul#sub_nav.nav.navbar-nav
-        - if can? :read, Salaries::Salary
-          %li
-            %a{href: '#payroll_tab'}
-              = I18n.t('common.salaries')
-
         - if can? :create, Salaries::Tax
           %li
             %a{href: '#deductions_tab'}
               = I18n.t('salary.views.taxes')
+
+        - if can? :read, Salaries::Salary
+          %li
+            %a{href: '#payroll_tab'}
+              = I18n.t('common.salaries')
 
 .container
   .row
@@ -33,15 +33,6 @@
     .col-lg-3
 
   .tab-content
-    #payroll_tab.tab-pane.fade
-      .row
-        .col-lg-12
-          - if can? :read, Salaries::Salary
-            #salaries_salaries.panel.panel-primary
-              .panel-heading
-                .panel-title
-                  = I18n.t('common.salaries')
-
     #deductions_tab.tab-pane.fade
       .row
         .col-lg-12
@@ -50,3 +41,12 @@
               .panel-heading
                 .panel-title
                   = I18n.t('salary.views.taxes')
+
+    #payroll_tab.tab-pane.fade
+      .row
+        .col-lg-12
+          - if can? :read, Salaries::Salary
+            #salaries_salaries.panel.panel-primary
+              .panel-heading
+                .panel-title
+                  = I18n.t('common.salaries')
