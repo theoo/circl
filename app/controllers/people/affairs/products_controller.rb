@@ -243,26 +243,29 @@ class People::Affairs::ProductsController < ApplicationController
   def product_params
     params[:value_currency] = ApplicationSetting.value("default_currency") if params[:value_currency].blank?
 
+    category = params[:category]
+    if ! category.blank?
+      cat = @affair.product_categories.where(title: category).first
+      cat ||= @affair.product_categories.create!(title: category)
+      params[:category_id] = cat.id
+    end
+    params.delete(:category)
+
     p = params.permit(
         :parent_id,
         :program_id,
         :product_id,
+        :affair_id,
+        :category_id,
         :value,
         :value_currency,
         :position,
         :bid_percentage,
         :quantity,
         :comment,
-        :ordered_at
+        :ordered_at,
+        :category_id
       )
-
-    category = params[:category]
-    if ! category.blank? and category != @product.category.try(:title)
-      cat = @product.affair.product_categories.where(title: category).first
-      cat ||= @product.affair.product_categories.create!(title: category)
-      @product.category = cat
-      @product.position = nil # Reset position so it goesn at the end of the category list.
-    end
 
     p
   end

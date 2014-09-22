@@ -34,11 +34,13 @@ class AffairsProductsProgram < ActiveRecord::Base
 
   before_validation do
     unless category
-      if affair.product_categories.count > 0
-        self.category = affair.product_categories.first
-      else
-        self.category = affair.product_categories
-          .create(title: ApplicationSetting.value("default_product_category_name"))
+      if affair
+        if affair.product_categories.count > 0
+          self.category = affair.product_categories.first
+        else
+          self.category = affair.product_categories
+            .create(title: ApplicationSetting.value("default_product_category_name"))
+        end
       end
     end
   end
@@ -222,7 +224,7 @@ class AffairsProductsProgram < ActiveRecord::Base
     if parent
       super
     else
-      s = affair.product_items.where(parent: nil).where("id != ?", id)
+      s = affair.product_items.where(parent: nil).where("id != ?", id) if affair
     end
   end
 
@@ -248,7 +250,7 @@ class AffairsProductsProgram < ActiveRecord::Base
   end
 
   def set_position_if_none_given
-    last_item = siblings.last
+    last_item = siblings.last if siblings
 
     if last_item
       self.position = last_item.position + 1
