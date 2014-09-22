@@ -111,7 +111,7 @@ class Product < ActiveRecord::Base
     # Product.find(3).variants.joins("LEFT JOIN product_programs
     # ON product_variants.program_group = product_programs.program_group")
     program_groups = self.variants.map(&:program_group)
-    ProductProgram.where(program_group: program_groups)
+    ProductProgram.actives.where(program_group: program_groups)
   end
 
   def unit_symbol_translated

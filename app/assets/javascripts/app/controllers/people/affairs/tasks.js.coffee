@@ -278,6 +278,9 @@ class App.PersonAffairTasks extends Spine.Controller
         @index.active {can: data}
 
     # FIXME TaskType will be reloaded on each affair change
-    TaskType.fetch()
+    TaskType.fetch
+      data:
+        actives: true
+      processData: true
 
 

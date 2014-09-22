@@ -637,4 +637,7 @@ class App.PersonAffairs extends Spine.Controller
       PersonAffair.fetch()
       @new.active()
 
-    AffairsCondition.fetch()
+    AffairsCondition.fetch
+      data:
+        actives: true
+      processData: true

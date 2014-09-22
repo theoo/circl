@@ -57,4 +57,7 @@ class App.PersonAffairTaskRates extends Spine.Controller
 
   activate: ->
     super
-    TaskRate.fetch()
+    TaskRate.fetch
+      data:
+        actives: true
+      processData: true

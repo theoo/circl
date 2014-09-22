@@ -19,8 +19,9 @@
 class ProductsDatatable
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
 
-  def initialize(view)
+  def initialize(view, actives)
     @view = view
+    @actives = actives
   end
 
   def as_json(options = {})
@@ -69,6 +70,9 @@ class ProductsDatatable
                                     products.description ~* ?",
                                     *([param]*3))
       end
+    end
+    if @actives
+      products = products.actives
     end
     products = products.page(page).per_page(per_page)
     products

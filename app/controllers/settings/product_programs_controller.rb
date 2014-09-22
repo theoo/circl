@@ -26,7 +26,7 @@ class Settings::ProductProgramsController < ApplicationController
 
   def index
 
-    @product_programs.actives if params[:actives]
+    @product_program = @product_programs.actives if params[:actives]
 
     respond_to do |format|
       format.json do
@@ -83,7 +83,7 @@ class Settings::ProductProgramsController < ApplicationController
     if params[:term].blank?
       result = []
     else
-      result = @product_programs.where("product_programs.program_group ~* ?", params[:term])
+      result = @product_programs.actives.where("product_programs.program_group ~* ?", params[:term])
         .select("DISTINCT(product_programs.program_group)")
     end
 
@@ -93,7 +93,7 @@ class Settings::ProductProgramsController < ApplicationController
   end
 
   def program_groups
-    result = @product_programs.select("DISTINCT(product_programs.program_group)")
+    result = @product_programs.actives.select("DISTINCT(product_programs.program_group)")
 
     respond_to do |format|
       format.json { render json: result.map{|t| t.program_group}}
@@ -105,7 +105,7 @@ class Settings::ProductProgramsController < ApplicationController
       result = []
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @product_programs.where("product_programs.key ~* ? OR product_programs.title ~* ?", param, param)
+      result = @product_programs.actives.where("product_programs.key ~* ? OR product_programs.title ~* ?", param, param)
     end
 
     respond_to do |format|

@@ -316,16 +316,8 @@ CIRCL::Application.routes.draw do
     end
 
     # resources :tasks
-    resources :task_types do
-      collection do
-        get 'everything'
-      end
-    end
-    resources :task_rates do
-      collection do
-        get 'everything'
-      end
-    end
+    resources :task_types
+    resources :task_rates
 
   end
 

@@ -27,6 +27,9 @@ class AffairsCondition < ActiveRecord::Base
   validates_presence_of :title
   validates_presence_of :description
 
+  scope :actives,  -> { where(archive: false)}
+  scope :archived, -> { where(archive: true)}
+
   ########################
   ### INSTANCE METHODS ###
   ########################

@@ -24,16 +24,7 @@ class Settings::TaskTypesController < ApplicationController
 
   def index
 
-    @task_types = TaskType.actives
-
-    respond_to do |format|
-      format.json { render json: @task_types }
-    end
-  end
-
-  def everything
-
-    @task_types = TaskType.all
+    @task_types = TaskType.actives if params[:actives]
 
     respond_to do |format|
       format.json { render json: @task_types }

@@ -25,6 +25,8 @@ class Settings::AffairsConditionsController < ApplicationController
   monitor_changes :@affairs_condition
 
   def index
+    @affairs_conditions = @affairs_conditions.actives if params[:actives]
+
     respond_to do |format|
       format.json { render json: @affairs_conditions }
     end

@@ -121,5 +121,5 @@ class App.SettingsTaskRates extends Spine.Controller
 
   activate: ->
     super
-    TaskRate.fetch(url: TaskRate.url() + "/everything")
+    TaskRate.fetch()
     @new.render()

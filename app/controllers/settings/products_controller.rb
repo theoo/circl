@@ -26,11 +26,10 @@ class Settings::ProductsController < ApplicationController
 
   def index
     authorize! :index, Product
-    # TODO @product.actives if params[:actives]
 
     respond_to do |format|
       format.json do
-        render json: ProductsDatatable.new(view_context)
+        render json: ProductsDatatable.new(view_context, params[:actives])
       end
     end
   end
@@ -153,6 +152,7 @@ class Settings::ProductsController < ApplicationController
     else
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       result = @products
+        .actives
         .where("products.key ~* ? OR products.title ~* ? OR products.description ~* ?", *([param]*3))
         .limit(10)
     end

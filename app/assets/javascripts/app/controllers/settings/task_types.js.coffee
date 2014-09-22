@@ -117,5 +117,5 @@ class App.SettingsTaskTypes extends Spine.Controller
 
   activate: ->
     super
-    TaskType.fetch(url: TaskType.url() + "/everything")
+    TaskType.fetch()
     @new.render()

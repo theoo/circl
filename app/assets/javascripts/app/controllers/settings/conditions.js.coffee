@@ -64,7 +64,7 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     data = $(e.target).serializeObject()
     @condition.load(data)
-    @condition.archie = data.archive?
+    @condition.archive = data.archive?
     @save_with_notifications @condition, @hide
 
   destroy: (e) ->

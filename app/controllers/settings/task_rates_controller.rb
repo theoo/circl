@@ -24,17 +24,7 @@ class Settings::TaskRatesController < ApplicationController
 
   def index
 
-    @task_rates = TaskRate.actives
-
-    respond_to do |format|
-      format.json { render json: @task_rates }
-    end
-  end
-
-  def everything
-    authorize! :index, TaskRate
-
-    @task_rates = TaskRate.all
+    @task_rates = TaskRate.actives if params[:actives]
 
     respond_to do |format|
       format.json { render json: @task_rates }
