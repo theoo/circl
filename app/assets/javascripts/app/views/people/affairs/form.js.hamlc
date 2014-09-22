@@ -141,10 +141,30 @@
               %tbody
                 %tr
                   %td.col-sm-4
+                    %label{for: 'affair_owner', class: 'required'}
+                      = I18n.t('affair.views.owner')
+                  %td
+                    .autocompleted.input-group
+                      %input{type: 'search',
+                             name: 'owner',
+                             id: 'affair_owner',
+                             class: 'form-control',
+                             value: @affair.owner_name,
+                             action: '/people/search'}
+
+                      %input{type: 'hidden',
+                             name: 'owner_id',
+                             value: @affair.owner_id}
+                      .input-group-btn
+                        %a.btn.btn-default{href: "/people/#{@affair.owner_id}"}
+                          .icon-play
+                  %td
+                %tr
+                  %td.col-sm-4
                     %label{for: 'affair_receiver', class: 'required'}
                       = I18n.t('affair.views.receiver')
                   %td
-                    .autocompleted
+                    .autocompleted.input-group
                       %input{type: 'search',
                              name: 'receiver',
                              id: 'affair_receiver',
@@ -155,6 +175,9 @@
                       %input{type: 'hidden',
                              name: 'receiver_id',
                              value: @affair.receiver_id}
+                      .input-group-btn
+                        %a.btn.btn-default{href: "/people/#{@affair.receiver_id}"}
+                          .icon-play
                   %td
 
                 %tr
@@ -162,7 +185,7 @@
                     %label{for: 'affair_buyer', class: 'required'}
                       = I18n.t('affair.views.buyer')
                   %td
-                    .autocompleted
+                    .autocompleted.input-group
                       %input{type: 'search',
                              name: 'buyer',
                              id: 'affair_buyer',
@@ -173,6 +196,9 @@
                       %input{type: 'hidden',
                              name: 'buyer_id',
                              value: @affair.buyer_id}
+                      .input-group-btn
+                        %a.btn.btn-default{href: "/people/#{@affair.buyer_id}"}
+                          .icon-play
                   %td
 
                 %tr
@@ -180,7 +206,7 @@
                     %label{for: 'affair_seller', class: 'required'}
                       = I18n.t('affair.views.seller')
                   %td
-                    .autocompleted
+                    .autocompleted.input-group
                       %input{type: 'search',
                              name: 'seller',
                              id: 'affair_seller',
@@ -191,6 +217,9 @@
                       %input{type: 'hidden',
                              name: 'seller_id',
                              value: @affair.seller_id}
+                      .input-group-btn
+                        %a.btn.btn-default{href: "/people/#{@affair.seller_id}"}
+                          .icon-play
                   %td
 
 
@@ -204,7 +233,7 @@
 
                     %td
                       %input{ name: "stakeholders[][id]", type: 'hidden', value: s.id }
-                      .autocompleted
+                      .autocompleted.input-group
                         %input{ name: "stakeholders[][person]",
                                 type: 'search',
                                 value: s.person_name,
@@ -214,6 +243,9 @@
                         %input{ type: 'hidden',
                                 name: "stakeholders[][person_id]",
                                 value: s.person_id }
+                        .input-group-btn
+                          %a.btn.btn-default{href: "/people/#{s.person_id}"}
+                            .icon-play
 
                     %td
                       %button{type: 'button',
