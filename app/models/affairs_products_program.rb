@@ -224,7 +224,9 @@ class AffairsProductsProgram < ActiveRecord::Base
     if parent
       super
     else
-      s = affair.product_items.where(parent: nil).where("id != ?", id) if affair
+      s = affair.product_items.where(parent: nil)
+      s = s.where("id != ?", id) if id
+      s
     end
   end
 
@@ -232,7 +234,7 @@ class AffairsProductsProgram < ActiveRecord::Base
     if parent
       affair.product_items.where(parent: parent.id)
     else
-      affair.product_items.where(parent: nil)
+      affair.product_items.where(parent: nil) if affair
     end
   end
 
