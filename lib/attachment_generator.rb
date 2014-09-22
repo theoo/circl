@@ -125,7 +125,7 @@ class AttachmentGenerator
 
   def cleanup
     # No need to destroy odt_file which is tmp_file
-    if @pdf_file.path != @general_error_file_path
+    if @pdf_file.try(:path) != @general_error_file_path
       File.delete(@pdf_path) if @pdf_file
       File.delete(@html_path) if @html_file
     end
