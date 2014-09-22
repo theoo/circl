@@ -19,7 +19,8 @@ class App.PersonAffair extends Spine.Model
   @configure 'PersonAffair', 'owner_id', 'owner_name', 'buyer_id', 'buyer_name', 'estimate',
              'receiver_id', 'receiver_name', 'parent_id', 'footer', 'seller_id', 'title',
              'description', 'value', 'value_currency', 'created_at', 'custom_value_with_taxes',
-             'conditions', 'condition_id', 'affairs_stakeholders', 'unbillable', 'copy_parent'
+             'conditions', 'condition_id', 'affairs_stakeholders', 'unbillable', 'copy_parent',
+             'notes'
 
   @extend Spine.Model.Ajax
   @extend Spine.Extensions.RemoteCount

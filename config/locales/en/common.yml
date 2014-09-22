@@ -68,6 +68,7 @@ en:
     name: name
     next: next
     none: none
+    notes: notes
     notices:
       successfully_destroyed: successfully destroyed
       successfully_updated: successfully updated

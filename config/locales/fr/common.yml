@@ -69,6 +69,7 @@ fr:
     name: nom
     next: suivant
     none: aucun
+    notes: notes
     notices:
       successfully_destroyed: destruction réussie
       successfully_updated: mise à jour réussie

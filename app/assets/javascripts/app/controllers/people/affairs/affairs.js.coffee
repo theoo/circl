@@ -145,6 +145,9 @@ class New extends App.ExtendedController
         unbillable: false
         seller_id: App.current_user.id
         seller_name: App.current_user.name
+        description: App.ApplicationSetting.value("affairs_description_placeholder")
+        notes: App.ApplicationSetting.value("affairs_notes_placeholder")
+        footer: App.ApplicationSetting.value("affairs_footer_placeholder")
 
       @template.owner_id = @template.buyer_id = @template.receiver_id = @person.id
       @template.owner_name = @template.buyer_name = @template.receiver_name = @person.name

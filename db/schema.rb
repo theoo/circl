@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140920145543) do
+ActiveRecord::Schema.define(version: 20140922131013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20140920145543) do
     t.integer  "seller_id",                default: 1,     null: false
     t.integer  "condition_id"
     t.boolean  "unbillable",               default: false, null: false
+    t.text     "notes"
   end
 
   add_index "affairs", ["buyer_id"], name: "index_affairs_on_buyer_id", using: :btree

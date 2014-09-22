@@ -51,3 +51,9 @@
   value: '10 days'
 - key: default_product_category_name
   value: 'Product'
+- key: affairs_description_placeholder
+  value: 'edit me in application settings: affairs_description_placeholder'
+- key: affairs_notes_placeholder
+  value: 'edit me in application settings: affairs_notes_placeholder'
+- key: affairs_footer_placeholder
+  value: 'edit me in application settings: affairs_footer_placeholder'

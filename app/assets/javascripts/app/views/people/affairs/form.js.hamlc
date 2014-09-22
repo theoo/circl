@@ -77,7 +77,7 @@
               %label{for: 'affair_description'}
                 = I18n.t('common.description')
               %textarea{name: 'description',
-                        rows: 6,
+                        rows: 5,
                         id: 'affair_description',
                         class: 'form-control'}
                 = @affair.description
@@ -85,10 +85,21 @@
         .row
           .col-lg-12
             .form-group
+              %label{for: 'affair_notes'}
+                = I18n.t('common.notes')
+              %textarea{name: 'notes',
+                        rows: 5,
+                        id: 'affair_notes',
+                        class: 'form-control'}
+                = @affair.notes
+
+        .row
+          .col-lg-12
+            .form-group
               %label{for: 'affair_footer'}
                 = I18n.t('affair.views.footer')
               %textarea{name: 'footer',
-                        rows: 3,
+                        rows: 5,
                         id: 'affair_footer',
                         class: 'form-control'}
                 = @affair.footer
