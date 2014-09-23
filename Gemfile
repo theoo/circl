@@ -26,7 +26,7 @@ gem 'net-ldap', :git => 'git://github.com/ruby-ldap/ruby-net-ldap.git'
 gem 'pdfkit', '0.5.2'
 gem 'imgkit', '1.3.6'
 gem 'paperclip', '4.2.0'
-gem 'serenity', '0.2.3', :git => 'git://github.com/theoo/serenity.git'
+gem 'serenity', '0.2.4', :git => 'git://github.com/theoo/serenity.git'
 gem 'rubyzip', '1.1.0'
 gem 'recursive-open-struct', '0.4.5'
 
@@ -79,8 +79,6 @@ gem 'rails_exception_handler', "~> 2"
 
 ### custom gem
 # gem 'plugin', :path => 'path/to/circl/plugin'
-# gem 'shipit', :path => '../circl_plugins/shipit'
-gem 'bulthaup', :path => '../circl_plugins/bulthaup'
 
 ### development console and testing
 group :development, :test do
