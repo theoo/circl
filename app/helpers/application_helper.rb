@@ -138,7 +138,7 @@ module ApplicationHelper
         if ApplicationSetting.value('use_vat') == "true"
 
           haml_tag :tr do
-            haml_tag :td, affair.vat_value.to_view
+            haml_tag :td, affair.vat.to_view
             haml_tag :td, I18n.t("affair.views.value.vat")
           end
 

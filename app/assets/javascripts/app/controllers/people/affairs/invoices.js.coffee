@@ -62,6 +62,7 @@ class New extends App.ExtendedController
       # re-calculate invoices_value instead of using information from rails
       invoices_value = PersonAffairInvoice.all().reduce(((sum, i) -> sum + i.value), 0)
       @invoice.value = (@affair.value - invoices_value).toFixed(2)
+      @invoice.vat_percentage = @affair.vat_percentage
     else
       @invoice = new PersonAffairInvoice(value: 0)
 
@@ -111,14 +112,14 @@ class Edit extends App.ExtendedController
   active: (params) ->
     @can = params.can if params.can
     @id = params.id if params.id
-    @show()
     @render()
 
   render: =>
     return unless PersonAffairInvoice.exists(@id) && @can
-    unless @can.invoice.create
-      @hide()
-      return
+    @show()
+    # unless @can.invoice.create
+    #   @hide()
+    #   return
     @invoice = PersonAffairInvoice.find(@id)
 
     @affair = PersonAffair.find(@invoice.affair_id)

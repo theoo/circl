@@ -431,6 +431,7 @@ class Invoice < ActiveRecord::Base
 
   def set_vat_percentage_if_empty
     unless self.vat_percentage
+      self.vat_percentage ||= affair.vat_percentage
       self.vat_percentage = ApplicationSetting.value('service_vat_rate').to_f
     end
   end

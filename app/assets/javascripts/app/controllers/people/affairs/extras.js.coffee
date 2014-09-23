@@ -36,6 +36,8 @@ class New extends App.ExtendedController
     if params
       @person_id = params.person_id if params.person_id
       @affair_id = params.affair_id if params.affair_id
+      if App.PersonAffair.exists(@affair_id)
+        @affair = App.PersonAffair.find(@affair_id)
       @can = params.can if params.can
 
     @render()
@@ -43,6 +45,7 @@ class New extends App.ExtendedController
   render: =>
     @show()
     @extra = new PersonAffairExtra(quantity: 1)
+    @extra.vat_percentage = @affair.vat_percentage if @affair
     @html @view('people/affairs/extras/form')(@)
     if @disabled() then @disable_panel() else @enable_panel()
 

@@ -354,49 +354,66 @@
             .col-sm-6
               .list-group
                 - if @affair.subscriptions_count > 0
-                  %a{href: '#person_affair_subscriptions', class: 'list-group-item'}
-                    .badge= @affair.subscriptions_count
-                    = I18n.t('affair.views.subscriptions') + " :"
-                    = @affair.subscriptions_value?.to_view(@affair.subscriptions_value_currency)
+                  - css_class = 'list-group-item list-group-item-info'
+                - else
+                  - css_class = 'list-group-item'
+                %a{href: '#person_affair_subscriptions', class: css_class}
+                  .badge= @affair.subscriptions_count
+                  = I18n.t('affair.views.subscriptions') + " :"
+                  = @affair.subscriptions_value?.to_view(@affair.subscriptions_value_currency)
 
                 - if @affair.tasks_count > 0
-                  %a{ href: '#person_affair_tasks', class: 'list-group-item' }
-                    .badge= @affair.tasks_count
-                    = I18n.t('affair.views.tasks') + " :"
-                    = @affair.tasks_value?.to_view(@affair.tasks_value_currency)
+                  - css_class = 'list-group-item list-group-item-info'
+                - else
+                  - css_class = 'list-group-item'
+                %a{ href: '#person_affair_tasks', class: css_class}
+                  .badge= @affair.tasks_count
+                  = I18n.t('affair.views.tasks') + " :"
+                  = @affair.tasks_value?.to_view(@affair.tasks_value_currency)
 
                 - if @affair.products_count > 0
-                  %a{href: '#person_affair_products', class: 'list-group-item'}
-                    .badge= @affair.products_count
-                    = I18n.t('affair.views.products') + " :"
-                    = @affair.products_value?.to_view(@affair.products_value_currency)
+                  - css_class = 'list-group-item list-group-item-info'
+                - else
+                  - css_class = 'list-group-item'
+                %a{href: '#person_affair_products', class: css_class}
+                  .badge= @affair.products_count
+                  = I18n.t('affair.views.products') + " :"
+                  = @affair.products_value?.to_view(@affair.products_value_currency)
 
                 - if @affair.extras_count > 0
-                  %a{href: '#person_affair_extras', class: 'list-group-item'}
-                    .badge= @affair.extras_count
-                    = I18n.t('affair.views.extras') + " :"
-                    = @affair.extras_value?.to_view(@affair.extras_value_currency)
+                  - css_class = 'list-group-item list-group-item-info'
+                - else
+                  - css_class = 'list-group-item'
+                %a{href: '#person_affair_extras', class: css_class}
+                  .badge= @affair.extras_count
+                  = I18n.t('affair.views.extras') + " :"
+                  = @affair.extras_value?.to_view(@affair.extras_value_currency)
 
             .col-sm-6
               .list-group
                 - if @affair.products_count > 0
-                  %a{href: '#person_affair_products', class: 'list-group-item list-group-item-warning'}
-                    .badge= @affair.arts_count
-                    = I18n.t('affair.views.arts') + " :"
-                    = @affair.arts_value?.to_view(@affair.arts_value_currency)
+                  - css_class = 'list-group-item list-group-item-info'
+                - else
+                  - css_class = 'list-group-item'
+                %a{href: '#person_affair_products', class: 'list-group-item list-group-item-warning'}
+                  .badge= @affair.arts_count
+                  = I18n.t('affair.views.arts') + " :"
+                  = @affair.arts_value?.to_view(@affair.arts_value_currency)
 
-                - if App.ApplicationSetting.value('use_vat') == "true"
-                  %a{href: '#balance', class: 'list-group-item list-group-item-warning'}
-                    .badge= @affair.vat_count
-                    = I18n.t('affair.views.vat') + " :"
-                    = @affair.vat_value?.to_view(@affair.vat_value_currency)
-
-                %a{href: '#balance', class: 'list-group-item'}
+                - if @affair.invoices_count > 0
+                  - css_class = 'list-group-item list-group-item-info'
+                - else
+                  - css_class = 'list-group-item'
+                %a{href: '#balance', class: css_class}
                   .badge= @affair.invoices_count
                   = I18n.t('affair.views.invoices') + " :"
                   = @affair.invoices_value_with_taxes?.to_view(@affair.invoices_value_with_taxes_currency)
 
-                %a{href: '#balance', class: 'list-group-item'}
+                - if @affair.receipts_count > 0
+                  - css_class = 'list-group-item list-group-item-info'
+                - else
+                  - css_class = 'list-group-item'
+                %a{href: '#balance', class: css_class}
                   .badge= @affair.receipts_count
                   = I18n.t('affair.views.receipts') + " :"
                   = @affair.receipts_value?.to_view(@affair.receipts_value_currency)

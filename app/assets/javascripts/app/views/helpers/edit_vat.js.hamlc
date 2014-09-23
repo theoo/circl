@@ -26,10 +26,7 @@
       %label{for: "#{@.prefix}vat_percentage"}
         = I18n.t('common.rate') + " (%)"
       .input-group
-        - if @.object.vat_percentage
-          - percentage = @.object.vat_percentage
-        - else
-          - percentage = App.ApplicationSetting.value('service_vat_rate')
+        - percentage = @.object.vat_percentage
 
         %input{ type: 'number',
                 step: 0.01,

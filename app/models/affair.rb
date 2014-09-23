@@ -64,6 +64,8 @@ class Affair < ActiveRecord::Base
 
   after_save :update_elasticsearch
   before_save :update_value, if: 'value_in_cents.blank?'
+  before_save :update_vat, if: 'vat_in_cents.blank?'
+  before_save :set_vat_percentage, if: 'vat_percentage.blank?'
   before_save :compute_value_without_taxes, if: 'custom_value_with_taxes'
   before_save :update_statuses
   before_validation  :ensure_buyer_and_receiver_person_exists
@@ -266,8 +268,6 @@ class Affair < ActiveRecord::Base
     h[:vat_count]                          = extras.each_with_object([]){|i,a| a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f}.size + 1
     h[:vat]                                = vat.try(:to_f)
     h[:vat_currency]                       = vat.currency.try(:iso_code)
-    h[:vat_value]                          = vat_value.try(:to_f)
-    h[:vat_value_currency]                 = vat_value.currency.try(:iso_code)
     h[:statuses]                           = translated_statuses
     h[:affairs_stakeholders]               = affairs_stakeholders.as_json
     h
@@ -345,19 +345,22 @@ class Affair < ActiveRecord::Base
     sum.to_money(value_currency)
   end
 
-  def vat_value(forced_value = self.value)
+  def compute_vat(forced_value = self.value)
     return 0.to_money if ApplicationSetting.value('use_vat') != "true"
+
+    percentage = vat_percentage
+    percentage ||= ApplicationSetting.value("service_vat_rate").to_f
 
     # Variable VAT, extract extras with different vat rate
     extra_with_different_vat_rate = extras.each_with_object([]) do |i,a|
-      a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f
+      a << i if i.vat_percentage != percentage
     end
 
     extras_diff_value = extra_with_different_vat_rate.map(&:value).sum.to_money(value_currency)
     extras_diff_vat = extra_with_different_vat_rate.map(&:vat).sum.to_money(value_currency)
 
     service_value = forced_value - extras_diff_value
-    sum = service_value * (ApplicationSetting.value("service_vat_rate").to_f / 100.0)
+    sum = service_value * (percentage / 100.0)
     sum += extras_diff_vat
 
     sum
@@ -380,11 +383,11 @@ class Affair < ActiveRecord::Base
 
   def compute_value_with_taxes
     val = compute_value
-    val + vat_value(val)
+    val + compute_vat(val)
   end
 
   def value_with_taxes
-    value + vat_value
+    value + vat
   end
 
   # Workflows and statuses
@@ -486,12 +489,21 @@ class Affair < ActiveRecord::Base
     self.value = compute_value
   end
 
+  def update_vat
+    self.vat = compute_vat
+  end
+
+  def set_vat_percentage
+    self.vat_percentage = ApplicationSetting.value("service_vat_rate").to_f
+  end
+
+
   def compute_value_without_taxes
-    self.value = reverse_vat_value(value)
+    self.value = reverse_vat(value)
   end
 
   # Takes a value taxes included
-  def reverse_vat_value(val)
+  def reverse_vat(val)
     val / ( 1 + (ApplicationSetting.value("service_vat_rate").to_f / 100) )
   end
 

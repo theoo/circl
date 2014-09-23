@@ -179,6 +179,8 @@ class People::AffairsController < ApplicationController
       surplus_values = recorded_ids - sent_ids
       AffairsStakeholder.destroy surplus_values
 
+      @affair.created_at = Time.now if params[:created_at].blank?
+
       # and append or update stakeholders
       unless params[:affairs_stakeholders].blank?
         params[:affairs_stakeholders].each do |s|
@@ -574,10 +576,6 @@ class People::AffairsController < ApplicationController
     end
 
     [errors, from, to]
-  end
-
-  def update_stakeholders(ary)
-
   end
 
 end

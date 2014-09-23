@@ -31,6 +31,7 @@ class Extra < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
+  before_save :set_vat_percentage, id: 'vat_percentage.blank?'
   before_validation :set_position_if_none_given, if: Proc.new {|i| i.position.blank? }
 
   #################
@@ -99,6 +100,11 @@ class Extra < ActiveRecord::Base
     else
       self.position = 1
     end
+  end
+
+  def set_vat_percentage
+    self.vat_percentage = affair.vat_percentage
+    self.vat_percentage ||= ApplicationSetting.value("service_vat_value").to_f
   end
 
 end
