@@ -93,12 +93,17 @@ class New extends App.ExtendedController
     'change select[name="condition_id"]': 'update_conditions'
     'click button[name="remove_item"]': 'remove_value_item'
     'click button[name="add_item"]': 'add_value_item'
+    'currency_changed select.currency_selector': 'on_currency_change'
 
   constructor: (params) ->
     super
     @person_id = params.person_id if params.person_id
     Person.bind('refresh', @render)
     @template = {}
+
+    @setup_vat
+      ids_prefix: 'person_affair_'
+      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
 
   active: (params) =>
     @person = Person.find(@person_id) if Person.exists(@person_id)
@@ -157,6 +162,7 @@ class New extends App.ExtendedController
   render: =>
     @affair = new PersonAffair(@template)
     @html @view('people/affairs/form')(@)
+    @adjust_vat()
 
   submit: (e) =>
     e.preventDefault()
@@ -193,11 +199,16 @@ class Edit extends App.ExtendedController
     'change select[name="condition_id"]': 'update_conditions'
     'click button[name="remove_item"]': 'remove_value_item'
     'click button[name="add_item"]': 'add_value_item'
+    'currency_changed select.currency_selector': 'on_currency_change'
 
   constructor: ->
     super
     @balance = new Balance
     PersonAffair.bind('refresh', @render)
+
+    @setup_vat
+      ids_prefix: 'person_affair_'
+      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
 
   active: (params) ->
     @id = params.id if params.id
@@ -299,6 +310,9 @@ class Edit extends App.ExtendedController
     @show()
     @affair = PersonAffair.find(@id)
     @html @view('people/affairs/form')(@)
+
+    if App.ApplicationSetting.value('use_vat') == "true"
+      @highlight_vat()
 
     # tooltips
     @el.find("a[href=#person_affair_tasks]").tooltip

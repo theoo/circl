@@ -71,7 +71,7 @@ class Invoice < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
-  before_save     :set_address_if_empty, :update_statuses
+  before_save     :set_address_if_empty, :update_statuses, :set_vat_percentage_if_empty
   after_save      :update_affair
   before_destroy  :check_presence_of_receipt
   after_destroy   :update_affair
@@ -426,6 +426,12 @@ class Invoice < ActiveRecord::Base
       # Check buyer existence so it's possible to destroy an orphan invoice.
       # (Migration 20130712160745_update_invoices_and_affairs_status.rb)
       self.printed_address = self.buyer.address_for_bvr if self.buyer
+    end
+  end
+
+  def set_vat_percentage_if_empty
+    unless self.vat_percentage
+      self.vat_percentage = ApplicationSetting.value('service_vat_rate').to_f
     end
   end
 

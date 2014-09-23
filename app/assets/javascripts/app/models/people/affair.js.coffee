@@ -20,7 +20,7 @@ class App.PersonAffair extends Spine.Model
              'receiver_id', 'receiver_name', 'parent_id', 'footer', 'seller_id', 'title',
              'description', 'value', 'value_currency', 'created_at', 'custom_value_with_taxes',
              'conditions', 'condition_id', 'affairs_stakeholders', 'unbillable', 'copy_parent',
-             'notes'
+             'notes', 'vat_percentage', 'vat', 'vat_currency'
 
   @extend Spine.Model.Ajax
   @extend Spine.Extensions.RemoteCount

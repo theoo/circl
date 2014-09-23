@@ -75,6 +75,7 @@ class People::AffairsController < ApplicationController
 
     Affair.transaction do
       @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])
+      @affair.vat = Money.new(params[:vat].to_f * 100, params[:vat_currency])
 
       # raise the error and rollback transaction if validation fails
       raise ActiveRecord::Rollback unless @affair.save
@@ -133,6 +134,7 @@ class People::AffairsController < ApplicationController
         @affair.subscriptions = @parent.subscriptions
 
         @affair.value = @parent.value
+        @affair.vat = @parent.vat
 
       end
 
@@ -200,6 +202,7 @@ class People::AffairsController < ApplicationController
       end
 
       @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])
+      @affair.vat = Money.new(params[:vat].to_f * 100, params[:vat_currency])
       # FIXME Why this is required to evaluate correctly the checkbox ? Only this one.
       @affair.custom_value_with_taxes = params[:custom_value_with_taxes]
 

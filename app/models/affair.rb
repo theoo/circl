@@ -153,6 +153,7 @@ class Affair < ActiveRecord::Base
 
   # Money
   money :value
+  money :vat
 
   scope :open_affairs, -> {
     mask = Affair.statuses_value_for(:to_be_billed)
@@ -263,6 +264,8 @@ class Affair < ActiveRecord::Base
     h[:arts_value]                         = arts_value.try(:to_f)
     h[:arts_value_currency]                = arts_value.currency.try(:iso_code)
     h[:vat_count]                          = extras.each_with_object([]){|i,a| a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f}.size + 1
+    h[:vat]                                = vat.try(:to_f)
+    h[:vat_currency]                       = vat.currency.try(:iso_code)
     h[:vat_value]                          = vat_value.try(:to_f)
     h[:vat_value_currency]                 = vat_value.currency.try(:iso_code)
     h[:statuses]                           = translated_statuses

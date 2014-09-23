@@ -328,6 +328,9 @@
                               value: 1 }
                       = I18n.t('affair.views.custom_value_with_taxes')
 
+          - if App.ApplicationSetting.value('use_vat') == "true"
+            != @partial('edit_vat')(object: @affair, prefix: @ids_prefix)
+
           .row
             .col-sm-6
               - if @affair.computed_value != @affair.value

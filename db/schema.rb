@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140922131013) do
+ActiveRecord::Schema.define(version: 20140923064853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,9 @@ ActiveRecord::Schema.define(version: 20140922131013) do
     t.integer  "condition_id"
     t.boolean  "unbillable",               default: false, null: false
     t.text     "notes"
+    t.float    "vat_percentage"
+    t.integer  "vat_in_cents",             default: 0,     null: false
+    t.string   "vat_currency",             default: "CHF", null: false
   end
 
   add_index "affairs", ["buyer_id"], name: "index_affairs_on_buyer_id", using: :btree
@@ -49,6 +52,9 @@ ActiveRecord::Schema.define(version: 20140922131013) do
   add_index "affairs", ["updated_at"], name: "index_affairs_on_updated_at", using: :btree
   add_index "affairs", ["value_currency"], name: "index_affairs_on_value_currency", using: :btree
   add_index "affairs", ["value_in_cents"], name: "index_affairs_on_value_in_cents", using: :btree
+  add_index "affairs", ["vat_currency"], name: "index_affairs_on_vat_currency", using: :btree
+  add_index "affairs", ["vat_in_cents"], name: "index_affairs_on_vat_in_cents", using: :btree
+  add_index "affairs", ["vat_percentage"], name: "index_affairs_on_vat_percentage", using: :btree
 
   create_table "affairs_conditions", force: true do |t|
     t.string  "title"
