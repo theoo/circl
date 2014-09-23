@@ -175,6 +175,7 @@ class New extends App.ExtendedController
     @affair.load(data)
     @affair.affairs_stakeholders = @fetch_items()
     @affair.value_currency = App.ApplicationSetting.value("default_currency") unless @affair.value_currency
+    @affair.vat_currency = App.ApplicationSetting.value("default_currency") unless @affair.vat_currency
     @affair.estimate = data.estimate?
     @affair.unbillable = data.unbillable?
     @affair.custom_value_with_taxes = data.custom_value_with_taxes?
