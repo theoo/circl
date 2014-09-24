@@ -20,16 +20,34 @@ PersonAffairInvoice = App.PersonAffairInvoice
 PersonAffairReceipt = App.PersonAffairReceipt
 Permissions = App.Permissions
 InvoiceTemplate = App.InvoiceTemplate
+AffairsCondition = App.AffairsCondition
 
 $.fn.invoice = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
   PersonAffairInvoice.find(elementID)
 
+# Modules
+ConditionsController =
+  update_conditions: (e) ->
+    e.preventDefault()
+    id = $(e.target).val()
+    textarea = @el.find('#person_affair_invoice_conditions')
+
+    if AffairsCondition.exists(id)
+      condition = AffairsCondition.find(id)
+      textarea.val(condition.description)
+    else
+      textarea.val("")
+
 class New extends App.ExtendedController
+
+  @include ConditionsController
+
   events:
     'submit form': 'submit'
     'currency_changed select.currency_selector': 'on_currency_change'
+    'change select[name="condition_id"]': 'update_conditions'
     'click a[name="reset"]': 'reset'
 
   constructor: (params) ->
@@ -93,6 +111,9 @@ class New extends App.ExtendedController
       @trigger('edit', @invoice.id)
 
 class Edit extends App.ExtendedController
+
+  @include ConditionsController
+
   events:
     'submit form': 'submit'
     'click a[name="cancel"]': 'cancel'
@@ -100,6 +121,7 @@ class Edit extends App.ExtendedController
     'click a[name="invoice-preview-pdf"]': 'preview'
     'click a[name="invoice-destroy"]': 'destroy'
     'click a[name="invoice-add-receipt"]': 'add_receipt'
+    'change select[name="condition_id"]': 'update_conditions'
     'currency_changed select.currency_selector': 'on_currency_change'
 
   constructor: (params) ->

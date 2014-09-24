@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140923064853) do
+ActiveRecord::Schema.define(version: 20140924155418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -302,9 +302,11 @@ ActiveRecord::Schema.define(version: 20140923064853) do
     t.string   "vat_currency",                  default: "CHF", null: false
     t.float    "vat_percentage"
     t.text     "conditions"
+    t.integer  "condition_id"
   end
 
   add_index "invoices", ["affair_id"], name: "index_invoices_on_affair_id", using: :btree
+  add_index "invoices", ["condition_id"], name: "index_invoices_on_condition_id", using: :btree
   add_index "invoices", ["created_at"], name: "index_invoices_on_created_at", using: :btree
   add_index "invoices", ["invoice_template_id"], name: "index_invoices_on_invoice_template_id", using: :btree
   add_index "invoices", ["pdf_updated_at"], name: "index_invoices_on_pdf_updated_at", using: :btree

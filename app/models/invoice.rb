@@ -85,6 +85,9 @@ class Invoice < ActiveRecord::Base
 
   belongs_to  :invoice_template
 
+  belongs_to  :condition,
+              class_name: 'AffairsCondition'
+
   has_many    :receipts,
               dependent: :destroy
 

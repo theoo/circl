@@ -40,10 +40,23 @@
               = @invoice.description
 
       .row
-        .col-sm-9
+        .col-lg-6
           .form-group
             %label{for: 'person_affair_invoice_conditions'}
               = I18n.t('invoice.views.conditions')
+            %select{name: 'condition_id',
+                    class: 'form-control'}
+              %option{value: undefined}= I18n.t("common.custom")
+              - for h in App.AffairsCondition.all()
+                - if h.id == @invoice.condition_id
+                  %option{value: h.id, selected: true}= h.title
+                - else
+                  %option{value: h.id}= h.title
+        .col-lg-6
+
+      .row
+        .col-sm-9
+          .form-group
             %textarea{name: 'conditions',
                       id: 'person_affair_invoice_conditions',
                       rows: 3,
