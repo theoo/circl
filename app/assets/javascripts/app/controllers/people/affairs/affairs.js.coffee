@@ -348,6 +348,7 @@ class Edit extends App.ExtendedController
   reset_value: (e) ->
     e.preventDefault()
     @el.find("#person_affair_value").val @affair.computed_value
+    @adjust_vat()
 
   pdf: (e) ->
     e.preventDefault()
