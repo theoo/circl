@@ -483,6 +483,16 @@ class Affair < ActiveRecord::Base
     end
   end
 
+  def update_value!
+    update_value
+    save!
+  end
+
+  def update_vat!
+    update_vat
+    save!
+  end
+
   private
 
   def update_value
