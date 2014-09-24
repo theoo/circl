@@ -446,7 +446,7 @@ class Affair < ActiveRecord::Base
   end
 
   def product_items_category_value_for(cat)
-    product_items_for_category(cat).map(&:value).sum.to_money(value_currency)
+    product_items_for_category(cat).map{|p| p.bid_price.to_money(value_currency)}.sum.to_money(value_currency)
   end
 
   # This method returns product_items ordered by its current positions and ensure
