@@ -108,6 +108,10 @@
                   - else
                     != item.description?.replace(/\n/g, '<br/>')
 
+                  - if item.comment
+                    %pre
+                      = item.comment
+
                 %td.small-number= item.quantity + " " + I18n.t("product.units.#{item.unit_symbol}.symbol")
                 %td.number
                   = item.unit_price?.to_view(@affair?.value_currency)
