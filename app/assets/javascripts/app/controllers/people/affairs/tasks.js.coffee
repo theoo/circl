@@ -47,7 +47,7 @@ class New extends App.TimesheetExtention
     @render()
 
   render: =>
-    if @person.task_rate_id > 0 and App.TaskType.count() > 0 and App.TaskRate.count() > 0
+    if @person?.task_rate_id > 0 and App.TaskType.count() > 0 and App.TaskRate.count() > 0
       @task = new PersonTask
 
       @task.owner_name = @person.name
@@ -79,7 +79,7 @@ class New extends App.TimesheetExtention
       if App.TaskRate.count() == 0
         @html @view('people/affairs/tasks/no_task_rate')(@)
       else
-        unless @person.task_rate_id
+        unless @person?.task_rate_id
           @html @view('people/affairs/tasks/no_rate_selected')(@)
 
       if @disabled() then @disable_panel() else @enable_panel()

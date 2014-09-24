@@ -426,11 +426,7 @@ class Index extends App.ExtendedController
 
     if $(e.target).parent("tr").hasClass("info")
       # Foreign affair
-      App.Affair.one 'refresh', =>
-        @affair = App.Affair.find(id)
-        window.location = "/people/" + @affair.owner_id + "#affairs"
-
-      App.Affair.fetch(id: id)
+      window.location = "/admin/affairs/#{id}"
 
     else
       # Normal affair
@@ -645,12 +641,30 @@ class App.PersonAffairs extends Spine.Controller
         @edit.render_errors errors
       PersonAffair.fetch(id: id)
 
+
   activate: ->
     super
 
+    # TODO use Spine.Route instead
+    anchor = Spine.Route.getFragment()
+    if anchor
+      path = anchor.split("/")
+      ctrl = path[0]
+      @resource = path[1] if path.length > 1
+
     AffairsCondition.one 'refresh', =>
-      PersonAffair.fetch()
-      @new.active()
+      if @resource
+        PersonAffair.one 'refresh', =>
+          @affair = PersonAffair.find(@resource)
+          @index.active(affair_id: @resource)
+          @edit.active(id: @resource, person_id: @person_id)
+          PersonAffair.fetch()
+
+        PersonAffair.fetch(id: @resource)
+
+      else
+        PersonAffair.fetch()
+        @new.active() # Anyways
 
     AffairsCondition.fetch
       data:

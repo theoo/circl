@@ -32,7 +32,7 @@ class Index extends App.ExtendedController
     id = $(e.target).parents('[data-id]').data('id')
     Affair.one 'refresh', =>
       affair = Affair.find(id)
-      window.location = "/people/#{affair.owner_id}#affairs"
+      window.location = "/admin/affairs/#{affair.id}"
     Affair.fetch(id: id)
 
 class App.AdminAffairs extends Spine.Controller

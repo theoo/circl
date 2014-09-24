@@ -305,8 +305,19 @@ class Ui
 
     title = nav.find("a")
 
+    anchor = location.hash.split('#')
+    if anchor
+      anchor = anchor[1]
+      if anchor
+        path = anchor.split("/")
+        ctrl = path[0]
+        resource = path[1] if path.length > 1
+
     title.on 'shown.bs.tab', (e) ->
       tab_name = get_tab_name($(e.target))
+
+      if tab_name == ctrl
+        tab_name = [ctrl, resource].join("/") if resource
 
       # Update url location in browser
       location.hash = tab_name if tab_name
@@ -323,10 +334,8 @@ class Ui
       # Trigger tab content loading (which is caught in index.js.coffee)
       nav.trigger tab_name
 
-    anchor = location.hash.split('#')
-    anchor = anchor[1] if anchor
 
-    tab_link = nav.find("a[href=#" + anchor + "_tab]")
+    tab_link = nav.find("a[href=#" + ctrl + "_tab]")
     tab_link = nav.find("a:first") if tab_link.length == 0
     tab_link.tab('show')
 

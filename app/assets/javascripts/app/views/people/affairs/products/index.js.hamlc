@@ -23,6 +23,7 @@
             %th.ignore-sort.asc= I18n.t('common.table.position')
             %th.ignore-sort= I18n.t('common.key')
             %th.ignore-sort= I18n.t('common.description')
+            %th.ignore-sort= I18n.t('product.views.provider')
             %th.small-number.ignore-sort= I18n.t('common.table.quantity')
             %th.small-number.ignore-sort= I18n.t('common.table.unit_value')
             %th.number.ignore-sort= I18n.t('common.value')
@@ -41,18 +42,9 @@
                 %b= item.key
                 = "/"
                 = item.program_key
-              %td
-                %b= item.title
-                %br
-                - if item.description?.length > 250
-                  != item.description?.replace(/\n/g, '<br/>').substring(0, 250).trim() + "..."
-                - else
-                  != item.description?.replace(/\n/g, '<br/>')
+              %td= item.title
 
-                - if item.comment
-                  %pre
-                    = item.comment
-
+              %td= item.provider_name
               %td.small-number= item.quantity + " " + I18n.t("product.units.#{item.unit_symbol}.symbol")
               %td.number
                 = item.unit_price?.to_view(@affair?.value_currency)

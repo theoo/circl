@@ -31,7 +31,7 @@ class Admin::AffairsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html { redirect_to person_path(@affair.owner, anchor: 'affairs')}
+      format.html { redirect_to person_path(@affair.owner, anchor: "affairs/#{@affair.id}")}
       format.json { render json: @affair }
     end
   end
