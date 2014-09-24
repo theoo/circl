@@ -160,7 +160,8 @@ class Edit extends PersonAffairProductExtention
 
 class Index extends App.ExtendedController
   events:
-    'click tr.item':      'edit'
+    'click tr.item td:not(.ignore-click)': 'edit'
+    'click input[name="export_all"]': 'select_all'
     'datatable_redraw': 'table_redraw'
     'click a[name=affair-products-csv]': 'csv'
     'click a[name=affair-products-pdf]': 'pdf'
@@ -240,17 +241,17 @@ class Index extends App.ExtendedController
 
   csv: (e) ->
     e.preventDefault()
-    window.location = PersonAffairProductsProgram.url() + ".csv"
+    window.location = PersonAffairProductsProgram.url() + ".csv?items=#{@selected_items()}"
 
   pdf: (e) ->
     e.preventDefault()
     @template_id = @el.find("#affair_products_template").val()
-    window.location = PersonAffairProductsProgram.url() + ".pdf?template_id=#{@template_id}"
+    window.location = PersonAffairProductsProgram.url() + ".pdf?template_id=#{@template_id}&items=#{@selected_items()}"
 
   odt: (e) ->
     e.preventDefault()
     @template_id = @el.find("#affair_products_template").val()
-    window.location = PersonAffairProductsProgram.url() + ".odt?template_id=#{@template_id}"
+    window.location = PersonAffairProductsProgram.url() + ".odt?template_id=#{@template_id}&items=#{@selected_items()}"
 
   preview: (e) ->
     e.preventDefault()
@@ -265,9 +266,10 @@ class Index extends App.ExtendedController
     # Update title
     win.find('h4').text I18n.t('common.preview')
 
+    url = "#{PersonAffairProductsProgram.url()}.html?template_id=#{@template_id}&items=#{@selected_items()}"
     # Insert iframe to content
     iframe = $("<iframe src='" +
-                "#{PersonAffairProductsProgram.url()}.html?template_id=#{@template_id}" +
+                url +
                 "' width='100%' " + "height='" + ($(window).height() - 60) +
                 "'></iframe>")
     win.find('.modal-body').html iframe
@@ -283,7 +285,8 @@ class Index extends App.ExtendedController
     win.find('.modal-footer').append btn
     btn.on 'click', (e) =>
       e.preventDefault()
-      window.open "#{PersonAffairProductsProgram.url()}.html?template_id=#{@template_id}", "affair_products_preview"
+      window.open url,
+        "affair_products_preview"
 
     win.modal('show')
 
@@ -300,6 +303,18 @@ class Index extends App.ExtendedController
     # FIXME Add error validation
     Spine.Ajax.queue =>
       $.ajax(settings).success(ajax_success)
+
+  select_all: (e) ->
+    @selected_items()
+    c = $(e.target).is(':checked')
+    @el.find("input[type='checkbox']").attr('checked', c)
+
+  selected_items: ->
+    items = @el.find("input[type='checkbox']:checked").map ->
+      $(@).closest("tr").data("id")
+    # encodeURIComponent(items.toArray())
+    JSON.stringify items.toArray()
+
 
 class App.PersonAffairProducts extends Spine.Controller
   className: 'products'

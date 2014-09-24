@@ -27,6 +27,11 @@
             %th.small-number.ignore-sort= I18n.t('common.table.quantity')
             %th.small-number.ignore-sort= I18n.t('common.table.unit_value')
             %th.number.ignore-sort= I18n.t('common.value')
+            %th.number.ignore-sort.ignore-click
+              %input{ type: 'checkbox',
+                      name: 'export_all',
+                      checked: false,
+                      value: 1 }
 
         %tbody
           - for item in App.PersonAffairProductsProgram.all()
@@ -63,6 +68,11 @@
                     = I18n.t("product.views.art") + ": "
                     = item.art?.to_view(@affair?.value_currency)
 
+              %td.number.ignore-click
+                %input{ type: 'checkbox',
+                        name: 'export[]',
+                        checked: false,
+                        value: 1 }
 
 
     - for cat in App.PersonAffairProductsCategory.all()

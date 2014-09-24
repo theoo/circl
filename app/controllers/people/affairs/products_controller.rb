@@ -32,11 +32,16 @@ class People::Affairs::ProductsController < ApplicationController
   def index
     authorize! :read, @person => AffairsProductsProgram
 
-    @products = @affair.product_items
+    if params[:items]
+      @products = @affair.product_items.where(id: JSON.parse(params[:items]))
+    else
+      @products = @affair.product_items
+    end
 
     if params[:template_id]
       @affair.template = GenericTemplate.find params[:template_id]
     end
+
 
     respond_to do |format|
       format.json { render json: @products }
