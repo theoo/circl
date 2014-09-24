@@ -507,9 +507,9 @@ class Affair < ActiveRecord::Base
     self.vat_percentage = ApplicationSetting.value("service_vat_rate").to_f
   end
 
-
   def compute_value_without_taxes
     self.value = reverse_vat(value)
+    update_vat
   end
 
   # Takes a value taxes included
