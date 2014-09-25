@@ -110,6 +110,8 @@ class PersonAffairsDatatable
                       a.title,
                       a.value_in_cents,
                       a.value_currency,
+                      a.vat_in_cents,
+                      a.vat_currency,
                       a.created_at,
                       a.updated_at,
                       a.status,
