@@ -243,15 +243,22 @@ class Index extends App.ExtendedController
     e.preventDefault()
     window.location = PersonAffairProductsProgram.url() + ".csv?items=#{@selected_items()}"
 
+  url_for: (format) ->
+    url = PersonAffairProductsProgram.url() + ".#{format}?template_id=#{@template_id}"
+    url = url + "&items=#{@selected_items()}"
+    e = @el.find("input[name=export_all]:checked")
+    url = url + "&export_all=true" if e.length == 1
+    url
+
   pdf: (e) ->
     e.preventDefault()
     @template_id = @el.find("#affair_products_template").val()
-    window.location = PersonAffairProductsProgram.url() + ".pdf?template_id=#{@template_id}&items=#{@selected_items()}"
+    window.location = @url_for('pdf')
 
   odt: (e) ->
     e.preventDefault()
     @template_id = @el.find("#affair_products_template").val()
-    window.location = PersonAffairProductsProgram.url() + ".odt?template_id=#{@template_id}&items=#{@selected_items()}"
+    window.location = @url_for('odt')
 
   preview: (e) ->
     e.preventDefault()
@@ -266,7 +273,7 @@ class Index extends App.ExtendedController
     # Update title
     win.find('h4').text I18n.t('common.preview')
 
-    url = "#{PersonAffairProductsProgram.url()}.html?template_id=#{@template_id}&items=#{@selected_items()}"
+    url = @url_for('html')
     # Insert iframe to content
     iframe = $("<iframe src='" +
                 url +
@@ -305,7 +312,6 @@ class Index extends App.ExtendedController
       $.ajax(settings).success(ajax_success)
 
   select_all: (e) ->
-    @selected_items()
     c = $(e.target).is(':checked')
     @el.find("input[type='checkbox']").attr('checked', c)
 

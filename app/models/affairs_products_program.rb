@@ -63,6 +63,8 @@ class AffairsProductsProgram < ActiveRecord::Base
   belongs_to :program, class_name: "ProductProgram"
   belongs_to :category, class_name: "AffairsProductsCategory"
 
+  attr_accessor :template
+
   ###################
   ### VALIDATIONS ###
   ###################
@@ -184,7 +186,8 @@ class AffairsProductsProgram < ActiveRecord::Base
     h[:unit_symbol]             = product.try(:unit_symbol)
     h[:category]                = category.try(:title)
     h[:provider_name]           = product.try(:provider).try(:name)
-    h[:created_at]              = created_at.to_date # Override datetime
+    h[:created_at]              = created_at.try(:to_date) # Override datetime
+    h[:ordered_at]              = ordered_at.try(:to_date) # Override datetime
 
     h[:errors]         = errors
 
