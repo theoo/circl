@@ -11,8 +11,8 @@
 development:
   adapter: postgresql
   encoding: utf8
-  database: directory_dev
-  username: directory
+  database: circl_dev
+  username: circl
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -36,21 +36,19 @@ development:
 test:
   adapter: postgresql
   encoding: utf8
-  database: directory_test
-  username: directory
+  database: circl_test
+  username: circl
   password:
 
 production:
   adapter: postgresql
   encoding: utf8
-  database: directory_prod
-  username: directory
+  database: circl_prod
+  username: circl
 
 exception_database:
   adapter: postgresql
   encoding: utf8
   database: circl_exceptions
   host: localhost
-  username:
-  password:
-  pool: 5
+  username: circl_manager
