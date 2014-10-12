@@ -15,11 +15,6 @@ fr:
       program_key: clé du programme
       program_title: titre du programme
     units:
-      "#{l}":
-        title: MISSING_TRANSLATION title
-      "#{prod":
-        unit_symbol}:
-          symbol: MISSING_TRANSLATION symbol
       cm:
         symbol: cm
         title: centimètres
@@ -45,10 +40,12 @@ fr:
       bid_price: prix avec remise
       category: catégorie
       comments: commentaires
+      confirmed_at: confirmation
+      delivery_at: livraison
       has_accessories: accessoires
       key: clé
       normal_price: prix normal
-      ordered_at: date de commande
+      ordered_at: commande
       position: position
       price_to_unit_rate: rapport de conversion du prix
       product_search: produit

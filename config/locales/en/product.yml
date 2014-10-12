@@ -15,11 +15,6 @@ en:
       program_key: program key
       program_title: program title
     units:
-      "#{l}":
-        title: MISSING_TRANSLATION title
-      "#{prod":
-        unit_symbol}:
-          symbol: MISSING_TRANSLATION symbol
       cm:
         symbol: cm
         title: centimeters
@@ -45,6 +40,8 @@ en:
       bid_price: bid price
       category: category
       comments: comments
+      confirmed_at: confirmation date
+      delivery_at: delivery date
       has_accessories: has accessories
       key: key
       normal_price: normal price

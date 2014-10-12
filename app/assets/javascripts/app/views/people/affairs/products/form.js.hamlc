@@ -120,6 +120,14 @@
             .input-group-addon
               != @partial('select_currency')(currency: @product.value_currency, name: 'value_currency', value: @product.value)
 
+        - if @product.value and @product.value != @product.bid_price
+          %small.help-block
+            = I18n.t('product.views.normal_price') + ": "
+            = @product.value.to_view(@product.value_currency)
+            .text-danger
+              = I18n.t('product.views.bid_price') + ": "
+              = @product.bid_price.to_view(@product.bid_price_currency)
+
     .row
       .col-md-5.form-group
         %label{class: 'label-control'}
@@ -129,24 +137,32 @@
                   class: 'form-control'}
           = @product.comment
 
-      .col-sm-2.form-group
-        %label
-          = I18n.t('product.views.ordered_at')
-        %input{ type: 'text',
-                name: 'ordered_at',
-                class: 'datepicker form-control',
-                value: @product.ordered_at }
+      .col-sm-2
+        .form-group
+          %label
+            = I18n.t('product.views.ordered_at')
+          %input{ type: 'text',
+                  name: 'ordered_at',
+                  class: 'datepicker form-control',
+                  value: @product.ordered_at }
 
       .col-md-2
+        .form-group
+          %label
+            = I18n.t('product.views.confirmed_at')
+          %input{ type: 'text',
+                  name: 'confirmed_at',
+                  class: 'datepicker form-control',
+                  value: @product.confirmed_at }
 
-      .col-md-3
-        - if @product.value and @product.value != @product.bid_price
-          %small.help-block
-            = I18n.t('product.views.normal_price') + ": "
-            = @product.value.to_view(@product.value_currency)
-            .text-danger
-              = I18n.t('product.views.bid_price') + ": "
-              = @product.bid_price.to_view(@product.bid_price_currency)
+      .col-md-2
+        .form-group
+          %label
+            = I18n.t('product.views.delivery_at')
+          %input{ type: 'text',
+                  name: 'delivery_at',
+                  class: 'datepicker form-control',
+                  value: @product.delivery_at }
 
     .row
       .col-lg-12

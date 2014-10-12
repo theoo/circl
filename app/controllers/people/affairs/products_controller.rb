@@ -276,6 +276,8 @@ class People::Affairs::ProductsController < ApplicationController
         :quantity,
         :comment,
         :ordered_at,
+        :confirmed_at,
+        :delivery_at,
         :category_id
       )
 

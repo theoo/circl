@@ -188,6 +188,8 @@ class AffairsProductsProgram < ActiveRecord::Base
     h[:provider_name]           = product.try(:provider).try(:name)
     h[:created_at]              = created_at.try(:to_date) # Override datetime
     h[:ordered_at]              = ordered_at.try(:to_date) # Override datetime
+    h[:confirmed_at]            = confirmed_at.try(:to_date) # Override datetime
+    h[:delivery_at]             = delivery_at.try(:to_date) # Override datetime
 
     h[:errors]         = errors
 
