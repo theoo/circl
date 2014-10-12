@@ -19,7 +19,7 @@ class App.Person extends Spine.Model
   @configure 'Person', 'name', 'job_name', 'job_id', 'location_name', 'location_id',
     'main_communication_language_id', 'communication_language_ids',
     'is_an_organization', 'organization_name', 'title', 'first_name', 'last_name',
-    'phone', 'second_phone', 'mobile', 'email', 'second_email', 'postal_code',
+    'phone', 'second_phone', 'mobile', 'email', 'second_email', 'postal_code', 'fax_number',
     'address', 'birth_date', 'nationality', 'avs_number', 'bank_informations',
     'generate_authentication_token', 'errors', 'hidden', 'alias_name',
     'created_at', 'task_rate_id', 'latitude', 'longitude', 'gender', 'website'

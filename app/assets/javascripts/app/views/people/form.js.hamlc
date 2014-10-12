@@ -206,7 +206,18 @@
                 %a{name: 'person_mobile_button', class: 'btn btn-default'}
                   .icon-phone
 
-          .col-sm-6
+          .col-sm-6.form-group
+            %label{for: 'person_fax_number', class: 'control-label'}
+              = I18n.t('person.views.fax_number')
+            .input-group
+              %input{ type: 'tel',
+                      id: 'person_fax_number',
+                      class: 'form-control',
+                      name: 'fax_number',
+                      value: @person.fax_number }
+              .input-group-btn
+                %a{name: 'person_fax_number_button', class: 'btn btn-default'}
+                  .icon-print
 
         .row
           .col-sm-6

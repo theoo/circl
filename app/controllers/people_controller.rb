@@ -343,6 +343,7 @@ class PeopleController < ApplicationController
         :longitude,
         :main_communication_language_id,
         :mobile,
+        :fax_number,
         :nationality,
         :organization_name,
         :phone,
