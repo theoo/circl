@@ -220,6 +220,8 @@ class Edit extends App.ExtendedController
   load_dependencies: ->
     if @id
       # Subscriptions
+      person_affair_subscriptions_ctrl = $("#person_affair_subscriptions").data('controller')
+      person_affair_subscriptions_ctrl.activate(person_id: @person_id, affair_id: @id)
       PersonAffairSubscription.url = =>
         "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/subscriptions"
       PersonAffairSubscription.refresh([], clear: true)

@@ -60,6 +60,7 @@ class Task < ActiveRecord::Base
 
   after_commit  :update_elasticsearch
   before_save   :set_value
+  after_save 'affair.update_on_prestation_alteration'
 
   #################
   ### RELATIONS ###

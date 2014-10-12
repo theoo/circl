@@ -35,9 +35,13 @@ class New extends App.ExtendedController
   active: (params) =>
     if params
       @person_id = params.person_id if params.person_id
+      if App.Person.exists(@person_id)
+        @person = App.Person.find(@person_id)
+
       @affair_id = params.affair_id if params.affair_id
       if App.PersonAffair.exists(@affair_id)
         @affair = App.PersonAffair.find(@affair_id)
+
       @can = params.can if params.can
 
     @render()
@@ -74,8 +78,17 @@ class Edit extends App.ExtendedController
       bind_events: (App.ApplicationSetting.value('use_vat') == "true")
 
   active: (params) =>
-    @can = params.can if params.can
-    @id = params.id if params.id
+    if params
+      @id = params.id if params.id
+      @person_id = params.person_id if params.person_id
+      if App.Person.exists(@person_id)
+        @person = App.Person.find(@person_id)
+
+      @affair_id = params.affair_id if params.affair_id
+      if App.PersonAffair.exists(@affair_id)
+        @affair = App.PersonAffair.find(@affair_id)
+
+      @can = params.can if params.can
     @render()
 
   render: =>
@@ -230,6 +243,6 @@ class App.PersonAffairExtras extends Spine.Controller
 
     App.Permissions.get { person_id: @person_id, can: { extra: ['create', 'update'] }}, (data) =>
       @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
-      @index.active {can: data}
-      @edit.active {can: data}
+      @index.active { person_id: @person_id, affair_id: @affair_id, can: data }
+      @edit.active { person_id: @person_id, affair_id: @affair_id, can: data }
       @edit.hide()

@@ -479,6 +479,7 @@ class Affair < ActiveRecord::Base
   def update_on_prestation_alteration(record = nil)
     if estimate
       self.update_attribute(:value, compute_value)
+      self.update_attribute(:vat, compute_vat)
       self.update_attribute(:status, update_statuses)
     end
   end

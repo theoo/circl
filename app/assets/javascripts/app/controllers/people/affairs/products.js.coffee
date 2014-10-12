@@ -101,6 +101,8 @@ class Edit extends PersonAffairProductExtention
     'click button[name=reset_value]': 'reset_value'
     'change #person_affair_product_bid_percentage': 'clear_value'
     'change #person_affair_product_quantity': 'clear_value'
+    'autocompleteselect #person_affair_product_search': 'clear_value'
+    'autocompleteselect #person_affair_product_program_search': 'clear_value'
 
   constructor: ->
     super

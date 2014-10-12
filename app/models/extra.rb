@@ -33,6 +33,7 @@ class Extra < ActiveRecord::Base
 
   before_save :set_vat_percentage, id: 'vat_percentage.blank?'
   before_validation :set_position_if_none_given, if: Proc.new {|i| i.position.blank? }
+  after_save 'affair.update_on_prestation_alteration'
 
   #################
   ### RELATIONS ###

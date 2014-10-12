@@ -30,6 +30,10 @@ class New extends App.ExtendedController
     PersonAffairSubscription.bind('refresh', @render)
 
   active: (params) =>
+    if params
+      @person_id = params.person_id if params.person_id
+      @affair_id = params.affair_id if params.affair_id
+      @can = params.can if params.can
     @render()
 
   disabled: =>
@@ -44,13 +48,11 @@ class New extends App.ExtendedController
     e.preventDefault()
     subscription = new PersonAffairSubscription()
     subscription.fromForm(e.target)
-    @save_with_notifications subscription, @on_successfull_submit
-
-  on_successfull_submit: ->
-    # Refresh affairs
-    App.PersonAffair.fetch()
-    # Refetch subscription so it get the correct value (different URL)
-    PersonAffairSubscription.fetch()
+    @save_with_notifications subscription, =>
+      # Refresh affairs
+      App.PersonAffair.fetch(id: @affair_id)
+      # Refetch subscription so it get the correct value (different URL)
+      PersonAffairSubscription.fetch()
 
 class Index extends App.ExtendedController
   events:
@@ -62,6 +64,10 @@ class Index extends App.ExtendedController
     PersonAffairSubscription.bind('refresh', @active)
 
   active: (params) =>
+    if params
+      @person_id = params.person_id if params.person_id
+      @affair_id = params.affair_id if params.affair_id
+      @can = params.can if params.can
     @render()
 
   disabled: =>
@@ -85,7 +91,7 @@ class Index extends App.ExtendedController
         PersonAffairSubscription.refresh([], clear: true)
         PersonAffairSubscription.fetch()
         # Refresh affairs
-        App.PersonAffair.fetch()
+        App.PersonAffair.fetch(id: @affair_id)
         @render_success()
 
       settings =
@@ -102,18 +108,21 @@ class App.PersonAffairSubscriptions extends Spine.Controller
   constructor: (params) ->
     super
 
-    @person_id = params.person_id
-
     @index = new Index
     @new = new New
     @append(@new, @index)
 
   activate: (params) ->
     super
+
+    if params
+      @person_id = params.person_id if params.person_id
+      @affair_id = params.affair_id if params.affair_id
+
     # Render empty values (placeholders)
     App.Subscription.one 'count_fetched', =>
       PersonAffairSubscription.refresh([], clear: true)
-      @index.active()
-      @new.active()
+      @index.active( person_id: @person_id, affair_id: @affair_id )
+      @new.active( person_id: @person_id, affair_id: @affair_id )
 
     App.Subscription.fetch_count()

@@ -273,9 +273,9 @@ class App.PersonAffairTasks extends Spine.Controller
     TaskType.one 'refresh', =>
       Permissions.get { person_id: @person_id, can: { task: ['create', 'update'] }}, (data) =>
         @edit.hide()
-        @edit.active {can: data}
+        @edit.active { person_id: @person_id, affair_id: @affair_id, can: data}
         @new.active { person_id: @person_id, affair_id: @affair_id, can: data }
-        @index.active {can: data}
+        @index.active { person_id: @person_id, affair_id: @affair_id, can: data}
 
     # FIXME TaskType will be reloaded on each affair change
     TaskType.fetch
