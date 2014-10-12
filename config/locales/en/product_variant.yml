@@ -2,6 +2,7 @@
 en:
   product_variant:
     errors:
+      parent_cannot_be_the_child_of_another_product_item: A parent cannot be the child of another item.
       this_relation_already_exists: This product is already selected. Please update the existing product instead.
     views:
       art: art

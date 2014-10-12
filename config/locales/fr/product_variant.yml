@@ -2,6 +2,7 @@
 fr:
   product_variant:
     errors:
+      parent_cannot_be_the_child_of_another_product_item: Un parent ne peut pas être l'enfant d'un autre élément.
       this_relation_already_exists: Ce produit a déjà été sélectionné, veuillez éditer le produit existant.
     views:
       art: TAR

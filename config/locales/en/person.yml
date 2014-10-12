@@ -3,6 +3,8 @@ en:
   person:
     dashboard:
       help: help
+      notices:
+        hotkey_info: Press ALT-Q to display this window anytime.
       panels:
         background_tasks: Background tasks
         current_affairs: current affairs
@@ -11,8 +13,8 @@ en:
         messages: messages
         open_invoices: open invoices
         open_salaries: open salaries
-        statistics: statistics
         shortcuts: shortcuts
+        statistics: statistics
         timesheet: timesheet
         your_activity: your activity
       tech_support: tech support

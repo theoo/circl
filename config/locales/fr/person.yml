@@ -3,6 +3,8 @@ fr:
   person:
     dashboard:
       help: documentation
+      notices:
+        hotkey_info: Appuyez les ALT+Q pour afficher cette fenêtre en tout temps.
       panels:
         background_tasks: Tâches d'arrière plan
         current_affairs: Affaires en cours
@@ -11,8 +13,8 @@ fr:
         messages: Messages
         open_invoices: Factures ouvertes
         open_salaries: Salaires ouverts
-        statistics: Statistiques
         shortcuts: Raccourcis
+        statistics: Statistiques
         timesheet: Pointeuse
         your_activity: Votre activité
       tech_support: support technique

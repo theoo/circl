@@ -37,7 +37,7 @@ en:
       proceed_with_import: proceed with import
       query_preset_explanation: You can drag attributes from the lists of selected attributes and sorting order.
       query_preset_name: Preset name
-      quick_search_placeholder: Quick search
+      quick_search_placeholder: "ALT+S: Quick search"
       results: Results
       score: score
       search_the_directory: Search the directory

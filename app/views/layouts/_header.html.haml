@@ -8,7 +8,11 @@
           .sr-only= I18n.t('common.close')
         %h4.modal-title= I18n.t("person.dashboard.panels.shortcuts")
       .modal-body
-
+      .modal-footer
+        %small.help-block
+          = I18n.t("person.dashboard.notices.hotkey_info")
+          .label.label-info
+            = I18n.t("common.info")
 %header
 
   - if person_signed_in?

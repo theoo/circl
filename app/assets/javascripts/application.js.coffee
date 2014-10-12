@@ -76,5 +76,17 @@ $(document).ready ->
     show: false
     keyboard: true
 
-  $('#shortcuts').click -> $('#shortcuts_content').modal('show')
+  $('#shortcuts').click ->
+    $('#shortcuts_content').modal('show')
+
+  # Keyboard shortcuts
+
+  # Open shortcuts
+  $(document).on 'keydown', null, 'alt+q', ->
+    $('#shortcuts_content').modal('show')
+    $('#shortcuts_content input[name="dashboard_shortcuts_person"]').focus()
+
+  # Focus quick search
+  $(document).on 'keydown', null, 'alt+s', ->
+    $('#quick_search_string').focus()
 

@@ -5,7 +5,6 @@
         .autocompleted.input-group
           %input{type: 'search',
             name: 'dashboard_shortcuts_person',
-            id: 'dashboard_shortcuts_person',
             placeholder: I18n.t('common.contact'),
             class: 'form-control',
             action: '/people/search'}
@@ -21,7 +20,6 @@
         .autocompleted.input-group
           %input{type: 'search',
             name: 'dashboard_shortcuts_affair',
-            id: 'dashboard_shortcuts_affair',
             placeholder: I18n.t('common.affair'),
             class: 'form-control',
             action: '/admin/affairs/search'}
@@ -37,7 +35,6 @@
         .autocompleted.input-group
           %input{type: 'search',
             name: 'dashboard_shortcuts_invoice',
-            id: 'dashboard_shortcuts_invoice',
             placeholder: I18n.t('common.invoice'),
             class: 'form-control',
             action: '/admin/invoices/search'}
