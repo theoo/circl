@@ -161,7 +161,8 @@ class Edit extends PersonAffairProductExtention
 class Index extends App.ExtendedController
   events:
     'click tr.item td:not(.ignore-click)': 'edit'
-    'click input[name="export_all"]': 'select_all'
+    'click div[name="select_all"]': 'select_all'
+    'click div[name="select_none"]': 'select_none'
     'datatable_redraw': 'table_redraw'
     'click a[name=affair-products-csv]': 'csv'
     'click a[name=affair-products-pdf]': 'pdf'
@@ -312,8 +313,13 @@ class Index extends App.ExtendedController
       $.ajax(settings).success(ajax_success)
 
   select_all: (e) ->
-    c = $(e.target).is(':checked')
-    @el.find("input[type='checkbox']").attr('checked', c)
+    # c = $(e.target)
+    # for item in PersonAffairProductsProgram.all()
+    #   item.checked = true
+    @el.find("input[type='checkbox']").prop('checked', true)
+
+  select_none: (e) ->
+    @el.find("input[type='checkbox']").prop('checked', false)
 
   selected_items: ->
     items = @el.find("input[type='checkbox']:checked").map ->

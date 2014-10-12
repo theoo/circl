@@ -29,10 +29,8 @@
             %th.number.ignore-sort= I18n.t('common.value')
             %th.number= I18n.t("product.views.ordered_at")
             %th.number.ignore-sort.ignore-click
-              %input{ type: 'checkbox',
-                      name: 'export_all',
-                      checked: false,
-                      value: 1 }
+              .icon-check{name: 'select_all'}
+              .icon-check-empty{name: 'select_none'}
 
         %tbody
           - for item in App.PersonAffairProductsProgram.all()
@@ -73,7 +71,7 @@
               %td.number.ignore-click
                 %input{ type: 'checkbox',
                         name: 'export[]',
-                        checked: false,
+                        checked: item.checked,
                         value: 1 }
 
 
