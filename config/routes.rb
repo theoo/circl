@@ -178,7 +178,7 @@ CIRCL::Application.routes.draw do
 
     resources :invoices do
       collection do
-        get 'export', 'available_statuses'
+        get 'export', 'available_statuses', 'search'
       end
     end
 

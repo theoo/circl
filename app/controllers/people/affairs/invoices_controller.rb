@@ -18,6 +18,8 @@
 
 class People::Affairs::InvoicesController < ApplicationController
 
+  include ControllerExtentions::Invoices
+
   layout false
 
   load_resource :person
@@ -143,18 +145,7 @@ class People::Affairs::InvoicesController < ApplicationController
     end
   end
 
-  def search
-    if params[:term].blank?
-      result = []
-    else
-      param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @invoices.where("invoices.title ~* ?", param)
-    end
-
-    respond_to do |format|
-      format.json { render json: result.map{|t| {id: t.id, label: t.title}}}
-    end
-  end
+  # search is in extention
 
   ##
   # PDF generation

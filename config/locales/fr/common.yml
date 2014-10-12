@@ -64,6 +64,7 @@ fr:
     id: id
     incomplete: incomplet
     info: info
+    invoice: facture
     key: clé
     members: membres
     name: nom

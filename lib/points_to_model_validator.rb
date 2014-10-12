@@ -16,7 +16,6 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-
 # validate that record.resource_type is a string representation of a rails model
 
 class PointsToModelValidator < ActiveModel::Validator

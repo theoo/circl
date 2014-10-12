@@ -18,6 +18,7 @@
 class Ui
   constructor: ->
 
+  # TODO move this in spine/libs
   load_ui: (context) =>
     @load_jqueryui(context)
     @load_autocompleters(context)
@@ -31,8 +32,8 @@ class Ui
     # should be trigged without calling this line (?)
     $('a[data-toggle=tooltip]').tooltip()
 
+  # TODO Move this in applications.js.coffee
   initialize_ui: =>
-    @load_locale()
     @bind_datepicker()
     @bind_currency_selector()
     @setup_datatable()
@@ -86,12 +87,6 @@ class Ui
         $(e.target).trigger 'currency_changed' # Catch this in 'events:'
 
       $.get "/settings/currency_rates/exchange", data, success, 'json'
-
-#--- translations ---
-  load_locale: ->
-    # set default locale for i18n-js
-    I18n.defaultLocale = $('html').attr('lang')
-    I18n.locale = $('html').attr('lang')
 
 #--- datatables setup ---
   setup_datatable: ->

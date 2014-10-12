@@ -2,34 +2,48 @@
   .row
     .col-lg-12.form-group
       %form.dashboard_shortcuts_person
-        %label{for: 'dashboard_shortcuts_person', class: 'label-control'}
-          = I18n.t('common.contact')
         .autocompleted.input-group
           %input{type: 'search',
-                 name: 'dashboard_shortcuts_person',
-                 id: 'dashboard_shortcuts_person',
-                 class: 'form-control',
-                 action: '/people/search'}
+            name: 'dashboard_shortcuts_person',
+            id: 'dashboard_shortcuts_person',
+            placeholder: I18n.t('common.contact'),
+            class: 'form-control',
+            action: '/people/search'}
           %input{type: 'hidden',
                  name: 'dashboard_shortcuts_person_id' }
           .input-group-btn
             %button{ class: 'btn btn-default', type: 'submit', name: "dashboard_shortcuts_person_jump" }
               .icon-play
+
   .row
     .col-lg-12.form-group
       %form.dashboard_shortcuts_affair
-        %label{for: 'dashboard_shortcuts_affair', class: 'label-control'}
-          = I18n.t('common.affair')
         .autocompleted.input-group
           %input{type: 'search',
-                 name: 'dashboard_shortcuts_affair',
-                 id: 'dashboard_shortcuts_affair',
-                 class: 'form-control',
-                 action: '/admin/affairs/search'}
+            name: 'dashboard_shortcuts_affair',
+            id: 'dashboard_shortcuts_affair',
+            placeholder: I18n.t('common.affair'),
+            class: 'form-control',
+            action: '/admin/affairs/search'}
           %input{type: 'hidden',
                  name: 'dashboard_shortcuts_affair_id' }
           .input-group-btn
             %button{ class: 'btn btn-default', type: 'submit', name: "dashboard_shortcuts_affair_jump" }
               .icon-play
 
+  .row
+    .col-lg-12.form-group
+      %form.dashboard_shortcuts_invoice
+        .autocompleted.input-group
+          %input{type: 'search',
+            name: 'dashboard_shortcuts_invoice',
+            id: 'dashboard_shortcuts_invoice',
+            placeholder: I18n.t('common.invoice'),
+            class: 'form-control',
+            action: '/admin/invoices/search'}
+          %input{type: 'hidden',
+                 name: 'dashboard_shortcuts_invoice_id' }
+          .input-group-btn
+            %button{ class: 'btn btn-default', type: 'submit', name: "dashboard_shortcuts_invoice_jump" }
+              .icon-play
 

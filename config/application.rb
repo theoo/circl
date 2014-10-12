@@ -39,7 +39,7 @@ module CIRCL
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W(#{config.root}/lib/)
     # config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
     # Enable the asset pipeline

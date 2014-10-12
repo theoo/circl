@@ -20,6 +20,7 @@ class Index extends App.ExtendedController
   events:
     'submit form.dashboard_shortcuts_person': 'select_person'
     'submit form.dashboard_shortcuts_affair': 'select_affair'
+    'submit form.dashboard_shortcuts_invoice': 'select_invoice'
 
   constructor: (params) ->
     super
@@ -38,6 +39,12 @@ class Index extends App.ExtendedController
     id = @el.find("input[name='dashboard_shortcuts_affair_id']").val()
     if id
       window.location = "#{Spine.Model.host}/admin/affairs/#{id}"
+
+  select_invoice: (e) ->
+    e.preventDefault()
+    id = @el.find("input[name='dashboard_shortcuts_invoice_id']").val()
+    if id
+      window.location = "#{Spine.Model.host}/admin/invoices/#{id}"
 
 class App.DashboardShortcuts extends Spine.Controller
   className: 'shortcuts'

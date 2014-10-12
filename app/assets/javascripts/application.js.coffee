@@ -18,6 +18,7 @@
 #= require jquery
 #= require jquery-ujs
 #= require jquery.cookie
+#= require jquery.hotkeys
 #= require jquery.iframe-transport
 #= require jquery_serialize_object
 # require jquery.turbolinks
@@ -42,6 +43,11 @@ $ = jQuery
 
 # quick search
 $(document).ready ->
+  # set default locale for i18n-js
+  I18n.defaultLocale = $('html').attr('lang')
+  I18n.locale = $('html').attr('lang')
+
+  # Quick search
   $("form#quick_search").on 'submit', (e) ->
     e.preventDefault()
     search_string = $('form#quick_search input[type=search]').val()
@@ -61,3 +67,14 @@ $(document).ready ->
   # Reveal content
   $("body").css('margin-left': 0)
   $("body").animate({opacity: 1}, 500)
+
+  # Shortcuts modal
+  shortcuts_app = new App.DashboardShortcuts({el: $('#shortcuts_content .modal-body')})
+  shortcuts_app.activate()
+
+  $('#shortcuts_content').modal
+    show: false
+    keyboard: true
+
+  $('#shortcuts').click -> $('#shortcuts_content').modal('show')
+

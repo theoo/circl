@@ -18,6 +18,8 @@
 
 class Admin::AffairsController < ApplicationController
 
+  include ControllerExtentions::Affairs
+
   layout false
 
   load_and_authorize_resource except: :index
@@ -36,37 +38,7 @@ class Admin::AffairsController < ApplicationController
     end
   end
 
-  # FIXME Same method in people/affairs_controller. DRY
-  def search
-    if params[:term].blank?
-      result = []
-    else
-      param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      if param.is_i?
-        result = @affairs.where("affairs.id = ?", param)
-      else
-        param.gsub!(/\s+/, ".*")
-        result = @affairs.where("affairs.title ~* ?", param)
-      end
-      result = result.limit(10)
-    end
-
-    respond_to do |format|
-      format.json do
-        render json: result.map{|t|
-          desc = " "
-          if t.estimate
-            desc += "<i>" + I18n.t("affair.views.estimate") + "</i>"
-            desc += " - " + t.description.exerpt unless t.description.blank?
-          else
-            desc += t.description if t.description
-          end
-          { id: t.id,
-            label: t.title,
-            desc: desc }}
-      end
-    end
-  end
+  # Search is in AffairsExtention
 
   def available_statuses
     a = Affair.available_statuses

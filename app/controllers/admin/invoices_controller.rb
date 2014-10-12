@@ -18,6 +18,8 @@
 
 class Admin::InvoicesController < ApplicationController
 
+  include ControllerExtentions::Invoices
+
   layout false
 
   load_and_authorize_resource except: :index
@@ -62,22 +64,12 @@ class Admin::InvoicesController < ApplicationController
 
   def show
     respond_to do |format|
+      format.html { redirect_to person_path(@invoice.affair.owner, anchor: "affairs/#{@invoice.affair.id}")}
       format.json { render json: @invoice }
     end
   end
 
-  def search
-    if params[:term].blank?
-      result = []
-    else
-      param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-      result = @invoices.where("invoices.title ~* ?", param)
-    end
-
-    respond_to do |format|
-      format.json { render json: result.map{|t| {id: t.id, label: t.title}}}
-    end
-  end
+  # search is in extention
 
   def available_statuses
     a = Invoice.available_statuses

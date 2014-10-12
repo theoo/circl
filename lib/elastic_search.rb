@@ -16,7 +16,6 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-
 module ElasticSearch
 
   def self.search(search_string, selected_attributes, attributes_order, current_person = nil)

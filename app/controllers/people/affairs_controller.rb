@@ -18,6 +18,8 @@
 
 class People::AffairsController < ApplicationController
 
+  include ControllerExtentions::Affairs
+
   layout false
 
   load_resource :person
@@ -231,34 +233,7 @@ class People::AffairsController < ApplicationController
     end
   end
 
-  def search
-    if params[:term].blank?
-      result = []
-    else
-      if params[:term].is_i?
-        result = @affairs.where("affairs.id = ?", params[:term])
-      else
-        param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-        result = @affairs.where("affairs.title ~* ?", param)
-      end
-    end
-
-    respond_to do |format|
-      format.json do
-        render json: result.map{|t|
-          desc = " "
-          if t.estimate
-            desc += "<i>" + I18n.t("affair.views.estimate") + "</i>"
-            desc += " - " + t.description.exerpt unless t.description.blank?
-          else
-            desc += t.description if t.description
-          end
-          { id: t.id,
-            label: t.title,
-            desc: desc }}
-      end
-    end
-  end
+  # Search is in AffairsExtention
 
   def affairs
 

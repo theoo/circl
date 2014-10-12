@@ -63,6 +63,7 @@ en:
     id: ID
     incomplete: incomplete
     info: info
+    invoice: invoice
     key: key
     members: members
     name: name

@@ -1,3 +1,14 @@
+#shortcuts_content.modal
+  .modal-dialog.modal-md
+    .modal-content
+      .modal-header
+        %button.close{'data-dismiss' => 'modal'}
+          %span{'aria-hidden' => true}
+            &times;
+          .sr-only= I18n.t('common.close')
+        %h4.modal-title= I18n.t("person.dashboard.panels.shortcuts")
+      .modal-body
+
 %header
 
   - if person_signed_in?
@@ -28,6 +39,9 @@
             .form-group
               - # style vs chrome bug => https://github.com/twbs/bootstrap/issues/9950
               .input-group{style: 'width: 250px;'}
+                .input-group-btn
+                  %button{type: 'button', class: 'btn btn-default', id: 'shortcuts'}
+                    .icon-bolt
                 %input{ type: 'search',
                         class: 'form-control',
                         name: 'quick_search_string',
@@ -36,7 +50,6 @@
                 .input-group-btn
                   %button{type: 'submit', class: 'btn btn-default'}
                     .icon-search
-
 
       .container
         #main_navigation.collapse.navbar-collapse.container
