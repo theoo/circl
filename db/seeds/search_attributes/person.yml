@@ -154,6 +154,20 @@
   group: Person
 
 - model: Person
+  name: fax_number
+  indexing: fax_number
+  mapping:
+    type: multi_field
+    fields:
+      fax_number:
+        type: string
+        analyzer: snowball
+      sort:
+        type: string
+        analyzer: string_lowercase
+  group: Person
+
+- model: Person
   name: address
   indexing: address
   mapping:

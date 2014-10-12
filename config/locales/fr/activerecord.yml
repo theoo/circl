@@ -131,6 +131,7 @@ fr:
         email: email
         encrypted_password: mot de passe encrypté
         failed_attempts: nombre d'échecs lors de la connexion
+        fax_number: numéro de fax
         first_name: prénom
         hidden: caché
         id: ID

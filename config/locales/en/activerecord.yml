@@ -131,6 +131,7 @@ en:
         email: email
         encrypted_password: encrypted password
         failed_attempts: failed attempts
+        fax_number: fax number
         first_name: first name
         hidden: hidden
         id: ID

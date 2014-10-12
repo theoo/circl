@@ -34,6 +34,7 @@
                 %th= I18n.t('person.views.phone')
                 %th= I18n.t('person.views.second_phone')
                 %th= I18n.t('person.views.mobile')
+                %th= I18n.t('person.views.fax_number')
                 %th= I18n.t('person.views.email')
                 %th= I18n.t('person.views.second_email')
                 %th= I18n.t('person.views.job')
@@ -47,6 +48,7 @@
                 %th= I18n.t('person.views.translation_aptitudes')
                 %th= I18n.t('person.views.private_tags')
                 %th= I18n.t('person.views.public_tags')
+                %th= I18n.t('person.views.comments')
                 %th= I18n.t('person.views.hidden')
 
             %tbody
@@ -90,6 +92,7 @@
                   %td= person.phone
                   %td= person.second_phone
                   %td= person.mobile
+                  %td= person.fax_number
                   %td= person.email
                   %td= person.second_email
                   %td= relation_to_string(person.job)
@@ -103,6 +106,9 @@
                   %td= relation_to_string(person.translation_aptitudes)
                   %td= relation_to_string(person.private_tags)
                   %td= relation_to_string(person.public_tags)
+                  / %td= person.private_tags.map(&:name).join(", ")
+                  / %td= person.public_tags.map(&:name).join(", ")
+                  %td= person.comments_edited_by_others.map{|c| c.description}.join("<br/>")
                   %td= I18n.t('common.' + person.hidden.to_s)
 
         - if ! @infos[:errors].empty?

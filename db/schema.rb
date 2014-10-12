@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140924155418) do
+ActiveRecord::Schema.define(version: 20141012174951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,11 +86,15 @@ ActiveRecord::Schema.define(version: 20140924155418) do
     t.integer  "category_id"
     t.text     "comment"
     t.datetime "ordered_at"
+    t.datetime "confirmed_at"
+    t.datetime "delivery_at"
   end
 
   add_index "affairs_products_programs", ["affair_id", "product_id", "position"], name: "affairs_products_programs_unique_position", using: :btree
   add_index "affairs_products_programs", ["affair_id"], name: "index_affairs_products_programs_on_affair_id", using: :btree
   add_index "affairs_products_programs", ["category_id"], name: "index_affairs_products_programs_on_category_id", using: :btree
+  add_index "affairs_products_programs", ["confirmed_at"], name: "index_affairs_products_programs_on_confirmed_at", using: :btree
+  add_index "affairs_products_programs", ["delivery_at"], name: "index_affairs_products_programs_on_delivery_at", using: :btree
   add_index "affairs_products_programs", ["ordered_at"], name: "index_affairs_products_programs_on_ordered_at", using: :btree
   add_index "affairs_products_programs", ["parent_id"], name: "index_affairs_products_programs_on_parent_id", using: :btree
   add_index "affairs_products_programs", ["product_id"], name: "index_affairs_products_programs_on_product_id", using: :btree
@@ -414,11 +418,13 @@ ActiveRecord::Schema.define(version: 20140924155418) do
     t.float    "longitude"
     t.string   "website"
     t.string   "alias_name",                                 default: ""
+    t.string   "fax_number",                                 default: ""
   end
 
   add_index "people", ["authentication_token"], name: "index_people_on_authentication_token", unique: true, using: :btree
   add_index "people", ["created_at"], name: "index_people_on_created_at", using: :btree
   add_index "people", ["email"], name: "index_people_on_email", using: :btree
+  add_index "people", ["fax_number"], name: "index_people_on_fax_number", using: :btree
   add_index "people", ["first_name", "last_name"], name: "index_people_on_first_name_and_last_name", using: :btree
   add_index "people", ["first_name"], name: "index_people_on_first_name", using: :btree
   add_index "people", ["gender"], name: "index_people_on_gender", using: :btree

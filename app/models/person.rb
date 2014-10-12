@@ -285,6 +285,7 @@ class Person < ActiveRecord::Base
   validates_with PhoneValidator, attribute: :phone
   validates_with PhoneValidator, attribute: :second_phone
   validates_with PhoneValidator, attribute: :mobile
+  validates_with PhoneValidator, attribute: :fax_number
 
   validate :cannot_use_same_first_name_and_last_name_unless_has_email
 
@@ -320,6 +321,7 @@ class Person < ActiveRecord::Base
   validates_length_of :phone, maximum: 255
   validates_length_of :second_phone, maximum: 255
   validates_length_of :mobile, maximum: 255
+  validates_length_of :fax_number, maximum: 255
   validates_length_of :email, maximum: 255
   validates_length_of :second_email, maximum: 255
   validates_length_of :nationality, maximum: 255
@@ -365,52 +367,86 @@ class Person < ActiveRecord::Base
     infos[:public_tags]  = []
     infos[:jobs]         = []
 
+    columns = [:first_name,
+      :last_name,
+      :title,
+      :is_an_organization,
+      :organization_name,
+      :address,
+      :postal_code_prefix,
+      :location,
+      :phone,
+      :second_phone,
+      :mobile,
+      :fax_number,
+      :email,
+      :second_email,
+      :job,
+      :birth_date,
+      :nationality,
+      :avs_number,
+      :bank_informations,
+      :roles,
+      :main_communication_language,
+      :communication_languages,
+      :translation_aptitudes,
+      :private_tags,
+      :public_tags,
+      :hidden,
+      :comments]
+
+    csvStruct = Struct.send(:new, *columns)
+
     begin
       CSV.parse(data, encoding: 'UTF-8')[1..-1].each_with_index do |row, i|
-        if row.size < 25
+
+        row.map! { |s| (s || '').force_encoding('utf-8').strip }
+
+        r = csvStruct.new(*row)
+
+        if row.size != columns.size
           infos[:errors] << "#{I18n.t('person.import.line')} #{i+2}: #{I18n.t('person.import.invalid_line')}"
           next
         end
 
-        row.map! { |s| (s || '').force_encoding('utf-8').strip }
-
         p = Person.new
 
-        p.first_name         = row[0]
-        p.last_name          = row[1]
-        p.title              = row[2]
-        p.is_an_organization = ['1', 'true', 'True'].include?(row[3])
-        p.organization_name  = row[4]
-        p.address            = row[5]
-        p.phone              = row[8]
-        p.second_phone       = row[9]
-        p.mobile             = row[10]
-        p.email              = row[11]
-        p.second_email       = row[12]
-        p.birth_date         = row[14]
-        p.nationality        = row[15]
-        p.avs_number         = row[16]
-        p.bank_informations  = row[17]
-        p.hidden             = ['1', 'true', 'True'].include?(row[24])
+        p.first_name         = r.first_name
+        p.last_name          = r.last_name
+        p.title              = r.title
+        p.is_an_organization = ['1', 'true', 'True'].include?(r.is_an_organization)
+        p.organization_name  = r.organization_name
+        p.address            = r.address
+        p.phone              = r.phone
+        p.second_phone       = r.second_phone
+        p.mobile             = r.mobile
+        p.fax_number         = r.fax_number
+        p.email              = r.email
+        p.second_email       = r.second_email
+        p.birth_date         = r.birth_date
+        p.nationality        = r.nationality
+        p.avs_number         = r.avs_number
+        p.bank_informations  = r.bank_informations
+        p.hidden             = ['1', 'true', 'True'].include?(r.hidden)
 
         p.valid?
 
         parser = PersonRelationsParser.new(p)
-        p.comments_edited_by_others << parser.parse_comments(row[25])
+        p.comments_edited_by_others << parser.parse_comments(r.comments)
 
-        job = parser.parse_job(row[13])
+        job = parser.parse_job(r.job)
         infos[:jobs] << job if job
 
-        parser.parse_location(row[6], row[7])
-        parser.parse_roles(row[18])
-        parser.parse_main_communication_language(row[19])
-        parser.parse_communication_languages(row[20])
-        parser.parse_translation_aptitudes(row[21])
+        parser.parse_location(r.postal_code_prefix, r.location)
+        parser.parse_roles(r.roles)
+        parser.parse_main_communication_language(r.main_communication_language)
+        parser.parse_communication_languages(r.communication_languages)
+        parser.parse_translation_aptitudes(r.translation_aptitudes)
 
-        private_tags = parser.parse_private_tags(row[22])
+        private_tags = parser.parse_private_tags(r.private_tags)
         infos[:private_tags] << private_tags unless private_tags.empty?
 
-        public_tags = parser.parse_public_tags(row[23])
+        public_tags = parser.parse_public_tags(r.public_tags)
         infos[:public_tags]  << public_tags unless public_tags.empty?
 
         infos[:people] << p

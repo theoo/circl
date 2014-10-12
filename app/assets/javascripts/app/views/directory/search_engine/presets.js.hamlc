@@ -77,7 +77,7 @@
                 != I18n.t("activerecord.models." + group.toLowerCase(), defaultValue: missing_translation )
               .draggable
                 %dl.dl-horizontal
-                  - for field in App.SearchAttribute.attributes_for(group)
+                  - for field in _.sortBy(App.SearchAttribute.attributes_for(group), (a) -> a)
                     - classes = ["dt_dd_couple"]
                     - classes.push 'searchable' if field.searchable
                     - classes.push 'orderable' if field.orderable
