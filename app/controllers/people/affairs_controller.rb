@@ -109,13 +109,18 @@ class People::AffairsController < ApplicationController
         @parent.product_items.each do |t|
           nt = t.dup
           nt.affair = @affair
+
+          # Create category if not existing or select it
           if @affair.product_categories.where(title: t.category.title).count == 0
             cat = @affair.product_categories.create!(title: t.category.title, position: t.category.position)
           else
             cat = @affair.product_categories.where(title: t.category.title).first
           end
+
           nt.category = cat
           raise ActiveRecord::Rollback unless nt.save
+          # Require to prevent removal of unused categories, it reloads product_items
+          @affair.reload
           parent_ids[t.id] = nt.id
           nt
         end

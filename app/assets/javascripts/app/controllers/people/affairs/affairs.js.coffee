@@ -665,7 +665,8 @@ class App.PersonAffairs extends Spine.Controller
 
       else
         PersonAffair.fetch()
-        @new.active() # Anyways
+
+      @new.active() # Anyways
 
     AffairsCondition.fetch
       data:

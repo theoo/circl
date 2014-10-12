@@ -222,7 +222,6 @@
                           .icon-play
                   %td
 
-
                 - for s in @affair.affairs_stakeholders
                   %tr{'data-id' => s.id, class: 'item'}
                     %td.col-sm-4
