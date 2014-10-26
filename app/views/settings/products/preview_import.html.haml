@@ -1,0 +1,104 @@
+#secondary_navbar.navbar.navbar-default.navbar-static-top
+
+  .container
+    #secondary_navigation.collapse.navbar-collapse
+      .navbar-brand
+        = I18n.t("product.views.import_products")
+
+.container
+  .row
+    .col-lg-12
+      = form_tag(import_settings_products_path, method: :post) do
+        .panel.panel-default
+          .panel-heading
+            .panel-title
+              = I18n.t('product.views.products_found_in_file')
+
+          .panel-body
+
+            %table.datatable
+              %thead
+                %tr
+                  %th= I18n.t("common.key")
+                  %th= I18n.t("common.title")
+                  %th= I18n.t("common.description")
+                  %th= I18n.t("common.width")
+                  %th= I18n.t("common.height")
+                  %th= I18n.t("common.depth")
+                  %th= I18n.t("common.volume")
+                  %th= I18n.t("common.weight")
+                  %th= I18n.t("product.views.unit_symbol")
+                  %th= I18n.t("product.views.price_to_unit_rate")
+
+                  %th= I18n.t("product.views.buying_prices")
+                  %th= I18n.t("product.views.selling_prices")
+                  %th= I18n.t("product.views.art_values")
+                  %th= I18n.t("product.views.program_groups")
+
+                  %th= I18n.t("product.views.provider_id")
+                  %th= I18n.t("product.views.after_sale_id")
+                  %th= I18n.t("common.category")
+                  %th= I18n.t("product.views.has_accessories")
+                  %th= I18n.t("common.archive")
+                  %th.ignore-sort= I18n.t("common.import")
+
+              %tbody
+                - @products.each_with_index do |p, i|
+                  - error_msg = []
+                  - p.errors.messages.each do |k,a|
+                    - error_msg << "#{k}: " + a.join(", ")
+
+                  - p.notices.messages.each do |k,a|
+                    - error_msg << a.join(", ")
+
+                  - classes = []
+                  - if p.errors.empty?
+                    - if p.notices.empty?
+                      - classes << 'success'
+                    - else
+                      - classes << 'warning'
+                  - else
+                    - classes << 'danger'
+
+                  %tr{class: classes.join(" "),
+                    'data-trigger' => 'click',
+                    'data-title' => (p.errors.size.to_s + " " + I18n.t("common.errors.error") + "(s)"),
+                    'data-html' => true,
+                    'data-placement' => 'auto right',
+                    'data-content' => raw(error_msg.join(" | "))}
+
+                    %td= p.key
+                    %td= p.title
+                    %td= p.description.try(:exerpt)
+                    %td= p.width
+                    %td= p.height
+                    %td= p.depth
+                    %td= p.volume
+                    %td= p.weight
+                    %td= p.unit_symbol
+                    %td= p.price_to_unit_rate
+
+                    %td!= p.variants.map{|v| v.buying_price.try(:to_view)}.join("<br />") if p.variants.count > 1
+                    %td!= p.variants.map{|v| v.selling_price.try(:to_view)}.join("<br />") if p.variants.count > 1
+                    %td!= p.variants.map{|v| v.art.try(:to_view)}.join("<br />") if p.variants.count > 1
+                    %td!= p.variants.map{|v| v.program_group}.sort.join("<br />") if p.variants.count > 1
+
+                    %td= p.provider.try(:name)
+                    %td= p.after_sale.try(:name)
+                    %td= p.category
+                    %td
+                      = I18n.t("common.#{p.has_accessories}") unless p.has_accessories.nil?
+                    %td
+                      = I18n.t("common.#{p.archive}") unless p.archive.nil?
+                    %td= check_box_tag "index[]", i, p.errors.count == 0
+
+            %h3= I18n.t("product.views.ignore_theses_columns")
+            %ol
+              - @columns.each do |c|
+                %li
+                  = check_box_tag "skip_columns[]", c
+                  = c
+
+          .panel-footer
+            .text-right
+              = submit_tag I18n.t('products.views.proceed_with_import'), class: 'btn btn-primary'

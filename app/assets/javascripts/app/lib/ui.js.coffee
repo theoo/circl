@@ -164,7 +164,7 @@ class Ui
     # TODO Use something like this plus bSortable to disable sorting on specific columns
     # default sorting option (class .desc or .asc on <th>)
     # will apply only if previous state isn't saved in localstorage
-    sort_parameter = [0, 'asc'] # desfault if no .desc or .asc class is set
+    sort_parameter = [0, 'asc'] # default if no .desc or .asc class is set
     table.find('th').each (index, th) ->
       th = $(th)
       sort_parameter = if th.hasClass('desc')

@@ -292,6 +292,7 @@ CIRCL::Application.routes.draw do
     resources :products do
       collection do
         get 'search', 'count', 'category_search'
+        post 'preview_import', 'import'
       end
       member do
         get 'programs'
