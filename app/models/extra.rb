@@ -105,7 +105,7 @@ class Extra < ActiveRecord::Base
 
   def set_vat_percentage
     self.vat_percentage = affair.vat_percentage
-    self.vat_percentage ||= ApplicationSetting.value("service_vat_value").to_f
+    self.vat_percentage ||= ApplicationSetting.value("service_vat_rate").to_f
   end
 
 end

@@ -22,3 +22,5 @@
       .col-lg-12
         .pull-right
           != @partial('update_button')()
+
+/ TODO Add loggable checkbox (when uncheck this should remove encrypted_password)

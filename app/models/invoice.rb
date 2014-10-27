@@ -347,6 +347,7 @@ class Invoice < ActiveRecord::Base
 
   # Checks if pdf is up to date.
   def pdf_up_to_date?
+    return false
     return false unless pdf?
 
     return false unless pdf_updated_at
@@ -355,7 +356,17 @@ class Invoice < ActiveRecord::Base
     return false if updated_at > pdf_updated_at.to_datetime
 
     # Check if pdf requires an update because its template is newer
-    invoice_template.updated_at < pdf_updated_at.to_datetime
+    return false if invoice_template.updated_at > pdf_updated_at.to_datetime
+
+    # Check if its affair is newer
+    return false if affair.updated_at > pdf_updated_at.to_datetime
+
+    # Check if its receipts list has changed
+    if receipts.count > 0
+      return false if receipts.order(:updated_at).last.updated_at > pdf_updated_at.to_datetime
+    end
+
+    true
   end
 
   # Append a background task in the queue to update the PDF.

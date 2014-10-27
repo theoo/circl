@@ -165,28 +165,34 @@ class Subscription < ActiveRecord::Base
   end
 
   def invoices_value
-    invoices.map(&:value).sum.to_money
+    invoices.map{|i| i.value.to_money(value_currency)}.sum.to_money
+  end
+
+  def invoices_value_with_taxes
+    invoices.map{|i| i.value_with_taxes.to_money(value_currency)}.sum.to_money
   end
 
   def receipts_value
-    receipts.map(&:value).sum.to_money
+    receipts.map{|i| i.value.to_money(value_currency)}.sum.to_money
   end
 
   def balance_value
-    receipts_value - invoices_value
+    receipts_value - invoices_value_with_taxes
   end
 
   def overpaid_value
-    cents = invoices.select("(( SELECT SUM(r.value_in_cents)
-                              FROM receipts r
-                              WHERE r.invoice_id = invoices.id
-                              HAVING invoices.value_in_cents < SUM(r.value_in_cents))
-                              - invoices.value_in_cents) as val")
-                    .group("invoices.id")
-                    .select(&:val) # remove null values (nil)
-                    .map{|i| i.val.to_i } # convert given strings to integers
-                    .sum
-    Money.new(cents)
+    # FIXME perfs
+    # cents = invoices.select("(( SELECT SUM(r.value_in_cents)
+    #                           FROM receipts r
+    #                           WHERE r.invoice_id = invoices.id
+    #                           HAVING invoices.value_in_cents < SUM(r.value_in_cents))
+    #                           - invoices.value_in_cents) as val")
+    #                 .group("invoices.id")
+    #                 .select(&:val) # remove null values (nil)
+    #                 .map{|i| i.val.to_i } # convert given strings to integers
+    #                 .sum
+    # Money.new(cents)
+    (balance_value > 0) ? balance_value : 0.to_money
   end
 
   # Ensure every single invoice has been paid.

@@ -328,7 +328,7 @@ class Affair < ActiveRecord::Base
   end
 
   def balance_value
-    receipts_value - invoices_value
+    receipts_value - invoices_value_with_taxes
   end
 
   def overpaid_value
