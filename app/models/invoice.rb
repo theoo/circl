@@ -347,7 +347,6 @@ class Invoice < ActiveRecord::Base
 
   # Checks if pdf is up to date.
   def pdf_up_to_date?
-    return false
     return false unless pdf?
 
     return false unless pdf_updated_at
