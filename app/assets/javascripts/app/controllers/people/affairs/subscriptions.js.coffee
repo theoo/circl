@@ -81,7 +81,7 @@ class Index extends App.ExtendedController
     e.preventDefault()
     subscription = $(e.target).person_affair_subscription()
 
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'warning', =>
 
       ajax_error = (xhr, statusText, error) =>
         @render_errors $.parseJSON(xhr.responseText)

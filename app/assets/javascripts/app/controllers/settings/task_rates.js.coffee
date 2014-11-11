@@ -69,7 +69,7 @@ class Edit extends App.ExtendedController
     @save_with_notifications @task_rate
 
   destroy: (e) ->
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'warning', =>
       @destroy_with_notifications @task_rate, @hide
 
   view_members: (e) ->

@@ -51,7 +51,7 @@ class Index extends App.ExtendedController
     e.preventDefault()
     id = $(e.target).salary_id()
 
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'warning', =>
       Salary.one 'refresh', =>
         salary = Salary.find(id)
         @destroy_with_notifications(salary)
@@ -61,7 +61,7 @@ class Index extends App.ExtendedController
   check_as_paid: (e) ->
     e.preventDefault()
     id = $(e.target).salary_id()
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'info', =>
       Salary.one 'refresh', =>
         salary = Salary.find(id)
         salary.updateAttributes(paid: true)

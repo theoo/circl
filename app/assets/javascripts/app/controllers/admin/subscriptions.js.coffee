@@ -248,7 +248,7 @@ class Edit extends ValueItemsController
 
   destroy: (e) ->
     e.preventDefault()
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'warning', =>
       Subscription.one 'refresh', =>
         @destroy_with_notifications @subscription, =>
           @hide()
@@ -290,7 +290,7 @@ class Edit extends ValueItemsController
   remove_members: (e) ->
     e.preventDefault()
 
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'danger', =>
       settings =
         url: "#{Subscription.url()}/#{@id}/remove_members"
         type: 'DELETE',

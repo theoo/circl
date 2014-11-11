@@ -86,7 +86,7 @@ class Edit extends ClassNamesExtention
 
   destroy: (e) ->
     e.preventDefault()
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'warning', =>
       @destroy_with_notifications @template, @hide
 
   stack_upload_window: (e) ->

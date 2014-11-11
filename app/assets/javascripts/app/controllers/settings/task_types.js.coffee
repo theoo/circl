@@ -69,7 +69,7 @@ class Edit extends App.ExtendedController
 
   destroy: (e) ->
     e.preventDefault()
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'warning', =>
       @destroy_with_notifications @task_type, @hide
 
 class Index extends App.ExtendedController

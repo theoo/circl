@@ -373,4 +373,14 @@ class App.ExtendedController extends Spine.Controller
       accept_callback() if accept_callback
       win.modal('hide')
 
+    if level == 'danger'
+      double_check = "<br /><br /><input type='checkbox' name='double-check-confirm' /> "
+      double_check += I18n.t("common.double_check_confirm")
+      win.find('.modal-body').append double_check
+
+      destroy.attr 'disabled', true
+
+      win.delegate "input[name='double-check-confirm']", 'click', (e) ->
+        destroy.attr 'disabled', $("input[name='double-check-confirm']:checked").length == 0
+
     win.modal('show')

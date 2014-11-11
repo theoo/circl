@@ -417,7 +417,7 @@ class Edit extends SearchEngineExtention
 
   destroy: (e) =>
     e.preventDefault()
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'warning', =>
       @destroy_with_notifications @query_preset, =>
         @trigger 'destroyed'
 

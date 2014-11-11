@@ -78,7 +78,7 @@ class Edit extends App.ExtendedController
 
   destroy: (e) ->
     e.preventDefault()
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'warning', =>
       @destroy_with_notifications @invoice_template, @hide
 
   stack_upload_window: (e) ->

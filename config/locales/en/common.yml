@@ -35,6 +35,7 @@ en:
     destroy: destroy
     directory: Directory
     documents: documents
+    double_check_confirm: Really confirm the action
     download: download
     errors:
       absence_of_identifier: Identifier missing

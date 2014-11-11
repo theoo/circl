@@ -93,12 +93,12 @@ class Edit extends App.ExtendedController
     ajax_success = (data, textStatus, jqXHR) =>
       PublicTag.fetch(id: @tag.id)
 
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'danger', =>
       PublicTag.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 
   destroy: (e) ->
     e.preventDefault()
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'warning', =>
       @destroy_with_notifications @tag, (id) =>
         @hide()
 

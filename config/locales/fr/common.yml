@@ -35,6 +35,7 @@ fr:
     destroy: détruire
     directory: Annuaire
     documents: documents
+    double_check_confirm: Vraiment confirmer l'action
     download: télécharger
     errors:
       absence_of_identifier: Identifiant manquant
