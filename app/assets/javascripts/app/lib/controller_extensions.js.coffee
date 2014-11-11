@@ -328,3 +328,49 @@ class App.ExtendedController extends Spine.Controller
     @el.find("##{@ids_prefix}vat_currency").html(currency_input.val())
 
     @adjust_vat(e)
+
+  # level = [ info | warning | danger ]
+  confirm: (msg, level, accept_callback, decline_callback) ->
+
+    win = $("<div class='modal fade modal-#{level}' id='confirm' tabindex='-1' role='dialog' />")
+
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Update title
+    win.find('h4').text I18n.t('common.confirm')
+
+    win.find('.modal-header').addClass
+
+    # Insert message
+    win.find('.modal-body').html msg
+
+    # Remove original button
+    win.find('.modal-footer').html ""
+
+    # Buttons
+    cancel = "<button type='button' class='btn btn-default' data-dismiss='modal'>"
+    cancel += "<i class='icon-chevron-left' /> "
+    cancel += I18n.t('common.cancel')
+    cancel += "</button>"
+    cancel = $(cancel)
+    win.find('.modal-footer').append cancel
+    cancel.on 'click', (e) =>
+      e.preventDefault()
+      decline_callback() if decline_callback
+      win.modal('hide')
+
+    destroy = "<button type='button' class='btn btn-danger' data-dismiss='modal'>"
+    destroy += I18n.t('common.destroy')
+    destroy += " <i class='icon-chevron-right' />"
+    destroy += "</button>"
+    destroy = $(destroy)
+    win.find('.modal-footer').append destroy
+    destroy.on 'click', (e) =>
+      e.preventDefault()
+      accept_callback() if accept_callback
+      win.modal('hide')
+
+    win.modal('show')

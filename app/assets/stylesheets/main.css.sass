@@ -32,7 +32,6 @@ $dark_grey: #383838
 
 $dark_bg: #383838
 
-
 $autocompleters: #00f
 
 $primary_menu_bg: #1d1d1d
@@ -120,6 +119,22 @@ header
 
 .modal, .modal.fade.in
   top: 80px // originaly 10%
+
+// custom-style for modal level
+// .modal-info
+
+.modal-info, .modal-warning, .modal-danger
+  .modal-header
+    border-top-left-radius: 5px
+    border-top-right-radius: 5px
+
+.modal-warning
+  .modal-header
+    background-color: rgb(240, 173, 78)
+
+.modal-danger
+  .modal-header
+    background-color: rgb(217, 83, 79)
 
 .login-xs
   li.dropdown

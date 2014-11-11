@@ -7,6 +7,7 @@ en:
       unable_to_compute_value_without_taxes_if_extras_have_different_vat_values: It's impossible to compute the value without taxes if the affair has extras with differents VAT values.
       wrong_date: wrong date
     notices:
+      destroy: "Destroying an affair will remove all its content: invoices, subscriptions, services, products and extras ! <br /> It is impossible to destroy an affair which have related receipts."
       document_export_explanation: Please select sorting criterias for the generation.
       document_export_explanation_title: Documents generation
       document_export_process: The process of selecting people will follow this step.

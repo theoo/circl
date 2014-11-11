@@ -341,7 +341,9 @@ class Edit extends App.ExtendedController
     window.location = "/people/#{@affair.owner_id}#affairs"
 
   destroy: (e) ->
-    if confirm(I18n.t('common.are_you_sure'))
+    msg = "<b>" + I18n.t('common.are_you_sure') + "</b><br />"
+    msg += I18n.t("affair.notices.destroy")
+    @confirm msg, 'danger', =>
       @unload_dependencies()
       @destroy_with_notifications @affair, (id) =>
         @hide()

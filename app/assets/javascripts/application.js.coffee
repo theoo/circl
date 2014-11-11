@@ -89,4 +89,3 @@ $(document).ready ->
   # Focus quick search
   $(document).on 'keydown', null, 'alt+s', ->
     $('#quick_search_string').focus()
-

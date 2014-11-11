@@ -145,7 +145,7 @@ class Edit extends PersonAffairProductExtention
       PersonAffair.fetch(id: @affair_id)
 
   destroy: (e) ->
-    if confirm(I18n.t('common.are_you_sure'))
+    @confirm I18n.t('common.are_you_sure'), 'warning', =>
       @destroy_with_notifications @product, =>
         @hide()
         PersonAffairProductsProgram.refresh([], clear: true)
