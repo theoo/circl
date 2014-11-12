@@ -138,6 +138,7 @@ class Ui
     # Extend table with bootstrap classes
     table.addClass("table table-hover table-condensed table-responsive")
 
+  # TODO: an option exist for this in new datatables version
   datatable_localstorage: (table) ->
     # get panel name to scope localstorage entry (datatable state)
     # it is required to set a "name" attribute when two tables are
@@ -182,6 +183,7 @@ class Ui
       aaSorting: [sort_parameter]
       bStateSave: true
       # bPaginate: true
+      aLengthMenu: [[10,25,100,-1], [10,25,100, '∞']]
       fnStateSave: @datatable_local_storage_save_callback
       fnStateLoad: @datatable_local_storage_load_callback
       bJQueryUI: false # We'll use bootstrap only, not the ui-state-default classes mess

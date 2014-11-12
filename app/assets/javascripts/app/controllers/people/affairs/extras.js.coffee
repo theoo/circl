@@ -138,7 +138,6 @@ class Index extends App.ExtendedController
     @html @view('people/affairs/extras/index')(@)
 
     refresh_index = =>
-      PersonAffairExtra.refresh([], clear: true)
       PersonAffairExtra.fetch()
 
     @el.find('table.datatable')

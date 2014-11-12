@@ -87,9 +87,7 @@ class New extends PersonAffairProductExtention
     @product.fromForm(e.target)
     @save_with_notifications @product, =>
       @render()
-      PersonAffairProductsCategory.refresh([], clear: true)
       PersonAffairProductsCategory.fetch()
-      PersonAffairProductsProgram.refresh([], clear: true)
       PersonAffairProductsProgram.fetch()
       PersonAffair.fetch(id: @affair_id)
 
@@ -138,9 +136,7 @@ class Edit extends PersonAffairProductExtention
     @product.fromForm(e.target)
     @save_with_notifications @product, =>
       @hide()
-      PersonAffairProductsProgram.refresh([], clear: true)
       PersonAffairProductsProgram.fetch()
-      PersonAffairProductsCategory.refresh([], clear: true)
       PersonAffairProductsCategory.fetch()
       PersonAffair.fetch(id: @affair_id)
 
@@ -148,7 +144,6 @@ class Edit extends PersonAffairProductExtention
     @confirm I18n.t('common.are_you_sure'), 'warning', =>
       @destroy_with_notifications @product, =>
         @hide()
-        PersonAffairProductsProgram.refresh([], clear: true)
         PersonAffairProductsProgram.fetch()
         PersonAffair.fetch(id: @affair_id)
 
@@ -186,10 +181,12 @@ class Index extends App.ExtendedController
     @render()
 
   render: =>
+
     @html @view('people/affairs/products/index')(@)
 
+    @el.find(".datatable_wrapper").css(maxHeight: '600px', overflow: 'auto')
+
     refresh_index = =>
-      PersonAffairProductsProgram.refresh([], clear: true)
       PersonAffairProductsProgram.fetch()
 
     @el.find('table.datatable')
@@ -219,7 +216,6 @@ class Index extends App.ExtendedController
         data: {ids: order}
 
       ajax_success = (data, textStatus, jqXHR) =>
-        PersonAffairProductsCategory.refresh([], clear: true)
         PersonAffairProductsCategory.fetch()
 
       # FIXME Add error validation
@@ -307,7 +303,6 @@ class Index extends App.ExtendedController
       type: 'POST'
 
     ajax_success = (data, textStatus, jqXHR) =>
-      PersonAffairProductsProgram.refresh([], clear: true)
       PersonAffairProductsProgram.fetch()
 
     # FIXME Add error validation

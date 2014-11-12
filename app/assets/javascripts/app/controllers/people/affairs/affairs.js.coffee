@@ -423,7 +423,11 @@ class Index extends App.ExtendedController
     @render()
 
   render: =>
-    @html @view('people/affairs/index')(@)
+    table = @el.find(".datatable_wrapper table")
+    if table.length > 0
+      table.first().dataTable().fnDraw()
+    else
+      @html @view('people/affairs/index')(@)
 
   edit: (e) ->
     e.preventDefault()
