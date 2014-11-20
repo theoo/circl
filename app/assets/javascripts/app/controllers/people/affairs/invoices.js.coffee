@@ -40,15 +40,22 @@ ConditionsController =
     else
       textarea.val("")
 
+ValueWithTaxesController =
+  clear_vat: (e) ->
+    if $(e.target).is(':checked')
+      @el.find("#person_affair_invoice_vat").val("")
+
 class New extends App.ExtendedController
 
   @include ConditionsController
+  @include ValueWithTaxesController
 
   events:
     'submit form': 'submit'
     'currency_changed select.currency_selector': 'on_currency_change'
     'change select[name="condition_id"]': 'update_conditions'
     'click a[name="reset"]': 'reset'
+    'click #person_affair_invoice_custom_value_with_taxes': 'clear_vat'
 
   constructor: (params) ->
     super
@@ -106,6 +113,7 @@ class New extends App.ExtendedController
     @invoice.load(data)
     @invoice.cancelled = data.cancelled?
     @invoice.offered = data.offered?
+    @invoice.custom_value_with_taxes = data.custom_value_with_taxes?
     @save_with_notifications @invoice, (id) =>
       PersonAffair.fetch(id: @affair_id)
       @trigger('edit', id)
@@ -113,6 +121,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
 
   @include ConditionsController
+  @include ValueWithTaxesController
 
   events:
     'submit form': 'submit'
@@ -123,6 +132,7 @@ class Edit extends App.ExtendedController
     'click a[name="invoice-add-receipt"]': 'add_receipt'
     'change select[name="condition_id"]': 'update_conditions'
     'currency_changed select.currency_selector': 'on_currency_change'
+    'click #person_affair_invoice_custom_value_with_taxes': 'clear_vat'
 
   constructor: (params) ->
     super
@@ -153,9 +163,11 @@ class Edit extends App.ExtendedController
     @invoice.load(data)
     @invoice.cancelled = data.cancelled?
     @invoice.offered = data.offered?
+    @invoice.custom_value_with_taxes = data.custom_value_with_taxes?
     @save_with_notifications @invoice, =>
       PersonAffair.fetch(id: @affair.id)
       PersonAffairReceipt.fetch()
+      @render()
 
   destroy: (e) ->
     e.preventDefault()

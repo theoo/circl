@@ -43,6 +43,11 @@ ConditionsController =
     else
       textarea.val("")
 
+ValueWithTaxesController =
+  clear_vat: (e) ->
+    if $(e.target).is(':checked')
+      @el.find("#person_affair_vat").val("")
+
 StakeholdersController =
   remove_value_item: (e) ->
     current_row = $(e.target).closest("tr")
@@ -84,6 +89,7 @@ LocalUi =
 class New extends App.ExtendedController
 
   @include ConditionsController
+  @include ValueWithTaxesController
   @include StakeholdersController
   @include LocalUi
 
@@ -94,6 +100,7 @@ class New extends App.ExtendedController
     'click button[name="remove_item"]': 'remove_value_item'
     'click button[name="add_item"]': 'add_value_item'
     'currency_changed select.currency_selector': 'on_currency_change'
+    'click #person_affair_custom_value_with_taxes': 'clear_vat'
 
   constructor: (params) ->
     super
@@ -184,6 +191,7 @@ class New extends App.ExtendedController
 class Edit extends App.ExtendedController
 
   @include ConditionsController
+  @include ValueWithTaxesController
   @include StakeholdersController
   @include LocalUi
 
@@ -201,6 +209,7 @@ class Edit extends App.ExtendedController
     'click button[name="remove_item"]': 'remove_value_item'
     'click button[name="add_item"]': 'add_value_item'
     'currency_changed select.currency_selector': 'on_currency_change'
+    'click #person_affair_custom_value_with_taxes': 'clear_vat'
 
   constructor: ->
     super

@@ -72,6 +72,7 @@ class Invoice < ActiveRecord::Base
   #################
 
   before_save     :set_address_if_empty, :update_statuses, :set_vat_percentage_if_empty
+  before_save     :compute_value_without_taxes, if: 'custom_value_with_taxes'
   after_save      :update_affair
   before_destroy  :check_presence_of_receipt
   after_destroy   :update_affair
@@ -130,6 +131,7 @@ class Invoice < ActiveRecord::Base
   }
 
   alias_method :template, :invoice_template
+  attr_accessor :custom_value_with_taxes
 
   ###################
   ### VALIDATIONS ###
@@ -282,7 +284,8 @@ class Invoice < ActiveRecord::Base
   end
 
   def compute_vat
-    value / 100.0 * vat_percentage
+    return 0.to_money if ApplicationSetting.value('use_vat') != "true"
+    value * (100.0 / vat_percentage)
   end
 
   # Returns true if receipts sum is greater or equal ot invoice value.
@@ -446,6 +449,27 @@ class Invoice < ActiveRecord::Base
     unless self.vat_percentage
       self.vat_percentage ||= affair.vat_percentage
       self.vat_percentage = ApplicationSetting.value('service_vat_rate').to_f
+    end
+  end
+
+  def compute_value_without_taxes
+    total = value
+    self.value = reverse_vat(value)
+    self.vat = total - self.value
+  end
+
+  # Takes a value taxes included
+  def reverse_vat(val)
+    val / ( 1 + (ApplicationSetting.value("service_vat_rate").to_f / 100.0) )
+  end
+
+  def vat_calculation_availability
+    extras.each do |i|
+      if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f
+        errors.add(:base,
+           I18n.t('affair.errors.unable_to_compute_value_without_taxes_if_extras_have_different_vat_values'))
+        return false
+      end
     end
   end
 

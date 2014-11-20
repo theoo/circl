@@ -103,6 +103,18 @@
       .row
         .col-sm-6
           .form-group
+            %label{for: 'person_affair_invoice_created_at'}
+              = I18n.t('invoice.views.invoice_date')
+            %input{type: 'text',
+                   name: 'created_at',
+                   id: 'person_affair_invoice_created_at',
+                   class: 'datepicker required form-control',
+                   value: @invoice.created_at }
+        .col-sm-6
+
+      .row
+        .col-sm-6
+          .form-group
             %label{for: 'person_affair_invoice_value'}
               = I18n.t('common.value')
             .input-group
@@ -118,14 +130,17 @@
                 != @partial('select_currency')(currency: @invoice.value_currency, name: 'value_currency', value: @invoice.value)
 
         .col-sm-6
-          .form-group
-            %label{for: 'person_affair_invoice_created_at'}
-              = I18n.t('invoice.views.invoice_date')
-            %input{type: 'text',
-                   name: 'created_at',
-                   id: 'person_affair_invoice_created_at',
-                   class: 'datepicker required form-control',
-                   value: @invoice.created_at }
+          - if App.ApplicationSetting.value('use_vat') == "true"
+            .form-group
+              %label
+              .checkbox
+                %label.control-label
+                  %input{ type: 'checkbox',
+                          id: 'person_affair_invoice_custom_value_with_taxes',
+                          name: 'custom_value_with_taxes',
+                          checked: false,
+                          value: 1 }
+                  = I18n.t('affair.views.custom_value_with_taxes')
 
       - if App.ApplicationSetting.value('use_vat') == "true"
         != @partial('edit_vat')(object: @invoice, prefix: @ids_prefix)

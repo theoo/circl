@@ -87,9 +87,6 @@ class People::Affairs::InvoicesController < ApplicationController
 
       # Render HTML but don't build PDF.
       format.html do
-        # TODO Merge this
-        # html = build_from_template(@invoice)
-        # render inline: html, layout: 'preview'
         generator = AttachmentGenerator.new(@invoice)
         render inline: generator.html, layout: 'preview'
       end
@@ -106,6 +103,7 @@ class People::Affairs::InvoicesController < ApplicationController
   end
 
   def create
+    @invoice.custom_value_with_taxes = params[:custom_value_with_taxes]
     @invoice.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     @invoice.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
@@ -124,6 +122,7 @@ class People::Affairs::InvoicesController < ApplicationController
   end
 
   def update
+    @invoice.custom_value_with_taxes = params[:custom_value_with_taxes]
     @invoice.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     @invoice.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
@@ -151,6 +150,7 @@ class People::Affairs::InvoicesController < ApplicationController
   # PDF generation
   #
 
+  # Required by generate_invoice_pdf
   def build_from_template(i, html = '')
 
     @invoice = i
