@@ -45,7 +45,6 @@ class New extends App.ExtendedController
     @render()
 
   render: =>
-    @show()
     @receipt = new PersonAffairReceipt(value: 0)
 
     # TODO replace CCP by global variable
@@ -75,10 +74,10 @@ class New extends App.ExtendedController
     # reset invoice so next receipt is empty
     @invoice = undefined
 
-    @save_with_notifications @receipt.fromForm(e.target), =>
-      @render()
+    @save_with_notifications @receipt.fromForm(e.target), (id) =>
       PersonAffair.fetch(id: @affair_id)
       PersonAffairInvoice.fetch()
+      @trigger('edit', id)
 
 class Edit extends App.ExtendedController
   events:
@@ -105,7 +104,6 @@ class Edit extends App.ExtendedController
     @html @view('people/affairs/receipts/form')(@)
 
   update_callback: =>
-    @hide()
     PersonAffair.fetch(id: @affair.id)
     PersonAffairInvoice.fetch()
 
@@ -117,7 +115,9 @@ class Edit extends App.ExtendedController
   destroy: (e) ->
     e.preventDefault()
     @confirm I18n.t('common.are_you_sure'), 'warning', =>
-      @destroy_with_notifications @receipt, @update_callback
+      @destroy_with_notifications @receipt, =>
+        @update_callback()
+        @hide()
 
 class Index extends App.ExtendedController
   events:
@@ -244,11 +244,20 @@ class App.PersonAffairReceipts extends Spine.Controller
     @new = new New
     @append(@new, @edit, @index)
 
+    @index.bind 'new', (params) =>
+      @new.active(params)
+
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
 
+    @new.bind 'edit', (id) =>
+      @edit.active(id: id, person_id: @person_id)
+      @index.active(receipt_id: id, person_id: @person_id)
+
     @edit.bind 'show', => @new.hide()
-    @edit.bind 'hide', => @new.show()
+    @edit.bind 'hide', =>
+      @new.show()
+      @new.render()
 
     @edit.bind 'error', (id, errors) =>
       @edit.active id: id

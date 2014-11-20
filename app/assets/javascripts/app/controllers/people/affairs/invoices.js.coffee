@@ -106,9 +106,9 @@ class New extends App.ExtendedController
     @invoice.load(data)
     @invoice.cancelled = data.cancelled?
     @invoice.offered = data.offered?
-    @save_with_notifications @invoice, =>
+    @save_with_notifications @invoice, (id) =>
       PersonAffair.fetch(id: @affair_id)
-      @trigger('edit', @invoice.id)
+      @trigger('edit', id)
 
 class Edit extends App.ExtendedController
 
@@ -139,13 +139,9 @@ class Edit extends App.ExtendedController
   render: =>
     return unless PersonAffairInvoice.exists(@id) && @can
     @show()
-    # unless @can.invoice.create
-    #   @hide()
-    #   return
+
     @invoice = PersonAffairInvoice.find(@id)
-
     @affair = PersonAffair.find(@invoice.affair_id)
-
     @html @view('people/affairs/invoices/form')(@)
 
     if App.ApplicationSetting.value('use_vat') == "true"
@@ -160,7 +156,6 @@ class Edit extends App.ExtendedController
     @save_with_notifications @invoice, =>
       PersonAffair.fetch(id: @affair.id)
       PersonAffairReceipt.fetch()
-      @hide()
 
   destroy: (e) ->
     e.preventDefault()
@@ -211,7 +206,7 @@ class Edit extends App.ExtendedController
   add_receipt: (e) ->
     e.preventDefault()
     person_affair_receipts_ctrl = $("#person_affair_receipts").data('controller')
-    person_affair_receipts_ctrl.new.active
+    person_affair_receipts_ctrl.index.trigger 'new',
       person_id: @person_id,
       affair_id: @invoice.affair_id,
       invoice: @invoice
