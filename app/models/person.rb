@@ -328,9 +328,9 @@ class Person < ActiveRecord::Base
   validates_length_of :avs_number, maximum: 255
 
   validates :alias_name,
-    # TODO reenable
-    #format: { with: /\A[a-zA-Z\-_\d]+\z/, message: I18n.t("person.errors.only_letters") },
-    length: { maximum: 25 }
+    format: { with: /\A[a-zA-Z\-_\d]+\z/, message: I18n.t("person.errors.only_letters")},
+    length: { maximum: 25 },
+    unless: 'alias_name.blank?'
 
   # Validate fields of type 'text' length
   validates_length_of :address, maximum: 65535

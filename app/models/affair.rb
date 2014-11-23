@@ -175,6 +175,11 @@ class Affair < ActiveRecord::Base
 
   validates_presence_of :title, :owner_id, :buyer_id, :receiver_id, :value_in_cents, :value_currency
 
+  validates :alias_name,
+    format: { with: /\A[a-zA-Z\-_\d]+\z/, message: I18n.t("person.errors.only_letters")},
+    length: { maximum: 25 },
+    unless: 'alias_name.blank?'
+
   # Validate fields of type 'string' length
   validates_length_of :title, maximum: 255
 

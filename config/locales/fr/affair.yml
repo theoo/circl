@@ -7,11 +7,11 @@ fr:
       unable_to_compute_value_without_taxes_if_extras_have_different_vat_values: Il est impossible de calculer la valeur hors taxe si l'affaire contient des extras aux TVA différentes.
       wrong_date: Mauvaise date
     notices:
-      destroy: "Détruire une affaire supprimera tout son contenu: facture, inscriptions, services, produits et extras ! <br /> Il est impossilbe de détruire une affaire dont des reçus dépendent."
+      destroy: 'Détruire une affaire supprimera tout son contenu: facture, inscriptions, services, produits et extras ! <br /> Il est impossilbe de détruire une affaire dont des reçus dépendent.'
       document_export_explanation: Veuillez sélectionner ci-dessous les critères de tri pour la génération du document.
       document_export_explanation_title: Génération de documents
       document_export_process: Le processus de sélection des personnes suivra cette étape.
-      estimate_value_update_notice: Pour un devis, une modification des prestations influance la valeur de l'affaire automatiquement.
+      estimate_value_update_notice: Pour un devis, une modification des prestations influence la valeur de l'affaire automatiquement.
       regexp: Une expression rationnelle est attendue.
       will_match_all_defined_thresholds: Toutes les limites définies seront employées pour le tri.
       will_match_all_selected_statuses: Tous les status sélectionnés seront employés pour le tri.
@@ -20,6 +20,7 @@ fr:
         edit_affair: modifier l'affaire
         preview_in_new_tab: prévisualiser dans un nouvel onglet
         show_owner: consulter la page du propriétaire
+      alias_name: alias
       arts: TAR
       available_statuses: status disponibles
       bid_value: La valeur HT de la remise est

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141026140130) do
+ActiveRecord::Schema.define(version: 20141123200646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,8 +38,10 @@ ActiveRecord::Schema.define(version: 20141026140130) do
     t.float    "vat_percentage"
     t.integer  "vat_in_cents",             default: 0,     null: false
     t.string   "vat_currency",             default: "CHF", null: false
+    t.string   "alias_name"
   end
 
+  add_index "affairs", ["alias_name"], name: "index_affairs_on_alias_name", using: :btree
   add_index "affairs", ["buyer_id"], name: "index_affairs_on_buyer_id", using: :btree
   add_index "affairs", ["condition_id"], name: "index_affairs_on_condition_id", using: :btree
   add_index "affairs", ["created_at"], name: "index_affairs_on_created_at", using: :btree
@@ -88,6 +90,8 @@ ActiveRecord::Schema.define(version: 20141026140130) do
     t.datetime "ordered_at"
     t.datetime "confirmed_at"
     t.datetime "delivery_at"
+    t.date     "warranty_begin"
+    t.date     "warranty_end"
   end
 
   add_index "affairs_products_programs", ["affair_id", "product_id", "position"], name: "affairs_products_programs_unique_position", using: :btree

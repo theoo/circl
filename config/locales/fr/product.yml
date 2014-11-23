@@ -1,10 +1,16 @@
 ---
 fr:
   product:
+    errors:
+      missing_program: programme manquant
+      no_file_submitted: pas de fichier soumis
+      unable_to_parse_file: impossible d'interpreter le fichier
     notices:
       no_existing_product_alert: Le catalogue des produits est vide, veuillez en créer pour en ajouter à une affaire.
       no_existing_product_button: Ajouter un produit
       no_existing_product_program_alert: Il n'existe pas de programme pour le regroupement des tarifs de produit, veuillez en ajouter ci-dessous avant de poursuivre avec la création de produit.
+      the_following_attributes_will_be_updated: les attributes suivants seront mis à jour
+      the_following_prices_will_be_updated: les prix suivants seront mis à jour
       this_product_will_be_removed_in_all_related_affairs: Ce produit sera supprimé de toutes les affaires relatives.
     pdf:
       parent_position: position du parent
@@ -35,23 +41,35 @@ fr:
         title: unité
     views:
       after_sale: après-vente
+      after_sale_id: id après-vente
       art: TAR
+      art_values: valeur de la TAR
       bid: remise
       bid_price: prix avec remise
+      buying_prices: MISSING_TRANSLATION buying prices
       category: catégorie
       comments: commentaires
       confirmed_at: confirmation
       delivery_at: livraison
       has_accessories: accessoires
+      ignore_theses_columns: ignorer ces collones
+      import_products: importer des produits
       key: clé
       normal_price: prix normal
       ordered_at: commande
       position: position
       price_to_unit_rate: rapport de conversion du prix
       product_search: produit
+      products_found_in_file: produits trouvés dans le fichier
       products_list_pdf_title: List des produits pour l'affaire <i>%{affair_title}</i>
+      program_groups: groupe de programme
       provider: fournisseur
+      provider_id: id du fournisseur
       quantity: quantité
       reorder: réordrer
+      selling_prices: prix de vente
       unit: unité
+      unit_symbol: symbole d'unité
+      upload_a_new_file_description: veuillez choisir un fichier
+      upload_a_new_file_title: téléverser un nouveau fichier
       variants: variantes

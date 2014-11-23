@@ -1,10 +1,16 @@
 ---
 en:
   product:
+    errors:
+      missing_program: missing program
+      no_file_submitted: no file submitted
+      unable_to_parse_file: unable to parse file
     notices:
       no_existing_product_alert: No existing product in CIRCL, please click below to add one.
       no_existing_product_button: Add a product
       no_existing_product_program_alert: No existing program, please add one below before continuing.
+      the_following_attributes_will_be_updated: the following attributes will be updated
+      the_following_prices_will_be_updated: the following prices will be updated
       this_product_will_be_removed_in_all_related_affairs: This product will be removed from all related affairs.
     pdf:
       parent_position: parent position
@@ -35,23 +41,35 @@ en:
         title: unit
     views:
       after_sale: after sale
+      after_sale_id: after sale id
       art: ART
+      art_values: ART value
       bid: bid
       bid_price: bid price
+      buying_prices: buying prices
       category: category
       comments: comments
       confirmed_at: confirmation date
       delivery_at: delivery date
       has_accessories: has accessories
+      ignore_theses_columns: ignore theses columns
+      import_products: import products
       key: key
       normal_price: normal price
       ordered_at: order date
       position: position
       price_to_unit_rate: Price to unit rate
       product_search: product
+      products_found_in_file: products found in file
       products_list_pdf_title: products list pdf title
+      program_groups: program groups
       provider: provider
+      provider_id: provider id
       quantity: quantity
       reorder: reorder
+      selling_prices: selling prices
       unit: unit
+      unit_symbol: unit symbol
+      upload_a_new_file_description: please select a file.
+      upload_a_new_file_title: upload a new file
       variants: variants

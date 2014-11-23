@@ -8,7 +8,7 @@ module ControllerExtentions
           result = @affairs.where("affairs.id = ?", params[:term])
         else
           param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
-          result = @affairs.where("affairs.title ~* ?", param)
+          result = @affairs.where("affairs.title ~* ? OR affairs.alias_name ~* ?", param, param)
         end
       end
 

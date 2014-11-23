@@ -33,34 +33,32 @@
                       value: @affair.parent_id }
 
         .row
-          .col-sm-8
-            .row
-              .col-xs-6
-                %br
-                .checkbox
-                  %label.control-label
-                    %input{ type: 'checkbox',
-                            id: 'affair_estimate',
-                            name: 'estimate',
-                            checked: @affair.estimate,
-                            value: 1 }
-                    = I18n.t('affair.views.estimate')
+          .col-sm-4
+            .checkbox
+              %label.control-label
+                %input{ type: 'checkbox',
+                        id: 'affair_estimate',
+                        name: 'estimate',
+                        checked: @affair.estimate,
+                        value: 1 }
+                = I18n.t('affair.views.estimate')
 
-              .col-xs-6
-                %br
-                .checkbox
-                  %label.control-label
-                    %input{ type: 'checkbox',
-                            id: 'affair_unbillable',
-                            name: 'unbillable',
-                            checked: @affair.unbillable,
-                            value: 1 }
-                    = I18n.t('affair.views.statuses.unbillable')
+            .checkbox
+              %label.control-label
+                %input{ type: 'checkbox',
+                        id: 'affair_unbillable',
+                        name: 'unbillable',
+                        checked: @affair.unbillable,
+                        value: 1 }
+                = I18n.t('affair.views.statuses.unbillable')
 
-            .row
-              .col-xs-12
-                %small.help-block
-                  = I18n.t("affair.notices.estimate_value_update_notice")
+          .col-sm-4.form-group
+            %label{for: 'affair_alias_name'}
+              = I18n.t('affair.views.alias_name')
+            %input{type: 'text',
+                   name: 'alias_name',
+                   class: 'form-control',
+                   value: @affair.alias_name}
 
           .col-sm-4.form-group
             %label
@@ -70,6 +68,10 @@
                     class: 'datepicker form-control required',
                     value: @affair.created_at }
 
+        .row
+          .col-sm-12
+            %small.help-block
+              = I18n.t("affair.notices.estimate_value_update_notice")
 
         .row
           .col-lg-12

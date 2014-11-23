@@ -33,7 +33,7 @@ fr:
       invalid_current_password: Le mot de passe actuel est invalide.
       main_language_already_in_communication_languages: Cette langue principale est déjà sélectionnée dans les langues de communication secondaires.
       no_second_email_if_no_primary_email: Il est impossible d'ajouter un email secondaire sans email principal.
-      only_letters: Ne doit être composé que de lettres
+      only_letters: Ne doit être composé que de lettres et de chiffres (sans espaces ni caractères spéciaux)
       organization_not_ticked_but_no_person_info: "'est une organisation' doit être coché si il n'y a pas d'information personnelle."
       second_email_should_be_different: L'email secondaire doit être différent de l'email principal.
       the_required_information_about_this_employee_are_not_satisfied: Cette personne a des salaires. L'attribut '%{field}' est requis.
