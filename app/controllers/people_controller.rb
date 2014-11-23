@@ -211,6 +211,8 @@ class PeopleController < ApplicationController
       # Check if it's an email
       if param.match(/.*@.*/)
         results = @people.where("people.email ~* ? OR people.second_email ~* ?", param, param)
+      elsif param.is_i?
+        results = @people.where("people.id = ?", param)
       else
         # Check if it looks like a first/last name pair
         s = param.match(/([[:alpha:]]+)\s+([a-zA-Z]+)/)
