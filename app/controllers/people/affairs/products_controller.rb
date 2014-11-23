@@ -278,6 +278,8 @@ class People::Affairs::ProductsController < ApplicationController
         :ordered_at,
         :confirmed_at,
         :delivery_at,
+        :warranty_begin,
+        :warranty_end,
         :category_id
       )
 

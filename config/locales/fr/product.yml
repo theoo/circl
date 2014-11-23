@@ -46,7 +46,7 @@ fr:
       art_values: valeur de la TAR
       bid: remise
       bid_price: prix avec remise
-      buying_prices: MISSING_TRANSLATION buying prices
+      buying_prices: prix d'achat
       category: catégorie
       comments: commentaires
       confirmed_at: confirmation
@@ -73,3 +73,5 @@ fr:
       upload_a_new_file_description: veuillez choisir un fichier
       upload_a_new_file_title: téléverser un nouveau fichier
       variants: variantes
+      warranty_begin: début garantie
+      warranty_end: fin garantie

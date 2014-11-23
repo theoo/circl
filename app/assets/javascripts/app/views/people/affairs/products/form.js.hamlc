@@ -133,36 +133,51 @@
         %label{class: 'label-control'}
           = I18n.t('product.views.comments')
         %textarea{name: 'comment',
-                  rows: 3,
+                  rows: 5,
                   class: 'form-control'}
           = @product.comment
 
-      .col-sm-2
-        .form-group
-          %label
-            = I18n.t('product.views.ordered_at')
-          %input{ type: 'text',
-                  name: 'ordered_at',
-                  class: 'datepicker form-control',
-                  value: @product.ordered_at }
+      .col-md-7
+        .row
+          .col-sm-4.form-group
+            %label
+              = I18n.t('product.views.ordered_at')
+            %input{ type: 'text',
+                    name: 'ordered_at',
+                    class: 'datepicker form-control',
+                    value: @product.ordered_at }
 
-      .col-md-2
-        .form-group
-          %label
-            = I18n.t('product.views.confirmed_at')
-          %input{ type: 'text',
-                  name: 'confirmed_at',
-                  class: 'datepicker form-control',
-                  value: @product.confirmed_at }
+          .col-md-4.form-group
+            %label
+              = I18n.t('product.views.confirmed_at')
+            %input{ type: 'text',
+                    name: 'confirmed_at',
+                    class: 'datepicker form-control',
+                    value: @product.confirmed_at }
 
-      .col-md-2
-        .form-group
-          %label
-            = I18n.t('product.views.delivery_at')
-          %input{ type: 'text',
-                  name: 'delivery_at',
-                  class: 'datepicker form-control',
-                  value: @product.delivery_at }
+          .col-md-4.form-group
+            %label
+              = I18n.t('product.views.delivery_at')
+            %input{ type: 'text',
+                    name: 'delivery_at',
+                    class: 'datepicker form-control',
+                    value: @product.delivery_at }
+        .row
+          .col-md-4.form-group
+            %label
+              = I18n.t('product.views.warranty_begin')
+            %input{ type: 'text',
+                    name: 'warranty_begin',
+                    class: 'datepicker form-control',
+                    value: @product.warranty_begin }
+
+          .col-md-4.form-group
+            %label
+              = I18n.t('product.views.warranty_end')
+            %input{ type: 'text',
+                    name: 'warranty_end',
+                    class: 'datepicker form-control',
+                    value: @product.warranty_end }
 
     .row
       .col-lg-12
