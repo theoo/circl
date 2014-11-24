@@ -178,7 +178,13 @@
                 = I18n.t('common.csv')
 
         %button{type: 'button',
-                name: 'affair-product_items-reorder',
+                name: 'affair-product-items-reorder',
                 class: 'btn btn-default' }
           .icon-list
           = I18n.t("product.views.reorder")
+
+        %button{type: 'button',
+                name: 'affair-product-items-group-edit',
+                class: 'btn btn-default' }
+          .icon-gear
+          = I18n.t("product.views.group_edit")

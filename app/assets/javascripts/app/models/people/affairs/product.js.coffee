@@ -29,5 +29,3 @@ class App.PersonAffairProductsProgram extends Spine.Model
 
   constructor: ->
     super
-    @checked = false
-

@@ -108,6 +108,7 @@ en:
     title: title
     to: to
     toolbox_export: Export
+    toolbox_import: Import
     toolbox_import_bank_file: Import a bank file
     toolbox_template: memplate
     tools: tools

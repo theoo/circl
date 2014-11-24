@@ -110,6 +110,7 @@ fr:
     title: titre
     to: "à"
     toolbox_export: Exporter
+    toolbox_import: Importer
     toolbox_import_bank_file: Importer un fichier bancaire
     toolbox_template: modèle
     tools: outils

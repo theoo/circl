@@ -21,7 +21,7 @@ PersonAffairProductsCategory = App.PersonAffairProductsCategory
 ProductProgram = App.ProductProgram
 Permissions = App.Permissions
 
-$.fn.product = ->
+$.fn.product_id = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
 
@@ -165,12 +165,15 @@ class Index extends App.ExtendedController
     'click a[name=affair-products-pdf]': 'pdf'
     'click a[name=affair-products-odt]': 'odt'
     'click a[name=affair-products-preview]': 'preview'
-    'click button[name=affair-product_items-reorder]': 'reorder'
+    'click button[name=affair-product-items-reorder]': 'reorder'
+    'click button[name=affair-product-items-group-edit]': 'group_edit'
+    'click input[type="checkbox"]': 'toggle_check'
 
   constructor: (params) ->
     super
     PersonAffairProductsProgram.bind('refresh', @render)
     PersonAffairProductsCategory.bind('refresh', @render)
+    @selected = []
 
   active: (params) ->
     if params
@@ -228,7 +231,7 @@ class Index extends App.ExtendedController
       items: 'li:not(.not-sortable)')
 
   edit: (e) ->
-    @id = $(e.target).product()
+    @id = $(e.target).product_id()
     @activate_in_list e.target
     @trigger 'edit', @id
 
@@ -309,16 +312,34 @@ class Index extends App.ExtendedController
     Spine.Ajax.queue =>
       $.ajax(settings).success(ajax_success)
 
+  toggle_check: (e) ->
+    @update_selected(e.target, $(e.target).prop("checked"))
+
+  update_selected: (i, status) ->
+    id = $(i).product_id()
+    if status
+      @selected.push id
+    else
+      @selected = _.without(@selected, id)
+
+  group_edit: (e) ->
+    e.preventDefault()
+    @selected_items()
+    # @trigger 'group_edit'
+
   select_all: (e) ->
-    # c = $(e.target)
-    # for item in PersonAffairProductsProgram.all()
-    #   item.checked = true
-    @el.find("input[type='checkbox']").prop('checked', true)
+    @el.find("input[type='checkbox']").each (index, item) =>
+      $(item).prop('checked', true)
+      @update_selected(item, true)
 
   select_none: (e) ->
-    @el.find("input[type='checkbox']").prop('checked', false)
+    @el.find("input[type='checkbox']").each (index, item) =>
+      $(item).prop('checked', false)
+      @update_selected(item, false)
 
   selected_items: ->
+    console.log @selected
+
     items = @el.find("input[type='checkbox']:checked").map ->
       $(@).closest("tr").data("id")
     # encodeURIComponent(items.toArray())
