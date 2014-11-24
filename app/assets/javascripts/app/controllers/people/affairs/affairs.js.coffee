@@ -320,7 +320,7 @@ class Edit extends App.ExtendedController
   render: =>
     return unless PersonAffair.exists(@id)
     @show()
-    @affair ||= PersonAffair.find(@id)
+    @affair = PersonAffair.find(@id)
     @html @view('people/affairs/form')(@)
 
     if App.ApplicationSetting.value('use_vat') == "true"
