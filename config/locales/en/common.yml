@@ -31,6 +31,7 @@ en:
     custom: custom
     dashboard: dashboard
     date: date
+    dates: dates
     description: description
     destroy: destroy
     directory: Directory

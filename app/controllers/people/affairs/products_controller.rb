@@ -145,6 +145,38 @@ class People::Affairs::ProductsController < ApplicationController
     end
   end
 
+  def group_update
+    authorize! :update, @person => AffairsProductsProgram
+
+    errors = nil
+    success = false
+
+    @affair.product_items.transaction do
+      @products = @affair.product_items.find(params[:ids])
+
+      params = product_params
+
+      @products.each do |p|
+        p.update_attributes params
+
+        if p.errors.size > 0
+          errors = p.errors
+          raise ActiveRecord::Rollback
+        end
+      end
+
+      success = true
+    end
+
+    respond_to do |format|
+      if success
+        format.json { render json: @products }
+      else
+        format.json { render json: errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     authorize! :destroy, @person => AffairsProductsProgram
 
@@ -252,6 +284,7 @@ class People::Affairs::ProductsController < ApplicationController
 
   private
 
+  # FIXME: Ensure affair is accessible by person
   def product_params
     params[:value_currency] = ApplicationSetting.value("default_currency") if params[:value_currency].blank?
 
@@ -280,7 +313,8 @@ class People::Affairs::ProductsController < ApplicationController
         :delivery_at,
         :warranty_begin,
         :warranty_end,
-        :category_id
+        :category_id,
+        :ids
       )
 
     p

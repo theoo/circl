@@ -28,10 +28,9 @@
             %th.small-number.ignore-sort= I18n.t('common.table.quantity')
             %th.small-number.ignore-sort= I18n.t('common.table.unit_value')
             %th.number.ignore-sort= I18n.t('common.value')
-            %th.number= I18n.t("product.views.ordered_at")
+            %th= I18n.t("common.dates")
             %th.number.ignore-sort.ignore-click
-              .icon-check{name: 'select_all'}
-              .icon-check-empty{name: 'select_none'}
+              %input{ type: 'checkbox', name: 'select_all' }
 
         %tbody
           - for item in App.PersonAffairProductsProgram.all()
@@ -69,11 +68,32 @@
                     = I18n.t("product.views.art") + ": "
                     = item.art?.to_view(@affair?.value_currency)
 
-              %td.number= item.ordered_at
+              %td
+                %dl
+                  - if item.ordered_at
+                    %dt= I18n.t("product.views.ordered_at") + ":"
+                    %dd= item.ordered_at
+
+                  - if item.confirmed_at
+                    %dt= I18n.t("product.views.confirmed_at") + ":"
+                    %dd= item.confirmed_at
+
+                  - if item.delivery_at
+                    %dt= I18n.t("product.views.delivery_at") + ":"
+                    %dd= item.delivery_at
+
+                  -# - if item.warranty_begin
+                  -#   %dt= I18n.t("product.views.warranty_begin") + ":"
+                  -#   %dd= item.warranty_begin
+
+                  -# - if item.warranty_end
+                  -#   %dt= I18n.t("product.views.warranty_end") + ":"
+                  -#   %dd= item.warranty_end
+
               %td.number.ignore-click
                 %input{ type: 'checkbox',
                         name: 'export[]',
-                        checked: item.checked,
+                        checked: @is_checked(item.id),
                         value: 1 }
 
 
@@ -90,6 +110,8 @@
               %th.small-number.ignore-sort= I18n.t('common.table.quantity')
               %th.small-number.ignore-sort= I18n.t('common.table.unit_value')
               %th.number.ignore-sort= I18n.t('common.value')
+              %th.number.ignore-sort.ignore-click
+                %input{ type: 'checkbox', name: 'select_all' }
 
           %tbody
             - for item in App.PersonAffairProductsProgram.for_category(cat.id)
@@ -133,6 +155,12 @@
                     .help-block
                       = I18n.t("product.views.art") + ": "
                       = item.art?.to_view(@affair?.value_currency)
+
+                %td.number.ignore-click
+                  %input{ type: 'checkbox',
+                          name: 'export[]',
+                          checked: @is_checked(item.id),
+                          value: 1 }
 
   .panel-footer
     .form-inline
@@ -185,6 +213,7 @@
 
         %button{type: 'button',
                 name: 'affair-product-items-group-edit',
-                class: 'btn btn-default' }
+                class: 'btn btn-default',
+                disabled: true }
           .icon-gear
           = I18n.t("product.views.group_edit")

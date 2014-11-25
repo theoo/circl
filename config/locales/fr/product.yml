@@ -12,6 +12,7 @@ fr:
       the_following_attributes_will_be_updated: les attributes suivants seront mis à jour
       the_following_prices_will_be_updated: les prix suivants seront mis à jour
       this_product_will_be_removed_in_all_related_affairs: Ce produit sera supprimé de toutes les affaires relatives.
+      you_are_editing_many_product_at_a_time: Attention! Vous êtes sur le point de modifier une série de %{products_count} produits d'un coup.
     pdf:
       parent_position: position du parent
       parent_product_key: titre du produit parent
@@ -51,6 +52,7 @@ fr:
       comments: commentaires
       confirmed_at: confirmation
       delivery_at: livraison
+      group_edit: édition groupée
       has_accessories: accessoires
       ignore_theses_columns: ignorer ces collones
       import_products: importer des produits

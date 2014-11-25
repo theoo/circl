@@ -4,6 +4,10 @@
       .col-md-12
         .validation_errors_placeholder
 
+        - if @ids and not @id
+          .alert.alert-warning
+            = I18n.t("product.notices.you_are_editing_many_product_at_a_time", products_count: @ids.length)
+
     .row
       .col-md-4.autocompleted.form-group
         %label{for: 'person_affair_product_search'}
@@ -182,18 +186,12 @@
     .row
       .col-lg-12
         .pull-right
-          - if @product.isNew()
+          - if @product.isNew() and not @ids
             %button{type: 'submit', class: 'btn btn-primary'}
               .icon-plus
               = I18n.t('common.add')
           - else
-            .btn-group
-              %button{name: 'cancel', class: 'btn btn-default'}
-                .icon-undo
-                = I18n.t('common.cancel')
-              %button{type: 'submit', class: 'btn btn-primary'}
-                .icon-download-alt
-                = I18n.t('common.save')
+            != @partial('save_and_cancel_buttons')(@affair)
 
 
         - unless @product.isNew()

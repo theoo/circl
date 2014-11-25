@@ -16,8 +16,8 @@
 
 Person = App.Person
 PersonAffair = App.PersonAffair
-PersonAffairProductsProgram = App.PersonAffairProductsProgram
-PersonAffairProductsCategory = App.PersonAffairProductsCategory
+ProductItem = App.PersonAffairProductsProgram
+ProductCategory = App.PersonAffairProductsCategory
 ProductProgram = App.ProductProgram
 Permissions = App.Permissions
 
@@ -71,7 +71,7 @@ class New extends PersonAffairProductExtention
 
   render: =>
     @show()
-    @product = new PersonAffairProductsProgram(quantity: 1, unit_symbol: "?")
+    @product = new ProductItem(quantity: 1, unit_symbol: "?")
     @html @view('people/affairs/products/form')(@)
     @init_locals()
 
@@ -80,15 +80,15 @@ class New extends PersonAffairProductExtention
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>
-    PersonAffairProductsProgram.url() == undefined
+    ProductItem.url() == undefined
 
   submit: (e) ->
     e.preventDefault()
     @product.fromForm(e.target)
     @save_with_notifications @product, =>
       @render()
-      PersonAffairProductsCategory.fetch()
-      PersonAffairProductsProgram.fetch()
+      ProductCategory.fetch()
+      ProductItem.fetch()
       PersonAffair.fetch(id: @affair_id)
 
 class Edit extends PersonAffairProductExtention
@@ -110,41 +110,80 @@ class Edit extends PersonAffairProductExtention
       @person_id = params.person_id if params.person_id
       @affair_id = params.affair_id if params.affair_id
       @can = params.can if params.can
-      @id = params.id if params.id
+      @ids = params.ids if params.ids
+      if params.id
+        @id = params.id
+      else
+        @id = undefined # Clear current id when editing group
 
     @render()
 
   render: =>
-    return unless PersonAffairProductsProgram.exists(@id) && @can
-    @product = PersonAffairProductsProgram.find(@id)
+    return unless @can
+
+    if @id
+      @product = ProductItem.find(@id)
+    else if @ids
+      @product = new ProductItem( unit_symbol: "?")
+    else
+      return
 
     @html @view('people/affairs/products/form')(@)
     @init_locals()
 
-    @product_field.autocomplete select: @product_selected
-    @program_field.autocomplete source: '/settings/products/' + @product.product_id + '/programs'
+    if @id
+      @product_field.autocomplete select: @product_selected
+      @program_field.autocomplete source: '/settings/products/' + @product.product_id + '/programs'
+    else
+      @product_field.prop('disabled', true)
+      @program_field.autocomplete source: '/settings/product_programs/search'
 
     @show()
 
     if @disabled() then @disable_panel() else @enable_panel()
 
   disabled: =>
-    PersonAffairProductsProgram.url() == undefined
+    ProductItem.url() == undefined
 
   submit: (e) ->
     e.preventDefault()
     @product.fromForm(e.target)
-    @save_with_notifications @product, =>
-      @hide()
-      PersonAffairProductsProgram.fetch()
-      PersonAffairProductsCategory.fetch()
-      PersonAffair.fetch(id: @affair_id)
+
+    if @ids and not @id
+
+      data = {}
+      $.each @product.attributes(), (k, v) ->
+        data[k] = v if v != ""
+      data.ids = @ids
+
+      settings =
+        url: ProductItem.url() + "/group_update",
+        type: 'POST',
+        data: JSON.stringify(data)
+
+      ajax_success = (data, textStatus, jqXHR) =>
+        ProductItem.fetch()
+        ProductCategory.fetch()
+        PersonAffair.fetch(id: @affair_id)
+        @hide()
+
+      ajax_error = (xhr, statusText, error) =>
+        @render_errors $.parseJSON(xhr.responseText)
+
+      ProductItem.ajax().ajax(settings).success(ajax_success)# .error(ajax_error)
+
+    else
+      @save_with_notifications @product, =>
+        @hide()
+        ProductItem.fetch()
+        ProductCategory.fetch()
+        PersonAffair.fetch(id: @affair_id)
 
   destroy: (e) ->
     @confirm I18n.t('common.are_you_sure'), 'warning', =>
       @destroy_with_notifications @product, =>
         @hide()
-        PersonAffairProductsProgram.fetch()
+        ProductItem.fetch()
         PersonAffair.fetch(id: @affair_id)
 
   reset_value: (e) ->
@@ -158,8 +197,6 @@ class Edit extends PersonAffairProductExtention
 class Index extends App.ExtendedController
   events:
     'click tr.item td:not(.ignore-click)': 'edit'
-    'click div[name="select_all"]': 'select_all'
-    'click div[name="select_none"]': 'select_none'
     'datatable_redraw': 'table_redraw'
     'click a[name=affair-products-csv]': 'csv'
     'click a[name=affair-products-pdf]': 'pdf'
@@ -167,13 +204,13 @@ class Index extends App.ExtendedController
     'click a[name=affair-products-preview]': 'preview'
     'click button[name=affair-product-items-reorder]': 'reorder'
     'click button[name=affair-product-items-group-edit]': 'group_edit'
-    'click input[type="checkbox"]': 'toggle_check'
+    'change input[name="select_all"]': 'toggle_checks'
+    'change input[type="checkbox"]': 'toggle_check'
 
   constructor: (params) ->
     super
-    PersonAffairProductsProgram.bind('refresh', @render)
-    PersonAffairProductsCategory.bind('refresh', @render)
-    @selected = []
+    ProductItem.bind('refresh', @render)
+    ProductCategory.bind('refresh', @render)
 
   active: (params) ->
     if params
@@ -181,6 +218,8 @@ class Index extends App.ExtendedController
       @affair_id = params.affair_id if params.affair_id
       @affair = App.PersonAffair.find(@affair_id) if @affair_id
       @can = params.can if params.can
+
+    @selected = []
     @render()
 
   render: =>
@@ -190,16 +229,16 @@ class Index extends App.ExtendedController
     @el.find(".datatable_wrapper").css(maxHeight: '600px', overflow: 'auto')
 
     refresh_index = =>
-      PersonAffairProductsProgram.fetch()
+      ProductItem.fetch()
 
     @el.find('table.datatable')
       .rowReordering(
-        sURL: PersonAffairProductsProgram.url() + "/change_position"
+        sURL: ProductItem.url() + "/change_position"
         sRequestType: "GET"
         iIndexColumn: 0
         fnSuccess: refresh_index)
 
-    first_category = PersonAffairProductsCategory.ordered()[0]
+    first_category = ProductCategory.ordered()[0]
     if first_category
       @el.find("#person_affairs_products_category_global")
         .addClass("active")
@@ -214,12 +253,12 @@ class Index extends App.ExtendedController
         $(val).data("id")
 
       settings =
-        url: PersonAffairProductsCategory.url() + "/update",
+        url: ProductCategory.url() + "/update",
         type: 'POST',
         data: {ids: order}
 
       ajax_success = (data, textStatus, jqXHR) =>
-        PersonAffairProductsCategory.fetch()
+        ProductCategory.fetch()
 
       # FIXME Add error validation
       Spine.Ajax.queue =>
@@ -243,11 +282,11 @@ class Index extends App.ExtendedController
 
   csv: (e) ->
     e.preventDefault()
-    window.location = PersonAffairProductsProgram.url() + ".csv?items=#{@selected_items()}"
+    window.location = ProductItem.url() + ".csv?items=#{@selected_as_params()}"
 
   url_for: (format) ->
-    url = PersonAffairProductsProgram.url() + ".#{format}?template_id=#{@template_id}"
-    url = url + "&items=#{@selected_items()}"
+    url = ProductItem.url() + ".#{format}?template_id=#{@template_id}"
+    url = url + "&items=#{@selected_as_params()}"
     e = @el.find("input[name=export_all]:checked")
     url = url + "&export_all=true" if e.length == 1
     url
@@ -302,49 +341,71 @@ class Index extends App.ExtendedController
   reorder: (e) ->
     e.preventDefault()
     settings =
-      url: PersonAffairProductsProgram.url() + "/reorder",
+      url: ProductItem.url() + "/reorder",
       type: 'POST'
 
     ajax_success = (data, textStatus, jqXHR) =>
-      PersonAffairProductsProgram.fetch()
+      ProductItem.fetch()
 
     # FIXME Add error validation
     Spine.Ajax.queue =>
       $.ajax(settings).success(ajax_success)
 
   toggle_check: (e) ->
-    @update_selected(e.target, $(e.target).prop("checked"))
+    id = $(e.target).product_id()
+    status = $(e.target).prop("checked")
 
-  update_selected: (i, status) ->
-    id = $(i).product_id()
-    if status
-      @selected.push id
+    checkboxes = @el.find("table").each (index, table) ->
+      datatable = $(table).dataTable()
+      $(datatable.fnGetNodes()).find("input[type='checkbox']").each (index, c) ->
+        if $(c).product_id() == id
+          $(c).prop('checked', status)
+      datatable.fnDraw()
+
+    @update_selected_index(id, status)
+    @toggle_group_edit_button()
+
+  toggle_checks: (e) ->
+    status = $(e.target).is(":checked")
+
+    current_table = $(e.target).closest("table")
+    current_datatable = current_table.dataTable()
+    current_ids = $(current_datatable.fnGetNodes()).map (index, c) -> $(c).product_id()
+
+    @el.find("table").each (index, table) =>
+      datatable = $(table).dataTable()
+
+      for id in current_ids
+        $(datatable.fnGetNodes()).siblings("tr[data-id=#{id}]").each ->
+          $(@).find("input[type='checkbox']").prop('checked', status)
+
+        @update_selected_index(id, status)
+
+      datatable.fnDraw()
+    @toggle_group_edit_button()
+
+  update_selected_index: (id, status) ->
+    if status and id
+      @selected.push id unless @selected.indexOf(id) >= 0
     else
       @selected = _.without(@selected, id)
 
   group_edit: (e) ->
     e.preventDefault()
-    @selected_items()
-    # @trigger 'group_edit'
+    @trigger 'group_edit', @selected
 
-  select_all: (e) ->
-    @el.find("input[type='checkbox']").each (index, item) =>
-      $(item).prop('checked', true)
-      @update_selected(item, true)
+  selected_as_params: ->
+    JSON.stringify @selected
 
-  select_none: (e) ->
-    @el.find("input[type='checkbox']").each (index, item) =>
-      $(item).prop('checked', false)
-      @update_selected(item, false)
+  toggle_group_edit_button: ->
+    btn = @el.find("button[name=affair-product-items-group-edit]")
+    if @selected.length > 0
+      btn.attr(disabled: false)
+    else
+      btn.attr(disabled: true)
 
-  selected_items: ->
-    console.log @selected
-
-    items = @el.find("input[type='checkbox']:checked").map ->
-      $(@).closest("tr").data("id")
-    # encodeURIComponent(items.toArray())
-    JSON.stringify items.toArray()
-
+  is_checked: (id) ->
+    @selected.indexOf(id) >= 0
 
 class App.PersonAffairProducts extends Spine.Controller
   className: 'products'
@@ -356,6 +417,9 @@ class App.PersonAffairProducts extends Spine.Controller
     @edit = new Edit
     @new = new New
     @append(@new, @edit, @index)
+
+    @index.bind 'group_edit', (ids) =>
+      @edit.active person_id: @person_id, affair_id: @affair_id, ids: ids
 
     @index.bind 'edit', (id) =>
       @edit.active person_id: @person_id, affair_id: @affair_id, id: id
