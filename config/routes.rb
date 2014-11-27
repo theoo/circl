@@ -55,6 +55,7 @@ CIRCL::Application.routes.draw do
         collection do
           get 'search', 'change_position', 'categories'
           post 'reorder', 'group_update'
+          delete 'group_destroy'
         end
       end
 

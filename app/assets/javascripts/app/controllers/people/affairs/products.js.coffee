@@ -181,10 +181,29 @@ class Edit extends PersonAffairProductExtention
 
   destroy: (e) ->
     @confirm I18n.t('common.are_you_sure'), 'warning', =>
-      @destroy_with_notifications @product, =>
-        @hide()
-        ProductItem.fetch()
-        PersonAffair.fetch(id: @affair_id)
+      if @ids and not @id
+
+        settings =
+          url: ProductItem.url() + "/group_destroy",
+          type: 'DELETE',
+          data: JSON.stringify({ids: @ids})
+
+        ajax_success = (data, textStatus, jqXHR) =>
+          ProductItem.fetch()
+          ProductCategory.fetch()
+          PersonAffair.fetch(id: @affair_id)
+          @hide()
+
+        ajax_error = (xhr, statusText, error) =>
+          @render_errors $.parseJSON(xhr.responseText)
+
+        ProductItem.ajax().ajax(settings).success(ajax_success)# .error(ajax_error)
+
+      else
+        @destroy_with_notifications @product, =>
+          @hide()
+          ProductItem.fetch()
+          PersonAffair.fetch(id: @affair_id)
 
   reset_value: (e) ->
     e.preventDefault()

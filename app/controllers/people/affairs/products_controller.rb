@@ -191,6 +191,26 @@ class People::Affairs::ProductsController < ApplicationController
     end
   end
 
+  def group_destroy
+    authorize! :destroy, @person => AffairsProductsProgram
+
+    errors = nil
+    success = false
+
+    @affair.product_items.transaction do
+      @products = @affair.product_items.where(id: params[:ids])
+      success = @products.destroy_all
+    end
+
+    respond_to do |format|
+      if success
+        format.json { render json: @products }
+      else
+        format.json { render json: I18n.t("common.errors.failed_to_destroy"), status: :unprocessable_entity }
+      end
+    end
+  end
+
   def search
     authorize! :read, @person => AffairsProductsProgram
 

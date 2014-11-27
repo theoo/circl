@@ -194,7 +194,7 @@
             != @partial('save_and_cancel_buttons')(@affair)
 
 
-        - unless @product.isNew()
+        - if not @product.isNew() or @ids
           %button{type: 'button',
                   class: 'btn btn-danger',
                   name: 'person-affair-product-destroy'}
