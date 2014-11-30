@@ -101,6 +101,8 @@ class Edit extends PersonAffairProductExtention
     'change #person_affair_product_quantity': 'clear_value'
     'autocompleteselect #person_affair_product_search': 'clear_value'
     'autocompleteselect #person_affair_product_program_search': 'clear_value'
+    'focus input': 'check_replace_value'
+    'focus textarea': 'check_replace_value'
 
   constructor: ->
     super
@@ -110,7 +112,13 @@ class Edit extends PersonAffairProductExtention
       @person_id = params.person_id if params.person_id
       @affair_id = params.affair_id if params.affair_id
       @can = params.can if params.can
-      @ids = params.ids if params.ids
+
+      # Toggle ids or id so it's easier to know when I'm group editing.
+      if params.ids
+        @ids = params.ids
+      else
+        params.ids = undefined
+
       if params.id
         @id = params.id
       else
@@ -138,6 +146,9 @@ class Edit extends PersonAffairProductExtention
       @product_field.prop('disabled', true)
       @program_field.autocomplete source: '/settings/product_programs/search'
 
+    # Enable tooltip for group_edit
+    @el.find(".replace_value").tooltip()
+
     @show()
 
     if @disabled() then @disable_panel() else @enable_panel()
@@ -151,9 +162,13 @@ class Edit extends PersonAffairProductExtention
 
     if @ids and not @id
 
+      # Get info from inputs which are checked only
       data = {}
-      $.each @product.attributes(), (k, v) ->
-        data[k] = v if v != ""
+      @el.find(".replace_value:checked").each ->
+        $(@).parents(".form-group").find("input:not(.replace_value)").each ->
+          i = $(@)
+          data[i.prop('name')] = i.val()
+
       data.ids = @ids
 
       settings =
@@ -212,6 +227,9 @@ class Edit extends PersonAffairProductExtention
   clear_value: (e) ->
     e.preventDefault()
     @el.find("#person_affair_product_value").val null
+
+  check_replace_value: (e) ->
+    $(e.target).parents(".form-group").find('.replace_value').prop(checked: true)
 
 class Index extends App.ExtendedController
   events:
@@ -283,10 +301,11 @@ class Index extends App.ExtendedController
       Spine.Ajax.queue =>
         $.ajax(settings).success(ajax_success)
 
-
     nav.sortable(
       stop: update_category_position
       items: 'li:not(.not-sortable)')
+
+    @toggle_group_edit_button()
 
   edit: (e) ->
     @id = $(e.target).product_id()

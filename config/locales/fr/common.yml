@@ -91,6 +91,7 @@ fr:
     quantity: quantité
     rate: taux
     released_under: livrée sous la version 3 de la license
+    replace_value: replacer la valeur existante
     requires_browser_update: Une mise à jour de votre navigateur est requise pour consulter cette page.
     reset: réinitialiser
     salaries: Salaires

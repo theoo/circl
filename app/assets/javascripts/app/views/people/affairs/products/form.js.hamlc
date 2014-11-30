@@ -6,10 +6,13 @@
 
         - if @ids and not @id
           .alert.alert-warning
-            = I18n.t("product.notices.you_are_editing_many_product_at_a_time", products_count: @ids.length)
+            != I18n.t("product.notices.you_are_editing_many_product_at_a_time", products_count: @ids.length)
 
     .row
       .col-md-4.autocompleted.form-group
+        - if not @id and @ids
+          .pull-right
+            %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
         %label{for: 'person_affair_product_search'}
           = I18n.t('product.views.product_search')
         %input{ type: 'search',
@@ -23,6 +26,9 @@
                value: @product.product_id}
 
       .col-md-4.autocompleted.form-group
+        - if not @id and @ids
+          .pull-right
+            %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
         %label{for: 'person_affair_product_program_search'}
           = I18n.t('product_program.views.program_search')
         %input{ type: 'search',
@@ -36,6 +42,9 @@
                value: @product.program_id}
 
       .col-md-4.autocompleted.form-group
+        - if not @id and @ids
+          .pull-right
+            %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
         %label{for: 'person_affair_product_category'}
           = I18n.t('common.category')
         %input{ type: 'search',
@@ -47,8 +56,13 @@
 
     .row
       .col-md-3.autocompleted.form-group
+        - if not @id and @ids
+          .pull-right
+            %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
+
         %label{for: 'person_affair_product_parent'}
           = I18n.t('common.parent')
+
         %input{ type: 'search',
                 id: 'person_affair_product_parent',
                 name: 'parent',
@@ -60,8 +74,13 @@
                value: @product.parent_id}
 
       .col-md-2.form-group
+        - if not @id and @ids
+          .pull-right
+            %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
+
         %label{for: 'person_affair_product_quantity'}
           = I18n.t('product.views.quantity')
+
         .input-group
           %input{ type: 'number',
                   step: 0.001,
@@ -74,6 +93,9 @@
               = @product.unit_symbol
 
       .col-md-2.form-group
+        - if not @id and @ids
+          .pull-right
+            %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
         %label{for: 'person_affair_product_bid_percentage'}
           = I18n.t('product.views.bid')
         .input-group
@@ -88,6 +110,9 @@
           .input-group-addon %
 
       .col-md-2.form-group
+        - if not @id and @ids
+          .pull-right
+            %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
         %label{for: 'person_affair_product_position'}
           = I18n.t('product.views.position')
         %input{ type: 'number',
@@ -97,32 +122,34 @@
                 class: 'form-control number',
                 value: @product.position }
 
-      .col-sm-3
-        .form-group
-          %label{for: "person_affair_product_value"}
-            = I18n.t('common.value')
-          .input-group
-            .input-group-btn
-              - classes = ['btn', 'btn-default']
-              - if @product.value == @product.computed_value
-                - classes.push('disabled')
-              - else
-                - classes.push('btn-danger')
+      .col-sm-3.form-group
+        - if not @id and @ids
+          .pull-right
+            %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
+        %label{for: "person_affair_product_value"}
+          = I18n.t('common.value')
+        .input-group
+          .input-group-btn
+            - classes = ['btn', 'btn-default']
+            - if @product.value == @product.computed_value
+              - classes.push('disabled')
+            - else
+              - classes.push('btn-danger')
 
-              %button{type: 'button', class: classes.join(" "), name: 'reset_value'}
-                .icon-refresh
+            %button{type: 'button', class: classes.join(" "), name: 'reset_value'}
+              .icon-refresh
 
-            %input{ type: 'number',
-                    step: 0.01,
-                    id: "person_affair_product_value",
-                    class: 'form-control required',
-                    min: 0,
-                    max: 99999999.99,
-                    name: 'value',
-                    value: @product.value }
+          %input{ type: 'number',
+                  step: 0.01,
+                  id: "person_affair_product_value",
+                  class: 'form-control required',
+                  min: 0,
+                  max: 99999999.99,
+                  name: 'value',
+                  value: @product.value }
 
-            .input-group-addon
-              != @partial('select_currency')(currency: @product.value_currency, name: 'value_currency', value: @product.value)
+          .input-group-addon
+            != @partial('select_currency')(currency: @product.value_currency, name: 'value_currency', value: @product.value)
 
         - if @product.value and @product.value != @product.bid_price
           %small.help-block
@@ -134,6 +161,10 @@
 
     .row
       .col-md-5.form-group
+        - if not @id and @ids
+          .pull-right
+            %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
+
         %label{class: 'label-control'}
           = I18n.t('product.views.comments')
         %textarea{name: 'comment',
@@ -144,6 +175,9 @@
       .col-md-7
         .row
           .col-sm-4.form-group
+            - if not @id and @ids
+              .pull-right
+                %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
             %label
               = I18n.t('product.views.ordered_at')
             %input{ type: 'text',
@@ -152,6 +186,9 @@
                     value: @product.ordered_at }
 
           .col-md-4.form-group
+            - if not @id and @ids
+              .pull-right
+                %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
             %label
               = I18n.t('product.views.confirmed_at')
             %input{ type: 'text',
@@ -160,6 +197,9 @@
                     value: @product.confirmed_at }
 
           .col-md-4.form-group
+            - if not @id and @ids
+              .pull-right
+                %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
             %label
               = I18n.t('product.views.delivery_at')
             %input{ type: 'text',
@@ -168,6 +208,9 @@
                     value: @product.delivery_at }
         .row
           .col-md-4.form-group
+            - if not @id and @ids
+              .pull-right
+                %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
             %label
               = I18n.t('product.views.warranty_begin')
             %input{ type: 'text',
@@ -176,6 +219,9 @@
                     value: @product.warranty_begin }
 
           .col-md-4.form-group
+            - if not @id and @ids
+              .pull-right
+                %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
             %label
               = I18n.t('product.views.warranty_end')
             %input{ type: 'text',

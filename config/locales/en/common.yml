@@ -90,6 +90,7 @@ en:
     quantity: quantity
     rate: rate
     released_under: released under the version 3
+    replace_value: replace existing value
     requires_browser_update: Your browser must be updated to see this page.
     reset: reset
     salaries: Salaries
