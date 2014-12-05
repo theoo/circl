@@ -2,13 +2,17 @@
 fr:
   product:
     errors:
-      missing_program: programme manquant
-      no_file_submitted: pas de fichier soumis
-      unable_to_parse_file: impossible d'interpreter le fichier
+      invalid_line: ligne invalide
+      line: ligne
+      missing_program: Programme %{program_name} manquant
+      no_file_submitted: Pas de fichier soumis
+      product_failed_to_imported: Impossible d'importer le produit
+      unable_to_parse_file: Impossible d'interpreter le fichier
     notices:
       no_existing_product_alert: Le catalogue des produits est vide, veuillez en créer pour en ajouter à une affaire.
       no_existing_product_button: Ajouter un produit
       no_existing_product_program_alert: Il n'existe pas de programme pour le regroupement des tarifs de produit, veuillez en ajouter ci-dessous avant de poursuivre avec la création de produit.
+      product_imported: Produits importés
       the_following_attributes_will_be_updated: les attributes suivants seront mis à jour
       the_following_prices_will_be_updated: les prix suivants seront mis à jour
       this_product_will_be_removed_in_all_related_affairs: Ce produit sera supprimé de toutes les affaires relatives.
@@ -52,16 +56,22 @@ fr:
       comments: commentaires
       confirmed_at: confirmation
       delivery_at: livraison
-      group_edit: édition groupée
+      example_files_explanation: Le fichier exemple ci-dessous peut être employé pour préparer les données à importer.
+      example_files_title: Fichier d'exemple
+      group_edit: "édition groupée"
       has_accessories: accessoires
-      ignore_theses_columns: ignorer ces collones
-      import_products: importer des produits
+      ignore_theses_columns: Ignorer ces collones
+      import_products: Importer des produits
       key: clé
       normal_price: prix normal
       ordered_at: commande
       position: position
+      price_definitions: Définitions des prix
       price_to_unit_rate: rapport de conversion du prix
+      proceed_with_import: Continuer avec l'importation
+      product_attributes: Attributs
       product_search: produit
+      products_example_file_desc: Modèle pour l'importation
       products_found_in_file: produits trouvés dans le fichier
       products_list_pdf_title: List des produits pour l'affaire <i>%{affair_title}</i>
       program_groups: groupe de programme

@@ -65,6 +65,8 @@ en:
       pdf_for_subscription: pdf for subscription
       people_import_report: People import report
       people_import_report_title: People import report
+      products_import_report: Products import report
+      products_import_report_title: Products import report
       receipts_import_report: Receipts import report
       report_error:
         datetime: datetime

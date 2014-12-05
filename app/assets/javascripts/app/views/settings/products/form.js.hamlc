@@ -89,9 +89,9 @@
                     class: 'required form-control'}
               - for l in Object.keys(I18n.t("product.units"))
                 - if @product.unit_symbol == l
-                  %option{value: l, selected: true}= "[#{l}] " + I18n.t("product.units.#{l}.title")
+                  %option{value: l, selected: true}= "[#{l}] " + I18n.t("product.units." + l + ".title")
                 - else
-                  %option{value: l}= "[#{l}] " + I18n.t("product.units.#{l}.title")
+                  %option{value: l}= "[#{l}] " + I18n.t("product.units." + l + ".title")
 
         .col-sm-6
           .form-group

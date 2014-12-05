@@ -43,7 +43,7 @@ class PersonAffairProductExtention extends App.ExtendedController
 
     App.Product.one "refresh", =>
       prod = App.Product.find(ui.item.id)
-      symbol = I18n.t("product.units.#{prod.unit_symbol}.symbol")
+      symbol = I18n.t("product.units." + prod.unit_symbol + ".symbol")
       @product_unit_symbol.html(symbol)
       @product_category.val prod.category
 

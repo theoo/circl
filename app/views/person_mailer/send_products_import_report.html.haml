@@ -1,0 +1,15 @@
+%h1
+  = I18n.t("person.mail.products_import_report_title")
+
+- attributes = %w(key title description width height depth volume weight unit_symbol price_to_unit_rate provider_id after_sale_id category has_accessories archive)
+
+%table
+  %thead
+    %tr
+      - attributes.each do |a|
+        %th= a
+  %tbody
+    - @products.each do |product|
+      %tr
+        - attributes.each do |a|
+          %td= product.send(a)

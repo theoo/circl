@@ -191,6 +191,7 @@ class Index extends App.ExtendedController
 
   export_in_csv: (e) ->
     e.preventDefault()
+    window.location = Product.url() + ".csv"
 
   stack_import_window: (e) ->
     e.preventDefault()

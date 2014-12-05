@@ -32,6 +32,7 @@ en:
     dashboard: dashboard
     date: date
     dates: dates
+    depth: depth
     description: description
     destroy: destroy
     directory: Directory
@@ -62,12 +63,15 @@ en:
     from: from
     global: Global
     good: good
+    height: height
     hour: hour
     id: ID
+    import: import
     incomplete: incomplete
     info: info
     invoice: invoice
     key: key
+    line: line
     members: members
     name: name
     next: next
@@ -124,7 +128,10 @@ en:
     use_right_click_save_as: right-click and select 'Save as...'
     value: value
     vat: VAT
+    volume: volume
     weak: weak
+    weight: weight
+    width: width
     year: year
   hours: hours
   minutes: minutes

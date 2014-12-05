@@ -34,8 +34,14 @@ class Product < ActiveRecord::Base
   #################
 
   before_validation do
+    # Sanitarize booleans
+    self.archive ||= false
+    self.has_accessories ||= false
+
     self.price_to_unit_rate ||= 1
     self.unit_symbol ||= "pc" # units are defined in translations
+
+    true
   end
 
   after_save do
@@ -122,16 +128,19 @@ class Product < ActiveRecord::Base
   end
 
   def unit_symbol_translated
-    I18n.t!("product.units.#{self.unit_symbol}.symbol")
+    I18n.t!("product.units." + self.unit_symbol + ".symbol")
   rescue
     self.unit_symbol
   end
 
-  def self.parse_csv(file)
+  def self.parse_csv(file, lines = [], skip_columns = [], do_record = false)
     products = []
+    # in case argument nil is sent
+    lines ||= []
+    skip_columns ||= []
 
     # Expected file structure
-    columns = [
+    columns_list = [
       :key,
       :title,
       :description,
@@ -213,92 +222,106 @@ class Product < ActiveRecord::Base
       :has_accessories,
       :archive ]
 
-    csvStruct = Struct.send(:new, *columns)
+    begin
+      Product.transaction do
 
-    # begin
-      CSV.parse(file, encoding: 'UTF-8')[1..-1].each_with_index do |row, row_index|
+        csvStruct = Struct.send(:new, *columns_list)
 
-        row.map!{ |s| (s || '').force_encoding('utf-8').strip }
+        CSV.parse(file, encoding: 'UTF-8')[1..-1].each_with_index do |row, row_index|
+          next if lines.size > 0 and ! lines.index((row_index + 1).to_s)
 
-        p = csvStruct.new(*row)
+          row.map!{ |s| (s || '').force_encoding('utf-8').strip }
 
-        if row.size != columns.size
-          products << "#{I18n.t('products.errors.line')} #{i+2}: #{I18n.t('products.errors.invalid_line')}"
-          next
-        end
+          p = csvStruct.new(*row)
 
-        if Product.exists?(key: p.key)
-          # Update
-          prod = Product.where(key: p.key).first
-
-          %w(key title description width height depth volume weight unit_symbol price_to_unit_rate provider_id
-            after_sale_id category has_accessories archive).each do |attribute|
-            prod.send(attribute + "=", p.send(attribute)) if prod.send(attribute) != p.send(attribute)
-          end
-
-          if prod.changed?
-            msg = I18n.t("product.notices.the_following_attributes_will_be_updated")
-            msg += ": "
-            msg += prod.changed.join(", ")
-            prod.notices.add :base, msg
-          end
-        else
-          # Create
-          prod = Product.new(
-            key: p.key,
-            title: p.title,
-            description: p.description,
-            width: p.width,
-            height: p.height,
-            depth: p.depth,
-            volume: p.volume,
-            weight: p.weight,
-            unit_symbol: p.unit_symbol,
-            price_to_unit_rate: p.price_to_unit_rate,
-            provider_id: p.provider_id,
-            after_sale_id: p.after_sale_id,
-            category: p.category,
-            has_accessories: p.has_accessories,
-            archive: p.archive )
-        end
-
-        # Check existance of product_programs
-        updated_prices = []
-        16.times do |t|
-          t = t + 1
-          program_name = p.send("program_group_" + t.to_s)
-          pp = ProductProgram.where(program_group: program_name)
-          if pp.count < 0
-            prod.errors.add :base, I18n.t("product.errors.missing_program", program_name: program_name)
+          if row.size != columns_list.size
+            products << "#{I18n.t('product.errors.line')} #{i+2}: #{I18n.t('product.errors.invalid_line')}"
             next
           end
 
-          pg = prod.variants.where(program_group: program_name).first
-          updated_prices << pg.program_group if pg
-          pg ||= prod.variants.new
-          pg.assign_attributes(
-            program_group: program_name,
-            buying_price: p.send("buying_price_" + t.to_s).to_money(p.currency_symbol),
-            selling_price: p.send("selling_price_" + t.to_s).to_money(p.currency_symbol),
-            art: p.send("art_value_" + t.to_s).to_money(p.currency_symbol) )
-        end
+          if Product.exists?(key: p.key)
+            # Update
+            prod = Product.where(key: p.key).first
 
-        if updated_prices.size > 0
-          msg = I18n.t("product.notices.the_following_prices_will_be_updated")
-          msg += ": "
-          msg += updated_prices.join(", ")
-          prod.notices.add :base, msg
-        end
+            %w(key title description width height depth volume weight unit_symbol price_to_unit_rate provider_id
+              after_sale_id category has_accessories archive).each do |a|
+              next if skip_columns.index(a)
+              prod.send(a + "=", p.send(a)) if prod.send(a) != p.send(a) and p.send(a)
+            end
 
-        prod.valid? # trig validation
-        products << prod
-      end
+            if prod.changed?
+              msg = I18n.t("product.notices.the_following_attributes_will_be_updated")
+              msg += ": "
+              msg += prod.changed.join(", ")
+              prod.notices.add :base, msg
+            end
+          else
+            # Create
+            attributes = {}
+            %w(key title description width height depth volume weight unit_symbol price_to_unit_rate provider_id
+              after_sale_id category has_accessories archive).each do |a|
+              next if skip_columns.index(a)
+              attributes[a] = p.send(a) if p.send(a)
+            end
+            prod = Product.new(attributes)
+          end
 
-    # rescue Exception => e
-    #   products = I18n.t("product.errors.unable_to_parse_file")
-    # end
 
-    [products, columns]
+          # Check existance of product_programs
+          updated_prices = []
+          16.times do |t|
+            t = t + 1
+
+            next if !! skip_columns.index(t.to_s)
+
+            program_name = p.send("program_group_" + t.to_s)
+
+            next if program_name.blank?
+
+            pp = ProductProgram.where(program_group: program_name)
+            unless pp.count > 0
+              prod.notices.add :base, I18n.t("product.errors.missing_program", program_name: program_name)
+              prod.errors.add :base, I18n.t("product.errors.missing_program", program_name: program_name)
+              next
+            end
+
+            pg = prod.variants.where(program_group: program_name).first
+            updated_prices << pg.program_group if pg
+            pg ||= prod.variants.new
+            pg.assign_attributes(
+              program_group: program_name,
+              buying_price: p.send("buying_price_" + t.to_s).to_money(p.currency_symbol),
+              selling_price: p.send("selling_price_" + t.to_s).to_money(p.currency_symbol),
+              art: p.send("art_value_" + t.to_s).to_money(p.currency_symbol) )
+
+            # force update
+            prod.variants << pg unless pg.new_record?
+          end
+
+          if updated_prices.size > 0
+            msg = I18n.t("product.notices.the_following_prices_will_be_updated")
+            msg += ": "
+            msg += updated_prices.join(", ")
+            prod.notices.add :base, msg
+          end
+
+          prod.save # trig validation
+          products << prod
+        end # csv
+
+        raise ActiveRecord::Rollback unless do_record
+
+      end # transaction
+
+    rescue ActiveRecord::Rollback
+      # continue
+
+    rescue Exception => e
+      raise e
+      products = I18n.t("product.errors.unable_to_parse_file")
+    end
+
+    [products, columns_list]
   end
 
   ########################

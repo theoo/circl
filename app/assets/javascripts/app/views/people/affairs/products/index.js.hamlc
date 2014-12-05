@@ -50,7 +50,7 @@
 
               %td= item.category
               %td= item.provider_name
-              %td.small-number= item.quantity + " " + I18n.t("product.units.#{item.unit_symbol}.symbol")
+              %td.small-number= item.quantity + " " + I18n.t("product.units." + item.unit_symbol + ".symbol")
               %td.number
                 = item.unit_price?.to_view(@affair?.value_currency)
               %td.number
@@ -138,7 +138,7 @@
                     %pre
                       = item.comment
 
-                %td.small-number= item.quantity + " " + I18n.t("product.units.#{item.unit_symbol}.symbol")
+                %td.small-number= item.quantity + " " + I18n.t("product.units." + item.unit_symbol + ".symbol")
                 %td.number
                   = item.unit_price?.to_view(@affair?.value_currency)
                 %td.number

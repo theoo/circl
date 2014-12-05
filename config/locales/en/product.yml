@@ -2,13 +2,17 @@
 en:
   product:
     errors:
-      missing_program: missing program
+      invalid_line: invalid line
+      line: line
+      missing_program: program %{program_name} missing
       no_file_submitted: no file submitted
+      product_failed_to_imported: Product failed to imported
       unable_to_parse_file: unable to parse file
     notices:
       no_existing_product_alert: No existing product in CIRCL, please click below to add one.
       no_existing_product_button: Add a product
       no_existing_product_program_alert: No existing program, please add one below before continuing.
+      product_imported: Product imported
       the_following_attributes_will_be_updated: the following attributes will be updated
       the_following_prices_will_be_updated: the following prices will be updated
       this_product_will_be_removed_in_all_related_affairs: This product will be removed from all related affairs.
@@ -52,6 +56,8 @@ en:
       comments: comments
       confirmed_at: confirmation date
       delivery_at: delivery date
+      example_files_explanation: Example file as template to prepare data before importation.
+      example_files_title: Example file
       group_edit: group edit
       has_accessories: has accessories
       ignore_theses_columns: ignore theses columns
@@ -60,8 +66,12 @@ en:
       normal_price: normal price
       ordered_at: order date
       position: position
+      price_definitions: prices definitions
       price_to_unit_rate: Price to unit rate
+      proceed_with_import: proceed with import
+      product_attributes: attributes
       product_search: product
+      products_example_file_desc: Product import template
       products_found_in_file: products found in file
       products_list_pdf_title: products list pdf title
       program_groups: program groups

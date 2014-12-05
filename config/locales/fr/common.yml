@@ -32,6 +32,7 @@ fr:
     dashboard: Tableau de bord
     date: date
     dates: dates
+    depth: profondeur
     description: description
     destroy: détruire
     directory: Annuaire
@@ -63,12 +64,15 @@ fr:
     from: de
     global: Global
     good: bon
+    height: hauteur
     hour: heure
     id: id
+    import: importer
     incomplete: incomplet
     info: info
     invoice: facture
     key: clé
+    line: ligne
     members: membres
     name: nom
     next: suivant
@@ -126,7 +130,10 @@ fr:
     use_right_click_save_as: utilisez le click droit et sélectionnez 'enregistrer le lien sous...'
     value: valeur
     vat: TVA
+    volume: volume
     weak: faible
+    weight: poid
+    width: largeur
     year: année
   hours: heures
   minutes: minutes

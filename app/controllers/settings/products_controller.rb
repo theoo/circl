@@ -31,6 +31,91 @@ class Settings::ProductsController < ApplicationController
       format.json do
         render json: ProductsDatatable.new(view_context, params[:actives])
       end
+      format.csv do
+        render inline: csv_ify(Product.all, [
+          :key,
+          :title,
+          :description,
+          :width,
+          :height,
+          :depth,
+          :volume,
+          :weight,
+          :unit_symbol,
+          :price_to_unit_rate,
+          'variants[0].try(:buying_price)',
+          'variants[1].try(:buying_price)',
+          'variants[2].try(:buying_price)',
+          'variants[3].try(:buying_price)',
+          'variants[4].try(:buying_price)',
+          'variants[5].try(:buying_price)',
+          'variants[6].try(:buying_price)',
+          'variants[7].try(:buying_price)',
+          'variants[8].try(:buying_price)',
+          'variants[9].try(:buying_price)',
+          'variants[10].try(:buying_price)',
+          'variants[11].try(:buying_price)',
+          'variants[12].try(:buying_price)',
+          'variants[13].try(:buying_price)',
+          'variants[14].try(:buying_price)',
+          'variants[15].try(:buying_price)',
+          'variants[0].try(:selling_price)',
+          'variants[1].try(:selling_price)',
+          'variants[2].try(:selling_price)',
+          'variants[3].try(:selling_price)',
+          'variants[4].try(:selling_price)',
+          'variants[5].try(:selling_price)',
+          'variants[6].try(:selling_price)',
+          'variants[7].try(:selling_price)',
+          'variants[8].try(:selling_price)',
+          'variants[9].try(:selling_price)',
+          'variants[10].try(:selling_price)',
+          'variants[11].try(:selling_price)',
+          'variants[12].try(:selling_price)',
+          'variants[13].try(:selling_price)',
+          'variants[14].try(:selling_price)',
+          'variants[15].try(:selling_price)',
+          'variants[0].try(:art_value)',
+          'variants[1].try(:art_value)',
+          'variants[2].try(:art_value)',
+          'variants[3].try(:art_value)',
+          'variants[4].try(:art_value)',
+          'variants[5].try(:art_value)',
+          'variants[6].try(:art_value)',
+          'variants[7].try(:art_value)',
+          'variants[8].try(:art_value)',
+          'variants[9].try(:art_value)',
+          'variants[10].try(:art_value)',
+          'variants[11].try(:art_value)',
+          'variants[12].try(:art_value)',
+          'variants[13].try(:art_value)',
+          'variants[14].try(:art_value)',
+          'variants[15].try(:art_value)',
+          'variants[0].try(:program_group)',
+          'variants[1].try(:program_group)',
+          'variants[2].try(:program_group)',
+          'variants[3].try(:program_group)',
+          'variants[4].try(:program_group)',
+          'variants[5].try(:program_group)',
+          'variants[6].try(:program_group)',
+          'variants[7].try(:program_group)',
+          'variants[8].try(:program_group)',
+          'variants[9].try(:program_group)',
+          'variants[10].try(:program_group)',
+          'variants[11].try(:program_group)',
+          'variants[12].try(:program_group)',
+          'variants[13].try(:program_group)',
+          'variants[14].try(:program_group)',
+          'variants[15].try(:program_group)',
+          'variants.map{|v| v.selling_price.try(:currency).try(:iso_code)}.try(:uniq)',
+          :provider_id,
+          :after_sale_id,
+          :category,
+          :has_accessories,
+          :archive,
+          :created_at,
+          :updated_at] )
+      end
     end
   end
 
@@ -239,12 +324,29 @@ class Settings::ProductsController < ApplicationController
   end
 
   def import
-    raise ArgumentError, params.inspect
+    # TODO Move this to background task
+    authorize! :import, Product
+    file = session[:product_file_data]
+
+    @products, @columns = Product.parse_csv(file, params[:lines], params[:skip_columns], true)
+
+    success = false
+    Product.transaction do
+
+      @products.each do |p|
+        raise ActiveRecord::Rollback unless p.save
+      end
+      success = true
+    end
+
     respond_to do |format|
       if success
-        format.html { redirect_to settings_path }
+        PersonMailer.send_products_import_report(current_person, @products, @columns).deliver
+        flash[:notice] = I18n.t('product.notices.product_imported', email: current_person.email)
+        format.html { redirect_to settings_path(anchor: 'affairs')  }
       else
-        format.html { render preview_import }
+        flash[:error] = I18n.t('product.errors.product_failed_to_imported')
+        format.html { redirect_to settings_path(anchor: 'affairs') }
       end
     end
 
@@ -255,7 +357,6 @@ class Settings::ProductsController < ApplicationController
       session.data.delete(:people_file_data) # Rails 3.2
     rescue
     end
-
   end
 
   def import_people

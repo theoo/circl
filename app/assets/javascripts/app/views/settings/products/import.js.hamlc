@@ -18,15 +18,15 @@
 
         .row
           .col-lg-12
-            %h3= I18n.t("products.views.example_files_title")
-            != I18n.t("products.views.example_files_explanation")
+            %h3= I18n.t("product.views.example_files_title")
+            != I18n.t("product.views.example_files_explanation")
             %br
             %br
 
             %ol
               %li
                 %a{href: 'assets/products.csv'}
-                  = I18n.t("products.views.products_example_file_desc")
+                  = I18n.t("product.views.products_example_file_desc")
             %br
             %br
 
