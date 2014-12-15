@@ -124,4 +124,57 @@ class Settings::ProductProgramsController < ApplicationController
     end
   end
 
+  def preview_import
+    authorize! :import, ProductProgram
+
+    unless params[:file]
+      flash[:alert] = I18n.t('product.errors.no_file_submitted')
+      redirect_to settings_path
+      return
+    end
+
+    session[:program_file_data] = params[:file].read
+    @programs, @columns = ProductProgram.parse_csv(session[:program_file_data])
+
+    respond_to do |format|
+      format.html { render layout: 'application' }
+    end
+  end
+
+  def import
+    # TODO Move this to background task
+    authorize! :import, ProductProgram
+    file = session[:program_file_data]
+
+    @programs, @columns = ProductProgram.parse_csv(file, params[:lines], params[:skip_columns], true)
+
+    success = false
+    ProductProgram.transaction do
+
+      @programs.each do |p|
+        raise ActiveRecord::Rollback unless p.save
+      end
+      success = true
+    end
+
+    respond_to do |format|
+      if success
+        PersonMailer.send_product_programs_import_report(current_person, @programs, @columns).deliver
+        flash[:notice] = I18n.t('product_program.notices.program_imported', email: current_person.email)
+        format.html { redirect_to settings_path(anchor: 'affairs')  }
+      else
+        flash[:error] = I18n.t('product_program.errors.program_failed_to_imported')
+        format.html { redirect_to settings_path(anchor: 'affairs') }
+      end
+    end
+
+    # In rails 3.1, session is a normal Hash
+    # In rails 3.2, session is a CGI::Session
+    begin
+      session.delete(:program_file_data) # Rails 3.1
+      session.data.delete(:program_file_data) # Rails 3.2
+    rescue
+    end
+  end
+
 end

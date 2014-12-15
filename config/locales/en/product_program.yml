@@ -1,9 +1,18 @@
 ---
 en:
   product_program:
+    errors:
+      program_failed_to_imported: Program failed to imported
+    notices:
+      program_imported: Program imported
     views:
+      example_files_explanation: Example file as template to prepare data before importation.
+      example_files_title: Example file
+      products_example_file_desc: Product program import template
       program_group: variant group
       program_search: program
       table:
         program_group: grp.
+      upload_a_new_file_description: please select a file.
+      upload_a_new_file_title: upload a new file
       variant_name: variant name

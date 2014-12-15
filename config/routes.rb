@@ -303,6 +303,7 @@ CIRCL::Application.routes.draw do
     resources :product_programs do
       collection do
         get 'program_groups', 'program_group_search', 'search', 'count'
+        post 'preview_import', 'import'
       end
     end
 

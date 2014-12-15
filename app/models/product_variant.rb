@@ -47,7 +47,9 @@ class ProductVariant < ActiveRecord::Base
   ###################
 
   validates :program_group, presence: true,
-                            length: { maximum: 255 }
+    length: { maximum: 255 },
+    inclusion: { in: ProductProgram.select("DISTINCT product_programs.program_group").map(&:program_group) }
+
   validates_uniqueness_of :program_group, scope: :product_id
   validates :selling_price, presence: true
   validates :selling_price_in_cents, presence: true

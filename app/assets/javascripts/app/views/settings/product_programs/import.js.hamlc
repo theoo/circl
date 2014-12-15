@@ -1,0 +1,56 @@
+.modal-dialog
+  .modal-content
+    .modal-header
+      %button{type: 'button', class: 'close', :data-dismiss => 'modal'}
+        &times;
+      %h4.modal-title
+        = I18n.t('product_program.views.upload_a_new_file_title')
+
+    %form{action: '/settings/product_programs/preview_import',
+          method: 'POST',
+          enctype: "multipart/form-data" }
+      .modal-body
+        %h3= I18n.t("product_program.views.upload_a_new_file_description")
+
+        .row
+          .col-lg-12
+            .validation_errors_placeholder
+
+        .row
+          .col-lg-12
+            %h3= I18n.t("product_program.views.example_files_title")
+            != I18n.t("product_program.views.example_files_explanation")
+            %br
+            %br
+
+            %ol
+              %li
+                %a{href: 'assets/product_programs.csv'}
+                  = I18n.t("product_program.views.products_example_file_desc")
+            %br
+            %br
+
+        .row
+          .col-lg-2
+          .col-lg-8
+            .form-group
+              %label{for: 'settings_products_import_file'}
+                = I18n.t('common.select_file')
+              %input{type: 'hidden', name: 'authenticity_token', value: App.authenticity_token()}
+              %input{ type: 'file',
+                      id: 'settings_product_programs_import_file',
+                      name: 'file'}
+
+          .col-lg-2
+
+      .modal-footer
+        %button{type: 'button',
+                class: 'btn btn-default',
+                :data-dismiss => 'modal'}
+          .icon-chevron-left
+          = I18n.t("common.close")
+
+        %button{type: 'submit',
+                class: 'btn btn-primary' }
+          .icon-chevron-right
+          = I18n.t('common.preview')

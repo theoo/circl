@@ -107,7 +107,7 @@ class Settings::ProductsController < ApplicationController
           'variants[13].try(:program_group)',
           'variants[14].try(:program_group)',
           'variants[15].try(:program_group)',
-          'variants.map{|v| v.selling_price.try(:currency).try(:iso_code)}.try(:uniq)',
+          'variants.map{|v| v.selling_price.try(:currency).try(:iso_code)}.try(:uniq).try(:join, ",")',
           :provider_id,
           :after_sale_id,
           :category,
@@ -307,7 +307,7 @@ class Settings::ProductsController < ApplicationController
   end
 
   def preview_import
-    authorize! :preview_import, Product
+    authorize! :import, Product
 
     unless params[:file]
       flash[:alert] = I18n.t('product.errors.no_file_submitted')
@@ -353,66 +353,10 @@ class Settings::ProductsController < ApplicationController
     # In rails 3.1, session is a normal Hash
     # In rails 3.2, session is a CGI::Session
     begin
-      session.delete(:people_file_data) # Rails 3.1
-      session.data.delete(:people_file_data) # Rails 3.2
+      session.delete(:product_file_data) # Rails 3.1
+      session.data.delete(:product_file_data) # Rails 3.2
     rescue
     end
-  end
-
-  def import_people
-    authorize! :import_people, Directory
-
-    report = {}
-
-    Person.transaction do
-      # Create tags first
-      if params[:private_tags]
-        params[:private_tags].each do |tag|
-          PrivateTag.create(name: tag)
-        end
-      end
-      if params[:public_tags]
-        params[:public_tags].each do |tag|
-          PublicTag.create(name: tag)
-        end
-      end
-      # Create missing jobs
-      if params[:jobs]
-        params[:jobs].each do |job|
-          Job.create(name: job)
-        end
-      end
-
-      # Temporarly disable geoloc and ES
-      Rails.configuration.settings['maps']['enable_geolocalization'] = false
-      Rails.configuration.settings['elasticsearch']['enable_indexing'] = false
-      # Then re-parse file and import people
-      report = Person.parse_people(session[:people_file_data])
-      report[:people].each do |p|
-        comments = p.comments_edited_by_others.dup
-        p.comments_edited_by_others = []
-        p.save
-        p.comments_edited_by_others = comments
-        comments.each{|c| c.save}
-      end
-
-      # Ensure ES and geoloc are enable again
-      Rails.configuration.settings['elasticsearch']['enable_indexing'] = true
-      Rails.configuration.settings['maps']['enable_geolocalization'] = true
-
-      # Reindex the whole database
-      BackgroundTasks::RunRakeTask.schedule(name: 'elasticsearch:sync')
-    end
-
-    # Ensure ES and geoloc are enable again
-    Rails.configuration.settings['elasticsearch']['enable_indexing'] = true
-    Rails.configuration.settings['maps']['enable_geolocalization'] = true
-
-
-    PersonMailer.send_people_import_report(current_person, report[:people]).deliver
-    flash[:notice] = I18n.t('directory.notices.people_imported', email: current_person.email)
-    Activity.create!(person: current_person, resource_type: 'Admin', resource_id: '0', action: 'info', data: { people: "imported at #{Time.now}" })
-    redirect_to directory_path
   end
 
 end

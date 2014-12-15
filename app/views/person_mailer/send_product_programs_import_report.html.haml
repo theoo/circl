@@ -1,0 +1,15 @@
+%h1
+  = I18n.t("person.mail.product_programs_import_report_title")
+
+- attributes = %w(key title description program_group archive)
+
+%table
+  %thead
+    %tr
+      - attributes.each do |a|
+        %th= a
+  %tbody
+    - @programs.each do |program|
+      %tr
+        - attributes.each do |a|
+          %td= program.send(a)

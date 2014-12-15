@@ -121,4 +121,12 @@ class PersonMailer < ActionMailer::Base
           subject: I18n.t('person.mail.products_import_report'))
   end
 
+  def send_product_programs_import_report(person, programs, columns)
+    @programs = programs
+    @columns = columns
+    I18n.locale = person.main_communication_language.symbol
+    mail( to: person.email,
+          subject: I18n.t('person.mail.product_programs_import_report'))
+  end
+
 end

@@ -81,9 +81,8 @@ class Product < ActiveRecord::Base
                   length: { maximum: 255 },
                   uniqueness: true
   validates :unit_symbol, presence: true,
-                          length: {maximum: 255}
+                          length: { maximum: 255 }
   validates :price_to_unit_rate, presence: true
-
 
   ########################
   #### CLASS METHODS #####
@@ -275,8 +274,9 @@ class Product < ActiveRecord::Base
             next if !! skip_columns.index(t.to_s)
 
             program_name = p.send("program_group_" + t.to_s)
+            buying_price = p.send("buying_price_" + t.to_s)
 
-            next if program_name.blank?
+            next if program_name.blank? or buying_price.blank?
 
             pp = ProductProgram.where(program_group: program_name)
             unless pp.count > 0
@@ -290,7 +290,7 @@ class Product < ActiveRecord::Base
             pg ||= prod.variants.new
             pg.assign_attributes(
               program_group: program_name,
-              buying_price: p.send("buying_price_" + t.to_s).to_money(p.currency_symbol),
+              buying_price: buying_price.to_money(p.currency_symbol),
               selling_price: p.send("selling_price_" + t.to_s).to_money(p.currency_symbol),
               art: p.send("art_value_" + t.to_s).to_money(p.currency_symbol) )
 
