@@ -244,7 +244,7 @@ class Product < ActiveRecord::Base
 
             %w(key title description width height depth volume weight unit_symbol price_to_unit_rate provider_id
               after_sale_id category has_accessories archive).each do |a|
-              next if skip_columns.index(a)
+              next if skip_columns.index(a) and not prod.send(a).blank?
               prod.send(a + "=", p.send(a)) if prod.send(a) != p.send(a) and p.send(a)
             end
 
@@ -259,12 +259,10 @@ class Product < ActiveRecord::Base
             attributes = {}
             %w(key title description width height depth volume weight unit_symbol price_to_unit_rate provider_id
               after_sale_id category has_accessories archive).each do |a|
-              next if skip_columns.index(a)
               attributes[a] = p.send(a) if p.send(a)
             end
             prod = Product.new(attributes)
           end
-
 
           # Check existance of product_programs
           updated_prices = []
@@ -273,10 +271,11 @@ class Product < ActiveRecord::Base
 
             next if !! skip_columns.index(t.to_s)
 
-            program_name = p.send("program_group_" + t.to_s)
-            buying_price = p.send("buying_price_" + t.to_s)
+            program_name  = p.send("program_group_" + t.to_s)
+            buying_price  = p.send("buying_price_" + t.to_s)
+            selling_price = p.send("selling_price_" + t.to_s)
 
-            next if program_name.blank? or buying_price.blank?
+            next if program_name.blank? or selling_price.blank?
 
             pp = ProductProgram.where(program_group: program_name)
             unless pp.count > 0
@@ -291,7 +290,7 @@ class Product < ActiveRecord::Base
             pg.assign_attributes(
               program_group: program_name,
               buying_price: buying_price.to_money(p.currency_symbol),
-              selling_price: p.send("selling_price_" + t.to_s).to_money(p.currency_symbol),
+              selling_price: selling_price.to_money(p.currency_symbol),
               art: p.send("art_value_" + t.to_s).to_money(p.currency_symbol) )
 
             # force update
