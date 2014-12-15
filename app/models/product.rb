@@ -316,8 +316,7 @@ class Product < ActiveRecord::Base
       # continue
 
     rescue Exception => e
-      raise e
-      products = I18n.t("product.errors.unable_to_parse_file")
+      products = I18n.t("product.errors.unable_to_parse_file") + " (" + e.inspect + ")"
     end
 
     [products, columns_list]

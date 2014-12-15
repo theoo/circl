@@ -131,11 +131,10 @@ class ProductProgram < ActiveRecord::Base
       end # transaction
 
     rescue ActiveRecord::Rollback
-      # continu e
+      # continue
 
     rescue Exception => e
-      raise e
-      programs = I18n.t("product.errors.unable_to_parse_file")
+      products = I18n.t("product.errors.unable_to_parse_file") + " (" + e.inspect + ")"
     end
 
     [programs, columns_list]
