@@ -90,6 +90,7 @@ class Person < ActiveRecord::Base
   before_destroy :do_not_destroy_if_has_salaries
   before_destroy :do_not_destroy_if_first_admin
   before_destroy :do_not_destroy_if_has_running_contracts
+  before_destroy :do_not_destroy_if_linked_to_products
   before_destroy :clear_affairs_as_buyer_and_affairs_as_receiver
   # TODO remove password if removing last email.
 
@@ -935,6 +936,14 @@ class Person < ActiveRecord::Base
                   I18n.t('person.errors.cant_delete_person_who_has_running_contract'))
         false
       end
+    end
+  end
+
+  def do_not_destroy_if_linked_to_products
+    if products_to_sell.count > 0 or products_to_maintain.count > 0
+      errors.add(:base,
+        I18n.t('person.errors.cant_delete_person_who_is_linked_to_products'))
+      false
     end
   end
 

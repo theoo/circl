@@ -31,7 +31,6 @@ class AffairsProductsProgram < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
-
   before_validation do
     unless category
       if affair

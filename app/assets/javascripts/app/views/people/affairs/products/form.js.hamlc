@@ -21,6 +21,20 @@
                 class: 'form-control required',
                 value: @product.key,
                 action: '/settings/products/search'}
+
+        -# TODO: Add link to product editing: requires Spine router on settings/product page
+        -# - if @product.isNew()
+        -# - else
+        -#   .input-group
+        -#     %input{ type: 'search',
+        -#             id: 'person_affair_product_search',
+        -#             name: 'product',
+        -#             class: 'form-control required',
+        -#             value: @product.key,
+        -#             action: '/settings/products/search'}
+        -#     .input-group-addon
+        -#       %a{href: @product}
+
         %input{type: 'hidden',
                name: 'product_id',
                value: @product.product_id}

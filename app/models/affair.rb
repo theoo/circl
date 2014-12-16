@@ -446,13 +446,45 @@ class Affair < ActiveRecord::Base
     invoices_value < value
   end
 
+  # Product items sorting
   def product_items_for_category(cat)
-    product_categories.where(title: cat).first.product_items
+    product_items.joins(:category).where("affairs_products_categories.title = ?", cat)
   end
 
   def product_items_category_value_for(cat)
-    product_items_for_category(cat).map{|p| p.bid_price.to_money(value_currency)}.sum.to_money(value_currency)
+    sum_product_items_values product_items_for_category(cat)
   end
+
+  def product_items_for_provider(provider)
+    product_items.joins(:product).where("products.provider_id = ?", provider)
+  end
+
+  def product_items_provider_value_for(provider)
+    sum_product_items_values product_items_for_provider(provider)
+  end
+
+  def product_items_for_after_sale(after_sale)
+    product_items.joins(:product).where("products.after_sale_id = ?", after_sale)
+  end
+
+  def product_items_after_sale_value_for(after_sale)
+    sum_product_items_values product_items_for_after_sale(after_sale)
+  end
+
+  def sum_product_items_values(product_items)
+     product_items.map{|p| p.bid_price.to_money(value_currency)}.sum.to_money(value_currency)
+  end
+
+  def providers
+    p = products.select("DISTINCT(provider_id)").reorder(nil).map(&:provider_id)
+    Person.where(id: p)
+  end
+
+  def after_sales
+    p = products.select("DISTINCT(after_sale_id)").reorder(nil).map(&:after_sale_id)
+    Person.where(id: p)
+  end
+
 
   # This method returns product_items ordered by its current positions and ensure
   # parent/children numerotation is respected.
@@ -497,6 +529,15 @@ class Affair < ActiveRecord::Base
   def update_vat!
     update_vat
     save!
+  end
+
+  # Dates
+  %w(created_at updated_at ordered_at confirmed_at delivery_at warranty_begin warranty_end).each do |d|
+    define_method("product_items_" + d) do
+      dates = product_items.reorder(nil).select("DISTINCT(affairs_products_programs.#{d})").map{|i| i.send(d)}
+      dates.delete(nil)
+      dates
+    end
   end
 
   private
