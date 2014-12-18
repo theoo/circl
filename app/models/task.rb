@@ -99,6 +99,8 @@ class Task < ActiveRecord::Base
   # Validate fields of type 'text' length
   validates_length_of :description, maximum: 65536
 
+  attr_accessor :template
+
   ########################
   ### INSTANCE METHODS ###
   ########################

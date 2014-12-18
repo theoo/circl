@@ -28,8 +28,10 @@ class People::Affairs::TasksController < ApplicationController
     @affair = Affair.find(params[:affair_id])
     @tasks = @affair.tasks
 
+    reference = @tasks.first
+
     if params[:template_id]
-      @affair.template = GenericTemplate.find params[:template_id]
+      reference.template = GenericTemplate.find params[:template_id]
     end
 
     respond_to do |format|
@@ -50,13 +52,13 @@ class People::Affairs::TasksController < ApplicationController
 
       if params[:template_id]
         format.html do
-          generator = AttachmentGenerator.new(@affair)
+          generator = AttachmentGenerator.new(@tasks, reference)
           render inline: generator.html, layout: 'preview'
         end
 
         format.pdf do
           @pdf = ""
-          generator = AttachmentGenerator.new(@affair)
+          generator = AttachmentGenerator.new(@tasks, reference)
           generator.pdf { |o,pdf| @pdf = pdf.read }
           send_data @pdf,
                     filename: "affair_tasks_#{params[:affair_id]}.pdf",
@@ -65,7 +67,7 @@ class People::Affairs::TasksController < ApplicationController
 
         format.odt do
           @odt = ""
-          generator = AttachmentGenerator.new(@affair)
+          generator = AttachmentGenerator.new(@tasks, reference)
           generator.odt { |o,odt| @odt = odt.read }
           send_data @odt,
                     filename: "affair_tasks_#{params[:affair_id]}.odt",

@@ -437,7 +437,7 @@ class Index extends App.ExtendedController
 
   toggle_group_edit_button: ->
     btn = @el.find("button[name=affair-product-items-group-edit]")
-    if @selected.length > 0
+    if @selected?.length > 0
       btn.attr(disabled: false)
     else
       btn.attr(disabled: true)
