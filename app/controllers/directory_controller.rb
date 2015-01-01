@@ -77,7 +77,6 @@ class DirectoryController < ApplicationController
         raise Tire::Search::SearchRequestFailed,
           I18n.t('directory.errors.you_need_to_select_at_least_one_attribute_to_display')
       end
-
     end
 
     respond_to do |format|

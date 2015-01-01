@@ -177,24 +177,37 @@ class PeopleController < ApplicationController
 
   # TODO do not redirect to show view if @person doesn't exists!
   def paginate
+    # Parse query
     unless params[:query] && params[:query].is_a?(ActiveSupport::HashWithIndifferentAccess)
       params[:query] = HashWithIndifferentAccess.new(JSON.parse(params[:query]))
     end
 
     # The goal of this search is to get an array of 3 persons (before, displayed, after)
-    @query = params[:query]
     @index = params[:index].to_i
+    @query = params[:query]
+
+    # Setup pagination if not yet
+    session[:pagination] ||= {}
+    session[:pagination][:query] ||= @query
+    unless session[:pagination][:query_result]
+      result = ElasticSearch::search(
+        @query[:search_string],
+        @query[:selected_attributes],
+        @query[:attributes_order],
+        @current_person)
+      session[:pagination][:query_result] = result.map(&:id)
+    end
 
     # Try to search from the person before unless it's the first entry
-    @from = (@index > 0) ? (@index - 1) : @index
-    results = ElasticSearch::search_paginated(@query[:search_string], @query[:selected_attributes], @query[:attributes_order], @from, 3, @current_person)
-    @total_entries = results.total_entries
-    results = results.to_a
+    from = (@index > 0) ? (@index - 1) : @index
+    ids = session[:pagination][:query_result].values_at(from, from + 1, from + 2)
+    @total_entries = session[:pagination][:query_result].size
 
     # If it's the first entry, modify array so there's nobody before
-    results.unshift(nil) if @index == 0
+    ids.unshift(nil) if @index == 0
 
-    @before, @person, @after = results.map{ |p| p.load if p }
+    # Person.where(id: ids).to_a won't return nil for a nil id (array size will be only two items)
+    @before, @person, @after = ids.map{|id| Person.find(id) if Person.exists?(id)}
 
     respond_to do |format|
       format.html do

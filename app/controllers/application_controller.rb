@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_person!
   before_filter :set_locale
   before_filter :route_browser
+  before_filter :cleanup_session
 
   protected
 
@@ -177,36 +178,13 @@ class ApplicationController < ActionController::Base
   # Monitor changes disabled
   def self.monitor_changes(instance_name, options = { only: [:create, :update, :destroy] })
     return # disabled
-    # class << self; attr_accessor :monitored_instance_name end
-    # self.monitored_instance_name = instance_name
-    # after_filter :log_activity_automatically, options
   end
 
-  # def monitored_instance
-  #   instance_variable_get(self.class.monitored_instance_name)
-  # end
-
-  # def log_activity_automatically
-  #   record = monitored_instance
-  #   return unless record.errors.empty?
-
-  #   action = params[:action]
-  #   data = (action == 'create' || record.destroyed?) ? record.attributes : record.changes
-  #   return if data.empty?
-
-  #   log_activity(action, record, data)
-  # end
-
-  # def log_action(resource, data)
-  #   log_activity(params[:action], resource, data)
-  # end
-
-  # def log_activity(action, resource, data)
-  #   Activity.create! action: action,
-  #                    data: data,
-  #                    person: current_person,
-  #                    resource: resource
-  # end
+  # For every session variables, ensure it is removed if the context doesn't needs it anymore
+  # TODO add all variable
+  def cleanup_session
+    session[:pagination] = {} unless request.path == paginate_people_path
+  end
 
   private
 

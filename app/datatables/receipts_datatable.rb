@@ -36,7 +36,6 @@ class ReceiptsDatatable
     }
   end
 
-
   private
 
   def data
