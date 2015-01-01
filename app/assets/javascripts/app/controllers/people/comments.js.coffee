@@ -36,6 +36,7 @@ class New extends App.ExtendedController
 
   constructor: (params) ->
     super
+    @person_id = params.person_id if params.person_id
 
   render: =>
     @comment = new PersonComment(resource_id: @person_id)
@@ -45,6 +46,8 @@ class New extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @comment.fromForm(e.target), =>
       @render()
+      App.PersonCommentSummary.refresh([], {clear: true})
+      App.PersonCommentSummary.fetch()
       @update_badge()
 
 class Edit extends App.ExtendedController
@@ -59,8 +62,9 @@ class Edit extends App.ExtendedController
     'click button[name="comment-destroy"]': 'destroy'
     'click a[name="reset"]': 'reset'
 
-  constructor: ->
+  constructor: (params) ->
     super
+    @person_id = params.person_id if params.person_id
 
   active: (params) ->
     @id = params.id if params.id
@@ -74,7 +78,10 @@ class Edit extends App.ExtendedController
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @comment.fromForm(e.target), @hide
+    @save_with_notifications @comment.fromForm(e.target), =>
+      App.PersonCommentSummary.refresh([], {clear: true})
+      App.PersonCommentSummary.fetch()
+      @hide()
 
   reopen: (e) ->
     e.preventDefault()
@@ -91,6 +98,8 @@ class Edit extends App.ExtendedController
     if confirm(I18n.t("common.are_you_sure"))
       @destroy_with_notifications @comment, =>
         @hide()
+        App.PersonCommentSummary.refresh([], {clear: true})
+        App.PersonCommentSummary.fetch()
         @update_badge()
 
 
@@ -135,7 +144,7 @@ class App.PersonComments extends Spine.Controller
       "#{Spine.Model.host}/people/#{@person_id}/comments"
 
     @index = new Index
-    @edit = new Edit
+    @edit = new Edit(person_id: @person_id)
     @new = new New(person_id: @person_id)
     @append(@new, @edit, @index)
 

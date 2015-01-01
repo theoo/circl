@@ -86,6 +86,14 @@ permissions:
   Person:
     - restricted_attributes
     - authenticate_using_token
+    - view_comments_on_profile_page
+    - dashboard_index
+    - dashboard_comments
+    - dashboard_activities
+    - dashboard_last_people_added
+    - dashboard_open_invoices
+    - dashboard_current_affairs
+    - dashboard_open_salaries
 
 # maps
 maps:

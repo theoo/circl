@@ -17,6 +17,7 @@
 Person = App.Person
 Permissions = App.Permissions
 Language = App.Language
+PersonCommentSummary = App.PersonCommentSummary
 
 $.fn.item = ->
   elementID   = $(@).data('id')
@@ -76,11 +77,13 @@ class Edit extends App.ExtendedController
     'click a[name=person_website_button]': 'link_to'
     'focusin input[name=website]': 'append_http'
     'focusout input[name=website]': 'remove_http'
+    'click #person_comments_summary tr.item': 'switch_to_comments'
 
   constructor: (params) ->
     super
     @id = params.id
     Language.bind 'refresh', @render
+    PersonCommentSummary.bind 'refresh', @render
 
   active: (params) ->
     @can = params.can if params.can
@@ -148,6 +151,10 @@ class Edit extends App.ExtendedController
     if input.val() == "http://www."
       input.val("")
 
+  switch_to_comments: (e) ->
+    e.preventDefault()
+    $("a[href='#activities_tab']").click()
+
 class App.People extends Spine.Controller
   className: 'person'
 
@@ -155,6 +162,9 @@ class App.People extends Spine.Controller
     super
 
     @person_id = params.person_id if params
+
+    PersonCommentSummary.url = =>
+      "#{Spine.Model.host}/people/#{@person_id}/comments?summary=true"
 
     @edit = new Edit(id: @person_id)
     @new = new New()
@@ -166,19 +176,33 @@ class App.People extends Spine.Controller
   activate: ->
     super
     # TODO refactor permissions with spine and ensure it's loaded before any other actions
-    Permissions.get { person_id: @person_id, can: { person: ['destroy', 'restricted_attributes', 'authenticate_using_token'] }},
-                      (data) =>
-                        if @person_id
-                          @edit.active { can: data }
-                        else
-                          @new.active { can: data }
+    permissions_hash =
+      person: [ 'destroy',
+        'restricted_attributes',
+        'authenticate_using_token',
+        'view_comments_on_profile_page']
+      comment: [ 'read' ]
 
-    Language.one 'refresh', =>
-      if @person_id
-        @edit.render()
-      else
-        @new.render()
+    on_permissions_refresh = (data) =>
+      Language.one 'refresh', =>
+        load_person = =>
+          if @person_id
+            @edit.active { can: data }
+          else
+            @new.active { can: data }
 
-    Language.fetch()
+        if @person_id
+          PersonCommentSummary.one 'refresh', => load_person()
+          PersonCommentSummary.fetch()
+        else
+          load_person()
+
+      Language.fetch()
+
+    Permissions.get(
+      person_id: @person_id
+      can: permissions_hash
+      , on_permissions_refresh)
+
 
 

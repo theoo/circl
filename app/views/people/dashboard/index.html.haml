@@ -43,12 +43,12 @@
             .panel-title
               = I18n.t('person.dashboard.panels.timesheet')
 
-      - if can? :read, @person => Activity
-        #dashboard_activity.panel.panel-default
-          .panel-heading
-            .panel-title
-              = I18n.t('person.dashboard.panels.your_activity')
-
+      // TODO reimplement change tracker first
+      / - if can? :read, @person => Activity
+      /   #dashboard_activity.panel.panel-default
+      /     .panel-heading
+      /       .panel-title
+      /         = I18n.t('person.dashboard.panels.your_activity')
 
       - if can? :read, @person => Affair
         #dashboard_current_affairs.panel.panel-default

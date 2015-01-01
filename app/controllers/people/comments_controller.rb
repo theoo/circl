@@ -30,7 +30,13 @@ class People::CommentsController < ApplicationController
 
   def index
     respond_to do |format|
-      format.json { render json: PersonCommentsDatatable.new(view_context, @person) }
+      format.json do
+        if params[:summary]
+          render json: @person.comments_edited_by_others.limit(10)
+        else
+          render json: PersonCommentsDatatable.new(view_context, @person)
+        end
+      end
     end
   end
 

@@ -49,3 +49,6 @@
 
 - subject: Person
   action: dashboard_last_people_added
+
+- subject: Person
+  action: view_comments_on_profile_page
