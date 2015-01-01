@@ -51,7 +51,7 @@ class SubscriptionsDatatable
         3 => values_summary,
         4 => subscription.invoices.count,
         5 => subscription.receipts.count,
-        6 => subscription.invoices_value.to_view,
+        6 => subscription.invoices_value_with_taxes.to_view,
         7 => subscription.receipts_value.to_view,
         8 => subscription.overpaid_value.to_money.to_view,
         9 => subscription.created_at,

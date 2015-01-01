@@ -19,8 +19,12 @@
 class ReceiptsDatatable
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
 
+  include ApplicationHelper
+  include Haml::Helpers
+
   def initialize(view)
     @view = view
+    init_haml_helpers
   end
 
   def as_json(options = {})
@@ -41,7 +45,7 @@ class ReceiptsDatatable
         0 => receipt.id,
         1 => receipt.owner.name,
         2 => receipt.affair.title,
-        3 => receipt.invoice.value.to_view,
+        3 => invoice_value_summary(receipt.invoice),
         4 => receipt.value.to_view,
         5 => receipt.value_date,
         6 => receipt.created_at,

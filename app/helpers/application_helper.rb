@@ -155,7 +155,6 @@ module ApplicationHelper
   end
 
   def invoice_value_summary(invoice)
-
     capture_haml do
       haml_tag "table.affair_value" do
         if ApplicationSetting.value('use_vat') == "true"
