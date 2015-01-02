@@ -28,7 +28,7 @@
 #++
 
 class PrivateTag < ActiveRecord::Base
-  
+
   ################
   ### INCLUDES ###
   ################
@@ -58,7 +58,7 @@ class PrivateTag < ActiveRecord::Base
                           -> { uniq },
                           after_add: :update_elasticsearch_index,
                           after_remove: :update_elasticsearch_index
-  has_many :subscription_values, 
+  has_many :subscription_values,
            -> { order('position ASC') }
 
   ###################
@@ -71,6 +71,9 @@ class PrivateTag < ActiveRecord::Base
 
   # Validate fields of type 'string' length
   validates_length_of :name, maximum: 255
+  validates_format_of :color,
+    with: /\A#(?:[0-9a-fA-F]{3}){1,2}\z/,
+    allow_blank: true
 
 
   ########################

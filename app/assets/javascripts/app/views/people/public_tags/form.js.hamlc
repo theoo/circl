@@ -4,6 +4,7 @@
 - display_tag = (tag) =>
   - id = _.uniqueId('public_tag')
   .checkbox
+    .color_square{style: "background-color: #{tag.color};"}
     %input{ type: 'checkbox',
         id: id,
         name: 'public_tag_ids[]',

@@ -114,6 +114,7 @@ en:
         subject: subject
         updated_at: last update
       person:
+        accessible_by: accessible by (users)
         address: address
         affairs: affairs
         affairs_as_buyer: affairs as buyer
@@ -143,6 +144,7 @@ en:
         last_sign_in_at: last login at
         last_sign_in_ip: last login ip
         latitude: latitude
+        location: location - place
         location_id: location ID
         locked_at: locked at
         longitude: longitude
@@ -155,11 +157,14 @@ en:
         npa_town: ZIP code / city
         organization_name: organization name
         paid_affairs: paid affairs
+        paid_subscriptions: paid subscriptions
         paid_subscriptions_or_reminders: paid subscriptions or reminders
         password_salt: password salt
         phone: phone
         private_tags: private tags
+        private_tags_colors: private tags colors
         public_tags: public tags
+        public_tags_colors: public tags colors
         receipts: receipts
         remember_created_at: session "remember" created at
         reset_password_sent_at: password reset sent at
@@ -171,6 +176,7 @@ en:
         subscriptions: subscriptions
         subscriptions_as_buyer: subscriptions as buyer
         subscriptions_as_receiver: subscriptions as receiver
+        task_rate: rate
         title: title
         town: city
         translation_aptitudes: translation aptitudes
@@ -308,12 +314,14 @@ en:
       language: Language
       location: Location
       permission: Permission
+      permissions: Permissions
       person: Person
       private_tag: Private Tag
       product: Product
       public_tag: Public Tag
       query_preset: Query Preset
       receipt: Receipt
+      relations: Relations
       role: Role
       salary: salary
       setting: Setting

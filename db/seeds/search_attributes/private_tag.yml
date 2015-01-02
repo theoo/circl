@@ -26,3 +26,10 @@
   mapping:
     type: string
     index: not_analyzed
+
+- model: PrivateTag
+  name: color
+  indexing: color
+  mapping:
+    type: string
+    index: not_analyzed

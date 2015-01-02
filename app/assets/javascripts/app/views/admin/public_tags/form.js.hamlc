@@ -29,6 +29,18 @@
                   value: @tag.parent_id }
 
     .row
+      .col-lg-6
+        .form-group
+          %label{for: 'admin_private_tag_color'}
+            = I18n.t('common.color')
+          %input{ type: 'text',
+                  name: 'color',
+                  class: 'minicolors form-control',
+                  'data-control': 'hue',
+                  value: @tag.color }
+      .col-lg-6
+
+    .row
       .col-lg-12
         .pull-right
           != @partial('save_and_cancel_buttons')(@tag)

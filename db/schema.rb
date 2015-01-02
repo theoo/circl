@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141123200646) do
+ActiveRecord::Schema.define(version: 20150102113421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -495,6 +495,7 @@ ActiveRecord::Schema.define(version: 20141123200646) do
   create_table "private_tags", force: true do |t|
     t.integer "parent_id"
     t.string  "name",      default: "", null: false
+    t.string  "color"
   end
 
   add_index "private_tags", ["name"], name: "index_private_tags_on_name", using: :btree
@@ -569,6 +570,7 @@ ActiveRecord::Schema.define(version: 20141123200646) do
   create_table "public_tags", force: true do |t|
     t.integer "parent_id"
     t.string  "name",      default: "", null: false
+    t.string  "color"
   end
 
   add_index "public_tags", ["name"], name: "index_public_tags_on_name", using: :btree
@@ -682,8 +684,8 @@ ActiveRecord::Schema.define(version: 20141123200646) do
     t.string   "cert_others_title",                                     default: "",    null: false
     t.text     "cert_notes",                                            default: "",    null: false
     t.string   "employer_account",                                      default: ""
-    t.string   "yearly_salary_currency",                                default: "CHF", null: false
     t.text     "comments"
+    t.string   "yearly_salary_currency",                                default: "CHF", null: false
   end
 
   add_index "salaries", ["is_reference"], name: "index_salaries_on_is_template", using: :btree
@@ -745,6 +747,7 @@ ActiveRecord::Schema.define(version: 20141123200646) do
     t.boolean  "archive",            default: false, null: false
   end
 
+  add_index "salaries_taxes", ["archive"], name: "index_salaries_taxes_on_archive", using: :btree
   add_index "salaries_taxes", ["exporter_avs_group"], name: "index_salaries_taxes_on_exporter_avs_group", using: :btree
   add_index "salaries_taxes", ["exporter_is_group"], name: "index_salaries_taxes_on_exporter_is_group", using: :btree
   add_index "salaries_taxes", ["exporter_lpp_group"], name: "index_salaries_taxes_on_exporter_lpp_group", using: :btree

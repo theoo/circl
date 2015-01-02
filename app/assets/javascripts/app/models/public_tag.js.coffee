@@ -16,7 +16,7 @@
 
 class App.PublicTag extends Spine.Model
 
-  @configure 'PublicTag', 'id', 'name', 'parent_id', 'parent_name', 'members_count'
+  @configure 'PublicTag', 'id', 'name', 'parent_id', 'parent_name', 'members_count', 'color'
 
   @extend Spine.Model.Ajax
   @url: ->

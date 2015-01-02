@@ -25,6 +25,7 @@ class Ui
     @load_multi_autocompleters(context)
     @load_number_precision(context)
     @load_password_strength(context)
+    @load_minicolors(context)
     @override_rails(context)
     @timout_info_alerts(context)
 
@@ -359,6 +360,25 @@ class Ui
         $(div).removeClass('label-danger label-warning label-success')
               .addClass(strength_class)
               .html(strength_title)
+
+  load_minicolors: (context) ->
+    context.find(".minicolors").minicolors
+      animationSpeed: 50
+      animationEasing: 'swing'
+      change: null
+      changeDelay: 0
+      control: 'hue'
+      dataUris: true
+      defaultValue: ''
+      hide: null
+      hideSpeed: 100
+      inline: false
+      letterCase: 'lowercase'
+      opacity: false
+      position: 'bottom right'
+      show: null
+      showSpeed: 100
+      theme: 'bootstrap'
 
   load_back_on_top: () ->
     offset = 220

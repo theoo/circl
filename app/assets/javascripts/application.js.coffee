@@ -27,6 +27,7 @@
 #
 #= require jquery-ui
 #= require password_strength
+#= require jquery.minicolors
 #= require jquery.strength
 #
 #= require bootstrap

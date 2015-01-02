@@ -16,7 +16,7 @@
 
 class App.PrivateTag extends Spine.Model
 
-  @configure 'PrivateTag', 'id', 'name', 'parent_id', 'parent_name', 'members_count'
+  @configure 'PrivateTag', 'id', 'name', 'parent_id', 'parent_name', 'members_count', 'color'
 
   @extend Spine.Model.Ajax
   @url: ->

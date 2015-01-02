@@ -69,6 +69,9 @@ class PublicTag < ActiveRecord::Base
 
   # Validate fields of type 'string' length
   validates_length_of :name, maximum: 255
+  validates_format_of :color,
+    with: /\A#(?:[0-9a-fA-F]{3}){1,2}\z/,
+    allow_blank: true
 
 
   ########################

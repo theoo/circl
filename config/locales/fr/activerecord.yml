@@ -114,6 +114,7 @@ fr:
         subject: sujet
         updated_at: mise à jour
       person:
+        accessible_by: accessible par (utilisateurs)
         address: adresse
         affairs: affaires
         affairs_as_buyer: affaires en temps que payeur
@@ -143,6 +144,7 @@ fr:
         last_sign_in_at: date de la dernière session
         last_sign_in_ip: adresse ip de la dernière session
         latitude: latitude
+        location: localité
         location_id: ID de la localité
         locked_at: date de blockage
         longitude: longitude
@@ -155,11 +157,14 @@ fr:
         npa_town: NPA et localité
         organization_name: nom de l'organisation
         paid_affairs: affaires payées
+        paid_subscriptions: inscriptions payées
         paid_subscriptions_or_reminders: inscriptions ou rappels payées
         password_salt: sel du mot de passe
         phone: numéro de téléphone
         private_tags: tags privés
+        private_tags_colors: couleurs des tags privés
         public_tags: tags publics
+        public_tags_colors: couleurs des tags publics
         receipts: reçus
         remember_created_at: date de "se souvenir de moi"
         reset_password_sent_at: date du changement de mot de passe
@@ -171,6 +176,7 @@ fr:
         subscriptions: inscriptions
         subscriptions_as_buyer: inscriptions en temps que payeur
         subscriptions_as_receiver: inscriptions en temps que receveur
+        task_rate: tarif
         title: titre
         town: localité
         translation_aptitudes: aptitude de traduction
@@ -308,12 +314,14 @@ fr:
       language: Langue
       location: Localité
       permission: Permission
+      permissions: Permissions
       person: Personne
       private_tag: Tag privé
       product: Produit
       public_tag: Tag public
       query_preset: Pré-réglage de recherche
       receipt: Reçu
+      relations: Relations
       role: Rôle
       salary: Salaire
       setting: Configuration

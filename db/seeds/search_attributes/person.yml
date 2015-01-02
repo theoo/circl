@@ -586,6 +586,22 @@
     include_in_all: false
   group: Relations
 
+- model: Person
+  name: private_tags_colors
+  indexing: "private_tags.each_with_object([]){|t,a| a << \"<div class='color_square' style='background-color: #{t.color};'>\" + \"</div>\" if t.color}.join(\" \")"
+  mapping:
+    type: string
+    include_in_all: false
+  group: Relations
+
+- model: Person
+  name: public_tags_colors
+  indexing: "public_tags.each_with_object([]){|t,a| a << \"<div class='color_square' style='background-color: #{t.color};'>\" + \"</div>\" if t.color}.join(\" \")"
+  mapping:
+    type: string
+    include_in_all: false
+  group: Relations
+
 # Permissions
 - model: Person
   name: accessible_by
@@ -594,4 +610,4 @@
     type: string
     index: not_analyzed
     include_in_all: false
-  group:
+  group: Permissions
