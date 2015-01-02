@@ -4,14 +4,15 @@
 - display_tag = (tag) =>
   - id = _.uniqueId('public_tag')
   .checkbox
-    .color_square{style: "background-color: #{tag.color};"}
-    %input{ type: 'checkbox',
-        id: id,
-        name: 'public_tag_ids[]',
-        checked: has_tag(tag),
-        value: tag.id }
+    %label{for: id}
+      .color_square{style: "background-color: #{tag.color};"}
+      %input{ type: 'checkbox',
+          id: id,
+          name: 'public_tag_ids[]',
+          checked: has_tag(tag),
+          value: tag.id }
+      = tag.name
 
-    %label{for: id}= tag.name
 
 - display_tree = (tags) =>
   - for tag in tags

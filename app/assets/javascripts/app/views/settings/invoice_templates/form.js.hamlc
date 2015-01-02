@@ -51,23 +51,25 @@
             = @invoice_template.bvr_address
 
       .col-lg-6
-        .checkbox
-          %label{for: 'settings_invoice_template_with_bvr'}
-            %input{ type: 'checkbox',
-              id: 'settings_invoice_template_with_bvr',
-              name: 'with_bvr',
-              checked: @invoice_template.with_bvr,
-              value: 1 }
-            = I18n.t('invoice_template.views.with_bvr')
+        .form-group
+          .checkbox
+            %label{for: 'settings_invoice_template_with_bvr'}
+              %input{ type: 'checkbox',
+                id: 'settings_invoice_template_with_bvr',
+                name: 'with_bvr',
+                checked: @invoice_template.with_bvr,
+                value: 1 }
+              = I18n.t('invoice_template.views.with_bvr')
 
-        .checkbox
-          %label{for: 'settings_invoice_template_show_invoice_value'}
-            = I18n.t('invoice_template.views.show_invoice_value')
-            %input{ type: 'checkbox',
-              id: 'settings_invoice_template_show_invoice_value',
-              name: 'show_invoice_value',
-              checked: @invoice_template.show_invoice_value,
-              value: 1 }
+        .form-group
+          .checkbox
+            %label{for: 'settings_invoice_template_show_invoice_value'}
+              %input{ type: 'checkbox',
+                id: 'settings_invoice_template_show_invoice_value',
+                name: 'show_invoice_value',
+                checked: @invoice_template.show_invoice_value,
+                value: 1 }
+              = I18n.t('invoice_template.views.show_invoice_value')
 
         .form-group
           %label{for: 'settings_invoice_template_account_identification'}
