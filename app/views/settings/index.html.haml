@@ -58,6 +58,7 @@
       - flash_messages
     .col-lg-3
 
+.main.container
   .tab-content
     #properties_tab.tab-pane.fade
       .row
@@ -206,3 +207,12 @@
                       rel: 'nofollow',
                       class: 'btn btn btn-danger' }
                       = I18n.t("application_setting.views.restart")
+
+#affix.hidden-print
+  %ul#properties_affix.nav
+  %ul#templates_affix.nav
+  %ul#searchengine_affix.nav
+  %ul#privileges_affix.nav
+  %ul#affairs_affix.nav
+  %ul#currencies_affix.nav
+  %ul#advanced_affix.nav

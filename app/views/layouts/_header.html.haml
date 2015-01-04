@@ -31,31 +31,31 @@
           .navbar-brand
             = I18n.t('common.' + controller.controller_name)
 
-      %ul.nav.navbar-nav.navbar-right.hidden-xs
-        = render partial: 'layouts/login'
-
-        - if can? :index, Directory
-          = form_tag directory_path,
-              method: 'get',
-              id: 'quick_search',
-              class: 'navbar-form navbar-right hidden-sm hidden-xs',
-              role: 'search' do
-            .form-group
-              - # style vs chrome bug => https://github.com/twbs/bootstrap/issues/9950
-              .input-group{style: 'width: 250px;'}
-                .input-group-btn
-                  %button{type: 'button', class: 'btn btn-default', id: 'shortcuts'}
-                    .icon-bolt
-                %input{ type: 'search',
-                        class: 'form-control',
-                        name: 'quick_search_string',
-                        id: 'quick_search_string',
-                        placeholder: I18n.t('directory.views.quick_search_placeholder') }
-                .input-group-btn
-                  %button{type: 'submit', class: 'btn btn-default'}
-                    .icon-search
-
       .container
+        %ul.nav.navbar-nav.navbar-right.hidden-xs
+          = render partial: 'layouts/login'
+
+          - if can? :index, Directory
+            = form_tag directory_path,
+                method: 'get',
+                id: 'quick_search',
+                class: 'navbar-form navbar-right hidden-sm hidden-xs',
+                role: 'search' do
+              .form-group
+                - # style vs chrome bug => https://github.com/twbs/bootstrap/issues/9950
+                .input-group{style: 'width: 250px;'}
+                  .input-group-btn
+                    %button{type: 'button', class: 'btn btn-default', id: 'shortcuts'}
+                      .icon-bolt
+                  %input{ type: 'search',
+                          class: 'form-control',
+                          name: 'quick_search_string',
+                          id: 'quick_search_string',
+                          placeholder: I18n.t('directory.views.quick_search_placeholder') }
+                  .input-group-btn
+                    %button{type: 'submit', class: 'btn btn-default'}
+                      .icon-search
+
         #main_navigation.collapse.navbar-collapse.container
           %ul.nav.navbar-nav
             .visible-xs.login-xs

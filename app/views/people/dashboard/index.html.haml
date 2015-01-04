@@ -35,6 +35,7 @@
     .col-lg-12
       %h1= I18n.t('person.dashboard.welcome')
 
+.main.container
   .row
     .col-md-6
       - if can? :manage, @person => ::Task
@@ -100,3 +101,7 @@
       -#     .panel-heading
       -#       .panel-title
       -#         = I18n.t('person.dashboard.panels.statistics')
+
+#affix.hidden-print
+  %ul#dashboard_affix.nav
+

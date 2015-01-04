@@ -27,7 +27,7 @@ class Ui
     @load_password_strength(context)
     @load_minicolors(context)
     @override_rails(context)
-    @timout_info_alerts(context)
+    @timeout_info_alerts(context)
 
     # FIXME http://getbootstrap.com/javascript/#tooltips the event
     # should be trigged without calling this line (?)
@@ -39,6 +39,7 @@ class Ui
     @bind_currency_selector()
     @setup_datatable()
     @load_back_on_top()
+    @load_affix()
 
 #--- delegated to events ---
   bind_datepicker: ->
@@ -130,8 +131,8 @@ class Ui
     context.find('.field_with_errors').each ->
       $(@).closest('.form-group').addClass('has-error')
 
-  timout_info_alerts: (context) ->
-    context.find('.alert.alert-info.timoutable').each (i, e) ->
+  timeout_info_alerts: (context) ->
+    context.find('.alert.alert-info.timeoutable').each (i, e) ->
       # Wait 5 seconds and fadeOut the message in 1 second
       setTimeout( (-> $(e).fadeOut(1000); return), 5000 )
 
@@ -290,6 +291,41 @@ class Ui
       table.dataTable @datatable_params(table)
       @datatable_appareance(table)
 
+  load_affix: ->
+    @affix = $("#affix")
+    $(document).ready =>
+      main_container = $(".container.main")
+      if main_container.length > 0
+        top = main_container.position().top
+        if @affix.length > 0
+          @affix.affix
+            offset:
+              top: -> (@.top = top - 20)
+
+          $(".affix-top").css(top: top)
+
+  lazy_affix_list: (context_selector, menu_selector) ->
+    if context_selector
+      context = $(context_selector)
+    else
+      context = $(document)
+
+    menu_selector ||= "#affix ul"
+
+    context.find(".panel:not(.ignore-affix)").each ->
+      panel = $(@)
+      id = panel.attr('id')
+      title = panel.find(".panel-title").clone()
+      title.find(".badge").remove()
+      title = title.text()
+      menu = $(menu_selector)
+      if menu.find("a[href='##{id}']").length == 0
+        $(menu_selector).append("<li><a href='##{id}'>#{title}</a></li>")
+
+  toggle_affix_menu: (menu_id) ->
+    @affix.find("ul").each ->
+      $(@).css(display: 'none')
+    @affix.find("ul##{menu_id}").css(display: "block")
 
   load_tabs: (context, on_tab_change_callback = undefined) ->
     nav = context.find("#sub_nav")
@@ -327,7 +363,14 @@ class Ui
       if on_tab_change_callback
         on_tab_change_callback()
 
-    title.one 'show.bs.tab', (e) ->
+    # Display corresponding content in affix, if existing
+    title.on 'shown.bs.tab', (e) =>
+      tab_name = get_tab_name($(e.target))
+      menu_id = tab_name + "_affix"
+      @lazy_affix_list("##{tab_name}_tab", "#affix ul##{menu_id}")
+      @toggle_affix_menu(menu_id)
+
+    title.one 'show.bs.tab', (e) =>
       tab_name = get_tab_name($(e.target))
       # Trigger tab content loading (which is caught in index.js.coffee)
       nav.trigger tab_name
@@ -391,7 +434,7 @@ class Ui
       else
         jQuery(".back-to-top").fadeOut duration
 
-    jQuery(".back-to-top").click (e) ->
+    jQuery(".back-to-top, .back-to-top-link").click (e) ->
       e.preventDefault()
       jQuery("html, body").animate scrollTop: 0 , duration
       false

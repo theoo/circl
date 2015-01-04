@@ -443,7 +443,7 @@ class Index extends App.ExtendedController
       btn.attr(disabled: true)
 
   is_checked: (id) ->
-    @selected.indexOf(id) >= 0
+    @selected?.indexOf(id) >= 0
 
 class App.PersonAffairProducts extends Spine.Controller
   className: 'products'

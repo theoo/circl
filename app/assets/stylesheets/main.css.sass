@@ -1,6 +1,6 @@
 @import "custom_fonts.css"
 @import "bootstrap-slider.css"
-@import "bootstrap.css"
+@import "bootstrap"
 @import "leaflet.css"
 @import "jquery-ui-bootstrap/jquery-ui-custom.css"
 @import "jquery-ui-bootstrap/jquery-ui-ie.css"
@@ -41,12 +41,8 @@ $secondary_menu_bg: #5b5b5b
 //bootstrap colors
 $success: #468847
 
-// $screen-sm-max: 991px
-// $screen-md-max: 1199px
-// @media (max-width: @screen-phone-max) { }
-// @media (min-width: @screen-sm) and (max-width: $screen-sm-max)
-// @media (min-width: @screen-md) and (max-width: $screen-md-max) { }
-// @media (min-width: @screen-lg) { }
+.hidden
+  display: none
 
 @mixin drop-shadow
   text-shadow: 0 2px 2px rgba(0, 0, 0, .1)
@@ -65,27 +61,84 @@ $success: #468847
   display: inline !important
 
 // XS
-@media (max-width: 767px)
+@media screen and (max-width: $screen-xs-max)
   .hidden-inline-xs
     display: none !important
 
 // SM
-@media (min-width: 768px) and (max-width: 991px)
+@media screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max)
   .hidden-inline-sm
     display: none !important
 
 // MD
-@media (min-width: 992px) and (max-width: 1199px)
+@media screen and (min-width: $screen-md-min) and (max-width: $screen-md-max)
   .hidden-inline-md
     display: none !important
 
 //LG
-@media (min-width: 1200px)
+@media screen and (min-width: $screen-lg-min)
   .hidden-inline-lg
     display: none !important
 
-.hidden
+// Custom big size
+$affix-width: 200px
+
+.affix-top
+  position: absolute
+
+.affix
+  position: fixed
+  top: 20px !important
+
+.affix-bottom
+
+#affix
+  width: $affix-width
+  padding: 0 0 0 20px
+  float: left
   display: none
+  ul
+    display: none
+
+$screen-xl: 1600px
+$container-xl: $screen-xl - $grid-gutter-width
+$screen-xl-min: $screen-xl
+$screen-xxl: 1900px
+$container-xxl: $screen-xxl - $grid-gutter-width - $affix-width
+$screen-xxl-min: $screen-xxl
+$screen-xl-max: $screen-xxl-min - 1
+
+.container
+  @media (min-width: $screen-xl-min)
+    width: $container-xl
+  @media (min-width: $screen-xxl-min)
+    width: $container-xxl
+
+@media (min-width: $screen-xl-min)
+  @include make-grid(xl)
+
+@media (min-width: $screen-xxl-min)
+  @include make-grid(xxl)
+
+@mixin make-grid-columns($i: 1, $list: ".col-xl-#{$i}, .col-xxl-#{$i}")
+  @for $i from (1 + 1) through $grid-columns
+    $list: "#{$list}, .col-xl-#{$i}, .col-xxl-#{$i}"
+  #{$list}
+    position: relative
+    // Prevent columns from collapsing when empty
+    min-height: 1px
+    // Inner gutter via padding
+    padding-left:  ($grid-gutter-width / 2)
+    padding-right: ($grid-gutter-width / 2)
+
+@include make-grid-columns
+
+@media screen and (min-width: $screen-xxl-min)
+  .container
+    margin-left: $affix-width
+
+  #affix
+    display: block
 
 // Main navigation
 html
@@ -354,6 +407,9 @@ body.fullscreen
   padding: 15px
   min-height: 500px
   border-radius: 5px
+
+a.back-to-top-link
+  color: $black
 
 .back-to-top
   position: fixed

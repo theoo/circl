@@ -9,6 +9,7 @@
       - flash_messages
     .col-lg-3
 
+.main.container
   .tab-content
     #tags_tab.tab-pane
       .row
@@ -58,3 +59,10 @@
               .panel-heading
                 .panel-title
                   = I18n.t('admin.views.invoices')
+
+#affix.hidden-print
+  %ul#tags_affix.nav
+
+  %ul#affairs_affix.nav
+
+  %ul#finances_affix.nav

@@ -42,41 +42,25 @@
 
 = render partial: 'header'
 
-.container
+= hidden_field :person, :id
+- if flash[:error] or flash[:alert] or flash[:notice] or @person.errors.size > 0
   .row
     .col-lg-3
     .col-md-6
-      - if flash[:error] or flash[:alert] or flash[:notice]
-        - flash_messages
+      - flash_messages
       - error_messages_for(@person)
-
-      = hidden_field :person, :id
-
     .col-lg-3
 
-  #affix{'data-spy' => 'affix', 'data-offset-top' => 180, 'data-offset-bottom' => 200}
-    %ul
-      %li
-        = link_to 'profile', "#person"
-
+.main.container
   .tab-content
     #info_tab.tab-pane
       .row
-        .col-md-12
+        .col-lg-12.col-xl-8
           - if can? :read, @person
             #person{class: 'panel panel-primary', 'data-primary_panel' => "true"}
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.personal_information')
-
-      .row
-        .col-md-4
-          - if can? :read, @person => PeopleCommunicationLanguage and @person.id
-            #person_communication_languages.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('person.views.communication_languages')
-                  .pull-right.badge= @person.communication_languages.empty? ? nil : @person.communication_languages.count
 
         .col-md-4
           - if can? :read, @person => PeoplePrivateTag and @person.id
@@ -96,6 +80,14 @@
                     = I18n.t('person.views.public_tags')
                     .pull-right.badge= @person.public_tags.empty? ? nil : @person.public_tags.count
 
+        .col-md-4
+          - if can? :read, @person => PeopleCommunicationLanguage and @person.id
+            #person_communication_languages.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('person.views.communication_languages')
+                  .pull-right.badge= @person.communication_languages.empty? ? nil : @person.communication_languages.count
+
           //- if can? :read, @person => TranslationAptitude
           //  #person_translation_aptitudes.widget
           //    %legend= I18n.t('person.views.translation_aptitudes')
@@ -107,7 +99,7 @@
         .col-md-12
           - # TODO Adjust access to every panel
           - if can? :read, @person => Affair
-            #person_affairs{class: 'panel panel-primary', 'data-primary_panel' => "true"}
+            #person_affairs{class: 'panel panel-primary ignore-affix', 'data-primary_panel' => "true"}
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.affairs')
@@ -167,14 +159,14 @@
       .row
         .col-md-6
           - if can? :manage, @person => Salaries::Salary
-            #person_salaries.panel.panel-primary
+            #person_salaries.panel.panel-primary.ignore-affix
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.salaries')
 
         .col-md-6
           - if can? :manage, @person => EmploymentContract
-            #person_employment_contracts.panel.panel-default
+            #person_employment_contracts.panel.panel-default.ignore-affix
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.employment_contracts')
@@ -184,7 +176,7 @@
       .row
         .col-lg-12
           - if can? :manage, @person => Salaries::Salary
-            .panel.panel-default
+            .panel.panel-default.ignore-affix
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.salary_items')
@@ -193,7 +185,7 @@
       .row
         .col-lg-12
           - if can? :manage, @person => Salaries::Salary
-            .panel.panel-default
+            .panel.panel-default.ignore-affix
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.salary_taxes')
@@ -225,3 +217,15 @@
         /         .panel-title
         /           = I18n.t('person.views.activities')
 
+#affix.hidden-print
+  %ul#info_affix.nav
+
+  %ul#affairs_affix.nav
+    %li= link_to t('common.summary'), "#person_affairs"
+
+  %ul#salaries_affix.nav
+    %li= link_to t('common.summary'), "#person_salaries"
+    %li= link_to t('person.views.employment_contracts'), "#person_employment_contracts"
+    %li= link_to t('person.views.salary_items'), "#person_salary_items"
+    %li= link_to t('person.views.salary_taxes'), "#person_salary_tax_datas"
+    %li= link_to t('person.views.statistics'), "#person_salaries_statistics"
