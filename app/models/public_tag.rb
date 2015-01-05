@@ -50,6 +50,12 @@ class PublicTag < ActiveRecord::Base
 
   # FIXME: Incompatible with person's HABTM
   # default_scope { order('name ASC') }
+  scope :by_usage, -> do
+    select("public_tags.id, public_tags.name, public_tags.color, count(people_public_tags.public_tag_id) AS tags_count")
+    .joins(:people)
+    .group("people_public_tags.public_tag_id, public_tags.id, public_tags.name")
+    .order("tags_count DESC")
+  end
 
   acts_as_tree
 

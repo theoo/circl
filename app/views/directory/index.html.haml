@@ -55,7 +55,7 @@
                 .hidden-inline-xs
                   = I18n.t('directory.views.sync_mailchimp')
 
-.container
+.main.container
 
   .tab-content
     #searchengine_tab.tab-pane
@@ -129,3 +129,18 @@
                           = I18n.t('common.upload')
 
         .col-lg-6
+
+#affix.hidden-print
+  %small.help-block= t('directory.notices.user_ctrl_plus_click')
+  #tag_cloud.top20
+    %h4= t('directory.views.top20_private_tags')
+    %ol.private_tags
+      - PrivateTag.by_usage.limit(20).each_with_index do |tag, index|
+        %li
+          = link_to tag.name, "#", 'data-id' => tag.id, class: "o#{index}", style: "color: #{tag.color}"
+
+    %h4= t('directory.views.top20_public_tags')
+    %ol.public_tags
+      - PublicTag.by_usage.limit(20).each_with_index do |tag, index|
+        %li
+          = link_to tag.name, "#", 'data-id' => tag.id, class: "o#{index}", style: "color: #{tag.color}"

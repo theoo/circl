@@ -169,6 +169,8 @@ class @Directory extends App
     @el.one 'dependencies_preloaded', =>
       @subapp($('#directory_search_engine'), 'DirectorySearchEngine', params)
 
+    @subapp($('#tag_cloud'), 'TagCloud', params)
+
   # NOTE Use Directory.search(search_string: "something") to run a query in the directory
   @search: (query) =>
     window.location = @search_url(query)
