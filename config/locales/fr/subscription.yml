@@ -56,7 +56,7 @@ fr:
         source_subscription_id_missing: ID de l'inscription source manquant
       overpaid_value: paiements excédantaires
       receipts: reçus
-      receipts_value: receipts value
+      receipts_value: total des reçus
       reminder: rappel
       renewal: renouvellement
       sort_people_for_pdf_generation_of: Tri des personnes pour la génération du PDF de l'inscription

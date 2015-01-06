@@ -16,16 +16,8 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-extend ColorizedOutput
-
-required_binaries = %w{ wkhtmltopdf wkhtmltoimage lowriter convert pdftk }
-
-print "Verifing Externalities: "
-required_binaries.each do |b|
-  unless system("which #{b} > /dev/null 2>&1")
-    message = "Binary '#{b}' not found!"
-    puts red(message)
-    raise ArgumentError, message
-  end
+if ActiveRecord::Base.connection.table_exists? 'application_settings' \
+    and ENV['force_application_settings'] != 'true' \
+    and Rails.env != 'test'
+  Rails.configuration.application_settings = ApplicationSetting.all.inject({}){|h, a| h[a.key.to_sym] = a.value; h }
 end
-puts green("done") + "."

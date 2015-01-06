@@ -6,14 +6,14 @@
       = image_tag('logo.png', alt: 'Directory')
 
   .row
-    .col-lg-3
-    .col-lg-6
+    .col-xl-4.col-lg-3
+    .col-xl-4.col-lg-6
       - flash_messages
-    .col-lg-3
+    .col-xl-4.col-lg-3
 
   .row
-    .col-lg-3.col-md-3.col-sm-2
-    .col-lg-6.col-md-6.col-sm-8
+    .col-xl-4.col-md-3.col-sm-2
+    .col-xl-4.col-md-6.col-sm-8
       #login.panel.panel-default
         .panel-heading
           .panel-title
@@ -43,8 +43,8 @@
               .col-lg-6
                 - if devise_mapping.rememberable?
                   .checkbox
-                    = f.check_box :remember_me
                     %label{for: 'person_remember_me', class: 'inline'}
+                      = f.check_box :remember_me
                       = I18n.t('devise.views.remember_me')
 
                 - if devise_mapping.recoverable? && controller_name != 'passwords'
@@ -59,4 +59,4 @@
                 = f.submit I18n.t('devise.views.sign_in'), class: 'btn btn-primary pull-right'
 
 
-    .col-lg-3.col-md-3.col-sm-2
+    .col-xl-4.col-md-3.col-sm-2

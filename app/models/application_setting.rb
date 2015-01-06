@@ -56,13 +56,23 @@ class ApplicationSetting < ActiveRecord::Base
   #####################
 
   def self.value(key, options = {silent: false})
-    setting = where(key: key).first
+    # AREL, slow
+    # setting = where(key: key).first
+    # if setting
+    #   setting.value
+    # elsif ! options[:silent]
+    #   msg = I18n.t("application_setting.errors.missing_attribute", key: key)
+    #   logger.warn msg
+    #   raise MissingAttribute, msg
+    # end
+
+    setting = Rails.configuration.application_settings[key.to_sym]
+
     if setting
-      setting.value
+      setting
     elsif ! options[:silent]
       msg = I18n.t("application_setting.errors.missing_attribute", key: key)
       logger.warn msg
-      raise MissingAttribute, msg
     end
   end
 
