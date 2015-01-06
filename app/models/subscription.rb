@@ -146,9 +146,9 @@ class Subscription < ActiveRecord::Base
 
   # returns an AREL for the list of people (owners) from self and its children subscriptions.
   def people_from_self_and_descendants
-    Person.select("DISTINCT people.*")
-          .joins(:subscriptions)
+    Person.joins(:subscriptions)
           .where('subscriptions.id IN (?)', self.self_and_descendants)
+          .uniq
   end
 
   def people_for(private_tag_name)
@@ -214,7 +214,6 @@ class Subscription < ActiveRecord::Base
     mask = Invoice.statuses_value_for(statuses)
     people_from_self_and_descendants.joins(:invoices)
       .where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
-      .uniq
   end
 
   # Returns an array of people which has affairs matching the given statuses.
@@ -222,7 +221,6 @@ class Subscription < ActiveRecord::Base
     mask = Affair.statuses_value_for(statuses)
     people_from_self_and_descendants.joins(:affairs)
       .where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
-      .uniq
   end
 
   # override default JSON serialization
