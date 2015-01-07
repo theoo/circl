@@ -1,6 +1,7 @@
 %h1
-  = I18n.t("subscription.mail.member_added_to_subscription_title")
-  = "#{@subscription.title}"
+  = I18n.t("person.mail.members_were_added_to_subscription",
+    title: @subscription.title,
+    id: @subscription.id)
 
 %p
   = I18n.t("subscription.mail.the_following_members_were_added_to_the_subscription")

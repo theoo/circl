@@ -15,6 +15,7 @@ fr:
       add_members_email_will_be_sent: Le processus d'import des membres à commencé, un rapport sera envoyé par email à %{email} lorsqu'il sera fini.
       people_imported: Les personnes ont été importées, un rapport a été envoyé par email à %{email}.
       result_return_only_one_person: Un seul contact trouvé.
+      use_ctrl_plus_click: CTRL + Click = multisélection
     views:
       actions:
         change_person_password: changer le mot de passe
@@ -44,3 +45,5 @@ fr:
       show_on_a_map: afficher sur une carte
       sync_mailchimp: synchroniser mailchimp
       tools: Outils
+      top20_private_tags: Top 20 tags privés
+      top20_public_tags: Top 20 tags publics

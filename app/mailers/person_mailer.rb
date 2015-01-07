@@ -68,7 +68,8 @@ class PersonMailer < ActionMailer::Base
     @subscription = Subscription.find(subscription_id)
     mail( to: person.email,
           subject: I18n.t('person.mail.pdf_for_subscription',
-          title: @subscription.title))
+          title: @subscription.title,
+          id: @subscription.id))
   end
 
   def send_members_added_to_subscription(person, subscription_id, new_people_ids, existing_people_ids)
@@ -78,15 +79,20 @@ class PersonMailer < ActionMailer::Base
     @subscription = Subscription.find(subscription_id)
     mail( to: person.email,
           subject: I18n.t('person.mail.members_were_added_to_subscription',
-          title: @subscription.title))
+          title: @subscription.title,
+          id: @subscription.id))
   end
 
-  def send_subscriptions_merged(person, destination_subscription_id)
+  def send_subscriptions_merged(person, source_subscription_id, source_subscription_title, destination_subscription_id)
     I18n.locale = person.main_communication_language.symbol
+    @source_subscription_title, @source_subscription_id = source_subscription_title, source_subscription_id
     @destination_subscription = Subscription.find(destination_subscription_id)
     mail( to: person.email,
           subject: I18n.t('person.mail.subscription_were_merged',
-          title: @destination_subscription.title))
+          destination_title: @destination_subscription.title,
+          destination_id: @destination_subscription.id,
+          source_title: @source_subscription_title,
+          source_id: @source_subscription_id))
   end
 
   def send_subscription_invoices_updated(person, subscription_id)
@@ -94,7 +100,8 @@ class PersonMailer < ActionMailer::Base
     @subscription = Subscription.find subscription_id
     mail( to: person.email,
           subject: I18n.t('person.mail.subscription_were_updated',
-          title: @subscription.title))
+          title: @subscription.title,
+          id: @subscription.id))
   end
 
   def send_receipts_document_link(person, cached_doc)

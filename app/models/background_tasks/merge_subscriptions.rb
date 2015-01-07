@@ -41,11 +41,16 @@ class BackgroundTasks::MergeSubscriptions < BackgroundTask
     # detach from all affairs
     source_subscription.affairs = []
 
+    source_subscription_title = source_subscription.title
+    source_subscription_id = source_subscription.id
+
     # and remove
     source_subscription.destroy
 
     # inform current user
     PersonMailer.send_subscriptions_merged(options[:person],
+                  source_subscription_id,
+                  source_subscription_title,
                   destination_subscription.id).deliver
   end
 end

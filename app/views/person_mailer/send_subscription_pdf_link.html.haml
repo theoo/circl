@@ -1,5 +1,7 @@
 %h1
-  = I18n.t("subscription.mail.subscription_pdf_title")
+  = I18n.t("person.mail.pdf_for_subscription",
+    title: @subscription.title,
+    id: @subscription.id)
 
 %p
   = I18n.t("subscription.mail.please_find_a_link_to_access_the_subscription_pdf")

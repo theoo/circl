@@ -61,8 +61,8 @@ fr:
       background_task_error_report: Rapport d'erreur de la tâche d'arrière plan
       imported_people: Personnes importées
       mailchimp_synchronisation_report: Rapport de synchronisation Mailchimp
-      members_were_added_to_subscription: Des membres ont été ajouté à l'inscription
-      pdf_for_subscription: PDF de l'inscription
+      members_were_added_to_subscription: Des membres ont été ajouté à l'inscription [(%{id}) %{title}]
+      pdf_for_subscription: PDF de l'inscription [(%{id}) %{title}]
       people_import_report: Rapport d'importation des personnes
       people_import_report_title: Rapport de l'import de personnes
       product_programs_import_report: Rapport d'importation des programmes de produit
@@ -79,8 +79,8 @@ fr:
         something_wrong_happened: Quelque chose d'incorrect est arrivé sur un annuaire en production. Veuillez consulter le backtrace ci-dessous et le fichier de log production.log.
         title: Une erreur critique a eu lieu sur un serveur en production
       report_error_subject: Une erreur critique (500) a eu lieu sur un serveur en production
-      subscription_were_merged: les inscriptions ont été fusionnées
-      subscription_were_updated: l'inscription à été mise à jour
+      subscription_were_merged: Les inscriptions [(%{source_id}) %{source_title}] -> [(%{destination_id}) %{destination_title}] ont été fusionnées
+      subscription_were_updated: L'inscription [(%{id}) %{title}] à été mise à jour
     notices:
       identifier_explanation: "<h3>Commencez par un identifiant</h3> L'identifiant doit être composé au moins de l'un des trois éléments suivants: <ul><li>un nom d'organisation</li><li>une paire prénom-nom</li><li>une adresse email</li></ul>"
       not_enough_information_to_point_this_person_on_a_map: Il n'y a pas assez d'informations pour pointer précisément l'adresse de ce contact sur une carte.
