@@ -75,7 +75,7 @@ fr:
       value:
         bid: remise
         computed: calculé
-        value: valeur
+        value: ""
         vat: TVA
         with_taxes: TTC
         without_taxes: HT

@@ -64,8 +64,8 @@ gem 'devise-encryptable', '0.2.0'
 gem 'cancan', '1.6.10'
 
 ### Finances
-gem 'money', '6.1.1'
-gem 'monetize', '0.3.0'
+gem 'money', '6.5.0'
+gem 'monetize', '1.1.0'
 
 ### MailChimp
 gem 'hominid', '3.0.4'

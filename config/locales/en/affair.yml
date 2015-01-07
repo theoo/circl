@@ -75,7 +75,7 @@ en:
       value:
         bid: bid
         computed: computed
-        value: value
+        value: ""
         vat: VAT
         with_taxes: w/ taxes
         without_taxes: wo/ taxes
