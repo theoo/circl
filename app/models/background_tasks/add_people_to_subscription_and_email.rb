@@ -72,7 +72,8 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
             buyer    = ref_affair.buyer
             receiver = ref_affair.receiver
           else
-            raise ArgumentError, "reference affair not found for parent subscription #{options[:parent_subscription_id]} and person #{p.id}." #
+            raise ArgumentError, "reference affair not found for parent subscription\
+             #{options[:parent_subscription_id]} and person #{p.id}."
           end
         end
 

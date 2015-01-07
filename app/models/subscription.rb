@@ -118,13 +118,21 @@ class Subscription < ActiveRecord::Base
   end
 
   def self_and_parents
-    retrive_parents(self)
+    parents(self)
   end
 
   def self_and_descendants
     [self, descendants].flatten
   end
 
+  # recusive!
+  def parents(s = self)
+    parents = [s]
+    parents << parents(s.parent) if s.parent
+    parents.flatten
+  end
+
+  # recusive!
   def descendants
     all = []
     self.children.each do |child|
@@ -298,13 +306,6 @@ class Subscription < ActiveRecord::Base
       level = compute_tree_level(s.parent, level + 1)
     end
     level
-  end
-
-  # recusive!
-  def retrive_parents(s)
-    parents = [s]
-    parents << retrive_parents(s.parent) if s.parent
-    parents.flatten
   end
 
   def ensure_is_destroyable

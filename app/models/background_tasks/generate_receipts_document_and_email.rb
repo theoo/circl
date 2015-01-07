@@ -91,7 +91,7 @@ class BackgroundTasks::GenerateReceiptsDocumentAndEmail < BackgroundTask
         if options[:format] == 'pdf'
           # build generator using selected generic template
           fake_object = OpenStruct.new
-          fake_object.generic_template = GenericTemplate.find options[:generic_template_id]
+          fake_object.template = GenericTemplate.find options[:generic_template_id]
           fake_object.person = person
           fake_object.receipts = receipts
 

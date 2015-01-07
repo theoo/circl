@@ -480,7 +480,7 @@ class Index extends App.ExtendedController
     win.append modal
     win.modal(keyboard: true, show: false)
 
-    controller = new DocumentsMachine({el: win.find('.modal-content'), content: content})
+    controller = new AffairsDocumentsMachine({el: win.find('.modal-content'), content: content})
     win.modal('show')
     controller.activate()
 
@@ -564,7 +564,7 @@ class Balance extends App.ExtendedController
       progress = @el.find(".progress")
       $.plot(progress, data, options);
 
-class DocumentsMachine extends App.ExtendedController
+class AffairsDocumentsMachine extends App.ExtendedController
   events:
     'submit form': 'validate'
     'change #person_affairs_document_export_format': 'format_changed'

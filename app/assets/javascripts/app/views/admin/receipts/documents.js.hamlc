@@ -145,7 +145,7 @@
           %select{name: 'generic_template_id',
                   id: 'admin_receipts_documents_template',
                   class: 'form-control required'}
-            - for h in _.sortBy(App.GenericTemplate.category(@template_class), (t) -> t.title)
+            - for h in _.sortBy(App.GenericTemplate.category(@template_class, true), (t) -> t.title)
               %option{value: h.id}= h.title
 
       - # template

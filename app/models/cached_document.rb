@@ -20,8 +20,7 @@ class CachedDocument < ActiveRecord::Base
 
   has_attached_file :document, use_timestamp: true
 
-  validates_attachment :document,
-    content_type: { content_type: [ "text/csv", "application/pdf" ] }
+  validates_attachment_content_type :document, :content_type => /\A.*\Z/ # Disable validation
 
   before_save do
     self.validity_time = 1.day.seconds

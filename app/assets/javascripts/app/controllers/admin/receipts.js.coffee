@@ -197,7 +197,7 @@ class Index extends App.ExtendedController
     win.append modal
     win.modal(keyboard: true, show: false)
 
-    controller = new DocumentsMachine({el: win.find('.modal-content')})
+    controller = new ReceiptsDocumentsMachine({el: win.find('.modal-content')})
     win.modal('show')
     controller.activate()
 
@@ -254,7 +254,7 @@ class App.ExportReceipts extends App.ExtendedController
     super
     @render()
 
-class DocumentsMachine extends App.ExtendedController
+class ReceiptsDocumentsMachine extends App.ExtendedController
   events:
     'submit form': 'submit'
     'change #admin_receipts_documents_format': 'format_changed'
