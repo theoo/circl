@@ -209,14 +209,13 @@ class ApplicationController < ActionController::Base
 
   # Token authentication replacement (Devise removed its support)
   def authenticate_person_from_token!
-    person_token = params[:person_token].presence
-    person       = person_token && Person.where(authentication_token: person_token.to_s).size > 0
+    person_email = params[:person_email].presence
+    person       = person_email && Person.where(email: person_email).try(:first)
 
-    if person
-      # Notice we are passing store false, so the person is not
-      # actually stored in the session and a token is needed
-      # for every request. If you want the token to work as a
-      # sign in token, you can simply remove store: false.
+    # Notice how we use Devise.secure_compare to compare the token
+    # in the database with the token given in the params, mitigating
+    # timing attacks.
+    if person && Devise.secure_compare(person.authentication_token, params[:person_token])
       sign_in person, store: false
     end
   end
