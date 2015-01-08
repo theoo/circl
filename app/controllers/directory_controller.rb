@@ -238,11 +238,15 @@ class DirectoryController < ApplicationController
       Rails.configuration.settings['elasticsearch']['enable_indexing'] = true
       Rails.configuration.settings['maps']['enable_geolocalization'] = true
 
+      # Reset people table id sequence.
+      last_id = Person.order(:id).last.id
+      ActiveRecord::Base.connection.execute "SELECT setval('people_id_seq', #{last_id});"
+
       # Reindex the whole database
       BackgroundTasks::RunRakeTask.schedule(name: 'elasticsearch:sync')
     end
 
-    # Ensure ES and geoloc are enable again
+    # Ensure ES and geoloc are enable again, whatever happend during transaction
     Rails.configuration.settings['elasticsearch']['enable_indexing'] = true
     Rails.configuration.settings['maps']['enable_geolocalization'] = true
 

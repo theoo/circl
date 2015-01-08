@@ -22,11 +22,10 @@ class PersonRelationsParser
   end
 
   def parse_comments(raw_comments)
-    comments_string = raw_comments.strip
-    return [] if comments_string.blank?
-
     # Comments will be save on transaction commit
-    Comment.new(:title => 'import', :description => comments_string)
+    raw_comments.split(",").map do |c|
+      Comment.new(:title => 'import', :description => c.strip)
+    end
   end
 
   def parse_location(postal_code_prefix, name)

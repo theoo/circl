@@ -297,6 +297,7 @@ class Person < ActiveRecord::Base
   validate :email_exists_if_it_has_a_second_email
   validate :email_required_if_it_is_loggable
   validate :cannot_use_existing_email
+  validates_uniqueness_of :id, allow_nil: true # Funny no ? It's to allow override when importing from CSV.
   validates_uniqueness_of :authentication_token, allow_nil: true
   validates_uniqueness_of :email, if: :has_email?
   validates_uniqueness_of :second_email, if: :has_second_email?
@@ -368,8 +369,10 @@ class Person < ActiveRecord::Base
     infos[:public_tags]  = []
     infos[:jobs]         = []
 
-    columns = [:first_name,
+    columns = [:id,
+      :first_name,
       :last_name,
+      :alias,
       :title,
       :is_an_organization,
       :organization_name,
@@ -386,6 +389,7 @@ class Person < ActiveRecord::Base
       :birth_date,
       :nationality,
       :avs_number,
+      :gender,
       :bank_informations,
       :roles,
       :main_communication_language,
@@ -412,8 +416,10 @@ class Person < ActiveRecord::Base
 
         p = Person.new
 
+        p.id                 = r.id.try(:to_i)
         p.first_name         = r.first_name
         p.last_name          = r.last_name
+        p.alias              = r.alias
         p.title              = r.title
         p.is_an_organization = ['1', 'true', 'True'].include?(r.is_an_organization)
         p.organization_name  = r.organization_name
@@ -427,8 +433,9 @@ class Person < ActiveRecord::Base
         p.birth_date         = r.birth_date
         p.nationality        = r.nationality
         p.avs_number         = r.avs_number
+        p.gender             = ['m', 'man', 'male', 'true', 't', 'True', 'T' '1'].index r.gender
         p.bank_informations  = r.bank_informations
-        p.hidden             = ['1', 'true', 'True'].include?(r.hidden)
+        p.hidden             = ['1', 'true', 'True', 't', 'T', 'yes'].include?(r.hidden)
 
         p.valid?
 
