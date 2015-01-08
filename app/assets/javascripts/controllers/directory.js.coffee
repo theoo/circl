@@ -12,7 +12,7 @@ $(document).ready ->
   Ui.load_ui $(document)
 
   enable_popover = ->
-    $("table.table tr.danger, table.table tr.warning").popover()
+    $("table.table tr.danger, table.table tr.warning").popover(placement: 'bottom')
 
   $("table.table").on "datatable_redraw", ->
     enable_popover()

@@ -226,21 +226,23 @@ class DirectoryController < ApplicationController
       Rails.configuration.settings['elasticsearch']['enable_indexing'] = false
       # Then re-parse file and import people
       report = Person.parse_people(session[:people_file_data])
+      # raise ArgumentError, report[:people].map(&:comments_edited_by_others).inspect
       report[:people].each do |p|
-        comments = p.comments_edited_by_others.dup
-        p.comments_edited_by_others = []
+        # comments = p.comments_edited_by_others.map{|c| c.dup}
+        # p.comments_edited_by_others = []
         p.save
-        p.comments_edited_by_others = comments
-        comments.each{|c| c.save}
+        # p.comments_edited_by_others = comments
+        # comments.each{|c| c.save}
+
+        # Reset people table id sequence
+        last_id = Person.order(:id).last.id
+        ActiveRecord::Base.connection.execute "SELECT setval('people_id_seq', #{last_id});"
       end
 
       # Ensure ES and geoloc are enable again
       Rails.configuration.settings['elasticsearch']['enable_indexing'] = true
       Rails.configuration.settings['maps']['enable_geolocalization'] = true
 
-      # Reset people table id sequence.
-      last_id = Person.order(:id).last.id
-      ActiveRecord::Base.connection.execute "SELECT setval('people_id_seq', #{last_id});"
 
       # Reindex the whole database
       BackgroundTasks::RunRakeTask.schedule(name: 'elasticsearch:sync')

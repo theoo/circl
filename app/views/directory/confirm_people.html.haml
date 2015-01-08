@@ -24,8 +24,10 @@
             %thead
               %tr
                 %th= I18n.t('directory.import.row')
+                %th= I18n.t('person.views.id')
                 %th= I18n.t('person.views.first_name')
                 %th= I18n.t('person.views.last_name')
+                %th= I18n.t('person.views.alias_name')
                 %th= I18n.t('common.title')
                 %th= I18n.t('person.views.is_an_organization')
                 %th= I18n.t('person.views.organization_name')
@@ -41,6 +43,7 @@
                 %th= I18n.t('person.views.birth_date')
                 %th= I18n.t('person.views.nationality')
                 %th= I18n.t('person.views.avs_number')
+                %th= I18n.t('person.views.gender')
                 %th= I18n.t('person.views.bank_informations')
                 %th= I18n.t('person.views.roles')
                 %th= I18n.t('directory.import.main_communication_language')
@@ -55,10 +58,10 @@
               - @infos[:people].each_with_index do |person, i|
                 - error_msg = []
                 - person.errors.messages.each do |k,a|
-                  - error_msg << a.join(", ")
+                  - error_msg << k.to_s + ": " + a.join(", ")
 
                 - person.notices.messages.each do |k,a|
-                  - error_msg << a.join(", ")
+                  - error_msg << k.to_s + ": " + a.join(", ")
 
                 - classes = []
                 - if person.errors.empty?
@@ -82,8 +85,10 @@
                       - a.each do |s|
                         = hidden_field_tag("people[][errors][#{k}][]", s)
 
+                  %td= person.id if person.id != 0
                   %td= person.first_name
                   %td= person.last_name
+                  %td= person.alias_name
                   %td= person.title
                   %td= I18n.t('common.' + person.is_an_organization.to_s)
                   %td= person.organization_name
@@ -99,6 +104,7 @@
                   %td= person.birth_date
                   %td= person.nationality
                   %td= person.avs_number
+                  %td= person.gender ? I18n.t("person.views.male") : I18n.t("person.views.female")
                   %td= person.bank_informations
                   %td= relation_to_string(person.roles)
                   %td= relation_to_string(person.main_communication_language)
@@ -106,9 +112,7 @@
                   %td= relation_to_string(person.translation_aptitudes)
                   %td= relation_to_string(person.private_tags)
                   %td= relation_to_string(person.public_tags)
-                  / %td= person.private_tags.map(&:name).join(", ")
-                  / %td= person.public_tags.map(&:name).join(", ")
-                  %td= person.comments_edited_by_others.map{|c| c.description}.join("<br/>")
+                  %td!= person.comments_edited_by_others.map{|c| c.description}.join("<br/>")
                   %td= I18n.t('common.' + person.hidden.to_s)
 
         - if ! @infos[:errors].empty?
@@ -132,6 +136,9 @@
 
                 - @infos[:jobs].each do |j|
                   = hidden_field_tag 'jobs[]', j
+
+                - @infos[:comments].each do |j|
+                  = hidden_field_tag 'comments[]', j
 
                 = submit_tag I18n.t('directory.views.proceed_with_import'), class: 'btn btn-primary'
 

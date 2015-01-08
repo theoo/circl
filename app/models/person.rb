@@ -372,7 +372,7 @@ class Person < ActiveRecord::Base
     columns = [:id,
       :first_name,
       :last_name,
-      :alias,
+      :alias_name,
       :title,
       :is_an_organization,
       :organization_name,
@@ -416,10 +416,10 @@ class Person < ActiveRecord::Base
 
         p = Person.new
 
-        p.id                 = r.id.try(:to_i)
+        p.id                 = r.id.try(:to_i) if r.id and r.id != 0
         p.first_name         = r.first_name
         p.last_name          = r.last_name
-        p.alias              = r.alias
+        p.alias_name         = r.alias_name
         p.title              = r.title
         p.is_an_organization = ['1', 'true', 'True'].include?(r.is_an_organization)
         p.organization_name  = r.organization_name
@@ -433,9 +433,9 @@ class Person < ActiveRecord::Base
         p.birth_date         = r.birth_date
         p.nationality        = r.nationality
         p.avs_number         = r.avs_number
-        p.gender             = ['m', 'man', 'male', 'true', 't', 'True', 'T' '1'].index r.gender
+        p.gender             = !!['m', 'man', 'male', 'true', 't', 'True', 'T' '1'].index(r.gender)
         p.bank_informations  = r.bank_informations
-        p.hidden             = ['1', 'true', 'True', 't', 'T', 'yes'].include?(r.hidden)
+        p.hidden             = !!['1', 'true', 'True', 't', 'T', 'yes'].include?(r.hidden)
 
         p.valid?
 
