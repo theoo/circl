@@ -49,6 +49,8 @@ class Edit extends App.ExtendedController
       @render_errors $.parseJSON(xhr.responseText)
 
     ajax_success = (data, textStatus, jqXHR) =>
+      PersonPrivateTag.refresh([], clear: true)
+      PersonPrivateTag.fetch()
       @render_success()
 
       # Update count badge

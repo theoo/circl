@@ -38,6 +38,7 @@ class People::PublicTagsController < ApplicationController
 
   def update
     authorize! [:create, :destroy], @person => self.class.model
+    params[:public_tag_ids] ||= []
 
     respond_to do |format|
       if @person.update_attributes(public_tags_params)

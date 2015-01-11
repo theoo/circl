@@ -38,6 +38,7 @@ class People::PrivateTagsController < ApplicationController
 
   def update
     authorize! [:create, :destroy], @person => self.class.model
+    params[:private_tag_ids] ||= []
 
     respond_to do |format|
       if @person.update_attributes(private_tags_params)

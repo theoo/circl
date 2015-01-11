@@ -63,6 +63,7 @@ class PrivateTag < ActiveRecord::Base
   has_and_belongs_to_many :people,
                           -> { uniq },
                           after_add: :update_elasticsearch_index,
+                          after_add: [:update_elasticsearch_index, :select_parents],
                           after_remove: :update_elasticsearch_index
   has_many :subscription_values,
            -> { order('position ASC') }
@@ -107,6 +108,11 @@ class PrivateTag < ActiveRecord::Base
                  I18n.t('tag.errors.cannot_destroy_tag_if_it_has_members'))
       false
     end
+  end
+
+  # Recursive!
+  def select_parents(person)
+    self.parent.people.push person if self.parent
   end
 
 end

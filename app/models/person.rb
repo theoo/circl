@@ -174,7 +174,7 @@ class Person < ActiveRecord::Base
             -> { uniq },
             class_name: 'PublicTag',
             through: :people_public_tags,
-            after_add: :update_elasticsearch_index,
+            after_add: [:update_elasticsearch_index, :select_parents],
             after_remove: :update_elasticsearch_index
 
   # monitored_habtm :private_tags,
@@ -182,7 +182,7 @@ class Person < ActiveRecord::Base
             -> { uniq },
             class_name: 'PrivateTag',
             through: :people_private_tags,
-            after_add: :update_elasticsearch_index,
+            after_add: [:update_elasticsearch_index, :select_parents],
             after_remove: :update_elasticsearch_index
 
   # secondary communication languages
@@ -974,6 +974,12 @@ class Person < ActiveRecord::Base
 
       false
     end
+  end
+
+  # Recursive!
+  def select_parents(tag)
+    rel = tag.class.to_s.underscore.pluralize
+    self.send(rel).push tag.parent if tag.parent
   end
 
 end
