@@ -124,27 +124,27 @@
           .row
             .col-lg-6
               .form-group
-                %label{ for: 'salary_is_married', class: 'label-control' }
-                  = I18n.t('salary.views.civil_status')
+                %label= I18n.t('salary.views.civil_status')
                 .checkbox
-                  %input{ name: 'married',
-                          id: 'salary_is_married',
-                          type: 'checkbox',
-                          checked: @salary.married,
-                          value: 1 }
-                  = I18n.t('salary.views.married')
+                  %label{ for: 'salary_is_married', class: 'label-control' }
+                    %input{ name: 'married',
+                            id: 'salary_is_married',
+                            type: 'checkbox',
+                            checked: @salary.married,
+                            value: 1 }
+                    = I18n.t('salary.views.married')
 
             .col-lg-6
               .form-group
-                %label{ for: 'salary_is_paid', class: 'label-control' }
-                  = I18n.t('common.paid')
+                %label= I18n.t('common.paid')
                 .checkbox
-                  %input{ name: 'paid',
-                          id: 'salary_is_paid',
-                          type: 'checkbox',
-                          checked: @salary.paid,
-                          value: 1 }
-                  = I18n.t('common.paid')
+                  %label{ for: 'salary_is_paid', class: 'label-control' }
+                    %input{ name: 'paid',
+                            id: 'salary_is_paid',
+                            type: 'checkbox',
+                            checked: @salary.paid,
+                            value: 1 }
+                    = I18n.t('common.paid')
 
             .col-lg-12
               .form-group

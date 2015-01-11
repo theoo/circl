@@ -20,11 +20,11 @@ en:
       multiplateform_browsers: crossform browsers
     cancel: cancel
     category: category
-    close: close
     clear: clear
+    close: close
+    color: color
     confirm: Confirm please
     contact: contact
-    color: color
     copy: copy
     create: create
     created_at: created at

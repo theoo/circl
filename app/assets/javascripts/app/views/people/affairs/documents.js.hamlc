@@ -12,12 +12,6 @@
       .col-md-12
         .validation_errors_placeholder
 
-    .row
-      .col-md-12
-        .alert.alert-info
-          %h3= I18n.t("affair.notices.document_export_explanation_title")
-          = I18n.t("affair.notices.document_export_explanation")
-
     - # payment dates interval
     .row
       .col-md-12

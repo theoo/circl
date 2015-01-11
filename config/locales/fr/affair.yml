@@ -71,11 +71,12 @@ fr:
       threshold_value_global: limite de la somme des valeurs
       threshold_value_unit: valeur limite
       title: titre
+      title_filter: filtrer le titre
       update_date: dernière mise à jour
       value:
         bid: remise
         computed: calculé
-        value: ""
+        value: ''
         vat: TVA
         with_taxes: TTC
         without_taxes: HT

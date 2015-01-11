@@ -71,11 +71,12 @@ en:
       threshold_value_global: value sum threshold
       threshold_value_unit: value threshold
       title: title
+      title_filter: title filter
       update_date: last update
       value:
         bid: bid
         computed: computed
-        value: ""
+        value: ''
         vat: VAT
         with_taxes: w/ taxes
         without_taxes: wo/ taxes

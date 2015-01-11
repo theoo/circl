@@ -213,7 +213,7 @@ class Affair < ActiveRecord::Base
                       # invoices are paid
      :paid,           # 8
      :overpaid,       # 9
-     nil,             # 10
+     :unbillable,     # 10
      nil,             # 11
      nil,             # 12
      nil,             # 13
@@ -580,8 +580,8 @@ class Affair < ActiveRecord::Base
     statuses = []
     if cancelled?
       statuses << :cancelled
-    elsif unbillable
-      statuses << :paid # NOTE is that the best reflection of its status ?
+    elsif unbillable or value_with_taxes == 0
+      statuses << :unbillable
     else
       statuses << :open if open?
       statuses << :underpaid if underpaid?

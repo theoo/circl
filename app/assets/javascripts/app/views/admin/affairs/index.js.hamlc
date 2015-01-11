@@ -13,3 +13,10 @@
       %tr
         %td.placeholder{colspan: 9}
           .icon-spin.icon-4x.icon-gear
+
+.panel-footer
+  %button{type: 'button',
+          name: 'admin-affairs-documents',
+          class: 'btn btn-default' }
+    .icon-paper-clip
+    = I18n.t("common.documents")

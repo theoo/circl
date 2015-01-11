@@ -20,11 +20,11 @@ fr:
       multiplateform_browsers: navigateurs multiplateforme
     cancel: annuler
     category: catégorie
-    close: fermer
     clear: effacer
+    close: fermer
+    color: couleur
     confirm: Veuillez confirmer
     contact: contact
-    color: couleur
     copy: copier
     create: créer
     created_at: création

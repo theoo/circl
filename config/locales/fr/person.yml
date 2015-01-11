@@ -29,6 +29,7 @@ fr:
       cant_delete_person_who_has_invoices: Il est impossible de détruire une personne dont dépend une facture.
       cant_delete_person_who_has_running_contract: Il est impossible de détruire une personne dont un contrat dépend.
       cant_delete_person_who_has_salaries: Il est impossible de détruire une personne dont dépend un salaire.
+      cant_delete_person_who_is_linked_to_products: Il est impossible de détruire une personne référencée dans un produit (comme fournisseur ou service après-vente)
       combination_of_first_name_and_last_name_already_taken: Cette combinaison de nom et prénom est déjà prise.
       invalid_current_password: Le mot de passe actuel est invalide.
       main_language_already_in_communication_languages: Cette langue principale est déjà sélectionnée dans les langues de communication secondaires.
@@ -92,6 +93,7 @@ fr:
       address: adresse
       affairs: Affaires
       alias: alias
+      alias_name: MISSING_TRANSLATION alias name
       api: API
       autentication_token: jeton d'authentification
       avs_number: numéro AVS
@@ -114,6 +116,7 @@ fr:
       generate_authentication_token: "(re)générer"
       geographic_coordinates: coordonnées géographiques
       hidden: caché
+      id: MISSING_TRANSLATION id
       is_an_organization: est une organisation
       job: métier
       last_name: nom de famille

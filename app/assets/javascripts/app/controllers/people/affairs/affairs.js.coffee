@@ -580,15 +580,15 @@ class AffairsDocumentsMachine extends App.ExtendedController
     switch @content
       when 'affairs'
         @template_class = 'Affair'
-        App.Affair.fetch_statuses()
         App.Affair.one 'statuses_fetched', =>
           @render()
+        App.Affair.fetch_statuses()
 
       when 'invoices'
         @template_class = 'Invoice'
-        App.Invoice.fetch_statuses()
         App.Invoice.one 'statuses_fetched', =>
           @render()
+        App.Invoice.fetch_statuses()
 
       when 'receipts'
         @template_class = 'Receipt'

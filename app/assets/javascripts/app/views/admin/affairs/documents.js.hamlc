@@ -1,0 +1,110 @@
+.modal-header
+  %button{type: 'button', class: 'close', :data-dismiss => 'modal'}
+    &times;
+  %h4.modal-title
+    = I18n.t("affair.views.document_export")
+    \-
+    = I18n.t("activerecord.models." + @template_class.toLowerCase())
+
+%form{ method:'get', action: @form_url + "." + @format }
+  .modal-body
+    .row
+      .col-md-12
+        .validation_errors_placeholder
+
+    - # payment dates
+    .row
+      .col-md-12
+        %h3= I18n.t("affair.views.select_payment_interval")
+
+    .row
+      .col-md-6
+        .form-group
+          %label{for: "admin_affairs_document_export_from"}
+            = I18n.t('common.from')
+          %input{ type: 'text',
+                  id: 'admin_affairs_document_export_from',
+                  name: 'from',
+                  class: 'datepicker form-control',
+                  value: '' }
+      .col-md-6
+        .form-group
+          %label{for: "admin_affairs_document_export_to"}
+            = I18n.t('common.to')
+          %input{ type: 'text',
+                  id: 'admin_affairs_document_export_to',
+                  name: 'to',
+                  class: 'datepicker form-control',
+                  value: '' }
+    .row
+      .col-lg-12
+        .form-group
+          %label{:for => 'admin_affairs_documents_title_filter'}
+            = I18n.t('affair.views.title_filter')
+          %input{:type => 'text',
+                 :name => 'title_filter',
+                 :id => 'admin_affairs_documents_title_filter',
+                 :class => 'form-control'}
+
+          %small.help-block
+            = I18n.t('affair.notices.regexp')
+
+            - if I18n.locale == 'fr'
+              - url = "http://fr.wikipedia.org/wiki/Expression_rationnelle"
+            - else
+              - url = "http://en.wikipedia.org/wiki/Regular_expression"
+
+            %a{href: url, target: '_blank'}
+              .icon-question
+
+    .row
+      - # affair status
+      .col-md-6
+        - if App.Affair.statuses()
+          .form-group
+            %label{for: "admin_affairs_document_export_statuses"}
+              = I18n.t('affair.views.available_statuses')
+            %select{multiple: true,
+                    id: 'admin_affairs_document_export_statuses',
+                    name: 'statuses[]',
+                    class: 'form-control'}
+              - for v,s of App.Affair.statuses()
+                %option{value: v}= I18n.t("affair.views.statuses." + s)
+            %small.help-block
+              = I18n.t('affair.notices.will_match_all_selected_statuses')
+
+      - # template
+      .col-md-6
+        .form-group
+          %label{for: 'admin_affairs_document_export_template'}
+            = I18n.t('affair.views.template')
+          - if App.GenericTemplate.category(@template_class, true).length > 0
+            %select{name: 'generic_template_id',
+                    id: 'admin_affairs_document_export_template',
+                    class: 'form-control required'}
+              - for h in _.sortBy(App.GenericTemplate.category(@template_class, true), (t) -> t.title)
+                %option{value: h.id}= h.title
+          - else
+            %a{href: '/settings#templates', class: 'btn btn-warning', name: 'generic_template_id'}
+              = I18n.t("common.add_new_template")
+
+        .form-group
+          %label{for: "admin_affairs_document_export_format"}
+            = I18n.t('affair.views.format')
+          %select{id: 'admin_affairs_document_export_format',
+                  name: 'format',
+                  class: 'form-control'}
+            - for f in ['csv', 'pdf', 'odt']
+              %option{value: f, selected: (f == @format)}= I18n.t("common." + f)
+
+  .modal-footer
+    %button{type: 'button',
+            class: 'btn btn-default',
+            :data-dismiss => 'modal'}
+      .icon-chevron-left
+      = I18n.t("common.close")
+
+    %button{type: 'submit',
+            class: 'btn btn-primary'}
+      = I18n.t('common.next')
+      .icon-chevron-right

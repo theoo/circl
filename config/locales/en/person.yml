@@ -29,6 +29,7 @@ en:
       cant_delete_person_who_has_invoices: cant delete person who has invoices
       cant_delete_person_who_has_running_contract: cant delete person who has running contract
       cant_delete_person_who_has_salaries: cant delete person who has salaries
+      cant_delete_person_who_is_linked_to_products: cant delete person who is linked to products
       combination_of_first_name_and_last_name_already_taken: combination of first name and last name already taken
       invalid_current_password: invalid current password
       main_language_already_in_communication_languages: main language already in communication languages
@@ -92,6 +93,7 @@ en:
       address: address
       affairs: affairs
       alias: alias
+      alias_name: MISSING_TRANSLATION alias name
       api: api
       autentication_token: autentication token
       avs_number: avs number
@@ -114,6 +116,7 @@ en:
       generate_authentication_token: generate authentication token
       geographic_coordinates: geographic coordinates
       hidden: hidden
+      id: MISSING_TRANSLATION id
       is_an_organization: is an organization
       job: job
       last_name: last name
