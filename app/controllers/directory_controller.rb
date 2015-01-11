@@ -228,11 +228,14 @@ class DirectoryController < ApplicationController
       report = Person.parse_people(session[:people_file_data])
       # raise ArgumentError, report[:people].map(&:comments_edited_by_others).inspect
       report[:people].each do |p|
-        # comments = p.comments_edited_by_others.map{|c| c.dup}
-        # p.comments_edited_by_others = []
+        comments = p.comments_edited_by_others.map{|c| c.dup}
+        p.comments_edited_by_others = []
         p.save
-        # p.comments_edited_by_others = comments
-        # comments.each{|c| c.save}
+        comments.each do |c|
+          c.resource = p
+          c.person = current_person
+          c.save!
+        end
 
         # Reset people table id sequence
         last_id = Person.order(:id).last.id
