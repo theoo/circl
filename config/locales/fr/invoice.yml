@@ -23,6 +23,7 @@ fr:
       owner: propriétaire
       printed_address: adresse imprimée
       receiver: receveur
+      select_generation_interval: Sélectionner l'intervalle d'émission
       status: statut
       statuses:
         cancelled: annulée

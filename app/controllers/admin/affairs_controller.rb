@@ -50,15 +50,7 @@ class Admin::AffairsController < ApplicationController
     end
 
     if ['pdf', 'odt'].index params[:format]
-      if params[:generic_template_id]
-        # Ensure at least a template is given
-        # build generator using selected generic template
-        fake_object = OpenStruct.new
-        fake_object.template = GenericTemplate.find params[:generic_template_id]
-        fake_object.affairs = @affairs
-
-        generator = AttachmentGenerator.new(fake_object, nil)
-      else
+      unless params[:generic_template_id]
         errors[:generic_template_id] = I18n.t("activerecord.errors.messages.blank")
       end
     end
@@ -68,7 +60,7 @@ class Admin::AffairsController < ApplicationController
       if errors.empty?
         ######### PREPARE ############
 
-        @affairs = Affair.all
+        @affairs = Affair.order(:created_at)
 
         # fetch affairs corresponding to selected statuses and interval
         if params[:statuses]
@@ -88,6 +80,16 @@ class Admin::AffairsController < ApplicationController
 
         # raise ArgumentError, @affairs.sql.inspect
         @affairs.uniq!
+
+        if ['pdf', 'odt'].index params[:format]
+          # Ensure at least a template is given
+          # build generator using selected generic template
+          fake_object = OpenStruct.new
+          fake_object.template = GenericTemplate.find params[:generic_template_id]
+          fake_object.affairs = @affairs
+
+          generator = AttachmentGenerator.new(fake_object, nil)
+        end
 
         ######### RENDER ############
 

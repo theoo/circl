@@ -14,6 +14,11 @@
 
 
 .panel-footer
-  %button{ type: 'button', name: 'admin-invoices-export', class: 'btn btn-default'}
-    .icon-cloud-upload
-    = I18n.t('common.toolbox_export')
+  .btn-group
+    %button{ type: 'button', name: 'admin-invoices-export', class: 'btn btn-default'}
+      .icon-cloud-upload
+      = I18n.t('common.toolbox_export')
+
+    %button{ type: 'button', name: 'admin-invoices-documents', class: 'btn btn-default'}
+      .icon-paper-clip
+      = I18n.t('common.documents')

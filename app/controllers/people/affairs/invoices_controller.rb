@@ -44,6 +44,8 @@ class People::Affairs::InvoicesController < ApplicationController
         fields << 'title'
         fields << 'created_at.try(:to_date)'
         fields << 'value'
+        fields << 'value_with_taxes'
+        fields << 'vat'
         fields << 'owner.first_name'
         fields << 'owner.last_name'
         fields << 'owner.full_address'

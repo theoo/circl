@@ -27,8 +27,111 @@ class Admin::InvoicesController < ApplicationController
   def index
     authorize! :index, Invoice
 
+    errors = {}
+    # pseudo validation
+    unless params[:from].blank?
+      if validate_date_format(params[:from])
+        from = Date.parse params[:from]
+      else
+        errors[:from] = I18n.t("affair.errors.wrong_date")
+      end
+    end
+
+    unless params[:to].blank?
+      if validate_date_format(params[:to])
+        to = Date.parse params[:to]
+      else
+        errors[:to] = I18n.t("affair.errors.wrong_date")
+      end
+    end
+
+    if from and to and from > to
+      errors[:from] = I18n.t("salary.errors.from_date_should_be_before_to_date")
+    end
+
+    if ['pdf', 'odt'].index params[:format]
+      unless params[:generic_template_id]
+        errors[:generic_template_id] = I18n.t("activerecord.errors.messages.blank")
+      end
+    end
+
     respond_to do |format|
-      format.json { render json: InvoicesDatatable.new(view_context) }
+
+      if errors.empty?
+        ######### PREPARE ############
+
+        @invoices = Invoice.order(:created_at)
+
+        # fetch invoices corresponding to selected statuses and interval
+        if params[:statuses]
+          mask = params[:statuses].map(&:to_i).sum
+          @invoices = @invoices.where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+        end
+
+        if params[:title_filter]
+          begin # Postgresql may trow an error if regexp is not correct
+            @invoices = @invoices.where("invoices.title ~ ?", params[:title_filter])
+          end
+        end
+
+        if from and to
+          @invoices = @invoices.where("created_at BETWEEN ? AND ?", from, to)
+        end
+
+        # raise ArgumentError, @invoices.sql.inspect
+        @invoices.uniq!
+
+        if ['pdf', 'odt'].index params[:format]
+          # Ensure at least a template is given
+          # build generator using selected generic template
+          fake_object = OpenStruct.new
+          fake_object.template = GenericTemplate.find params[:generic_template_id]
+          fake_object.invoices = @invoices
+
+          generator = AttachmentGenerator.new(fake_object, nil)
+        end
+
+        ######### RENDER ############
+
+        format.json { render json: InvoicesDatatable.new(view_context) }
+
+        format.csv do
+          fields = []
+          fields << 'title'
+          fields << 'created_at.try(:to_date)'
+          fields << 'value'
+          fields << 'value_with_taxes'
+          fields << 'vat'
+          fields << 'receipts_value'
+          fields << 'get_statuses.try(:join, ", ")'
+          fields << 'owner.organization_name'
+          fields << 'owner.first_name'
+          fields << 'owner.last_name'
+          fields << 'owner.full_address'
+          fields << 'owner.try(:location).try(:postal_code_prefix)'
+          fields << 'owner.try(:location).try(:country).try(:name)'
+          fields << 'owner.try(:main_communication_language).try(:name)'
+          fields << 'owner.email'
+          render inline: csv_ify(@invoices, fields)
+        end
+
+        format.pdf do
+          send_data generator.pdf,
+            filename: "invoices.pdf",
+            type: 'application/pdf'
+        end
+
+        format.odt do
+          send_data generator.odt,
+            filename: "invoices.odt",
+            type: 'application/vnd.oasis.opendocument.text'
+        end
+
+      else
+        format.json do
+          render json: errors, status: :unprocessable_entity
+        end
+      end
     end
   end
 

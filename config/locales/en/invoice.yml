@@ -23,6 +23,7 @@ en:
       owner: owner
       printed_address: printed address
       receiver: receiver
+      select_generation_interval: Select generation interval
       status: status
       statuses:
         cancelled: cancelled
