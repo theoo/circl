@@ -929,7 +929,7 @@ class Person < ActiveRecord::Base
   end
 
   def do_not_destroy_if_first_admin
-    if id == 1 # FIXME don't hardcode this
+    if id == ApplicationSetting.value("me").to_i
       errors.add(:base,
                  I18n.t('person.errors.cant_delete_first_admin'))
       false

@@ -31,6 +31,7 @@ en:
       cant_delete_person_who_has_salaries: cant delete person who has salaries
       cant_delete_person_who_is_linked_to_products: cant delete person who is linked to products
       combination_of_first_name_and_last_name_already_taken: combination of first name and last name already taken
+      hey_you_cannot_sucide: "<b>Hey!</b>, What are you doing ?<br/>In CIRCL universe you cannot end yourself.<br /> Need assistance ? -> <a href='http://www.stopsuicide.ch' target='_blank'>http://www.stopsuicide.ch</a>"
       invalid_current_password: invalid current password
       main_language_already_in_communication_languages: main language already in communication languages
       no_second_email_if_no_primary_email: no second email if no primary email

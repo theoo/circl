@@ -123,22 +123,33 @@ class PeopleController < ApplicationController
 
   def destroy
     respond_to do |format|
-      if @person.destroy
+      if @person == current_person
         format.html do
-          flash[:notice] = I18n.t('common.notices.successfully_destroyed')
-          redirect_to directory_path
-        end
-        format.json { render json: {} }
-      else
-        format.html do
-          # TODO usually if we reach this code path it's because ldap_remove fails
-          # in the before_destroy callback. Refactor so Person#errors is updated with the reasons.
-          flash[:alert] = I18n.t('common.errors.failed_to_destroy')
+          flash[:alert] = I18n.t('person.errors.hey_you_cannot_sucide')
           render :show, layout: 'application'
         end
         format.json do
-          flash[:alert] = I18n.t('common.errors.failed_to_destroy') + " " + I18n.t("common.errors.please_verify_rights_and_record")
+          flash[:alert] = I18n.t('person.errors.hey_you_cannot_sucide')
           render json: @person.errors, status: :unprocessable_entity
+        end
+      else
+        if @person.destroy
+          format.html do
+            flash[:notice] = I18n.t('common.notices.successfully_destroyed')
+            redirect_to directory_path
+          end
+          format.json { render json: {} }
+        else
+          format.html do
+            # TODO usually if we reach this code path it's because ldap_remove fails
+            # in the before_destroy callback. Refactor so Person#errors is updated with the reasons.
+            flash[:alert] = I18n.t('common.errors.failed_to_destroy')
+            render :show, layout: 'application'
+          end
+          format.json do
+            flash[:alert] = I18n.t('common.errors.failed_to_destroy') + " " + I18n.t("common.errors.please_verify_rights_and_record")
+            render json: @person.errors, status: :unprocessable_entity
+          end
         end
       end
     end
