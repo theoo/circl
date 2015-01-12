@@ -33,7 +33,7 @@ class PersonMailer < ActionMailer::Base
   layout 'mail'
 
   def send_mailchimp_sync_report(person, report)
-    I18n.locale = person.main_communication_language.symbol
+    I18n.locale = person.main_communication_language.try(:symbol)
     @report = report
     mail( to: person.email,
           subject: I18n.t('person.mail.mailchimp_synchronisation_report'))
@@ -47,7 +47,7 @@ class PersonMailer < ActionMailer::Base
   end
 
   def send_receipts_import_report(person, receipts = [], errors = [])
-    I18n.locale = person.main_communication_language.symbol
+    I18n.locale = person.main_communication_language.try(:symbol)
     @receipts = receipts
     @errors   = errors
     mail( to: person.email,
@@ -55,7 +55,7 @@ class PersonMailer < ActionMailer::Base
   end
 
   def send_people_import_report(person, people)
-    I18n.locale = person.main_communication_language.symbol
+    I18n.locale = person.main_communication_language.try(:symbol)
     @valid_people = []
     @invalid_people = []
     people.each{|p| (p.errors.empty? ? @valid_people : @invalid_people) << p }
@@ -64,7 +64,7 @@ class PersonMailer < ActionMailer::Base
   end
 
   def send_subscription_pdf_link(person, subscription_id)
-    I18n.locale = person.main_communication_language.symbol
+    I18n.locale = person.main_communication_language.try(:symbol)
     @subscription = Subscription.find(subscription_id)
     mail( to: person.email,
           subject: I18n.t('person.mail.pdf_for_subscription',
@@ -73,7 +73,7 @@ class PersonMailer < ActionMailer::Base
   end
 
   def send_members_added_to_subscription(person, subscription_id, new_people_ids, existing_people_ids)
-    I18n.locale = person.main_communication_language.symbol
+    I18n.locale = person.main_communication_language.try(:symbol)
     @new_people = new_people_ids.map{ |id| Person.find(id) }
     @existing_people = existing_people_ids.map{ |id| Person.find(id) }
     @subscription = Subscription.find(subscription_id)
@@ -84,7 +84,7 @@ class PersonMailer < ActionMailer::Base
   end
 
   def send_subscriptions_merged(person, source_subscription_id, source_subscription_title, destination_subscription_id)
-    I18n.locale = person.main_communication_language.symbol
+    I18n.locale = person.main_communication_language.try(:symbol)
     @source_subscription_title, @source_subscription_id = source_subscription_title, source_subscription_id
     @destination_subscription = Subscription.find(destination_subscription_id)
     mail( to: person.email,
@@ -96,7 +96,7 @@ class PersonMailer < ActionMailer::Base
   end
 
   def send_subscription_invoices_updated(person, subscription_id)
-    I18n.locale = person.main_communication_language.symbol
+    I18n.locale = person.main_communication_language.try(:symbol)
     @subscription = Subscription.find subscription_id
     mail( to: person.email,
           subject: I18n.t('person.mail.subscription_were_updated',
@@ -106,7 +106,7 @@ class PersonMailer < ActionMailer::Base
 
   def send_receipts_document_link(person, cached_doc)
     @document = cached_doc
-    I18n.locale = person.main_communication_language.symbol
+    I18n.locale = person.main_communication_language.try(:symbol)
     mail(to: person.email,
       subject: I18n.t('person.mail.admin_receipts_were_generated'))
   end
@@ -123,7 +123,7 @@ class PersonMailer < ActionMailer::Base
   def send_products_import_report(person, products, columns)
     @products = products
     @columns = columns
-    I18n.locale = person.main_communication_language.symbol
+    I18n.locale = person.main_communication_language.try(:symbol)
     mail( to: person.email,
           subject: I18n.t('person.mail.products_import_report'))
   end
@@ -131,7 +131,7 @@ class PersonMailer < ActionMailer::Base
   def send_product_programs_import_report(person, programs, columns)
     @programs = programs
     @columns = columns
-    I18n.locale = person.main_communication_language.symbol
+    I18n.locale = person.main_communication_language.try(:symbol)
     mail( to: person.email,
           subject: I18n.t('person.mail.product_programs_import_report'))
   end
