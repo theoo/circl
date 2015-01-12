@@ -272,7 +272,7 @@ class Subscription < ActiveRecord::Base
 
   def destroy_affairs
     # affairs.destroy_all # this destroys only the relation, not the affairs themselves
-    affairs.each {|a| a.destroy}
+    affairs.each {|a| a.invoices.destroy_all; a.destroy!}
   end
 
   # TODO Idealy this method should be in a callback but it takes
