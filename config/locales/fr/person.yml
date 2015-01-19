@@ -94,7 +94,7 @@ fr:
       address: adresse
       affairs: Affaires
       alias: alias
-      alias_name: MISSING_TRANSLATION alias name
+      alias_name: alias name
       api: API
       autentication_token: jeton d'authentification
       avs_number: numéro AVS
@@ -117,7 +117,7 @@ fr:
       generate_authentication_token: "(re)générer"
       geographic_coordinates: coordonnées géographiques
       hidden: caché
-      id: MISSING_TRANSLATION id
+      id: id
       is_an_organization: est une organisation
       job: métier
       last_name: nom de famille

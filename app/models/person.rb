@@ -416,12 +416,15 @@ class Person < ActiveRecord::Base
 
         p = Person.new
 
-        p.id                 = r.id.try(:to_i) if r.id and r.id != 0
+        col_id = r.id.try(:to_i)
+        col_id = nil if col_id == 0
+
+        p.id                 = col_id
         p.first_name         = r.first_name
         p.last_name          = r.last_name
         p.alias_name         = r.alias_name
         p.title              = r.title
-        p.is_an_organization = ['1', 'true', 'True'].include?(r.is_an_organization)
+        p.is_an_organization = ['1', 'true', 'True', 'TRUE', 'T'].include?(r.is_an_organization)
         p.organization_name  = r.organization_name
         p.address            = r.address
         p.phone              = r.phone
