@@ -55,9 +55,9 @@
                         = hidden_field_tag 'receipts[][already_imported]', !receipt.new_record?
                         = hidden_field_tag 'receipts[][rectification]', info[:status] == 'rectification'
                         = receipt.invoice.owner.name
-                      %td= receipt.invoice.created_at
+                      %td= receipt.invoice.created_at.to_date
                       %td= receipt.invoice.title
-                      %td= receipt.invoice.value.to_view
+                      %td= invoice_value_summary receipt.invoice
                       %td= receipt.value_date
                       %td= info[:status] == 'rectification' ? receipt.changes[:value_in_cents].map{|i| Money.new(i).to_view }.join(' -> ') : receipt.value.to_view
                       %td= I18n.t "receipt.import_status." + info[:status]

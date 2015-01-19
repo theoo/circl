@@ -29,6 +29,7 @@ en:
       rectification: réctification
     mail:
       account: account
+      affair: affair
       already_imported: already imported
       application_id: application
       available_digits: available digits
@@ -39,8 +40,10 @@ en:
       errors_occured: errors occured
       errors_occured_on_theses_lines: errors occured on theses lines
       info: info
+      invoice: invoice
       invoice_date: invoice date
       invoice_id: invoice
+      invoice_value: invoice value (Tax inc.)
       lines_should_be_formatted_as_following: lines should be formatted as following
       message: message
       number_of_characters: number of characters

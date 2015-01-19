@@ -29,6 +29,7 @@ fr:
       rectification: réctification
     mail:
       account: compte
+      affair: affaire
       already_imported: déjà importé
       application_id: ID de l'application
       available_digits: chiffres libres
@@ -39,8 +40,10 @@ fr:
       errors_occured: Une erreur a eu lieu
       errors_occured_on_theses_lines: Une erreur a eu lieu avec ces lignes
       info: info
+      invoice: facture
       invoice_date: date de la facture
       invoice_id: facture
+      invoice_value: valeur de la facture (TTC)
       lines_should_be_formatted_as_following: Les lignes devraient être formatée ainsi
       message: message
       number_of_characters: nombre de charactères

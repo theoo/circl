@@ -90,33 +90,48 @@
   %h2
     = I18n.t("receipt.mail.receipts")
 
+
   %table
     %thead
       %tr
         %th= I18n.t("receipt.mail.person_id")
-        %th= I18n.t("receipt.mail.invoice_id")
+        %th= I18n.t("receipt.mail.affair")
+        %th= I18n.t("receipt.mail.invoice")
         %th= I18n.t("receipt.mail.receipt_id")
         %th= I18n.t("receipt.mail.receipt_date")
         %th= I18n.t("receipt.mail.receipt_value")
+        %th= I18n.t("receipt.mail.invoice_value")
         %th= I18n.t("receipt.mail.already_imported")
         %th= I18n.t("receipt.mail.rectification")
         %th= I18n.t("receipt.mail.selected")
     %tbody
       - @receipts.each do |info|
+        - invoice = Invoice.find(info[:invoice_id])
+        - affair = invoice.affair
         %tr
           %td
             - if Person.exists?(info[:owner_id])
               - person = Person.find(info[:owner_id])
-              = link_to person.name, person_path(person)
+              = link_to person.name, person_url(person)
               (
               = info[:owner_id]
               )
             - else
               = info[:owner_id]
 
-          %td= info[:invoice_id]
+          %td
+            = affair.title
+            (
+            = link_to affair.id, person_url(person) + "#affairs/" + invoice.affair.id.to_s
+            )
+          %td
+            = invoice.title
+            (
+            = info[:invoice_id]
+            )
           %td= info[:receipt_id]
           %td= info[:value_date]
+          %td= invoice.value_with_taxes.to_f
           %td= info[:rectification] == 'true' ? ("#{Money.new(info[:old_value_in_cents].to_i).to_view} -> #{Money.new(info[:value_in_cents].to_i).to_view}") : Money.new(info[:value_in_cents].to_i).to_view
           %td= info[:already_imported]
           %td= info[:rectification]
