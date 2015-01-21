@@ -12,8 +12,6 @@ $(document).ready ->
   enable_popover() # onload
 
   # collect selected lines
-  # console.log $('#settings_products_import table').dataTable().fnSettings()
-
   $('#settings_products_import').on 'submit', (e) ->
     form = $(e.target)
     $(form.find("table").dataTable().fnGetNodes()).find("input[type='checkbox']:checked").map (index, c) ->
@@ -23,3 +21,12 @@ $(document).ready ->
         .attr('name', 'lines[]')
         .val( line )
       form.append i
+
+  $(".select_all").click ->
+    k = $(@).attr('name')
+    if $(@).prop('checked')
+      $(@).closest("table").find("tbody td.#{k} input:checkbox:not(:checked)").prop(checked: true)
+    else
+      $(@).closest("table").find("tbody td.#{k} input:checkbox:checked").prop(checked: false)
+
+    true

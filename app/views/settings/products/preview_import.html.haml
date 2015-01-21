@@ -119,24 +119,56 @@
               .row
                 .col-md-6
                   %h4= I18n.t("product.views.product_attributes")
-                  %ol
-                    %li
-                      = check_box_tag "skip_columns[]", 'key', false, disabled: true
-                      key
-                    - @columns.each do |c|
-                      - next if c == :key # Mandatory
-                      - next if c.to_s.match(/\d+$/) # Skip prices
-                      %li
-                        = check_box_tag "skip_columns[]", c
-                        = c
+                  %table.table.table-hover
+                    .thead
+                      %tr
+                        %td= t("product.views.attribute")
+                        %td
+                    .tbody
+                      %tr
+                        %td
+                          key
+                        %td
+                          = check_box_tag "skip_columns[]", 'key', false, disabled: true
+                      - @columns.each do |c|
+                        - next if c == :key # Mandatory
+                        - next if c.to_s.match(/\d+$/) # Skip prices
+                        %tr
+                          %td
+                            = c
+                          %td
+                            = check_box_tag "skip_columns[]", c
 
                 .col-md-6
                   %h4= I18n.t("product.views.price_definitions")
-                  %ol
-                    - (1..16).each do |c|
-                      %li
-                        = check_box_tag "skip_columns[]", c
-                        = c
+                  %table.table.table-hover
+                    .thead
+                      %tr
+                        %td
+                        %td
+                          %label
+                            %input.select_all{type: 'checkbox', name: 'program_group'}
+                            = t("product.views.program_group")
+                        %td
+                          %label
+                            %input.select_all{type: 'checkbox', name: 'buying_price'}
+                            = t("product.views.buying_price")
+                        %td
+                          %label
+                            %input.select_all{type: 'checkbox', name: 'selling_price'}
+                            = t("product.views.selling_price")
+                        %td
+                          %label
+                            %input.select_all{type: 'checkbox', name: 'art'}
+                            = t("product.views.art")
+                    .tbody
+                      - (1..16).each do |row|
+                        %tr
+                          %td
+                            = row
+                          - %w(program_group buying_price selling_price art).each do |col|
+                            %td{class: col}
+                              = check_box_tag "skip_columns[]", [col, row].join("_")
 
             .panel-footer
               .text-right
