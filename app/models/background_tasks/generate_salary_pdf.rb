@@ -40,7 +40,7 @@ class BackgroundTasks::GenerateSalaryPdf < BackgroundTask
   def process!
     @salary = Salaries::Salary.find(options[:salary_id])
 
-    generator = AttachmentGenerator.new(@salary, [:person])
+    generator = AttachmentGenerator.new(@salary)
     generator.pdf do |o, pdf|
       o.update_attributes pdf: pdf
 
