@@ -171,7 +171,7 @@ class PeopleController < ApplicationController
   end
 
   def update_password
-    current_password = params.delete(:current_password)
+    current_password = params[:person].delete(:current_password)
     if @person == current_person && !@person.valid_password?(current_password)
       @person.errors.add(:current_password, I18n.t('person.errors.invalid_current_password'))
       @person.assign_attributes person_params
@@ -380,6 +380,7 @@ class PeopleController < ApplicationController
         :updated_at,
         :website,
         :alias_name,
+        :current_password,
         :password,
         :password_confirmation
         )
