@@ -110,6 +110,7 @@ class Task < ActiveRecord::Base
     h[:task_type_title]         = task_type.try(:title)
     h[:affair_title]            = affair.try(:title)
     h[:owner_name]              = owner.try(:name)
+    h[:executer_id]             = executer.try(:id)
     h[:executer_name]           = executer.try(:name)
     h[:duration_in_words]       = translated_duration
     h[:value]                   = value.to_f

@@ -37,7 +37,9 @@ class New extends App.TimesheetExtention
     super
 
   render: =>
-    @task = new PersonTask
+    # TODO Start using GON
+    current_user = $.parseJSON $("[name=current_user]").attr("content")
+    @task = new PersonTask(executer_id: current_user.id, executer_name: current_user.name)
 
     @task.start_date = (new Date).to_view()
     @task.start_time = '09:00'

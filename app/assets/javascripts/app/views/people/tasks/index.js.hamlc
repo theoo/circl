@@ -3,21 +3,23 @@
     %tr
       %th= I18n.t('common.id')
       %th= I18n.t('common.date')
-      %th= I18n.t('task.views.duration')
+      %th= I18n.t('task.views.executer_name')
       %th= I18n.t('common.description')
+      %th= I18n.t('task.views.duration')
 
   %tbody
     - for task in App.PersonTask.all()
       %tr{:data-id => task.id, class: 'item'}
         %td= task.id
         %td= task.start_date
-        %td
-          = task.duration + " min"
-          %br
-          = "(#{task.duration_in_words})"
+        %td= task.executer_name
         %td
           %b= task.owner_name
           \-
           %i= task.affair_title
           %br
           != task.description.replace(/\n/g, '<br/>')
+        %td
+          = task.duration + " min"
+          %br
+          = "(#{task.duration_in_words})"

@@ -64,8 +64,9 @@ class ExecutedTasksDatatable
       h ={
         0 => task.id,
         1 => task.start_date,
-        2 => duration,
+        2 => task.executer.try(:name),
         3 => description,
+        4 => duration,
         'id' => task.id
       }
 
@@ -101,7 +102,7 @@ class ExecutedTasksDatatable
   end
 
   def sort_column
-    columns = %w{id created_at duration description}
+    columns = %w{id created_at executer_id description duration}
     columns[params[:iSortCol_0].to_i]
   end
 

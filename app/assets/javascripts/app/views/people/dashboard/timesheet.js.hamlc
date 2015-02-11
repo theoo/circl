@@ -3,9 +3,10 @@
     %tr
       %th= I18n.t('common.id')
       %th= I18n.t('common.date')
-      %th= I18n.t('task.views.duration')
+      %th= I18n.t('task.views.executer_name')
       %th= I18n.t('common.description')
+      %th= I18n.t('task.views.duration')
   %tbody
     %tr
-      %td.placeholder{colspan: 4}
+      %td.placeholder{colspan: 5}
         .icon-spin.icon-4x.icon-gear

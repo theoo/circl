@@ -132,6 +132,25 @@
             = I18n.t("task.notices.the_value_is_automaticaly_computed")
 
     .row
+      .col-lg-6.col-md-6.col-sm-6.form-group
+        %label{for: 'task_type'}
+          = I18n.t('task.views.executer_name')
+        .autocompleted.input-group
+          %input{type: 'search',
+            name: 'executer_name',
+            class: 'form-control',
+            action: '/people/search',
+            value: @task.executer_name}
+          %input{type: 'hidden',
+                 name: 'executer_id',
+                 value: @task.executer_id}
+          .input-group-btn
+            %a{ class: 'btn btn-default', name: "executer" }
+              .icon-user
+
+      .col-lg-6.col-md-6.col-sm-6.form-group
+
+    .row
       .col-lg-12.form-group
         %label{for: 'task_description'}
           = I18n.t('common.description')
