@@ -60,7 +60,7 @@ fr:
       please_verify_rights_and_record: Veuillez vérifier que vous êtes autorisé à effectuer cette action, et assurez vous que cette action est valable pour cet enregistrement.
     export: exporter
     export_to: exporter vers
-    failed_to_update: MISSING_TRANSLATION failed to update
+    failed_to_update: La mise à jour a échouée
     'false': faux
     file: fichier
     from: de

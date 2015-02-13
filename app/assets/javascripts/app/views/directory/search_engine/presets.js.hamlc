@@ -1,8 +1,8 @@
-#presets.collapse
+#presets.collapse.info-bg
 
   %hr{style: 'margin: 0;'}
 
-  .panel-body.grey-bg
+  .panel-body
     .pull-right
       %button{type: 'button',
               class: 'close',
@@ -88,7 +88,7 @@
                         != I18n.t("activerecord.attributes.person." + field.name, defaultValue: missing_translation )
 
   %hr{style: 'margin: 0;'}
-  .panel-body.grey-bg
+  .panel-body
     .row
       .col-lg-4.col-md-4
         %label.sr-only{for: 'directory_preset_name'}

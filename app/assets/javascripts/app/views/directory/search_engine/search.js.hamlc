@@ -47,7 +47,12 @@
             - qp = _.sortBy App.QueryPreset.all(), (q) -> q.name.toLowerCase()
             - for query_preset in qp
               %option{:data-id => query_preset.id}
-                = query_preset.name
+                - if query_preset.id == 1
+                  *
+                  = query_preset.name
+                  *
+                - else
+                  = query_preset.name
           .input-group-btn
             %button{type: 'button',
                     name: 'directory-preset-edit',

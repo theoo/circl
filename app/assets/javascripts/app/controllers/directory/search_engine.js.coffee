@@ -421,6 +421,12 @@ class Edit extends SearchEngineExtention
       @destroy_with_notifications @query_preset, =>
         @trigger 'destroyed'
 
+  render_errors: (e) =>
+    super
+    $("#presets").removeClass('info-bg')
+    $("#presets").addClass('danger-bg')
+
+
 class Index extends App.ExtendedController
   events:
     'click tr.item td:not(.ignore-click)': 'edit'
@@ -568,6 +574,9 @@ class App.DirectorySearchEngine extends App.ExtendedController
     @edit.bind 'destroyed', =>
       @edit.active(preset: QueryPreset.first())
       @search.active(preset: QueryPreset.first())
+
+    @edit.bind 'destroyError', (id, errors) =>
+      @edit.render_errors errors
 
   activate: ->
     super

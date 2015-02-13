@@ -34,7 +34,7 @@ fr:
       duration: durée
       duration_help: en minutes
       end_date: date de fin
-      executer_name: "exécutant"
+      executer_name: exécutant
       owner: client
       start_date: date de début
       task_rate: tarif
