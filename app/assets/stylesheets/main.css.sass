@@ -317,16 +317,22 @@ table.sortable.table-condensed
 
 // search engine
 .info-bg
-  background: repeating-linear-gradient(45deg, $state-info-bg, $state-info-bg 25px, #fff 25px, #fff 50px)
+  border: solid 10px $state-info-bg
 
 .danger-bg
-  background: repeating-linear-gradient(45deg, $state-danger-bg, $state-danger-bg 25px, #fff 25px, #fff 50px)
+  border: solid 10px $state-danger-bg
 
 .all_attributes
   height: 565px
 
 .selected_attributes, .attributes_order
+  margin: 0
+  padding: 0
   height: 250px
+  ol
+    background-color: $state-info-bg
+    padding-top: 1em
+    padding-bottom: 1em
 
 .selected_attributes, .attributes_order, .all_attributes
   overflow-y: scroll
