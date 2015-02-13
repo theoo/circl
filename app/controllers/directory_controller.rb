@@ -52,7 +52,7 @@ class DirectoryController < ApplicationController
     if QueryPreset.count == 0
       @query = HashWithIndifferentAccess.new QueryPreset.new.query
     else
-      @query = HashWithIndifferentAccess.new QueryPreset.order(:id).first.query
+      @query = HashWithIndifferentAccess.new QueryPreset.reorder(:id).first.query
     end
 
     person = false

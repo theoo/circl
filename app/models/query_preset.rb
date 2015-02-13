@@ -59,6 +59,10 @@ class QueryPreset < ActiveRecord::Base
   # Validate fields of type 'string' length
   validates_length_of :name, maximum: 255
 
+  before_destroy do
+    errors.add :base, I18n.t("search_attributes.errors.unable_to_destroy_default_query_preset")
+    false
+  end
 
   private
 
