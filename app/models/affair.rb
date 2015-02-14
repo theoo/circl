@@ -187,6 +187,7 @@ class Affair < ActiveRecord::Base
   validates_length_of :description, maximum: 65536
   validates_length_of :footer, maximum: 65536
   validates_length_of :notes, maximum: 65536
+  validates_length_of :execution_notes, maximum: 65536
   validate :vat_calculation_availability, if: 'custom_value_with_taxes'
   validate :parent_id_is_not_self, if: 'parent_id'
 

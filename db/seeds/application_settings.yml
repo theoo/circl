@@ -57,3 +57,5 @@
   value: 'edit me in application settings: affairs_notes_placeholder'
 - key: affairs_footer_placeholder
   value: 'edit me in application settings: affairs_footer_placeholder'
+- key: affairs_execution_notes_placeholder
+  value: 'edit me in application settings: affairs_execution_notes_placeholder'

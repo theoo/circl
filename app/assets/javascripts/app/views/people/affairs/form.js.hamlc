@@ -88,12 +88,13 @@
               - # i18n-tasks-use I18n.t("affair.views.description")
               - # i18n-tasks-use I18n.t("affair.views.notes")
               - # i18n-tasks-use I18n.t("affair.views.footer")
-              - for col in ['description', 'notes', 'footer']
+              - # i18n-tasks-use I18n.t("affair.views.execution_notes")
+              - for col in ['description', 'notes', 'execution_notes', 'footer']
                 .panel.panel-default
                   %div.panel-heading{id: "affair-#{col}-heading-#{@affair.id}"}
                     %h4.panel-title
                       - classes = ["collapsed"]
-                      - if @affair[col].length == 0
+                      - if @affair[col]?.length == 0
                         - classes.push("empty")
 
                       %a{"data-toggle" => 'collapse',

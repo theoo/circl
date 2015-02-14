@@ -11,34 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150102113421) do
+ActiveRecord::Schema.define(version: 20150214143927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "affairs", force: true do |t|
-    t.integer  "owner_id",                                 null: false
-    t.integer  "buyer_id",                                 null: false
-    t.integer  "receiver_id",                              null: false
-    t.string   "title",                    default: "",    null: false
-    t.text     "description",              default: ""
-    t.integer  "value_in_cents", limit: 8, default: 0,     null: false
-    t.string   "value_currency",           default: "CHF", null: false
+    t.integer  "owner_id",                                  null: false
+    t.integer  "buyer_id",                                  null: false
+    t.integer  "receiver_id",                               null: false
+    t.string   "title",                     default: "",    null: false
+    t.text     "description",               default: ""
+    t.integer  "value_in_cents",  limit: 8, default: 0,     null: false
+    t.string   "value_currency",            default: "CHF", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "status",                   default: 0,     null: false
-    t.boolean  "estimate",                 default: false, null: false
+    t.integer  "status",                    default: 0,     null: false
+    t.boolean  "estimate",                  default: false, null: false
     t.integer  "parent_id"
     t.text     "footer"
     t.text     "conditions"
-    t.integer  "seller_id",                default: 1,     null: false
+    t.integer  "seller_id",                 default: 1,     null: false
     t.integer  "condition_id"
-    t.boolean  "unbillable",               default: false, null: false
+    t.boolean  "unbillable",                default: false, null: false
     t.text     "notes"
     t.float    "vat_percentage"
-    t.integer  "vat_in_cents",             default: 0,     null: false
-    t.string   "vat_currency",             default: "CHF", null: false
+    t.integer  "vat_in_cents",              default: 0,     null: false
+    t.string   "vat_currency",              default: "CHF", null: false
     t.string   "alias_name"
+    t.text     "execution_notes"
   end
 
   add_index "affairs", ["alias_name"], name: "index_affairs_on_alias_name", using: :btree
@@ -684,8 +685,8 @@ ActiveRecord::Schema.define(version: 20150102113421) do
     t.string   "cert_others_title",                                     default: "",    null: false
     t.text     "cert_notes",                                            default: "",    null: false
     t.string   "employer_account",                                      default: ""
-    t.text     "comments"
     t.string   "yearly_salary_currency",                                default: "CHF", null: false
+    t.text     "comments"
   end
 
   add_index "salaries", ["is_reference"], name: "index_salaries_on_is_template", using: :btree
@@ -747,7 +748,6 @@ ActiveRecord::Schema.define(version: 20150102113421) do
     t.boolean  "archive",            default: false, null: false
   end
 
-  add_index "salaries_taxes", ["archive"], name: "index_salaries_taxes_on_archive", using: :btree
   add_index "salaries_taxes", ["exporter_avs_group"], name: "index_salaries_taxes_on_exporter_avs_group", using: :btree
   add_index "salaries_taxes", ["exporter_is_group"], name: "index_salaries_taxes_on_exporter_is_group", using: :btree
   add_index "salaries_taxes", ["exporter_lpp_group"], name: "index_salaries_taxes_on_exporter_lpp_group", using: :btree

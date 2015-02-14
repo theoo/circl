@@ -160,6 +160,7 @@ class New extends App.ExtendedController
         description: App.ApplicationSetting.value("affairs_description_placeholder")
         notes: App.ApplicationSetting.value("affairs_notes_placeholder")
         footer: App.ApplicationSetting.value("affairs_footer_placeholder")
+        execution_notes: App.ApplicationSetting.value("affairs_execution_notes_placeholder")
 
       @template.owner_id = @template.buyer_id = @template.receiver_id = @person.id
       @template.owner_name = @template.buyer_name = @template.receiver_name = @person.name

@@ -34,6 +34,7 @@ fr:
       description: description
       document_export: Génération de documents
       estimate: devis
+      execution_notes: notes pour l'exécution
       extras: Extras
       footer: commentaires
       format: format
