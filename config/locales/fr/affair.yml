@@ -31,6 +31,7 @@ fr:
       conditions: conditions
       create_variant: créer une variante
       custom_value_with_taxes: la valeur fixée est TTC
+      description: description
       document_export: Génération de documents
       estimate: devis
       extras: Extras
@@ -40,6 +41,7 @@ fr:
       invoices_count: nombre de factures
       invoices_value: valeur des factures
       new_affair: Nouvelle affaire
+      notes: notes
       owner: propriétaire
       person: contact
       products: Produits

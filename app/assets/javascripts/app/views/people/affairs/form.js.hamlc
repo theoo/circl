@@ -82,36 +82,35 @@
 
         .row
           .col-lg-12
-            .form-group
-              %label{for: 'affair_description'}
-                = I18n.t('common.description')
-              %textarea{name: 'description',
-                        rows: 5,
-                        id: 'affair_description',
-                        class: 'form-control'}
-                = @affair.description
+            %div.panel-group.accordion{id: "accordion-#{@affair.id}", "role" => "tablist",
+              "aria-multiselectable" => "true"}
 
-        .row
-          .col-lg-12
-            .form-group
-              %label{for: 'affair_notes'}
-                = I18n.t('common.notes')
-              %textarea{name: 'notes',
-                        rows: 5,
-                        id: 'affair_notes',
-                        class: 'form-control'}
-                = @affair.notes
+              - # i18n-tasks-use I18n.t("affair.views.description")
+              - # i18n-tasks-use I18n.t("affair.views.notes")
+              - # i18n-tasks-use I18n.t("affair.views.footer")
+              - for col in ['description', 'notes', 'footer']
+                .panel.panel-default
+                  %div.panel-heading{id: "affair-#{col}-heading-#{@affair.id}"}
+                    %h4.panel-title
+                      - classes = ["collapsed"]
+                      - if @affair[col].length == 0
+                        - classes.push("empty")
 
-        .row
-          .col-lg-12
-            .form-group
-              %label{for: 'affair_footer'}
-                = I18n.t('affair.views.footer')
-              %textarea{name: 'footer',
-                        rows: 5,
-                        id: 'affair_footer',
-                        class: 'form-control'}
-                = @affair.footer
+                      %a{"data-toggle" => 'collapse',
+                        "data-parent" => "#accordion-#{@affair.id}",
+                        href: "#affair-#{col}-body-#{@affair.id}",
+                        class: classes.join(" "),
+                        "aria-expanded" => "false",
+                        "aria-controls" => "affair-#{col}-heading-#{@affair.id}"}
+                        = I18n.t("affair.views." + col)
+                  %div.panel-collapse.collapse{id: "affair-#{col}-body-#{@affair.id}",
+                    role: "tabpanel",
+                    "aria-labelledby" => "affair-#{col}-heading-#{@affair.id}"}
+                    .panel-body.form-group
+                      %textarea{name: col,
+                                rows: 5,
+                                class: 'form-control'}
+                        = @affair[col]
 
         .row
           .col-lg-6

@@ -31,6 +31,7 @@ en:
       conditions: conditions
       create_variant: create variant
       custom_value_with_taxes: The fixed value is all taxes included
+      description: description
       document_export: Documents generation
       estimate: estimate
       extras: Extras
@@ -40,6 +41,7 @@ en:
       invoices_count: invoice count
       invoices_value: values of invoices
       new_affair: New affair
+      notes: notes
       owner: owner
       person: contact
       products: Products
