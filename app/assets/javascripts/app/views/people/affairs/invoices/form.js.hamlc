@@ -23,7 +23,7 @@
             %select{name: 'invoice_template_id',
                     id: 'person_affair_invoice_template_id',
                     class: 'required form-control'}
-              - for l in App.InvoiceTemplate.all()
+              - for l in _.sortBy(App.InvoiceTemplate.all(), (c) -> c.title)
                 - if @invoice.invoice_template_id == l.id
                   %option{value: l.id, selected: true}= l.title
                 - else
