@@ -21,7 +21,7 @@ module ControllerExtentions
             if t.estimate
               desc += "<i>" + I18n.t("affair.views.estimate") + "</i> - "
             end
-            desc += t.try(:owner).try(:name)
+            desc += t.try(:owner).try(:name).to_s
             desc += "<br />" + t.description.exerpt unless t.description.blank?
 
             { id: t.id,
