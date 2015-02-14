@@ -157,7 +157,7 @@
                   step: 0.01,
                   id: "person_affair_product_value",
                   class: 'form-control required',
-                  min: 0,
+                  max: -99999999.99,
                   max: 99999999.99,
                   name: 'value',
                   value: @product.value }
