@@ -20,6 +20,7 @@ en:
         edit_affair: edit affair
         preview_in_new_tab: preview in new tab
         show_owner: show owner's page
+      affair_number: Affair n°%{number}
       alias_name: alias
       arts: ART
       available_statuses: available statuses
@@ -38,6 +39,7 @@ en:
       invoices: Invoices
       invoices_count: invoice count
       invoices_value: values of invoices
+      new_affair: New affair
       owner: owner
       person: contact
       products: Products

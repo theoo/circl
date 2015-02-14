@@ -7,6 +7,13 @@
     .row
       .col-md-6
         .row
+          .col-sm-12.visible-lg
+            %h2.panel-fat-title
+              - if @affair.id
+                = I18n.t("affair.views.affair_number", number: @affair.id)
+              - else
+                = I18n.t("affair.views.new_affair")
+        .row
           .col-sm-12
             .form-group
               %label{for: 'affair_title'}

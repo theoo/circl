@@ -20,6 +20,7 @@ fr:
         edit_affair: modifier l'affaire
         preview_in_new_tab: prévisualiser dans un nouvel onglet
         show_owner: consulter la page du propriétaire
+      affair_number: Affaire n°%{number}
       alias_name: alias
       arts: TAR
       available_statuses: status disponibles
@@ -38,6 +39,7 @@ fr:
       invoices: Factures
       invoices_count: nombre de factures
       invoices_value: valeur des factures
+      new_affair: Nouvelle affaire
       owner: propriétaire
       person: contact
       products: Produits
