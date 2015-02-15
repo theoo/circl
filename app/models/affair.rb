@@ -317,16 +317,18 @@ class Affair < ActiveRecord::Base
     tasks_real_value - tasks_value
   end
 
-  def product_items_value
-    product_items.map{|p| p.bid_price.to_money(value_currency)}.sum.to_money
+  def product_items_value(category_name = nil)
+    pi = category_name ? product_items_for_category(category_name) : product_items
+    pi.map{|p| p.bid_price.to_money(value_currency)}.sum.to_money
   end
 
-  def product_items_real_value
-    product_items.map{|p| p.value.to_money(value_currency)}.sum.to_money
+  def product_items_real_value(category_name = nil)
+    pi = category_name ? product_items_for_category(category_name) : product_items
+    pi.map{|p| p.value.to_money(value_currency)}.sum.to_money
   end
 
-  def product_items_bid_value
-    product_items_real_value - product_items_value
+  def product_items_bid_value(category_name = nil)
+    product_items_real_value(category_name) - product_items_value(category_name)
   end
 
   def extras_value
@@ -341,10 +343,11 @@ class Affair < ActiveRecord::Base
     (balance_value > 0) ? balance_value : 0.to_money
   end
 
-  def arts_value
+  def arts_value(category_name = nil)
+    pi = category_name ? product_items_for_category(category_name) : product_items
     # See AffairsProductsProgram#variant definition
     sum = 0.to_money
-    product_items.each do |i|
+    pi.each do |i|
       v = i.variant
       sum += v.art.to_money(value_currency) * i.quantity if v
     end
