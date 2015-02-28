@@ -72,7 +72,7 @@ class Permission < ActiveRecord::Base
     begin
       subject.constantize
     rescue
-      logger.warn "Permission: caught exception while constantizing #{subject}"
+      logger.warn "Permission: caught exception while constantizing #{subject}" if Rails.env == "development"
       subject
     end
   end
