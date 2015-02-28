@@ -307,9 +307,19 @@ class Index extends App.ExtendedController
 
     @toggle_group_edit_button()
 
+    # Scroll to the previous selected element
+    tab = $("#person_affairs_products_nav li[data-id='#{@last_category_id}'] a")
+    tab.click()
+    active_table = @el.find(".tab-pane.active .datatable_wrapper")
+    last_item = active_table.find("tr[data-id='#{@last_id}']")
+    if last_item.length > 0
+      active_table.scrollTop(active_table.scrollTop() + last_item.position().top)
+
   edit: (e) ->
     @id = $(e.target).product_id()
     @activate_in_list e.target
+    @last_id = @id
+    @last_category_id = $("#person_affairs_products_nav li.active").data("id")
     @trigger 'edit', @id
 
   table_redraw: =>
