@@ -10,7 +10,7 @@
     .col-lg-12
       - if @products.is_a? String
         .alert.alert-danger
-          .btn.btn-primary
+          = link_to settings_path(anchor: 'affairs'), class: 'btn btn-primary' do
             .icon.icon-chevron-left
             = I18n.t("common.previous")
           = @products
