@@ -31,6 +31,9 @@ en:
       value_in_cents: value in cents
     views:
       affair: affair
+      affairs_found:
+        one: "%{count} affair found"
+        other: "%{count} affairs found"
       duration: duration
       duration_help: duration help
       end_date: end date

@@ -42,6 +42,9 @@ module CIRCL
     config.autoload_paths += %W(#{config.root}/lib/)
     # config.autoload_paths += Dir["#{config.root}/lib/**/"]
 
+    # Precision for bootstrap
+    Sass::Script::Number.precision = 8
+
     # Enable the asset pipeline
     config.assets.enabled = true
 

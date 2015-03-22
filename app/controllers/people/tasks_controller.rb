@@ -30,7 +30,7 @@ class People::TasksController < ApplicationController
     authorize! :index, ::Task
 
     respond_to do |format|
-      format.json { render json: ExecutedTasksDatatable.new(view_context, @person) }
+      format.json { render json: CreatedTasksDatatable.new(view_context, @person) }
     end
   end
 
@@ -41,7 +41,7 @@ class People::TasksController < ApplicationController
   def create
     authorize! :create, ::Task
     @task = ::Task.new(params[:task])
-    @task.executer_id = current_person.id
+    @task.creator_id = current_person.id
     @task.value = params[:value] if params[:value]
 
     respond_to do |format|

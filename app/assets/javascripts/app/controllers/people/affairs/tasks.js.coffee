@@ -135,6 +135,8 @@ class Edit extends App.TimesheetExtention
     @task.end_time = @float_to_time(st + (@task.duration / 60))
 
     super
+    @owner_button.attr('disabled', false)
+    @affair_button.attr('disabled', false)
 
   submit: (e) ->
     e.preventDefault()

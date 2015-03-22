@@ -27,7 +27,10 @@ module ControllerExtentions
             { id: t.id,
               title: t.id.to_s,
               label: t.title,
-              desc: desc }}
+              desc: desc,
+              owner_id: t.owner_id,
+              owner_name: t.owner.try(:name) }
+          }
         end
       end
     end

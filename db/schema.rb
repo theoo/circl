@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150214143927) do
+ActiveRecord::Schema.define(version: 20150322170738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -952,9 +952,11 @@ ActiveRecord::Schema.define(version: 20150214143927) do
     t.string   "value_currency",           default: "CHF", null: false
     t.integer  "salary_id"
     t.datetime "start_date"
+    t.integer  "creator_id"
   end
 
   add_index "tasks", ["affair_id"], name: "index_tasks_on_affair_id", using: :btree
+  add_index "tasks", ["creator_id"], name: "index_tasks_on_creator_id", using: :btree
   add_index "tasks", ["duration"], name: "index_tasks_on_duration", using: :btree
   add_index "tasks", ["executer_id"], name: "index_tasks_on_executer_id", using: :btree
   add_index "tasks", ["salary_id"], name: "index_tasks_on_salary_id", using: :btree

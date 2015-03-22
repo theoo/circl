@@ -16,9 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# NOTE currently unused
-
-class ExecutedTasksDatatable
+class CreatedTasksDatatable
   delegate :params, :h, :link_to, :number_to_currency, to: :@view
 
   include ApplicationHelper
@@ -34,7 +32,7 @@ class ExecutedTasksDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: @person.executed_tasks.count,
+      iTotalRecords: @person.created_tasks.count,
       iTotalDisplayRecords: tasks.total_entries,
       aaData: data
     }
@@ -81,7 +79,7 @@ class ExecutedTasksDatatable
   end
 
   def fetch_tasks
-    tasks = @person.executed_tasks.order("#{sort_column} #{sort_direction}").limit(100)
+    tasks = @person.created_tasks.order("#{sort_column} #{sort_direction}").limit(100)
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       param = "^#{param}"

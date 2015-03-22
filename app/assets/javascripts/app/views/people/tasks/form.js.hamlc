@@ -4,31 +4,42 @@
       .validation_errors_placeholder
 
   #task_owner_affair.row
-    .col-lg-6.col-md-6.col-sm-6.autocompleted.form-group
+    .col-lg-6.col-md-6.col-sm-6
       %label{for: 'task_owner'}
         = I18n.t('task.views.owner')
-      %input{type: 'search',
-             name: 'owner',
-             id: 'task_owner',
-             class: 'required form-control',
-             value: @task.owner_name,
-             action: '/people/search'}
-      %input{type: 'hidden',
-             name: 'owner_id',
-             value: @task.owner_id}
+      .autocompleted.input-group
+        %input{type: 'search',
+               name: 'owner',
+               id: 'task_owner',
+               class: 'required form-control',
+               value: @task.owner_name,
+               action: '/people/search'}
+        %input{type: 'hidden',
+               name: 'owner_id',
+               value: @task.owner_id}
+        .input-group-btn
+          %a.btn.btn-default{href: "/people/#{@task.owner_id}", disabled: true}
+            .icon-play
 
-    .col-lg-6.col-md-6.col-sm-6.autocompleted.form-group
+    .col-lg-6.col-md-6.col-sm-6
       %label{for: 'task_affair'}
         = I18n.t('task.views.affair')
-      %input{type: 'search',
-             name: 'affair',
-             id: 'task_affair',
-             class: 'required form-control',
-             value: @task.affair_title,
-             action: '/nowhere'}
-      %input{type: 'hidden',
-             name: 'affair_id',
-             value: @task.affair_id}
+      .autocompleted.input-group
+        %input{type: 'search',
+               name: 'affair',
+               id: 'task_affair',
+               class: 'required form-control',
+               value: @task.affair_title,
+               action: '/admin/affairs/search'}
+        %input{type: 'hidden',
+               name: 'affair_id',
+               value: @task.affair_id}
+        .input-group-btn
+          %a.btn.btn-default{href: "/people/#{@task.owner_id}#affairs/#{@task.affair_id}", disabled: true}
+            .icon-play
+
+      %small#affairs_count.help-block
+        = I18n.t("task.views.affairs_found", count: gon.affairs_count)
 
   %fieldset#timesheet
     .row
@@ -127,7 +138,7 @@
 
         %small.help-block
           - if @task.value != @task.computed_value
-            = I18n.t("task.notices.computed_value_is", {value: @task.computed_value.to_view(@task.computed_value_currency)})
+            = I18n.t("task.notices.computed_value_is", {value: @task.computed_value?.to_view(@task.computed_value_currency)})
           - else
             = I18n.t("task.notices.the_value_is_automaticaly_computed")
 

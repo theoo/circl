@@ -256,11 +256,9 @@ class PeopleController < ApplicationController
     end
 
     a = results.map do |p|
-      if p.is_an_organization
-        { label: p.name, title: p.full_name, desc: p.full_address, id: p.id }
-      else
-        { label: p.name, desc: p.full_address, id: p.id }
-      end
+      h = { label: p.name, desc: p.full_address, id: p.id, affairs_count: p.affairs.count }
+      h[:title] = p.full_name if p.is_an_organization
+      h
     end
 
 

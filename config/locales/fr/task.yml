@@ -31,6 +31,9 @@ fr:
       value_in_cents: valeur en centimes
     views:
       affair: affaire
+      affairs_found:
+        one: "une affaire trouvée"
+        other: "%{count} affaires trouvées"
       duration: durée
       duration_help: en minutes
       end_date: date de fin

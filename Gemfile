@@ -46,6 +46,8 @@ gem 'coffee-rails', '4.0.1'
 gem 'jquery-turbolinks', '2.0.2'
 gem 'turbolinks', '2.2.2'
 
+gem 'gon'
+
 # gem 'jbuilder'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.12.1', platforms: :ruby
@@ -110,7 +112,6 @@ end
 # gem 'icalendar'
 
 # Misc
-# gem 'gon'
 
 # group :doc do
 #   # bundle exec rake doc:rails generates the API under doc/api.

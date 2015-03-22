@@ -243,6 +243,10 @@ class Person < ActiveRecord::Base
             foreign_key: 'executer_id',
             dependent: :destroy
 
+  has_many  :created_tasks,
+            class_name: '::Task',
+            foreign_key: 'creator_id'
+
   # tasks made for this person, the client
   has_many  :tasks,
             through: :affairs

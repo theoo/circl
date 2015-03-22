@@ -26,6 +26,9 @@ class People::DashboardController < ApplicationController
     authorize! :dashboard_index, @person
     @person = params[:id] ? Person.find(params[:id]) : current_person
 
+    # TODO Count only accessible affairs
+    gon.affairs_count = Affair.count
+
     respond_to do |format|
       format.html { render layout: 'application' }
     end

@@ -48,7 +48,6 @@ class New extends App.TimesheetExtention
 
     super
 
-    @disable_affair_selection()
     @disable_timesheet()
     @disable_submit()
 

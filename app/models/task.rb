@@ -69,8 +69,12 @@ class Task < ActiveRecord::Base
   belongs_to  :affair
   # made for this person
   has_one     :owner, through: :affair
-  # made by this person
+
+  # whom actually made the service
   belongs_to  :executer, class_name: 'Person'
+  # whom created the task
+  belongs_to  :creator, class_name: 'Person'
+
   belongs_to  :task_type
   belongs_to  :salary, class_name: 'Salaries::Salary'
 
@@ -109,9 +113,12 @@ class Task < ActiveRecord::Base
     h = super(options)
     h[:task_type_title]         = task_type.try(:title)
     h[:affair_title]            = affair.try(:title)
+    h[:owner_id]                = owner.try(:id)
     h[:owner_name]              = owner.try(:name)
     h[:executer_id]             = executer.try(:id)
     h[:executer_name]           = executer.try(:name)
+    h[:creator_id]              = creator.try(:id)
+    h[:creator_name]            = creator.try(:name)
     h[:duration_in_words]       = translated_duration
     h[:value]                   = value.to_f
     h[:value_currency]          = value.currency.try(:iso_code)

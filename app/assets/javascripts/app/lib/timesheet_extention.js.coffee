@@ -29,8 +29,12 @@ class App.TimesheetExtention extends App.ExtendedController
     ### Field variables ###
     @owner_field = @el.find("input[name='owner']")
     @owner_id_field = @el.find("input[name='owner_id']")
+    @owner_button = @owner_field.parent(".autocompleted").find(".input-group-btn .btn")
+
     @affair_field = @el.find("input[name='affair']")
     @affair_id_field = @el.find("input[name='affair_id']")
+    @affair_help_block = @el.find("#affairs_count")
+    @affair_button = @affair_field.parent(".autocompleted").find(".input-group-btn .btn")
 
     @slider_div = @el.find(".timesheet_timeline")
 
@@ -49,15 +53,21 @@ class App.TimesheetExtention extends App.ExtendedController
     # client is cleared
     @owner_field.on 'keyup search', (e) =>
       if $(e.target).val() == ''
-        @disable_affair_selection()
+        @reset_affairs_search_url()
         @disable_timesheet()
         @disable_submit()
+        @owner_button.attr('disabled', true)
+        @affair_button.attr('disabled', true)
 
     # client is selected
     @owner_field.autocomplete('option', 'select', (e, ui) =>
       @owner_id_field.val ui.item.id
       @set_affairs_search_url(ui.item.id)
-      @enable_affair_selection()
+      @affair_help_block.html I18n.t("task.views.affairs_found", count: ui.item.affairs_count)
+      @affair_help_block.effect('highlight')
+
+      @owner_button.attr('href', "/people/#{ui.item.id}")
+      @owner_button.attr('disabled', false)
     )
 
     # affair is cleared
@@ -65,12 +75,21 @@ class App.TimesheetExtention extends App.ExtendedController
       if $(e.target).val() == ''
         @disable_timesheet()
         @disable_submit()
+        @affair_button.attr('disabled', true)
 
     # affair is selected
     @affair_field.autocomplete('option', 'select', (e, ui) =>
+      @owner_id_field.val ui.item.owner_id
+      @owner_field.val ui.item.owner_name
+      @owner_button.attr('href', "/people/#{ui.item.owner_id}")
+      @owner_button.attr('disabled', false)
+
       @affair_id_field.val ui.item.id
       @enable_submit()
       @enable_timesheet()
+
+      @affair_button.attr('href', "/people/#{ui.item.owner_id}#affairs/#{ui.item.id}")
+      @affair_button.attr('disabled', false)
     )
 
     ### Load slider ###
@@ -83,36 +102,18 @@ class App.TimesheetExtention extends App.ExtendedController
   set_affairs_search_url: (id) ->
     @affair_field.autocomplete({source: '/people/' + id + '/affairs/search'})
 
-  disable_affair_selection: ->
+  reset_affairs_search_url: ->
     @affair_field.val("")
-    @affair_id_field.val(null)
-    @affair_field.prop('disabled', true)
+    @affair_field.autocomplete({source: '/admin/affairs/search'})
 
   disable_timesheet: ->
     $("#timesheet").prop('disabled', true)
-    # @date_field.prop('disabled', true)
-    # @start_field.prop('disabled', true)
-    # @end_field.prop('disabled', true)
-    # @duration_field.prop('disabled', true)
-    # @value_field.prop('disabled', true)
-    # @task_type_field.prop('disabled', true)
-    # @description_field.prop('disabled', true)
 
   disable_submit: ->
     @update_button.addClass('disabled')
 
-  enable_affair_selection: ->
-    @affair_field.removeAttr('disabled')
-
   enable_timesheet: ->
     $("#timesheet").removeAttr('disabled')
-    # @date_field.removeAttr('disabled')
-    # @start_field.removeAttr('disabled')
-    # @end_field.removeAttr('disabled')
-    # @duration_field.removeAttr('disabled')
-    # @value_field.removeAttr('disabled')
-    # @task_type_field.removeAttr('disabled')
-    # @description_field.removeAttr('disabled')
 
   enable_submit: ->
     @update_button.removeClass('disabled')
