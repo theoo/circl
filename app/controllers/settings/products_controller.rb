@@ -107,7 +107,7 @@ class Settings::ProductsController < ApplicationController
           'variants[13].try(:program_group)',
           'variants[14].try(:program_group)',
           'variants[15].try(:program_group)',
-          'variants.map{|v| v.selling_price.try(:currency).try(:iso_code)}.try(:uniq).try(:join, ",")',
+          'variants.first.try(:selling_price).try(:currency).try(:iso_code)',
           :provider_id,
           :after_sale_id,
           :category,
