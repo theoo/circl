@@ -53,6 +53,7 @@ en:
       bid_price: bid price
       buying_prices: buying prices
       category: category
+      clear_variants: Clear existing variants before importing updates.
       comments: comments
       confirmed_at: confirmation date
       delivery_at: delivery date
@@ -64,6 +65,7 @@ en:
       import_products: import products
       key: key
       normal_price: normal price
+      options: Options
       ordered_at: order date
       position: position
       price_definitions: prices definitions

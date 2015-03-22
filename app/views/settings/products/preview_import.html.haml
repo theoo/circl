@@ -74,8 +74,9 @@
                       'data-trigger' => 'click',
                       'data-title' => (p.errors.size.to_s + " " + I18n.t("common.errors.error") + "(s)"),
                       'data-html' => true,
+                      'data-placement' => 'auto center',
+                      'data-container' => "body",
                       'data-line' => line,
-                      'data-placement' => 'auto right',
                       'data-content' => raw(error_msg.join(" | "))}
 
                       %td= line
@@ -169,6 +170,13 @@
                           - %w(program_group buying_price selling_price art).each do |col|
                             %td{class: col}
                               = check_box_tag "skip_columns[]", [col, row].join("_")
+
+              %h3= I18n.t("product.views.options")
+
+              .checkbox
+                %label{for: 'person_remember_me', class: 'inline'}
+                  = check_box_tag "clear_variants", 1
+                  = I18n.t('product.views.clear_variants')
 
             .panel-footer
               .text-right

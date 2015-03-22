@@ -328,11 +328,10 @@ class Settings::ProductsController < ApplicationController
     authorize! :import, Product
     file = session[:product_file_data]
 
-    @products, @columns = Product.parse_csv(file, params[:lines], params[:skip_columns], true)
+    @products, @columns = Product.parse_csv(file, params[:lines], params[:skip_columns], params[:clear_variants], true)
 
     success = false
     Product.transaction do
-
       @products.each do |p|
         raise ActiveRecord::Rollback unless p.save
       end

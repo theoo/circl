@@ -59,8 +59,9 @@ class Product < ActiveRecord::Base
   belongs_to :provider, class_name: 'Person'
   belongs_to :after_sale, class_name: 'Person'
 
-  has_many :variants, class_name: 'ProductVariant',
-                      dependent: :destroy
+  has_many :variants, -> { order(:program_group) },
+    class_name: 'ProductVariant',
+    dependent: :destroy
 
   has_many :product_items, class_name: 'AffairsProductsProgram',
                            dependent: :destroy
@@ -132,7 +133,7 @@ class Product < ActiveRecord::Base
     self.unit_symbol
   end
 
-  def self.parse_csv(file, lines = [], skip_columns = [], do_record = false)
+  def self.parse_csv(file, lines = [], skip_columns = [], clear_variants = false, do_record = false)
     products = []
     # in case argument nil is sent
     lines ||= []
@@ -266,6 +267,7 @@ class Product < ActiveRecord::Base
 
           # Check existance of product_programs
           updated_prices = []
+          prod.variants = [] if clear_variants
           16.times do |t|
             t = t + 1
 

@@ -53,6 +53,7 @@ fr:
       bid_price: prix avec remise
       buying_prices: prix d'achat
       category: catégorie
+      clear_variants: Supprimer les variantes existantes avant d'importer les mises à jour.
       comments: commentaires
       confirmed_at: confirmation
       delivery_at: livraison
@@ -64,6 +65,7 @@ fr:
       import_products: Importer des produits
       key: clé
       normal_price: prix normal
+      options: Options
       ordered_at: commande
       position: position
       price_definitions: Définitions des prix
