@@ -53,44 +53,25 @@ class App.TimesheetExtention extends App.ExtendedController
     # client is cleared
     @owner_field.on 'keyup search', (e) =>
       if $(e.target).val() == ''
-        @reset_affairs_search_url()
-        @disable_timesheet()
-        @disable_submit()
-        @owner_button.attr('disabled', true)
-        @affair_button.attr('disabled', true)
+        @disable_owner()
 
     # client is selected
-    @owner_field.autocomplete('option', 'select', (e, ui) =>
-      @owner_id_field.val ui.item.id
-      @set_affairs_search_url(ui.item.id)
-      @affair_help_block.html I18n.t("task.views.affairs_found", count: ui.item.affairs_count)
-      @affair_help_block.effect('highlight')
-
-      @owner_button.attr('href', "/people/#{ui.item.id}")
-      @owner_button.attr('disabled', false)
-    )
+    @owner_field.autocomplete('option', 'select', (e, ui) => @enable_owner(ui.item) )
 
     # affair is cleared
     @affair_field.on 'keyup search', (e) =>
       if $(e.target).val() == ''
-        @disable_timesheet()
-        @disable_submit()
-        @affair_button.attr('disabled', true)
+        @disable_affair()
 
     # affair is selected
-    @affair_field.autocomplete('option', 'select', (e, ui) =>
-      @owner_id_field.val ui.item.owner_id
-      @owner_field.val ui.item.owner_name
-      @owner_button.attr('href', "/people/#{ui.item.owner_id}")
-      @owner_button.attr('disabled', false)
+    @affair_field.autocomplete('option', 'select', (e, ui) => @enable_affair(ui.item) )
 
-      @affair_id_field.val ui.item.id
-      @enable_submit()
-      @enable_timesheet()
+    # Onload, check if owner or affair are set
+    if @owner_id_field.val() != "" and @owner_field.val() != ""
+      @enable_owner({ id: @owner_id_field.val() })
 
-      @affair_button.attr('href', "/people/#{ui.item.owner_id}#affairs/#{ui.item.id}")
-      @affair_button.attr('disabled', false)
-    )
+    if @affair_id_field.val() != "" and @affair_field.val() != ""
+      @enable_affair({ id: @affair_id_field.val(), owner_id: @owner_id_field.val() })
 
     ### Load slider ###
     @slider_div
@@ -98,6 +79,40 @@ class App.TimesheetExtention extends App.ExtendedController
     @el.find(".slider").width("100%")
 
     @update_task_type_description()
+
+  enable_owner: (item) ->
+    @owner_id_field.val item.id
+    @set_affairs_search_url(item.id)
+    @affair_help_block.html I18n.t("task.views.affairs_found", count: item.affairs_count)
+    @affair_help_block.effect('highlight')
+
+    @owner_button.attr('href', "/people/#{item.id}")
+    @owner_button.attr('disabled', false)
+
+  disable_owner: ->
+    @reset_affairs_search_url()
+    @disable_timesheet()
+    @disable_submit()
+    @owner_button.attr('disabled', true)
+    @affair_button.attr('disabled', true)
+
+  enable_affair: (item) ->
+    @owner_id_field.val item.owner_id
+    @owner_field.val item.owner_name
+    @owner_button.attr('href', "/people/#{item.owner_id}")
+    @owner_button.attr('disabled', false)
+
+    @affair_id_field.val item.id
+    @enable_submit()
+    @enable_timesheet()
+
+    @affair_button.attr('href', "/people/#{item.owner_id}#affairs/#{item.id}")
+    @affair_button.attr('disabled', false)
+
+  disable_affair: ->
+    @disable_timesheet()
+    @disable_submit()
+    @affair_button.attr('disabled', true)
 
   set_affairs_search_url: (id) ->
     @affair_field.autocomplete({source: '/people/' + id + '/affairs/search'})
