@@ -115,11 +115,6 @@ class AffairsProductsProgram < ActiveRecord::Base
     true
   end
 
-  def self.uberlog()
-    return if Rails.env != "development"
-    @unique_logger ||= ActiveSupport::Logger.new("#{Rails.root}/log/uberdebug.log")
-  end
-
   ########################
   ### INSTANCE METHODS ###
   ########################
@@ -165,25 +160,22 @@ class AffairsProductsProgram < ActiveRecord::Base
   def as_json(options = nil)
     h = super(options)
 
-    # NOTE currently products currency is forced to affair currency
-    affair_currency = affair.try(:value).try(:currency).try(:iso_code)
-
     h[:program_key]             = program.try(:key)
     h[:parent_key]              = parent.try(:product).try(:key)
     h[:has_accessories]         = product.try(:has_accessories)
     h[:key]                     = product.try(:key)
     h[:title]                   = variant.title.blank? ? product.title : [product.title, variant.title].join(" / ")
     h[:description]             = product.try(:description)
-    h[:unit_price]              = unit_price.to_money(affair_currency).try(:to_f)
-    h[:unit_price_currency]     = affair_currency
-    h[:value]                   = value.to_money(affair_currency).to_f
-    h[:value_currency]          = affair_currency
-    h[:bid_price]               = bid_price.to_money(affair_currency).to_f
-    h[:bid_price_currency]      = affair_currency
-    h[:computed_value]          = compute_value.to_money(affair_currency).to_f
-    h[:computed_value_currency] = affair_currency
-    h[:art]                     = variant ? variant.art.to_money(affair_currency).to_f : nil
-    h[:art_currency]            = affair_currency
+    h[:unit_price]              = unit_price.try(:to_f)
+    h[:unit_price_currency]     = unit_price.currency.try(:iso_code)
+    h[:value]                   = value.to_f
+    h[:value_currency]          = value.currency.try(:iso_code)
+    h[:bid_price]               = bid_price.to_f
+    h[:bid_price_currency]      = bid_price.currency.try(:iso_code)
+    h[:computed_value]          = compute_value.to_f
+    h[:computed_value_currency] = compute_value.currency.try(:iso_code)
+    h[:art]                     = variant ? variant.art.to_f : nil
+    h[:art_currency]            = variant ? variant.art.currency.try(:iso_code) : nil
     h[:unit_symbol]             = product.try(:unit_symbol)
     h[:category]                = category.try(:title)
     h[:provider_name]           = product.try(:provider).try(:name)
@@ -209,7 +201,7 @@ class AffairsProductsProgram < ActiveRecord::Base
   # The value of an item depends on its variant and its program
   # An item may not have value (free accessories)
   def compute_value
-    unit_price * quantity
+    (unit_price * quantity).to_money(value_currency)
   end
 
   def unit_price
@@ -250,7 +242,8 @@ class AffairsProductsProgram < ActiveRecord::Base
   private
 
   def update_value
-    self.value = compute_value
+    original_currency = self.value_currency
+    self.value = compute_value.to_money(original_currency)
   end
 
   def uniquness_of_jointure
