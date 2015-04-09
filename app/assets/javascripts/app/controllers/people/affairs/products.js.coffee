@@ -223,6 +223,7 @@ class Edit extends PersonAffairProductExtention
   reset_value: (e) ->
     e.preventDefault()
     @el.find("#person_affair_product_value").val @product.computed_value
+    @el.find("[name='value_currency']").val @product.computed_value_currency
 
   clear_value: (e) ->
     e.preventDefault()
