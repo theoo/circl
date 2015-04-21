@@ -161,7 +161,11 @@ class PeopleController < ApplicationController
     # this redirection should not be possible through routes.rb
 
     #redirect_to dashboard_person_path(current_person)
-    redirect_to person_dashboard_index_path(current_person)
+    if can? :dashboard_index, current_person
+      redirect_to person_dashboard_index_path(current_person)
+    else
+      redirect_to person_path(current_person)
+    end
   end
 
   def change_password
