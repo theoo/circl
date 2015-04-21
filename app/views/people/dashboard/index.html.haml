@@ -45,19 +45,19 @@
               = I18n.t('person.dashboard.panels.timesheet')
 
       // TODO reimplement change tracker first
-      / - if can? :read, @person => Activity
+      / - if can? :dashboard_activities, @person
       /   #dashboard_activity.panel.panel-default
       /     .panel-heading
       /       .panel-title
       /         = I18n.t('person.dashboard.panels.your_activity')
 
-      - if can? :read, @person => Affair
+      - if can? :dashboard_current_affairs, @person
         #dashboard_current_affairs.panel.panel-default
           .panel-heading
             .panel-title
               = I18n.t('person.dashboard.panels.current_affairs')
 
-      - if can? :read, @person => Salaries::Salary
+      - if can? :dashboard_open_salaries, @person
         #dashboard_open_salaries.panel.panel-default
           .panel-heading
             .panel-title
@@ -78,19 +78,19 @@
             .panel-title
               = I18n.t('person.dashboard.panels.background_tasks')
 
-      - if can? :read, @person => Comment
+      - if can? :dashboard_comments, @person
         #dashboard_comments.panel.panel-default
           .panel-heading
             .panel-title
               = I18n.t('person.dashboard.panels.last_comments')
 
-      - if can? :read, @person => Invoice
+      - if can? :dashboard_open_invoices, @person
         #dashboard_open_invoices.panel.panel-default
           .panel-heading
             .panel-title
               = I18n.t('person.dashboard.panels.open_invoices')
 
-      - if can? :read, @person => Directory
+      - if can? :dashboard_last_people_added, @person
         #dashboard_last_people_added.panel.panel-default
           .panel-heading
             .panel-title
