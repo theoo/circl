@@ -5,10 +5,12 @@
     %pre= @invoice.invoice_template.bvr_address.to_s
   .bvr_organisation_address2
     %pre= @invoice.invoice_template.bvr_address.to_s
-  .bvr_member_address1= simple_format(@invoice.printed_address)
-  .bvr_member_address2= simple_format(@invoice.printed_address)
-  .bvr_account1= @invoice.invoice_template.bvr_account.to_s
-  .bvr_account2= @invoice.invoice_template.bvr_account.to_s
+  .bvr_member_address1
+    %pre= @invoice.printed_address
+  .bvr_member_address2
+    %pre= @invoice.printed_address
+  .bvr_account1= simple_format(@invoice.invoice_template.bvr_account)
+  .bvr_account2= simple_format(@invoice.invoice_template.bvr_account)
   - if @invoice.invoice_template.show_invoice_value
     / FIXME Not DRY
     .bvr_value1
