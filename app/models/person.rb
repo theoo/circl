@@ -630,6 +630,16 @@ class Person < ActiveRecord::Base
     end
   end
 
+  def address_name_with_title
+    if is_an_organization
+      names = [organization_name]
+      names << [title, full_name].join(' ').strip unless full_name.blank?
+      names.join("\n")
+    else
+      [title, full_name].join(' ').strip
+    end
+  end
+
   def address_for_bvr
     [address_name, full_address].join("\n")
   end
