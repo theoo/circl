@@ -21,7 +21,7 @@ fr:
       invoice_value: valeur de la facture
       offered: offerte
       owner: propriétaire
-      printed_address: adresse imprimée
+      printed_address: adresse imprimée sur le BVR
       receiver: receveur
       select_generation_interval: Sélectionner l'intervalle d'émission
       status: statut

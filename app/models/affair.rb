@@ -157,7 +157,7 @@ class Affair < ActiveRecord::Base
   money :value
   money :vat
 
-  scope :open_affairs, -> {
+  scope :open, -> {
     mask = Affair.statuses_value_for(:to_be_billed)
     where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
   }
@@ -489,7 +489,6 @@ class Affair < ActiveRecord::Base
     Person.where(id: p)
   end
 
-
   # This method returns product_items ordered by its current positions and ensure
   # parent/children numerotation is respected.
   # It can take an array of product_items and sort it.
@@ -542,6 +541,13 @@ class Affair < ActiveRecord::Base
       dates.delete(nil)
       dates
     end
+  end
+
+  # recusive!
+  def parents(s = self)
+    parents = [s]
+    parents << parents(s.parent) if s.parent
+    parents.flatten
   end
 
   private

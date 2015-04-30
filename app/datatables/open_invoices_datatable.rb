@@ -31,7 +31,7 @@ class OpenInvoicesDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: Invoice.open_invoices.count,
+      iTotalRecords: Invoice.open.count,
       iTotalDisplayRecords: invoices.total_entries,
       aaData: data
     }
@@ -78,7 +78,7 @@ class OpenInvoicesDatatable
   end
 
   def fetch_invoices
-    invoices = Invoice.open_invoices.select('invoices.*')
+    invoices = Invoice.open.select('invoices.*')
                     .joins(:affair)
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes

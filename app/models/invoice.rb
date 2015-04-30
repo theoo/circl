@@ -124,10 +124,19 @@ class Invoice < ActiveRecord::Base
   money :value
   money :vat
 
-  scope :open_invoices, -> {
+  scope :open, -> {
     mask = Invoice.statuses_value_for(:open)
-    where("(invoices.status::bit(16) & ?::bit(16))::int = ? AND invoices.created_at < now()",
-      mask, mask)
+    where("(invoices.status::bit(16) & ?::bit(16))::int = ? AND invoices.created_at < now()", mask, mask)
+  }
+
+  scope :billable, -> {
+    mask = Invoice.statuses_value_for(:cancelled)
+    where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+  }
+
+  scope :unbillable, -> {
+    mask = Invoice.statuses_value_for(:cancelled)
+    where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
   }
 
   alias_method :template, :invoice_template
@@ -384,6 +393,18 @@ class Invoice < ActiveRecord::Base
   # Placeholder proxy
   def affair_receipts
     affair.receipts
+  end
+
+  # TODO SQL
+  def parent_invoices_from_subscriptions
+    parent_affairs = subscriptions.map{|s| s.parents.map{|sub| sub.affairs.where(owner: owner)} }.flatten
+    parent_affairs.map{|a| a.invoices }.flatten.sort_by(&:created_at)
+  end
+
+  # TODO SQL
+  def parent_invoices_from_affairs
+    parent_affairs = affair.parents
+    parent_affairs.map{|a| a.invoices }.flatten.sort_by(&:created_at)
   end
 
   protected
