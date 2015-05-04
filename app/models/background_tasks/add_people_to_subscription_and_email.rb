@@ -60,14 +60,20 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
           next
         end
 
+        # Set default owner/buyer/receiver
+        owner    = p
+        buyer    = p
+        receiver = p
+
         # Depending on the status of this subscription, copy
         # former affair's owner/buyer/receiver
         if ! options[:status].blank? # 'renewal' or 'reminder'
           ref_affair = p.affairs
                         .joins(:subscriptions)
                         .where('subscription_id in (?)', parent_and_reminders)
-                        .first
+                        .last
           if ref_affair
+            # Override owner/buyer/receiver
             owner    = ref_affair.owner
             buyer    = ref_affair.buyer
             receiver = ref_affair.receiver
@@ -76,11 +82,6 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
              #{options[:parent_subscription_id]} and person #{p.id}."
           end
         end
-
-        # If no owner/buyer/receiver were defined, set defaults
-        owner    ||= p
-        buyer    ||= p
-        receiver ||= p
 
         a = p.affairs.create!(title: subscription.title,
                               owner: owner,
