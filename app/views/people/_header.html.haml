@@ -51,9 +51,20 @@
       .pull-right
         .navbar-right.btn-group
           - if can? :change_password, @person and ! @person.new_record?
+            - classes = %w(btn btn-default navbar-btn)
+            - classes << 'btn-warning' unless @person.locked_at.nil?
+            = link_to unlock_person_path(@person),
+                method: 'post',
+                class: classes,
+                disabled: @person.locked_at.nil? do
+              .icon-unlock
+              .hidden-inline-sm.hidden-inline-xs
+                = I18n.t('person.views.unlock_account')
+
+          - if can? :change_password, @person and ! @person.new_record?
             = link_to change_password_person_path(@person),
                 class: 'btn btn-default navbar-btn' do
-              .icon-lock
+              .icon-key
               .hidden-inline-sm.hidden-inline-xs
                 = I18n.t('person.views.change_password')
 

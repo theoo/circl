@@ -1,24 +1,45 @@
-%div{style: 'text-align: center; margin: 20px 0;'}
-  /= TODO: insert company name here.
-  = image_tag('logo.png', alt: 'Directory')
+%br
 
-%div{style: 'width: 525px;', class: 'centered'}
+.container
+  .row
+    .col-lg-12
+      .text-center
+        = image_tag('logo.png', alt: 'Directory')
 
-  - flash_messages
+  .row
+    .col-lg-12
+      - flash_messages
 
-  .widget
-    %legend
-      = I18n.t('devise.views.resend_unlock_instructions')
+  .row
+    .col-lg-3.col-md-3.col-sm-2
+    .col-lg-6.col-md-6.col-sm-8
+      .panel.panel-primary
+        .panel-heading
+          .panel-title
+            = I18n.t('devise.views.request_new_password')
+        .panel-body
+          .well
+            = I18n.t("devise.views.request_new_password_explanation_title")
+            %br
+            = I18n.t("devise.views.request_new_password_explanation")
 
-    %div{style: 'padding: 1em 0; width: 80%; margin: 0 auto;'}
-      = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
-        - devise_error_messages!
+          = form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f|
+            - devise_error_messages!
 
-        %div{class: 'half', style: 'margin: 10px auto;'}
-          = f.label :email
-          = f.email_field :email, style: 'width: 100%'
+            .row
+              .col-lg-2
+              .col-lg-8
+                .form-group
+                  = f.label :email, for: 'person_email'
+                  = f.email_field :email, class: 'form-control'
+              .col-lg-2
 
-          = f.submit I18n.t('devise.views.resend_unlock_instructions')
+            .row
+              .col-lg-12
+                .pull-right
+                  = f.submit I18n.t('devise.views.resend_unlock_instructions_button'), class: 'btn btn-primary'
 
-      = render partial: 'devise/shared/links'
-
+                = link_to I18n.t("devise.views.back_to_login_page"),
+                          new_person_session_path,
+                          class: 'btn btn-default'
+    .col-lg-3.col-md-3.col-sm-2

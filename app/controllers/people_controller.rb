@@ -190,6 +190,15 @@ class PeopleController < ApplicationController
     end
   end
 
+  def unlock
+    @person.unlock_access!
+
+    flash[:notice] = I18n.t("devise.views.account_unlocked")
+    respond_to do |format|
+      format.html { redirect_to person_path(@person) }
+    end
+  end
+
   # TODO do not redirect to show view if @person doesn't exists!
   def paginate
     # Parse query

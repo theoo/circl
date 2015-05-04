@@ -16,7 +16,7 @@ CIRCL::Application.routes.draw do
   resources  :people do
     member do
       get 'change_password', 'map'
-      post 'update_password'
+      post 'update_password', 'unlock'
       put 'update_password'
     end
 

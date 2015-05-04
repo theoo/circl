@@ -2,7 +2,8 @@
 en:
   devise:
     help:
-      request_new_password_tooltip: request new password tooltip
+      request_new_password_tooltip: request a link to change password
+      resend_unlock_instructions_tooltip: resend a link with unlock instructions
     mail:
       change_my_password: change my password
       click_the_link_below_to_unlock_your_account: click the link below to unlock your account
@@ -16,6 +17,7 @@ en:
       your_account_has_been_locked: your account has been locked
       your_password_wont_change_until_you_access_the_link_above_and_create_a_new_one: your password wont change until you access the link above and create a new one
     views:
+      account_unlocked: account unlocked
       back_to_login_page: back to login page
       change_my_password: change my password
       change_your_password: change your password
@@ -26,8 +28,10 @@ en:
       password: password
       remember_me: remember me
       request_new_password: request new password
+      request_new_password_button: request new password
       request_new_password_explanation: request new password explanation
       request_new_password_explanation_title: request new password explanation title
       resend_confirmation_instructions: resend confirmation instructions
       resend_unlock_instructions: resend unlock instructions
+      resend_unlock_instructions_button: resend unlock instructions
       sign_in: sign in

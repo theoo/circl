@@ -32,7 +32,7 @@ fr:
     views:
       affair: affaire
       affairs_found:
-        one: "une affaire trouvée"
+        one: une affaire trouvée
         other: "%{count} affaires trouvées"
       duration: durée
       duration_help: en minutes

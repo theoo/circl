@@ -40,23 +40,37 @@
                                   class: 'form-control'
 
             .row
-              .col-lg-6
+              .col-xs-8
                 - if devise_mapping.rememberable?
                   .checkbox
                     %label{for: 'person_remember_me', class: 'inline'}
                       = f.check_box :remember_me
                       = I18n.t('devise.views.remember_me')
 
-                - if devise_mapping.recoverable? && controller_name != 'passwords'
-                  = link_to I18n.t('devise.views.request_new_password'),
-                            new_password_path(resource_name),
-                            'data-toggle' => 'tooltip',
-                            'data-trigger' => 'hover',
-                            'data-placement' => 'bottom',
-                            'title' => I18n.t("devise.help.request_new_password_tooltip")
 
-              .col-lg-6
+              .col-sm-4
                 = f.submit I18n.t('devise.views.sign_in'), class: 'btn btn-primary pull-right'
+
+            .row
+              .col-xs-12
+                %center
+                  %br
+                  - if devise_mapping.lockable? && controller_name != 'passwords'
+                    = link_to I18n.t('devise.views.resend_unlock_instructions'),
+                              new_unlock_path(resource_name),
+                              'data-toggle' => 'tooltip',
+                              'data-trigger' => 'hover',
+                              'data-placement' => 'bottom',
+                              'title' => I18n.t("devise.help.resend_unlock_instructions_tooltip")
+
+                  |
+                  - if devise_mapping.recoverable? && controller_name != 'passwords'
+                    = link_to I18n.t('devise.views.request_new_password'),
+                              new_password_path(resource_name),
+                              'data-toggle' => 'tooltip',
+                              'data-trigger' => 'hover',
+                              'data-placement' => 'bottom',
+                              'title' => I18n.t("devise.help.request_new_password_tooltip")
 
 
     .col-xl-4.col-md-3.col-sm-2
