@@ -94,8 +94,18 @@ module StatusExtention
   end
 
   def has_status?(status)
-    status = status.to_sym
-    get_statuses.index(status) ? true : false
+    if status.is_a? Symbol
+      status = status.to_sym
+      !!get_statuses.index(status)
+    elsif status.is_a? Array
+      object_status = get_statuses
+      status.each do |s|
+        return true if object_status.index(s.to_sym)
+      end
+      false
+    else
+      raise ArgumentError, "Symbol, string or array of symbols and strings expected.".inspect
+    end
   end
 
 end

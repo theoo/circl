@@ -588,9 +588,9 @@ class Affair < ActiveRecord::Base
   # and return its statuses.
   def update_statuses
     statuses = []
-    if cancelled?
-      statuses << :cancelled
-    elsif unbillable or value_with_taxes == 0
+    statuses << :cancelled if cancelled?
+
+    if unbillable or value_with_taxes == 0
       statuses << :unbillable
     else
       statuses << :open if open?
@@ -600,6 +600,7 @@ class Affair < ActiveRecord::Base
     end
 
     # TODO How an invoice could be paid and open in the same time ?
+    # Prevent checkbox on invoices when there is a receipt, add validation
     if offered?
       statuses << :offered
     else

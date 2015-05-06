@@ -44,11 +44,18 @@ class AffairsDatatable
 
       classes = []
       # Colorize active affairs
-      if ! affair.has_status?(:cancelled) \
-        and ! affair.has_status?(:offered) \
-        and ! affair.has_status?(:paid)
-        classes.push("success") unless affair.estimate
-        classes.push("warning") if affair.estimate
+      if not affair.has_status?([:paid, :overpaid])
+        if not affair.estimate and affair.unbillable
+          classes.push("danger")
+        elsif affair.estimate
+          classes.push("warning")
+        else
+          if affair.has_status?([:cancelled, :offered])
+            classes.push("info")
+          else
+            classes.push("success")
+          end
+        end
       end
 
       if affair.owner == affair.buyer and affair.owner == affair.receiver
