@@ -28,3 +28,9 @@ class App.PersonAffairInvoice extends Spine.Model
 
   constructor: ->
     super
+
+  @billable: ->
+    (i for i in @all() when not i.offered and not i.cancelled)
+
+  @unbillable: ->
+    (i for i in @all() when i.offered or i.cancelled)

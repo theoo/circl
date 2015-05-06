@@ -285,11 +285,11 @@ class Affair < ActiveRecord::Base
   end
 
   def invoices_value
-    invoices.map{|i| i.value.to_money(value_currency)}.sum.to_money
+    invoices.billable.map{|i| i.value.to_money(value_currency)}.sum.to_money
   end
 
   def invoices_value_with_taxes
-    invoices.map{|i| i.value_with_taxes.to_money(value_currency)}.sum.to_money
+    invoices.billable.map{|i| i.value_with_taxes.to_money(value_currency)}.sum.to_money
   end
 
   def receipts_value

@@ -85,7 +85,7 @@ class New extends App.ExtendedController
       @invoice.description = @affair.description
       @invoice.created_at = (new Date).to_view()
       # re-calculate invoices_value instead of using information from rails
-      invoices_value = PersonAffairInvoice.all().reduce(((sum, i) -> sum + i.value), 0)
+      invoices_value = PersonAffairInvoice.billable().reduce(((sum, i) -> sum + i.value), 0)
       @invoice.value = (@affair.value - invoices_value).toFixed(2)
       @invoice.vat_percentage = @affair.vat_percentage
     else

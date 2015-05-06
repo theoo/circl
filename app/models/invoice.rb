@@ -129,15 +129,8 @@ class Invoice < ActiveRecord::Base
     where("(invoices.status::bit(16) & ?::bit(16))::int = ? AND invoices.created_at < now()", mask, mask)
   }
 
-  scope :billable, -> {
-    mask = Invoice.statuses_value_for(:cancelled)
-    where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
-  }
-
-  scope :unbillable, -> {
-    mask = Invoice.statuses_value_for(:cancelled)
-    where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
-  }
+  scope :billable, -> { where("cancelled = ? AND offered = ?", false, false) }
+  scope :unbillable, -> { where("cancelled = ? OR offered = ?", true, true) }
 
   alias_method :template, :invoice_template
   attr_accessor :custom_value_with_taxes
@@ -424,18 +417,13 @@ class Invoice < ActiveRecord::Base
   def update_statuses
     statuses = []
     # Underpaid
-    if cancelled
+    if cancelled or offered
       statuses << :cancelled if cancelled
+      statuses << :offered if offered
     else
       statuses << :open if open?
       statuses << :underpaid if underpaid?
-    end
 
-    # Paid or overpaid
-    # TODO How an invoice could be paid and open in the same time ?
-    if offered
-      statuses << :offered if offered
-    else
       statuses << :paid if paid?
       statuses << :overpaid if overpaid?
     end
