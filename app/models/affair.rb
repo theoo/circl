@@ -63,6 +63,7 @@ class Affair < ActiveRecord::Base
   #################
 
   after_save :update_elasticsearch
+  after_save :cancel_open_invoices, if: 'unbillable'
   before_save :update_value, if: 'value_in_cents.blank?'
   before_save :update_vat, if: 'vat_in_cents.blank?'
   before_save :set_vat_percentage, if: 'vat_percentage.blank?'
@@ -677,6 +678,10 @@ class Affair < ActiveRecord::Base
                  I18n.t('affair.errors.parent_id_cannot_be_self'))
       false
     end
+  end
+
+  def cancel_open_invoices
+    invoices.open.each{|i| i.update_attributes cancelled: true}
   end
 
 end
