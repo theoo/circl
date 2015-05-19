@@ -211,23 +211,18 @@ class Admin::SubscriptionsController < ApplicationController
       end
 
       if ! params[:parent_id].blank?
-        do_bg_tasks = false
         case params[:status]
         when 'reminder'
           people_ids = @subscription.parents.map{ |p| p.get_people_from_affairs_status(:open).map(&:id) }.flatten
-          do_bg_tasks = true
         when 'renewal'
           people_ids = Subscription.find(params[:parent_id]).get_people_from_affairs_status(:paid).map(&:id)
-          do_bg_tasks = true
         end
 
-        if do_bg_tasks
-          BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(subscription_id: @subscription.id,
-            people_ids: people_ids,
-            person: current_person,
-            parent_subscription_id: @subscription.parents.last, # root
-            status: params[:status])
-        end
+        BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(subscription_id: @subscription.id,
+          people_ids: people_ids,
+          person: current_person,
+          parent_subscription_id: params[:parent_id],
+          status: params[:status])
       end
       succeed = true
     end

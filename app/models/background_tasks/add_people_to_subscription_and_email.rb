@@ -67,7 +67,7 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
 
         # Depending on the status of this subscription, copy
         # former affair's owner/buyer/receiver
-        if ! options[:status].blank? # 'renewal' or 'reminder'
+        if ! options[:status].blank? and parent_and_reminders # 'renewal' or 'reminder'
           ref_affair = p.affairs
                         .joins(:subscriptions)
                         .where('subscription_id in (?)', parent_and_reminders)
