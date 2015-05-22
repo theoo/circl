@@ -80,7 +80,7 @@ class AffairsDatatable
         'id' => affair.id,
         'actions' => [ I18n.t('affair.views.actions.edit_affair') ],
         'classes' => classes.join(" "),
-        'number_columns' => [5,6,7,8]
+        'number_columns' => [3,4,5]
       }
     end
   end
@@ -99,7 +99,7 @@ class AffairsDatatable
                     .joins('LEFT JOIN invoices ON invoices.affair_id = affairs.id')
                     .joins('LEFT JOIN receipts ON receipts.invoice_id = invoices.id')
                     .joins(:owner)
-                    .group('affairs.id')
+                    .group('affairs.id, people.last_name')
     affairs = affairs.order("#{sort_column} #{sort_direction}")
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
@@ -127,8 +127,7 @@ class AffairsDatatable
     columns = [ :id,
                 :title,
                 'people.last_name',
-                :invoices_count,
-                :receipts_count,
+                :value_in_cents,
                 :invoices_sum,
                 :receipts_sum,
                 :status,
