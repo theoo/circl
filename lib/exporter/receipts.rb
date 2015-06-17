@@ -27,7 +27,7 @@ module Exporter
       options[:account]             ||= ApplicationSetting.value("receipts_credit_account")
       options[:counterpart_account] ||= ApplicationSetting.value("receipts_debit_account")
       options[:receipt_vat_code]    ||= ApplicationSetting.value("receipts_vat_code")
-      options[:service_vat_rate]         ||= ApplicationSetting.value("service_vat_rate")
+      options[:service_vat_rate]    ||= ApplicationSetting.value("service_vat_rate")
       options[:receipt_prefix]      ||= ApplicationSetting.value("receipts_prefix")
       @options = options
     end

@@ -48,10 +48,12 @@ class Admin::ReceiptsController < ApplicationController
     respond_to do |format|
       format.html do
         if from && to
-          receipts = receipt_arel.where('value_date >= ? AND value_date <= ?', from.to_time, to.to_time).order(:value_date)
+          receipts = receipt_arel
+            .where('value_date >= ? AND value_date <= ?', from, to)
+            .order(:value_date)
           exporter = Exporter::Factory.new( :receipts,
-                                            params[:type].to_sym,
-                                            { account: params["account"], counterpart_account: params['counterpart_account'] })
+            params[:type].to_sym,
+            { account: params["account"], counterpart_account: params['counterpart_account'] })
 
           extention = case params[:type]
             when 'banana' then 'txt'
@@ -104,13 +106,13 @@ class Admin::ReceiptsController < ApplicationController
       if Subscription.exists? params[:subscription_id]
         @subscription = Subscription.find(params[:subscription_id])
         @affair = Affair.joins(:subscriptions)
-                        .where(owner_id: params[:owner_id],
-                               subscriptions: {
-                                 id: @subscription.id,
-                                 title: @subscription.title
-                               })
-                        .select('affairs.*') # We need this otherwise the returned record is readonly
-                        .first
+          .where(owner_id: params[:owner_id],
+            subscriptions: {
+              id: @subscription.id,
+              title: @subscription.title
+            })
+          .select('affairs.*') # We need this otherwise the returned record is readonly
+          .first
       else
         errors[:subscription_id] = [I18n.t("permission.errors.record_not_found")]
       end
@@ -223,16 +225,16 @@ class Admin::ReceiptsController < ApplicationController
       if errors.empty?
         people = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order])
         BackgroundTasks::GenerateReceiptsDocumentAndEmail.schedule(people_ids: people.map{ |p| p.id.to_i },
-                                                                   person: current_person,
-                                                                   from: from,
-                                                                   to: to,
-                                                                   format: params[:format],
-                                                                   generic_template_id: params[:generic_template_id],
-                                                                   subscriptions_filter: params[:subscriptions_filter],
-                                                                   unit_value: params[:unit_value],
-                                                                   global_value: params[:global_value],
-                                                                   unit_overpaid: params[:unit_overpaid],
-                                                                   global_overpaid: params[:global_overpaid])
+          person: current_person,
+          from: from,
+          to: to,
+          format: params[:format],
+          generic_template_id: params[:generic_template_id],
+          subscriptions_filter: params[:subscriptions_filter],
+          unit_value: params[:unit_value],
+          global_value: params[:global_value],
+          unit_overpaid: params[:unit_overpaid],
+          global_overpaid: params[:global_overpaid])
         format.json { render json: {} }
         format.any do
           # TODO improve report
