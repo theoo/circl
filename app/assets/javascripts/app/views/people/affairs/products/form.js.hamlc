@@ -21,6 +21,11 @@
                 class: 'form-control required',
                 value: @product.key,
                 action: '/settings/products/search'}
+        %small#person_affair_product_description.help-block
+          != @view('people/affairs/products/_description')(object: @product)
+        %input{type: 'hidden',
+               name: 'product_id',
+               value: @product.product_id}
 
         -# TODO: Add link to product editing: requires Spine router on settings/product page
         -# - if @product.isNew()
@@ -35,11 +40,7 @@
         -#     .input-group-addon
         -#       %a{href: @product}
 
-        %input{type: 'hidden',
-               name: 'product_id',
-               value: @product.product_id}
-
-      .col-md-4.autocompleted.form-group
+      .col-md-3.autocompleted.form-group
         - if not @id and @ids
           .pull-right
             %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
@@ -51,11 +52,13 @@
                 class: 'form-control required',
                 value: @product.program_key,
                 action: '/settings/product_programs/search'}
+        %small#person_affair_product_program_description.help-block
+          != @view('people/affairs/products/_description')(object: {title: @product.program_title, desc: @product.program_desc})
         %input{type: 'hidden',
                name: 'program_id',
                value: @product.program_id}
 
-      .col-md-4.autocompleted.form-group
+      .col-md-3.autocompleted.form-group
         - if not @id and @ids
           .pull-right
             %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
@@ -74,15 +77,17 @@
           .pull-right
             %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
 
-        %label{for: 'person_affair_product_parent'}
+        %label{for: 'person_affair_product_parent_search'}
           = I18n.t('common.parent')
 
         %input{ type: 'search',
-                id: 'person_affair_product_parent',
+                id: 'person_affair_product_parent_search',
                 name: 'parent',
                 class: 'form-control',
                 value: @product.parent_key,
                 action: "/people/#{@person_id}/affairs/#{@affair_id}/products/search"}
+        %small#person_affair_product_parent_description.help-block
+          != @view('people/affairs/products/_description')(object: {title: @product.parent_title, desc: @product.parent_desc})
         %input{type: 'hidden',
                name: 'parent_id',
                value: @product.parent_id}

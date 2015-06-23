@@ -161,7 +161,11 @@ class AffairsProductsProgram < ActiveRecord::Base
     h = super(options)
 
     h[:program_key]             = program.try(:key)
+    h[:program_title]           = program.try(:title)
+    h[:program_desc]            = program.try(:description)
     h[:parent_key]              = parent.try(:product).try(:key)
+    h[:parent_title]            = parent.try(:product).try(:title)
+    h[:parent_desc]             = parent.try(:product).try(:description).try(:exerpt)
     h[:has_accessories]         = product.try(:has_accessories)
     h[:key]                     = product.try(:key)
     h[:title]                   = variant.title.blank? ? product.title : [product.title, variant.title].join(" / ")

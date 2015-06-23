@@ -236,6 +236,7 @@ class People::Affairs::ProductsController < ApplicationController
                 id: pi.try(:id),
                 label: t.key,
                 title: t.title,
+                description: t.description,
                 desc: "position: " + pi.try(:position).try(:to_s)
               }
             end

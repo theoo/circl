@@ -249,6 +249,8 @@ class Settings::ProductsController < ApplicationController
           title: p.title,
           desc: p.description.try(:exerpt),
           program_key: p.available_programs.first.try(:key),
+          program_title: p.available_programs.first.try(:title),
+          program_desc: p.available_programs.first.try(:description),
           program_id: p.available_programs.first.try(:id) }
       else
         { id: p.id,

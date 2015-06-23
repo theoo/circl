@@ -30,8 +30,12 @@ class PersonAffairProductExtention extends App.ExtendedController
   init_locals: =>
     # Theses locals need to be set when template has been rendered
     @product_field = @el.find("#person_affair_product_search")
+    @product_description = @el.find("#person_affair_product_description")
+    @parent_field = @el.find("#person_affair_product_parent_search")
+    @parent_description = @el.find("#person_affair_product_parent_description")
     @product_id_field = @el.find("input[name=product_id]")
     @program_field = @el.find("#person_affair_product_program_search")
+    @program_description = @el.find("#person_affair_product_program_description")
     @program_id_field = @el.find("input[name=program_id]")
     @product_unit_symbol = @el.find("#affair-product-unit")
     @product_category = @el.find("#person_affair_product_category")
@@ -52,6 +56,17 @@ class PersonAffairProductExtention extends App.ExtendedController
     if ui.item.program_key
       @program_field.val ui.item.program_key
       @program_id_field.val ui.item.program_id
+      obj = {title: ui.item.program_title, desc: ui.item.program_desc}
+      @program_description.html @view('people/affairs/products/_description')(object: obj)
+
+    # Update description
+    @product_description.html @view('people/affairs/products/_description')(object: ui.item)
+
+  update_description_on_select: =>
+    @parent_field.autocomplete
+      select: (e, ui) => @parent_description.html @view('people/affairs/products/_description')(object: ui.item)
+    @program_field.autocomplete
+      select: (e, ui) => @program_description.html @view('people/affairs/products/_description')(object: ui.item)
 
 class New extends PersonAffairProductExtention
   events:
@@ -76,6 +91,7 @@ class New extends PersonAffairProductExtention
     @init_locals()
 
     @product_field.autocomplete select: @product_selected
+    @update_description_on_select()
 
     if @disabled() then @disable_panel() else @enable_panel()
 
@@ -142,6 +158,7 @@ class Edit extends PersonAffairProductExtention
     if @id
       @product_field.autocomplete select: @product_selected
       @program_field.autocomplete source: '/settings/products/' + @product.product_id + '/programs'
+      @update_description_on_select()
     else
       @product_field.prop('disabled', true)
       @program_field.autocomplete source: '/settings/product_programs/search'
