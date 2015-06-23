@@ -155,6 +155,7 @@ class New extends App.ExtendedController
       @template =
         affairs_stakeholders: []
         unbillable: false
+        estimate: false
         seller_id: App.current_user.id
         seller_name: App.current_user.name
         description: App.ApplicationSetting.value("affairs_description_placeholder")
