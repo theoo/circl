@@ -87,8 +87,7 @@ class Receipt < ActiveRecord::Base
   validates_presence_of :value_date, :invoice_id
   validates_with DateValidator, attribute: :value_date
   validates :value, presence: true,
-                    numericality: { greater_than: 0,
-                                       less_than_or_equal: 99999999.99 } # BVR limit
+    numericality: { more_than_or_equal: -99999999.99, less_than_or_equal: 99999999.99 } # BVR limit
 
 
   # Validate fields of type 'string' length
