@@ -63,10 +63,18 @@ class PersonAffairProductExtention extends App.ExtendedController
     @product_description.html @view('people/affairs/products/_description')(object: ui.item)
 
   update_description_on_select: =>
+
+    select_callback_for = (div, ui) =>
+      div.html @view('people/affairs/products/_description')(object: ui.item)
+      text_field = div.parent().find("input[type='search']")
+      hidden_field = div.parent().find("input[type='hidden']")
+      hidden_field.attr('value', ui.item.id)
+      text_field.attr('value', ui.item.title) if ui.item.title
+
     @parent_field.autocomplete
-      select: (e, ui) => @parent_description.html @view('people/affairs/products/_description')(object: ui.item)
+      select: (e, ui) => select_callback_for(@parent_description, ui)
     @program_field.autocomplete
-      select: (e, ui) => @program_description.html @view('people/affairs/products/_description')(object: ui.item)
+      select: (e, ui) => select_callback_for(@program_description, ui)
 
 class New extends PersonAffairProductExtention
   events:
