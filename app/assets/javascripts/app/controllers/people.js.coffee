@@ -75,6 +75,9 @@ class Edit extends App.ExtendedController
     'click a[name=person_second_phone_button]': 'call_to'
     'click a[name=person_mobile_button]': 'call_to'
     'click a[name=person_website_button]': 'link_to'
+    'click a[name="person_preview"]': 'pdf'
+    'click a[name="person_pdf"]': 'pdf'
+    'click a[name="person_odt"]': 'odt'
     'focusin input[name=website]': 'append_http'
     'focusout input[name=website]': 'remove_http'
     'click #person_comments_summary tr.item': 'switch_to_comments'
@@ -154,6 +157,16 @@ class Edit extends App.ExtendedController
   switch_to_comments: (e) ->
     e.preventDefault()
     $("a[href='#activities_tab']").click()
+
+  pdf: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#person_template").val()
+    window.location = "#{Person.url()}/#{@person.id}.pdf?template_id=#{@template_id}"
+
+  odt: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#person_template").val()
+    window.location = "#{Person.url()}/#{@person.id}.odt?template_id=#{@template_id}"
 
 class App.People extends Spine.Controller
   className: 'person'

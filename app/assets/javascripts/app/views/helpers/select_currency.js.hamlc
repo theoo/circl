@@ -1,6 +1,6 @@
-%select{name: @.name, class: 'currency_selector'}
-  - if @.currency
-    - currency = @.currency
+%select{name: @name, class: 'currency_selector'}
+  - if @currency
+    - currency = @currency
   - else
     - currency = App.ApplicationSetting.value('default_currency')
 
@@ -13,4 +13,4 @@
         = c
 
 %input{type: 'hidden', name: 'reference_currency', value: currency}
-%input{type: 'hidden', name: 'reference_value', value: @.value}
+%input{type: 'hidden', name: 'reference_value', value: @value}

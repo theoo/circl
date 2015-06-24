@@ -23,24 +23,12 @@
         .icon-spin.icon-4x.icon-gear
 
 .panel-footer
-  .btn-group
-    .btn-group
-      %button{type: 'button',
-              :data-toggle => 'dropdown',
-              class: 'btn btn-default dropdown-toggle' }
-        .icon-paper-clip
-        = I18n.t("common.export")
-        .caret
 
-      %ul.dropdown-menu
-        %li
-          %a{href: '#', name: 'directory-export-to-csv'}
-            .icon-file-text
-            = I18n.t('common.csv')
+  != @partial("generate_document")(prefix: 'people', model: 'Person', collection: true)
 
-    - if @query?.search_string and @results_count < 5000
-      %a{ href: '#',
-          name: 'directory-map',
-          class: 'btn btn-default'}
-        .icon-map-marker
-        = I18n.t('directory.views.show_on_a_map')
+  - if @query?.search_string and @results_count < 5000
+    %a{ href: '#',
+        name: 'directory-map',
+        class: 'btn btn-default'}
+      .icon-map-marker
+      = I18n.t('directory.views.show_on_a_map')

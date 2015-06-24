@@ -49,6 +49,7 @@ class @App extends Spine.Controller
     App.ApplicationSetting.fetch()
 
     @sub_nav = $("#sub_nav")
+    @preload_models()
 
   subapp: (element, class_name, extra_params = {}) ->
     # TODO Raise a message if application controller cannot be found.
@@ -60,6 +61,10 @@ class @App extends Spine.Controller
     element.data('controller', instance)
     instance.activate()
 
+  preload_models: ->
+    models = {'GenericTemplate': 'generic_templates'}
+    for c,o of models
+      App[c].refresh( eval(gon[o]), {clear: true} ) if gon[o]
 
   @authenticity_token: -> $('meta[name="csrf-token"]').attr('content')
 

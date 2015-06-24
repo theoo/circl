@@ -16,6 +16,7 @@
 
 QueryPreset = App.QueryPreset
 SearchAttribute = App.SearchAttribute
+GenericTemplate = App.GenericTemplate
 
 $.fn.directory_person_id = ->
   elementID   = $(@).data('id')
@@ -432,7 +433,10 @@ class Index extends App.ExtendedController
     'click tr.item td:not(.ignore-click)': 'edit'
     'click tr button[name=directory-person-destroy]': 'destroy'
     'click tr button[name=directory-person-change-password]': 'change_password'
-    'click a[name=directory-export-to-csv]': 'export_to_csv'
+    'click a[name=people_preview]': 'pdf'
+    'click a[name=people_pdf]': 'pdf'
+    'click a[name=people_odt]': 'odt'
+    'click a[name=people_csv]': 'csv'
     'click a[name=directory-map]': 'open_map'
     'datatable_redraw': 'table_redraw'
 
@@ -514,9 +518,19 @@ class Index extends App.ExtendedController
       @el.find('button[name=directory-person-change-password]').attr("disabled", "disabled")
       @el.find('tr.item').removeClass('item')
 
-  export_to_csv: (e) =>
+  csv: (e) =>
     e.preventDefault()
     window.location = '/directory.csv?query=' + @json_query
+
+  pdf: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#people_template").val()
+    window.location = "/directory.pdf?template_id=#{@template_id}&query=" + @json_query
+
+  odt: (e) ->
+    e.preventDefault()
+    @template_id = @el.find("#people_template").val()
+    window.location = "/directory.odt?template_id=#{@template_id}&query=" + @json_query
 
   edit: (e) =>
     e.preventDefault()

@@ -8,7 +8,7 @@
       .col-md-6
         .row
           .col-sm-12.visible-lg
-            %h2.panel-fat-title
+            %h2.panel-fat-title.text-info
               - if @affair.id
                 = I18n.t("affair.views.affair_number", number: @affair.id)
               - else
@@ -442,35 +442,7 @@
 
         .col-sm-4
           - unless @affair.isNew?()
-            .form-inline
-              .form-group
-                %select{name: 'generic_template_id',
-                        id: 'affair_template',
-                        class: 'form-control'}
-                  - for h in _.sortBy(App.GenericTemplate.category('Affair'), (t) -> t.title)
-                    %option{value: h.id}= h.title
-
-              .btn-group
-                %a{ :data-toggle => 'dropdown',
-                    type: 'button',
-                    class: 'btn btn-default dropdown-toggle' }
-                  .icon-paper-clip
-                  = I18n.t('common.documents')
-                  .caret
-
-                %ul.dropdown-menu
-                  %li
-                    %a{href: '#', name: 'affair-preview-pdf'}
-                      .icon-eye-open
-                      = I18n.t('common.preview')
-                  %li
-                    %a{href: '#', name: 'affair-download-pdf'}
-                      .icon-download-alt
-                      = I18n.t('common.pdf')
-                  %li
-                    %a{href: '#', name: 'affair-download-odt'}
-                      .icon-download-alt
-                      = I18n.t('common.odt')
+            != @partial("generate_document")(prefix: 'affair', model: 'Affair', collection: false, except: ['csv'])
 
         .col-sm-4
           .pull-right

@@ -125,10 +125,10 @@ class Index extends App.ExtendedController
     'datatable_redraw': 'table_redraw'
     'mouseover tr.item':'item_over'
     'mouseout tr.item': 'item_out'
-    'click a[name=affair-receipts-csv]': 'csv'
-    'click a[name=affair-receipts-pdf]': 'pdf'
-    'click a[name=affair-receipts-odt]': 'odt'
-    'click a[name=affair-receipts-preview]': 'preview'
+    'click a[name=affair_receipts_csv]': 'csv'
+    'click a[name=affair_receipts_pdf]': 'pdf'
+    'click a[name=affair_receipts_odt]': 'odt'
+    'click a[name=affair_receipts_preview]': 'preview'
 
   constructor: (params) ->
     super

@@ -172,11 +172,11 @@
 
                 %ul.dropdown-menu
                   %li
-                    %a{href: '#', name: 'invoice-preview-pdf'}
+                    %a{href: '#', name: 'affair_invoice_pdf'}
                       .icon-eye-open
                       = I18n.t('common.preview')
                   %li
-                    %a{href: '#', name: 'invoice-download-pdf'}
+                    %a{href: '#', name: 'affair_invoice_pdf'}
                       .icon-download-alt
                       = I18n.t('common.download')
 - else

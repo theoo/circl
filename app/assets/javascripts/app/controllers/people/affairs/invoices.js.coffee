@@ -126,8 +126,8 @@ class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click a[name="cancel"]': 'cancel'
-    'click a[name="invoice-download-pdf"]': 'pdf'
-    'click a[name="invoice-preview-pdf"]': 'preview'
+    'click a[name="affair_invoice_preview"]': 'preview'
+    'click a[name="affair_invoice_pdf"]': 'pdf'
     'click a[name="invoice-destroy"]': 'destroy'
     'click a[name="invoice-add-receipt"]': 'add_receipt'
     'change select[name="condition_id"]': 'update_conditions'
@@ -229,10 +229,10 @@ class Index extends App.ExtendedController
     'datatable_redraw': 'table_redraw'
     'mouseover tr.item':'item_over'
     'mouseout tr.item': 'item_out'
-    'click a[name=affair-invoices-csv]': 'csv'
-    'click a[name=affair-invoices-pdf]': 'pdf'
-    'click a[name=affair-invoices-odt]': 'odt'
-    'click a[name=affair-invoices-preview]': 'preview'
+    'click a[name=affair_invoices_csv]': 'csv'
+    'click a[name=affair_invoices_pdf]': 'pdf'
+    'click a[name=affair_invoices_odt]': 'odt'
+    'click a[name=affair_invoices_preview]': 'preview'
 
   constructor: (params) ->
     super

@@ -163,57 +163,22 @@
                           value: 1 }
 
   .panel-footer
-    .form-inline
-      .form-group
-        %label{for: 'affair_products_template', class: 'sr-only'}
-          = I18n.t('affair.views.template')
-        - if App.GenericTemplate.category('Product', true).length > 0
-          %select{name: 'generic_template_id',
-                  id: 'affair_products_template',
-                  class: 'form-control'}
-            - for h in _.sortBy(App.GenericTemplate.category('Product', true), (t) -> t.title)
-              %option{value: h.id}= h.title
+    .row
+      .col-md-6
+        != @partial("generate_document")(prefix: 'affair_products', model: 'Product', collection: true)
 
-        - else
-          %a{href: '/settings#templates', class: 'btn btn-warning'}
-            = I18n.t("common.add_new_template")
+      .col-md-6
+        .form-inline
+          .form-group
+            %button{type: 'button',
+                    name: 'affair-product-items-reorder',
+                    class: 'btn btn-default' }
+              .icon-list
+              = I18n.t("product.views.reorder")
 
-        .btn-group
-          %button{type: 'button',
-                  :data-toggle => 'dropdown',
-                  class: 'btn btn-default dropdown-toggle' }
-            .icon-paper-clip
-            = I18n.t("common.documents")
-            .caret
-
-          %ul.dropdown-menu
-            - if App.GenericTemplate.category('Product', true).length > 0
-              %li
-                %a{href: '#', name: 'affair-products-preview'}
-                  .icon-eye-open
-                  = I18n.t('common.preview')
-              %li
-                %a{href: '#', name: 'affair-products-pdf'}
-                  .icon-download-alt
-                  = I18n.t('common.pdf')
-              %li
-                %a{href: '#', name: 'affair-products-odt'}
-                  .icon-download-alt
-                  = I18n.t('common.odt')
-            %li
-              %a{href: '#', name: 'affair-products-csv'}
-                .icon-file-text
-                = I18n.t('common.csv')
-
-        %button{type: 'button',
-                name: 'affair-product-items-reorder',
-                class: 'btn btn-default' }
-          .icon-list
-          = I18n.t("product.views.reorder")
-
-        %button{type: 'button',
-                name: 'affair-product-items-group-edit',
-                class: 'btn btn-default',
-                disabled: true }
-          .icon-gear
-          = I18n.t("product.views.group_edit")
+            %button{type: 'button',
+                    name: 'affair-product-items-group-edit',
+                    class: 'btn btn-default',
+                    disabled: true }
+              .icon-gear
+              = I18n.t("product.views.group_edit")

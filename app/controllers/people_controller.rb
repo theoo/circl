@@ -32,8 +32,14 @@ class PeopleController < ApplicationController
   end
 
   def show
+
+    if params[:template_id]
+      @person.template = GenericTemplate.find params[:template_id]
+    end
+
     respond_to do |format|
       format.html { render layout: 'application' }
+
       format.json do
         options = {}
         options[:restricted_attributes] = can?(:restricted_attributes, @person)
@@ -41,6 +47,25 @@ class PeopleController < ApplicationController
 
         render json: @person.as_json(options)
       end
+
+      format.pdf do
+        @pdf = ""
+        generator = AttachmentGenerator.new(@person)
+        generator.pdf { |o,pdf| @pdf = pdf.read }
+        send_data @pdf,
+                  filename: "person_#{params[:person_id]}.pdf",
+                  type: 'application/pdf'
+      end
+
+      format.odt do
+        @odt = ""
+        generator = AttachmentGenerator.new(@person)
+        generator.odt { |o,odt| @odt = odt.read }
+        send_data @odt,
+                  filename: "person_#{params[:person_id]}.odt",
+                  type: 'application/vnd.oasis.opendocument.text'
+      end
+
     end
   end
 

@@ -1,0 +1,49 @@
+- # defaults
+- @except ||= []
+- @collection ||= false
+- throw "Generate document: prefix required" unless @prefix
+- throw "Generate document: model required" unless @model
+
+.form-inline
+  .form-group
+    %label{for: "#{@prefix}_template", class: 'sr-only'}
+      = I18n.t('common.template')
+    - if App.GenericTemplate.category(@model, @collection).length > 0
+      %select{name: 'generic_template_id',
+              id: "#{@prefix}_template",
+              class: 'form-control'}
+        - for h in _.sortBy(App.GenericTemplate.category(@model, @collection), (t) -> t.title)
+          %option{value: h.id}= h.title
+
+    - else
+      %a{href: '/settings#templates', class: 'btn btn-warning'}
+        = I18n.t("common.add_new_template")
+
+    .btn-group
+      %button{type: 'button',
+              :data-toggle => 'dropdown',
+              class: 'btn btn-default dropdown-toggle' }
+        .icon-paper-clip
+        = I18n.t("common.documents")
+        .caret
+
+      %ul.dropdown-menu
+        - if @except.indexOf('odt') < 0
+          - if App.GenericTemplate.category(@model, @collection).length > 0
+            %li
+              %a{href: '#', name: "#{@prefix}_preview"}
+                .icon-eye-open
+                = I18n.t('common.preview')
+            %li
+              %a{href: '#', name: "#{@prefix}_pdf"}
+                .icon-download-alt
+                = I18n.t('common.pdf')
+            %li
+              %a{href: '#', name: "#{@prefix}_odt"}
+                .icon-download-alt
+                = I18n.t('common.odt')
+        - if @except.indexOf('csv') < 0
+          %li
+            %a{href: '#', name: "#{@prefix}_csv"}
+              .icon-file-text
+              = I18n.t('common.csv')

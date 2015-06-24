@@ -32,6 +32,7 @@ class ClassNamesExtention extends App.ExtendedController
     @class_names['Invoice']          = I18n.t("activerecord.models.invoice")
     @class_names['Receipt']          = I18n.t("activerecord.models.receipt")
     @class_names['Task']             = I18n.t("activerecord.models.task")
+    @class_names['Person']           = I18n.t("activerecord.models.person")
     @class_names['Product']          = I18n.t("activerecord.models.product")
     @class_names['Extra']            = I18n.t("activerecord.models.extra")
 

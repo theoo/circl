@@ -79,6 +79,15 @@ class DirectoryController < ApplicationController
       end
     end
 
+    # GON, preload some objects
+    gon.push generic_templates: GenericTemplate.all.map(&:as_json)
+
+    if params[:template_id] and request[:format] != 'csv'
+      people = es_search.map{ |p| p.load }
+      reference = people.first
+      reference.template = GenericTemplate.find params[:template_id]
+    end
+
     respond_to do |format|
       format.html do
         if @results_count == 1 and not @custom_action
@@ -99,18 +108,34 @@ class DirectoryController < ApplicationController
       end
 
       format.xml do
-        es_search.map!{ |p| p.load }
         render xml: people.to_xml
       end
 
       format.csv do
-        people = es_search.map do |p|
+        peopl = es_search.map do |p|
           @query[:selected_attributes].each_with_object(OpenStruct.new(p.to_hash)) do |f, o|
             o.send("#{f}=", relation_to_string(o.send(f)))
           end
         end
-        render inline: csv_ify(people, @query['selected_attributes'])
+        render inline: csv_ify(peopl, @query['selected_attributes'])
       end
+
+      format.pdf do
+        @pdf = ""
+        people = es_search.map!{ |p| p.load }
+        generator = AttachmentGenerator.new(people, reference)
+        generator.pdf { |o,pdf| @pdf = pdf.read }
+        send_data @pdf, filename: "people.pdf", type: 'application/pdf'
+      end
+
+      format.odt do
+        @odt = ""
+        people = es_search.map!{ |p| p.load }
+        generator = AttachmentGenerator.new(people, reference)
+        generator.odt { |o,odt| @odt = odt.read }
+        send_data @odt, filename: "people.odt", type: 'application/vnd.oasis.opendocument.text'
+      end
+
     end
   end
 

@@ -75,6 +75,7 @@ class Person < ActiveRecord::Base
   include ElasticSearch::Indexing
 
   attr_accessor :notices
+  attr_accessor :template
 
   def initialize(*params)
     super(*params)

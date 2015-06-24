@@ -121,10 +121,10 @@ class Index extends App.ExtendedController
   events:
     'click tr.item':      'edit'
     'datatable_redraw': 'table_redraw'
-    'click a[name=affair-extras-csv]': 'csv'
-    'click a[name=affair-extras-pdf]': 'pdf'
-    'click a[name=affair-extras-odt]': 'odt'
-    'click a[name=affair-extras-preview]': 'preview'
+    'click a[name=affair_extras_csv]': 'csv'
+    'click a[name=affair_extras_pdf]': 'pdf'
+    'click a[name=affair_extras_odt]': 'odt'
+    'click a[name=affair_extras_preview]': 'preview'
 
   constructor: (params) ->
     super
