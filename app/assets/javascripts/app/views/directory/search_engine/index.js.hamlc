@@ -26,6 +26,8 @@
 
   != @partial("generate_document")(prefix: 'people', model: 'Person', collection: true)
 
+  &nbsp;
+
   - if @query?.search_string and @results_count < 5000
     %a{ href: '#',
         name: 'directory-map',

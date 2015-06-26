@@ -19,6 +19,7 @@
       %a{href: '/settings#templates', class: 'btn btn-warning'}
         = I18n.t("common.add_new_template")
 
+    .icon-chevron-right
     .btn-group
       %button{type: 'button',
               :data-toggle => 'dropdown',

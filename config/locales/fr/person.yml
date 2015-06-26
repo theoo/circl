@@ -104,7 +104,7 @@ fr:
       change_password_for: Changer le mot de pass de <b>%{person}</b>
       comments: Commentaires
       communication_languages: Langues de communications secondaires
-      contact_nr: "Contact n°%{id}"
+      contact_nr: Contact n°%{id}
       coordinates_format: Le format des coordonnées est 46.1997577723502, 6.13464653491974
       current_password: mot de passe actuel
       destroy: supprimer

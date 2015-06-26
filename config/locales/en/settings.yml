@@ -15,6 +15,8 @@ en:
       languages: Languages
       ldap_attributes: LDAP attributes
       locations: Locations
+      mailchimp: MISSING_TRANSLATION mailchimp
+      mailchimp_configuration_required: MISSING_TRANSLATION mailchimp configuration required
       privileges: Privileges
       product_programs: product programs
       products: products
@@ -22,6 +24,9 @@ en:
       roles: Roles
       search_attributes: Search attributes
       search_engine: Search engine
+      select_list_and_click_synchronize: MISSING_TRANSLATION select list and click synchronize
+      sync_mailchimp_message: MISSING_TRANSLATION sync mailchimp message
+      sync_mailchimp_title: MISSING_TRANSLATION sync mailchimp title
       task_rates: Task rates
       task_types: Task types
       templates: Templates

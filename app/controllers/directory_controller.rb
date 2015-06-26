@@ -16,8 +16,6 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-require 'mailchimp/process'
-
 class DirectoryController < ApplicationController
 
   layout 'application'
@@ -142,15 +140,46 @@ class DirectoryController < ApplicationController
   def mailchimp
     authorize! :mailchimp, Directory
 
-    if mailchimp_synchronizing?
-      flash[:alert] = I18n.t('common.errors.already_synchronizing')
+    query = JSON.parse params[:query]
+    query.symbolize_keys!
+
+    if query[:search_string].blank?
+
+      format.json do
+        render json: { search_string: [I18n.t('activerecord.errors.messages.blank')] }, status: :unprocessable_entity
+      end
+      format.html do
+        flash[:alert] = I18n.t("directory.errors.query_empty")
+        redirect_to admin_path(anchor: 'tags')
+      end
+
     else
-      flash[:notice] = I18n.t('common.notices.synchronization_started', email: current_person.email)
-      BackgroundTasks::RunRakeTask.schedule(name: 'mailchimp:sync',
-                                            arguments: { person_id: current_person.id })
-      Activity.create!(person: current_person, resource_type: 'Directory', resource_id: '0', action: 'info', data: { mailchimp: "Sync started at #{Time.now}" })
+
+      if mailchimp_synchronizing?
+
+        flash[:alert] = I18n.t('common.errors.already_synchronizing')
+
+      else
+
+        people_ids = ElasticSearch.search(
+            query[:search_string],
+            query[:selected_attributes],
+            query[:attributes_order])
+          .map(&:id)
+
+        flash[:notice] = I18n.t('common.notices.synchronization_started', email: current_person.email)
+        BackgroundTasks::SynchronizeMailchimp.process!(
+          person_id: current_person.id,
+          list_id: params[:id],
+          people_ids: people_ids
+          )
+
+      end
+
+      format.json { render json: {} }
+      format.html { redirect_to directory_path }
+
     end
-    redirect_to directory_path
   end
 
   def map
@@ -297,7 +326,7 @@ class DirectoryController < ApplicationController
   private
 
   def mailchimp_synchronizing?
-    File.exists? Mailchimp::LOCK_FILE
+    File.exists? MailchimpAccount::LOCK_FILE
   end
 
   # Effectively search in ES with the giver attributes

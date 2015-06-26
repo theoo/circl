@@ -154,7 +154,7 @@ CIRCL::Application.routes.draw do
   end
 
   match 'directory' => 'directory#index', :via => [:get, :post]
-  post 'directory/mailchimp' => 'directory#mailchimp'
+  post 'directory/:id/mailchimp' => 'directory#mailchimp'
   get 'directory/map' => 'directory#map'
   post 'directory/confirm_people' => 'directory#confirm_people'
   post 'directory/import_people' => 'directory#import_people'
