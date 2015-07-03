@@ -31,7 +31,7 @@ fr:
       cant_delete_person_who_has_salaries: Il est impossible de détruire une personne dont dépend un salaire.
       cant_delete_person_who_is_linked_to_products: Il est impossible de détruire une personne référencée dans un produit (comme fournisseur ou service après-vente)
       combination_of_first_name_and_last_name_already_taken: Cette combinaison de nom et prénom est déjà prise.
-      hey_you_cannot_sucide: "<b>Ohla</b>, qu'est-ce que vous faites là ?<br/>Dans l'univers CIRCL il n'est pas possible de se supprimer sois-même.<br /> Besoin d'aide ? -> <a href='http://www.stopsuicide.ch' target='_blank'>http://www.stopsuicide.ch</a>"
+      hey_you_cannot_suicide: "<b>Ohla</b>, qu'est-ce que vous faites là ?<br/>Dans l'univers CIRCL il n'est pas possible de se supprimer sois-même.<br /> Besoin d'aide ? -> <a href='http://www.stopsuicide.ch' target='_blank'>http://www.stopsuicide.ch</a>"
       invalid_current_password: Le mot de passe actuel est invalide.
       main_language_already_in_communication_languages: Cette langue principale est déjà sélectionnée dans les langues de communication secondaires.
       no_second_email_if_no_primary_email: Il est impossible d'ajouter un email secondaire sans email principal.

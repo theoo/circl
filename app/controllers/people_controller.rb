@@ -150,7 +150,7 @@ class PeopleController < ApplicationController
     respond_to do |format|
       if @person == current_person
         format.html do
-          flash[:alert] = I18n.t('person.errors.hey_you_cannot_sucide')
+          flash[:alert] = I18n.t('person.errors.hey_you_cannot_suicide')
           render :show, layout: 'application'
         end
         format.json do
@@ -161,7 +161,12 @@ class PeopleController < ApplicationController
         if @person.destroy
           format.html do
             flash[:notice] = I18n.t('common.notices.successfully_destroyed')
+            # TODO Require Tire update to elasticsearch-ruby gem first
+            # if request.referer.match("paginate")
+            #   redirect_to request.referer
+            # else
             redirect_to directory_path
+            # end
           end
           format.json { render json: {} }
         else
