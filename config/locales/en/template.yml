@@ -12,20 +12,30 @@ en:
       associations: associations
       body: body
       class_name: ressource
-      donation_template_file: "(Receipts) Donation certificate example"
       download_current_template: download the current template
       example_files_explanation: Below is a list of example files to adapt at your needs. Please have a look at <a href='https://doc.circl.ch' target='_blank'>https://doc.circl.ch</a> for more information.
       example_files_title: Example files
       footer: footer
       header: header
-      invoice_with_bvr_file: Invoice template with BVR
-      invoice_without_bvr_file: Invoice template without BVR
+      invoice_with_bvr_file: "Invoice with BVR"
+      invoice_without_bvr_file: "Invoice withou BVR"
       language: language
       plural: plural ressource
       plural_explanation: It's a list of items and not the item itself
-      projects_template_file: "(Affairs) Projects template example"
-      salary_template_file: Salary template example
-      statement_template_file: "(Invoices) Statement of a project template example"
       template: template
+      template_file:
+        address_book: "(People) Address book"
+        affair_statement: "(Affairs) Affairs statement"
+        contact_info: "(Person) Contact info"
+        donation: "(Receipts) Donnation certificate"
+        extended_offer: "(Affair) Extended offer"
+        extras_list: "(Extras) List of extras"
+        products_list: "(Products) List of products sorted by position"
+        products_list_by_category: "(Products) List of products sorted by category"
+        projects: "(Affair) Project of Offer"
+        receipts_list: "(Receipts) List of receipts"
+        salary: "(Salary) Payslip"
+        statement: "(Invoices) Statement for an affair"
+        tasks_report: "(Services) List of tasks"
       thumb: thumb
       upload_new_template: upload the new template (odt)

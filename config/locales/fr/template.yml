@@ -12,20 +12,30 @@ fr:
       associations: associations
       body: Corps du texte
       class_name: ressource
-      donation_template_file: Modèle de certifiat de dons (reçus) pour exemple
       download_current_template: récupérer le modèle actuel
       example_files_explanation: Vous trouverez ci-dessous une liste de fichier exemple pour l'adaptation des modèles. Veuillez consulter <a href='https://doc.circl.ch' target='_blank'>https://doc.circl.ch</a> pour plus d'informations.
       example_files_title: Fichier d'exemple
       footer: Pied de page
       header: Entête
-      invoice_with_bvr_file: Modèle de facture avec BVR
-      invoice_without_bvr_file: Modèle de facture sans BVR
+      invoice_with_bvr_file: "Facture avec BVR"
+      invoice_without_bvr_file: "Facture sans BVR"
       language: langue
       plural: ressource plurielle
       plural_explanation: Il s'agit d'une liste d'éléments et non de l'élément lui-même.
-      projects_template_file: Modèle de projets (affairs) pour exemple
-      salary_template_file: Modèle de salaire pour exemple
-      statement_template_file: Modèle de relevé de compte (factures) pour exemple
       template: modèle
+      template_file:
+        address_book: "(Personnes) Carnet d'adresses"
+        affair_statement: "(Affaires) Relevé de compte"
+        contact_info: "(Personne) Fiche contact"
+        donation: "(Reçus) Certifiat de dons"
+        extended_offer: "(Affair) Offre étendue"
+        extras_list: "(Extras) List des extras"
+        products_list_by_category: "(Produits) Liste des produits par catégorie"
+        products_list: "(Produits) Liste des produits par position"
+        projects: "(Affair) Projet ou offre"
+        receipts_list: "(Reçus) Liste des reçus"
+        salary: "(Salaire) Fiche de salaire"
+        statement: "(Factures) Relevé de compte"
+        tasks_report: "(Services) Liste des tâches"
       thumb: aperçu
       upload_new_template: envoyer au serveur un nouveau modèle

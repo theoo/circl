@@ -19,17 +19,44 @@
 
         %ol
           %li
-            %a{href: '/assets/salary.odt'}
-              = I18n.t("template.views.salary_template_file")
+            %a{href: '/assets/address_book.odt'}
+              = I18n.t("template.views.template_file.address_book")
           %li
-            %a{href: '/assets/projects.odt'}
-              = I18n.t("template.views.projects_template_file")
+            %a{href: '/assets/affair_statement.odt'}
+              = I18n.t("template.views.template_file.affair_statement")
           %li
-            %a{href: '/assets/statement.odt'}
-              = I18n.t("template.views.statement_template_file")
+            %a{href: '/assets/contact_info.odt'}
+              = I18n.t("template.views.template_file.contact_info")
           %li
             %a{href: '/assets/donation.odt'}
-              = I18n.t("template.views.donation_template_file")
+              = I18n.t("template.views.template_file.donation")
+          %li
+            %a{href: '/assets/extended_offer.odt'}
+              = I18n.t("template.views.template_file.extended_offer")
+          %li
+            %a{href: '/assets/extras_list.odt'}
+              = I18n.t("template.views.template_file.extras_list")
+          %li
+            %a{href: '/assets/products_list.odt'}
+              = I18n.t("template.views.template_file.products_list")
+          %li
+            %a{href: '/assets/products_list_by_category.odt'}
+              = I18n.t("template.views.template_file.products_list_by_category")
+          %li
+            %a{href: '/assets/projects.odt'}
+              = I18n.t("template.views.template_file.projects")
+          %li
+            %a{href: '/assets/receipts_list.odt'}
+              = I18n.t("template.views.template_file.receipts_list")
+          %li
+            %a{href: '/assets/salary.odt'}
+              = I18n.t("template.views.template_file.salary")
+          %li
+            %a{href: '/assets/statement.odt'}
+              = I18n.t("template.views.template_file.statement")
+          %li
+            %a{href: '/assets/tasks_report.odt'}
+              = I18n.t("template.views.template_file.tasks_report")
 
         %input{ type: 'hidden', name: 'template_id', value: @template.id }
         %br

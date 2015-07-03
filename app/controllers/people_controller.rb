@@ -154,7 +154,7 @@ class PeopleController < ApplicationController
           render :show, layout: 'application'
         end
         format.json do
-          flash[:alert] = I18n.t('person.errors.hey_you_cannot_sucide')
+          flash[:alert] = I18n.t('person.errors.hey_you_cannot_suicide')
           render json: @person.errors, status: :unprocessable_entity
         end
       else
