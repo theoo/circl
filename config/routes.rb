@@ -192,6 +192,8 @@ CIRCL::Application.routes.draw do
       end
     end
 
+    resources :product_orders, only: [:index]
+
     resources :public_tags do
       member do
         post 'add_members', 'remove_all_members'

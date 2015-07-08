@@ -218,6 +218,9 @@ class @Admin extends App
         @subapp($('#admin_private_tags'), 'AdminPrivateTags')
         @subapp($('#admin_public_tags'), 'AdminPublicTags')
 
+      @sub_nav.one 'products', =>
+        @subapp($('#admin_product_orders'), 'AdminProductOrders')
+
       App.GenericTemplate.one 'refresh', =>
         @sub_nav.one 'affairs', =>
           @subapp($('#admin_affairs'), 'AdminAffairs')

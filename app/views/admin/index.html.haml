@@ -60,6 +60,15 @@
                 .panel-title
                   = I18n.t('admin.views.invoices')
 
+    #products_tab.tab-pane
+      .row
+        .col-lg-12
+          - if can? :update, AffairsProductsProgram
+            #admin_product_orders.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('admin.views.product_orders')
+
 #affix.hidden-print
   %ul#tags_affix.nav
 

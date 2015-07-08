@@ -1,0 +1,22 @@
+%table.datatable{ action: '/admin/product_orders' }
+  %thead
+    %tr
+      %th.desc= I18n.t('product.views.delivery_at')
+      %th= I18n.t('product.views.title')
+      %th= I18n.t('product.views.affair')
+      %th= I18n.t('product.views.provider')
+      %th= I18n.t('affair.views.seller')
+    %tbody
+      %tr
+        %td.placeholder{colspan: 5}
+          .icon-spin.icon-4x.icon-gear
+
+.panel-footer
+  / .btn-group
+  /   %button{ type: 'button', name: 'admin-product-orders-export', class: 'btn btn-default'}
+  /     .icon-cloud-upload
+  /     = I18n.t('common.toolbox_export')
+
+  /   %button{ type: 'button', name: 'admin-product-orders-documents', class: 'btn btn-default'}
+  /     .icon-paper-clip
+  /     = I18n.t('common.documents')

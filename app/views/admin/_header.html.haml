@@ -28,3 +28,8 @@
           %li
             %a{href: '#finances_tab'}
               = I18n.t('admin.views.finances')
+
+        - if can? :update, AffairsProductsProgram
+          %li
+            %a{href: '#products_tab'}
+              = I18n.t('admin.views.products')
