@@ -93,16 +93,14 @@ group :development, :test do
   gem 'syntax', '1.2.0'
 
   ### IRB
-  gem 'byebug', '3.1.2'
-  gem 'pry-rails', '0.3.2'
-  gem 'awesome_print', '1.2.0'
-  gem 'hirb', '0.7.2'
+  gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
 
   ### Misc
-  gem 'rails-dev-boost', '0.3.0'
-  gem 'rb-inotify', '0.9.5'
+  gem 'pry-byebug'
   gem 'spork-rails', '4.0.0'
   gem 'spring', '1.1.3'
+
+  gem 'web-console', '~> 2.0'
 end
 
 # FUTURE
