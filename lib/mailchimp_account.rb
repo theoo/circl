@@ -16,34 +16,41 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-module Exporter
+require 'mailchimp'
 
-  class Resource
+class MailchimpAccount
 
-    class InvalidSettings < StandardError; end
+  LOCK_FILE = File.join(Rails.root.to_s, 'tmp', 'mailchimp_sync_process.lock')
 
-    def initialize(options = {})
-    end
+  attr_accessor :session
 
-    def convert(items)
-      raise NotImplementedError, 'you need to subclass & overload this method'
-    end
-
-    def validate_settings(setting, item)
-      if json = setting.valid_json?
-        raise InvalidSettings, ":separator key missing" if json[:separator].nil?
-        raise InvalidSettings, ":attributes key missing" if json[:attributes].nil?
-      else
-        raise InvalidSettings, "invalid json"
-      end
-      json
-    rescue InvalidSettings => e
-      default_desc(item)
-    end
-
-    def default_desc(item)
-      raise NotImplementedError, 'you need to subclass & overload this method'
-    end
-
+  def initialize()
+    @api_key = ApplicationSetting.value(:mailchimp_api_key)
+    @session = Mailchimp::API.new(@api_key)
   end
+
+  def lists
+    h = {}
+    @session.lists.list['data'].map{|l| h[l['name']] = l['id']}
+    h
+  end
+
+  def segments(list_id)
+    h = {}
+    @session.lists.segments(list_id, 'static')['static'].map{|s| h[s['name']] = s['id']}
+    h
+  end
+
+  def process_running?
+    File.file? LOCK_FILE
+  end
+
+  def lock_job
+    FileUtils.touch(LOCK_FILE)
+  end
+
+  def unlock_job
+    FileUtils.rm(LOCK_FILE) if process_running?
+  end
+
 end

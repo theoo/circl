@@ -34,6 +34,9 @@ Spine.Extensions = {}
 
 class @App extends Spine.Controller
 
+  # Global configuration
+  @AVAILABLE_EXPORT_SYSTEMS = ['banana', 'csv']
+
   constructor: (params) ->
     super
     Ui.initialize_ui()

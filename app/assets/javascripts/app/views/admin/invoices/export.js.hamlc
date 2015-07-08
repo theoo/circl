@@ -32,7 +32,7 @@
           %select{name: 'type',
                   id: 'admin_invoices_type',
                   class: 'form-control'}
-            - for l in ['banana', 'git', 'office_maker', 'csv']
+            - for l in App.AVAILABLE_EXPORT_SYSTEMS
               %option{value: l}= l
 
     .row

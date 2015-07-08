@@ -37,6 +37,14 @@
   value: employer deductions
 - key: banana_accounting_headers_mapping
   value: '{"Date": "date", "Description": "description", "Amount": "value", "AccountDebit": "account", "AccountCredit": "counterpart_account"}'
+- key: export_invoice_description
+  value: '{"attributes": ["id", "title", "owner.try(:name)", "owner.try(:id)"], "separator": "/"}'
+- key: export_receipt_description
+  value: '{"attributes": ["id", "invoice.title", "owner.try(:name)", "owner.try(:id)"], "separator": "/"}'
+- key: export_salary_description
+  value: ''
+- key: export_salary_and_taxes_description
+  value: '{"attributes": ["id", "title", "person.try(:name)", "person.try(:id)", "from.strftime(\"%d-%m\")", "to.strftime(\"%d-%m\")"], "separator": "/"}'
 - key: service_vat_rate
   value: '8.0'
 - key: service_vat_number

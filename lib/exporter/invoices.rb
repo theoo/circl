@@ -27,12 +27,18 @@ module Exporter
       options[:account]             ||= ApplicationSetting.value("invoices_credit_account")
       options[:counterpart_account] ||= ApplicationSetting.value("invoices_debit_account")
       options[:invoice_vat_code]    ||= ApplicationSetting.value("invoices_vat_code")
-      options[:service_vat_rate]         ||= ApplicationSetting.value("service_vat_rate")
+      options[:service_vat_rate]    ||= ApplicationSetting.value("service_vat_rate")
       options[:invoice_prefix]      ||= ApplicationSetting.value("invoices_prefix")
       @options = options
     end
 
     def desc_for(i)
+      desc = ApplicationSetting.value("export_invoice_description")
+      json = validate_settings(desc, i)
+      [@options[:invoice_prefix], json[:attributes].map{ |a| eval("i.#{a}") }].flatten.join(json[:separator])
+    end
+
+    def default_desc(i)
       client_str = "Client "
       if i.owner
         client_str += i.owner.try(:id).try(:to_s)

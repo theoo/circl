@@ -37,6 +37,12 @@ module Exporter
     end
 
     def desc_for(i)
+      desc = ApplicationSetting.value("export_receipt_description")
+      json = validate_settings(desc, i)
+      [@options[:receipt_prefix], json[:attributes].map{ |a| eval("i.#{a}") }].flatten.join(json[:separator])
+    end
+
+    def default_desc(i)
       [ @options[:receipt_prefix], "client " + i.owner.id.to_s, "#{title_for(i)} - #{i.id}" ].join("/")
     end
 

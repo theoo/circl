@@ -32,6 +32,12 @@ module Exporter
     end
 
     def desc_for(i)
+      desc = ApplicationSetting.value("export_salary_and_taxes_description")
+      json = validate_settings(desc, i)
+      [@options[:salary_prefix], json[:attributes].map{ |a| eval("i.#{a}") }].flatten.join(json[:separator])
+    end
+
+    def default_desc(i)
       str = [ @options[:salary_prefix],
         i.person.name + "[" + i.person.id.to_s + "]",
         i.title + "[" + i.id.to_s + "]",

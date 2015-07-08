@@ -53,6 +53,14 @@ module StringExtention
       self
     end
   end
+
+  def valid_json?
+    begin
+      JSON.parse(self).symbolize_keys
+    rescue JSON::ParserError => e
+      false
+    end
+  end
 end
 
 class String
