@@ -17,8 +17,8 @@ fr:
       example_files_title: Fichier d'exemple
       footer: Pied de page
       header: Entête
-      invoice_with_bvr_file: "Facture avec BVR"
-      invoice_without_bvr_file: "Facture sans BVR"
+      invoice_with_bvr_file: Facture avec BVR
+      invoice_without_bvr_file: Facture sans BVR
       language: langue
       plural: ressource plurielle
       plural_explanation: Il s'agit d'une liste d'éléments et non de l'élément lui-même.
@@ -30,8 +30,8 @@ fr:
         donation: "(Reçus) Certifiat de dons"
         extended_offer: "(Affair) Offre étendue"
         extras_list: "(Extras) List des extras"
-        products_list_by_category: "(Produits) Liste des produits par catégorie"
         products_list: "(Produits) Liste des produits par position"
+        products_list_by_category: "(Produits) Liste des produits par catégorie"
         projects: "(Affair) Projet ou offre"
         receipts_list: "(Reçus) Liste des reçus"
         salary: "(Salaire) Fiche de salaire"

@@ -19,6 +19,8 @@ en:
       invoices: Invoices
       private_tags: Private tags
       proceed_with_import: proceed with import
+      product_orders: Products Orders
+      products: Products
       public_tags: public tags
       receipt_date: receipt date
       receipt_value: receipt value

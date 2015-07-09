@@ -45,6 +45,7 @@ en:
         symbol: pc
         title: unit
     views:
+      affair: affair
       after_sale: after sale
       after_sale_id: after sale id
       art: ART
@@ -82,6 +83,7 @@ en:
       quantity: quantity
       reorder: reorder
       selling_prices: selling prices
+      title: title
       unit: unit
       unit_symbol: unit symbol
       upload_a_new_file_description: please select a file.

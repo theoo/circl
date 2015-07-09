@@ -45,6 +45,7 @@ fr:
         symbol: pc
         title: unité
     views:
+      affair: affaire
       after_sale: après-vente
       after_sale_id: id après-vente
       art: TAR
@@ -82,6 +83,7 @@ fr:
       quantity: quantité
       reorder: réordrer
       selling_prices: prix de vente
+      title: titre
       unit: unité
       unit_symbol: symbole d'unité
       upload_a_new_file_description: veuillez choisir un fichier
