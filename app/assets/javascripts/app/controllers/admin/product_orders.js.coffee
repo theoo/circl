@@ -30,12 +30,8 @@ class Index extends App.ExtendedController
 
   show: (e) ->
     e.preventDefault()
-    console.log "TODO"
-    # id = $(e.target).parents('[data-id]').data('id')
-    # ProductItem.one 'refresh', =>
-    #   product_item = ProductItem.find(id)
-    #   window.location = "/admin/product_orders/#{product_item.id}"
-    # ProductItem.fetch(id: id)
+    id = $(e.target).parents('[data-id]').data('id')
+    window.location = "/admin/affairs/#{id}"
 
 #   documents: (e) ->
 #     e.preventDefault()

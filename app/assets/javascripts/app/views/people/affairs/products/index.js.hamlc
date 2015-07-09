@@ -135,8 +135,7 @@
                     != item.description?.replace(/\n/g, '<br/>')
 
                   - if item.comment
-                    %pre
-                      = item.comment
+                    %code= item.comment
 
                 %td.small-number= item.quantity + " " + I18n.t("product.units." + item.unit_symbol + ".symbol")
                 %td.number

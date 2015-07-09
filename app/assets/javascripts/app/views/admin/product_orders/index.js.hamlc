@@ -1,7 +1,11 @@
 %table.datatable{ action: '/admin/product_orders' }
   %thead
     %tr
+      %th.desc= I18n.t('common.date')
+      %th.desc= I18n.t('product.views.ordered_at')
+      %th.desc= I18n.t('product.views.confirmed_at')
       %th.desc= I18n.t('product.views.delivery_at')
+      %th.number= I18n.t('product.views.quantity')
       %th= I18n.t('product.views.title')
       %th= I18n.t('product.views.affair')
       %th= I18n.t('product.views.provider')

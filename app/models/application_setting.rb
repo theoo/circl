@@ -76,6 +76,13 @@ class ApplicationSetting < ActiveRecord::Base
     end
   end
 
+  def self.value_in_seconds(key, options = {silent: false})
+    # validate format before eval
+    if value(key, options).match(/^\d\.(year|month|week|day|hour|minute|second)s?$/)
+      eval(value(key))
+    end
+  end
+
   # NOTE Mandatory fields are not defined in the database (non sense)
   def self.mandatory_fields
     [:application_id,

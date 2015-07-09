@@ -67,3 +67,7 @@
   value: 'edit me in application settings: affairs_footer_placeholder'
 - key: affairs_execution_notes_placeholder
   value: 'edit me in application settings: affairs_execution_notes_placeholder'
+- key: product_item_warning_threshold
+  value: '2.month'
+- key: product_item_danger_threshold
+  value: '1.month'

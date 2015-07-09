@@ -31,10 +31,7 @@ class Index extends App.ExtendedController
   edit: (e) ->
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
-    Affair.one 'refresh', =>
-      affair = Affair.find(id)
-      window.location = "/admin/affairs/#{affair.id}"
-    Affair.fetch(id: id)
+    window.location = "/admin/affairs/#{id}"
 
   documents: (e) ->
     e.preventDefault()

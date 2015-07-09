@@ -40,34 +40,65 @@ class ProductOrdersDatatable
   private
 
   def data
+    warning_date = Time.now + ApplicationSetting.value_in_seconds("product_item_warning_threshold")
+    danger_date = Time.now + ApplicationSetting.value_in_seconds("product_item_danger_threshold")
+
     product_items.map do |product_item|
 
-      classes = []
       # Colorize active product_items
-      # if not product_item.has_status?([:paid, :overpaid])
-      #   if not product_item.estimate and product_item.unbillable
-      #     classes.push("danger")
-      #   elsif product_item.estimate
-      #     classes.push("warning")
-      #   else
-      #     if product_item.has_status?([:cancelled, :offered])
-      #       classes.push("info")
-      #     else
-      #       classes.push("success")
-      #     end
-      #   end
-      # end
+      classes = []
+      if product_item.delivery_at and not product_item.confirmed_at
+        if product_item.delivery_at < danger_date
+          classes.push("danger")
+        elsif product_item.delivery_at < warning_date
+          classes.push("warning")
+        elsif product_item.ordered_at
+          classes.push("info")
+        end
+      elsif product_item.confirmed_at
+        classes.push("success")
+      end
+
+      description = capture_haml do
+        haml_tag :b, product_item.product.try(:title)
+        if ! product_item.product.try(:description).try(:blank?)
+          haml_tag :br if product_item.product.title
+          if product_item.product and product_item.product.description.size > 255
+            haml_concat product_item.product.description.exerpt
+          else
+            haml_concat product_item.product.description
+          end
+        end
+        if ! product_item.comment.blank?
+          haml_tag :br
+          haml_tag :code, product_item.comment
+        end
+      end
+
+      affair_description = capture_haml do
+        haml_tag :b, product_item.affair.try(:title)
+        haml_tag :i, product_item.affair.try(:id)
+        haml_tag :br
+        if product_item.affair and product_item.affair.description.size > 255
+          haml_concat product_item.affair.description.exerpt
+        else
+          haml_concat product_item.affair.description
+        end
+      end
 
       {
-        0 => product_item.delivery_at, # localization
-        1 => product_item.product.try(:title),
-        2 => [ "(", product_item.affair.try(:id), ") ", product_item.affair.try(:title)].join(""), # link
-        3 => product_item.product.try(:provider).try(:name), # link
-        4 => product_item.affair.try(:seller).try(:name),
-        'id' => product_item.id,
-        # 'actions' => [ I18n.t('product_item.views.actions.edit_product_item') ],
-        'classes' => classes.join(" ")
-        # 'number_columns' => [3,4,5]
+        0 => product_item.created_at.try(:to_date), # localization
+        1 => product_item.ordered_at.try(:to_date), # localization
+        2 => product_item.confirmed_at.try(:to_date), # localization
+        3 => product_item.delivery_at.try(:to_date), # localization
+        4 => product_item.quantity,
+        5 => description,
+        6 => affair_description,
+        7 => product_item.product.try(:provider).try(:name), # link
+        8 => product_item.affair.try(:seller).try(:name),
+        'id' => product_item.affair.try(:id),
+        'classes' => classes.join(" "),
+        'number_columns' => [4]
       }
     end
   end
@@ -79,7 +110,7 @@ class ProductOrdersDatatable
   # TODO: improve search like "Firstname Lastname", actually returns zero results.
   def fetch_product_items
     product_items = AffairsProductsProgram.joins(:affair, :category, :product, :program)
-    product_items = product_items.order("#{sort_column} #{sort_direction}")
+    product_items = product_items.order("#{sort_column} #{sort_direction} NULLS last")
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       product_items = product_items.where("affairs.title ~* ?
@@ -100,11 +131,14 @@ class ProductOrdersDatatable
   end
 
   def sort_column
-    columns = [ :id,
-                :id,
-                :id,
-                :id,
-                :id]
+    columns = [ :created_at,
+                :ordered_at,
+                :confirmed_at,
+                :delivery_at,
+                'products.title',
+                'affairs.title',
+                'products.provider_id',
+                'affairs.seller_id']
     columns[params[:iSortCol_0].to_i]
   end
 
