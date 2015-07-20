@@ -585,13 +585,14 @@ class Person < ActiveRecord::Base
     h
   end
 
-  # name return organization name, full_name of email in order of availability.
+  # Returns organization name, full_name of email in order of availability.
   def name
     return organization_name if is_an_organization
     return full_name unless full_name.blank?
     return email
   end
 
+  # Returns first name followed by last name separated by a space.
   def full_name
     [first_name, last_name].join(' ').strip
   end
@@ -612,15 +613,18 @@ class Person < ActiveRecord::Base
     !second_email.blank?
   end
 
+  # Return the address, postal code + location and country if not the same as this directory's owner.
+  # Fields are separated by carriage returns.
   def full_address
     full_address_helper.join("\n")
   end
 
+  # Like full_address except that fields are separated by comma ", " instead of carriage returns.
   def full_address_inline
     full_address_helper.join(", ")
   end
 
-  # organization_name plus person name if existing
+  # Returns organization_name + person name if existing.
   def address_name
     if is_an_organization
       names = [organization_name, full_name]
@@ -631,6 +635,7 @@ class Person < ActiveRecord::Base
     end
   end
 
+  # Returns organization_name + person name with title if existing.
   def address_name_with_title
     if is_an_organization
       names = [organization_name]
@@ -641,6 +646,7 @@ class Person < ActiveRecord::Base
     end
   end
 
+  # Returns address_name and full_address separated with carriage returns.
   def address_for_bvr
     [address_name, full_address].join("\n")
   end
@@ -749,6 +755,7 @@ class Person < ActiveRecord::Base
   #######################
   private
 
+  # Returns the address block with location and country if not the same as directory's owner.
   def full_address_helper
     arr = []
     arr << address unless address.blank?
@@ -762,7 +769,7 @@ class Person < ActiveRecord::Base
       me = Person.find(ApplicationSetting.value("me"))
       if me.location
         if me.location.country.try(:name) != country and !location.is_country?
-          arr << location.country.try(:name)
+          arr << location.country.try(:name).try(:upcase)
         end
       end
     end
