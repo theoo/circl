@@ -1,0 +1,16 @@
+---
+fr:
+  creditor:
+    errors:
+      discount_cannot_end_after_invoice_end: La date de l'escompte ne peut pas être après la date d'échéance de la facture
+      wrong_date: Mauvais format de date
+    views:
+      affair_name: affair
+      creditor_name: fournisseur
+      discount_ends_on: escompte
+      invoice_ends_on: "échéance"
+      invoice_in_books_on: facture compta.
+      invoice_received_on: reçu
+      paid_on: payé
+      payment_in_books_on: payement compta.
+      discount_percentage: 'escompte %'

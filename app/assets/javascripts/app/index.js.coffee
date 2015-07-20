@@ -52,7 +52,7 @@ class @App extends Spine.Controller
     App.ApplicationSetting.fetch()
 
     @sub_nav = $("#sub_nav")
-    @preload_models()
+    @preload_models({'GenericTemplate': 'generic_templates'})
 
   subapp: (element, class_name, extra_params = {}) ->
     # TODO Raise a message if application controller cannot be found.
@@ -64,8 +64,8 @@ class @App extends Spine.Controller
     element.data('controller', instance)
     instance.activate()
 
-  preload_models: ->
-    models = {'GenericTemplate': 'generic_templates'}
+  # Arguments: Object {'ModelName': 'gon_collection_name'}
+  preload_models: (models) ->
     for c,o of models
       App[c].refresh( eval(gon[o]), {clear: true} ) if gon[o]
 
@@ -214,6 +214,9 @@ class @Admin extends App
     super
 
     @el.one 'dependencies_preloaded', =>
+      @sub_nav.one 'creditors', =>
+        @subapp($('#admin_creditors'), 'AdminCreditors')
+
       @sub_nav.one 'tags', =>
         @subapp($('#admin_private_tags'), 'AdminPrivateTags')
         @subapp($('#admin_public_tags'), 'AdminPublicTags')

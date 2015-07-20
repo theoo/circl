@@ -177,6 +177,13 @@ CIRCL::Application.routes.draw do
       end
     end
 
+    resources :creditors do
+      collection do
+        # post 'confirm', 'import'
+        # get 'export'
+      end
+    end
+
     resources :invoices do
       collection do
         get 'export', 'available_statuses', 'search'

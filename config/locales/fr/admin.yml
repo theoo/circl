@@ -11,6 +11,7 @@ fr:
       receipts_imported: Les reçus ont été importés, un rapport a été envoyé par email à %{email}.
     views:
       affairs: Affaires
+      creditors: Créanciers
       finances: Finances
       import: importer
       invoice_date: date de la facture

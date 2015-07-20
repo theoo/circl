@@ -33,3 +33,8 @@
           %li
             %a{href: '#products_tab'}
               = I18n.t('admin.views.products')
+
+        - if can? :read, Creditor
+          %li
+            %a{href: '#creditors_tab'}
+              = I18n.t('admin.views.creditors')

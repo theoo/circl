@@ -260,6 +260,9 @@ class Person < ActiveRecord::Base
             class_name: 'Product',
             foreign_key: :after_sale_id
 
+  has_many  :credits,
+            class_name: 'Creditor',
+            foreign_key: :creditor_id
 
 
   ##################

@@ -11,6 +11,7 @@ en:
       receipts_imported: The receipts have been imported, a report has been sent to you at %{email}.
     views:
       affairs: Affairs
+      creditors: Creditors
       finances: Finances
       import: import
       invoice_date: invoice date

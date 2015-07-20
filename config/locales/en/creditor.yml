@@ -1,0 +1,16 @@
+---
+en:
+  creditor:
+    errors:
+      discount_cannot_end_after_invoice_end: discount cannot end after invoice end
+      wrong_date: wrong date
+    views:
+      affair_name: affair
+      creditor_name: name
+      discount_ends_on: discount ends on
+      invoice_ends_on: invoice ends on
+      invoice_in_books_on: invoice in books on
+      invoice_received_on: received on
+      paid_on: paid on
+      payment_in_books_on: payment in books on
+      discount_percentage: discount percentage

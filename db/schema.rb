@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150322170738) do
+ActiveRecord::Schema.define(version: 20150720113901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20150322170738) do
     t.integer  "product_id"
     t.integer  "program_id"
     t.float    "position"
-    t.integer  "quantity"
+    t.float    "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "bid_percentage"
@@ -182,6 +182,35 @@ ActiveRecord::Schema.define(version: 20150322170738) do
   add_index "comments", ["resource_id"], name: "index_comments_on_resource_id", using: :btree
   add_index "comments", ["resource_type"], name: "index_comments_on_resource_type", using: :btree
   add_index "comments", ["updated_at"], name: "index_comments_on_updated_at", using: :btree
+
+  create_table "creditors", force: true do |t|
+    t.integer  "creditor_id"
+    t.integer  "affair_id"
+    t.string   "title"
+    t.text     "description"
+    t.integer  "value_in_cents",      default: 0,     null: false
+    t.string   "value_currency",      default: "CHF", null: false
+    t.integer  "vat_in_cents",        default: 0,     null: false
+    t.string   "vat_currency",        default: "CHF", null: false
+    t.date     "invoice_received_on"
+    t.date     "invoice_ends_on"
+    t.date     "invoice_in_books_on"
+    t.float    "discount_percentage", default: 0.0
+    t.date     "discount_ends_on"
+    t.date     "paid_on"
+    t.date     "payment_in_books_on"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "creditors", ["affair_id"], name: "index_creditors_on_affair_id", using: :btree
+  add_index "creditors", ["creditor_id"], name: "index_creditors_on_creditor_id", using: :btree
+  add_index "creditors", ["discount_ends_on"], name: "index_creditors_on_discount_ends_on", using: :btree
+  add_index "creditors", ["invoice_ends_on"], name: "index_creditors_on_invoice_ends_on", using: :btree
+  add_index "creditors", ["invoice_in_books_on"], name: "index_creditors_on_invoice_in_books_on", using: :btree
+  add_index "creditors", ["invoice_received_on"], name: "index_creditors_on_invoice_received_on", using: :btree
+  add_index "creditors", ["paid_on"], name: "index_creditors_on_paid_on", using: :btree
+  add_index "creditors", ["payment_in_books_on"], name: "index_creditors_on_payment_in_books_on", using: :btree
 
   create_table "currencies", force: true do |t|
     t.integer "priority"
@@ -685,8 +714,8 @@ ActiveRecord::Schema.define(version: 20150322170738) do
     t.string   "cert_others_title",                                     default: "",    null: false
     t.text     "cert_notes",                                            default: "",    null: false
     t.string   "employer_account",                                      default: ""
-    t.text     "comments"
     t.string   "yearly_salary_currency",                                default: "CHF", null: false
+    t.text     "comments"
   end
 
   add_index "salaries", ["is_reference"], name: "index_salaries_on_is_template", using: :btree
@@ -748,7 +777,6 @@ ActiveRecord::Schema.define(version: 20150322170738) do
     t.boolean  "archive",            default: false, null: false
   end
 
-  add_index "salaries_taxes", ["archive"], name: "index_salaries_taxes_on_archive", using: :btree
   add_index "salaries_taxes", ["exporter_avs_group"], name: "index_salaries_taxes_on_exporter_avs_group", using: :btree
   add_index "salaries_taxes", ["exporter_is_group"], name: "index_salaries_taxes_on_exporter_is_group", using: :btree
   add_index "salaries_taxes", ["exporter_lpp_group"], name: "index_salaries_taxes_on_exporter_lpp_group", using: :btree

@@ -70,3 +70,6 @@
 
 - subject: AffairsCondition
   action: manage
+
+- subject: Creditor
+  action: manage

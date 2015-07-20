@@ -69,9 +69,22 @@
                 .panel-title
                   = I18n.t('admin.views.product_orders')
 
+    #creditors_tab.tab-pane
+      .row
+        .col-lg-12
+          - if can? :read, Creditor
+            #admin_creditors.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('admin.views.creditors')
+
 #affix.hidden-print
   %ul#tags_affix.nav
 
   %ul#affairs_affix.nav
 
   %ul#finances_affix.nav
+
+  / %ul#products_affix.nav
+
+  / %ul#creditors_affix.nav

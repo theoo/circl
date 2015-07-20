@@ -1,0 +1,25 @@
+%table.datatable{ action: '/admin/creditors' }
+  %thead
+
+    %tr
+      %th.desc= I18n.t('common.date')
+      %th= I18n.t('common.title')
+      %th= I18n.t('creditor.views.creditor_name')
+      %th.number= I18n.t('common.value')
+      %th.desc= I18n.t('creditor.views.invoice_received_on')
+      %th.desc= I18n.t('creditor.views.discount_ends_on')
+      %th.desc= I18n.t('creditor.views.invoice_ends_on')
+      %th.desc= I18n.t('creditor.views.invoice_in_books_on')
+      %th.desc= I18n.t('creditor.views.paid_on')
+      %th.desc= I18n.t('creditor.views.payment_in_books_on')
+    %tbody
+      %tr
+        %td.placeholder{colspan: 10}
+          .icon-spin.icon-4x.icon-gear
+
+.panel-footer
+  %button{type: 'button',
+          name: 'admin-creditors-documents',
+          class: 'btn btn-default' }
+    .icon-paper-clip
+    = I18n.t("common.documents")
