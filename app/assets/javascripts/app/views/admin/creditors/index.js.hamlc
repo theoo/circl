@@ -1,4 +1,4 @@
-%table.datatable{ action: '/admin/creditors' }
+%table.datatable{ action: App.Creditor.url() }
   %thead
 
     %tr

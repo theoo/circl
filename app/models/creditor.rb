@@ -113,4 +113,12 @@ class Creditor < ActiveRecord::Base
     end
   end
 
+  def as_json(options = nil)
+    h = super(options)
+    h[:value]            = value.try(:to_f)
+    h[:value_currency]   = value.currency.try(:iso_code)
+    h[:value_with_taxes] = value_with_taxes.try(:to_f)
+    h
+  end
+
 end

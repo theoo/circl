@@ -23,6 +23,8 @@ class AdminController < ApplicationController
   def index
     authorize! :index, Admin
 
+    gon.affairs_count = Affair.count
+
     respond_to do |format|
       format.html { render }
     end

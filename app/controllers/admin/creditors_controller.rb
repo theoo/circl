@@ -18,9 +18,13 @@
 
 class Admin::CreditorsController < ApplicationController
 
+  respond_to :json
+
   layout false
 
   load_and_authorize_resource except: :index
+
+  before_filter :set_money, only: [:create, :update]
 
   def index
     authorize! :index, Creditor
@@ -118,11 +122,62 @@ class Admin::CreditorsController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.html { redirect_to person_path(@creditor.owner, anchor: "creditors/#{@creditor.id}")}
-      format.json { render json: @creditor }
+    respond_with(@creditor)
+  end
+
+  def create
+    if @creditor.save
+      respond_with(@creditor)
+    else
+      render json: @creditor.errors, status: :unprocessable_entity
     end
   end
 
+  def edit
+    respond_with(@creditor)
+  end
+
+  def update
+    if @creditor.update_attributes(creditor_params)
+      respond_with(@creditor)
+    else
+      render json: @creditor.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @creditor.destroy
+    respond_with(@creditor)
+    # format.json { render json: @creditor.errors, status: :unprocessable_entity }
+  end
+
+  private
+
+    def set_money
+      @creditor.value = Money.new(params[:value].to_f * 100, params[:value_currency]) if params[:value]
+      @creditor.vat = Money.new(params[:vat].to_f * 100, params[:vat_currency]) if params[:vat]
+    end
+
+    def creditor_params
+      params.require(:creditor).permit(
+        :creditor_id,
+        :affair_id,
+        :title,
+        :description,
+        :value,
+        :value_in_cents,
+        :value_currency,
+        :vat,
+        :vat_in_cents,
+        :vat_currency,
+        :invoice_received_on,
+        :invoice_ends_on,
+        :invoice_in_books_on,
+        :discount_percentage,
+        :discount_ends_on,
+        :paid_on,
+        :payment_in_books_on,
+        :updated_at )
+    end
 
 end

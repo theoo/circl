@@ -7,150 +7,153 @@
       .col-lg-3
 
     .row
-      .col-lg-4.col-md-6
-        .form-group.autocompleted
-          %label{for: 'admin_creditors_creditor_name'}
-            = I18n.t('creditor.views.creditor_name')
-          %input{ type: 'search',
-                  id: 'admin_creditors_creditor_name',
-                  creditor_name: 'owner',
-                  autofocus: 'autofocus',
-                  value: @creditor.creditor_name,
-                  action: '/people/search',
-                  class: 'form-control required'}
-          %input{ type: 'hidden',
-                  name: 'creditor_id',
-                  value: @creditor.creditor_id}
+      .col-md-6
+        .row
+          .col-md-6
+            %label
+              = I18n.t('creditor.views.creditor_name')
+            .autocompleted.input-group
+              %input{ type: 'search',
+                      name: 'creditor_name',
+                      autofocus: 'autofocus',
+                      value: @creditor.creditor_name,
+                      action: '/people/search',
+                      class: 'form-control required'}
+              %input{ type: 'hidden',
+                      name: 'creditor_id',
+                      value: @creditor.creditor_id}
+              .input-group-btn
+                %a.btn.btn-default{href: "/people/#{@creditor.creditor_id}", disabled: true}
+                  .icon-play
 
-      .col-lg-4.col-md-6
-        .form-group.autocompleted
-          %label{for: 'admin_creditors_affair_name'}
-            = I18n.t('creditor.views.affair_name')
-          %input{ type: 'search',
-                  id: 'admin_creditors_affair_name',
-                  affair_name: 'owner',
-                  autofocus: 'autofocus',
-                  value: @creditor.affair_name,
-                  action: '/people/search',
-                  class: 'form-control required'}
-          %input{ type: 'hidden',
-                  name: 'affair_id',
-                  value: @creditor.affair_id}
+          .col-md-6
+            %label
+              = I18n.t('creditor.views.affair_name')
+            .autocompleted.input-group
+              %input{ type: 'search',
+                      name: 'affair_name',
+                      value: @creditor.affair_name,
+                      action: '/admin/affairs/search',
+                      class: 'form-control'}
+              %input{ type: 'hidden',
+                      name: 'affair_id',
+                      value: @creditor.affair_id}
+              .input-group-btn
+                %a.btn.btn-default{href: "/people/#{@creditor.creditor_id}/affairs/#{@creditor.affair_id}", disabled: true}
+                  .icon-play
 
-      .col-lg-2.col-md-6
-        .form-group
-          %label{for: 'admin_creditors_value'}
-            = I18n.t('common.value')
-          .input-group
-            %input{ type: 'number',
-                    id: 'admin_creditors_value',
-                    class: 'form-control required',
-                    step: 0.01,
-                    min: 0,
-                    max: 1000000,
-                    name: "value",
-                    value: @creditor.value }
-            .input-group-addon
-              != @partial('select_currency')(currency: @creditor.value_currency, name: 'value_currency', value: @creditor.value)
+            %small.help-block.affairs_count
+              = I18n.t("task.views.affairs_found", count: gon.affairs_count)
 
-      .col-lg-2.col-md-6
-        .form-group
-          %label{for: 'admin_creditors_discount_percentage'}
-            = I18n.t('creditor.views.discount_percentage')
-          %input{ type: 'number',
-                  id: 'admin_creditors_discount_percentage',
-                  class: 'form-control required',
-                  step: 0.01,
-                  min: -100,
-                  max: 100,
-                  name: "discount_percentage",
-                  value: @creditor.discount_percentage }
-
-      .col-lg-6
         .row
           .col-lg-12
             .form-group
-              %label{for: 'admin_creditors_title'}
+              %label
                 = I18n.t('common.title')
               %input{type: 'text',
                      name: 'title',
-                     id: 'admin_creditors_title',
-                     class: 'form-control',
+                     class: 'form-control required',
                      value: @creditor.title }
 
           .col-lg-12
             .form-group
-              %label{for: 'admin_creditors_description'}
+              %label
                 = I18n.t('common.description')
               %textarea{name: 'description',
-                        id: 'admin_creditors_description',
                         rows: 3,
                         class: 'form-control'}
                 = @creditor.description
 
-      .col-lg-6
+      .col-md-6
         .row
-          .col-lg-4.col-md-3
+          .col-xl-4.col-sm-6
             .form-group
-              %label{for: 'admin_creditors_invoice_received_on'}
+              %label
+                = I18n.t('common.value')
+              .input-group
+                %input{ type: 'number',
+                        class: 'form-control required',
+                        step: 0.01,
+                        min: 0,
+                        max: 1000000,
+                        name: "value",
+                        value: @creditor.value }
+                .input-group-addon
+                  != @partial('select_currency')(currency: @creditor.value_currency, name: 'value_currency', value: @creditor.value)
+
+          .col-xl-4.col-xs-6
+            .form-group
+              %label
                 = I18n.t('creditor.views.invoice_received_on')
               %input{type: 'text',
                      name: 'invoice_received_on',
-                     id: 'admin_creditors_invoice_received_on',
                      class: 'form-control datepicker required',
                      value: @creditor.invoice_received_on }
 
-          .col-lg-4.col-md-3
+          .col-xs-6.visible-xs
+            %br
+            %br
+            %br
+            %br
+
+          .col-xl-4.col-xs-6
             .form-group
-              %label{for: 'admin_creditors_invoice_ends_on'}
+              %label
                 = I18n.t('creditor.views.invoice_ends_on')
               %input{type: 'text',
                      name: 'invoice_ends_on',
-                     id: 'admin_creditors_invoice_ends_on',
                      class: 'form-control datepicker required',
                      value: @creditor.invoice_ends_on }
 
-          .col-lg-4.col-md-3
+          .col-xl-4.col-xs-6
             .form-group
-              %label{for: 'admin_creditors_invoice_in_books_on'}
+              %label
                 = I18n.t('creditor.views.invoice_in_books_on')
               %input{type: 'text',
                      name: 'invoice_in_books_on',
-                     id: 'admin_creditors_invoice_in_books_on',
-                     class: 'form-control datepicker required',
+                     class: 'form-control datepicker',
                      value: @creditor.invoice_in_books_on }
 
-          .col-lg-4.col-md-3
+          .col-xl-4.col-xs-6
             .form-group
-              %label{for: 'admin_creditors_discount_ends_on'}
+              %label
+                = I18n.t('creditor.views.discount_percentage')
+              %input{ type: 'number',
+                      class: 'form-control',
+                      step: 0.01,
+                      min: -100,
+                      max: 100,
+                      name: "discount_percentage",
+                      value: @creditor.discount_percentage }
+
+          .col-xl-4.col-xs-6
+            .form-group
+              %label
                 = I18n.t('creditor.views.discount_ends_on')
               %input{type: 'text',
                      name: 'discount_ends_on',
-                     id: 'admin_creditors_discount_ends_on',
-                     class: 'form-control datepicker required',
+                     class: 'form-control datepicker',
                      value: @creditor.discount_ends_on }
 
-          .col-lg-4.col-md-3
+          .col-xl-4.col-xs-6
             .form-group
-              %label{for: 'admin_creditors_paid_on'}
+              %label
                 = I18n.t('creditor.views.paid_on')
               %input{type: 'text',
                      name: 'paid_on',
-                     id: 'admin_creditors_paid_on',
-                     class: 'form-control datepicker required',
+                     class: 'form-control datepicker',
                      value: @creditor.paid_on }
 
-          .col-lg-4.col-md-3
+          .col-xl-4.col-xs-6
             .form-group
-              %label{for: 'admin_creditors_payment_in_books_on'}
+              %label
                 = I18n.t('creditor.views.payment_in_books_on')
               %input{type: 'text',
                      name: 'payment_in_books_on',
-                     id: 'admin_creditors_payment_in_books_on',
-                     class: 'form-control datepicker required',
+                     class: 'form-control datepicker',
                      value: @creditor.payment_in_books_on }
 
     .row
       .col-lg-12
         .pull-right
-          != @partial('update_button')(@creditor)
+          != @partial('save_and_cancel_buttons')(@creditor)
