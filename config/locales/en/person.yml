@@ -114,6 +114,8 @@ en:
       fax_number: fax number
       female: female
       first_name: first name
+      full_address: full address
+      full_name: full name
       gender: gender
       generate_authentication_token: generate authentication token
       geographic_coordinates: geographic coordinates
