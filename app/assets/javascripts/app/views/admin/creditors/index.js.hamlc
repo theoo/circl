@@ -1,6 +1,5 @@
 %table.datatable{ action: App.Creditor.url() }
   %thead
-
     %tr
       %th.desc= I18n.t('common.date')
       %th= I18n.t('common.title')

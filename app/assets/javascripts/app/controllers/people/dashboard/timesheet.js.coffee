@@ -22,7 +22,7 @@ $.fn.task_id = ->
   elementID ||= $(@).parents('[data-id]').data('id')
   elementID
 
-class New extends App.TimesheetExtention
+class New extends App.TimesheetExtension
 
   events:
     'submit form': 'submit'
@@ -57,7 +57,7 @@ class New extends App.TimesheetExtention
     @task.start_date = @repack_date_time(@task.start_date)
     @save_with_notifications @task, @render
 
-class Edit extends App.TimesheetExtention
+class Edit extends App.TimesheetExtension
 
   events:
     'submit form': 'submit'

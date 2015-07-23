@@ -44,9 +44,10 @@ class Affair < ActiveRecord::Base
   require 'monetize/core_extensions'
 
   # include ChangesTracker
-  include StatusExtention
+  include StatusExtension
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
+  extend  VatExtension
   extend  MoneyComposer
 
   # TODO: Move this to jsbuilder
@@ -568,11 +569,6 @@ class Affair < ActiveRecord::Base
   def compute_value_without_taxes
     self.value = reverse_vat(value)
     update_vat
-  end
-
-  # Takes a value taxes included
-  def reverse_vat(val)
-    val / ( 1 + (ApplicationSetting.value("service_vat_rate").to_f / 100) )
   end
 
   def vat_calculation_availability

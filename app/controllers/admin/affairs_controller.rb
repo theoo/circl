@@ -18,7 +18,7 @@
 
 class Admin::AffairsController < ApplicationController
 
-  include ControllerExtentions::Affairs
+  include ControllerExtensions::Affairs
 
   layout false
 
@@ -141,7 +141,7 @@ class Admin::AffairsController < ApplicationController
     end
   end
 
-  # Search is in AffairsExtention
+  # Search is in AffairsExtension
 
   def available_statuses
     a = Affair.available_statuses

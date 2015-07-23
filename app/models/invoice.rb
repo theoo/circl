@@ -50,7 +50,7 @@ class Invoice < ActiveRecord::Base
   require 'monetize/core_extensions'
 
   # include ChangesTracker
-  include StatusExtention
+  include StatusExtension
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::TagHelper
   include ElasticSearch::Mapping

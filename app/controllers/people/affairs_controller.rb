@@ -18,7 +18,7 @@
 
 class People::AffairsController < ApplicationController
 
-  include ControllerExtentions::Affairs
+  include ControllerExtensions::Affairs
 
   layout false
 
@@ -238,7 +238,7 @@ class People::AffairsController < ApplicationController
     end
   end
 
-  # Search is in AffairsExtention
+  # Search is in AffairsExtension
 
   def affairs
 

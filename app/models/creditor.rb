@@ -28,15 +28,20 @@ class Creditor < ActiveRecord::Base
   # include ChangesTracker
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
+  include VatExtension
   extend  MoneyComposer
 
   #################
   ### CALLBACKS ###
   #################
 
-  # before_save :update_value, if: 'value_in_cents.blank?'
-  # before_save :update_vat, if: 'vat_in_cents.blank?'
-  # before_save :set_vat_percentage, if: 'vat_percentage.blank?'
+  before_save do
+    if custom_value_with_taxes
+      original_value = value
+      self.value = reverse_vat(original_value)
+      self.vat = original_value - value
+    end
+  end
 
   #################
   ### RELATIONS ###
@@ -48,7 +53,9 @@ class Creditor < ActiveRecord::Base
           foreign_key: 'id'
 
   # relation not reflected on affairs model
-  has_one :affair
+  has_one :affair,
+          primary_key: 'affair_id',
+          foreign_key: 'id'
 
   # Money
   money :value
@@ -64,6 +71,7 @@ class Creditor < ActiveRecord::Base
     where("creditors.paid_on is not null and creditors.payment_in_books_on is null")
   }
 
+  attr_accessor :custom_value_with_taxes
   attr_accessor :template
 
   ###################
@@ -115,8 +123,12 @@ class Creditor < ActiveRecord::Base
 
   def as_json(options = nil)
     h = super(options)
+    h[:creditor_name]    = creditor.try(:name)
+    h[:affair_name]      = affair.try(:title)
     h[:value]            = value.try(:to_f)
     h[:value_currency]   = value.currency.try(:iso_code)
+    h[:vat]              = vat.try(:to_f)
+    h[:vat_currency]     = vat.currency.try(:iso_code)
     h[:value_with_taxes] = value_with_taxes.try(:to_f)
     h
   end

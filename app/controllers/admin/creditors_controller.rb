@@ -127,7 +127,7 @@ class Admin::CreditorsController < ApplicationController
 
   def create
     if @creditor.save
-      respond_with(@creditor)
+      render json: @creditor
     else
       render json: @creditor.errors, status: :unprocessable_entity
     end
@@ -139,7 +139,7 @@ class Admin::CreditorsController < ApplicationController
 
   def update
     if @creditor.update_attributes(creditor_params)
-      respond_with(@creditor)
+      render json: @creditor
     else
       render json: @creditor.errors, status: :unprocessable_entity
     end
@@ -159,7 +159,7 @@ class Admin::CreditorsController < ApplicationController
     end
 
     def creditor_params
-      params.require(:creditor).permit(
+      params.permit(
         :creditor_id,
         :affair_id,
         :title,
@@ -167,9 +167,11 @@ class Admin::CreditorsController < ApplicationController
         :value,
         :value_in_cents,
         :value_currency,
+        :custom_value_with_taxes,
         :vat,
         :vat_in_cents,
         :vat_currency,
+        :vat_percentage,
         :invoice_received_on,
         :invoice_ends_on,
         :invoice_in_books_on,
@@ -177,7 +179,7 @@ class Admin::CreditorsController < ApplicationController
         :discount_ends_on,
         :paid_on,
         :payment_in_books_on,
-        :updated_at )
+        :updated_at)
     end
 
 end

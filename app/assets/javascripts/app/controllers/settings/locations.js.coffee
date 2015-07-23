@@ -55,8 +55,8 @@ class Edit extends App.ExtendedController
     Location.fetch id: @id
 
   render: =>
-    @show()
     @html @view('settings/locations/form')(@)
+    @show()
 
   submit: (e) ->
     e.preventDefault()
@@ -119,5 +119,5 @@ class App.SettingsLocations extends Spine.Controller
 
   activate: ->
     super
-    Location.fetch()
     @new.render()
+    @index.render()

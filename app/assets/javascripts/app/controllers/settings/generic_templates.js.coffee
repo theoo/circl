@@ -22,7 +22,7 @@ $.fn.template = ->
   elementID ||= $(@).parents('[data-id]').data('id')
   GenericTemplate.find(elementID)
 
-class ClassNamesExtention extends App.ExtendedController
+class ClassNamesExtension extends App.ExtendedController
 
   constructor: ->
     super
@@ -36,7 +36,7 @@ class ClassNamesExtention extends App.ExtendedController
     @class_names['Product']          = I18n.t("activerecord.models.product")
     @class_names['Extra']            = I18n.t("activerecord.models.extra")
 
-class New extends ClassNamesExtention
+class New extends ClassNamesExtension
   events:
     'submit form' : 'submit'
     'click a[name="reset"]': 'reset'
@@ -59,7 +59,7 @@ class New extends ClassNamesExtention
     @save_with_notifications @template, (id) =>
       @trigger 'edit', id
 
-class Edit extends ClassNamesExtention
+class Edit extends ClassNamesExtension
   events:
     'submit form' : 'submit'
     'click a[name="cancel"]': 'cancel'
@@ -104,7 +104,7 @@ class Edit extends ClassNamesExtention
     controller.activate()
     win.modal('show')
 
-class Index extends ClassNamesExtention
+class Index extends ClassNamesExtension
   events:
     'click tr.item': 'edit'
     'datatable_redraw': 'table_redraw'

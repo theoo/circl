@@ -35,7 +35,7 @@ $.fn.query_preset = ->
         selected_attributes: []
         attributes_order: []
 
-class SearchEngineExtention extends App.ExtendedController
+class SearchEngineExtension extends App.ExtendedController
 
   # TODO Do not annimate already collapsed #presets and #presets_summary
 
@@ -286,7 +286,7 @@ class SearchEngineExtention extends App.ExtendedController
     a['selected_attributes'] = @get_selected_attributes()
     a
 
-class Search extends SearchEngineExtention
+class Search extends SearchEngineExtension
   events:
     'submit form':                                'search'
     'click button[name=directory-search]':        'search'
@@ -357,7 +357,7 @@ class Search extends SearchEngineExtention
     @trigger 'edit', {preset: @query_preset}
     @render()
 
-class Edit extends SearchEngineExtention
+class Edit extends SearchEngineExtension
   events:
     'click button[name=directory-preset-update]':  'update'
     'click button[name=directory-preset-add]':     'add'

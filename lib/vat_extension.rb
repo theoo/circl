@@ -16,53 +16,15 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-module NilClassExtension
+module VatExtension
 
-  def to_datepicker
-    ""
+  ########################
+  ### INSTANCE METHODS ###
+  ########################
+
+  # Takes a value taxes included
+  def reverse_vat(val)
+    val / ( 1 + (ApplicationSetting.value("service_vat_rate").to_f / 100) )
   end
 
-  def round
-    0
-  end
-
-  # many models use the attr value, it's a shortcut for listings helper
-  def value
-    nil
-  end
-
-  def title
-
-  end
-
-end
-
-class NilClass
-  include NilClassExtension
-end
-
-module StringExtension
-  def is_i?
-     /^[-+]?\d+$/ === self
-  end
-
-  def exerpt(number_of_chars = 250)
-    if self.size > number_of_chars
-      self[0..number_of_chars] + " (...)"
-    else
-      self
-    end
-  end
-
-  def valid_json?
-    begin
-      JSON.parse(self).symbolize_keys
-    rescue JSON::ParserError => e
-      false
-    end
-  end
-end
-
-class String
-  include StringExtension
 end

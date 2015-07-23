@@ -21,15 +21,28 @@ $.fn.creditor = ->
   elementID ||= $(@).parents('[data-id]').data('id')
   Creditor.find(elementID)
 
-FormFieldsController =
-  bind_provider_and_affair: ->
-    @creditor_name_field = @el.find("input[name=creditor_name]")
-    @creditor_id_field   = @el.find("input[name=creditor_id]")
-    @creditor_button     = @creditor_name_field.parent(".autocompleted").find(".input-group-btn .btn")
-    @affair_name_field   = @el.find("input[name=affair_name]")
-    @affair_id_field     = @el.find("input[name=affair_id]")
-    @affair_help_block   = @el.find(".affairs_count")
-    @affair_button       = @affair_name_field.parent(".autocompleted").find(".input-group-btn .btn")
+CreditorsExtentions =
+  constrains: ->
+    # Autocompletes buttons
+    @creditor_id_field       = @el.find("input[name=creditor_id]")
+    @creditor_name_field     = @el.find("input[name=creditor_name]")
+    @creditor_button         = @creditor_name_field.parent(".autocompleted").find(".input-group-btn .btn")
+    @affair_id_field         = @el.find("input[name=affair_id]")
+    @affair_name_field       = @el.find("input[name=affair_name]")
+    @affair_help_block       = @el.find(".affairs_count")
+    @affair_button           = @affair_name_field.parent(".autocompleted").find(".input-group-btn .btn")
+
+    @vat_field               = @el.find("input[name=vat]")
+    @vat_percentage_field    = @el.find("input[name=vat_percentage]")
+    @value_field             = @el.find("input[name=value]")
+    @custom_value_with_taxes = @el.find("#admin_creditors_custom_value_with_taxes")
+
+    # Required fields
+    @required_fields = [ @creditor_id_field,
+      @el.find("input[name=value]"),
+      @el.find("input[name=invoice_received_on]"),
+      @el.find("input[name=invoice_ends_on]"),
+      @el.find("input[name=title]") ]
 
     @update_button       = @el.find('button[type=submit]')
 
@@ -57,94 +70,105 @@ FormFieldsController =
     if @affair_id_field.val() != "" and @affair_name_field.val() != ""
       @enable_affair({ id: @affair_id_field.val(), owner_id: @creditor_id_field.val() })
 
+    @toggle_submit()
+
   enable_creditor: (item) ->
     @creditor_id_field.val item.id
-    @set_affairs_search_url(item.id)
-    @affair_help_block.html I18n.t("task.views.affairs_found", count: item.affairs_count)
-    @affair_help_block.effect('highlight')
-
     @creditor_button.attr('href', "/people/#{item.id}")
     @creditor_button.attr('disabled', false)
 
   disable_creditor: ->
-    @reset_affairs_search_url()
-    @disable_submit()
+    @creditor_id_field.val undefined
     @creditor_button.attr('disabled', true)
-    @affair_button.attr('disabled', true)
 
   enable_affair: (item) ->
-    @creditor_id_field.val item.owner_id
-    @creditor_name_field.val item.owner_name
-    @creditor_button.attr('href', "/people/#{item.owner_id}")
-    @creditor_button.attr('disabled', false)
-
     @affair_id_field.val item.id
-    @enable_submit()
-
     @affair_button.attr('href', "/people/#{item.owner_id}#affairs/#{item.id}")
     @affair_button.attr('disabled', false)
 
   disable_affair: ->
-    @disable_submit()
+    @affair_id_field.val undefined
     @affair_button.attr('disabled', true)
 
-  set_affairs_search_url: (id) ->
-    @affair_name_field.autocomplete({source: '/people/' + id + '/affairs/search'})
+  toggle_submit: ->
+    allow_submit = true
+    for field in @required_fields
+      allow_submit = allow_submit && (field.val() != "")
 
-  reset_affairs_search_url: ->
-    @affair_name_field.val("")
-    @affair_name_field.autocomplete({source: '/admin/affairs/search'})
+    if allow_submit
+      @update_button.removeClass('disabled')
+    else
+      @update_button.addClass('disabled')
 
-  disable_submit: ->
-    @update_button.addClass('disabled')
-
-  enable_submit: ->
-    @update_button.removeClass('disabled')
+  clear_vat: (e) ->
+    if $(e.target).is(':checked')
+      @vat_field.val("")
+      @vat_field.attr(disabled: true)
+    else
+      @vat_field.attr(disabled: false)
+      @update_vat()
 
 
 class New extends App.ExtendedController
 
-  @include FormFieldsController
+  @include CreditorsExtentions
 
   events:
     'submit form': 'submit'
     'click a[name="reset"]': 'reset'
+    'keyup': 'toggle_submit'
+    'currency_changed select.currency_selector': 'on_currency_change'
+    'click #admin_creditors_custom_value_with_taxes': 'clear_vat'
 
   constructor: (params) ->
     super
+    @setup_vat
+      ids_prefix: 'admin_creditors_'
+      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
 
   render: =>
-    @creditor = new Creditor
-
+    @creditor = new Creditor(vat_percentage: App.ApplicationSetting.value('service_vat_rate'))
     @html @view('admin/creditors/form')(@)
-    @bind_provider_and_affair()
+    @constrains()
+
+    # Click it so the callback is called
+    @custom_value_with_taxes.click()
 
   submit: (e) ->
     e.preventDefault()
     @save_with_notifications @creditor.fromForm(e.target), @render
 
 class Edit extends App.ExtendedController
+
+  @include CreditorsExtentions
+
   events:
     'submit form': 'submit'
     'click a[name="cancel"]': 'cancel'
+    'currency_changed select.currency_selector': 'on_currency_change'
+    'click #admin_creditors_custom_value_with_taxes': 'clear_vat'
 
   constructor: ->
     super
+    @setup_vat
+      ids_prefix: 'admin_creditors_'
+      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
 
   active: (params) ->
     @id = params.id if params.id
-    @creditor = Creditor.find(@id)
     @render()
 
   render: =>
     return unless Creditor.exists(@id)
+    @creditor = Creditor.find(@id)
     @html @view('admin/creditors/form')(@)
-    @bind_provider_and_affair()
+    @constrains()
     @show()
 
   submit: (e) ->
     e.preventDefault()
-    @save_with_notifications @creditor.fromForm(e.target)
+    # re-render so value is updated when custom_value_with_taxes is checked
+    @save_with_notifications @creditor.fromForm(e.target), @render
 
   destroy: (e) ->
     e.preventDefault()
@@ -172,6 +196,8 @@ class Index extends App.ExtendedController
     Creditor.unbind 'refresh'
     Creditor.one 'refresh', =>
       @trigger 'edit', id
+      # Rebind refresh
+      Creditor.bind 'refresh', @render
     Creditor.fetch(id: id)
 
   documents: (e) ->

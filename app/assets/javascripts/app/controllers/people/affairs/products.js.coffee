@@ -25,7 +25,7 @@ $.fn.product_id = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
 
-class PersonAffairProductExtention extends App.ExtendedController
+class PersonAffairProductExtension extends App.ExtendedController
 
   init_locals: =>
     # Theses locals need to be set when template has been rendered
@@ -76,7 +76,7 @@ class PersonAffairProductExtention extends App.ExtendedController
     @program_field.autocomplete
       select: (e, ui) => select_callback_for(@program_description, ui)
 
-class New extends PersonAffairProductExtention
+class New extends PersonAffairProductExtension
   events:
     'submit form': 'submit'
     'click a[name="reset"]': 'reset'
@@ -115,7 +115,7 @@ class New extends PersonAffairProductExtention
       ProductItem.fetch()
       PersonAffair.fetch(id: @affair_id)
 
-class Edit extends PersonAffairProductExtention
+class Edit extends PersonAffairProductExtension
   events:
     'submit form': 'submit'
     'click a[name="cancel"]': 'cancel'

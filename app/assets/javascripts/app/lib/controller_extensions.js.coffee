@@ -304,7 +304,6 @@ class App.ExtendedController extends Spine.Controller
   adjust_vat: (e) =>
     e.preventDefault() if e
     @update_vat()
-    @highlight_vat()
 
   compute_vat: () =>
     val = @el.find("#" + @ids_prefix + 'value').val()
@@ -317,7 +316,12 @@ class App.ExtendedController extends Spine.Controller
 
   update_vat: () =>
     vat = @compute_vat()
-    @el.find("#" + @ids_prefix + 'vat').val(vat)
+    vat_field = @el.find("#" + @ids_prefix + 'vat')
+    if vat_field.attr('disabled')
+      vat_field.val("")
+    else
+      vat_field.val(vat)
+      @highlight_vat()
 
   # Function called from events, trigger sent from ui.js#bind_currency_selector
   on_currency_change: (e) ->

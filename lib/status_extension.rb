@@ -18,7 +18,7 @@
 
 # Allow any class to inherit the status manipulation methods.
 # Requires a 'status' attribute as unsigned int(16)
-module StatusExtention
+module StatusExtension
 
   def self.included(base)
     base.extend(ClassMethods)

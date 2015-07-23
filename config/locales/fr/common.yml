@@ -133,6 +133,7 @@ fr:
     upload: téléverser
     use_right_click_save_as: utilisez le click droit et sélectionnez 'enregistrer le lien sous...'
     value: valeur
+    value_with_taxes: valeur TTC
     vat: TVA
     volume: volume
     weak: faible

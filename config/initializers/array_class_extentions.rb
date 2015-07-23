@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-module ArrayClassExtention
+module ArrayClassExtension
 
   # expect a bidimentional array
   def to_csv
@@ -34,5 +34,5 @@ module ArrayClassExtention
 end
 
 class Array
-  include ArrayClassExtention
+  include ArrayClassExtension
 end

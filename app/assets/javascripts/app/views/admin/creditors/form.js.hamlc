@@ -66,12 +66,26 @@
 
       .col-md-6
         .row
+          .col-sm-12
+            - if App.ApplicationSetting.value('use_vat') == "true"
+              .form-group
+                %label
+                .checkbox
+                  %label.control-label
+                    %input{ type: 'checkbox',
+                            name: 'custom_value_with_taxes',
+                            id: 'admin_creditors_custom_value_with_taxes',
+                            checked: @creditor.custom_value_with_taxes == true,
+                            value: 1 }
+                    = I18n.t('creditor.views.custom_value_with_taxes')
+
           .col-xl-4.col-sm-6
             .form-group
               %label
                 = I18n.t('common.value')
               .input-group
                 %input{ type: 'number',
+                        id: 'admin_creditors_value',
                         class: 'form-control required',
                         step: 0.01,
                         min: 0,
@@ -80,6 +94,10 @@
                         value: @creditor.value }
                 .input-group-addon
                   != @partial('select_currency')(currency: @creditor.value_currency, name: 'value_currency', value: @creditor.value)
+
+          .col-xl-8.col-sm-12
+            - if App.ApplicationSetting.value('use_vat') == "true"
+              != @partial('edit_vat')(object: @creditor, prefix: @ids_prefix)
 
           .col-xl-4.col-xs-6
             .form-group

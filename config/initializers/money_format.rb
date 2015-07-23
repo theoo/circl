@@ -54,7 +54,7 @@ if ActiveRecord::Base.connection.table_exists? 'currencies' \
 
   Money.default_currency = Money::Currency.new(ApplicationSetting.value("default_currency"))
 
-  module MoneyClassExtention
+  module MoneyClassExtension
 
     # Force default currency format for all devises
     def to_view
@@ -75,7 +75,7 @@ if ActiveRecord::Base.connection.table_exists? 'currencies' \
   end
 
   class Money
-    include MoneyClassExtention
+    include MoneyClassExtension
   end
 
   # Currencies conversion

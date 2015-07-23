@@ -10,6 +10,7 @@ class CreateCreditors < ActiveRecord::Migration
       t.string  :value_currency, default: "CHF", null: false
       t.integer :vat_in_cents, default: 0, null: false
       t.string  :vat_currency, default: "CHF", null: false
+      t.string  :vat_percentage
       t.date    :invoice_received_on
       t.date    :invoice_ends_on
       t.date    :invoice_in_books_on

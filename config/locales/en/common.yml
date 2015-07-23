@@ -131,6 +131,7 @@ en:
     upload: upload
     use_right_click_save_as: right-click and select 'Save as...'
     value: value
+    value_with_taxes: value with taxes
     vat: VAT
     volume: volume
     weak: weak

@@ -23,7 +23,7 @@ $.fn.task = ->
   elementID ||= $(@).parents('[data-id]').data('id')
   PersonTask.find(elementID)
 
-class New extends App.TimesheetExtention
+class New extends App.TimesheetExtension
 
   events:
     'submit form': 'submit'
@@ -95,7 +95,7 @@ class New extends App.TimesheetExtention
       @render()
       App.PersonAffair.fetch(id: @affair_id)
 
-class Edit extends App.TimesheetExtention
+class Edit extends App.TimesheetExtension
 
   events:
     'submit form': 'submit'

@@ -14,3 +14,4 @@ fr:
       paid_on: payé
       payment_in_books_on: payement compta.
       discount_percentage: 'escompte %'
+      custom_value_with_taxes: La valeur saisie est TTC

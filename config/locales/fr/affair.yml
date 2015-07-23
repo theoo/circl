@@ -30,7 +30,7 @@ fr:
       computed_value_with_taxes_is: La valeur TTC calculée est
       conditions: conditions
       create_variant: créer une variante
-      custom_value_with_taxes: la valeur fixée est TTC
+      custom_value_with_taxes: La valeur saisie est TTC
       description: description
       document_export: Génération de documents
       estimate: devis
