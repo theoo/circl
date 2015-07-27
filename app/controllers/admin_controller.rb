@@ -23,7 +23,10 @@ class AdminController < ApplicationController
   def index
     authorize! :index, Admin
 
+    # GON
     gon.affairs_count = Affair.count
+    gon.creditor_statuses = Creditor.statuses
+    gon.creditor_date_fields = Creditor.date_fields
 
     respond_to do |format|
       format.html { render }

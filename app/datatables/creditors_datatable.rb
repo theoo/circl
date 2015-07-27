@@ -52,7 +52,7 @@ class CreditorsDatatable
         classes.push("success")
       end
 
-      value = invoice_value_summary(creditor)
+      value = creditor_value_summary(creditor)
 
       {
         0 => creditor.created_at,

@@ -47,6 +47,17 @@ class Creditor < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
+  # Names should be reported in status and vice-versa
+  scope :paid, -> { where("creditors.paid_on is not null") }
+  scope :unpaid, -> { where(paid_on: nil) }
+  scope :late, -> { where("creditors.invoice_ends_on < ?", Time.now) }
+  scope :invoices_to_record_in_books, -> {
+    where("creditors.invoice_received_on is not null and creditors.invoice_in_books_on is null")
+  }
+  scope :payments_to_record_in_books, -> {
+    where("creditors.paid_on is not null and creditors.payment_in_books_on is null")
+  }
+
   has_one :creditor,
           class_name: 'Person',
           primary_key: 'creditor_id',
@@ -60,16 +71,6 @@ class Creditor < ActiveRecord::Base
   # Money
   money :value
   money :vat
-
-  scope :paid, -> { where("creditors.paid_on is not null") }
-  scope :unpaid, -> { where(paid_on: nil) }
-  scope :late, -> { where("creditors.invoice_ends_on < ?", Time.now) }
-  scope :invoices_to_record_in_books, -> {
-    where("creditors.invoice_received_on is not null and creditors.invoice_in_books_on is null")
-  }
-  scope :payments_to_record_in_books, -> {
-    where("creditors.paid_on is not null and creditors.payment_in_books_on is null")
-  }
 
   attr_accessor :custom_value_with_taxes
   attr_accessor :template
@@ -92,6 +93,31 @@ class Creditor < ActiveRecord::Base
   #### CLASS METHODS #####
   ########################
 
+  # Returns status hash with machine alias and human translation
+  def self.statuses
+    # Names should be reported in scopes and vice-versa
+    {
+      paid: I18n.t("creditor.status.paid"),
+      unpaid: I18n.t("creditor.status.unpaid"),
+      late: I18n.t("creditor.status.late"),
+      invoices_to_record_in_books: I18n.t("creditor.status.invoices_to_record_in_books"),
+      payments_to_record_in_books: I18n.t("creditor.status.payments_to_record_in_books")
+    }
+  end
+
+  # Returns date fields with a translation
+  def self.date_fields
+    {
+      created_at: I18n.t("creditor.date_fields.creation"),
+      invoice_received_on: I18n.t("creditor.date_fields.reception"),
+      invoice_ends_on: I18n.t("creditor.date_fields.invoice_end"),
+      invoice_in_books_on: I18n.t("creditor.date_fields.invoice_books_recording"),
+      discount_ends_on: I18n.t("creditor.date_fields.discount_end"),
+      paid_on: I18n.t("creditor.date_fields.payment_date"),
+      payment_in_books_on: I18n.t("creditor.date_fields.payment_books_recording"),
+    }
+  end
+
   ########################
   ### INSTANCE METHODS ###
   ########################
@@ -112,6 +138,18 @@ class Creditor < ActiveRecord::Base
 
   def value_with_taxes
     value + vat
+  end
+
+  def discount_value(v = value_with_taxes)
+    if not discount_ends_on.nil? and Time.now < discount_ends_on
+      (v / 100.0 * discount_percentage)
+    else
+      0
+    end
+  end
+
+  def value_with_discount(v = value_with_taxes)
+    v - discount_value(v)
   end
 
   def discount_ends_before_invoice

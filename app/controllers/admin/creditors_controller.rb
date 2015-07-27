@@ -49,6 +49,22 @@ class Admin::CreditorsController < ApplicationController
 
     if from and to and from > to
       errors[:from] = I18n.t("salary.errors.from_date_should_be_before_to_date")
+
+      unless params[:date_field].blank?
+        if Creditor.date_fields.index params[:date_field]
+          date_field = params[:date_field]
+        else
+          errors[:statuses] = I18n.t("creditors.errors.date_field_unkown")
+        end
+      end
+    end
+
+    unless params[:status].blank?
+      unless Creditor.statuses.index params[:status]
+        status = params[:status]
+      else
+        errors[:statuses] = I18n.t("creditors.errors.invalid_status")
+      end
     end
 
     if ['pdf', 'odt'].index params[:format]
@@ -63,9 +79,10 @@ class Admin::CreditorsController < ApplicationController
         ######### PREPARE ############
 
         @creditors = Creditor.order(:created_at)
+        @creditors = @creditors.send(status) if status
 
         if from and to
-          @creditors = @creditors.where("created_at BETWEEN ? AND ?", from, to)
+          @creditors = @creditors.where("#{date_field} BETWEEN ? AND ?", from, to)
         end
 
         if ['pdf', 'odt'].index params[:format]

@@ -17,8 +17,10 @@
           .icon-spin.icon-4x.icon-gear
 
 .panel-footer
-  %button{type: 'button',
-          name: 'admin-creditors-documents',
-          class: 'btn btn-default' }
-    .icon-paper-clip
-    = I18n.t("common.documents")
+  %button{ type: 'button', name: 'admin-creditors-export', class: 'btn btn-default'}
+    .icon-cloud-upload
+    = I18n.t('common.toolbox_export')
+
+  -# %button{type: 'button', name: 'admin-creditors-documents', class: 'btn btn-default' }
+  -#   .icon-paper-clip
+  -#   = I18n.t("common.documents")

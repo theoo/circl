@@ -14,7 +14,7 @@
               = I18n.t('creditor.views.creditor_name')
             .autocompleted.input-group
               %input{ type: 'search',
-                      name: 'creditor_name',
+                      name: 'creditor',
                       autofocus: 'autofocus',
                       value: @creditor.creditor_name,
                       action: '/people/search',
@@ -31,7 +31,7 @@
               = I18n.t('creditor.views.affair_name')
             .autocompleted.input-group
               %input{ type: 'search',
-                      name: 'affair_name',
+                      name: 'affair',
                       value: @creditor.affair_name,
                       action: '/admin/affairs/search',
                       class: 'form-control'}

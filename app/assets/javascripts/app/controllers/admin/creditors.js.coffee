@@ -138,6 +138,7 @@ class New extends App.ExtendedController
     e.preventDefault()
     @save_with_notifications @creditor.fromForm(e.target), @render
 
+
 class Edit extends App.ExtendedController
 
   @include CreditorsExtentions
@@ -176,9 +177,11 @@ class Edit extends App.ExtendedController
       @destroy_with_notifications @creditor, =>
         @hide()
 
+
 class Index extends App.ExtendedController
   events:
     'click tr.item': 'edit'
+    'click button[name=admin-creditors-export]':       'export'
     'click button[name="admin-creditors-documents"]':  'documents'
 
   constructor: (params) ->
@@ -200,6 +203,23 @@ class Index extends App.ExtendedController
       Creditor.bind 'refresh', @render
     Creditor.fetch(id: id)
 
+  export: (e) ->
+    e.preventDefault()
+
+    win = $("<div class='modal fade' id='admin-invoices-export-modal' tabindex='-1' role='dialog' />")
+    # render partial to modal
+    modal = JST["app/views/helpers/modal"]()
+    win.append modal
+    win.modal(keyboard: true, show: false)
+
+    # Modal alternative
+    win.find('.modal-body').remove()
+    win.find('.modal-footer').remove()
+
+    controller = new App.ExportCreditors({el: win.find('.modal-content')})
+    win.modal('show')
+    controller.activate()
+
   documents: (e) ->
     e.preventDefault()
 
@@ -213,46 +233,108 @@ class Index extends App.ExtendedController
     win.modal('show')
     controller.activate()
 
-class CreditorsDocumentsMachine extends App.ExtendedController
+
+class App.ExportCreditors extends App.ExtendedController
   events:
     'submit form': 'validate'
-    'change #admin_creditors_document_export_format': 'format_changed'
 
   constructor: (params) ->
     super
-    @content = params.content
+    @account = App.ApplicationSetting.value("creditors_debit_account")
+    @counterpart_account = App.ApplicationSetting.value("creditors_credit_account")
+    @statuses = gon.creditor_statuses
+    @date_fields = gon.creditor_date_fields
 
-  activate: (params)->
-    @format = 'csv' # default format
-    @form_url = App.Creditor.url()
-
-    @template_class = 'Creditor'
-    App.Creditor.one 'statuses_fetched', =>
-      @render()
-    App.Creditor.fetch_statuses()
-
-  render: =>
-    @html @view('admin/creditors/documents')(@)
-
-    @el.find("#admin_creditors_document_export_threshold_value_global").attr(disabled: true)
-    @el.find("#admin_creditors_document_export_threshold_overpaid_global").attr(disabled: true)
-
+  # FIXME validation should be in model
   validate: (e) ->
     errors = new App.ErrorsList
 
-    if @el.find("#admin_creditors_document_export_format").val() != 'csv'
-      unless @el.find("#admin_creditors_document_export_template").val()
-        errors.add ['generic_template_id', I18n.t("activerecord.errors.messages.blank")].to_property()
+    # Clear errors
+    @reset_notifications()
+
+    form = $(e.target)
+    from = form.find('input[name=from]').val()
+    to = form.find('input[name=to]').val()
+    account = form.find('input[name=account]').val()
+    counterpart = form.find('input[name=counterpart_account]').val()
+
+    if from.length == 0
+      errors.add ['from', I18n.t("activerecord.errors.messages.blank")].to_property()
+    else
+      unless @validate_date_format(from)
+        errors.add ['to', I18n.t('common.errors.date_must_match_format')].to_property()
+
+    if to.length == 0
+      errors.add ['to', I18n.t("activerecord.errors.messages.blank")].to_property()
+    else
+      unless @validate_date_format(to)
+        errors.add ['to', I18n.t('common.errors.date_must_match_format')].to_property()
+
+    if from.length > 0 and to.length > 0
+      if ! @validate_interval(from, to)
+        errors.add ['from', I18n.t('common.errors.from_should_be_before_to')].to_property()
+
+    if account.length == 0
+      errors.add ['account', I18n.t("activerecord.errors.messages.blank")].to_property()
+
+    if counterpart.length == 0
+      errors.add ['counterpart_account', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     if errors.is_empty()
-      # @render_success() # do nothing...
+      @render_success()
     else
       e.preventDefault()
       @render_errors(errors.errors)
 
-  format_changed: (e) ->
-    @format = $(e.target).val()
-    @el.find("form").attr('action', @form_url + "." + @format)
+  render: ->
+    @html @view('admin/creditors/export')(@)
+
+  activate: ->
+    super
+    @render()
+
+
+# class CreditorsDocumentsMachine extends App.ExtendedController
+#   events:
+#     'submit form': 'validate'
+#     'change #admin_creditors_document_export_format': 'format_changed'
+
+#   constructor: (params) ->
+#     super
+#     @content = params.content
+
+#   activate: (params)->
+#     @format = 'csv' # default format
+#     @form_url = App.Creditor.url()
+
+#     @template_class = 'Creditor'
+#     App.Creditor.one 'statuses_fetched', =>
+#       @render()
+#     App.Creditor.fetch_statuses()
+
+#   render: =>
+#     @html @view('admin/creditors/documents')(@)
+
+#     @el.find("#admin_creditors_document_export_threshold_value_global").attr(disabled: true)
+#     @el.find("#admin_creditors_document_export_threshold_overpaid_global").attr(disabled: true)
+
+#   validate: (e) ->
+#     errors = new App.ErrorsList
+
+#     if @el.find("#admin_creditors_document_export_format").val() != 'csv'
+#       unless @el.find("#admin_creditors_document_export_template").val()
+#         errors.add ['generic_template_id', I18n.t("activerecord.errors.messages.blank")].to_property()
+
+#     if errors.is_empty()
+#       # @render_success() # do nothing...
+#     else
+#       e.preventDefault()
+#       @render_errors(errors.errors)
+
+#   format_changed: (e) ->
+#     @format = $(e.target).val()
+#     @el.find("form").attr('action', @form_url + "." + @format)
+
 
 class App.AdminCreditors extends Spine.Controller
   className: 'creditors'

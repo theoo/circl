@@ -1,17 +1,36 @@
 ---
 en:
   creditor:
+    date_fields:
+      creation: MISSING_TRANSLATION creation
+      discount_end: MISSING_TRANSLATION discount end
+      invoice_books_recording: MISSING_TRANSLATION invoice books recording
+      invoice_end: MISSING_TRANSLATION invoice end
+      payment_books_recording: MISSING_TRANSLATION payment books recording
+      payment_date: MISSING_TRANSLATION payment date
+      reception: MISSING_TRANSLATION reception
     errors:
       discount_cannot_end_after_invoice_end: discount cannot end after invoice end
       wrong_date: wrong date
+    status:
+      invoices_to_record_in_books: invoices to record in books
+      late: late
+      paid: paid
+      payments_to_record_in_books: payments to record in books
+      unpaid: unpaid
     views:
+      account: account
       affair_name: affair
+      counterpart_account: counterpart account
       creditor_name: name
+      custom_value_with_taxes: Value is taxes included
+      dates_field: dates field
       discount_ends_on: discount ends on
+      discount_percentage: discount percentage
+      export: export
       invoice_ends_on: invoice ends on
       invoice_in_books_on: invoice in books on
       invoice_received_on: received on
       paid_on: paid on
       payment_in_books_on: payment in books on
-      discount_percentage: discount percentage
-      custom_value_with_taxes: Value is taxes included
+      status: status

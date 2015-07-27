@@ -1,0 +1,92 @@
+%form{ method:'get', action: '/admin/creditors/export' }
+  .modal-header
+    %button{type: 'button', class: 'close', :data-dismiss => 'modal'}
+      &times;
+    %h4.modal-title
+      = I18n.t('creditor.views.export')
+
+  .modal-body
+    .row
+      .col-lg-12
+        .validation_errors_placeholder
+
+    .row
+      .col-lg-6
+        .form-group
+          %label
+            = I18n.t('creditor.views.status')
+          %select{name: 'type',
+                  class: 'form-control'}
+            - for k,v of @statuses
+              %option{value: k}= v
+
+      .col-lg-6
+        .form-group
+          %label
+            = I18n.t('common.toolbox_template')
+          %select{name: 'type',
+                  class: 'form-control'}
+            - for l in App.AVAILABLE_EXPORT_SYSTEMS
+              %option{value: l}= l
+
+    .row
+      .col-lg-6
+        .form-group
+          %label
+            = I18n.t('creditor.views.account')
+          %input{ type: 'text',
+                  step: '1',
+                  class: 'form-control required',
+                  name: 'account',
+                  value: @account }
+
+      .col-lg-6
+        .form-group
+          %label
+            = I18n.t('creditor.views.counterpart_account')
+          %input{ type: 'text',
+                  step: '1',
+                  class: 'form-control required',
+                  name: 'counterpart_account',
+                  value: @counterpart_account }
+
+    .row
+      .col-lg-6
+        .form-group
+          %label
+            = I18n.t('creditor.views.dates_field')
+          %select{name: 'type',
+                  class: 'form-control'}
+            - for k,v of @date_fields
+              %option{value: k}= v
+
+    .row
+      .col-lg-6
+        .form-group
+          %label
+            = I18n.t('common.from')
+          %input{ type: 'text',
+                  name: 'from',
+                  class: 'datepicker required form-control',
+                  value: '' }
+
+      .col-lg-6
+        .form-group
+          %label
+            = I18n.t('common.to')
+          %input{ type: 'text',
+                  name: 'to',
+                  class: 'datepicker required form-control',
+                  value: '' }
+
+  .modal-footer
+    .row
+      .col-lg-12
+        %button{type: 'button', class: 'btn btn-default', :data-dismiss => 'modal'}
+          .icon-chevron-left
+          = I18n.t("common.close")
+
+        %button{type: 'submit',
+                class: 'btn btn-primary'}
+          .icon-cloud-download
+          = I18n.t('common.download')

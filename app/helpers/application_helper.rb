@@ -187,5 +187,47 @@ module ApplicationHelper
     end # value
   end
 
+  def creditor_value_summary(creditor)
+    capture_haml do
+      haml_tag "table.affair_value" do
+        if ApplicationSetting.value('use_vat') == "true"
+          without_taxes_translation = I18n.t("affair.views.value.without_taxes")
+        else
+          without_taxes_translation = I18n.t("affair.views.value.value")
+        end
+
+        haml_tag :tr do
+          haml_tag :td, creditor.value.to_view
+          haml_tag :td, without_taxes_translation
+        end
+
+        if ApplicationSetting.value('use_vat') == "true"
+          haml_tag :tr do
+            haml_tag :td, creditor.vat.to_view
+            haml_tag :td, I18n.t("affair.views.value.vat")
+          end
+        end
+
+        if not creditor.discount_ends_on.nil? and Time.now < creditor.discount_ends_on
+          haml_tag :tr do
+            haml_tag :td do
+              haml_tag ".text-danger", "-#{creditor.discount_value.to_view}"
+            end
+            haml_tag :td, "#{creditor.discount_percentage.to_s}%"
+          end
+        end
+
+        if ApplicationSetting.value('use_vat') == "true"
+          haml_tag :tr do
+            haml_tag :td, creditor.value_with_discount.to_view
+            haml_tag :td, I18n.t("affair.views.value.with_taxes")
+          end
+        end
+
+
+      end # table
+
+    end # value
+  end
 
 end
