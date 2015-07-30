@@ -25,7 +25,7 @@ class AdminController < ApplicationController
 
     # GON
     gon.affairs_count = Affair.count
-    gon.creditor_statuses = Creditor.statuses
+    gon.creditor_statuses = {all: I18n.t("common.all")}.merge(Creditor.statuses)
     gon.creditor_date_fields = Creditor.date_fields
 
     respond_to do |format|

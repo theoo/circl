@@ -70,8 +70,6 @@ CreditorsExtentions =
     if @affair_id_field.val() != "" and @affair_name_field.val() != ""
       @enable_affair({ id: @affair_id_field.val(), owner_id: @creditor_id_field.val() })
 
-    @toggle_submit()
-
   enable_creditor: (item) ->
     @creditor_id_field.val item.id
     @creditor_button.attr('href', "/people/#{item.id}")
@@ -90,16 +88,6 @@ CreditorsExtentions =
     @affair_id_field.val undefined
     @affair_button.attr('disabled', true)
 
-  toggle_submit: ->
-    allow_submit = true
-    for field in @required_fields
-      allow_submit = allow_submit && (field.val() != "")
-
-    if allow_submit
-      @update_button.removeClass('disabled')
-    else
-      @update_button.addClass('disabled')
-
   clear_vat: (e) ->
     if $(e.target).is(':checked')
       @vat_field.val("")
@@ -116,7 +104,6 @@ class New extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click a[name="reset"]': 'reset'
-    'keyup': 'toggle_submit'
     'currency_changed select.currency_selector': 'on_currency_change'
     'click #admin_creditors_custom_value_with_taxes': 'clear_vat'
 
@@ -255,8 +242,6 @@ class App.ExportCreditors extends App.ExtendedController
     form = $(e.target)
     from = form.find('input[name=from]').val()
     to = form.find('input[name=to]').val()
-    account = form.find('input[name=account]').val()
-    counterpart = form.find('input[name=counterpart_account]').val()
 
     if from.length == 0
       errors.add ['from', I18n.t("activerecord.errors.messages.blank")].to_property()
@@ -273,12 +258,6 @@ class App.ExportCreditors extends App.ExtendedController
     if from.length > 0 and to.length > 0
       if ! @validate_interval(from, to)
         errors.add ['from', I18n.t('common.errors.from_should_be_before_to')].to_property()
-
-    if account.length == 0
-      errors.add ['account', I18n.t("activerecord.errors.messages.blank")].to_property()
-
-    if counterpart.length == 0
-      errors.add ['counterpart_account', I18n.t("activerecord.errors.messages.blank")].to_property()
 
     if errors.is_empty()
       @render_success()

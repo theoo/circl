@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150720113901) do
+ActiveRecord::Schema.define(version: 20150730104959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -192,6 +192,7 @@ ActiveRecord::Schema.define(version: 20150720113901) do
     t.string   "value_currency",      default: "CHF", null: false
     t.integer  "vat_in_cents",        default: 0,     null: false
     t.string   "vat_currency",        default: "CHF", null: false
+    t.string   "vat_percentage"
     t.date     "invoice_received_on"
     t.date     "invoice_ends_on"
     t.date     "invoice_in_books_on"
@@ -453,6 +454,7 @@ ActiveRecord::Schema.define(version: 20150720113901) do
     t.string   "website"
     t.string   "alias_name",                                 default: ""
     t.string   "fax_number",                                 default: ""
+    t.string   "creditor_account"
   end
 
   add_index "people", ["authentication_token"], name: "index_people_on_authentication_token", unique: true, using: :btree

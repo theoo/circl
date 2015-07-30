@@ -104,8 +104,10 @@ en:
       change_password_for: change password for
       comments: comments
       communication_languages: communication languages
-      contact_nr: MISSING_TRANSLATION contact nr
+      contact_nr: Contact N°
       coordinates_format: Coordinate format is 46.1997577723502, 6.13464653491974
+      creditor_account: provider account (as creditor)
+      creditor_information: Provider information
       current_password: current password
       destroy: destroy
       email: email
@@ -132,7 +134,7 @@ en:
       new_contact: new contact
       new_password: new password
       new_password_confirmation: new password confirmation
-      new_person: MISSING_TRANSLATION new person
+      new_person: New person
       organization_name: organization name
       permissions: permissions
       personal_information: personal information

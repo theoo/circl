@@ -15,7 +15,7 @@
         .form-group
           %label
             = I18n.t('creditor.views.status')
-          %select{name: 'type',
+          %select{name: 'status',
                   class: 'form-control'}
             - for k,v of @statuses
               %option{value: k}= v
@@ -36,26 +36,27 @@
             = I18n.t('creditor.views.account')
           %input{ type: 'text',
                   step: '1',
-                  class: 'form-control required',
+                  class: 'form-control',
                   name: 'account',
                   value: @account }
+          %small.help-block= I18n.t("creditor.notices.the_counterpart_is_assigned_on_providers_page")
 
-      .col-lg-6
-        .form-group
-          %label
-            = I18n.t('creditor.views.counterpart_account')
-          %input{ type: 'text',
-                  step: '1',
-                  class: 'form-control required',
-                  name: 'counterpart_account',
-                  value: @counterpart_account }
+      / .col-lg-6
+      /   .form-group
+      /     %label
+      /       = I18n.t('creditor.views.counterpart_account')
+      /     %input{ type: 'text',
+      /             step: '1',
+      /             class: 'form-control required',
+      /             name: 'counterpart_account',
+      /             value: @counterpart_account }
 
-    .row
+      / .row
       .col-lg-6
         .form-group
           %label
             = I18n.t('creditor.views.dates_field')
-          %select{name: 'type',
+          %select{name: 'dates_field',
                   class: 'form-control'}
             - for k,v of @date_fields
               %option{value: k}= v

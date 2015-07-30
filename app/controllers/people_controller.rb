@@ -423,7 +423,8 @@ class PeopleController < ApplicationController
         :alias_name,
         :current_password,
         :password,
-        :password_confirmation
+        :password_confirmation,
+        :creditor_account
         )
     end
 

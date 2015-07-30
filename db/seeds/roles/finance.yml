@@ -52,3 +52,6 @@
 
 - subject: Person
   action: dashboard_open_salaries
+
+- subject: Person
+  action: creditor_information

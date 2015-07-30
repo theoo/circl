@@ -16,17 +16,17 @@
 - key: invoices_prefix
   value: invoices
 - key: invoices_debit_account
-  value: '1111'
+  value: 'changeme'
 - key: invoices_credit_account
-  value: '2222'
+  value: 'changeme'
 - key: invoices_vat_code
-  value: '1300'
+  value: 'changeme'
 - key: receipts_prefix
   value: receipts
 - key: receipts_debit_account
-  value: '3333'
+  value: 'changeme'
 - key: receipts_credit_account
-  value: '4444'
+  value: 'changeme'
 - key: receipts_vat_code
   value: '1300'
 - key: salaries_prefix
@@ -71,3 +71,11 @@
   value: '2.month'
 - key: product_item_danger_threshold
   value: '1.month'
+- key: creditor_prefix
+  value: creditor
+- key: creditor_account
+  value: 'changeme'
+- key: creditor_vat_code
+  value: 'changeme'
+- key: export_creditor_description
+  value: '{"attributes": ["id", "title", "creditor.try(:name)", "creditor.try(:id)", "affair.try(:title)"], "separator": "/"}'

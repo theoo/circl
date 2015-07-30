@@ -35,6 +35,7 @@ module Exporter
         # Base::export should be overloaded in the custom factory class (like in oLohnausweisssk or ocas).
         when :custom             then nil
 
+        when :creditors          then Exporter::Creditors.new(options)
         when :invoices           then Exporter::Invoices.new(options)
         when :receipts           then Exporter::Receipts.new(options)
         when :salaries           then Exporter::Salaries.new(options)

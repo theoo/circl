@@ -168,6 +168,45 @@ class Admin::CreditorsController < ApplicationController
     # format.json { render json: @creditor.errors, status: :unprocessable_entity }
   end
 
+  def export
+    from = Date.parse(params[:from]) if validate_date_format(params[:from])
+    to   = Date.parse(params[:to]) if validate_date_format(params[:to])
+
+    creditor_arel = Creditor
+
+    if Creditor.statuses.index params[:status]
+      creditor_arel = creditor_arel.send(params[:status])
+    end
+
+    if Creditor.statuses.index params[:dates_field]
+      # NOTE to_time allow rails to search UTC date which may be different between summer and winter
+      creditor_arel = creditor_arel
+        .where('? >= ? AND ? <= ?',
+          params[:dates_field],
+          from.to_time,
+          params[:dates_field],
+          to.to_time)
+        .order(:created_at)
+    end
+
+    respond_to do |format|
+      format.html do
+        if from && to
+          exporter = Exporter::Factory.new( :creditors,
+                                            params[:type].to_sym,
+                                            { account: params["account"] } )
+          send_data( exporter.export(creditor_arel.all),
+                     type: 'application/octet-stream',
+                     filename: "creditors_#{from}_#{to}_#{params[:type]}.csv",
+                     disposition: 'attachment' )
+        else
+          flash[:alert] = I18n.t('common.errors.date_must_match_format')
+          redirect_to admin_path(anchor: "creditors")
+        end
+      end
+    end
+  end
+
   private
 
     def set_money

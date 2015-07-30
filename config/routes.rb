@@ -180,7 +180,7 @@ CIRCL::Application.routes.draw do
     resources :creditors, defaults: { format: 'json' } do
       collection do
         # post 'confirm', 'import'
-        # get 'export'
+        get 'export', format: 'html'
       end
     end
 

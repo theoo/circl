@@ -193,6 +193,7 @@ class App.People extends Spine.Controller
       person: [ 'destroy',
         'restricted_attributes',
         'authenticate_using_token',
+        'creditor_information',
         'view_comments_on_profile_page']
       comment: [ 'read' ]
 

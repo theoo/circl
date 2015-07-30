@@ -106,6 +106,8 @@ fr:
       communication_languages: Langues de communications secondaires
       contact_nr: Contact n°%{id}
       coordinates_format: Le format des coordonnées est 46.1997577723502, 6.13464653491974
+      creditor_account: compte créditeur
+      creditor_information: Informations du fournisseur
       current_password: mot de passe actuel
       destroy: supprimer
       email: email

@@ -2,16 +2,18 @@
 en:
   creditor:
     date_fields:
-      creation: MISSING_TRANSLATION creation
-      discount_end: MISSING_TRANSLATION discount end
-      invoice_books_recording: MISSING_TRANSLATION invoice books recording
-      invoice_end: MISSING_TRANSLATION invoice end
-      payment_books_recording: MISSING_TRANSLATION payment books recording
-      payment_date: MISSING_TRANSLATION payment date
-      reception: MISSING_TRANSLATION reception
+      creation: creation
+      discount_end: discount end
+      invoice_books_recording: invoice books recording
+      invoice_end: invoice end
+      payment_books_recording: payment books recording
+      payment_date: payment date
+      reception: reception
     errors:
       discount_cannot_end_after_invoice_end: discount cannot end after invoice end
       wrong_date: wrong date
+    notices:
+      the_counterpart_is_assigned_on_providers_page: the counterpart is assigned on providers page
     status:
       invoices_to_record_in_books: invoices to record in books
       late: late
