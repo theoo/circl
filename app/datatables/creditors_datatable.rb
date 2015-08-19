@@ -65,6 +65,7 @@ class CreditorsDatatable
         7 => creditor.invoice_in_books_on,
         8 => creditor.paid_on,
         9 => creditor.payment_in_books_on,
+        10 => nil,
         'id' => creditor.id,
         'classes' => classes.join(" "),
         'number_columns' => [3]
@@ -112,7 +113,8 @@ class CreditorsDatatable
       :invoice_ends_on,
       :invoice_in_books_on,
       :paid_on,
-      :payment_in_books_on ]
+      :payment_in_books_on,
+      :created_at ]
     columns[params[:iSortCol_0].to_i]
   end
 

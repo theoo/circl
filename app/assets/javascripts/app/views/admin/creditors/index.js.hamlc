@@ -11,9 +11,11 @@
       %th.desc= I18n.t('creditor.views.invoice_in_books_on')
       %th.desc= I18n.t('creditor.views.paid_on')
       %th.desc= I18n.t('creditor.views.payment_in_books_on')
+      %th.number.ignore-sort.ignore-click
+        %input{ type: 'checkbox', name: 'select_all' }
     %tbody
       %tr
-        %td.placeholder{colspan: 10}
+        %td.placeholder{colspan: 11}
           .icon-spin.icon-4x.icon-gear
 
 .panel-footer

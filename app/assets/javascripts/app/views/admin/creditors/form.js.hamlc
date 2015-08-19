@@ -175,3 +175,10 @@
       .col-lg-12
         .pull-right
           != @partial('save_and_cancel_buttons')(@creditor)
+
+        .btn-group
+          - unless @creditor.isNew?()
+            %button{name: "creditor_destroy",
+                    class: 'btn btn-danger' }
+              .icon-remove
+              = I18n.t("common.destroy")

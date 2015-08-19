@@ -16,10 +16,10 @@
 
 Creditor = App.Creditor
 
-$.fn.creditor = ->
+$.fn.creditor_id = ->
   elementID   = $(@).data('id')
   elementID ||= $(@).parents('[data-id]').data('id')
-  Creditor.find(elementID)
+  elementID
 
 CreditorsExtentions =
   constrains: ->
@@ -133,6 +133,7 @@ class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click a[name="cancel"]': 'cancel'
+    'click button[name="creditor_destroy"]': 'destroy'
     'currency_changed select.currency_selector': 'on_currency_change'
     'click #admin_creditors_custom_value_with_taxes': 'clear_vat'
 
@@ -167,16 +168,35 @@ class Edit extends App.ExtendedController
 
 class Index extends App.ExtendedController
   events:
-    'click tr.item': 'edit'
-    'click button[name=admin-creditors-export]':       'export'
-    'click button[name="admin-creditors-documents"]':  'documents'
+    'click tbody tr.item td:not(.ignore-click)':      'edit'
+    'click button[name=admin-creditors-export]':      'export'
+    'click button[name="admin-creditors-documents"]': 'documents'
+    'datatable_redraw':                               'table_redraw'
+    'click button[name=creditors-group-edit]':        'group_edit'
+    'change thead input[name="select_all"]':                'toggle_checks'
+    'change tbody input[type="checkbox"]':                  'toggle_check'
 
   constructor: (params) ->
     super
     Creditor.bind 'refresh', @render
+    @selected_ids = []
 
   render: =>
     @html @view('admin/creditors/index')(@)
+
+  table_redraw: =>
+    # Unbind checkbox in header (so it doesn't try to sort)
+    @el.find('thead>tr>th.ignore-sort').each (index, el) ->
+      $(el).unbind 'click'
+
+    # Add class and checkbox to each item
+    @el.find('tbody>tr.item>td:last-child').each (index, el) ->
+      $(el).addClass('number ignore-click')
+      $(el).html "<input type='checkbox'>"
+
+    # Rechecked selected items
+    $(@selected_ids).each (index, item) =>
+      @el.find("tr[data-id=#{item}] input[type='checkbox']").attr(checked: true)
 
   edit: (e) ->
     e.preventDefault()
@@ -219,6 +239,30 @@ class Index extends App.ExtendedController
     controller = new CreditorsDocumentsMachine({el: win.find('.modal-content')})
     win.modal('show')
     controller.activate()
+
+  toggle_check: (e) ->
+    id = $(e.target).creditor_id()
+    if $(e.target).is(":checked")
+      @selected_ids.push id
+    else
+      index = @selected_ids.indexOf(id)
+      @selected_ids.splice index, 1
+
+  toggle_checks: (e) ->
+    # status = $(e.target).is(":checked")
+
+    # table = $(e.target).closest("table")
+    # datatable = table.dataTable()
+    # ids = $(datatable.fnGetNodes()).map (index, c) -> $(c).product_id()
+
+  group_edit: (e) ->
+
+  toggle_group_edit_button: ->
+    # btn = @el.find("button[name=affair-product-items-group-edit]")
+    # if @selected?.length > 0
+    #   btn.attr(disabled: false)
+    # else
+    #   btn.attr(disabled: true)
 
 
 class App.ExportCreditors extends App.ExtendedController
