@@ -23,6 +23,16 @@
     .icon-cloud-upload
     = I18n.t('common.toolbox_export')
 
-  -# %button{type: 'button', name: 'admin-creditors-documents', class: 'btn btn-default' }
-  -#   .icon-paper-clip
-  -#   = I18n.t("common.documents")
+  .btn-group
+    %button{:data-toggle => 'dropdown',
+            type: 'button',
+            class: 'btn btn-default dropdown-toggle' }
+      .icon-filter
+      = I18n.t('common.filter')
+      .caret
+
+    %ul.dropdown-menu{name: 'admin-creditors-filter'}
+      - for name, translation of gon.creditor_statuses
+        %li
+          %a{href: '#', "data-name" => name}
+            = translation

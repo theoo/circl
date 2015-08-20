@@ -50,7 +50,7 @@ class Creditor < ActiveRecord::Base
   # Names should be reported in status and vice-versa
   scope :paid, -> { where("creditors.paid_on is not null") }
   scope :unpaid, -> { where(paid_on: nil) }
-  scope :late, -> { where("creditors.invoice_ends_on < ?", Time.now) }
+  scope :late, -> { unpaid.where("creditors.invoice_ends_on < ?", Time.now) }
   scope :invoices_to_record_in_books, -> {
     where("creditors.invoice_received_on is not null and creditors.invoice_in_books_on is null")
   }

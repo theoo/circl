@@ -27,6 +27,7 @@ class AdminController < ApplicationController
     gon.affairs_count = Affair.count
     gon.creditor_statuses = {all: I18n.t("common.all")}.merge(Creditor.statuses)
     gon.creditor_date_fields = Creditor.date_fields
+    gon.admin_creditors = session[:admin_creditors]
 
     respond_to do |format|
       format.html { render }

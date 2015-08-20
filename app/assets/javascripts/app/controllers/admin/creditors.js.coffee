@@ -172,14 +172,15 @@ class Index extends App.ExtendedController
     'click button[name=admin-creditors-export]':      'export'
     'click button[name="admin-creditors-documents"]': 'documents'
     'datatable_redraw':                               'table_redraw'
-    'click button[name=creditors-group-edit]':        'group_edit'
-    'change thead input[name="select_all"]':                'toggle_checks'
-    'change tbody input[type="checkbox"]':                  'toggle_check'
+    'click button[name=admin-creditors-group-edit]':  'group_edit'
+    'click ul[name=admin-creditors-filter] a':        'filter_selection'
+    'change thead input[name="select_all"]':          'toggle_checks'
+    'change tbody input[type="checkbox"]':            'toggle_check'
 
   constructor: (params) ->
     super
     Creditor.bind 'refresh', @render
-    @selected_ids = []
+    @selected_ids = gon.admin_creditors
 
   render: =>
     @html @view('admin/creditors/index')(@)
@@ -195,6 +196,7 @@ class Index extends App.ExtendedController
       $(el).html "<input type='checkbox'>"
 
     # Rechecked selected items
+    console.log @selected_ids
     $(@selected_ids).each (index, item) =>
       @el.find("tr[data-id=#{item}] input[type='checkbox']").attr(checked: true)
 
@@ -240,22 +242,47 @@ class Index extends App.ExtendedController
     win.modal('show')
     controller.activate()
 
-  toggle_check: (e) ->
+  toggle_check: (e) =>
+    e.preventDefault()
     id = $(e.target).creditor_id()
+
     if $(e.target).is(":checked")
-      @selected_ids.push id
+      path = "check_items"
     else
-      index = @selected_ids.indexOf(id)
-      @selected_ids.splice index, 1
+      path = "uncheck_items"
 
-  toggle_checks: (e) ->
-    # status = $(e.target).is(":checked")
+    $.post(Creditor.url() + "/#{path}", {id: id})
+      .success (response) =>
+        @selected_ids = response
 
-    # table = $(e.target).closest("table")
-    # datatable = table.dataTable()
-    # ids = $(datatable.fnGetNodes()).map (index, c) -> $(c).product_id()
+  toggle_checks: (e) =>
+    e.preventDefault()
 
-  group_edit: (e) ->
+    if $(e.target).is(":checked")
+      path = "check_items"
+    else
+      path = "uncheck_items"
+
+    $.post(Creditor.url() + "/#{path}", { group: 'all' })
+      .success (response) =>
+        @selected_ids = response
+
+    # @reload_table()
+
+  filter_selection: (e) =>
+    e.preventDefault()
+    filter = $(e.target).data("name")
+
+    $.post(Creditor.url() + "/check_items", {group: filter})
+      .success (response) =>
+        @selected_ids = response
+
+    # @reload_table()
+
+  reload_table: ->
+    table = @el.find("table.datatable")
+    datatable = table.dataTable()
+    datatable.fnDraw()
 
   toggle_group_edit_button: ->
     # btn = @el.find("button[name=affair-product-items-group-edit]")

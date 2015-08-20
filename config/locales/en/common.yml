@@ -63,6 +63,7 @@ en:
     export_to: export to
     'false': 'false'
     file: file
+    filter: Filter
     from: from
     global: Global
     good: good

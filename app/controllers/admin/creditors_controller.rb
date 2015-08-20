@@ -22,121 +22,168 @@ class Admin::CreditorsController < ApplicationController
 
   layout false
 
-  load_and_authorize_resource except: :index
+  load_and_authorize_resource except: [:index, :check_item, :uncheck_item]
 
   before_filter :set_money, only: [:create, :update]
 
   def index
     authorize! :index, Creditor
 
-    errors = {}
-    # pseudo validation
-    unless params[:from].blank?
-      if validate_date_format(params[:from])
-        from = Date.parse params[:from]
-      else
-        errors[:from] = I18n.t("creditor.errors.wrong_date")
-      end
-    end
-
-    unless params[:to].blank?
-      if validate_date_format(params[:to])
-        to = Date.parse params[:to]
-      else
-        errors[:to] = I18n.t("creditor.errors.wrong_date")
-      end
-    end
-
-    if from and to and from > to
-      errors[:from] = I18n.t("salary.errors.from_date_should_be_before_to_date")
-
-      unless params[:date_field].blank?
-        if Creditor.date_fields.index params[:date_field]
-          date_field = params[:date_field]
-        else
-          errors[:statuses] = I18n.t("creditors.errors.date_field_unkown")
-        end
-      end
-    end
-
-    unless params[:status].blank?
-      unless Creditor.statuses.index params[:status]
-        status = params[:status]
-      else
-        errors[:statuses] = I18n.t("creditors.errors.invalid_status")
-      end
-    end
-
-    if ['pdf', 'odt'].index params[:format]
-      unless params[:generic_template_id]
-        errors[:generic_template_id] = I18n.t("activerecord.errors.messages.blank")
-      end
-    end
-
     respond_to do |format|
-
-      if errors.empty?
-        ######### PREPARE ############
-
-        @creditors = Creditor.order(:created_at)
-        @creditors = @creditors.send(status) if status
-
-        if from and to
-          @creditors = @creditors.where("#{date_field} BETWEEN ? AND ?", from, to)
-        end
-
-        if ['pdf', 'odt'].index params[:format]
-          # Ensure at least a template is given
-          # build generator using selected generic template
-          fake_object = OpenStruct.new
-          fake_object.template = GenericTemplate.find params[:generic_template_id]
-          fake_object.creditors = @creditors
-
-          generator = AttachmentGenerator.new(fake_object, nil)
-        end
-
-        ######### RENDER ############
-
-        format.json { render json: CreditorsDatatable.new(view_context) }
-
-        format.csv do
-          fields = []
-          fields << 'id'
-          fields << 'owner_id'
-          fields << 'owner.try(:name)'
-          fields << 'buyer_id'
-          fields << 'buyer.try(:name)'
-          fields << 'receiver_id'
-          fields << 'receiver.try(:name)'
-          fields << 'title'
-          fields << 'description'
-          fields << 'value'
-          fields << 'overpaid_value'
-          fields << 'get_statuses.join(", ")'
-          fields << 'created_at'
-          fields << 'updated_at'
-          render inline: csv_ify(@creditors, fields)
-        end
-
-        format.pdf do
-          send_data generator.pdf,
-            filename: "creditors.pdf",
-            type: 'application/pdf'
-        end
-
-        format.odt do
-          send_data generator.odt,
-            filename: "creditors.odt",
-            type: 'application/vnd.oasis.opendocument.text'
-        end
-
-      else
-        format.json do
-          render json: errors, status: :unprocessable_entity
-        end
-      end
+      format.json { render json: CreditorsDatatable.new(view_context) }
     end
   end
+
+  def check_items
+    authorize! :index, Creditor
+
+    session[:admin_creditors] ||= []
+    session[:admin_creditors].push *select_items
+    session[:admin_creditors].uniq!
+
+    respond_to do |format|
+      format.json { render json: session[:admin_creditors] }
+    end
+  end
+
+  def uncheck_items
+    authorize! :index, Creditor
+
+    session[:admin_creditors] ||= []
+    session[:admin_creditors].delete_if {|e| select_items.index(e)}
+
+    # Sort of reset in case of complications
+    session[:admin_creditors] = [] if params[:group] == 'all'
+
+    respond_to do |format|
+      format.json { render json: session[:admin_creditors] }
+    end
+  end
+
+  def select_items
+
+    if params[:id]
+      Creditor.where(id: params[:id]).pluck(:id)
+    elsif params[:group]
+      valid_statuses = Creditor.statuses.keys
+      valid_statuses << :all
+      return [] unless valid_statuses.index(params[:group].to_sym)
+      Creditor.send(params[:group]).pluck(:id)
+    end
+
+  end
+
+  # def export
+  #   authorize! :index, Creditor
+
+  #   errors = {}
+  #   # pseudo validation
+  #   unless params[:from].blank?
+  #     if validate_date_format(params[:from])
+  #       from = Date.parse params[:from]
+  #     else
+  #       errors[:from] = I18n.t("creditor.errors.wrong_date")
+  #     end
+  #   end
+
+  #   unless params[:to].blank?
+  #     if validate_date_format(params[:to])
+  #       to = Date.parse params[:to]
+  #     else
+  #       errors[:to] = I18n.t("creditor.errors.wrong_date")
+  #     end
+  #   end
+
+  #   if from and to and from > to
+  #     errors[:from] = I18n.t("salary.errors.from_date_should_be_before_to_date")
+
+  #     unless params[:date_field].blank?
+  #       if Creditor.date_fields.index params[:date_field]
+  #         date_field = params[:date_field]
+  #       else
+  #         errors[:statuses] = I18n.t("creditors.errors.date_field_unkown")
+  #       end
+  #     end
+  #   end
+
+  #   unless params[:status].blank?
+  #     unless Creditor.statuses.index params[:status]
+  #       status = params[:status]
+  #     else
+  #       errors[:statuses] = I18n.t("creditors.errors.invalid_status")
+  #     end
+  #   end
+
+  #   if ['pdf', 'odt'].index params[:format]
+  #     unless params[:generic_template_id]
+  #       errors[:generic_template_id] = I18n.t("activerecord.errors.messages.blank")
+  #     end
+  #   end
+
+  #   respond_to do |format|
+
+  #     if errors.empty?
+  #       ######### PREPARE ############
+
+  #       @creditors = Creditor.order(:created_at)
+  #       @creditors = @creditors.send(status) if status
+
+  #       if from and to
+  #         @creditors = @creditors.where("#{date_field} BETWEEN ? AND ?", from, to)
+  #       end
+
+  #       if ['pdf', 'odt'].index params[:format]
+  #         # Ensure at least a template is given
+  #         # build generator using selected generic template
+  #         fake_object = OpenStruct.new
+  #         fake_object.template = GenericTemplate.find params[:generic_template_id]
+  #         fake_object.creditors = @creditors
+
+  #         generator = AttachmentGenerator.new(fake_object, nil)
+  #       end
+
+  #       ######### RENDER ############
+
+  #       format.json { render json: CreditorsDatatable.new(view_context) }
+
+  #       format.csv do
+  #         fields = []
+  #         fields << 'id'
+  #         fields << 'owner_id'
+  #         fields << 'owner.try(:name)'
+  #         fields << 'buyer_id'
+  #         fields << 'buyer.try(:name)'
+  #         fields << 'receiver_id'
+  #         fields << 'receiver.try(:name)'
+  #         fields << 'title'
+  #         fields << 'description'
+  #         fields << 'value'
+  #         fields << 'overpaid_value'
+  #         fields << 'get_statuses.join(", ")'
+  #         fields << 'created_at'
+  #         fields << 'updated_at'
+  #         render inline: csv_ify(@creditors, fields)
+  #       end
+
+  #       format.pdf do
+  #         send_data generator.pdf,
+  #           filename: "creditors.pdf",
+  #           type: 'application/pdf'
+  #       end
+
+  #       format.odt do
+  #         send_data generator.odt,
+  #           filename: "creditors.odt",
+  #           type: 'application/vnd.oasis.opendocument.text'
+  #       end
+
+  #     else
+  #       format.json do
+  #         render json: errors, status: :unprocessable_entity
+  #       end
+  #     end
+  #   end
+  # end
 
   def show
     respond_with(@creditor)
