@@ -266,8 +266,7 @@ class Index extends App.ExtendedController
     $.post(Creditor.url() + "/#{path}", { group: 'all' })
       .success (response) =>
         @selected_ids = response
-
-    # @reload_table()
+        @reload_table()
 
   filter_selection: (e) =>
     e.preventDefault()
@@ -276,8 +275,7 @@ class Index extends App.ExtendedController
     $.post(Creditor.url() + "/check_items", {group: filter})
       .success (response) =>
         @selected_ids = response
-
-    # @reload_table()
+        @reload_table()
 
   reload_table: ->
     table = @el.find("table.datatable")

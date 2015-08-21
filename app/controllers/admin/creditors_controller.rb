@@ -22,6 +22,8 @@ class Admin::CreditorsController < ApplicationController
 
   layout false
 
+  skip_before_action :verify_authenticity_token
+
   load_and_authorize_resource except: [:index, :check_item, :uncheck_item]
 
   before_filter :set_money, only: [:create, :update]
@@ -30,6 +32,7 @@ class Admin::CreditorsController < ApplicationController
     authorize! :index, Creditor
 
     respond_to do |format|
+      format.html { raise ArgumentError, format.inspect }
       format.json { render json: CreditorsDatatable.new(view_context) }
     end
   end
