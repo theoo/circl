@@ -53,14 +53,15 @@ class CreditorsDatatable
       end
 
       value = creditor_value_summary(creditor)
+      discount = creditor_discount_value_and_date(creditor)
 
       {
         0 => creditor.created_at,
         1 => creditor.title,
         2 => creditor.creditor.try(:name),
         3 => value,
-        4 => creditor.invoice_received_on,
-        5 => creditor.discount_ends_on,
+        4 => I18n.l(creditor.invoice_received_on),
+        5 => discount,
         6 => creditor.invoice_ends_on,
         7 => creditor.invoice_in_books_on,
         8 => creditor.paid_on,

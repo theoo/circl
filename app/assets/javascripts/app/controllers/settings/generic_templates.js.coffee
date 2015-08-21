@@ -35,6 +35,7 @@ class ClassNamesExtension extends App.ExtendedController
     @class_names['Person']           = I18n.t("activerecord.models.person")
     @class_names['Product']          = I18n.t("activerecord.models.product")
     @class_names['Extra']            = I18n.t("activerecord.models.extra")
+    @class_names['Creditor']         = I18n.t("activerecord.models.creditor")
 
 class New extends ClassNamesExtension
   events:

@@ -24,18 +24,79 @@ class Admin::CreditorsController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
-  load_and_authorize_resource except: [:index, :check_item, :uncheck_item]
+  load_and_authorize_resource except: [:index, :check_item, :uncheck_item, :group_destroy, :group_update]
 
   before_filter :set_money, only: [:create, :update]
 
   def index
     authorize! :index, Creditor
 
+    errors = {}
+
+    if ['pdf', 'odt'].index params[:format]
+      unless params[:generic_template_id]
+        errors[:generic_template_id] = I18n.t("activerecord.errors.messages.blank")
+      end
+    end
+
     respond_to do |format|
-      format.html { raise ArgumentError, format.inspect }
-      format.json { render json: CreditorsDatatable.new(view_context) }
+
+      if errors.empty?
+
+        format.json { render json: CreditorsDatatable.new(view_context) }
+
+        @creditors = Creditor.where(id: params[:items])
+
+        format.csv do
+          fields = []
+          fields << 'id'
+          fields << 'owner_id'
+          fields << 'owner.try(:name)'
+          fields << 'buyer_id'
+          fields << 'buyer.try(:name)'
+          fields << 'receiver_id'
+          fields << 'receiver.try(:name)'
+          fields << 'title'
+          fields << 'description'
+          fields << 'value'
+          fields << 'overpaid_value'
+          fields << 'get_statuses.join(", ")'
+          fields << 'created_at'
+          fields << 'updated_at'
+          render inline: csv_ify(@creditors, fields)
+        end
+
+        if ['pdf', 'odt'].index params[:format]
+          # Ensure at least a template is given
+          # build generator using selected generic template
+          fake_object = OpenStruct.new
+          fake_object.template = GenericTemplate.find params[:generic_template_id]
+          fake_object.creditors = @creditors
+
+          generator = AttachmentGenerator.new(fake_object, nil)
+        end
+
+        format.pdf do
+          send_data generator.pdf,
+            filename: "creditors.pdf",
+            type: 'application/pdf'
+        end
+
+        format.odt do
+          send_data generator.odt,
+            filename: "creditors.odt",
+            type: 'application/vnd.oasis.opendocument.text'
+        end
+      else
+        format.all do
+          # TODO improve display
+          flash[:error] = errors.inspect
+          redirect_to admin_path(anchor: 'creditors')
+        end
+      end
     end
   end
+
 
   def check_items
     authorize! :index, Creditor
@@ -204,6 +265,38 @@ class Admin::CreditorsController < ApplicationController
     respond_with(@creditor)
   end
 
+  def group_update
+    authorize! :update, Creditor
+
+    errors = nil
+    success = false
+
+    Creditor.transaction do
+      @creditors = Creditor.find(params[:ids])
+
+      params = creditor_params
+
+      @creditors.each do |c|
+        c.update_attributes params
+
+        if c.errors.size > 0
+          errors = c.errors
+          raise ActiveRecord::Rollback
+        end
+      end
+
+      success = true
+    end
+
+    respond_to do |format|
+      if success
+        format.json { render json: @creditors }
+      else
+        format.json { render json: errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def update
     if @creditor.update_attributes(creditor_params)
       render json: @creditor
@@ -216,6 +309,26 @@ class Admin::CreditorsController < ApplicationController
     @creditor.destroy
     respond_with(@creditor)
     # format.json { render json: @creditor.errors, status: :unprocessable_entity }
+  end
+
+  def group_destroy
+    authorize! :destroy, Creditor
+
+    errors = nil
+    success = false
+
+    Creditor.transaction do
+      @creditors = Creditor.where(id: params[:ids])
+      success = @creditors.destroy_all
+    end
+
+    respond_to do |format|
+      if success
+        format.json { render json: @creditors }
+      else
+        format.json { render json: I18n.t("common.errors.failed_to_destroy"), status: :unprocessable_entity }
+      end
+    end
   end
 
   def export

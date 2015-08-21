@@ -179,8 +179,9 @@ CIRCL::Application.routes.draw do
 
     resources :creditors, defaults: { format: 'json' } do
       collection do
-        post 'check_items', 'uncheck_items'
         get 'export', format: 'html'
+        post 'check_items', 'uncheck_items', 'group_update'
+        delete 'group_destroy'
       end
     end
 

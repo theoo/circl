@@ -60,7 +60,6 @@ fr:
       delivery_at: livraison
       example_files_explanation: Le fichier exemple ci-dessous peut être employé pour préparer les données à importer.
       example_files_title: Fichier d'exemple
-      group_edit: "édition groupée"
       has_accessories: accessoires
       ignore_theses_columns: Ignorer ces collones
       import_products: Importer des produits

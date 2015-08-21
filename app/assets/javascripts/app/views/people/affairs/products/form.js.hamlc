@@ -4,13 +4,13 @@
       .col-md-12
         .validation_errors_placeholder
 
-        - if @ids and not @id
+        - if @editing_a_group
           .alert.alert-warning
             != I18n.t("product.notices.you_are_editing_many_product_at_a_time", products_count: @ids.length)
 
     .row
       .col-md-4.autocompleted.form-group
-        - if not @id and @ids
+        - if @editing_a_group
           .pull-right
             %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
         %label{for: 'person_affair_product_search'}
@@ -41,7 +41,7 @@
         -#       %a{href: @product}
 
       .col-md-3.autocompleted.form-group
-        - if not @id and @ids
+        - if @editing_a_group
           .pull-right
             %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
         %label{for: 'person_affair_product_program_search'}
@@ -59,7 +59,7 @@
                value: @product.program_id}
 
       .col-md-3.autocompleted.form-group
-        - if not @id and @ids
+        - if @editing_a_group
           .pull-right
             %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
         %label{for: 'person_affair_product_category'}
@@ -73,7 +73,7 @@
 
     .row
       .col-md-3.autocompleted.form-group
-        - if not @id and @ids
+        - if @editing_a_group
           .pull-right
             %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
 
@@ -93,7 +93,7 @@
                value: @product.parent_id}
 
       .col-md-2.form-group
-        - if not @id and @ids
+        - if @editing_a_group
           .pull-right
             %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
 
@@ -112,7 +112,7 @@
               = @product.unit_symbol
 
       .col-md-2.form-group
-        - if not @id and @ids
+        - if @editing_a_group
           .pull-right
             %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
         %label{for: 'person_affair_product_bid_percentage'}
@@ -129,7 +129,7 @@
           .input-group-addon %
 
       .col-md-2.form-group
-        - if not @id and @ids
+        - if @editing_a_group
           .pull-right
             %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
         %label{for: 'person_affair_product_position'}
@@ -142,7 +142,7 @@
                 value: @product.position }
 
       .col-sm-3.form-group
-        - if not @id and @ids
+        - if @editing_a_group
           .pull-right
             %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
         %label{for: "person_affair_product_value"}
@@ -182,7 +182,7 @@
 
     .row
       .col-md-5.form-group
-        - if not @id and @ids
+        - if @editing_a_group
           .pull-right
             %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
 
@@ -196,7 +196,7 @@
       .col-md-7
         .row
           .col-sm-4.form-group
-            - if not @id and @ids
+            - if @editing_a_group
               .pull-right
                 %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
             %label
@@ -207,7 +207,7 @@
                     value: @product.ordered_at }
 
           .col-md-4.form-group
-            - if not @id and @ids
+            - if @editing_a_group
               .pull-right
                 %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
             %label
@@ -218,7 +218,7 @@
                     value: @product.confirmed_at }
 
           .col-md-4.form-group
-            - if not @id and @ids
+            - if @editing_a_group
               .pull-right
                 %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
             %label
@@ -229,7 +229,7 @@
                     value: @product.delivery_at }
         .row
           .col-md-4.form-group
-            - if not @id and @ids
+            - if @editing_a_group
               .pull-right
                 %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
             %label
@@ -240,7 +240,7 @@
                     value: @product.warranty_begin }
 
           .col-md-4.form-group
-            - if not @id and @ids
+            - if @editing_a_group
               .pull-right
                 %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
             %label

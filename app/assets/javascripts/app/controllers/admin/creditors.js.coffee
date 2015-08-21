@@ -136,6 +136,8 @@ class Edit extends App.ExtendedController
     'click button[name="creditor_destroy"]': 'destroy'
     'currency_changed select.currency_selector': 'on_currency_change'
     'click #admin_creditors_custom_value_with_taxes': 'clear_vat'
+    'focus input': 'check_replace_value'
+    'focus textarea': 'check_replace_value'
 
   constructor: ->
     super
@@ -144,38 +146,109 @@ class Edit extends App.ExtendedController
       bind_events: (App.ApplicationSetting.value('use_vat') == "true")
 
   active: (params) ->
-    @id = params.id if params.id
+    # Toggle ids or id so it's easier to know when I'm group editing.
+    if params.ids
+      @ids = params.ids
+    else
+      params.ids = undefined
+
+    if params.id
+      @id = params.id
+    else
+      @id = undefined # Clear current id when editing group
+
     @render()
 
   render: =>
-    return unless Creditor.exists(@id)
-    @creditor = Creditor.find(@id)
+    if @id
+      @creditor = Creditor.find(@id)
+    else if @ids
+      @creditor = new Creditor( )
+      @creditor.isNew = -> false
+    else
+      return
+
+    @editing_a_group = not @id and @ids
     @html @view('admin/creditors/form')(@)
     @constrains()
     @show()
 
   submit: (e) ->
     e.preventDefault()
-    # re-render so value is updated when custom_value_with_taxes is checked
-    @save_with_notifications @creditor.fromForm(e.target), @render
+    @creditor.fromForm(e.target)
+
+    if @editing_a_group
+      # Get info from inputs which are checked only
+      data = {}
+      @el.find(".replace_value:checked").each ->
+        $(@).parents(".form-group").find("input:not(.replace_value)").each ->
+          i = $(@)
+          data[i.prop('name')] = i.val()
+
+      data.ids = @ids
+
+      settings =
+        url: Creditor.url() + "/group_update",
+        type: 'POST',
+        data: JSON.stringify(data)
+
+      ajax_success = (data, textStatus, jqXHR) =>
+        @trigger 'reload_index'
+        @hide()
+
+      ajax_error = (xhr, statusText, error) =>
+        @render_errors $.parseJSON(xhr.responseText)
+
+      Creditor.ajax().ajax(settings).success(ajax_success).error(ajax_error)
+
+    else
+      @save_with_notifications @creditor, @render
 
   destroy: (e) ->
     e.preventDefault()
+
     @confirm I18n.t('common.are_you_sure'), 'warning', =>
-      @destroy_with_notifications @creditor, =>
-        @hide()
+      if @editing_a_group
+
+        settings =
+          url: Creditor.url() + "/group_destroy",
+          type: 'DELETE',
+          data: JSON.stringify({ids: @ids})
+
+        ajax_success = (data, textStatus, jqXHR) =>
+          @trigger 'reload_index'
+          @hide()
+
+        ajax_error = (xhr, statusText, error) =>
+          @render_errors $.parseJSON(xhr.responseText)
+
+        Creditor.ajax().ajax(settings).success(ajax_success)# .error(ajax_error)
+
+      else
+        @destroy_with_notifications @creditor, @hide
+
+
+  check_replace_value: (e) ->
+    $(e.target).parents(".form-group").find('.replace_value').prop(checked: true)
+
+  cancel: (e) ->
+    @trigger 'reload_index'
+    super(e)
 
 
 class Index extends App.ExtendedController
   events:
-    'click tbody tr.item td:not(.ignore-click)':      'edit'
+    'click tbody tr.item>td:not(.ignore-click)':      'edit'
     'click button[name=admin-creditors-export]':      'export'
-    'click button[name="admin-creditors-documents"]': 'documents'
     'datatable_redraw':                               'table_redraw'
     'click button[name=admin-creditors-group-edit]':  'group_edit'
     'click ul[name=admin-creditors-filter] a':        'filter_selection'
-    'change thead input[name="select_all"]':          'toggle_checks'
+    'click thead [name="check_all"]':                 'toggle_checks'
+    'click thead [name="check_none"]':                'toggle_checks'
     'change tbody input[type="checkbox"]':            'toggle_check'
+    'click a[name="admin_creditors_pdf"]':            'pdf'
+    'click a[name="admin_creditors_odt"]':            'odt'
+    'click a[name="admin_creditors_csv"]':            'csv'
 
   constructor: (params) ->
     super
@@ -196,13 +269,15 @@ class Index extends App.ExtendedController
       $(el).html "<input type='checkbox'>"
 
     # Rechecked selected items
-    console.log @selected_ids
     $(@selected_ids).each (index, item) =>
       @el.find("tr[data-id=#{item}] input[type='checkbox']").attr(checked: true)
+
+    @toggle_group_edit_button()
 
   edit: (e) ->
     e.preventDefault()
     id = $(e.target).parents('[data-id]').data('id')
+    @activate_in_list(e.target)
 
     # Prevent default behavior (do not reload table)
     Creditor.unbind 'refresh'
@@ -210,37 +285,25 @@ class Index extends App.ExtendedController
       @trigger 'edit', id
       # Rebind refresh
       Creditor.bind 'refresh', @render
+
     Creditor.fetch(id: id)
 
-  export: (e) ->
+  csv: (e) ->
     e.preventDefault()
+    window.location = Creditor.url() + ".csv?items=#{@selected_as_params()}"
 
-    win = $("<div class='modal fade' id='admin-invoices-export-modal' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
+  url_for: (format) ->
+    @template_id = @el.find("#admin_creditors_template").val()
+    url = Creditor.url() + ".#{format}?template_id=#{@template_id}"
+    url + "&items=#{JSON.stringify @selected_ids}"
 
-    # Modal alternative
-    win.find('.modal-body').remove()
-    win.find('.modal-footer').remove()
-
-    controller = new App.ExportCreditors({el: win.find('.modal-content')})
-    win.modal('show')
-    controller.activate()
-
-  documents: (e) ->
+  pdf: (e) ->
     e.preventDefault()
+    window.location = @url_for('pdf')
 
-    win = $("<div class='modal fade' id='admin-creditors-documents-modal' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
-
-    controller = new CreditorsDocumentsMachine({el: win.find('.modal-content')})
-    win.modal('show')
-    controller.activate()
+  odt: (e) ->
+    e.preventDefault()
+    window.location = @url_for('odt')
 
   toggle_check: (e) =>
     e.preventDefault()
@@ -254,11 +317,12 @@ class Index extends App.ExtendedController
     $.post(Creditor.url() + "/#{path}", {id: id})
       .success (response) =>
         @selected_ids = response
+        @toggle_group_edit_button()
 
   toggle_checks: (e) =>
     e.preventDefault()
 
-    if $(e.target).is(":checked")
+    if $(e.target).attr('name') == 'check_all'
       path = "check_items"
     else
       path = "uncheck_items"
@@ -272,7 +336,14 @@ class Index extends App.ExtendedController
     e.preventDefault()
     filter = $(e.target).data("name")
 
-    $.post(Creditor.url() + "/check_items", {group: filter})
+    if filter == 'none'
+      # select none == unselect all
+      path = "/uncheck_items"
+      filter = 'all'
+    else
+      path = "/check_items"
+
+    $.post(Creditor.url() + path, {group: filter})
       .success (response) =>
         @selected_ids = response
         @reload_table()
@@ -282,12 +353,21 @@ class Index extends App.ExtendedController
     datatable = table.dataTable()
     datatable.fnDraw()
 
+  group_edit: (e) ->
+    e.preventDefault()
+    @el.find("table.datatable input:checked").each (idx, el) ->
+      tr = $(el).closest('tr.item')
+      tr.addClass('active')
+      tr.removeClass('success', 'warning', 'danger')
+
+    @trigger 'group_edit', @selected_ids
+
   toggle_group_edit_button: ->
-    # btn = @el.find("button[name=affair-product-items-group-edit]")
-    # if @selected?.length > 0
-    #   btn.attr(disabled: false)
-    # else
-    #   btn.attr(disabled: true)
+    btn = @el.find("button[name=admin-creditors-group-edit]")
+    if @selected_ids?.length > 0
+      btn.attr(disabled: false)
+    else
+      btn.attr(disabled: true)
 
 
 class App.ExportCreditors extends App.ExtendedController
@@ -401,9 +481,16 @@ class App.AdminCreditors extends Spine.Controller
       @edit.active id: id
       @edit.render_errors errors
 
+    @edit.bind 'reload_index', =>
+      @index.render()
+
     @index.bind 'edit', (id) =>
       @edit.active(id: id)
       @index.active(id: id)
+
+    @index.bind 'group_edit', (ids) =>
+      @edit.active(ids: ids)
+
 
   activate: ->
     super

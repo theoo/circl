@@ -160,6 +160,7 @@ class Edit extends PersonAffairProductExtension
     else
       return
 
+    @editing_a_group = not @id and @ids
     @html @view('people/affairs/products/form')(@)
     @init_locals()
 

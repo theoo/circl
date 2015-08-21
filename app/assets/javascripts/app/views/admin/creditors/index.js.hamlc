@@ -12,27 +12,41 @@
       %th.desc= I18n.t('creditor.views.paid_on')
       %th.desc= I18n.t('creditor.views.payment_in_books_on')
       %th.number.ignore-sort.ignore-click
-        %input{ type: 'checkbox', name: 'select_all' }
+        .checkbox-icon.icon-check-empty{name: 'check_none'}
+        .checkbox-icon.icon-check{name: "check_all"}
     %tbody
       %tr
         %td.placeholder{colspan: 11}
           .icon-spin.icon-4x.icon-gear
 
 .panel-footer
-  %button{ type: 'button', name: 'admin-creditors-export', class: 'btn btn-default'}
-    .icon-cloud-upload
-    = I18n.t('common.toolbox_export')
+  .pull-right
+    .btn-group
+      %button{:data-toggle => 'dropdown',
+              type: 'button',
+              class: 'btn btn-default dropdown-toggle' }
+        .icon-filter
+        = I18n.t('common.filter')
+        .caret
 
-  .btn-group
-    %button{:data-toggle => 'dropdown',
-            type: 'button',
-            class: 'btn btn-default dropdown-toggle' }
-      .icon-filter
-      = I18n.t('common.filter')
-      .caret
-
-    %ul.dropdown-menu{name: 'admin-creditors-filter'}
-      - for name, translation of gon.creditor_statuses
+      %ul.dropdown-menu{name: 'admin-creditors-filter'}
         %li
-          %a{href: '#', "data-name" => name}
-            = translation
+          %a{href: '#', "data-name" => 'none'}
+            = I18n.t("common.none")
+        - for name, translation of gon.creditor_statuses
+          %li
+            %a{href: '#', "data-name" => name}
+              = translation
+
+  != @partial("generate_document")(prefix: 'admin_creditors', model: 'Creditor', collection: true)
+
+  / %button{ type: 'button', name: 'admin-creditors-export', class: 'btn btn-default'}
+  /   .icon-cloud-upload
+  /   = I18n.t('common.toolbox_export')
+
+  %button{type: 'button',
+          name: 'admin-creditors-group-edit',
+          class: 'btn btn-default',
+          disabled: true }
+    .icon-gear
+    = I18n.t("common.group_edit")

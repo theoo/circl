@@ -246,7 +246,7 @@ class App.ExtendedController extends Spine.Controller
   activate_in_list: (target) ->
     # if target is undefined it will clear the list
     if $(target).length > 0
-      tr = $(target).closest('tr')
+      tr = $(target).closest('tr.item')
 
       tr.addClass('active')
 

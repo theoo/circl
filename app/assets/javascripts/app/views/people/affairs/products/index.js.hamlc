@@ -180,4 +180,4 @@
                     class: 'btn btn-default',
                     disabled: true }
               .icon-gear
-              = I18n.t("product.views.group_edit")
+              = I18n.t("common.group_edit")

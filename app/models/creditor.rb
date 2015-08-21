@@ -154,7 +154,7 @@ class Creditor < ActiveRecord::Base
 
   def discount_ends_before_invoice
     if invoice_ends_on and discount_ends_on and invoice_ends_on < discount_ends_on
-      error.add(:discount_ends_on, I18n.t("creditor.errors.discount_cannot_end_after_invoice_end"))
+      errors.add(:discount_ends_on, I18n.t("creditor.errors.discount_cannot_end_after_invoice_end"))
       false
     end
   end

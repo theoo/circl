@@ -230,4 +230,35 @@ module ApplicationHelper
     end # value
   end
 
+  def creditor_discount_value_and_date(creditor)
+    capture_haml do
+      haml_tag "table.affair_value" do
+        if creditor.discount_ends_on
+          haml_tag :tr do
+            haml_tag :td, I18n.l(creditor.discount_ends_on)
+            haml_tag :td, ""
+          end
+        end
+
+        if creditor.discount_percentage and creditor.discount_percentage > 0
+          haml_tag :tr do
+            haml_tag :td, creditor.discount_percentage
+            haml_tag :td, "%"
+          end
+        end
+
+        if creditor.discount_value > 0
+          haml_tag :tr do
+            haml_tag :td do
+              haml_tag ".text-danger", "-#{creditor.discount_value.to_view}"
+            end
+            haml_tag :td, ""
+          end
+        end
+
+      end # table
+
+    end # value
+  end
+
 end

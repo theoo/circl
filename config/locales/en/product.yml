@@ -60,7 +60,6 @@ en:
       delivery_at: delivery date
       example_files_explanation: Example file as template to prepare data before importation.
       example_files_title: Example file
-      group_edit: group edit
       has_accessories: has accessories
       ignore_theses_columns: ignore theses columns
       import_products: import products

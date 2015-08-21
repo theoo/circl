@@ -57,6 +57,9 @@
           %li
             %a{href: '/assets/tasks_report.odt'}
               = I18n.t("template.views.template_file.tasks_report")
+          %li
+            %a{href: '/assets/creditors.odt'}
+              = I18n.t("template.views.template_file.creditor_list")
 
         %input{ type: 'hidden', name: 'template_id', value: @template.id }
         %br
