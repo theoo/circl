@@ -34,4 +34,4 @@
 
 - if App.PersonTask.all().length > 0
   .panel-footer
-    != @partial("generate_document")(prefix: 'affair_tasks', model: 'Task', collection: true)
+    != @partial("generate_document")(prefix: 'affair_tasks', model: 'Task', collection: true, except: ['accounting'])

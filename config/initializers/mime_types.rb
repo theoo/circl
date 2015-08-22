@@ -24,3 +24,4 @@
 
 Mime::Type.register 'image/jpeg', :jpg
 Mime::Type.register 'application/vnd.oasis.opendocument.text', :odt
+Mime::Type.register 'text/plain', :txt

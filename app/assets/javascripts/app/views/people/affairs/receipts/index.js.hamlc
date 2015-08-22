@@ -27,4 +27,4 @@
 
 - if App.PersonAffairReceipt.all().length > 0
   .panel-footer
-    != @partial("generate_document")(prefix: 'affair_receipts', model: 'Receipt', collection: true)
+    != @partial("generate_document")(prefix: 'affair_receipts', model: 'Receipt', collection: true, except: ['accounting'])

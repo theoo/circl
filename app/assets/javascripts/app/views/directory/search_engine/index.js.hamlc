@@ -24,7 +24,7 @@
 
 .panel-footer
 
-  != @partial("generate_document")(prefix: 'people', model: 'Person', collection: true)
+  != @partial("generate_document")(prefix: 'people', model: 'Person', collection: true, except: ['accounting'])
 
   - if @query?.search_string and @results_count < 5000
     %a{ href: '#',

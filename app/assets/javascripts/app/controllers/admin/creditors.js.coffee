@@ -250,6 +250,7 @@ class Index extends App.ExtendedController
     'click a[name="admin_creditors_pdf"]':            'pdf'
     'click a[name="admin_creditors_odt"]':            'odt'
     'click a[name="admin_creditors_csv"]':            'csv'
+    'click a[name="admin_creditors_txt"]':            'txt'
 
   constructor: (params) ->
     super
@@ -304,6 +305,10 @@ class Index extends App.ExtendedController
   odt: (e) ->
     e.preventDefault()
     window.location = @url_for('odt')
+
+  txt: (e) ->
+    e.preventDefault()
+    window.location = @url_for('txt')
 
   toggle_check: (e) =>
     e.preventDefault()

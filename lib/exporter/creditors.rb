@@ -24,7 +24,6 @@ module Exporter
     def initialize(options = {})
       super
 
-      options[:account]             ||= ApplicationSetting.value("creditor_account")
       options[:creditor_vat_code]   ||= ApplicationSetting.value("creditor_vat_code")
       options[:service_vat_rate]    ||= ApplicationSetting.value("service_vat_rate")
       options[:creditor_prefix]     ||= ApplicationSetting.value("creditor_prefix")
@@ -49,6 +48,13 @@ module Exporter
     end
 
     def convert(creditor)
+      if not creditor.invoice_in_books_on.nil?
+        counterpart_account = creditor.creditor.try(:creditor_transitional_account)
+        account = creditor.creditor.try(:creditor_account)
+      else
+        counterpart_account = ApplicationSetting.value("creditor_account")
+        account = creditor.creditor.try(:creditor_transitional_account)
+      end
 
       {
         :id                         => creditor.id,
@@ -57,8 +63,8 @@ module Exporter
         :description                => desc_for(creditor),
         :value                      => creditor.value_with_taxes.to_f,
         :value_currency             => creditor.value_currency,
-        :account                    => @options[:account],
-        :counterpart_account        => creditor.creditor.try(:creditor_account),
+        :account                    => account,
+        :counterpart_account        => counterpart_account,
         :vat_code                   => @options[:creditor_vat_code],
         :vat_rate                   => @options[:service_vat_rate],
         :person_id                  => creditor.creditor.try(:id),

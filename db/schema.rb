@@ -455,6 +455,7 @@ ActiveRecord::Schema.define(version: 20150730104959) do
     t.string   "alias_name",                                 default: ""
     t.string   "fax_number",                                 default: ""
     t.string   "creditor_account"
+    t.string   "creditor_transitional_account"
   end
 
   add_index "people", ["authentication_token"], name: "index_people_on_authentication_token", unique: true, using: :btree

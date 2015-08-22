@@ -2,6 +2,7 @@
 fr:
   common:
     a_webapp_developped_by: Une application développée par
+    accounting: Comptabilité
     action: action
     actions: actions
     add: ajouter
@@ -68,7 +69,7 @@ fr:
     from: de
     global: Global
     good: bon
-    group_edit: édition groupée
+    group_edit: "édition groupée"
     height: hauteur
     hour: heure
     id: id

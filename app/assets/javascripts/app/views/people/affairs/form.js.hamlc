@@ -442,7 +442,7 @@
 
         .col-sm-4
           - unless @affair.isNew?()
-            != @partial("generate_document")(prefix: 'affair', model: 'Affair', collection: false, except: ['csv'])
+            != @partial("generate_document")(prefix: 'affair', model: 'Affair', collection: false, except: ['csv', 'accounting'])
 
         .col-sm-4
           .pull-right

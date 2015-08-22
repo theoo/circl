@@ -40,4 +40,4 @@
 
 - if App.PersonAffairInvoice.all().length > 0
   .panel-footer
-    != @partial("generate_document")(prefix: 'affair_invoices', model: 'Invoice', collection: true)
+    != @partial("generate_document")(prefix: 'affair_invoices', model: 'Invoice', collection: true, except: ['accounting'])

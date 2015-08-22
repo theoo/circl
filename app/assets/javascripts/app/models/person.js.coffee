@@ -23,7 +23,7 @@ class App.Person extends Spine.Model
     'address', 'birth_date', 'nationality', 'avs_number', 'bank_informations',
     'generate_authentication_token', 'errors', 'hidden', 'alias_name',
     'created_at', 'task_rate_id', 'latitude', 'longitude', 'gender', 'website',
-    'creditor_account'
+    'creditor_transitional_account', 'creditor_account'
 
   @extend Spine.Model.Ajax
   @url: ->

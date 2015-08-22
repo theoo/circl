@@ -340,6 +340,15 @@
             .col-sm-6
               .form-group
                 %label
+                  = I18n.t('person.views.creditor_transitional_account')
+                %input{ type: 'text',
+                        name: 'creditor_transitional_account',
+                        class: 'form-control',
+                        value: @person.creditor_transitional_account }
+
+            .col-sm-6
+              .form-group
+                %label
                   = I18n.t('person.views.creditor_account')
                 %input{ type: 'text',
                         name: 'creditor_account',
@@ -395,5 +404,5 @@
     .pull-right
       != @partial("update_button")(@person)
 
-    != @partial("generate_document")(prefix: 'person', model: 'Person', collection: false, except: ['csv'])
+    != @partial("generate_document")(prefix: 'person', model: 'Person', collection: false, except: ['csv', 'accounting'])
 

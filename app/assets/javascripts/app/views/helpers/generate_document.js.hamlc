@@ -43,3 +43,9 @@
             %a{href: '#', name: "#{@prefix}_csv"}
               .icon-file-text
               = I18n.t('common.csv')
+
+        - if @except.indexOf('accounting') < 0
+          %li
+            %a{href: '#', name: "#{@prefix}_txt"}
+              .icon-book
+              = I18n.t('common.accounting')

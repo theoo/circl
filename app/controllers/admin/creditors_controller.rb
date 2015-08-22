@@ -86,6 +86,17 @@ class Admin::CreditorsController < ApplicationController
             filename: "creditors.odt",
             type: 'application/vnd.oasis.opendocument.text'
         end
+
+        format.txt do
+
+          # TODO catch the 'type' (banana) from user's or directory configuration
+          exporter = Exporter::Factory.new(:creditors, :banana)
+          send_data( exporter.export(@creditors),
+                     type: 'application/octet-stream',
+                     filename: "creditors.txt",
+                     disposition: 'attachment' )
+        end
+
       else
         format.all do
           # TODO improve display

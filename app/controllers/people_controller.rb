@@ -424,6 +424,7 @@ class PeopleController < ApplicationController
         :current_password,
         :password,
         :password_confirmation,
+        :creditor_transitional_account,
         :creditor_account
         )
     end

@@ -305,6 +305,7 @@ fr:
       application_setting: Configuration de l'application
       background_task: Tâche d'arrière plan
       comment: Commentaire
+      creditor: Créantiers
       elastic_search_attribute: Attribut d'Elastic Search
       employment_contract: Contrat d'emploi
       extra: Extra
