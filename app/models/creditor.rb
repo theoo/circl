@@ -118,6 +118,66 @@ class Creditor < ActiveRecord::Base
         payment_in_books_on: I18n.t("creditor.date_fields.payment_books_recording"),
       }
     end
+
+    def parse_csv(file, lines = [], skip_columns = [], do_record = false)
+      products = []
+      # in case argument nil is sent
+      lines ||= []
+      skip_columns ||= []
+
+      # Expected file structure
+      columns_list = [
+        :id_provider,
+        :provider_name,
+        :value,
+        :discount,
+        :transitional_account,
+        :account,
+        :invoice_received_on,
+        :invoice_ends_on,
+        :title,
+        :affair_id,
+        :invoice_in_books_on,
+        :paid_on,
+        :payment_in_books_on ]
+
+      begin
+        Creditor.transaction do
+
+          csvStruct = Struct.send(:new, *columns_list)
+
+          CSV.parse(file, encoding: 'UTF-8')[1..-1].each_with_index do |row, row_index|
+            next if lines.size > 0 and ! lines.index((row_index + 1).to_s)
+
+            row.map!{ |s| (s || '').force_encoding('utf-8').strip }
+
+            c = csvStruct.new(*row)
+
+            if row.size != columns_list.size
+              creditors << "#{I18n.t('creditor.errors.line')} #{i+2}: #{I18n.t('creditor.errors.invalid_line')}"
+              next
+            end
+
+            c.delete(:provider_name) # this is just to help reading the table
+            creditor = Creditor.create(c) # trig validation
+
+            creditors << creditor
+          end # csv
+
+          raise ActiveRecord::Rollback unless do_record
+
+        end # transaction
+
+      rescue ActiveRecord::Rollback
+        # continue
+
+      rescue Exception => e
+        creditors = I18n.t("creditor.errors.unable_to_parse_file") + " (" + e.inspect + ")"
+      end # transaction
+
+      [creditors, columns_list]
+    end
+  
   end
 
   ########################
@@ -143,7 +203,7 @@ class Creditor < ActiveRecord::Base
   end
 
   def discount_value(v = value_with_taxes)
-    if not discount_ends_on.nil? and Time.now < discount_ends_on
+    if discount_percentage and paid_on or (not discount_ends_on.nil? and Time.now < discount_ends_on)
       (v / 100.0 * discount_percentage)
     else
       0

@@ -61,7 +61,7 @@ module Exporter
         :date                       => creditor.created_at.to_date,
         :title                      => creditor.title,
         :description                => desc_for(creditor),
-        :value                      => creditor.value_with_taxes.to_f,
+        :value                      => creditor.value_with_discount.to_f,
         :value_currency             => creditor.value_currency,
         :account                    => account,
         :counterpart_account        => counterpart_account,
