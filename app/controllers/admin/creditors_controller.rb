@@ -34,8 +34,8 @@ class Admin::CreditorsController < ApplicationController
     errors = {}
 
     if ['pdf', 'odt'].index params[:format]
-      unless params[:generic_template_id]
-        errors[:generic_template_id] = I18n.t("activerecord.errors.messages.blank")
+      unless params[:template_id]
+        errors[:template_id] = I18n.t("activerecord.errors.messages.blank")
       end
     end
 
@@ -45,45 +45,44 @@ class Admin::CreditorsController < ApplicationController
 
         format.json { render json: CreditorsDatatable.new(view_context) }
 
-        @creditors = Creditor.where(id: params[:items])
+        @creditors = Creditor.where(id: session[:admin_creditors])
 
         format.csv do
-          fields = []
-          fields << 'id'
-          fields << 'owner_id'
-          fields << 'owner.try(:name)'
-          fields << 'buyer_id'
-          fields << 'buyer.try(:name)'
-          fields << 'receiver_id'
-          fields << 'receiver.try(:name)'
-          fields << 'title'
-          fields << 'description'
-          fields << 'value'
-          fields << 'overpaid_value'
-          fields << 'get_statuses.join(", ")'
-          fields << 'created_at'
-          fields << 'updated_at'
+          fields = [ "id",
+            "creditor_id",
+            "creditor.try(:name)",
+            "affair_id",
+            "affair.try(:name)",
+            "title",
+            "description",
+            "value_in_cents",
+            "value_currency",
+            "value",
+            "vat_in_cents",
+            "vat_currency",
+            "vat",
+            "vat_percentage",
+            "invoice_received_on",
+            "invoice_ends_on",
+            "invoice_in_books_on",
+            "discount_percentage",
+            "discount_ends_on",
+            "paid_on",
+            "payment_in_books_on",
+            "created_at",
+            "updated_at" ]
+
           render inline: csv_ify(@creditors, fields)
         end
 
-        if ['pdf', 'odt'].index params[:format]
-          # Ensure at least a template is given
-          # build generator using selected generic template
-          fake_object = OpenStruct.new
-          fake_object.template = GenericTemplate.find params[:generic_template_id]
-          fake_object.creditors = @creditors
-
-          generator = AttachmentGenerator.new(fake_object, nil)
-        end
-
         format.pdf do
-          send_data generator.pdf,
+          send_data build_generator.pdf,
             filename: "creditors.pdf",
             type: 'application/pdf'
         end
 
         format.odt do
-          send_data generator.odt,
+          send_data build_generator.odt,
             filename: "creditors.odt",
             type: 'application/vnd.oasis.opendocument.text'
         end
@@ -96,7 +95,6 @@ class Admin::CreditorsController < ApplicationController
       end
     end
   end
-
 
   def check_items
     authorize! :index, Creditor
@@ -123,145 +121,6 @@ class Admin::CreditorsController < ApplicationController
       format.json { render json: session[:admin_creditors] }
     end
   end
-
-  def select_items
-
-    if params[:id]
-      arel = Creditor.where(id: params[:id])
-    elsif params[:group]
-      valid_statuses = Creditor.statuses.keys
-      valid_statuses << :all
-      return [] unless valid_statuses.index(params[:group].to_sym)
-      arel = Creditor.send(params[:group])
-    end
-
-    return [] if arel.nil?
-
-    unless params[:from].blank?
-      from = Date.parse params[:from] if validate_date_format(params[:from])
-      arel = arel.where('? < creditors.invoice_received_on', from)
-    end
-
-    unless params[:to].blank?
-      to = Date.parse params[:to] if validate_date_format(params[:to])
-      arel = arel.where('creditors.invoice_received_on < ?', to)
-    end
-
-    arel.pluck(:id)
-
-  end
-
-  # def export
-  #   authorize! :index, Creditor
-
-  #   errors = {}
-  #   # pseudo validation
-  #   unless params[:from].blank?
-  #     if validate_date_format(params[:from])
-  #       from = Date.parse params[:from]
-  #     else
-  #       errors[:from] = I18n.t("creditor.errors.wrong_date")
-  #     end
-  #   end
-
-  #   unless params[:to].blank?
-  #     if validate_date_format(params[:to])
-  #       to = Date.parse params[:to]
-  #     else
-  #       errors[:to] = I18n.t("creditor.errors.wrong_date")
-  #     end
-  #   end
-
-  #   if from and to and from > to
-  #     errors[:from] = I18n.t("salary.errors.from_date_should_be_before_to_date")
-
-  #     unless params[:date_field].blank?
-  #       if Creditor.date_fields.index params[:date_field]
-  #         date_field = params[:date_field]
-  #       else
-  #         errors[:statuses] = I18n.t("creditors.errors.date_field_unkown")
-  #       end
-  #     end
-  #   end
-
-  #   unless params[:status].blank?
-  #     unless Creditor.statuses.index params[:status]
-  #       status = params[:status]
-  #     else
-  #       errors[:statuses] = I18n.t("creditors.errors.invalid_status")
-  #     end
-  #   end
-
-  #   if ['pdf', 'odt'].index params[:format]
-  #     unless params[:generic_template_id]
-  #       errors[:generic_template_id] = I18n.t("activerecord.errors.messages.blank")
-  #     end
-  #   end
-
-  #   respond_to do |format|
-
-  #     if errors.empty?
-  #       ######### PREPARE ############
-
-  #       @creditors = Creditor.order(:created_at)
-  #       @creditors = @creditors.send(status) if status
-
-  #       if from and to
-  #         @creditors = @creditors.where("#{date_field} BETWEEN ? AND ?", from, to)
-  #       end
-
-  #       if ['pdf', 'odt'].index params[:format]
-  #         # Ensure at least a template is given
-  #         # build generator using selected generic template
-  #         fake_object = OpenStruct.new
-  #         fake_object.template = GenericTemplate.find params[:generic_template_id]
-  #         fake_object.creditors = @creditors
-
-  #         generator = AttachmentGenerator.new(fake_object, nil)
-  #       end
-
-  #       ######### RENDER ############
-
-  #       format.json { render json: CreditorsDatatable.new(view_context) }
-
-  #       format.csv do
-  #         fields = []
-  #         fields << 'id'
-  #         fields << 'owner_id'
-  #         fields << 'owner.try(:name)'
-  #         fields << 'buyer_id'
-  #         fields << 'buyer.try(:name)'
-  #         fields << 'receiver_id'
-  #         fields << 'receiver.try(:name)'
-  #         fields << 'title'
-  #         fields << 'description'
-  #         fields << 'value'
-  #         fields << 'overpaid_value'
-  #         fields << 'get_statuses.join(", ")'
-  #         fields << 'created_at'
-  #         fields << 'updated_at'
-  #         render inline: csv_ify(@creditors, fields)
-  #       end
-
-  #       format.pdf do
-  #         send_data generator.pdf,
-  #           filename: "creditors.pdf",
-  #           type: 'application/pdf'
-  #       end
-
-  #       format.odt do
-  #         send_data generator.odt,
-  #           filename: "creditors.odt",
-  #           type: 'application/vnd.oasis.opendocument.text'
-  #       end
-
-  #     else
-  #       format.json do
-  #         render json: errors, status: :unprocessable_entity
-  #       end
-  #     end
-  #   end
-  # end
 
   def show
     respond_with(@creditor)
@@ -413,6 +272,38 @@ class Admin::CreditorsController < ApplicationController
         :paid_on,
         :payment_in_books_on,
         :updated_at)
+    end
+
+    def build_generator
+      fake_reference = OpenStruct.new(template: GenericTemplate.find(params[:template_id]))
+      AttachmentGenerator.new(@creditors, fake_reference)
+    end
+
+    def select_items
+
+      if params[:id]
+        arel = Creditor.where(id: params[:id])
+      elsif params[:group]
+        valid_statuses = Creditor.statuses.keys
+        valid_statuses << :all
+        return [] unless valid_statuses.index(params[:group].to_sym)
+        arel = Creditor.send(params[:group])
+      end
+
+      return [] if arel.nil?
+
+      unless params[:from].blank?
+        from = Date.parse params[:from] if validate_date_format(params[:from])
+        arel = arel.where('? < creditors.invoice_received_on', from)
+      end
+
+      unless params[:to].blank?
+        to = Date.parse params[:to] if validate_date_format(params[:to])
+        arel = arel.where('creditors.invoice_received_on < ?', to)
+      end
+
+      arel.pluck(:id)
+
     end
 
 end

@@ -22,6 +22,7 @@ class AttachmentGenerator
 
   include Serenity::Generator
 
+  # TODO remove useless reference and provide template overriding instead.
   def initialize(object, reference = nil, relations = [])
     # TODO convert to OpenStruct
     # o = @object.as_json

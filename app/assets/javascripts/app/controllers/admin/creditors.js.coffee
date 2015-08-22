@@ -291,12 +291,11 @@ class Index extends App.ExtendedController
 
   csv: (e) ->
     e.preventDefault()
-    window.location = Creditor.url() + ".csv?items=#{@selected_as_params()}"
+    window.location = Creditor.url() + ".csv"
 
   url_for: (format) ->
     @template_id = @el.find("#admin_creditors_template").val()
-    url = Creditor.url() + ".#{format}?template_id=#{@template_id}"
-    url + "&items=#{JSON.stringify @selected_ids}"
+    Creditor.url() + ".#{format}?template_id=#{@template_id}"
 
   pdf: (e) ->
     e.preventDefault()
