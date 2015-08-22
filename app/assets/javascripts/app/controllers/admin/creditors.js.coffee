@@ -242,7 +242,8 @@ class Index extends App.ExtendedController
     'click button[name=admin-creditors-export]':      'export'
     'datatable_redraw':                               'table_redraw'
     'click button[name=admin-creditors-group-edit]':  'group_edit'
-    'click ul[name=admin-creditors-filter] a':        'filter_selection'
+    'click [name=add-to-selection]':                  'filter_selection'
+    'click [name=remove-from-selection]':             'filter_selection'
     'click thead [name="check_all"]':                 'toggle_checks'
     'click thead [name="check_none"]':                'toggle_checks'
     'change tbody input[type="checkbox"]':            'toggle_check'
@@ -334,16 +335,19 @@ class Index extends App.ExtendedController
 
   filter_selection: (e) =>
     e.preventDefault()
-    filter = $(e.target).data("name")
+    action = $(e.target).closest('button').attr('name')
+    footer = $(e.target).closest('.panel-footer')
+    form_data = {}
+    form_data['group'] = footer.find("[name=filter]").val()
+    form_data['from']  = footer.find("[name=select-from]").val()
+    form_data['to']    = footer.find("[name=select-to]").val()
 
-    if filter == 'none'
-      # select none == unselect all
+    if action == 'remove-from-selection'
       path = "/uncheck_items"
-      filter = 'all'
     else
       path = "/check_items"
 
-    $.post(Creditor.url() + path, {group: filter})
+    $.post(Creditor.url() + path, form_data)
       .success (response) =>
         @selected_ids = response
         @reload_table()

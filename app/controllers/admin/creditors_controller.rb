@@ -127,13 +127,27 @@ class Admin::CreditorsController < ApplicationController
   def select_items
 
     if params[:id]
-      Creditor.where(id: params[:id]).pluck(:id)
+      arel = Creditor.where(id: params[:id])
     elsif params[:group]
       valid_statuses = Creditor.statuses.keys
       valid_statuses << :all
       return [] unless valid_statuses.index(params[:group].to_sym)
-      Creditor.send(params[:group]).pluck(:id)
+      arel = Creditor.send(params[:group])
     end
+
+    return [] if arel.nil?
+
+    unless params[:from].blank?
+      from = Date.parse params[:from] if validate_date_format(params[:from])
+      arel = arel.where('? < creditors.invoice_received_on', from)
+    end
+
+    unless params[:to].blank?
+      to = Date.parse params[:to] if validate_date_format(params[:to])
+      arel = arel.where('creditors.invoice_received_on < ?', to)
+    end
+
+    arel.pluck(:id)
 
   end
 

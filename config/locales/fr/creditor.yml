@@ -15,10 +15,10 @@ fr:
     notices:
       the_counterpart_is_assigned_on_providers_page: La contrepartie est indiquée sur la fiche du fournisseur
     status:
-      invoices_to_record_in_books: document saisi en compta.
+      invoices_to_record_in_books: document a saisir en compta.
       late: en retard
       paid: payé
-      payments_to_record_in_books: payement saisi en compta.
+      payments_to_record_in_books: payement a saisir en compta.
       unpaid: impayé
     views:
       account: compte

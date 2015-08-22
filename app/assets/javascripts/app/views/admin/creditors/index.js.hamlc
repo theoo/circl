@@ -20,33 +20,48 @@
           .icon-spin.icon-4x.icon-gear
 
 .panel-footer
-  .pull-right
-    .btn-group
-      %button{:data-toggle => 'dropdown',
-              type: 'button',
-              class: 'btn btn-default dropdown-toggle' }
-        .icon-filter
-        = I18n.t('common.filter')
-        .caret
+  .row
+    .col-sm-6
+      != @partial("generate_document")(prefix: 'admin_creditors', model: 'Creditor', collection: true)
 
-      %ul.dropdown-menu{name: 'admin-creditors-filter'}
-        %li
-          %a{href: '#', "data-name" => 'none'}
-            = I18n.t("common.none")
-        - for name, translation of gon.creditor_statuses
-          %li
-            %a{href: '#', "data-name" => name}
-              = translation
+      %button{type: 'button',
+              name: 'admin-creditors-group-edit',
+              class: 'btn btn-default',
+              disabled: true }
+        .icon-gear
+        = I18n.t("common.group_edit")
+    .col-sm-6
+      .row
+        .col-xs-4
+          .input-group
+            .input-group-addon
+              .icon-filter
+            %select.form-control{name: 'filter'}
+              - for name, translation of gon.creditor_statuses
+                %option{"value" => name}
+                  = translation
 
-  != @partial("generate_document")(prefix: 'admin_creditors', model: 'Creditor', collection: true)
+        .col-xs-3.form-group
+          %input{type: 'text',
+                 name: 'select-from',
+                 placeholder: I18n.t('common.from'),
+                 class: 'form-control datepicker' }
 
-  / %button{ type: 'button', name: 'admin-creditors-export', class: 'btn btn-default'}
-  /   .icon-cloud-upload
-  /   = I18n.t('common.toolbox_export')
+        .col-xs-3.form-group
+          %input{type: 'text',
+                 name: 'select-to',
+                 placeholder: I18n.t('common.to'),
+                 class: 'form-control datepicker' }
 
-  %button{type: 'button',
-          name: 'admin-creditors-group-edit',
-          class: 'btn btn-default',
-          disabled: true }
-    .icon-gear
-    = I18n.t("common.group_edit")
+        .col-xs-2
+          .btn-group
+            %button{type: 'button', class: 'btn btn-default',
+              name: 'add-to-selection',
+              title: I18n.t("common.add_to_selection") }
+              .icon-plus
+
+            %button{type: 'button', class: 'btn btn-default',
+              name: 'remove-from-selection',
+              title: I18n.t("common.remove_from_selection") }
+              .icon-minus
+

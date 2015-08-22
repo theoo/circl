@@ -93,29 +93,31 @@ class Creditor < ActiveRecord::Base
   #### CLASS METHODS #####
   ########################
 
-  # Returns status hash with machine alias and human translation
-  def self.statuses
-    # Names should be reported in scopes and vice-versa
-    {
-      paid: I18n.t("creditor.status.paid"),
-      unpaid: I18n.t("creditor.status.unpaid"),
-      late: I18n.t("creditor.status.late"),
-      invoices_to_record_in_books: I18n.t("creditor.status.invoices_to_record_in_books"),
-      payments_to_record_in_books: I18n.t("creditor.status.payments_to_record_in_books")
-    }
-  end
+  class << self
+    # Returns status hash with machine alias and human translation
+    def statuses
+      # Names should be reported in scopes and vice-versa
+      {
+        paid: I18n.t("creditor.status.paid"),
+        unpaid: I18n.t("creditor.status.unpaid"),
+        late: I18n.t("creditor.status.late"),
+        invoices_to_record_in_books: I18n.t("creditor.status.invoices_to_record_in_books"),
+        payments_to_record_in_books: I18n.t("creditor.status.payments_to_record_in_books")
+      }
+    end
 
-  # Returns date fields with a translation
-  def self.date_fields
-    {
-      created_at: I18n.t("creditor.date_fields.creation"),
-      invoice_received_on: I18n.t("creditor.date_fields.reception"),
-      invoice_ends_on: I18n.t("creditor.date_fields.invoice_end"),
-      invoice_in_books_on: I18n.t("creditor.date_fields.invoice_books_recording"),
-      discount_ends_on: I18n.t("creditor.date_fields.discount_end"),
-      paid_on: I18n.t("creditor.date_fields.payment_date"),
-      payment_in_books_on: I18n.t("creditor.date_fields.payment_books_recording"),
-    }
+    # Returns date fields with a translation
+    def date_fields
+      {
+        created_at: I18n.t("creditor.date_fields.creation"),
+        invoice_received_on: I18n.t("creditor.date_fields.reception"),
+        invoice_ends_on: I18n.t("creditor.date_fields.invoice_end"),
+        invoice_in_books_on: I18n.t("creditor.date_fields.invoice_books_recording"),
+        discount_ends_on: I18n.t("creditor.date_fields.discount_end"),
+        paid_on: I18n.t("creditor.date_fields.payment_date"),
+        payment_in_books_on: I18n.t("creditor.date_fields.payment_books_recording"),
+      }
+    end
   end
 
   ########################
