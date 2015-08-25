@@ -55,6 +55,7 @@ class Invoice < ActiveRecord::Base
   include ActionView::Helpers::TagHelper
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
+  include VatExtension
   extend  MoneyComposer
 
   # TODO: Move this to jsbuilder
@@ -465,11 +466,6 @@ class Invoice < ActiveRecord::Base
     total = value
     self.value = reverse_vat(value)
     self.vat = total - self.value
-  end
-
-  # Takes a value taxes included
-  def reverse_vat(val)
-    val / ( 1 + (ApplicationSetting.value("service_vat_rate").to_f / 100.0) )
   end
 
   def vat_calculation_availability

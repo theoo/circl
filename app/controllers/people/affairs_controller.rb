@@ -173,6 +173,8 @@ class People::AffairsController < ApplicationController
       params[:parent_id] = nil if ! params[:parent_id] or ! params[:parent_name]
 
       # raise the error and rollback transaction if validation fails
+      # TODO migrate to strong_parameters !
+      params[:affair].delete(:id)
       raise ActiveRecord::Rollback unless @affair.update_attributes(params[:affair])
 
       # Only keep values that are returned

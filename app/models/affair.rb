@@ -47,7 +47,7 @@ class Affair < ActiveRecord::Base
   include StatusExtension
   include ElasticSearch::Mapping
   include ElasticSearch::Indexing
-  extend  VatExtension
+  include VatExtension
   extend  MoneyComposer
 
   # TODO: Move this to jsbuilder
