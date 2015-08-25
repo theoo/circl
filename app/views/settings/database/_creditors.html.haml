@@ -1,0 +1,35 @@
+= form_tag(preview_import_admin_creditors_path,
+  multipart: true,
+  id: "settings_database_creditors",
+  class: 'panel panel-default') do
+  .panel-heading
+    .panel-title
+      = I18n.t("settings.views.db.creditor_entries", count: Creditor.count)
+
+  .panel-body
+
+    != I18n.t("creditor.views.example_files_explanation")
+    %br
+    %br
+
+    %ol
+      %li
+        %a{href: 'assets/creditors.csv'}
+          = I18n.t("creditor.views.creditors_example_file_desc")
+    %br
+
+    .form-group
+      %label{for: 'settings_creditors_import_file'}
+        = I18n.t('common.select_file')
+      %input{ type: 'file', name: 'file'}
+
+  .panel-footer
+    %button{type: 'submit', name: 'settings-database-creditors-import', class: 'btn btn-default'}
+      .icon-cloud-download
+      = I18n.t('common.toolbox_import')
+
+    .pull-right
+      = link_to(admin_creditors_path(format: 'csv'), class: 'btn btn-default') do
+        .icon-cloud-upload
+        = I18n.t('common.toolbox_export')
+

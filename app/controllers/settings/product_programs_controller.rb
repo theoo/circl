@@ -136,13 +136,13 @@ class Settings::ProductProgramsController < ApplicationController
     authorize! :import, ProductProgram
 
     unless params[:file]
-      flash[:alert] = I18n.t('product.errors.no_file_submitted')
+      flash[:alert] = I18n.t('common.errors.no_file_submitted')
       redirect_to settings_path
       return
     end
 
-    session[:program_file_data] = params[:file].read
-    @programs, @columns = ProductProgram.parse_csv(session[:program_file_data])
+    session[:settings_product_programs_file_data] = params[:file].read
+    @programs, @columns = ProductProgram.parse_csv(session[:settings_product_programs_file_data])
 
     respond_to do |format|
       format.html { render layout: 'application' }
@@ -152,7 +152,7 @@ class Settings::ProductProgramsController < ApplicationController
   def import
     # TODO Move this to background task
     authorize! :import, ProductProgram
-    file = session[:program_file_data]
+    file = session[:settings_product_programs_file_data]
 
     @programs, @columns = ProductProgram.parse_csv(file, params[:lines], params[:skip_columns], true)
 
@@ -179,63 +179,10 @@ class Settings::ProductProgramsController < ApplicationController
     # In rails 3.1, session is a normal Hash
     # In rails 3.2, session is a CGI::Session
     begin
-      session.delete(:program_file_data) # Rails 3.1
-      session.data.delete(:program_file_data) # Rails 3.2
+      session.delete(:settings_product_programs_file_data) # Rails 3.1
+      session.data.delete(:settings_product_programs_file_data) # Rails 3.2
     rescue
     end
   end
-
-  # def preview_import
-  #   authorize! :import, Product
-
-  #   unless params[:file]
-  #     flash[:alert] = I18n.t('product.errors.no_file_submitted')
-  #     redirect_to settings_path
-  #     return
-  #   end
-
-  #   session[:product_file_data] = params[:file].read
-  #   @products, @columns = Product.parse_csv(session[:product_file_data])
-
-  #   respond_to do |format|
-  #     format.html { render layout: 'application' }
-  #   end
-  # end
-
-  # def import
-  #   # TODO Move this to background task
-  #   authorize! :import, Product
-  #   file = session[:product_file_data]
-
-  #   @products, @columns = Product.parse_csv(file, params[:lines], params[:skip_columns], true)
-
-  #   success = false
-  #   Product.transaction do
-
-  #     @products.each do |p|
-  #       raise ActiveRecord::Rollback unless p.save
-  #     end
-  #     success = true
-  #   end
-
-  #   respond_to do |format|
-  #     if success
-  #       PersonMailer.send_products_import_report(current_person, @products, @columns).deliver
-  #       flash[:notice] = I18n.t('product.notices.product_imported', email: current_person.email)
-  #       format.html { redirect_to settings_path(anchor: 'affairs')  }
-  #     else
-  #       flash[:error] = I18n.t('product.errors.product_failed_to_imported')
-  #       format.html { redirect_to settings_path(anchor: 'affairs') }
-  #     end
-  #   end
-
-  #   # In rails 3.1, session is a normal Hash
-  #   # In rails 3.2, session is a CGI::Session
-  #   begin
-  #     session.delete(:product_file_data) # Rails 3.1
-  #     session.data.delete(:product_file_data) # Rails 3.2
-  #   rescue
-  #   end
-  # end
 
 end

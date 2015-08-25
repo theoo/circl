@@ -56,6 +56,13 @@ module Exporter
         account = creditor.transitional_account
       end
 
+      # Invert account when negative
+      if value_with_discount < 0
+        old_account = account
+        account = counterpart_account
+        counterpart_account = old_account
+      end
+
       {
         :id                         => creditor.id,
         :date                       => creditor.created_at.to_date,

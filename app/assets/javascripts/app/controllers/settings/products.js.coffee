@@ -163,8 +163,6 @@ class Index extends App.ExtendedController
   events:
     'click tr.item':      'edit'
     'datatable_redraw': 'table_redraw'
-    'click button[name="settings-products-export"]':  'export_in_csv'
-    'click button[name="settings-products-import"]':  'stack_import_window'
 
   constructor: (params) ->
     super
@@ -189,19 +187,6 @@ class Index extends App.ExtendedController
 
     @activate_in_list(target)
 
-  export_in_csv: (e) ->
-    e.preventDefault()
-    window.location = Product.url() + ".csv"
-
-  stack_import_window: (e) ->
-    e.preventDefault()
-
-    win = $("<div class='modal fade' id='settings-products-import-modal' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST['app/views/settings/products/import']()
-    win.append modal
-    win.modal(keyboard: true, show: false)
-    win.modal('show')
 
 class App.SettingsProducts extends Spine.Controller
   className: 'products'

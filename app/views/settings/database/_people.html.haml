@@ -1,0 +1,34 @@
+= form_tag(directory_confirm_people_path,
+  multipart: true,
+  id: "settings_database_people",
+  class: 'panel panel-default') do
+  .panel-heading
+    .panel-title
+      = I18n.t("settings.views.db.people_entries", count: Person.count)
+
+  .panel-body
+
+    != I18n.t("product.views.example_files_explanation")
+    %br
+    %br
+
+    %ol
+      %li
+        = link_to asset_path('people_example.csv') do
+          = I18n.t("people.views.people_example_file_desc")
+    %br
+
+    .form-group
+      %label{for: 'settings_people_import_file'}
+        = I18n.t('common.select_file')
+      %input{ type: 'file', name: 'people_file'}
+
+  .panel-footer
+    %button{type: 'submit', name: 'settings-database-people-import', class: 'btn btn-default'}
+      .icon-cloud-download
+      = I18n.t('common.toolbox_import')
+
+    .pull-right
+      = link_to(directory_path(), class: 'btn btn-default') do
+        .icon-cloud-upload
+        = I18n.t('common.toolbox_export')

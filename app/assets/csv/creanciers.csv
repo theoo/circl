@@ -1,0 +1,2 @@
+provider_id,provider_name,value,discount,transitional_account,account,invoice_received_on,invoice_ends_on,title,affair_id,invoice_in_books_on,paid_on,payment_in_books_on
+3804,Internet Provider,340.2,0,123654,654123,11/02/15,23/02/15,Internet access for the office. IBAN: DE-XXX-123124-123123,123,18/02/15,19/02/15,23/02/15

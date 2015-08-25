@@ -136,4 +136,12 @@ class PersonMailer < ActionMailer::Base
           subject: I18n.t('person.mail.product_programs_import_report'))
   end
 
+  def send_creditors_import_report(person, creditors, columns)
+    @creditors = creditors
+    @columns = columns
+    I18n.locale = person.main_communication_language.try(:symbol)
+    mail( to: person.email,
+          subject: I18n.t('person.mail.creditor_import_report'))
+  end
+
 end

@@ -11,17 +11,3 @@
     %tr
       %td.placeholder{colspan: 6}
         .icon-spin.icon-4x.icon-gear
-
-.panel-footer
-  .btn-group
-    %button{type: 'button',
-            name: 'settings-products-import',
-            class: 'btn btn-default'}
-      .icon-cloud-download
-      = I18n.t('common.toolbox_import')
-    %button{type: 'button',
-            name: 'settings-products-export',
-            class: 'btn btn-default'}
-      .icon-cloud-upload
-      = I18n.t('common.toolbox_export')
-

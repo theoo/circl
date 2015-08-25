@@ -9,6 +9,10 @@ fr:
       attributes: Attributs
       currencies: Devises
       currency_rates: Taux de changes
+      database: Base de donnée
+      db:
+        product_entries: "%{count} Produits"
+        products: Produits
       generic_templates: Modèles Génériques
       invoice_templates: Modèles de facture
       jobs: Métiers

@@ -19,11 +19,6 @@
             %a{href: '#searchengine_tab'}
               = I18n.t('common.directory')
 
-        - if can? :manage, Person
-          %li
-            %a{href: '#tools_tab'}
-              = I18n.t('directory.views.tools')
-
       // pull-right = XS
       .pull-right
         .navbar-right.btn-group
@@ -94,41 +89,6 @@
       .panel.panel-default
         #directory_search_engine
 
-    #tools_tab.tab-pane
-      .row
-        .col-lg-6
-          - if can? :create, Person
-            #directory_import_people.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('directory.views.import_people')
-
-              = form_tag(directory_confirm_people_path, multipart: true) do
-                .panel-body
-                  .row
-                    .col-lg-12
-                      = link_to I18n.t('directory.views.people_example_file'), asset_path('people_example.csv')
-                      = '(' + I18n.t('common.use_right_click_save_as') + ')'
-                      %br
-                      %br
-
-                  .row
-                    .col-lg-6
-                      .form-group
-                        %label{for: 'directory_import_people'}
-                          = I18n.t('common.select_file')
-                        %input{type: :file, id: 'directory_import_people', name: :people_file}
-
-                .panel-footer
-                  .row
-                    .col-lg-12
-                      .pull-right
-                        %button{type: :submit,
-                              class: 'btn btn-primary'}
-                          .glyphicon.glyphicon-cloud-upload
-                          = I18n.t('common.upload')
-
-        .col-lg-6
 
 #affix.hidden-print
   %small.help-block= t('directory.notices.use_ctrl_plus_click')

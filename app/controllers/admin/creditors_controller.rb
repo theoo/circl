@@ -255,16 +255,16 @@ class Admin::CreditorsController < ApplicationController
   end
 
   def preview_import
-    authorize! :import, Product
+    authorize! :manage, Creditor
 
     unless params[:file]
-      flash[:alert] = I18n.t('product.errors.no_file_submitted')
-      redirect_to settings_path
+      flash[:alert] = I18n.t('common.errors.no_file_submitted')
+      redirect_to settings_path(anchor: 'database')
       return
     end
 
-    session[:product_file_data] = params[:file].read
-    @products, @columns = Product.parse_csv(session[:product_file_data])
+    session[:admin_creditors_file_data] = params[:file].read
+    @creditors, @columns = Creditor.parse_csv(session[:admin_creditors_file_data])
 
     respond_to do |format|
       format.html { render layout: 'application' }
@@ -272,15 +272,16 @@ class Admin::CreditorsController < ApplicationController
   end
 
   def import
-    # TODO Move this to background task
-    authorize! :import, Product
-    file = session[:product_file_data]
 
-    @products, @columns = Product.parse_csv(file, params[:lines], params[:skip_columns], params[:clear_variants], true)
+    # TODO Move this to background task
+    authorize! :manage, Creditor
+    file = session[:admin_creditors_file_data]
+
+    @creditors, @columns = Creditor.parse_csv(file, params[:lines], params[:skip_columns], true)
 
     success = false
-    Product.transaction do
-      @products.each do |p|
+    Creditor.transaction do
+      @creditors.each do |p|
         raise ActiveRecord::Rollback unless p.save
       end
       success = true
@@ -288,12 +289,11 @@ class Admin::CreditorsController < ApplicationController
 
     respond_to do |format|
       if success
-        PersonMailer.send_products_import_report(current_person, @products, @columns).deliver
-        flash[:notice] = I18n.t('product.notices.product_imported', email: current_person.email)
-        format.html { redirect_to settings_path(anchor: 'affairs')  }
+        flash[:notice] = I18n.t('creditor.notices.creditor_imported', email: current_person.email)
+        format.html { redirect_to settings_path(anchor: 'database')  }
       else
-        flash[:error] = I18n.t('product.errors.product_failed_to_imported')
-        format.html { redirect_to settings_path(anchor: 'affairs') }
+        flash[:error] = I18n.t('creditor.errors.creditor_failed_to_imported')
+        format.html { redirect_to settings_path(anchor: 'database') }
       end
     end
   end

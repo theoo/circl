@@ -31,6 +31,13 @@ class Creditor < ActiveRecord::Base
   include VatExtension
   extend  MoneyComposer
 
+  # Used for import
+  attr_accessor :notices
+
+  after_initialize do
+    @notices = ActiveModel::Errors.new(self)
+  end
+
   #################
   ### CALLBACKS ###
   #################
@@ -123,17 +130,17 @@ class Creditor < ActiveRecord::Base
     end
 
     def parse_csv(file, lines = [], skip_columns = [], do_record = false)
-      products = []
+      creditors = []
       # in case argument nil is sent
       lines ||= []
       skip_columns ||= []
 
       # Expected file structure
       columns_list = [
-        :id_provider,
+        :creditor_id,
         :provider_name,
         :value,
-        :discount,
+        :discount_percentage,
         :transitional_account,
         :account,
         :invoice_received_on,
@@ -161,8 +168,10 @@ class Creditor < ActiveRecord::Base
               next
             end
 
-            c.delete(:provider_name) # this is just to help reading the table
-            creditor = Creditor.create(c) # trig validation
+            params = c.to_h
+            params.delete(:provider_name) # Just for the view
+            creditor = Creditor.create!(params) # trig validation
+            raise ActiveRecord::Rollback unless creditor.creditor
 
             creditors << creditor
           end # csv
@@ -180,7 +189,7 @@ class Creditor < ActiveRecord::Base
 
       [creditors, columns_list]
     end
-  
+
   end
 
   ########################

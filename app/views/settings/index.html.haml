@@ -46,6 +46,11 @@
 
         - if can? :manage, ApplicationSetting
           %li
+            %a{href: '#database_tab'}
+              = I18n.t('settings.views.database')
+
+        - if can? :manage, ApplicationSetting
+          %li
             %a{href: '#advanced_tab'}
               = I18n.t('settings.views.advanced')
 
@@ -182,6 +187,23 @@
                 .panel-title
                   = I18n.t('settings.views.currency_rates')
 
+    #database_tab.tab-pane.fade
+      .row
+        .col-lg-6
+          - if can? :manage, Person
+            = render partial: 'settings/database/people'
+
+          - if can? :manage, Product
+            = render partial: 'settings/database/products'
+
+          - if can? :manage, ProductProgram
+            = render partial: 'settings/database/product_programs'
+
+        .col-lg-6
+          - if can? :manage, Creditor
+            = render partial: 'settings/database/creditors'
+
+
     #advanced_tab.tab-pane.fade
       .row
         .col-lg-6
@@ -215,4 +237,5 @@
   %ul#privileges_affix.nav
   %ul#affairs_affix.nav
   %ul#currencies_affix.nav
+  %ul#database_affix.nav
   %ul#advanced_affix.nav

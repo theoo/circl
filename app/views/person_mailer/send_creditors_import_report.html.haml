@@ -1,0 +1,15 @@
+%h1
+  = I18n.t("person.mail.creditors_import_report_title")
+
+- attributes = %w(id creditor_id affair_id title description value_in_cents value_currency vat_in_cents vat_currency vat_percentage invoice_received_on invoice_ends_on invoice_in_books_on discount_percentage discount_ends_on paid_on payment_in_books_on account transitional_account created_at updated_at)
+
+%table
+  %thead
+    %tr
+      - attributes.each do |a|
+        %th= a
+  %tbody
+    - @creditors.each do |program|
+      %tr
+        - attributes.each do |a|
+          %td= program.send(a)

@@ -22,16 +22,3 @@
           %br
           = program.description
         %td= program.updated_at
-
-.panel-footer
-  .btn-group
-    %button{type: 'button',
-            name: 'settings-product_programs-import',
-            class: 'btn btn-default'}
-      .icon-cloud-download
-      = I18n.t('common.toolbox_import')
-    %button{type: 'button',
-            name: 'settings-product_programs-export',
-            class: 'btn btn-default'}
-      .icon-cloud-upload
-      = I18n.t('common.toolbox_export')

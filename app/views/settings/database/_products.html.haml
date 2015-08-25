@@ -1,0 +1,36 @@
+
+= form_tag(preview_import_settings_products_path,
+  multipart: true,
+  id: "settings_database_products",
+  class: 'panel panel-default') do
+  .panel-heading
+    .panel-title
+      = I18n.t("settings.views.db.product_entries", count: Product.count)
+
+  .panel-body
+
+    != I18n.t("product.views.example_files_explanation")
+    %br
+    %br
+
+    %ol
+      %li
+        %a{href: 'assets/products.csv'}
+          = I18n.t("product.views.products_example_file_desc")
+    %br
+
+    .form-group
+      %label{for: 'settings_products_import_file'}
+        = I18n.t('common.select_file')
+      %input{ type: 'file', name: 'file'}
+
+  .panel-footer
+    %button{type: 'submit', name: 'settings-database-products-import', class: 'btn btn-default'}
+      .icon-cloud-download
+      = I18n.t('common.toolbox_import')
+
+    .pull-right
+      = link_to(settings_products_path(format: 'csv'), class: 'btn btn-default') do
+        .icon-cloud-upload
+        = I18n.t('common.toolbox_export')
+

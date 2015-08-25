@@ -9,6 +9,10 @@ en:
       attributes: Attributes
       currencies: Currencies
       currency_rates: Exchange rates
+      database: MISSING_TRANSLATION database
+      db:
+        product_entries: MISSING_TRANSLATION product entries
+        products: MISSING_TRANSLATION products
       generic_templates: Generic Templates
       invoice_templates: Invoice templates
       jobs: Jobs

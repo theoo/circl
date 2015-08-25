@@ -181,6 +181,7 @@ CIRCL::Application.routes.draw do
       collection do
         get 'export', format: 'html'
         post 'check_items', 'uncheck_items', 'group_update'
+        post 'preview_import', 'import', format: 'html'
         delete 'group_destroy'
       end
     end

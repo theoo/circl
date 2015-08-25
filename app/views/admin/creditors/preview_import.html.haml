@@ -1,0 +1,107 @@
+#secondary_navbar.navbar.navbar-default.navbar-static-top
+
+  .container
+    #secondary_navigation.collapse.navbar-collapse
+      .navbar-brand
+        = I18n.t("creditor.views.import_creditors")
+
+.container
+  .row
+    .col-lg-12
+      - if @creditors.is_a? String
+        .alert.alert-danger
+          .btn.btn-primary
+            .icon.icon-chevron-left
+            = I18n.t("common.previous")
+          = @creditors
+
+      - else
+        = form_tag(import_admin_creditors_path, method: :post, id: 'settings_creditors_import') do
+          .panel.panel-default
+            .panel-heading
+              .panel-title
+                = I18n.t('creditor.views.creditors_found_in_file')
+
+            .panel-body
+
+              %table.datatable
+                %thead
+                  %tr
+                    %th= I18n.t("common.line")
+                    %th= I18n.t("provider_id")
+                    %th= I18n.t("provider_name")
+                    %th= I18n.t("value")
+                    %th= I18n.t("discount")
+                    %th= I18n.t("transitional_account")
+                    %th= I18n.t("account")
+                    %th= I18n.t("invoice_received_on")
+                    %th= I18n.t("invoice_ends_on")
+                    %th= I18n.t("title")
+                    %th= I18n.t("affair_id")
+                    %th= I18n.t("invoice_in_books_on")
+                    %th= I18n.t("paid_on")
+                    %th= I18n.t("payment_in_books_on")
+                    %th= I18n.t("common.import")
+
+                %tbody
+                  - @creditors.each_with_index do |c, i|
+                    - line = i + 1
+                    - error_msg = []
+                    - c.errors.messages.each do |k,a|
+                      - error_msg << "#{k}: " + a.join(", ")
+
+                    - c.notices.messages.each do |k,a|
+                      - error_msg << a.join(", ")
+
+                    - classes = []
+                    - if c.errors.empty?
+                      - if c.notices.empty?
+                        - classes << 'success'
+                      - else
+                        - classes << 'warning'
+                    - else
+                      - classes << 'danger'
+
+                    %tr{class: classes.join(" "),
+                      'data-trigger' => 'click',
+                      'data-title' => (c.errors.size.to_s + " " + I18n.t("common.errors.error") + "(s)"),
+                      'data-html' => true,
+                      'data-line' => line,
+                      'data-placement' => 'auto right',
+                      'data-content' => raw(error_msg.join(" | "))}
+
+                      %td= line
+                      %td= c.creditor_id
+                      %td= c.creditor.try(:name)
+                      %td= c.value
+                      %td= c.discount_percentage
+                      %td= c.transitional_account
+                      %td= c.account
+                      %td= c.invoice_received_on
+                      %td= c.invoice_ends_on
+                      %td= c.title
+                      %td= c.affair_id
+                      %td= c.invoice_in_books_on
+                      %td= c.paid_on
+                      %td= c.payment_in_books_on
+                      %td= check_box_tag "unreal[]", i, c.errors.count == 0
+
+              %h3= I18n.t("creditor.views.ignore_theses_columns")
+              .row
+                .col-md-6
+                  %h4= I18n.t("creditor.views.creditor_attributes")
+                  %ol
+                    %li
+                      = check_box_tag "skip_columns[]", 'key', false, disabled: true
+                      key
+                    - @columns.each do |c|
+                      - next if c == :key # Mandatory
+                      - next if c.to_s.match(/\d+$/) # Skip prices
+                      %li
+                        = check_box_tag "skip_columns[]", c
+                        = c
+
+            .panel-footer
+              .text-right
+                = submit_tag I18n.t('creditor.views.proceed_with_import'), class: 'btn btn-primary'
+
