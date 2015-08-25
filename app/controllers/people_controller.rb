@@ -271,6 +271,8 @@ class PeopleController < ApplicationController
   end
 
   def search
+    params[:options] ||= []
+
     if params[:term].blank?
       results = []
     else
@@ -301,9 +303,14 @@ class PeopleController < ApplicationController
     a = results.map do |p|
       h = { label: p.name, desc: p.full_address, id: p.id, affairs_count: p.affairs.count }
       h[:title] = p.full_name if p.is_an_organization
+
+      if params[:options].index("creditor_accounts")
+        h[:creditor_account] = p.creditor_account
+        h[:creditor_transitional_account] = p.creditor_transitional_account
+      end
+
       h
     end
-
 
     respond_to do |format|
       format.json { render json: a}

@@ -18,6 +18,8 @@ class CreateCreditors < ActiveRecord::Migration
       t.date    :discount_ends_on
       t.date    :paid_on
       t.date    :payment_in_books_on
+      t.string  :account
+      t.string  :transitional_account
 
       t.timestamps
     end

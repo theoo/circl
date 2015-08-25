@@ -49,11 +49,11 @@ module Exporter
 
     def convert(creditor)
       if not creditor.invoice_in_books_on.nil?
-        counterpart_account = creditor.creditor.try(:creditor_transitional_account)
-        account = creditor.creditor.try(:creditor_account)
+        counterpart_account = creditor.transitional_account
+        account = creditor.account
       else
         counterpart_account = ApplicationSetting.value("creditor_account")
-        account = creditor.creditor.try(:creditor_transitional_account)
+        account = creditor.transitional_account
       end
 
       {

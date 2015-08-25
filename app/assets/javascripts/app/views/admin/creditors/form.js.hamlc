@@ -22,7 +22,7 @@
                       name: 'creditor',
                       autofocus: 'autofocus',
                       value: @creditor.creditor_name,
-                      action: '/people/search',
+                      action: '/people/search?options[]=creditor_accounts',
                       class: 'form-control required'}
               %input{ type: 'hidden',
                       name: 'creditor_id',
@@ -76,8 +76,6 @@
                       class: 'form-control'}
               = @creditor.description
 
-      .col-md-6
-        .row
           .col-sm-12
             - if App.ApplicationSetting.value('use_vat') == "true"
               .form-group
@@ -113,6 +111,32 @@
           .col-xl-8.col-sm-12
             - if App.ApplicationSetting.value('use_vat') == "true" and not @editing_a_group
               != @partial('edit_vat')(object: @creditor, prefix: @ids_prefix)
+
+      .col-md-6
+        .row
+          .col-xl-4.col-xs-6
+            .form-group
+              - if @editing_a_group
+                .pull-right
+                  %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
+              %label
+                = I18n.t('creditor.views.account')
+              %input{type: 'text',
+                     name: 'account',
+                     class: 'form-control',
+                     value: @creditor.account }
+
+          .col-xl-4.col-xs-6
+            .form-group
+              - if @editing_a_group
+                .pull-right
+                  %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
+              %label
+                = I18n.t('creditor.views.transitional_account')
+              %input{type: 'text',
+                     name: 'transitional_account',
+                     class: 'form-control',
+                     value: @creditor.transitional_account }
 
           .col-xl-4.col-xs-6
             .form-group

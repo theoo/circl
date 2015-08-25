@@ -11,6 +11,9 @@ fr:
       reception: réception
     errors:
       discount_cannot_end_after_invoice_end: La date de l'escompte ne peut pas être après la date d'échéance de la facture
+      invalid_line: ligne invalide
+      line: ligne
+      unable_to_parse_file: impossible d'évaluer le fichier
       wrong_date: Mauvais format de date
     notices:
       the_counterpart_is_assigned_on_providers_page: La contrepartie est indiquée sur la fiche du fournisseur
@@ -36,3 +39,4 @@ fr:
       paid_on: payé
       payment_in_books_on: payement compta.
       status: statut
+      transitional_account: compte transitoire

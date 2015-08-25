@@ -326,7 +326,9 @@ class Admin::CreditorsController < ApplicationController
         :discount_ends_on,
         :paid_on,
         :payment_in_books_on,
-        :updated_at)
+        :updated_at,
+        :account,
+        :transitional_account)
     end
 
     def build_generator

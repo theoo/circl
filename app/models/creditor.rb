@@ -41,6 +41,9 @@ class Creditor < ActiveRecord::Base
       self.value = reverse_vat(original_value)
       self.vat = original_value - value
     end
+
+    self.account ||= creditor.creditor_account
+    self.transitional_account ||= creditor.creditor_transitional_account
   end
 
   #################

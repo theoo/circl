@@ -25,12 +25,15 @@ CreditorsExtentions =
   constrains: ->
     # Autocompletes buttons
     @creditor_id_field       = @el.find("input[name=creditor_id]")
-    @creditor_name_field     = @el.find("input[name=creditor_name]")
+    @creditor_name_field     = @el.find("input[name=creditor]")
     @creditor_button         = @creditor_name_field.parent(".autocompleted").find(".input-group-btn .btn")
     @affair_id_field         = @el.find("input[name=affair_id]")
-    @affair_name_field       = @el.find("input[name=affair_name]")
+    @affair_name_field       = @el.find("input[name=affair]")
     @affair_help_block       = @el.find(".affairs_count")
     @affair_button           = @affair_name_field.parent(".autocompleted").find(".input-group-btn .btn")
+
+    @account_field           = @el.find("input[name=account]")
+    @trans_account_field     = @el.find("input[name=transitional_account]")
 
     @vat_field               = @el.find("input[name=vat]")
     @vat_percentage_field    = @el.find("input[name=vat_percentage]")
@@ -72,6 +75,9 @@ CreditorsExtentions =
 
   enable_creditor: (item) ->
     @creditor_id_field.val item.id
+    @account_field.val item.creditor_account if item.creditor_account
+    @trans_account_field.val item.creditor_transitional_account if item.creditor_transitional_account
+
     @creditor_button.attr('href', "/people/#{item.id}")
     @creditor_button.attr('disabled', false)
 

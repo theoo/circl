@@ -11,6 +11,9 @@ en:
       reception: reception
     errors:
       discount_cannot_end_after_invoice_end: discount cannot end after invoice end
+      invalid_line: invalid line
+      line: line
+      unable_to_parse_file: unable to parse file
       wrong_date: wrong date
     notices:
       the_counterpart_is_assigned_on_providers_page: the counterpart is assigned on providers page
@@ -36,3 +39,4 @@ en:
       paid_on: paid on
       payment_in_books_on: payment in books on
       status: status
+      transitional_account: transitional account

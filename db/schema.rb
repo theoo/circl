@@ -188,18 +188,20 @@ ActiveRecord::Schema.define(version: 20150730104959) do
     t.integer  "affair_id"
     t.string   "title"
     t.text     "description"
-    t.integer  "value_in_cents",      default: 0,     null: false
-    t.string   "value_currency",      default: "CHF", null: false
-    t.integer  "vat_in_cents",        default: 0,     null: false
-    t.string   "vat_currency",        default: "CHF", null: false
+    t.integer  "value_in_cents",       default: 0,     null: false
+    t.string   "value_currency",       default: "CHF", null: false
+    t.integer  "vat_in_cents",         default: 0,     null: false
+    t.string   "vat_currency",         default: "CHF", null: false
     t.string   "vat_percentage"
     t.date     "invoice_received_on"
     t.date     "invoice_ends_on"
     t.date     "invoice_in_books_on"
-    t.float    "discount_percentage", default: 0.0
+    t.float    "discount_percentage",  default: 0.0
     t.date     "discount_ends_on"
     t.date     "paid_on"
     t.date     "payment_in_books_on"
+    t.string   "account"
+    t.string   "transitional_account"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
