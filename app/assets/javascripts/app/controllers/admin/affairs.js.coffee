@@ -18,7 +18,7 @@ Affair = App.Affair
 
 class Index extends App.ExtendedController
   events:
-    'click tr.item': 'edit'
+    'click tbody tr.item': 'edit'
     'click button[name="admin-affairs-documents"]':  'documents'
 
   constructor: (params) ->
