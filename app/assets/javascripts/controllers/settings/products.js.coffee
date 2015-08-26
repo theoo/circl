@@ -12,7 +12,7 @@ $(document).ready ->
   enable_popover() # onload
 
   # collect selected lines
-  $('#settings_products_import').on 'submit', (e) ->
+  $('#settings_database_products').on 'submit', (e) ->
     form = $(e.target)
     $(form.find("table").dataTable().fnGetNodes()).find("input[type='checkbox']:checked").map (index, c) ->
       line = $(c).parents("tr").data("line")

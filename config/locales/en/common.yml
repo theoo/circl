@@ -59,6 +59,7 @@ en:
       invalid_phone: Invalid phone number format, you must use the following "+11 22 333 44 55" (7 to 18 digits).
       must_provide_first_name_if_last_name: By providing a last name, you must provide a first name along with it.
       must_provide_last_name_if_first_name: By providing a first name, you must provide a last name along with it.
+      no_file_submitted: no file submitted
       please_verify_rights_and_record: Please verify that you have the required privileges to perform this action and that this action can be performed on this record.
     export: export
     export_to: export to

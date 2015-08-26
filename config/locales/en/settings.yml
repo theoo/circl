@@ -9,10 +9,12 @@ en:
       attributes: Attributes
       currencies: Currencies
       currency_rates: Exchange rates
-      database: MISSING_TRANSLATION database
+      database: database
       db:
-        product_entries: MISSING_TRANSLATION product entries
-        products: MISSING_TRANSLATION products
+        creditor_entries: creditor entries
+        people_entries: people entries
+        product_entries: product entries
+        product_program_entries: product program entries
       generic_templates: Generic Templates
       invoice_templates: Invoice templates
       jobs: Jobs

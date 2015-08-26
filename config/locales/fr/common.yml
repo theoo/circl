@@ -59,9 +59,11 @@ fr:
       invalid_phone: Le format n'est pas valide, vous devez utiliser un format comme "+11 22 333 44 55" (entre 7 et 18 chiffres).
       must_provide_first_name_if_last_name: Il doit y avoir un prénom s'il y a un nom de famille.
       must_provide_last_name_if_first_name: Il doit y avoir un nom de famille s'il y a un prénom.
+      no_file_submitted: Aucun fichier soumis
       please_verify_rights_and_record: Veuillez vérifier que vous êtes autorisé à effectuer cette action, et assurez vous que cette action est valable pour cet enregistrement.
     export: exporter
     export_to: exporter vers
+    example_files_explanation: Le fichier exemple ci-dessous peut être employé pour préparer les données à importer.
     failed_to_update: La mise à jour a échouée
     'false': faux
     file: fichier

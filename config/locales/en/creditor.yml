@@ -10,12 +10,14 @@ en:
       payment_date: payment date
       reception: reception
     errors:
+      creditor_failed_to_imported: Creditors import failed
       discount_cannot_end_after_invoice_end: discount cannot end after invoice end
       invalid_line: invalid line
       line: line
       unable_to_parse_file: unable to parse file
       wrong_date: wrong date
     notices:
+      creditor_imported: Creditors imported
       the_counterpart_is_assigned_on_providers_page: the counterpart is assigned on providers page
     status:
       invoices_to_record_in_books: invoices to record in books
@@ -25,18 +27,31 @@ en:
       unpaid: unpaid
     views:
       account: account
-      affair_name: affair
+      affair_id: ID affaire
+      affair_name: nom de l'affair
       counterpart_account: counterpart account
+      creditor_attributes: creditor attributes
       creditor_name: name
+      creditors_example_file_desc: creditors example file desc
+      creditors_found_in_file: creditors found in file
       custom_value_with_taxes: Value is taxes included
       dates_field: dates field
+      discount: discount
       discount_ends_on: discount ends on
       discount_percentage: discount percentage
+      example_files_explanation: example files explanation
       export: export
+      ignore_theses_columns: ignore theses columns
+      import_creditors: import creditors
       invoice_ends_on: invoice ends on
       invoice_in_books_on: invoice in books on
       invoice_received_on: received on
       paid_on: paid on
       payment_in_books_on: payment in books on
+      proceed_with_import: proceed with import
+      provider_id: provider
+      provider_name: provider name
       status: status
+      title: title
       transitional_account: transitional account
+      value: value

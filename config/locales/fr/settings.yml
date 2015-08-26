@@ -11,8 +11,10 @@ fr:
       currency_rates: Taux de changes
       database: Base de donnée
       db:
+        creditor_entries: "%{count} Créanciers"
+        people_entries: "%{count} Contacts"
         product_entries: "%{count} Produits"
-        products: Produits
+        product_program_entries: "%{count} Programmes de produit"
       generic_templates: Modèles Génériques
       invoice_templates: Modèles de facture
       jobs: Métiers

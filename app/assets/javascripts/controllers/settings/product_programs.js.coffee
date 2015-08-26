@@ -14,7 +14,7 @@ $(document).ready ->
   # collect selected lines
   # console.log $('#settings_products_import table').dataTable().fnSettings()
 
-  $('#settings_product_programs_import').on 'submit', (e) ->
+  $('#settings_database_product_programs').on 'submit', (e) ->
     form = $(e.target)
     $(form.find("table").dataTable().fnGetNodes()).find("input[type='checkbox']:checked").map (index, c) ->
       line = $(c).parents("tr").data("line")

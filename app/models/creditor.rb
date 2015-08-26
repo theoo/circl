@@ -170,6 +170,7 @@ class Creditor < ActiveRecord::Base
 
             params = c.to_h
             params.delete(:provider_name) # Just for the view
+            params[:custom_value_with_taxes] = true
             creditor = Creditor.create!(params) # trig validation
             raise ActiveRecord::Rollback unless creditor.creditor
 

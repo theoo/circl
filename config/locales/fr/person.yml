@@ -137,6 +137,7 @@ fr:
       new_password_confirmation: confirmation du nouveau mot de passe
       new_person: Nouveau contact
       organization_name: nom de l'organisation
+      people_example_file_desc: Import de contacts
       permissions: Accès
       personal_information: Informations personnelles
       phone: téléphone

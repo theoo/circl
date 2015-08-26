@@ -8,6 +8,7 @@ en:
     views:
       example_files_explanation: Example file as template to prepare data before importation.
       example_files_title: Example file
+      product-programs_example_file_desc: Product programs example file desc
       products_example_file_desc: Product program import template
       program_group: variant group
       program_search: program

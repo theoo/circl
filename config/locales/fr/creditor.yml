@@ -10,12 +10,14 @@ fr:
       payment_date: payment
       reception: réception
     errors:
+      creditor_failed_to_imported: L'import des créanciers à échoué
       discount_cannot_end_after_invoice_end: La date de l'escompte ne peut pas être après la date d'échéance de la facture
       invalid_line: ligne invalide
       line: ligne
       unable_to_parse_file: impossible d'évaluer le fichier
       wrong_date: Mauvais format de date
     notices:
+      creditor_imported: Créanciers importés
       the_counterpart_is_assigned_on_providers_page: La contrepartie est indiquée sur la fiche du fournisseur
     status:
       invoices_to_record_in_books: document a saisir en compta.
@@ -25,18 +27,31 @@ fr:
       unpaid: impayé
     views:
       account: compte
-      affair_name: affair
+      affair_id: ID affaire
+      affair_name: nom de l'affaire
       counterpart_account: contrepartie
+      creditor_attributes: attributs des créanciers
       creditor_name: fournisseur
+      creditors_example_file_desc: Fichiers d'example pour créanciers
+      creditors_found_in_file: "%{count} créanciers trouvés dans le fichier"
       custom_value_with_taxes: La valeur saisie est TTC
       dates_field: référence pour l'intervale
+      discount: escompte
       discount_ends_on: escompte
       discount_percentage: escompte %
+      example_files_explanation: Le fichier exemple ci-dessous peut être employé pour préparer les données à importer.
       export: exporter
+      ignore_theses_columns: ignorer ces colonnes
+      import_creditors: Importer des créanciers
       invoice_ends_on: "échéance"
       invoice_in_books_on: facture compta.
       invoice_received_on: reçu
       paid_on: payé
       payment_in_books_on: payement compta.
+      proceed_with_import: importer
+      provider_id: ID fournisseur
+      provider_name: nom du fournisseur
       status: statut
+      title: titre
       transitional_account: compte transitoire
+      value: valeur

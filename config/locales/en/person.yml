@@ -137,6 +137,7 @@ en:
       new_password_confirmation: new password confirmation
       new_person: New person
       organization_name: organization name
+      people_example_file_desc: Contacts import
       permissions: permissions
       personal_information: personal information
       phone: phone

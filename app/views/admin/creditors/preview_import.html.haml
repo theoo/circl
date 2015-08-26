@@ -10,7 +10,7 @@
     .col-lg-12
       - if @creditors.is_a? String
         .alert.alert-danger
-          .btn.btn-primary
+          = link_to(settings_path(anchor: 'database'), class: 'btn btn-primary') do
             .icon.icon-chevron-left
             = I18n.t("common.previous")
           = @creditors
@@ -20,7 +20,7 @@
           .panel.panel-default
             .panel-heading
               .panel-title
-                = I18n.t('creditor.views.creditors_found_in_file')
+                = I18n.t('creditor.views.creditors_found_in_file', count: @creditors.size)
 
             .panel-body
 
@@ -28,19 +28,19 @@
                 %thead
                   %tr
                     %th= I18n.t("common.line")
-                    %th= I18n.t("provider_id")
-                    %th= I18n.t("provider_name")
-                    %th= I18n.t("value")
-                    %th= I18n.t("discount")
-                    %th= I18n.t("transitional_account")
-                    %th= I18n.t("account")
-                    %th= I18n.t("invoice_received_on")
-                    %th= I18n.t("invoice_ends_on")
-                    %th= I18n.t("title")
-                    %th= I18n.t("affair_id")
-                    %th= I18n.t("invoice_in_books_on")
-                    %th= I18n.t("paid_on")
-                    %th= I18n.t("payment_in_books_on")
+                    %th= I18n.t("creditor.views.provider_id")
+                    %th= I18n.t("creditor.views.provider_name")
+                    %th= I18n.t("creditor.views.value")
+                    %th= I18n.t("creditor.views.discount")
+                    %th= I18n.t("creditor.views.transitional_account")
+                    %th= I18n.t("creditor.views.account")
+                    %th= I18n.t("creditor.views.invoice_received_on")
+                    %th= I18n.t("creditor.views.invoice_ends_on")
+                    %th= I18n.t("creditor.views.title")
+                    %th= I18n.t("creditor.views.affair_id")
+                    %th= I18n.t("creditor.views.invoice_in_books_on")
+                    %th= I18n.t("creditor.views.paid_on")
+                    %th= I18n.t("creditor.views.payment_in_books_on")
                     %th= I18n.t("common.import")
 
                 %tbody
