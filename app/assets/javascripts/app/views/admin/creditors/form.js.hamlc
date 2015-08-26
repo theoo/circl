@@ -101,8 +101,8 @@
                         id: 'admin_creditors_value',
                         class: 'form-control required',
                         step: 0.01,
-                        min: 0,
-                        max: 1000000,
+                        min: -99999999.99,
+                        max: 99999999.99,
                         name: "value",
                         value: @creditor.value }
                 .input-group-addon
