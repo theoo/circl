@@ -6,7 +6,7 @@
 
         - if @editing_a_group
           .alert.alert-warning
-            != I18n.t("product.notices.you_are_editing_many_product_at_a_time", products_count: @ids.length)
+            != I18n.t("creditor.notices.you_are_editing_many_creditors_at_a_time", count: @ids.length)
 
     .row
       .col-md-6

@@ -19,6 +19,7 @@ en:
     notices:
       creditor_imported: Creditors imported
       the_counterpart_is_assigned_on_providers_page: the counterpart is assigned on providers page
+      you_are_editing_many_creditors_at_a_time: you_are_editing_many_creditors_at_a_time
     status:
       invoices_to_record_in_books: invoices to record in books
       late: late
