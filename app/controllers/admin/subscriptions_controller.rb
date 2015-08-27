@@ -348,42 +348,39 @@ class Admin::SubscriptionsController < ApplicationController
         # Find members of a subscription
         if params[:subscription_member]
           people_arel = Person.joins(:subscriptions)
-                              .where("? BETWEEN interval_starts_on AND interval_ends_on", date)
+            .where("? BETWEEN interval_starts_on AND interval_ends_on", date)
         else
           people_arel = Person.joins(:subscriptions)
-                              .where("? NOT BETWEEN interval_starts_on AND interval_ends_on", date)
+            .where("? NOT BETWEEN interval_starts_on AND interval_ends_on", date)
         end
 
         # And extract paying member or extract not paying members
-        # people_ids = []
         if params[:subscription_member] and params[:subscription_paid]
           Person.transaction do
-            people_arel.each do |p|
-              people_subs = p.subscriptions.where("? BETWEEN interval_starts_on AND interval_ends_on", date)
-              # obviously there is always less (or equal) paid_subscription than subscriptions
-              if (p.paid_subscriptions & people_subs).size == people_subs.size
+            mask = Affair.statuses_value_for(:paid)
+            people_arel
+              .where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask).uniq
+              .each do |p|
                 p.private_tags << tag
-                # people_ids << p.id
-              end
             end
           end
         else
           if params[:subscription_member]
             Person.transaction do
-              people_arel.all.each do |p|
-                people_subs = p.subscriptions.where("? BETWEEN interval_starts_on AND interval_ends_on", date)
-                if (p.unpaid_subscriptions & people_subs).size == people_subs.size
+              mask = Affair.statuses_value_for(:open)
+              people_arel
+                .where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask).uniq
+                .each do |p|
                   p.private_tags << tag
-                end
               end
             end
           elsif params[:subscription_paid]
             Person.transaction do
-              people_arel.all.each do |p|
-                people_subs = p.subscriptions.where("? NOT BETWEEN interval_starts_on AND interval_ends_on", date)
-                if (p.paid_subscriptions & people_subs).size == people_subs.size
+              mask = Affair.statuses_value_for(:paid)
+              people_arel
+                .where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask).uniq
+                .each do |p|
                   p.private_tags << tag
-                end
               end
             end
           end

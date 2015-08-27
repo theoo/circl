@@ -61,7 +61,19 @@ module StatusExtension
       end
       current_statuses
     end
+
+    # TODO automatic scope
+    # class_eval do
+      # available_statuses.each do |s|
+      #   scope s.to_sym, -> {
+      #     mask = statuses_value_for(s)
+      #     where("(#{self.class.table_name}.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+      #   }
+      # end
+    # end
+
   end
+
 
   ########################
   ### INSTANCE METHODS ###

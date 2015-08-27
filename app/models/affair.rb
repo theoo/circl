@@ -197,32 +197,35 @@ class Affair < ActiveRecord::Base
   #### CLASS METHODS #####
   ########################
 
-  # Returns the list of available statuses as an array.
-  # Watch the sources to read available statuses.
-  def self.available_statuses
-    [
-                      # under bit weight 256 (bits 0-7),
-                      # invoices are not (fully) paid
-     :open,           # 0
-     :underpaid,      # 1
-     :partially_paid, # 2
-     :to_be_billed,   # 3
-     nil,             # 4
-     nil,             # 5
-     nil,             # 6
-     :cancelled,      # 7 user defined
+  class << self
+    # Returns the list of available statuses as an array. Order in array matter.
+    # Watch the sources to read available statuses.
+    def available_statuses
+      [
+                        # under bit weight 256 (bits 0-7),
+                        # invoices are not (fully) paid
+       :open,           # 0
+       :underpaid,      # 1
+       :partially_paid, # 2
+       :to_be_billed,   # 3
+       nil,             # 4
+       nil,             # 5
+       nil,             # 6
+       :cancelled,      # 7 user defined
 
-                      # starting from 256 (bit 8-15),
-                      # invoices are paid
-     :paid,           # 8
-     :overpaid,       # 9
-     :unbillable,     # 10
-     nil,             # 11
-     nil,             # 12
-     nil,             # 13
-     nil,             # 14
-     :offered         # 15 user defined
-    ]
+                        # starting from 256 (bit 8-15),
+                        # invoices are paid
+       :paid,           # 8
+       :overpaid,       # 9
+       :unbillable,     # 10
+       nil,             # 11
+       nil,             # 12
+       nil,             # 13
+       nil,             # 14
+       :offered         # 15 user defined
+      ]
+    end
+
   end
 
   ########################
@@ -286,29 +289,29 @@ class Affair < ActiveRecord::Base
   end
 
   def invoices_value
-    invoices.billable.map{|i| i.value.to_money(value_currency)}.sum.to_money
+    invoices.billable.map{|i| i.value.try(:to_money, value_currency)}.try(:sum).try(:to_money)
   end
 
   def invoices_value_with_taxes
-    invoices.billable.map{|i| i.value_with_taxes.to_money(value_currency)}.sum.to_money
+    invoices.billable.map{|i| i.value_with_taxes.try(:to_money, value_currency)}.try(:sum).try(:to_money)
   end
 
   def receipts_value
-    receipts.map{ |r| r.value.to_money(value_currency)}.sum.to_money
+    receipts.map{ |r| r.value.try(:to_money, value_currency)}.try(:sum).try(:to_money)
   end
 
   def subscriptions_value
     # Sum only leaves of a subscription tree (the last child)
     leaves = find_children(subscriptions)
-    leaves.map{|l| l.value_for(owner).to_money(value_currency)}.sum.to_money
+    leaves.map{|l| l.value_for(owner).try(:to_money, value_currency)}.try(:sum).try(:to_money)
   end
 
   def tasks_value
-    tasks.map{ |t| t.value.to_money(value_currency)}.sum.to_money
+    tasks.map{ |t| t.value.try(:to_money, value_currency)}.try(:sum).try(:to_money)
   end
 
   def tasks_real_value
-    tasks.map{ |t| t.compute_value.to_money(value_currency)}.sum.to_money
+    tasks.map{ |t| t.compute_value.try(:to_money, value_currency)}.try(:sum).try(:to_money)
   end
 
   def tasks_duration
