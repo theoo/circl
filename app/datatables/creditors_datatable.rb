@@ -88,8 +88,10 @@ class CreditorsDatatable
         creditors = creditors.where("creditors.id = ?", param)
       else
         creditors = creditors.where("creditors.title ~* ?
+                                 OR creditors.description ~* ?
+                                 OR people.organization_name ~* ?
                                  OR people.first_name ~* ?
-                                 OR people.last_name ~* ?", *([param] * 3))
+                                 OR people.last_name ~* ?", *([param] * 5))
       end
     end
     creditors = creditors.page(page).per_page(per_page)
