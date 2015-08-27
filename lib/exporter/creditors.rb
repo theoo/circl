@@ -57,7 +57,7 @@ module Exporter
       end
 
       # Invert account when negative
-      if value_with_discount < 0
+      if creditor.value_with_discount < 0
         old_account = account
         account = counterpart_account
         counterpart_account = old_account
