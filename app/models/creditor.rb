@@ -49,6 +49,7 @@ class Creditor < ActiveRecord::Base
       self.vat = original_value - value
     end
 
+    self.discount_percentage ||= 0
     self.account ||= creditor.creditor_account
     self.transitional_account ||= creditor.creditor_transitional_account
   end
