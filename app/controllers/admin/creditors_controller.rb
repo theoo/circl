@@ -351,12 +351,12 @@ class Admin::CreditorsController < ApplicationController
 
       unless params[:from].blank?
         from = Date.parse params[:from] if validate_date_format(params[:from])
-        arel = arel.where('? < creditors.invoice_received_on', from)
+        arel = arel.where('? < creditors.invoice_ends_on', from)
       end
 
       unless params[:to].blank?
         to = Date.parse params[:to] if validate_date_format(params[:to])
-        arel = arel.where('creditors.invoice_received_on < ?', to)
+        arel = arel.where('creditors.invoice_ends_on < ?', to)
       end
 
       arel.pluck(:id)
