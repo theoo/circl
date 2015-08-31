@@ -65,7 +65,8 @@ module Exporter
         :vat_rate                   => nil,
         :person_id                  => tax.salary.person.id,
         :person_name                => tax.salary.person.name,
-        :document_type              => :tax
+        :document_type              => :tax,
+        :cost_center_1              => nil
       }
     end
 
@@ -83,7 +84,8 @@ module Exporter
         :vat_rate                   => nil,
         :person_id                  => tax.salary.person.id,
         :person_name                => tax.salary.person.name,
-        :document_type              => :tax
+        :document_type              => :tax,
+        :cost_center_1              => nil
       }
     end
 

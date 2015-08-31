@@ -44,7 +44,7 @@ module Exporter
         :value_currency           => salary.gross_pay.currency.to_s,
         :account                  => salary.brut_account,
         :counterpart_account      => nil,
-        :gross_account             => salary.brut_account,
+        :gross_account            => salary.brut_account,
         :net_account              => salary.net_account,
         :vat_code                 => nil,
         :vat_rate                 => nil,
@@ -57,7 +57,8 @@ module Exporter
         :person_address           => salary.person.address,
         :person_bank_informations => salary.person.bank_informations,
         :person_avs_number        => salary.person.avs_number,
-        :document_type            => :salary
+        :document_type            => :salary,
+        :cost_center_1            => nil
       }
     end
   end

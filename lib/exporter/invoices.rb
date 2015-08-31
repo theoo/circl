@@ -64,7 +64,8 @@ module Exporter
         :vat_rate                   => @options[:service_vat_rate],
         :person_id                  => invoice.owner.try(:id),
         :person_name                => invoice.owner.try(:name),
-        :document_type              => :invoice
+        :document_type              => :invoice,
+        :cost_center_1              => invoice.affair_id
       }
 
     end

@@ -69,7 +69,8 @@ module Exporter
           :vat_rate                   => nil,
           :person_id                  => salary.person.id,
           :person_name                => salary.person.name,
-          :document_type              => :salary
+          :document_type              => :salary,
+          :cost_center_1              => nil
         }
       ]
 
@@ -92,7 +93,8 @@ module Exporter
           :vat_rate                   => @options[:service_vat_rate],
           :person_id                  => salary.person.id,
           :person_name                => salary.person.name,
-          :document_type              => :salary
+          :document_type              => :salary,
+          :cost_center_1              => nil
       }
 
       # employer taxes if requested
@@ -111,7 +113,8 @@ module Exporter
             :vat_rate                   => @options[:service_vat_rate],
             :person_id                  => salary.person.id,
             :person_name                => salary.person.name,
-            :document_type              => :salary
+            :document_type              => :salary,
+            :cost_center_1              => nil
         }
 
        # balance employer taxes
@@ -143,7 +146,8 @@ module Exporter
             :vat_rate                   => @options[:salary_vat_rate],
             :person_id                  => salary.person.id,
             :person_name                => salary.person.name,
-            :document_type              => :salary
+            :document_type              => :salary,
+            :cost_center_1              => nil
         }
       end
 

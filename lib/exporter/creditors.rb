@@ -24,7 +24,6 @@ module Exporter
     def initialize(options = {})
       super
 
-      options[:creditor_vat_code]   ||= ApplicationSetting.value("creditor_vat_code")
       options[:service_vat_rate]    ||= ApplicationSetting.value("service_vat_rate")
       @options = options
     end
@@ -78,11 +77,12 @@ module Exporter
         :value_currency             => creditor.value_currency,
         :account                    => account,
         :counterpart_account        => counterpart_account,
-        :vat_code                   => @options[:creditor_vat_code],
+        :vat_code                   => creditor.creditor.try(:creditor_vat_account),
         :vat_rate                   => @options[:service_vat_rate],
         :person_id                  => creditor.creditor.try(:id),
         :person_name                => creditor.creditor.try(:name),
-        :document_type              => :creditor
+        :document_type              => :creditor,
+        :cost_center_1              => creditor.affair_id
       }
 
       if discount_account
@@ -95,11 +95,12 @@ module Exporter
           :value_currency             => creditor.value_currency,
           :account                    => discount_account,
           :counterpart_account        => discount_counterpart_account,
-          :vat_code                   => @options[:creditor_vat_code],
+          :vat_code                   => creditor.creditor.try(:creditor_vat_discount_account),
           :vat_rate                   => @options[:service_vat_rate],
           :person_id                  => creditor.creditor.try(:id),
           :person_name                => creditor.creditor.try(:name),
-          :document_type              => :creditor
+          :document_type              => :creditor,
+          :cost_center_1              => creditor.affair_id
         }
       end
 
