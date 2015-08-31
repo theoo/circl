@@ -208,6 +208,11 @@ class Creditor < ActiveRecord::Base
     paid_on.nil? and discount_ends_on < Time.now
   end
 
+  def discount_paid_ontime?
+    return false if discount_ends_on.nil? or paid_on.nil?
+    discount_ends_on <= paid_on
+  end
+
   def paid?
     !paid_on.nil?
   end

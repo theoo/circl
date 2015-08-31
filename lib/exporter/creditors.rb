@@ -37,13 +37,13 @@ module Exporter
 
     def default_desc(i)
       creditor_str = "#{i.title} - #{i.id}"
-      [ @options[:creditor_prefix], client_str, creditor_str ].join("/")
+      [ @options[:creditor_prefix], creditor_str ].join("/")
     end
 
     def convert(creditor)
       if creditor.paid_on
 
-        if creditor.discount_percentage > 0 and not creditor.discount_late?
+        if creditor.discount_percentage > 0 and creditor.discount_paid_ontime?
           # return discount to account
           discount_counterpart_account = creditor.transitional_account
           discount_account = creditor.account
