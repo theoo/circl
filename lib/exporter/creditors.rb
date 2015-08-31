@@ -26,34 +26,39 @@ module Exporter
 
       options[:creditor_vat_code]   ||= ApplicationSetting.value("creditor_vat_code")
       options[:service_vat_rate]    ||= ApplicationSetting.value("service_vat_rate")
-      options[:creditor_prefix]     ||= ApplicationSetting.value("creditor_prefix")
       @options = options
     end
 
-    def desc_for(i)
+    def desc_for(i, prefix)
       desc = ApplicationSetting.value("export_creditor_description")
       json = validate_settings(desc, i)
-      [@options[:creditor_prefix], json[:attributes].map{ |a| eval("i.#{a}") }].flatten.join(json[:separator])
+      [prefix, json[:attributes].map{ |a| eval("i.#{a}") }].flatten.join(json[:separator])
     end
 
     def default_desc(i)
-      client_str = "Client "
-      if i.owner
-        client_str += i.owner.try(:id).try(:to_s)
-      else
-        client_str += "missing!"
-      end
       creditor_str = "#{i.title} - #{i.id}"
       [ @options[:creditor_prefix], client_str, creditor_str ].join("/")
     end
 
     def convert(creditor)
-      if not creditor.invoice_in_books_on.nil?
+      if creditor.paid_on
+
+        if creditor.discount_percentage > 0 and not creditor.discount_late?
+          # return discount to account
+          discount_counterpart_account = creditor.transitional_account
+          discount_account = creditor.account
+        end
+
+        # creditor_paid_account is usually the bank
+        prefix = ApplicationSetting.value("creditor_paid_prefix")
+        date = creditor.paid_on
+        account = ApplicationSetting.value("creditor_paid_account")
         counterpart_account = creditor.transitional_account
-        account = creditor.account
       else
-        counterpart_account = ApplicationSetting.value("creditor_account")
+        prefix = ApplicationSetting.value("creditor_prefix")
+        date = creditor.invoice_received_on
         account = creditor.transitional_account
+        counterpart_account = creditor.account
       end
 
       # Invert account when negative
@@ -63,11 +68,12 @@ module Exporter
         counterpart_account = old_account
       end
 
-      {
+      lines = []
+      lines << {
         :id                         => creditor.id,
-        :date                       => creditor.created_at.to_date,
+        :date                       => date,
         :title                      => creditor.title,
-        :description                => desc_for(creditor),
+        :description                => desc_for(creditor, prefix),
         :value                      => creditor.value_with_discount.to_f,
         :value_currency             => creditor.value_currency,
         :account                    => account,
@@ -79,6 +85,25 @@ module Exporter
         :document_type              => :creditor
       }
 
+      if discount_account
+        lines << {
+          :id                         => creditor.id,
+          :date                       => date,
+          :title                      => creditor.title,
+          :description                => desc_for(creditor, ApplicationSetting.value("creditor_discount_prefix")),
+          :value                      => creditor.discount_value.to_f,
+          :value_currency             => creditor.value_currency,
+          :account                    => discount_account,
+          :counterpart_account        => discount_counterpart_account,
+          :vat_code                   => @options[:creditor_vat_code],
+          :vat_rate                   => @options[:service_vat_rate],
+          :person_id                  => creditor.creditor.try(:id),
+          :person_name                => creditor.creditor.try(:name),
+          :document_type              => :creditor
+        }
+      end
+
+      lines
     end
   end
 

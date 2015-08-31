@@ -73,8 +73,12 @@
   value: '1.month'
 - key: creditor_prefix
   value: creditor
-- key: creditor_account
-  value: 'changeme'
+- key: creditor_paid_prefix
+  value: creditor_paid
+- key: creditor_discount_prefix
+  value: creditor_discount
+- key: creditor_paid_account
+  value: 'bank'
 - key: creditor_vat_code
   value: 'changeme'
 - key: export_creditor_description
