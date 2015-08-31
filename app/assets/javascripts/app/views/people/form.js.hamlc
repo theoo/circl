@@ -355,6 +355,26 @@
                         class: 'form-control',
                         value: @person.creditor_account }
 
+          .row
+            .col-sm-6
+              .form-group
+                %label
+                  = I18n.t('person.views.creditor_vat_account')
+                %input{ type: 'text',
+                        name: 'creditor_vat_account',
+                        class: 'form-control',
+                        value: @person.creditor_vat_account }
+
+            .col-sm-6
+              .form-group
+                %label
+                  = I18n.t('person.views.creditor_vat_discount_account')
+                %input{ type: 'text',
+                        name: 'creditor_vat_discount_account',
+                        class: 'form-control',
+                        value: @person.creditor_vat_discount_account }
+
+
       - if @can.person.authenticate_using_token
         .col-md-6
 

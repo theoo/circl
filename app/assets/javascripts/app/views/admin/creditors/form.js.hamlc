@@ -51,7 +51,10 @@
                   .icon-play
 
             %small.help-block.affairs_count
-              = I18n.t("task.views.affairs_found", count: gon.affairs_count)
+              - if @creditor.affair_id
+                = I18n.t("creditor.views.affair_id") + ": " + @creditor.affair_id
+              - else
+                = I18n.t("task.views.affairs_found", count: gon.affairs_count)
 
         .row
           .col-lg-12.form-group
@@ -76,8 +79,8 @@
                       class: 'form-control'}
               = @creditor.description
 
-          .col-sm-12
-            - if App.ApplicationSetting.value('use_vat') == "true"
+          - if App.ApplicationSetting.value('use_vat') == "true"
+            .col-sm-12
               .form-group
                 %label
                 .checkbox
@@ -88,6 +91,11 @@
                             checked: @creditor.custom_value_with_taxes == true,
                             value: 1 }
                     = I18n.t('creditor.views.custom_value_with_taxes')
+
+                - if @creditor.value_with_taxes
+                  %small.help-block
+                    = I18n.t("affair.views.value_with_taxes_is")
+                    = @creditor.value_with_taxes?.to_view(@creditor.value_with_taxes_currency)
 
           .col-xl-4.col-sm-6
             .form-group

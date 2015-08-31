@@ -432,7 +432,9 @@ class PeopleController < ApplicationController
         :password,
         :password_confirmation,
         :creditor_transitional_account,
-        :creditor_account
+        :creditor_account,
+        :creditor_vat_account,
+        :creditor_vat_discount_account
         )
     end
 

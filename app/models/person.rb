@@ -338,6 +338,8 @@ class Person < ActiveRecord::Base
   validates_length_of :avs_number, maximum: 255
   validates_length_of :creditor_transitional_account, maximum: 255
   validates_length_of :creditor_account, maximum: 255
+  validates_length_of :creditor_vat_account, maximum: 255
+  validates_length_of :creditor_vat_discount_account, maximum: 255
 
   validates :alias_name,
     format: { with: /\A[a-zA-Z\-_\d]+\z/, message: I18n.t("person.errors.only_letters")},

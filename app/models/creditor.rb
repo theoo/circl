@@ -225,7 +225,7 @@ class Creditor < ActiveRecord::Base
     if discount_percentage and paid_on or (not discount_ends_on.nil? and Time.now < discount_ends_on)
       (v / 100.0 * discount_percentage)
     else
-      0
+      0.to_money
     end
   end
 
@@ -242,13 +242,14 @@ class Creditor < ActiveRecord::Base
 
   def as_json(options = nil)
     h = super(options)
-    h[:creditor_name]    = creditor.try(:name)
-    h[:affair_name]      = affair.try(:title)
-    h[:value]            = value.try(:to_f)
-    h[:value_currency]   = value.currency.try(:iso_code)
-    h[:vat]              = vat.try(:to_f)
-    h[:vat_currency]     = vat.currency.try(:iso_code)
-    h[:value_with_taxes] = value_with_taxes.try(:to_f)
+    h[:creditor_name]             = creditor.try(:name)
+    h[:affair_name]               = affair.try(:title)
+    h[:value]                     = value.try(:to_f)
+    h[:value_currency]            = value.currency.try(:iso_code)
+    h[:vat]                       = vat.try(:to_f)
+    h[:vat_currency]              = vat.currency.try(:iso_code)
+    h[:value_with_taxes]          = value_with_taxes.try(:to_f)
+    h[:value_with_taxes_currency] = value_with_taxes.try(:currency).try(:iso_code)
     h
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150730104959) do
+ActiveRecord::Schema.define(version: 20150831162413) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -458,6 +458,8 @@ ActiveRecord::Schema.define(version: 20150730104959) do
     t.string   "fax_number",                                 default: ""
     t.string   "creditor_account"
     t.string   "creditor_transitional_account"
+    t.string   "creditor_tva_account"
+    t.string   "creditor_tva_discount_account"
   end
 
   add_index "people", ["authentication_token"], name: "index_people_on_authentication_token", unique: true, using: :btree

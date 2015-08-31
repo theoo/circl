@@ -107,6 +107,8 @@ en:
       contact_nr: Contact N°
       coordinates_format: Coordinate format is 46.1997577723502, 6.13464653491974
       creditor_account: account (as creditor)
+      creditor_vat_account: VAT code
+      creditor_vat_discount_account: VAT discount code
       creditor_information: Provider information
       creditor_transitional_account: transitional account
       current_password: current password
