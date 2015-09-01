@@ -349,14 +349,20 @@ class Admin::CreditorsController < ApplicationController
 
       return [] if arel.nil?
 
+      if Creditor.date_fields.keys.index(params[:date_field].to_sym)
+        date_field = params[:date_field]
+      else
+        date_field = "invoice_ends_on"
+      end
+
       unless params[:from].blank?
         from = Date.parse params[:from] if validate_date_format(params[:from])
-        arel = arel.where('? < creditors.invoice_ends_on', from)
+        arel = arel.where("? <= creditors.#{date_field}", from)
       end
 
       unless params[:to].blank?
         to = Date.parse params[:to] if validate_date_format(params[:to])
-        arel = arel.where('creditors.invoice_ends_on < ?', to)
+        arel = arel.where("creditors.#{date_field} <= ?", to)
       end
 
       arel.pluck(:id)

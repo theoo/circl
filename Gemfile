@@ -101,6 +101,7 @@ group :development, :test do
   gem 'spring', '1.1.3'
 
   gem 'web-console', '~> 2.0'
+  gem 'quiet_assets'
 end
 
 # FUTURE

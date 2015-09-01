@@ -21,7 +21,7 @@
 
 .panel-footer
   .row
-    .col-sm-6
+    .col-md-5
       != @partial("generate_document")(prefix: 'admin_creditors', model: 'Creditor', collection: true)
 
       %button{type: 'button',
@@ -30,38 +30,47 @@
               disabled: true }
         .icon-gear
         = I18n.t("common.group_edit")
-    .col-sm-6
-      .row
-        .col-xs-4
-          .input-group
-            .input-group-addon
-              .icon-filter
-            %select.form-control{name: 'filter'}
-              - for name, translation of gon.creditor_statuses
-                %option{"value" => name}
-                  = translation
 
-        .col-xs-3.form-group
-          %input{type: 'text',
-                 name: 'select-from',
-                 placeholder: I18n.t('common.from'),
-                 class: 'form-control datepicker' }
+    .col-md-7
+      .form-inline
+        .input-group
+          .input-group-addon
+            .icon-filter
+          %select.form-control{name: 'filter'}
+            - for name, translation of gon.creditor_statuses
+              %option{"value" => name}
+                = translation
 
-        .col-xs-3.form-group
-          %input{type: 'text',
-                 name: 'select-to',
-                 placeholder: I18n.t('common.to'),
-                 class: 'form-control datepicker' }
+      .form-inline
+        .input-group
+          .input-group-addon
+            .icon-calendar
+          %select.form-control{name: 'date_field'}
+            - for name, translation of gon.creditor_date_fields
+              %option{"value" => name}
+                = translation
 
-        .col-xs-2
-          .btn-group
-            %button{type: 'button', class: 'btn btn-default',
-              name: 'add-to-selection',
-              title: I18n.t("common.add_to_selection") }
-              .icon-plus
+      .form-inline
+        %input{type: 'text',
+               name: 'select-from',
+               placeholder: I18n.t('common.from'),
+               class: 'form-control small-datepicker' }
 
-            %button{type: 'button', class: 'btn btn-default',
-              name: 'remove-from-selection',
-              title: I18n.t("common.remove_from_selection") }
-              .icon-minus
+      .form-inline
+        %input{type: 'text',
+               name: 'select-to',
+               placeholder: I18n.t('common.to'),
+               class: 'form-control small-datepicker' }
+
+      .form-inline
+        .btn-group
+          %button{type: 'button', class: 'btn btn-default',
+            name: 'add-to-selection',
+            title: I18n.t("common.add_to_selection") }
+            .icon-plus
+
+          %button{type: 'button', class: 'btn btn-default',
+            name: 'remove-from-selection',
+            title: I18n.t("common.remove_from_selection") }
+            .icon-minus
 

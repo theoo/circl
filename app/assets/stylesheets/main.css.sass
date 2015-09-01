@@ -303,8 +303,10 @@ table.affair_value
 input
   &[type='number'], &.number
     text-align: right
-  &[type='date'], &.datepicker
+  &[type='date'], &.datepicker, &.small-datepicker
     text-align: center
+  &.small-datepicker
+    max-width: 100px  !important
 
 .input-group-addon select
   border: none
@@ -533,6 +535,10 @@ a.back-to-top-link
     display: inline
   .form-group
     margin-bottom: 0
+
+  input, .btn-group, .input-group
+    margin-top: 10px
+    margin-bottom: 10px
 
 code
   display: block

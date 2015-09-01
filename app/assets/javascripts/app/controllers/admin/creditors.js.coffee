@@ -348,9 +348,10 @@ class Index extends App.ExtendedController
     action = $(e.target).closest('button').attr('name')
     footer = $(e.target).closest('.panel-footer')
     form_data = {}
-    form_data['group'] = footer.find("[name=filter]").val()
-    form_data['from']  = footer.find("[name=select-from]").val()
-    form_data['to']    = footer.find("[name=select-to]").val()
+    form_data['date_field'] = footer.find("[name=date_field]").val()
+    form_data['group']      = footer.find("[name=filter]").val()
+    form_data['from']       = footer.find("[name=select-from]").val()
+    form_data['to']         = footer.find("[name=select-to]").val()
 
     if action == 'remove-from-selection'
       path = "/uncheck_items"

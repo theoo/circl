@@ -49,11 +49,13 @@ module Exporter
         end
 
         # creditor_paid_account is usually the bank
+        value = creditor.value_with_discount
         prefix = ApplicationSetting.value("creditor_paid_prefix")
         date = creditor.paid_on
         account = ApplicationSetting.value("creditor_paid_account")
         counterpart_account = creditor.transitional_account
       else
+        value = creditor.value_with_taxes
         prefix = ApplicationSetting.value("creditor_prefix")
         date = creditor.invoice_received_on
         account = creditor.transitional_account
@@ -73,7 +75,7 @@ module Exporter
         :date                       => date,
         :title                      => creditor.title,
         :description                => desc_for(creditor, prefix),
-        :value                      => creditor.value_with_discount.to_f,
+        :value                      => value.to_f,
         :value_currency             => creditor.value_currency,
         :account                    => account,
         :counterpart_account        => counterpart_account,

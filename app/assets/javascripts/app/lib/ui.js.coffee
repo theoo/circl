@@ -51,7 +51,7 @@ class Ui
     # If an ID is given to the datepicker, ensure it's really unique
     # and not in a hidden form (like it is with spine new/edit paradigm)
 
-    $(document).delegate 'input.datepicker', 'focus', ->
+    $(document).delegate 'input.datepicker, input.small-datepicker', 'focus', ->
       $(@).datepicker
         inline: true
         buttonImageOnly: true
@@ -110,8 +110,6 @@ class Ui
       label = $(@).parent().siblings('label') if label.length == 0
 
       label.addClass('required')
-
-    # $('input.required').attr("required", true) # this enable HTML5 validation, might conflict with datepicker.
 
     # Add icon to datepickers
     dp = context.find('input.datepicker')
