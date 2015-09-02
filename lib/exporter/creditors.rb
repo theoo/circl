@@ -40,7 +40,7 @@ module Exporter
     end
 
     def convert(creditor)
-      if creditor.paid_on
+      if creditor.paid_on and creditor.paid_on.blank?
 
         if creditor.discount_percentage > 0 and creditor.discount_paid_ontime?
           # return discount to account
