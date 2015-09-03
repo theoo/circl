@@ -52,21 +52,21 @@ module Exporter
         value = creditor.value_with_discount
         prefix = ApplicationSetting.value("creditor_paid_prefix")
         date = creditor.paid_on
-        account = ApplicationSetting.value("creditor_paid_account")
-        counterpart_account = creditor.transitional_account
+        counterpart_account = ApplicationSetting.value("creditor_paid_account")
+        account = creditor.transitional_account
       else
         value = creditor.value_with_taxes
         prefix = ApplicationSetting.value("creditor_prefix")
         date = creditor.invoice_received_on
-        account = creditor.transitional_account
-        counterpart_account = creditor.account
+        counterpart_account = creditor.transitional_account
+        account = creditor.account
       end
 
       # Invert account when negative
       if creditor.value_with_discount < 0
         old_account = account
-        account = counterpart_account
-        counterpart_account = old_account
+        counterpart_account = counterpart_account
+        account = old_account
       end
 
       lines = []
