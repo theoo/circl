@@ -118,7 +118,7 @@
                 .panel-title
                   = I18n.t('settings.views.ldap_attributes')
 
-          - if can? :mailchimp, Directory 
+          - if can? :mailchimp, Directory
             #settings_mailchimp.panel.panel-default
               .panel-heading
                 .panel-title
@@ -144,8 +144,16 @@
                           .hidden-inline-xs
                             = I18n.t('common.synchronize')
               - else
-                .alert.alert-warning
-                  != I18n.t("settings.views.mailchimp_configuration_required")
+                .panel-body
+                  .alert.alert-warning
+                    != I18n.t("settings.views.mailchimp_configuration_required")
+                    %br
+                    .pull-right
+                      = link_to t("settings.views.advanced"),
+                        settings_path(anchor: :advanced),
+                        class: 'btn btn-warning',
+                        onclick: '$("a[href=#advanced_tab]").click()'
+                    .clearfix
 
 
 
