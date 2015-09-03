@@ -16,59 +16,54 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Options are: :people_ids, :person
+# Options are:
+# :person_id,
+# :list_id
+# :directory_query,
+
 class BackgroundTasks::SynchronizeMailchimp < BackgroundTask
   def self.generate_title(options)
     I18n.t("background_task.tasks.synchronizing_mailchimp",
       people_count: options[:people_ids].size)
- end
+  end
+
+  def subscribers_mapping(people)
+    # TODO sync second email (and all if more)
+
+  end
 
   def process!
-    # TODO error catching
-    # TODO report
-    people_ids = options[:people_ids]
+
     list_id = options[:list_id]
 
-    errors = {private_tags: [], public_tags: [], people: []}
+    # require an arel
+    people = Person
+      .where(id: ElasticSearch.search(options[:directory_query]).map(&:id))
+      .where("people.email != ''")
 
-    people = Person.where(id: people_ids).where("people.email != ''")
-    people_emails = people.pluck(:email, :second_email)
-    people_emails.delete("")
+    mc = MailchimpSession.new
 
-    mc = MailchimpAccount.new
-    session = mc.session
+    # Purge the current list
+    result = mc.session.lists.batch_unsubscribe(list_id, mc.session.lists.members(list_id)["data"], true, false, false)
 
-    # Add missing segments
-    [:private_tags, :public_tags].each do |tag_class|
-      mc_segments = mc.segments(list_id)
+    # Resubscribe all
+    # TODO sync second email (and all if more)
+    subscribers = people.map do |p|
+      {
+        "EMAIL" => {
+          "email" => p.email
+        },
 
-      klass = tag_class.to_s.classify.constantize
-      tags = klass.joins(:people).where("people.id" => people_ids).where("people.email != ''")
-      tags.each do |tag|
-        begin
-          # add if new
-          mc_segments.merge( session.lists.static_segment_add(list_id, tag.name) ) unless mc_segments[tag.name]
-        rescue Mailchimp::ListInvalidOptionError => e
-          errors[tag_class][tag.name] = e.inspect
-        end
-
-        # add members to tag
-        mc_segments.each_pair do |name, id|
-          emails = tag.people.where(id: people_ids).where("people.email != ''").pluck(:email, :second_email)
-          session.lists.static_segment_members_add(list_id, id, emails)
-        end
-      end
+        :merge_vars => {
+          "FIRSTNAME" => p.first_name,
+          "LASTNAME"  => p.last_name
+        }
+      }
     end
+    result = mc.session.lists.batch_subscribe(list_id, subscribers, false, true, false)
 
-    raise ArgumentError, errors.inspect
-
-    # Add missing groups
-
-    # Add missing emails
-
-    # Link emails and segements
-
-    # Link emails and groups
+    # TODO send an email
+    PersonMailer.send_mailchimp_sync_report(options[:person_id], list_id, result["errors"]).deliver
 
   end
 end

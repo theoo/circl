@@ -134,7 +134,7 @@
 
                       .form-group
                         %select{name: 'list', id: "mailchimp_lists", class: 'form-control'}
-                          - @mailchimp_lists.each_pair do |name, id|
+                          - @mailchimp_lists.each_pair do |id, name|
                             %option{value: id}= name
 
                         .icon-chevron-right

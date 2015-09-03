@@ -70,7 +70,7 @@ gem 'money', '6.5.0'
 gem 'monetize', '1.1.0'
 
 ### MailChimp
-gem 'mailchimp-api'
+gem 'mailchimp-api', require: 'mailchimp'
 
 ### rake
 gem 'rake-progressbar', '0.0.5'

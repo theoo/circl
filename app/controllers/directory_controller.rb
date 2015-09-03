@@ -155,23 +155,18 @@ class DirectoryController < ApplicationController
 
     else
 
-      if mailchimp_synchronizing?
+      # TODO provide a get/setter in MailchimpSession class
+      if false # mailchimp_synchronizing?
 
         flash[:alert] = I18n.t('common.errors.already_synchronizing')
 
       else
 
-        people_ids = ElasticSearch.search(
-            query[:search_string],
-            query[:selected_attributes],
-            query[:attributes_order])
-          .map(&:id)
-
         flash[:notice] = I18n.t('common.notices.synchronization_started', email: current_person.email)
         BackgroundTasks::SynchronizeMailchimp.process!(
           person_id: current_person.id,
           list_id: params[:id],
-          people_ids: people_ids
+          directory_query: query[:search_string]
           )
 
       end
@@ -324,10 +319,6 @@ class DirectoryController < ApplicationController
   end
 
   private
-
-  def mailchimp_synchronizing?
-    File.exists? MailchimpAccount::LOCK_FILE
-  end
 
   # Effectively search in ES with the giver attributes
   def es_search

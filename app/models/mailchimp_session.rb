@@ -16,32 +16,16 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class SettingsController < ApplicationController
+class MailchimpSession
 
-  layout 'application'
+  attr_accessor :session
 
-  skip_before_filter :authenticate_person!, only: 'requires_browser_update'
-  skip_before_filter :route_browser, only: 'requires_browser_update'
-
-  def index
-    authorize! :index, Setting
-
-    if can? :mailchimp, Directory
-      # 00000000000000000000000000000000-us0 is the default value, not valid in real world
-      if ApplicationSetting.value(:mailchimp_api_key) != "00000000000000000000000000000000-us0"
-        @mailchimp_lists = MailchimpSession.new.list_names
-      end
-    end
-
-    respond_to do |format|
-      format.html
-    end
+  def initialize
+    @session = Mailchimp::API.new(ApplicationSetting.value("mailchimp_api_key"))
   end
 
-  def requires_browser_update
-    respond_to do |format|
-      format.html { render layout: false }
-    end
+  def list_names
+    @session.lists.list["data"].each_with_object({}){|l,o| o[l['id']] = l['name']}
   end
 
 end
