@@ -46,8 +46,11 @@ class Admin::CreditorsController < ApplicationController
         format.json { render json: CreditorsDatatable.new(view_context) }
 
         @creditors = Creditor.where(id: session[:admin_creditors])
+        # It makes no sense to export an empty array.
+        @creditors = Creditor.all if @creditors.size == 0
 
         format.csv do
+
           fields = [ "id",
             "creditor_id",
             "creditor.try(:name)",
@@ -349,7 +352,7 @@ class Admin::CreditorsController < ApplicationController
 
       return [] if arel.nil?
 
-      if Creditor.date_fields.keys.index(params[:date_field].to_sym)
+      if Creditor.date_fields.keys.index(params[:date_field].try(:to_sym))
         date_field = params[:date_field]
       else
         date_field = "invoice_ends_on"

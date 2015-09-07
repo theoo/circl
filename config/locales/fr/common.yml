@@ -78,6 +78,9 @@ fr:
     import: importer
     incomplete: incomplet
     info: info
+    item_selected:
+      one: "un élément selectionné"
+      other: "%{count} éléments sélectionnés"
     invoice: facture
     key: clé
     line: ligne

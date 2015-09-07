@@ -19,7 +19,7 @@ fr:
     notices:
       creditor_imported: Créanciers importés
       the_counterpart_is_assigned_on_providers_page: La contrepartie est indiquée sur la fiche du fournisseur
-      you_are_editing_many_creditors_at_a_time: Attention! Vous êtes sur le point de modifier une série de %{count} créanciers d'un coup. <br /> Si vous modifiez un champs qui affecte généralement la valeur et souhaitez que cette dernière soit mise à jour, cochez la case de la valeur en laissant le champs vide.
+      you_are_editing_many_creditors_at_a_time: Attention! Vous êtes sur le point de modifier une série de <b>%{count} créanciers</b> d'un coup. <br /> Si vous modifiez un champs qui affecte généralement la valeur et souhaitez que cette dernière soit mise à jour, cochez la case de la valeur en laissant le champs vide.
     status:
       invoices_to_record_in_books: document a saisir en compta.
       late: en retard

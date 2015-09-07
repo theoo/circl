@@ -265,6 +265,7 @@ class Index extends App.ExtendedController
 
   render: =>
     @html @view('admin/creditors/index')(@)
+    @update_selected_count()
 
   table_redraw: =>
     # Unbind checkbox in header (so it doesn't try to sort)
@@ -329,6 +330,7 @@ class Index extends App.ExtendedController
       .success (response) =>
         @selected_ids = response
         @toggle_group_edit_button()
+        @update_selected_count()
 
   toggle_checks: (e) =>
     e.preventDefault()
@@ -342,6 +344,7 @@ class Index extends App.ExtendedController
       .success (response) =>
         @selected_ids = response
         @reload_table()
+        @update_selected_count()
 
   filter_selection: (e) =>
     e.preventDefault()
@@ -362,6 +365,7 @@ class Index extends App.ExtendedController
       .success (response) =>
         @selected_ids = response
         @reload_table()
+        @update_selected_count()
 
   reload_table: ->
     table = @el.find("table.datatable")
@@ -383,6 +387,13 @@ class Index extends App.ExtendedController
       btn.attr(disabled: false)
     else
       btn.attr(disabled: true)
+
+  update_selected_count: ->
+    box = @el.find("#admin_creditors_select_count")
+    if @selected_ids.length > 0
+      box.html(I18n.t("common.item_selected", {count: @selected_ids.length}))
+    else
+      box.html("")
 
 
 class App.ExportCreditors extends App.ExtendedController

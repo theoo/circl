@@ -31,6 +31,8 @@
         .icon-gear
         = I18n.t("common.group_edit")
 
+      %span#admin_creditors_select_count.item_counter
+
     .col-md-7
       .form-inline
         .input-group
