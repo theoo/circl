@@ -136,21 +136,32 @@ class Creditor < ActiveRecord::Base
       lines ||= []
       skip_columns ||= []
 
+
+
       # Expected file structure
-      columns_list = [
+      columns_list = [ :id,
         :creditor_id,
-        :provider_name,
-        :value,
-        :discount_percentage,
-        :transitional_account,
-        :account,
+        :creditor_name,
+        :affair_id,
+        :affair_name,
+        :title,
+        :description,
+        :value_in_cents,
+        :value_currency,
+        :vat_in_cents,
+        :vat_currency,
+        :vat_percentage,
         :invoice_received_on,
         :invoice_ends_on,
-        :title,
-        :affair_id,
         :invoice_in_books_on,
+        :discount_percentage,
+        :discount_ends_on,
         :paid_on,
-        :payment_in_books_on ]
+        :payment_in_books_on,
+        :account,
+        :transitional_account,
+        :created_at,
+        :updated_at ]
 
       begin
         Creditor.transaction do
@@ -170,8 +181,10 @@ class Creditor < ActiveRecord::Base
             end
 
             params = c.to_h
-            params.delete(:provider_name) # Just for the view
-            params[:custom_value_with_taxes] = true
+            # Just for the view
+            params.delete(:creditor_name)
+            params.delete(:affair_name)
+            params[:custom_value_with_taxes] = true if c.vat_in_cents.blank?
             creditor = Creditor.create!(params) # trig validation
             raise ActiveRecord::Rollback unless creditor.creditor
 
