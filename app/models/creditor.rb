@@ -223,7 +223,7 @@ class Creditor < ActiveRecord::Base
 
   def discount_paid_ontime?
     return false if discount_ends_on.nil? or paid_on.nil?
-    discount_ends_on <= paid_on
+    discount_ends_on >= paid_on
   end
 
   def paid?

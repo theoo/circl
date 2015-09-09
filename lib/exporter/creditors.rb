@@ -40,10 +40,12 @@ module Exporter
     end
 
     def convert(creditor)
-      if creditor.paid_on and creditor.paid_on.blank?
+      # Check which step it is, exporting invoices or payments
+      if not creditor.paid_on.blank?
+        # It's a payment
 
+        # return discount to account if existing
         if creditor.discount_percentage > 0 and creditor.discount_paid_ontime?
-          # return discount to account
           discount_counterpart_account = creditor.transitional_account
           discount_account = creditor.account
         end
@@ -55,6 +57,7 @@ module Exporter
         counterpart_account = ApplicationSetting.value("creditor_paid_account")
         account = creditor.transitional_account
       else
+        # It's an unpaid invoice
         value = creditor.value_with_taxes
         prefix = ApplicationSetting.value("creditor_prefix")
         date = creditor.invoice_received_on
