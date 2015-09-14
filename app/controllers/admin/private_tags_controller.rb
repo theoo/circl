@@ -97,12 +97,15 @@ class Admin::PrivateTagsController < ApplicationController
     respond_to do |format|
       query = JSON.parse params[:query]
       query.symbolize_keys!
+
       if query[:search_string].blank?
+
         format.json { render json: { search_string: [I18n.t('activerecord.errors.messages.blank')] }, status: :unprocessable_entity }
         format.html {
           flash[:alert] = I18n.t("directory.errors.query_empty")
           redirect_to admin_path(anchor: 'tags')
         }
+
       else
         new_people_array = ElasticSearch.search(
             query[:search_string],
@@ -120,7 +123,9 @@ class Admin::PrivateTagsController < ApplicationController
           flash[:notice] = I18n.t("tag.notices.members_added", members_count: new_people_array.count)
           redirect_to admin_path(anchor: 'tags')
         end
+
       end
+
     end
   end
 

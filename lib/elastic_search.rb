@@ -18,12 +18,12 @@
 
 module ElasticSearch
 
-  def self.search(search_string, selected_attributes, attributes_order, current_person = nil)
+  def self.search(search_string, selected_attributes=[], attributes_order=[], current_person=nil)
     results = []
     from = 0
     per_page = Rails.configuration.settings['elasticsearch']['max_per_page']
     while true
-      tmp = search_paginated(search_string, selected_attributes, attributes_order, from, per_page, current_person)
+      tmp = search_paginated(search_string, from, per_page, selected_attributes, attributes_order,  current_person)
       break unless tmp.size > 0
       results += tmp.to_a
       from += per_page
@@ -40,7 +40,7 @@ module ElasticSearch
     search.results.size
   end
 
-  def self.search_paginated(search_string, selected_attributes, attributes_order, from, per_page, current_person = nil)
+  def self.search_paginated(search_string, from, per_page, selected_attributes=[], attributes_order=[], current_person=nil)
     search = Tire::Search::Search.new(Rails.configuration.settings['elasticsearch']['name'])
 
     search_string = '*' if search_string.blank?

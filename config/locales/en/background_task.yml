@@ -14,6 +14,7 @@ en:
       merge_subscriptions: Merging subscription %{source_subscription_id} into %{destination_subscription_id}
       prepare_subscription_pdf_and_email: Generating PDFs of invoices for %{people_count} person(s) for the subscription %{subscription_id} - %{subscription_title}
       run_rake_task: Running an unsual task - %{name}
+      synchronizing_mailchimp: MISSING_TRANSLATION synchronizing mailchimp
       update_index_for_people: Updating search index for %{people_count} person(s)
       update_subscription_invoices_and_email: Updating indexes and invoices for subscription %{subscription_id} - %{subscription_title}
     views:

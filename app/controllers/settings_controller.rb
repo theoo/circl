@@ -25,6 +25,14 @@ class SettingsController < ApplicationController
 
   def index
     authorize! :index, Setting
+
+    if can? :mailchimp, Directory
+      # 00000000000000000000000000000000-us0 is the default value, not valid in real world
+      if ApplicationSetting.value(:mailchimp_api_key) != "00000000000000000000000000000000-us0"
+        @mailchimp_lists = MailchimpSession.new.list_names
+      end
+    end
+
     respond_to do |format|
       format.html
     end

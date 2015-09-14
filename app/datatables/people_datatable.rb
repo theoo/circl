@@ -63,10 +63,10 @@ class PeopleDatatable
 
   def fetch_people
     ElasticSearch::search_paginated(@query[:search_string],
-      @query[:selected_attributes],
-      @query[:attributes_order],
       from,
       per_page,
+      @query[:selected_attributes],
+      @query[:attributes_order],
       @current_person)
   end
 

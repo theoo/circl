@@ -504,7 +504,11 @@ class Index extends App.ExtendedController
       @el.undelegate 'tr.item td:not(.ignore-click)', 'click'
       @el.undelegate 'tr button[name=directory-person-destroy]', 'click'
       @el.undelegate 'tr button[name=directory-person-change-password]', 'click'
-      @el.undelegate 'a[name=directory-export-to-csv]', 'click'
+      @el.undelegate '#people_template', 'click'
+      @el.undelegate 'a[name=people_preview]', 'click'
+      @el.undelegate 'a[name=people_pdf]', 'click'
+      @el.undelegate 'a[name=people_odt]', 'click'
+      @el.undelegate 'a[name=people_csv]', 'click'
       @el.undelegate 'a[name=directory-map]', 'click'
 
       @el.find('.panel-footer').hide()

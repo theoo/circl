@@ -123,6 +123,45 @@
                 .panel-title
                   = I18n.t('settings.views.ldap_attributes')
 
+          - if can? :mailchimp, Directory
+            #settings_mailchimp.panel.panel-default
+              .panel-heading
+                .panel-title
+                  = I18n.t('settings.views.mailchimp')
+
+              - if @mailchimp_lists
+                .panel-body
+                  .row
+                    .form-inline.col-lg-12
+
+                      .alert.alert-info
+                        = I18n.t("settings.views.select_list_and_click_synchronize")
+
+                      .form-group
+                        %select{name: 'list', id: "mailchimp_lists", class: 'form-control'}
+                          - @mailchimp_lists.each_pair do |id, name|
+                            %option{value: id}= name
+
+                        .icon-chevron-right
+
+                        %button.btn.btn-default{name: 'synchronize_mailchimp'}
+                          .icon-refresh
+                          .hidden-inline-xs
+                            = I18n.t('common.synchronize')
+              - else
+                .panel-body
+                  .alert.alert-warning
+                    != I18n.t("settings.views.mailchimp_configuration_required")
+                    %br
+                    .pull-right
+                      = link_to t("settings.views.advanced"),
+                        settings_path(anchor: :advanced),
+                        class: 'btn btn-warning',
+                        onclick: '$("a[href=#advanced_tab]").click()'
+                    .clearfix
+
+
+
     #privileges_tab.tab-pane.fade
       .row
         .col-md-6

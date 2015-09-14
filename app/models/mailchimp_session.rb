@@ -16,37 +16,16 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-module Mailchimp
+class MailchimpSession
 
-  # call block n times, if n exceptions raise MailchimpSyncError
-  class ApiFilter
+  attr_accessor :session
 
-    def initialize(attempts = 3, time_between_attempts = 2, &block)
-      @remaining_attempts = attempts
-      @time_between_attempts = time_between_attempts
-      @proc = block
-    end
-
-    def call
-      begin
-        result = @proc.call
-      rescue  =>  e
-        @remaining_attempts -= 1
-        puts "rescuing #{e.message}"
-        if @remaining_attempts == 0
-          raise MailchimpSyncError, "#{e.message}"
-        else
-          sleep @time_between_attempts
-          call
-        end
-      end
-      result
-    end
-
+  def initialize
+    @session = Mailchimp::API.new(ApplicationSetting.value("mailchimp_api_key"))
   end
 
-  class MailchimpSyncError < StandardError
+  def list_names
+    @session.lists.list["data"].each_with_object({}){|l,o| o[l['id']] = l['name']}
   end
 
 end
-

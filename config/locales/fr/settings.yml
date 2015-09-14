@@ -21,6 +21,8 @@ fr:
       languages: Langues
       ldap_attributes: Attributs LDAP
       locations: Localités
+      mailchimp: Mailchimp
+      mailchimp_configuration_required: Il est nécessaire de configurer la clé 'mailchimp_api_key' dans la configuration avancée pour accéder à cette fonctionnalité
       privileges: Privilèges
       product_programs: Programmes
       products: Produits
@@ -28,6 +30,9 @@ fr:
       roles: Rôles
       search_attributes: Attributs de recherche
       search_engine: Moteur de recherche
+      select_list_and_click_synchronize: Selectionnez une liste à synchroniser et cliquer 'synchroniser' pour sélectionner les contacts
+      sync_mailchimp_message: Les personnes sélectionnées seront synchronisées avec la liste.
+      sync_mailchimp_title: "Synchronisation des contacts avec la liste '%{name}'"
       task_rates: Tarifs
       task_types: Type de tâches
       templates: Modèles
