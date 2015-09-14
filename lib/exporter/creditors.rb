@@ -63,6 +63,7 @@ module Exporter
         date = creditor.invoice_received_on
         counterpart_account = creditor.transitional_account
         account = creditor.account
+        cc1 = creditor.affair_id
       end
 
       # Invert account when negative
@@ -87,7 +88,7 @@ module Exporter
         :person_id                  => creditor.creditor.try(:id),
         :person_name                => creditor.creditor.try(:name),
         :document_type              => :creditor,
-        :cost_center_1              => creditor.affair_id
+        :cost_center_1              => cc1
       }
 
       if discount_account
@@ -105,7 +106,7 @@ module Exporter
           :person_id                  => creditor.creditor.try(:id),
           :person_name                => creditor.creditor.try(:name),
           :document_type              => :creditor,
-          :cost_center_1              => creditor.affair_id
+          :cost_center_1              => cc1
         }
       end
 
