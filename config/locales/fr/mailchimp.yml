@@ -10,3 +10,5 @@ fr:
       message: message
       sync_report_title: Rapport de synchronisation
       synchronization_succeed: La synchronisation a réussi
+      synchronizing_people_on_list: "%{count} contacts ont été synchronisés avec la list %{list_id}."
+      if_the_count_doesnt_match_query: "Si le compte des contacts ne correspond pas à la requête, veuillez vérifier que vos contacts ont bien un email valide."

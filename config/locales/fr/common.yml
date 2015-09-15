@@ -92,7 +92,7 @@ fr:
     notices:
       successfully_destroyed: destruction réussie
       successfully_updated: mise à jour réussie
-      synchronization_started: La synchronisation a démarrée.
+      synchronization_started: "La synchronisation a démarrée. Un rapport sera envoyé à <i>%{email}</i>"
     odt: ODT
     paid: payé
     parent: parent

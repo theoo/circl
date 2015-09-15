@@ -145,12 +145,14 @@ class DirectoryController < ApplicationController
 
     if query[:search_string].blank?
 
-      format.json do
-        render json: { search_string: [I18n.t('activerecord.errors.messages.blank')] }, status: :unprocessable_entity
-      end
-      format.html do
-        flash[:alert] = I18n.t("directory.errors.query_empty")
-        redirect_to admin_path(anchor: 'tags')
+      respond_to do |format|
+        format.json do
+          render json: { search_string: [I18n.t('activerecord.errors.messages.blank')] }, status: :unprocessable_entity
+        end
+        format.html do
+          flash[:alert] = I18n.t("directory.errors.query_empty")
+          redirect_to admin_path(anchor: 'tags')
+        end
       end
 
     else
@@ -163,7 +165,7 @@ class DirectoryController < ApplicationController
       else
 
         flash[:notice] = I18n.t('common.notices.synchronization_started', email: current_person.email)
-        BackgroundTasks::SynchronizeMailchimp.process!(
+        BackgroundTasks::SynchronizeMailchimp.schedule(
           person_id: current_person.id,
           list_id: params[:id],
           directory_query: query[:search_string]
@@ -171,8 +173,10 @@ class DirectoryController < ApplicationController
 
       end
 
-      format.json { render json: {} }
-      format.html { redirect_to directory_path }
+      respond_to do |format|
+        format.json { render json: {} }
+        format.html { redirect_to directory_path }
+      end
 
     end
   end

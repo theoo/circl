@@ -24,12 +24,7 @@
 class BackgroundTasks::SynchronizeMailchimp < BackgroundTask
   def self.generate_title(options)
     I18n.t("background_task.tasks.synchronizing_mailchimp",
-      people_count: options[:people_ids].size)
-  end
-
-  def subscribers_mapping(people)
-    # TODO sync second email (and all if more)
-
+      list_id: options[:list_id])
   end
 
   def process!
@@ -63,7 +58,7 @@ class BackgroundTasks::SynchronizeMailchimp < BackgroundTask
     result = mc.session.lists.batch_subscribe(list_id, subscribers, false, true, false)
 
     # TODO send an email
-    PersonMailer.send_mailchimp_sync_report(options[:person_id], list_id, result["errors"]).deliver
+    PersonMailer.send_mailchimp_sync_report(options[:person_id], list_id, result["errors"], people.count).deliver
 
   end
 end

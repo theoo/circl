@@ -32,10 +32,12 @@ class PersonMailer < ActionMailer::Base
 
   layout 'mail'
 
-  def send_mailchimp_sync_report(person_id, list_id, errors)
+  def send_mailchimp_sync_report(person_id, list_id, errors, people_count)
     person = Person.find(person_id)
     I18n.locale = person.main_communication_language.try(:symbol)
+    @list_id = list_id
     @errors = errors
+    @people_count = people_count
     mail( to: person.email,
           subject: I18n.t('person.mail.mailchimp_synchronisation_report'))
   end

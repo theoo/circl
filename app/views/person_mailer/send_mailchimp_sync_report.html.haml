@@ -1,6 +1,8 @@
 %h1
   = I18n.t("mailchimp.mail.sync_report_title")
 %p
+  = I18n.t("mailchimp.mail.synchronizing_people_on_list", count: @people_count, list_id: @list_id)
+%p
   - if @errors.size == 0
     %h2
       = I18n.t("mailchimp.mail.synchronization_succeed")
@@ -23,3 +25,5 @@
                   %td= e["code"]
                   %td= e["email"]["email"]
                   %td= e["error"]
+%p
+  = I18n.t("mailchimp.mail.if_the_count_doesnt_match_query")

@@ -10,3 +10,5 @@ en:
       message: message
       sync_report_title: sync report title
       synchronization_succeed: synchronization succeed
+      synchronizing_people_on_list: "%{count} contacts have been synchronized to the list %{list_id}."
+      if_the_count_doesnt_match_query: "If the count doesn't match, please ensure all your selected contacts have a valid email."
