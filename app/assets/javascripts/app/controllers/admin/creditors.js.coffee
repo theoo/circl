@@ -390,7 +390,7 @@ class Index extends App.ExtendedController
 
   update_selected_count: ->
     box = @el.find("#admin_creditors_select_count")
-    if @selected_ids.length > 0
+    if @selected_ids?.length > 0
       box.html(I18n.t("common.item_selected", {count: @selected_ids.length}))
     else
       box.html("")
