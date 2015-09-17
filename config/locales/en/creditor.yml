@@ -28,6 +28,7 @@ en:
       unpaid: unpaid
     views:
       account: account
+      accounting: accounting
       affair_id: ID affaire
       affair_name: nom de l'affair
       counterpart_account: counterpart account
@@ -36,8 +37,10 @@ en:
       creditors_example_file_desc: creditors example file desc
       creditors_found_in_file: creditors found in file
       custom_value_with_taxes: Value is taxes included
+      dates: dates
       dates_field: dates field
       discount: discount
+      discount_account: discount account
       discount_ends_on: discount ends on
       discount_percentage: discount percentage
       example_files_explanation: example files explanation
@@ -56,3 +59,5 @@ en:
       title: title
       transitional_account: transitional account
       value: value
+      vat_account: vat account
+      vat_discount_account: vat discount account

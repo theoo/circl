@@ -61,6 +61,8 @@ fr:
       admin_receipts_were_generated_explanation: Vous pouvez télécharger le document généré à l'adresse suivante
       admin_receipts_were_generated_title: Génération des documents terminée
       background_task_error_report: Rapport d'erreur de la tâche d'arrière plan
+      creditor_import_report: MISSING_TRANSLATION creditor import report
+      creditors_import_report_title: MISSING_TRANSLATION creditors import report title
       imported_people: Personnes importées
       mailchimp_synchronisation_report: Rapport de synchronisation Mailchimp
       members_were_added_to_subscription: Des membres ont été ajouté à l'inscription [(%{id}) %{title}]
@@ -107,10 +109,11 @@ fr:
       contact_nr: Contact n°%{id}
       coordinates_format: Le format des coordonnées est 46.1997577723502, 6.13464653491974
       creditor_account: compte
-      creditor_vat_account: code TVA
-      creditor_vat_discount_account: code escompte TVA
+      creditor_discount_account: compte d'escompte
       creditor_information: Informations du fournisseur
       creditor_transitional_account: compte transitoire
+      creditor_vat_account: code TVA
+      creditor_vat_discount_account: code escompte TVA
       current_password: mot de passe actuel
       destroy: supprimer
       email: email

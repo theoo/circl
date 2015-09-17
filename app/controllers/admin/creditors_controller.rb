@@ -43,19 +43,42 @@ class Admin::CreditorsController < ApplicationController
 
       if errors.empty?
 
-        format.json { render json: CreditorsDatatable.new(view_context) }
+        @creditors = Creditor.joins(:creditor)
+        @creditors = @creditors.where(id: session[:admin_creditors])
 
-        @creditors = Creditor.where(id: session[:admin_creditors])
+        if params[:sSearch] and params[:sSearch].match("SELECTED")
+          subset = @creditors
+          params[:sSearch] = params[:sSearch].gsub("SELECTED", "").strip
+        end
+
+        format.json { render json: CreditorsDatatable.new(view_context, subset) }
+
         # It makes no sense to export an empty array.
-        @creditors = Creditor.all if @creditors.size == 0
+        @creditors = @creditors.all if @creditors.size == 0
+
+        table_fields = [ :created_at,
+          :title,
+          "people.organization_name",
+          :value_in_cents,
+          :invoice_received_on,
+          :discount_ends_on,
+          :invoice_ends_on,
+          :invoice_in_books_on,
+          :paid_on,
+          :payment_in_books_on ]
+
+        if params[:order_by]
+          ob = params[:order_by].split(",")
+          @creditors = @creditors.reorder("#{table_fields[ob[0].to_i]} #{ob[1]}")
+        end
 
         format.csv do
 
-          fields = [ :id,
+          csv_fields = [ :id,
             :creditor_id,
             "creditor.try(:name)",
             :affair_id,
-            "affair.try(:name)",
+            "affair.try(:title)",
             :title,
             :description,
             :value_in_cents,
@@ -75,7 +98,7 @@ class Admin::CreditorsController < ApplicationController
             :created_at,
             :updated_at ]
 
-          render inline: csv_ify(@creditors, fields)
+          render inline: csv_ify(@creditors, csv_fields)
         end
 
         format.pdf do
@@ -331,6 +354,9 @@ class Admin::CreditorsController < ApplicationController
         :payment_in_books_on,
         :updated_at,
         :account,
+        :discount_account,
+        :vat_account,
+        :vat_discount_account,
         :transitional_account)
     end
 

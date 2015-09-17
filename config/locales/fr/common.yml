@@ -61,9 +61,9 @@ fr:
       must_provide_last_name_if_first_name: Il doit y avoir un nom de famille s'il y a un prénom.
       no_file_submitted: Aucun fichier soumis
       please_verify_rights_and_record: Veuillez vérifier que vous êtes autorisé à effectuer cette action, et assurez vous que cette action est valable pour cet enregistrement.
+    example_files_explanation: Le fichier exemple ci-dessous peut être employé pour préparer les données à importer.
     export: exporter
     export_to: exporter vers
-    example_files_explanation: Le fichier exemple ci-dessous peut être employé pour préparer les données à importer.
     failed_to_update: La mise à jour a échouée
     'false': faux
     file: fichier
@@ -78,10 +78,10 @@ fr:
     import: importer
     incomplete: incomplet
     info: info
-    item_selected:
-      one: "un élément selectionné"
-      other: "%{count} éléments sélectionnés"
     invoice: facture
+    item_selected:
+      one: un élément selectionné
+      other: "%{count} éléments sélectionnés"
     key: clé
     line: ligne
     members: membres
@@ -92,7 +92,7 @@ fr:
     notices:
       successfully_destroyed: destruction réussie
       successfully_updated: mise à jour réussie
-      synchronization_started: "La synchronisation a démarrée. Un rapport sera envoyé à <i>%{email}</i>"
+      synchronization_started: La synchronisation a démarrée. Un rapport sera envoyé à <i>%{email}</i>
     odt: ODT
     paid: payé
     parent: parent

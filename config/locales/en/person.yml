@@ -61,6 +61,8 @@ en:
       admin_receipts_were_generated_explanation: You can download the requested file by clicking the following link
       admin_receipts_were_generated_title: Receipt documents generation succeed
       background_task_error_report: Background tasks error report
+      creditor_import_report: MISSING_TRANSLATION creditor import report
+      creditors_import_report_title: MISSING_TRANSLATION creditors import report title
       imported_people: Imported people
       mailchimp_synchronisation_report: mailchimp synchronisation report
       members_were_added_to_subscription: members were added to subscription
@@ -107,10 +109,11 @@ en:
       contact_nr: Contact N°
       coordinates_format: Coordinate format is 46.1997577723502, 6.13464653491974
       creditor_account: account (as creditor)
-      creditor_vat_account: VAT code
-      creditor_vat_discount_account: VAT discount code
+      creditor_discount_account: discount account
       creditor_information: Provider information
       creditor_transitional_account: transitional account
+      creditor_vat_account: VAT code
+      creditor_vat_discount_account: VAT discount code
       current_password: current password
       destroy: destroy
       email: email

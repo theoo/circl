@@ -357,6 +357,19 @@
 
           .row
             .col-sm-6
+
+            .col-sm-6
+              .form-group
+                %label
+                  = I18n.t('person.views.creditor_discount_account')
+                %input{ type: 'text',
+                        name: 'creditor_discount_account',
+                        class: 'form-control',
+                        value: @person.creditor_discount_account }
+
+
+          .row
+            .col-sm-6
               .form-group
                 %label
                   = I18n.t('person.views.creditor_vat_account')

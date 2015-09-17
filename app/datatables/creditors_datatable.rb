@@ -22,8 +22,9 @@ class CreditorsDatatable
   include ApplicationHelper
   include Haml::Helpers
 
-  def initialize(view)
+  def initialize(view, subset = nil)
     @view = view
+    @subset = subset
 
     init_haml_helpers
   end
@@ -80,7 +81,8 @@ class CreditorsDatatable
 
   # TODO: improve search like "Firstname Lastname", actually returns zero results.
   def fetch_creditors
-    creditors = Creditor.joins(:creditor)
+    @subset ||= Creditor
+    creditors = @subset.joins(:creditor)
     creditors = creditors.order("#{sort_column} #{sort_direction}")
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
@@ -109,7 +111,7 @@ class CreditorsDatatable
   def sort_column
     columns = [ :created_at,
       :title,
-      "people.last_name",
+      "people.organization_name",
       :value_in_cents,
       :invoice_received_on,
       :discount_ends_on,

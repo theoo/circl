@@ -305,8 +305,11 @@ class PeopleController < ApplicationController
       h[:title] = p.full_name if p.is_an_organization
 
       if params[:options].index("creditor_accounts")
-        h[:creditor_account] = p.creditor_account
+        h[:creditor_account]              = p.creditor_account
         h[:creditor_transitional_account] = p.creditor_transitional_account
+        h[:creditor_discount_account]     = p.creditor_discount_account
+        h[:creditor_vat_account]          = p.creditor_vat_account
+        h[:creditor_vat_discount_account] = p.creditor_vat_discount_account
       end
 
       h
@@ -433,6 +436,7 @@ class PeopleController < ApplicationController
         :password_confirmation,
         :creditor_transitional_account,
         :creditor_account,
+        :creditor_discount_account,
         :creditor_vat_account,
         :creditor_vat_discount_account
         )

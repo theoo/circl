@@ -32,7 +32,7 @@ fr:
       search_engine: Moteur de recherche
       select_list_and_click_synchronize: Selectionnez une liste à synchroniser et cliquer 'synchroniser' pour sélectionner les contacts
       sync_mailchimp_message: Les personnes sélectionnées seront synchronisées avec la liste.
-      sync_mailchimp_title: "Synchronisation des contacts avec la liste '%{name}'"
+      sync_mailchimp_title: Synchronisation des contacts avec la liste '%{name}'
       task_rates: Tarifs
       task_types: Type de tâches
       templates: Modèles

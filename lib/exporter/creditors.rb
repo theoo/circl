@@ -40,74 +40,111 @@ module Exporter
     end
 
     def convert(creditor)
+      lines = []
+
+      bank_account = ApplicationSetting.value("creditor_paid_account")
+      cc1 = creditor.affair_id.to_s
+
       # Check which step it is, exporting invoices or payments
       if not creditor.paid_on.blank?
         # It's a payment
 
-        # return discount to account if existing
-        if creditor.discount_percentage > 0 and creditor.discount_paid_ontime?
-          discount_counterpart_account = creditor.transitional_account
-          discount_account = creditor.account
-        end
-
         # creditor_paid_account is usually the bank
-        value = creditor.value_with_discount
         prefix = ApplicationSetting.value("creditor_paid_prefix")
         date = creditor.paid_on
         counterpart_account = ApplicationSetting.value("creditor_paid_account")
         account = creditor.transitional_account
-      else
-        # It's an unpaid invoice
-        value = creditor.value_with_taxes
-        prefix = ApplicationSetting.value("creditor_prefix")
-        date = creditor.invoice_received_on
-        counterpart_account = creditor.transitional_account
-        account = creditor.account
-        cc1 = creditor.affair_id
-      end
 
-      # Invert account when negative
-      if creditor.value_with_discount < 0
-        old_account = account
-        counterpart_account = counterpart_account
-        account = old_account
-      end
+        # Invert account when negative
+        if creditor.value_with_discount < 0
+          old_account = account
+          counterpart_account = counterpart_account
+          account = old_account
+        end
 
-      lines = []
-      lines << {
-        :id                         => creditor.id,
-        :date                       => date,
-        :title                      => creditor.title,
-        :description                => desc_for(creditor, prefix),
-        :value                      => value.to_f,
-        :value_currency             => creditor.value_currency,
-        :account                    => account,
-        :counterpart_account        => counterpart_account,
-        :vat_code                   => creditor.creditor.try(:creditor_vat_account),
-        :vat_rate                   => @options[:service_vat_rate],
-        :person_id                  => creditor.creditor.try(:id),
-        :person_name                => creditor.creditor.try(:name),
-        :document_type              => :creditor,
-        :cost_center_1              => cc1
-      }
-
-      if discount_account
         lines << {
           :id                         => creditor.id,
           :date                       => date,
           :title                      => creditor.title,
-          :description                => desc_for(creditor, ApplicationSetting.value("creditor_discount_prefix")),
-          :value                      => creditor.discount_value.to_f,
+          :description                => desc_for(creditor, prefix),
+          :value                      => creditor.value_with_discount.abs.to_f,
           :value_currency             => creditor.value_currency,
-          :account                    => discount_account,
-          :counterpart_account        => discount_counterpart_account,
-          :vat_code                   => creditor.creditor.try(:creditor_vat_discount_account),
+          :account                    => account,
+          :counterpart_account        => counterpart_account,
+          :vat_code                   => nil,
+          :vat_rate                   => nil,
+          :person_id                  => creditor.creditor.try(:id),
+          :person_name                => creditor.creditor.try(:name),
+          :document_type              => :creditor,
+          :cost_center_1              => nil
+        }
+
+        # return discount to account if existing
+        if creditor.discount_percentage > 0 and creditor.discount_paid_ontime?
+
+          account = bank_account
+          counterpart_account = creditor.discount_account
+
+          # Invert account when negative
+          if creditor.value_with_discount < 0
+            old_account = account
+            account = counterpart_account
+            counterpart_account = old_account
+            cc1 = "creditor.affair_id"
+          else
+            cc1 = "-#{creditor.affair_id}"
+          end
+
+          lines << {
+            :id                         => creditor.id,
+            :date                       => date,
+            :title                      => creditor.title,
+            :description                => desc_for(creditor, ApplicationSetting.value("creditor_discount_prefix")),
+            :value                      => creditor.discount_value.abs.to_f,
+            :value_currency             => creditor.value_currency,
+            :account                    => account,
+            :counterpart_account        => counterpart_account,
+            :vat_code                   => creditor.vat_discount_account,
+            :vat_rate                   => @options[:service_vat_rate],
+            :person_id                  => creditor.creditor.try(:id),
+            :person_name                => creditor.creditor.try(:name),
+            :document_type              => :creditor,
+            :cost_center_1              => cc1
+          }
+        end
+
+      else
+        # It's an unpaid invoice
+        prefix = ApplicationSetting.value("creditor_prefix")
+        date = creditor.invoice_received_on
+        counterpart_account = creditor.transitional_account
+        account = creditor.account
+
+        # Invert account when negative
+        if creditor.value_with_taxes < 0
+          old_account = account
+          account = counterpart_account
+          counterpart_account = old_account
+          cc1 = "-#{cc1}"
+        end
+
+        lines << {
+          :id                         => creditor.id,
+          :date                       => date,
+          :title                      => creditor.title,
+          :description                => desc_for(creditor, prefix),
+          :value                      => creditor.value_with_taxes.abs.to_f,
+          :value_currency             => creditor.value_currency,
+          :account                    => account,
+          :counterpart_account        => counterpart_account,
+          :vat_code                   => creditor.creditor.try(:creditor_vat_account),
           :vat_rate                   => @options[:service_vat_rate],
           :person_id                  => creditor.creditor.try(:id),
           :person_name                => creditor.creditor.try(:name),
           :document_type              => :creditor,
           :cost_center_1              => cc1
         }
+
       end
 
       lines

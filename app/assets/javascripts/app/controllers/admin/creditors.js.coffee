@@ -34,6 +34,9 @@ CreditorsExtentions =
 
     @account_field           = @el.find("input[name=account]")
     @trans_account_field     = @el.find("input[name=transitional_account]")
+    @discount_account_field  = @el.find("input[name=discount_account]")
+    @vat_account_field       = @el.find("input[name=vat_account]")
+    @vat_discount_account_field = @el.find("input[name=vat_discount_account]")
 
     @vat_field               = @el.find("input[name=vat]")
     @vat_percentage_field    = @el.find("input[name=vat_percentage]")
@@ -77,6 +80,9 @@ CreditorsExtentions =
     @creditor_id_field.val item.id
     @account_field.val item.creditor_account if item.creditor_account
     @trans_account_field.val item.creditor_transitional_account if item.creditor_transitional_account
+    @discount_account_field.val item.creditor_discount_account if item.creditor_discount_account
+    @vat_account_field.val item.creditor_vat_account if item.creditor_vat_account
+    @vat_discount_account_field.val item.creditor_vat_discount_account if item.creditor_vat_discount_account
 
     @creditor_button.attr('href', "/people/#{item.id}")
     @creditor_button.attr('disabled', false)
@@ -250,9 +256,8 @@ class Index extends App.ExtendedController
     'click button[name=admin-creditors-group-edit]':  'group_edit'
     'click [name=add-to-selection]':                  'filter_selection'
     'click [name=remove-from-selection]':             'filter_selection'
-    'click thead [name="check_all"]':                 'toggle_checks'
-    'click thead [name="check_none"]':                'toggle_checks'
     'change tbody input[type="checkbox"]':            'toggle_check'
+    'change thead input[name="selected_filter"]':     'filter_selected'
     'click a[name="admin_creditors_pdf"]':            'pdf'
     'click a[name="admin_creditors_odt"]':            'odt'
     'click a[name="admin_creditors_csv"]':            'csv'
@@ -297,13 +302,15 @@ class Index extends App.ExtendedController
 
     Creditor.fetch(id: id)
 
-  csv: (e) ->
-    e.preventDefault()
-    window.location = Creditor.url() + ".csv"
-
   url_for: (format) ->
     @template_id = @el.find("#admin_creditors_template").val()
-    Creditor.url() + ".#{format}?template_id=#{@template_id}"
+    # Base64 encoded
+    order_by = @el.find("table.datatable").dataTable().fnSettings().aaSorting.join(",")
+    Creditor.url() + ".#{format}?template_id=#{@template_id}&order_by=#{order_by}"
+
+  csv: (e) ->
+    e.preventDefault()
+    window.location = @url_for('csv')
 
   pdf: (e) ->
     e.preventDefault()
@@ -332,20 +339,6 @@ class Index extends App.ExtendedController
         @toggle_group_edit_button()
         @update_selected_count()
 
-  toggle_checks: (e) =>
-    e.preventDefault()
-
-    if $(e.target).attr('name') == 'check_all'
-      path = "check_items"
-    else
-      path = "uncheck_items"
-
-    $.post(Creditor.url() + "/#{path}", { group: 'all' })
-      .success (response) =>
-        @selected_ids = response
-        @reload_table()
-        @update_selected_count()
-
   filter_selection: (e) =>
     e.preventDefault()
     action = $(e.target).closest('button').attr('name')
@@ -366,6 +359,16 @@ class Index extends App.ExtendedController
         @selected_ids = response
         @reload_table()
         @update_selected_count()
+
+  filter_selected: (e) =>
+    e.preventDefault()
+
+    filter_field_value = @el.find(".dataTables_filter input[type='text']").val()
+    dt = @el.find("table.datatable").dataTable()
+    if $(e.target).is(":checked")
+      dt.fnFilter("SELECTED #{filter_field_value}")
+    else
+      dt.fnFilter(filter_field_value.replace("SELECTED", "").trim())
 
   reload_table: ->
     table = @el.find("table.datatable")

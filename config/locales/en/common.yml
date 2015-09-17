@@ -76,10 +76,10 @@ en:
     import: import
     incomplete: incomplete
     info: info
+    invoice: invoice
     item_selected:
       one: one item selected
       other: "%{count} items selected"
-    invoice: invoice
     key: key
     line: line
     members: members

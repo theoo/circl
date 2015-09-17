@@ -120,7 +120,35 @@
             - if App.ApplicationSetting.value('use_vat') == "true" and not @editing_a_group
               != @partial('edit_vat')(object: @creditor, prefix: @ids_prefix)
 
+          .col-xl-4.col-xs-6.form-group
+            - if @editing_a_group
+              .pull-right
+                %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
+            %label
+              = I18n.t('creditor.views.discount_percentage')
+            %input{ type: 'number',
+                    class: 'form-control',
+                    step: 0.01,
+                    min: -100,
+                    max: 100,
+                    name: "discount_percentage",
+                    value: @creditor.discount_percentage }
+
+          .col-xl-4.col-xs-6.form-group
+            - if @editing_a_group
+              .pull-right
+                %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
+            %label
+              = I18n.t('creditor.views.discount_ends_on')
+            %input{type: 'text',
+                   name: 'discount_ends_on',
+                   class: 'form-control datepicker',
+                   value: @creditor.discount_ends_on }
+
       .col-md-6
+        .row
+          .col-xs-12
+            %h3= I18n.t("creditor.views.accounting")
         .row
           .col-xl-4.col-xs-6
             .form-group
@@ -152,17 +180,51 @@
                 .pull-right
                   %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
               %label
+                = I18n.t('creditor.views.discount_account')
+              %input{type: 'text',
+                     name: 'discount_account',
+                     class: 'form-control',
+                     value: @creditor.discount_account }
+
+          .col-xl-4.col-xs-6
+            .form-group
+              - if @editing_a_group
+                .pull-right
+                  %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
+              %label
+                = I18n.t('creditor.views.vat_account')
+              %input{type: 'text',
+                     name: 'vat_account',
+                     class: 'form-control',
+                     value: @creditor.vat_account }
+
+          .col-xl-4.col-xs-6
+            .form-group
+              - if @editing_a_group
+                .pull-right
+                  %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
+              %label
+                = I18n.t('creditor.views.vat_discount_account')
+              %input{type: 'text',
+                     name: 'vat_discount_account',
+                     class: 'form-control',
+                     value: @creditor.vat_discount_account }
+
+        .row
+          .col-xs-12
+            %h3= I18n.t("creditor.views.dates")
+
+          .col-xl-4.col-xs-6
+            .form-group
+              - if @editing_a_group
+                .pull-right
+                  %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
+              %label
                 = I18n.t('creditor.views.invoice_received_on')
               %input{type: 'text',
                      name: 'invoice_received_on',
                      class: 'form-control datepicker required',
                      value: @creditor.invoice_received_on }
-
-          .col-xs-6.visible-xs
-            %br
-            %br
-            %br
-            %br
 
           .col-xl-4.col-xs-6.form-group
             - if @editing_a_group
@@ -185,31 +247,6 @@
                    name: 'invoice_in_books_on',
                    class: 'form-control datepicker',
                    value: @creditor.invoice_in_books_on }
-
-          .col-xl-4.col-xs-6.form-group
-            - if @editing_a_group
-              .pull-right
-                %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
-            %label
-              = I18n.t('creditor.views.discount_percentage')
-            %input{ type: 'number',
-                    class: 'form-control',
-                    step: 0.01,
-                    min: -100,
-                    max: 100,
-                    name: "discount_percentage",
-                    value: @creditor.discount_percentage }
-
-          .col-xl-4.col-xs-6.form-group
-            - if @editing_a_group
-              .pull-right
-                %input.replace_value{type: 'checkbox', title: I18n.t("common.replace_value")}
-            %label
-              = I18n.t('creditor.views.discount_ends_on')
-            %input{type: 'text',
-                   name: 'discount_ends_on',
-                   class: 'form-control datepicker',
-                   value: @creditor.discount_ends_on }
 
           .col-xl-4.col-xs-6.form-group
             - if @editing_a_group

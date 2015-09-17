@@ -19,7 +19,8 @@ class App.Creditor extends Spine.Model
   @configure 'Creditor', 'creditor_id', 'affair_id', 'title', 'description', 'value', 'value_currency',
   'vat', 'vat_currency', 'invoice_received_on', 'invoice_ends_on', 'invoice_in_books_on',
   'discount_percentage', 'discount_ends_on', 'paid_on', 'payment_in_books_on', 'vat_percentage',
-  'custom_value_with_taxes', 'account', 'transitional_account'
+  'custom_value_with_taxes', 'account', 'transitional_account', 'discount_account', 'vat_account',
+  'vat_discount_account'
 
   @extend Spine.Model.Ajax
 
