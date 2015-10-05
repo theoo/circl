@@ -62,7 +62,7 @@ module Exporter
         :person_id                  => receipt.owner.id,
         :person_name                => receipt.owner.name,
         :document_type              => :receipt,
-        :cost_center_1              => receipt.try(:affair).try(:id)
+        :cost_center_1              => nil
       }
 
     end

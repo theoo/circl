@@ -51,6 +51,12 @@ module Exporter
 
     def convert(invoice)
 
+      cc1 = if invoice.value_with_taxes < 0
+        "-#{invoice.affair_id}"
+      else
+        invoice.affair_id.to_s
+      end
+
       {
         :id                         => invoice.id,
         :date                       => invoice.created_at.to_date,
@@ -65,7 +71,7 @@ module Exporter
         :person_id                  => invoice.owner.try(:id),
         :person_name                => invoice.owner.try(:name),
         :document_type              => :invoice,
-        :cost_center_1              => invoice.affair_id
+        :cost_center_1              => cc1
       }
 
     end

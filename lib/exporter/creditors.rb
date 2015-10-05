@@ -67,7 +67,7 @@ module Exporter
           :date                       => date,
           :title                      => creditor.title,
           :description                => desc_for(creditor, prefix),
-          :value                      => creditor.value_with_discount.abs.to_f,
+          :value                      => creditor.value_with_taxes.abs.to_f,
           :value_currency             => creditor.value_currency,
           :account                    => account,
           :counterpart_account        => counterpart_account,
@@ -92,7 +92,7 @@ module Exporter
             counterpart_account = old_account
             cc1 = "creditor.affair_id"
           else
-            cc1 = "-#{creditor.affair_id}"
+            cc1 = "-#{creditor.affair_id}" if creditor.affair_id
           end
 
           lines << {
