@@ -52,9 +52,9 @@ module Exporter
     def convert(invoice)
 
       cc1 = if invoice.value_with_taxes < 0
-        "-#{invoice.affair_id}"
-      else
         invoice.affair_id.to_s
+      else
+        "-#{invoice.affair_id}"
       end
 
       {
