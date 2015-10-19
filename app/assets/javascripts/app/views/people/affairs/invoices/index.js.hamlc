@@ -13,7 +13,7 @@
     - for i in @invoices
       %tr{:data-id => i.id, class: 'item'}
         %td= i.id
-        %td= i.buyer_name
+        %td= i.printed_address
         %td= i.title
         %td
           - if App.ApplicationSetting.value('use_vat') == "true"
