@@ -125,8 +125,20 @@ class New extends App.ExtendedController
       ids_prefix: 'admin_creditors_'
       bind_events: (App.ApplicationSetting.value('use_vat') == "true")
 
+  active: (params) =>
+    if params and params.clone_id
+      clone = Creditor.find(params.clone_id)
+      @template = clone.attributes()
+      @template.id = null
+      @template.creditor_name = clone.creditor_name
+      @template.affair_name   = clone.affair_name
+    else
+      @template =
+        vat_percentage: App.ApplicationSetting.value('service_vat_rate')
+    @render()
+
   render: =>
-    @creditor = new Creditor(vat_percentage: App.ApplicationSetting.value('service_vat_rate'))
+    @creditor = new Creditor(@template)
     @html @view('admin/creditors/form')(@)
     @constrains()
 
@@ -146,6 +158,7 @@ class Edit extends App.ExtendedController
     'submit form': 'submit'
     'click a[name="cancel"]': 'cancel'
     'click button[name="creditor_destroy"]': 'destroy'
+    'click button[name="creditor_copy"]': 'copy'
     'currency_changed select.currency_selector': 'on_currency_change'
     'click #admin_creditors_custom_value_with_taxes': 'clear_vat'
     'focus input': 'check_replace_value'
@@ -238,6 +251,10 @@ class Edit extends App.ExtendedController
 
       else
         @destroy_with_notifications @creditor, @hide
+
+  copy: (e) ->
+    e.preventDefault()
+    @trigger 'copy', {clone_id: @id, type: 'copy'}
 
 
   check_replace_value: (e) ->
@@ -450,49 +467,6 @@ class App.ExportCreditors extends App.ExtendedController
     super
     @render()
 
-
-# class CreditorsDocumentsMachine extends App.ExtendedController
-#   events:
-#     'submit form': 'validate'
-#     'change #admin_creditors_document_export_format': 'format_changed'
-
-#   constructor: (params) ->
-#     super
-#     @content = params.content
-
-#   activate: (params)->
-#     @format = 'csv' # default format
-#     @form_url = App.Creditor.url()
-
-#     @template_class = 'Creditor'
-#     App.Creditor.one 'statuses_fetched', =>
-#       @render()
-#     App.Creditor.fetch_statuses()
-
-#   render: =>
-#     @html @view('admin/creditors/documents')(@)
-
-#     @el.find("#admin_creditors_document_export_threshold_value_global").attr(disabled: true)
-#     @el.find("#admin_creditors_document_export_threshold_overpaid_global").attr(disabled: true)
-
-#   validate: (e) ->
-#     errors = new App.ErrorsList
-
-#     if @el.find("#admin_creditors_document_export_format").val() != 'csv'
-#       unless @el.find("#admin_creditors_document_export_template").val()
-#         errors.add ['generic_template_id', I18n.t("activerecord.errors.messages.blank")].to_property()
-
-#     if errors.is_empty()
-#       # @render_success() # do nothing...
-#     else
-#       e.preventDefault()
-#       @render_errors(errors.errors)
-
-#   format_changed: (e) ->
-#     @format = $(e.target).val()
-#     @el.find("form").attr('action', @form_url + "." + @format)
-
-
 class App.AdminCreditors extends Spine.Controller
   className: 'creditors'
 
@@ -517,11 +491,14 @@ class App.AdminCreditors extends Spine.Controller
       @edit.active(id: id)
       @index.active(id: id)
 
+    @edit.bind 'copy', (params) =>
+      @new.active(params)
+      @edit.hide()
+
     @index.bind 'group_edit', (ids) =>
       @edit.active(ids: ids)
 
-
   activate: ->
     super
-    @new.render()
+    @new.active()
     @index.render()

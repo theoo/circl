@@ -273,6 +273,12 @@
     .row
       .col-lg-12
         .pull-right
+          - unless @creditor.isNew?()
+            %button{name: "creditor_copy",
+                    class: 'btn btn-default' }
+              .icon-copy
+              = I18n.t("common.copy")
+
           != @partial('save_and_cancel_buttons')(@creditor)
 
         .btn-group

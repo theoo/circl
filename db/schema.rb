@@ -16,23 +16,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "activity_logs", force: true do |t|
-    t.integer  "player_id"
-    t.string   "method"
-    t.string   "request_ip"
-    t.string   "original_serial"
-    t.text     "origin_rpc_response"
-    t.boolean  "origin_accept_rpc",   default: false
-    t.boolean  "unknow_user",         default: false
-    t.boolean  "no_free_license",     default: false
-    t.boolean  "unexpected",          default: false
-    t.boolean  "unlicensed",          default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "activity_logs", ["player_id"], name: "index_activity_logs_on_player_id", using: :btree
-
   create_table "affairs", force: true do |t|
     t.integer  "owner_id",                                  null: false
     t.integer  "buyer_id",                                  null: false
@@ -262,16 +245,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   add_index "currency_rates", ["rate"], name: "index_currency_rates_on_rate", using: :btree
   add_index "currency_rates", ["to_currency_id"], name: "index_currency_rates_on_to_currency_id", using: :btree
 
-  create_table "display_info", force: true do |t|
-    t.integer  "player_id"
-    t.string   "display_type"
-    t.string   "power"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "display_info", ["player_id"], name: "index_display_info_on_player_id", using: :btree
-
   create_table "employment_contracts", force: true do |t|
     t.integer  "person_id"
     t.float    "percentage"
@@ -287,77 +260,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   add_index "employment_contracts", ["interval_starts_on"], name: "index_employment_contracts_on_interval_starts_on", using: :btree
   add_index "employment_contracts", ["person_id"], name: "index_employment_contracts_on_person_id", using: :btree
   add_index "employment_contracts", ["updated_at"], name: "index_employment_contracts_on_updated_at", using: :btree
-
-  create_table "errors_info", force: true do |t|
-    t.integer  "player_id"
-    t.time     "time"
-    t.string   "code"
-    t.text     "description"
-    t.text     "source"
-    t.text     "destination"
-    t.text     "custom"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "errors_info", ["code"], name: "index_errors_info_on_code", using: :btree
-  add_index "errors_info", ["player_id"], name: "index_errors_info_on_player_id", using: :btree
-
-  create_table "event_logs", force: true do |t|
-    t.integer  "player_id"
-    t.string   "kind"
-    t.string   "name"
-    t.string   "cached_player_status"
-    t.string   "cached_event_status"
-    t.boolean  "cached_online_status"
-    t.text     "additional_info"
-    t.integer  "count",                default: 1
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "event_logs", ["kind"], name: "index_event_logs_on_kind", using: :btree
-  add_index "event_logs", ["name"], name: "index_event_logs_on_name", using: :btree
-  add_index "event_logs", ["player_id"], name: "index_event_logs_on_player_id", using: :btree
-
-  create_table "events_configs", force: true do |t|
-    t.integer  "configurable_id"
-    t.string   "configurable_type"
-    t.boolean  "force",                             default: false, null: false
-    t.boolean  "email_success",                     default: false, null: false
-    t.boolean  "email_warning",                     default: false, null: false
-    t.boolean  "email_danger",                      default: false, null: false
-    t.boolean  "email_connectivity_lost",           default: false, null: false
-    t.boolean  "email_connectivity_restored",       default: false, null: false
-    t.boolean  "email_file",                        default: false, null: false
-    t.boolean  "email_firmware_version_changed",    default: false, null: false
-    t.boolean  "email_license_warnings_and_errors", default: false, null: false
-    t.boolean  "email_publishing_errors",           default: false, null: false
-    t.boolean  "email_screen_changes",              default: false, null: false
-    t.boolean  "email_storage_warnings",            default: false, null: false
-    t.boolean  "email_temperature_warnings",        default: false, null: false
-    t.boolean  "email_other_warnings",              default: false, null: false
-    t.boolean  "email_other_errors",                default: false, null: false
-    t.boolean  "sms_success",                       default: false, null: false
-    t.boolean  "sms_warning",                       default: false, null: false
-    t.boolean  "sms_danger",                        default: false, null: false
-    t.boolean  "sms_connectivity_lost",             default: false, null: false
-    t.boolean  "sms_connectivity_restored",         default: false, null: false
-    t.boolean  "sms_file",                          default: false, null: false
-    t.boolean  "sms_firmware_version_changed",      default: false, null: false
-    t.boolean  "sms_license_warnings_and_errors",   default: false, null: false
-    t.boolean  "sms_publishing_errors",             default: false, null: false
-    t.boolean  "sms_screen_changes",                default: false, null: false
-    t.boolean  "sms_storage_warnings",              default: false, null: false
-    t.boolean  "sms_temperature_warnings",          default: false, null: false
-    t.boolean  "sms_other_warnings",                default: false, null: false
-    t.boolean  "sms_other_errors",                  default: false, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "events_configs", ["configurable_id"], name: "index_events_configs_on_configurable_id", using: :btree
-  add_index "events_configs", ["configurable_type"], name: "index_events_configs_on_configurable_type", using: :btree
 
   create_table "extras", force: true do |t|
     t.integer  "affair_id"
@@ -380,39 +282,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   add_index "extras", ["value_in_cents"], name: "index_extras_on_value_in_cents", using: :btree
   add_index "extras", ["vat_in_cents"], name: "index_extras_on_vat_in_cents", using: :btree
 
-  create_table "firmware_updates_queue", force: true do |t|
-    t.integer  "player_id"
-    t.string   "target_version"
-    t.boolean  "succeed"
-    t.text     "uri"
-    t.datetime "started_at"
-    t.datetime "finished_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "firmware_updates_queue", ["player_id"], name: "index_firmware_updates_queue_on_player_id", using: :btree
-  add_index "firmware_updates_queue", ["succeed"], name: "index_firmware_updates_queue_on_succeed", using: :btree
-
-  create_table "firmware_uris", force: true do |t|
-    t.string   "version"
-    t.text     "uri"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "flash_informations", force: true do |t|
-    t.integer  "user_id"
-    t.string   "title",        limit: nil
-    t.text     "description"
-    t.string   "log_level",    limit: nil
-    t.datetime "display_till"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-  end
-
-  add_index "flash_informations", ["user_id"], name: "index_flash_informations_on_user_id", using: :btree
-
   create_table "generic_templates", force: true do |t|
     t.string   "title",                                 null: false
     t.string   "snapshot_file_name"
@@ -432,14 +301,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
 
   add_index "generic_templates", ["language_id"], name: "index_salaries_salary_templates_on_language_id", using: :btree
   add_index "generic_templates", ["odt_updated_at"], name: "index_generic_templates_on_odt_updated_at", using: :btree
-
-  create_table "global_configs", force: true do |t|
-    t.string   "key"
-    t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "type_for_validation", limit: nil, default: "string", null: false
-  end
 
   create_table "invoice_templates", force: true do |t|
     t.string   "title",                  default: "",    null: false
@@ -506,12 +367,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
 
   add_index "jobs", ["name"], name: "index_jobs_on_name", using: :btree
 
-  create_table "known_players", id: false, force: true do |t|
-    t.string   "serial_number", limit: nil, null: false
-    t.string   "player_hash",   limit: nil
-    t.datetime "created_at"
-  end
-
   create_table "languages", force: true do |t|
     t.string "name", default: ""
     t.string "code", default: ""
@@ -528,199 +383,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   end
 
   add_index "ldap_attributes", ["name"], name: "index_ldap_attributes_on_name", using: :btree
-
-  create_table "license_cards", force: true do |t|
-    t.integer  "license_order_id",                             null: false
-    t.integer  "distributor_id"
-    t.integer  "sequence_number"
-    t.string   "product_code",     limit: nil
-    t.string   "serial_number",    limit: nil,                 null: false
-    t.boolean  "trial",                        default: false, null: false
-    t.boolean  "demo",                         default: false, null: false
-    t.text     "comment"
-    t.datetime "start_at"
-    t.datetime "validity_to"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
-  end
-
-  add_index "license_cards", ["distributor_id"], name: "index_license_cards_on_distributor_id", using: :btree
-  add_index "license_cards", ["license_order_id"], name: "index_license_cards_on_license_order_id", using: :btree
-  add_index "license_cards", ["product_code"], name: "index_license_cards_on_product_code", using: :btree
-  add_index "license_cards", ["sequence_number"], name: "index_license_cards_on_sequence_number", using: :btree
-  add_index "license_cards", ["serial_number"], name: "index_license_cards_on_serial_number", using: :btree
-
-  create_table "license_error_logs", force: true do |t|
-    t.string   "error_code",  limit: nil
-    t.text     "description"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-  end
-
-  create_table "license_histories", force: true do |t|
-    t.string   "action_type",         limit: nil,                 null: false
-    t.inet     "ipv4"
-    t.inet     "ipv6"
-    t.boolean  "manual",                          default: false, null: false
-    t.text     "result",                                          null: false
-    t.integer  "website_uid"
-    t.integer  "cockpit_uid"
-    t.string   "product_key",         limit: nil
-    t.string   "version",             limit: nil
-    t.string   "fqdn",                limit: nil
-    t.string   "locale",              limit: nil
-    t.string   "os_arch",             limit: nil
-    t.string   "os_build_number",     limit: nil
-    t.string   "os_version",          limit: nil
-    t.string   "processor_name",      limit: nil
-    t.string   "system_family",       limit: nil
-    t.string   "system_manufacturer", limit: nil
-    t.string   "system_product_name", limit: nil
-    t.string   "system_sku",          limit: nil
-    t.string   "system_version",      limit: nil
-    t.string   "system_macs",         limit: nil
-    t.string   "system_id",           limit: nil
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-  end
-
-  add_index "license_histories", ["action_type"], name: "index_license_histories_on_action_type", using: :btree
-  add_index "license_histories", ["product_key"], name: "index_license_histories_on_product_key", using: :btree
-
-  create_table "license_ignored_mac_addresses", force: true do |t|
-    t.macaddr  "mac",                         null: false
-    t.text     "description"
-    t.boolean  "prefix",      default: false, null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-  end
-
-  add_index "license_ignored_mac_addresses", ["mac"], name: "index_license_ignored_mac_addresses_on_mac", using: :btree
-
-  create_table "license_keys", force: true do |t|
-    t.integer  "license_card_id",                                         null: false
-    t.string   "license_key",                     limit: nil,             null: false
-    t.string   "cached_status",                   limit: nil
-    t.datetime "cached_mnu_valid_up_to"
-    t.text     "cached_mac_addresses"
-    t.datetime "cached_activation_date"
-    t.integer  "cached_releases_count",                       default: 0, null: false
-    t.integer  "cached_emergency_releases_count",             default: 0, null: false
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
-    t.datetime "cached_first_activation_date"
-  end
-
-  add_index "license_keys", ["license_card_id"], name: "index_license_keys_on_license_card_id", using: :btree
-  add_index "license_keys", ["license_key"], name: "index_license_keys_on_license_key", using: :btree
-
-  create_table "license_mac_addresses", force: true do |t|
-    t.integer  "license_history_id", null: false
-    t.macaddr  "mac",                null: false
-    t.text     "description"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-  end
-
-  add_index "license_mac_addresses", ["license_history_id"], name: "index_license_mac_addresses_on_license_history_id", using: :btree
-  add_index "license_mac_addresses", ["mac"], name: "index_license_mac_addresses_on_mac", using: :btree
-
-  create_table "license_mac_addresses_states", id: false, force: true do |t|
-    t.integer "license_mac_address_id"
-    t.integer "license_state_id"
-  end
-
-  add_index "license_mac_addresses_states", ["license_mac_address_id"], name: "index_license_mac_states_address_id", using: :btree
-  add_index "license_mac_addresses_states", ["license_state_id"], name: "index_license_mac_states_state_id", using: :btree
-
-  create_table "license_mac_addresses_trials", id: false, force: true do |t|
-    t.integer "license_trial_id",       null: false
-    t.integer "license_mac_address_id", null: false
-  end
-
-  add_index "license_mac_addresses_trials", ["license_mac_address_id"], name: "index_license_trials_macs_address_id", using: :btree
-  add_index "license_mac_addresses_trials", ["license_trial_id"], name: "index_license_trials_macs_trial_id", using: :btree
-
-  create_table "license_mnu_versions", force: true do |t|
-    t.datetime "publish_date"
-    t.integer  "major"
-    t.integer  "minor"
-    t.integer  "bugfix"
-    t.integer  "build"
-    t.string   "marketing_name", limit: nil
-    t.text     "download_url"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
-    t.boolean  "available",                  default: true, null: false
-  end
-
-  add_index "license_mnu_versions", ["available"], name: "index_license_mnu_versions_on_available", using: :btree
-  add_index "license_mnu_versions", ["publish_date"], name: "index_license_mnu_versions_on_publish_date", using: :btree
-
-  create_table "license_mnus", force: true do |t|
-    t.integer  "distributor_id"
-    t.integer  "license_key_id"
-    t.string   "product_code",   limit: nil, default: "S",   null: false
-    t.datetime "valid_from"
-    t.datetime "valid_to"
-    t.datetime "selling_date"
-    t.boolean  "disabled",                   default: false, null: false
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-  end
-
-  add_index "license_mnus", ["disabled"], name: "index_license_mnus_on_disabled", using: :btree
-  add_index "license_mnus", ["distributor_id"], name: "index_license_mnus_on_distributor_id", using: :btree
-  add_index "license_mnus", ["license_key_id"], name: "index_license_mnus_on_license_key_id", using: :btree
-  add_index "license_mnus", ["valid_from"], name: "index_license_mnus_on_valid_from", using: :btree
-  add_index "license_mnus", ["valid_to"], name: "index_license_mnus_on_valid_to", using: :btree
-
-  create_table "license_orders", force: true do |t|
-    t.integer  "order_number"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  create_table "license_registrations", force: true do |t|
-    t.integer  "license_key_id",                             null: false
-    t.integer  "user_id"
-    t.integer  "website_uid"
-    t.boolean  "archive",                    default: false, null: false
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
-    t.string   "website_email",  limit: nil
-  end
-
-  add_index "license_registrations", ["archive"], name: "index_license_registrations_on_archive", using: :btree
-  add_index "license_registrations", ["license_key_id"], name: "index_license_registrations_on_license_key_id", using: :btree
-  add_index "license_registrations", ["user_id"], name: "index_license_registrations_on_user_id", using: :btree
-
-  create_table "license_states", force: true do |t|
-    t.integer  "license_key_id",                 null: false
-    t.integer  "license_history_id",             null: false
-    t.string   "status",             limit: nil, null: false
-    t.datetime "expire_at"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-  end
-
-  add_index "license_states", ["license_history_id"], name: "index_license_states_on_license_history_id", using: :btree
-  add_index "license_states", ["license_key_id"], name: "index_license_states_on_license_key_id", using: :btree
-
-  create_table "license_trials", force: true do |t|
-    t.integer  "license_history_id",             null: false
-    t.string   "product_key",        limit: nil
-    t.string   "product",            limit: nil, null: false
-    t.string   "mnu_version",        limit: nil
-    t.datetime "registered_at",                  null: false
-    t.datetime "expire_at",                      null: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-  end
-
-  add_index "license_trials", ["license_history_id"], name: "index_license_trials_on_license_history_id", using: :btree
-  add_index "license_trials", ["mnu_version"], name: "index_license_trials_on_mnu_version", using: :btree
-  add_index "license_trials", ["product_key"], name: "index_license_trials_on_product_key", using: :btree
 
   create_table "locations", force: true do |t|
     t.integer "parent_id"
@@ -753,48 +415,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   add_index "logs", ["resource_id"], name: "index_logs_on_resource_id", using: :btree
   add_index "logs", ["resource_type"], name: "index_logs_on_resource_type", using: :btree
   add_index "logs", ["updated_at"], name: "index_logs_on_updated_at", using: :btree
-
-  create_table "notifications_histories", force: true do |t|
-    t.integer  "notifiable_id"
-    t.string   "notifiable_type"
-    t.string   "media"
-    t.string   "destination"
-    t.datetime "created_at"
-  end
-
-  add_index "notifications_histories", ["media"], name: "index_notifications_histories_on_media", using: :btree
-  add_index "notifications_histories", ["notifiable_id"], name: "index_notifications_histories_on_notifiable_id", using: :btree
-  add_index "notifications_histories", ["notifiable_type"], name: "index_notifications_histories_on_notifiable_type", using: :btree
-
-  create_table "operating_times", force: true do |t|
-    t.integer  "player_id"
-    t.boolean  "monday"
-    t.boolean  "thursday"
-    t.boolean  "wednesday"
-    t.boolean  "tuesday"
-    t.boolean  "friday"
-    t.boolean  "saturday"
-    t.boolean  "sunday"
-    t.string   "from",       limit: nil
-    t.string   "to",         limit: nil
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "operating_times", ["player_id"], name: "index_operating_times_on_player_id", using: :btree
-
-  create_table "pairing_requests", force: true do |t|
-    t.string   "pairing_hash",                  null: false
-    t.integer  "distributor_id",                null: false
-    t.integer  "dealer_id"
-    t.boolean  "active",         default: true, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "reference"
-  end
-
-  add_index "pairing_requests", ["active"], name: "index_pairing_requests_on_active", using: :btree
-  add_index "pairing_requests", ["pairing_hash"], name: "index_pairing_requests_on_pairing_hash", using: :btree
 
   create_table "people", force: true do |t|
     t.integer  "job_id"
@@ -913,111 +533,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   add_index "permissions", ["role_id"], name: "index_permissions_on_role_id", using: :btree
   add_index "permissions", ["subject"], name: "index_permissions_on_subject", using: :btree
 
-  create_table "player_attachments", force: true do |t|
-    t.integer  "player_id"
-    t.string   "type"
-    t.string   "file_file_name"
-    t.string   "file_content_type"
-    t.integer  "file_file_size"
-    t.datetime "file_updated_at"
-    t.boolean  "processed",         default: false, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "player_attachments", ["player_id"], name: "index_player_attachments_on_player_id", using: :btree
-  add_index "player_attachments", ["processed"], name: "index_player_attachments_on_processed", using: :btree
-  add_index "player_attachments", ["type"], name: "index_player_attachments_on_type", using: :btree
-
-  create_table "player_licenses", force: true do |t|
-    t.integer  "distributor_id"
-    t.integer  "dealer_id"
-    t.integer  "player_id"
-    t.boolean  "trial",             default: false, null: false
-    t.datetime "valid_from"
-    t.datetime "valid_to"
-    t.datetime "selling_date"
-    t.integer  "remaining_seconds"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "player_licenses", ["dealer_id"], name: "index_player_licenses_on_dealer_id", using: :btree
-  add_index "player_licenses", ["distributor_id"], name: "index_player_licenses_on_distributor_id", using: :btree
-  add_index "player_licenses", ["player_id"], name: "index_player_licenses_on_player_id", using: :btree
-  add_index "player_licenses", ["trial"], name: "index_player_licenses_on_trial", using: :btree
-
-  create_table "player_models", force: true do |t|
-    t.string   "name",                         null: false
-    t.text     "description"
-    t.string   "image_url"
-    t.boolean  "archive",      default: false, null: false
-    t.datetime "availability"
-    t.datetime "end_of_life"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "player_models", ["archive"], name: "index_player_models_on_archive", using: :btree
-
-  create_table "players", force: true do |t|
-    t.integer  "user_id",                                                       null: false
-    t.integer  "player_model_id"
-    t.string   "serial_number"
-    t.string   "name"
-    t.boolean  "archive",                                   default: false,     null: false
-    t.boolean  "display_status",                            default: true,      null: false
-    t.integer  "display_resolution"
-    t.text     "contact"
-    t.text     "address"
-    t.text     "notes"
-    t.text     "configuration_xml"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.integer  "uptime"
-    t.string   "current_firmware_version"
-    t.datetime "current_time"
-    t.string   "authentication_hash"
-    t.boolean  "passthrough_authentication",                default: false,     null: false
-    t.string   "current_status",                            default: "success"
-    t.integer  "current_status_log_id"
-    t.boolean  "online_status",                             default: true,      null: false
-    t.datetime "last_event_log_viewed_at"
-    t.datetime "last_info_at"
-    t.datetime "licenses_validity_from"
-    t.datetime "licenses_validity_to"
-    t.boolean  "automatic_license",                         default: false,     null: false
-    t.string   "firmware_update_method",                    default: "latest"
-    t.text     "firmware_update_uri"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "cached_license_status",         limit: nil
-    t.integer  "cached_info_pooling_interval"
-    t.integer  "cached_ready_pooling_interval"
-    t.boolean  "monitor_connectivity",                      default: true,      null: false
-    t.boolean  "monitor_screen",                            default: true,      null: false
-    t.boolean  "monitor_storage",                           default: true,      null: false
-    t.boolean  "monitor_temperature",                       default: true,      null: false
-  end
-
-  add_index "players", ["archive"], name: "index_players_on_archive", using: :btree
-  add_index "players", ["authentication_hash"], name: "index_players_on_authentication_hash", using: :btree
-  add_index "players", ["current_status"], name: "index_players_on_current_status", using: :btree
-  add_index "players", ["last_event_log_viewed_at"], name: "index_players_on_last_event_log_viewed_at", using: :btree
-  add_index "players", ["last_info_at"], name: "index_players_on_last_info_at", using: :btree
-  add_index "players", ["licenses_validity_from"], name: "index_players_on_licenses_validity_from", using: :btree
-  add_index "players", ["licenses_validity_to"], name: "index_players_on_licenses_validity_to", using: :btree
-  add_index "players", ["online_status"], name: "index_players_on_online_status", using: :btree
-  add_index "players", ["player_model_id"], name: "index_players_on_player_model_id", using: :btree
-  add_index "players", ["user_id"], name: "index_players_on_user_id", using: :btree
-
-  create_table "players_permissions", force: true do |t|
-    t.integer "player_id"
-    t.integer "user_id"
-  end
-
-  add_index "players_permissions", ["player_id", "user_id"], name: "index_players_permissions_on_player_id_and_user_id", unique: true, using: :btree
-
   create_table "private_tags", force: true do |t|
     t.integer "parent_id"
     t.string  "name",      default: "", null: false
@@ -1102,61 +617,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   add_index "public_tags", ["name"], name: "index_public_tags_on_name", using: :btree
   add_index "public_tags", ["parent_id"], name: "index_public_tags_on_parent_id", using: :btree
 
-  create_table "pull_actions_errors", force: true do |t|
-    t.integer  "pull_actions_status_id"
-    t.integer  "error_code"
-    t.text     "description"
-    t.string   "file"
-    t.time     "time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "pull_actions_errors", ["pull_actions_status_id"], name: "index_pull_actions_errors_on_pull_actions_status_id", using: :btree
-
-  create_table "pull_actions_queue", force: true do |t|
-    t.integer  "player_id"
-    t.integer  "rpc_queue_id"
-    t.string   "alias"
-    t.string   "handle"
-    t.string   "action_type"
-    t.text     "uri"
-    t.integer  "max_retry",                 default: 0
-    t.text     "options"
-    t.datetime "valid_up_to"
-    t.datetime "finished_at"
-    t.datetime "execution_confirmation_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "pull_actions_queue", ["handle"], name: "index_pull_actions_queue_on_handle", using: :btree
-  add_index "pull_actions_queue", ["player_id"], name: "index_pull_actions_queue_on_player_id", using: :btree
-  add_index "pull_actions_queue", ["rpc_queue_id"], name: "index_pull_actions_queue_on_rpc_queue_id", using: :btree
-
-  create_table "pull_actions_statuses", force: true do |t|
-    t.integer  "player_id"
-    t.integer  "pull_actions_queue_id"
-    t.boolean  "success"
-    t.string   "foreign_handle"
-    t.string   "state"
-    t.integer  "retry_count",           default: 0
-    t.integer  "file_count_new",        default: 0
-    t.integer  "nb_errors",             default: 0
-    t.string   "action_type"
-    t.integer  "file_count_modified"
-    t.integer  "file_count_deleted"
-    t.integer  "file_count_failed"
-    t.datetime "end_time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "pull_actions_statuses", ["foreign_handle"], name: "index_pull_actions_statuses_on_foreign_handle", using: :btree
-  add_index "pull_actions_statuses", ["player_id"], name: "index_pull_actions_statuses_on_player_id", using: :btree
-  add_index "pull_actions_statuses", ["pull_actions_queue_id"], name: "index_pull_actions_statuses_on_pull_actions_queue_id", using: :btree
-  add_index "pull_actions_statuses", ["success"], name: "index_pull_actions_statuses_on_success", using: :btree
-
   create_table "query_presets", force: true do |t|
     t.string "name",  default: ""
     t.text   "query", default: ""
@@ -1164,21 +624,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
 
   add_index "query_presets", ["name"], name: "index_query_presets_on_name", using: :btree
   add_index "query_presets", ["query"], name: "index_query_presets_on_query", using: :btree
-
-  create_table "reboot_logs", force: true do |t|
-    t.integer  "player_id"
-    t.integer  "event_log_id"
-    t.string   "firmware_version"
-    t.string   "firmware_status"
-    t.string   "bootid"
-    t.string   "mode"
-    t.string   "reason"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "reboot_logs", ["event_log_id"], name: "index_reboot_logs_on_event_log_id", using: :btree
-  add_index "reboot_logs", ["player_id"], name: "index_reboot_logs_on_player_id", using: :btree
 
   create_table "receipts", force: true do |t|
     t.integer  "invoice_id"
@@ -1206,24 +651,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   end
 
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
-
-  create_table "rpc_queue", force: true do |t|
-    t.integer  "player_id"
-    t.integer  "response_id"
-    t.text     "options",      default: "--- {}"
-    t.string   "command"
-    t.integer  "sent_counter", default: 0
-    t.datetime "valid_up_to"
-    t.datetime "sent_at"
-    t.datetime "received_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "parent_id"
-  end
-
-  add_index "rpc_queue", ["parent_id"], name: "index_rpc_queue_on_parent_id", using: :btree
-  add_index "rpc_queue", ["player_id"], name: "index_rpc_queue_on_player_id", using: :btree
-  add_index "rpc_queue", ["response_id"], name: "index_rpc_queue_on_response_id", using: :btree
 
   create_table "salaries", force: true do |t|
     t.integer  "parent_id"
@@ -1474,41 +901,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
-  create_table "stats_info", force: true do |t|
-    t.integer  "player_id"
-    t.datetime "time"
-    t.string   "render"
-    t.integer  "pictures"
-    t.integer  "peak"
-    t.integer  "usage_arm"
-    t.integer  "usage_dsp"
-    t.integer  "usage_average"
-    t.text     "usage_max"
-    t.integer  "buffers_average"
-    t.integer  "buffers_min"
-    t.integer  "drop_fps_average"
-    t.text     "drop_fps_max"
-    t.integer  "drop_peak_average"
-    t.text     "drop_peak_max"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "stats_info", ["player_id"], name: "index_stats_info_on_player_id", using: :btree
-
-  create_table "storage_info", force: true do |t|
-    t.integer  "player_id"
-    t.string   "fs_type"
-    t.integer  "free"
-    t.integer  "used"
-    t.integer  "total"
-    t.string   "unit"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "storage_info", ["player_id"], name: "index_storage_info_on_player_id", using: :btree
-
   create_table "subscription_values", force: true do |t|
     t.integer "subscription_id",                     null: false
     t.integer "invoice_template_id",                 null: false
@@ -1613,17 +1005,6 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   add_index "tasks", ["value_currency"], name: "index_tasks_on_value_currency", using: :btree
   add_index "tasks", ["value_in_cents"], name: "index_tasks_on_value_in_cents", using: :btree
 
-  create_table "temperature_info", force: true do |t|
-    t.integer  "player_id"
-    t.float    "celcius"
-    t.string   "alarm"
-    t.text     "history"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "temperature_info", ["player_id"], name: "index_temperature_info_on_player_id", using: :btree
-
   create_table "translation_aptitudes", force: true do |t|
     t.integer "person_id"
     t.integer "from_language_id"
@@ -1633,107 +1014,5 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   add_index "translation_aptitudes", ["from_language_id"], name: "index_translation_aptitudes_on_from_language_id", using: :btree
   add_index "translation_aptitudes", ["person_id"], name: "index_translation_aptitudes_on_person_id", using: :btree
   add_index "translation_aptitudes", ["to_language_id"], name: "index_translation_aptitudes_on_to_language_id", using: :btree
-
-  create_table "user_alert_emails", force: true do |t|
-    t.integer  "user_id"
-    t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "user_alert_phones", force: true do |t|
-    t.integer  "user_id"
-    t.string   "phone_number"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "user_requests", force: true do |t|
-    t.integer  "parent_id"
-    t.integer  "sender_id"
-    t.integer  "receiver_id"
-    t.string   "message_kind"
-    t.boolean  "read",         default: false, null: false
-    t.boolean  "acknowleged",  default: false, null: false
-    t.boolean  "deleted",      default: false, null: false
-    t.string   "title"
-    t.text     "description"
-    t.integer  "amount"
-    t.text     "players"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "user_requests", ["parent_id"], name: "index_user_requests_on_parent_id", using: :btree
-  add_index "user_requests", ["receiver_id"], name: "index_user_requests_on_receiver_id", using: :btree
-  add_index "user_requests", ["sender_id"], name: "index_user_requests_on_sender_id", using: :btree
-
-  create_table "user_requests_keys", force: true do |t|
-    t.integer "license_key_id"
-    t.integer "user_request_id"
-    t.integer "amount"
-  end
-
-  add_index "user_requests_keys", ["license_key_id"], name: "index_user_requests_keys_on_license_key_id", using: :btree
-  add_index "user_requests_keys", ["user_request_id"], name: "index_user_requests_keys_on_user_request_id", using: :btree
-
-  create_table "users", force: true do |t|
-    t.string   "email",                         default: "",    null: false
-    t.string   "encrypted_password",            default: "",    null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                 default: 0,     null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
-    t.string   "authentication_token"
-    t.string   "authentication_hash"
-    t.integer  "failed_attempts",               default: 0,     null: false
-    t.string   "unlock_token"
-    t.datetime "locked_at"
-    t.boolean  "locked"
-    t.string   "company_name"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.text     "address"
-    t.string   "location"
-    t.string   "latitude"
-    t.string   "longitude"
-    t.string   "zip"
-    t.string   "phone"
-    t.string   "mobile"
-    t.string   "locale"
-    t.string   "timezone"
-    t.string   "role"
-    t.boolean  "provide_support"
-    t.boolean  "automatic_license",             default: false, null: false
-    t.boolean  "overview_welcome",              default: true,  null: false
-    t.boolean  "overview_getting_started",      default: true,  null: false
-    t.boolean  "players_gettings_started",      default: true,  null: false
-    t.boolean  "player_getting_started",        default: true,  null: false
-    t.boolean  "player_events_getting_started", default: true,  null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
-
-  create_table "users_relations", force: true do |t|
-    t.integer "parent_id"
-    t.integer "child_id"
-  end
-
-  add_index "users_relations", ["child_id"], name: "index_users_relations_on_child_id", using: :btree
-  add_index "users_relations", ["parent_id", "child_id"], name: "index_users_relations_on_parent_id_and_child_id", unique: true, using: :btree
-  add_index "users_relations", ["parent_id"], name: "index_users_relations_on_parent_id", using: :btree
 
 end
