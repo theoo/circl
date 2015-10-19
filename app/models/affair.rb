@@ -452,7 +452,7 @@ class Affair < ActiveRecord::Base
   end
 
   def to_be_billed?
-    invoices_value < value
+    invoices_value_with_taxes < value_with_taxes
   end
 
   # Product items sorting
