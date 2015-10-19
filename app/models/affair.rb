@@ -406,51 +406,78 @@ class Affair < ActiveRecord::Base
 
   # Workflows and statuses
 
-  # Returns true if all invoices are open in this affair.
+  #
+  # Are all invoices of this affair open ?
+  #
+  # @return [Boolean] true if all billable invoices are open
   def open?
-    invoices.inject(false) { |sum, i| sum | i.has_status?(:open) }
+    invoices.billable.inject(false) { |sum, i| sum | i.has_status?(:open) }
   end
 
-  # Returns true if invoices are partially paid in this affair.
+  #
+  # Are some invoices of this affair open ?
+  #
+  # @return [Boolean] true if some billable invoices are open
   def partially_paid?
     if open?
-      return invoices.inject(false) { |sum, i| sum | i.has_status?(:paid) }
+      return invoices.billable.inject(false) { |sum, i| sum | i.has_status?(:paid) }
     end
     false
   end
 
-  # Return true if every single invoice has been paid.
-  # If the sum of receipts is greater than the sum of invoices, it
-  # doesn't means every single invoice has been paid.
+  #
+  # Are all invoices been paid?
+  # @note every single invoice has been paid.
+  #   If the sum of receipts is greater than the sum of invoices, it doesn't means every single invoice has been paid.
+  #   Unbillable invoices (cancelled and offered) are not part of the computation
+  #
+  # @return [Boolean] true if all billable invoices are paid
   def paid?
-    return false if invoices.count == 0
-    invoices.inject(true) { |sum, i| sum & i.has_status?(:paid) }
+    return false if invoices.billable.count == 0
+    invoices.billable.inject(true) { |sum, i| sum & i.has_status?(:paid) }
   end
 
-  # Returns true if at leaset one invoice is overpaid in this affair.
+
+  #
+  # Are some invoices overpaid ?
+  #
+  # @return [Boolean] true if at least one billable invoice is overpaid
   def overpaid?
-    return false if invoices.count == 0
-    invoices.inject(false) { |sum, i| sum | i.has_status?(:overpaid) }
+    return false if invoices.billable.count == 0
+    invoices.billable.inject(false) { |sum, i| sum | i.has_status?(:overpaid) }
   end
 
-  # Returns true if at least one invoice is underpaid in this affair.
+  #
+  # Are some invoices underpaid ?
+  #
+  # @return [Boolean] true if at least one billable invoice is underpaid
   def underpaid?
-    return false if invoices.count == 0
-    invoices.inject(false) { |sum, i| sum | i.has_status?(:underpaid) }
+    return false if invoices.billable.count == 0
+    invoices.billable.inject(false) { |sum, i| sum | i.has_status?(:underpaid) }
   end
 
-  # Returns true if all invoices are set to cancelled.
+  #
+  # Are all invoices cancelled ?
+  #
+  # @return [Boolean] true if all unbillable invoices are set to "cancelled"
   def cancelled?
-    return false if invoices.count == 0
-    invoices.inject(true) { |sum, i| sum & i.has_status?(:cancelled) }
+    return false if invoices.unbillable.count == 0
+    invoices.unbillable.inject(true) { |sum, i| sum & i.has_status?(:cancelled) }
   end
 
-  # Returns true if all invoices are set to offered.
+  #
+  # Are all invoices offered ?
+  #
+  # @return [Boolean] true if all unbillable invoices are set to "offered"
   def offered?
-    return false if invoices.count == 0
-    invoices.inject(true) { |sum, i| sum & i.has_status?(:offered) }
+    return false if invoices.unbillable.count == 0
+    invoices.unbillable.inject(true) { |sum, i| sum & i.has_status?(:offered) }
   end
 
+  #
+  # Is there something to bill in this affair ?
+  #
+  # @return [Boolean] true if the #value_with_taxes greater than #invoices_value_with_taxes
   def to_be_billed?
     invoices_value_with_taxes < value_with_taxes
   end
