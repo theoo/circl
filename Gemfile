@@ -23,9 +23,9 @@ gem 'tire', '0.6.2'
 gem 'net-ldap', :git => 'git://github.com/ruby-ldap/ruby-net-ldap.git'
 
 # pdf and images
-gem 'pdfkit', '0.5.2'
+gem 'pdfkit', '0.8.2'
 gem 'imgkit', '1.3.6'
-gem 'paperclip', '4.2.0'
+gem 'paperclip', '4.3.1'
 gem 'serenity', '0.2.4', :git => 'git://github.com/theoo/serenity.git'
 gem 'rubyzip', '1.1.0'
 gem 'recursive-open-struct', '0.4.5'

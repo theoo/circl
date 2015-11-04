@@ -24,7 +24,10 @@ class People::Affairs::InvoicesController < ApplicationController
 
   load_resource :person
   load_resource :affair
-  load_and_authorize_resource through: :affair
+  load_and_authorize_resource through: :affair, except: :bvr_preview
+
+  # NOTE Only for testing purpose
+  skip_filter :authenticate_person!
 
   monitor_changes :@invoice
 
@@ -57,14 +60,14 @@ class People::Affairs::InvoicesController < ApplicationController
       end
 
       if params[:template_id]
+        generator = AttachmentGenerator.new(@affair)
+
         format.html do
-          generator = AttachmentGenerator.new(@affair)
           render inline: generator.html, layout: 'preview'
         end
 
         format.pdf do
           @pdf = ""
-          generator = AttachmentGenerator.new(@affair)
           generator.pdf { |o,pdf| @pdf = pdf.read }
           send_data @pdf,
                     filename: "affair_invoices_#{params[:affair_id]}.pdf",
@@ -73,7 +76,6 @@ class People::Affairs::InvoicesController < ApplicationController
 
         format.odt do
           @odt = ""
-          generator = AttachmentGenerator.new(@affair)
           generator.odt { |o,odt| @odt = odt.read }
           send_data @odt,
                     filename: "affair_invoices_#{params[:affair_id]}.odt",
@@ -114,6 +116,14 @@ class People::Affairs::InvoicesController < ApplicationController
       else
         format.json { render json: @invoice.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def bvr_preview
+    @invoice = Invoice.find(params[:id])
+    l = params["frame"].nil? ? 'pdf' : 'preview'
+    respond_to do |format|
+      format.html { render :bvr, layout: l }
     end
   end
 

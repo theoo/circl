@@ -46,6 +46,10 @@ CIRCL::Application.routes.draw do
       end
 
       resources :invoices, :controller => 'people/affairs/invoices' do
+        member do
+          get 'bvr_preview'
+        end
+
         collection do
           get 'search'
         end

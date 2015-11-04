@@ -42,6 +42,7 @@ class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
   def process!
     @invoice = Invoice.find(options[:invoice_id])
 
+
     # GENERATE INVOICE FROM ODT TEMPLATE
     file = Tempfile.new(['invoice_body', '.pdf'], encoding: 'ascii-8bit')
     generator = AttachmentGenerator.new(@invoice)
@@ -58,6 +59,8 @@ class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
       bvr.binmode
 
       # Using path instead of url so it works in dev mode too.
+      # TODO limit page to one. if css describes it, it may be longer. Then reverse document and bg in pdftk, so
+      # content never overlap the bvr
       kit = PDFKit.new(html)
 
       bvr.write(kit.to_pdf)
@@ -66,9 +69,6 @@ class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
       # MERGE INVOICE AND BVR
       document = Tempfile.new(["invoice_document", '.pdf'], encoding: 'ascii-8bit')
 
-      # FIXME invert file and bvr files in pdftk so if body content is too long it doesn't
-      # overlap on BVR. Currently wkhtmltopdf always print a white background instead of a transparent one.
-      # --no-background doesn't seams to make any changes.
       script = Tempfile.new(['script', '.sh'], encoding: 'ascii-8bit')
       script.write("#!/bin/bash\n")
       script.write("pdftk #{file.path} background #{bvr.path} output #{document.path}\n")

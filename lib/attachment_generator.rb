@@ -24,13 +24,7 @@ class AttachmentGenerator
 
   # TODO remove useless reference and provide template overriding instead.
   def initialize(object, reference = nil, relations = [])
-    # TODO convert to OpenStruct
-    # o = @object.as_json
-    # relations.each do |r|
-    #   o[r.to_sym] = @object.send(r).as_json
-    # end
-
-    # @o = RecursiveOpenStruct.new o
+    # TODO limit access to object, provide a list of allowd methods
 
     # Object used in block
     if reference
@@ -38,7 +32,10 @@ class AttachmentGenerator
     else
       @object = object
     end
-    @o = object # Object used in document as placeholder
+    # Object used in document as placeholder
+    # TODO It has to be a clone because render_odt is corrupting object. Text field contains <text:line-break/>
+    # instead of \n afterwards !
+    @o = object.dup
   end
 
   def pdf
@@ -138,7 +135,5 @@ class AttachmentGenerator
     end
     @tmp_file.unlink
   end
-
-  # /home/to/Code/rails/circl/public/system/generic_templates/odts/000/000/002/original/salary.odt
 
 end
