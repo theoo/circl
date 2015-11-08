@@ -53,7 +53,7 @@ class OpenAffairsDatatable
 
         if affair.subscriptions.count > 0
           haml_tag :br
-          haml_tag ".badge", affair.subscriptions_count
+          haml_tag ".badge", affair.subscriptions.count
           haml_concatI18n.t('affair.views.subscriptions') + " :"
           haml_concat affair.subscriptions_value.to_view
         end
