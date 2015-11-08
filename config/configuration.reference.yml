@@ -74,6 +74,7 @@ pdfkit:
     margin_right: 0mm
     margin_bottom: 0mm
     margin_left: 0mm
+    quiet: true
 
 # IMGKit
 imgkit:
