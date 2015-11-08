@@ -46,9 +46,9 @@ class BackgroundTasks::PrepareSubscriptionPdfsAndEmail < BackgroundTask
         next unless i.affair.subscription_ids.include?(options[:subscription_id])
         invoices_ids << i.id
         if i.pdf_up_to_date?
-          log "PDF for invoice #{i.id} is up to date, skipping..."
+          logger.info "PDF for invoice #{i.id} is up to date, skipping..."
         else
-          log "PDF for invoice #{i.id} is not up to date, generating..."
+          logger.info "PDF for invoice #{i.id} is not up to date, generating..."
           BackgroundTasks::GenerateInvoicePdf.process!(invoice_id: i.id)
         end
       end
