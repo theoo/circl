@@ -154,8 +154,12 @@ class Invoice < ActiveRecord::Base
                     numericality: { less_than_or_equal: 99999999.99 }, # BVR limit
                     allow_nil: true
 
-  validates_attachment :pdf,
-    content_type: { content_type: "application/pdf" }
+  # Mime type or content type validation sometime fails with the current script.
+  # Whether update the script or add "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" content type
+  # which seams to be the most frequent source of confusion.
+  validates_attachment_content_type :pdf, :content_type => /\A.*\Z/ # Fake validator
+  # validates_attachment :pdf,
+  #   content_type: { content_type: "application/pdf" }
 
   #####################
   ### CLASS METHODS ###

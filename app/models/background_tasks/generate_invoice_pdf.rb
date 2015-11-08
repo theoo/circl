@@ -42,7 +42,6 @@ class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
   def process!
     @invoice = Invoice.find(options[:invoice_id])
 
-
     # GENERATE INVOICE FROM ODT TEMPLATE
     file = Tempfile.new(['invoice_body', '.pdf'], encoding: 'ascii-8bit')
     generator = AttachmentGenerator.new(@invoice)
@@ -68,6 +67,7 @@ class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
 
       # MERGE INVOICE AND BVR
       document = Tempfile.new(["invoice_document", '.pdf'], encoding: 'ascii-8bit')
+      document.binmode
 
       script = Tempfile.new(['script', '.sh'], encoding: 'ascii-8bit')
       script.write("#!/bin/bash\n")
