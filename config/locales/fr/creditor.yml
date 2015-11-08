@@ -41,7 +41,7 @@ fr:
       dates_field: référence pour l'intervale
       discount: escompte
       discount_account: compte d'escompte
-      discount_ends_on: échéance de l'escompte
+      discount_ends_on: "échéance de l'escompte"
       discount_percentage: escompte %
       example_files_explanation: Le fichier exemple ci-dessous peut être employé pour préparer les données à importer.
       export: exporter

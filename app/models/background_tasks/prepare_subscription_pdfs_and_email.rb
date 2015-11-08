@@ -28,7 +28,7 @@
 # == Schema Information End
 #++
 
-# Options are: :subscription_id, :person, :query
+# Options are: :subscription_id, :person, :query, :current_locale
 class BackgroundTasks::PrepareSubscriptionPdfsAndEmail < BackgroundTask
   def self.generate_title(options)
     I18n.t("background_task.tasks.prepare_subscription_pdf_and_email",
@@ -56,6 +56,7 @@ class BackgroundTasks::PrepareSubscriptionPdfsAndEmail < BackgroundTask
     BackgroundTasks::ConcatAndEmailSubscriptionPdf.process!(subscription_id: options[:subscription_id],
                                                             invoices_ids: invoices_ids,
                                                             person: options[:person],
-                                                            query: options[:query])
+                                                            query: options[:query],
+                                                            current_locale: options[:current_locale])
   end
 end

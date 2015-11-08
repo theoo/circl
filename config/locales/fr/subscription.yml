@@ -29,11 +29,21 @@ fr:
       no_existing_invoice_template_alert: Il n'existe pas de modèle de facture, veuillez en créer avant de poursuivre avec la création d'inscription.
       no_existing_subscription_alert: Il n'existe pas d'inscription, veuillez en créer pour en ajouter à une affaire.
     pdf:
+      front_page:
+        invoices_count: Nombre de factures
+        order_query: Ordre du tri
+        pdf_file_size: Taille du fichier PDF
+        pdf_updated_at: Date de la dernière mise à jour du fichier PDF
+        subscription_created_at: Date de création de l'inscription
+        subscription_id: ID de l'inscription
+        subscription_updated_at: Date de la dernière mise à jour de l'inscription
       interval_ends_on: fin de l'intervalle
       interval_starts_on: début de l'intervalle
     views:
       actions:
         add_members_to_subscription: ajouter des membres à l'inscription
+        download_pdf: télécharger le dernier PDF généré
+        generate_pdf: trier et regénérer le PDF
         merge: fusionner vers une autre inscription
         remove_members_from_subscription: retirer tous les membres de l'inscription
         subscription_reminder: créer une inscription de rappel
@@ -43,7 +53,6 @@ fr:
         view_subscription_members: voir les membres
         view_subscription_members_who_didnt_paid: voir les membres qui n'ont pas payé
         view_subscription_members_who_paid: voir les membres qui ont payé
-        view_subscription_pdf: télécharger le PDF des factures
         view_subscription_receivers: voir les receveurs
       add_members_message: Les personnes sélectionnées seront ajoutées à l'inscription.
       add_members_title: Ajouter des personnes à l'inscription

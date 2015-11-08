@@ -249,7 +249,8 @@ class Subscription < ActiveRecord::Base
     h[:receipts_count] = receipts.count
     h[:receipts_value] = receipts_value.to_f
     h[:overpaid_value] = overpaid_value.to_f
-    h[:errors] = errors
+    h[:pdf_public_url] = pdf_public_url
+    h[:errors]         = errors
     h
   end
 

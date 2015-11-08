@@ -38,8 +38,25 @@ class BackgroundTasks::ConcatAndEmailSubscriptionPdf < BackgroundTask
   end
 
   def process!
+    I18n.locale = options[:current_locale]
     subscription = Subscription.find options[:subscription_id]
+
+    # GENERATE FRONTPAGE
+    controller = Admin::SubscriptionsController.new
+    html = controller.render_to_string( inline: controller.pdf_front_page(subscription, options[:query]))
+    html.assets_to_full_path!
+
+    front_page = Tempfile.new(["subscription#{subscription.id}_front_page", '.pdf'], encoding: 'ascii-8bit')
+    front_page.binmode
+
+    kit = PDFKit.new(html)
+
+    front_page.write(kit.to_pdf)
+    front_page.flush
+
+    # MAP PDF URLS
     paths = options[:invoices_ids].map{ |id| Invoice.find(id).pdf.path }
+    paths.insert(0, front_page.path)
 
     file = Tempfile.new(["subscription#{subscription.id}", ".pdf"], encoding: 'ascii-8bit')
     file.binmode

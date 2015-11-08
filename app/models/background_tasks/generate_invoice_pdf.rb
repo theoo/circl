@@ -83,7 +83,10 @@ class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
     end
 
     @invoice.pdf = file
-    @invoice.save!
+    @invoice.save
+    if @invoice.errors.size > 0
+      raise ArgumentError, "Failed to save invoice #{@invoice.inspect}, #{@invoice.errors.inspect}"
+    end
 
     # this won't touch updated_at column
     @invoice.update_column(:pdf_updated_at, Time.now)

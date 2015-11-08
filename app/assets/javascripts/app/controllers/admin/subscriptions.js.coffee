@@ -187,7 +187,7 @@ class Edit extends ValueItemsController
     'click button[name="remove_item"]':  'remove_value_item'
     'click button[name="add_item"]':     'add_value_item'
     'click button[name=subscription-destroy]':                'destroy'
-    'click a[name=subscription-pdf]':                         'pdf'
+    'click a[name=generate-pdf]':                             'generate_pdf'
     'click a[name=subscription-members-view]':                'view_members'
     'click a[name=subscription-buyers-view]':                 'view_buyers'
     'click a[name=subscription-receivers-view]':              'view_receivers'
@@ -220,7 +220,6 @@ class Edit extends ValueItemsController
     # allow user to sort and redefine position
     @make_table_sortable()
 
-
   submit: (e) ->
     e.preventDefault()
     attr = $(e.target).serializeObject()
@@ -231,7 +230,7 @@ class Edit extends ValueItemsController
 
     @save_with_notifications @subscription.load(attr)
 
-  pdf: (e) ->
+  generate_pdf: (e) ->
     e.preventDefault()
 
     query       = {search_string: "subscriptions.id: #{@subscription.id}"}

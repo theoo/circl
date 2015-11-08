@@ -29,6 +29,14 @@ en:
       no_existing_invoice_template_alert: no existing invoice template alert
       no_existing_subscription_alert: no existing subscription alert
     pdf:
+      front_page:
+        invoices_count: Invoices count
+        order_query: Sorting order
+        pdf_file_size: PDF file size
+        pdf_updated_at: PDF last update
+        subscription_created_at: Subscription creation date
+        subscription_id: Subscription ID
+        subscription_updated_at: Subscription last update
       interval_ends_on: interval end
       interval_starts_on: interval start
       title: title
@@ -36,6 +44,8 @@ en:
     views:
       actions:
         add_members_to_subscription: add members to subscription
+        download_pdf: MISSING_TRANSLATION download pdf
+        generate_pdf: MISSING_TRANSLATION generate pdf
         merge: merge
         remove_members_from_subscription: remove members from subscription
         subscription_reminder: subscription reminder

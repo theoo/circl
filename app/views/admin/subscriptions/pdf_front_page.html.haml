@@ -1,0 +1,29 @@
+
+%div{style: "padding: 20mm;"}
+
+  %center= image_tag("circl_letter.png", width: 200)
+  %br
+
+  %h1= @subscription.title
+
+  %dl
+    %dt= I18n.t("subscription.pdf.front_page.subscription_id")
+    %dd= @subscription.id
+
+    %dt= I18n.t("subscription.pdf.front_page.subscription_created_at")
+    %dd= I18n.l(@subscription.created_at, format: :long)
+
+    %dt= I18n.t("subscription.pdf.front_page.subscription_updated_at")
+    %dd= I18n.l(@subscription.updated_at, format: :long)
+
+    %dt= I18n.t("subscription.pdf.front_page.pdf_updated_at")
+    %dd= I18n.l(@subscription.pdf_updated_at, format: :long)
+
+    %dt= I18n.t("subscription.pdf.front_page.pdf_file_size")
+    %dd= (@subscription.pdf_file_size / 1024).to_s + " kilobytes"
+
+    %dt= I18n.t("subscription.pdf.front_page.invoices_count")
+    %dd= @subscription.invoices.count
+
+    %dt= I18n.t("subscription.pdf.front_page.order_query")
+    %dd= @query[:attributes_order].join(", ") if @query and @query[:attributes_order]

@@ -46,7 +46,8 @@ class Admin::SubscriptionsController < ApplicationController
             BackgroundTasks::PrepareSubscriptionPdfsAndEmail.schedule(subscription_id: @subscription.id,
                                                                       people_ids: people.map{ |p| p.id.to_i },
                                                                       person: current_person,
-                                                                      query: query)
+                                                                      query: query,
+                                                                      current_locale: I18n.locale)
 
             flash[:notice] = I18n.t('admin.notices.pdf_will_be_sent', email: current_person.email)
           else
@@ -427,6 +428,19 @@ class Admin::SubscriptionsController < ApplicationController
         format.json { render json: {} }
       end
     end
+  end
+
+  #
+  # Generate PDF front page, a summary to keep sorting, date and references information within the PDF itself
+  # @param subscription [Subscription] object it's all about
+  #
+  # @return [String] html page
+  def pdf_front_page(subscription, query)
+
+    @subscription = subscription
+    @query = query
+    render_to_string("pdf_front_page")
+
   end
 
 end

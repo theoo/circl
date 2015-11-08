@@ -197,9 +197,14 @@
 
                 %ul.dropdown-menu
                   %li{class: (if @subscription.invoices_count == 0 then 'disabled' else '')}
-                    %a{href: '#', name: 'subscription-pdf'}
+                    %a{href: '#', name: 'generate-pdf'}
                       .icon-cloud-download
-                      = I18n.t('subscription.views.actions.view_subscription_pdf')
+                      = I18n.t('subscription.views.actions.generate_pdf')
+
+                  %li{class: (if @subscription.pdf_public_url then '' else 'disabled')}
+                    %a{href: "#{@subscription.pdf_public_url}", target: '_blank'}
+                      .icon-cloud-download
+                      = I18n.t('subscription.views.actions.download_pdf')
 
               .btn-group
                 %button{:data-toggle => 'dropdown',
