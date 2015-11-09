@@ -125,7 +125,10 @@ module Exporter
           old_account = account
           account = counterpart_account
           counterpart_account = old_account
-          cc1 = "-#{cc1}"
+          cc1 = "-#{cc1}" unless cc1.blank?
+          vat_code = creditor.creditor.try(:creditor_vat_discount_account)
+        else
+          vat_code = creditor.creditor.try(:creditor_vat_account)
         end
 
         lines << {
@@ -137,7 +140,7 @@ module Exporter
           :value_currency             => creditor.value_currency,
           :account                    => account,
           :counterpart_account        => counterpart_account,
-          :vat_code                   => creditor.creditor.try(:creditor_vat_account),
+          :vat_code                   => vat_code,
           :vat_rate                   => @options[:service_vat_rate],
           :person_id                  => creditor.creditor.try(:id),
           :person_name                => creditor.creditor.try(:name),

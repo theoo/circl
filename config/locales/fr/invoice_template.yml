@@ -16,6 +16,6 @@ fr:
       invoices: factures
       language: langue du modèle
       language_notice: localisation des attributs
-      show_invoice_value: imprimer avec la valeure de la facture
+      show_invoice_value: imprimer avec la valeur de la facture
       thumb: aperçu
       with_bvr: imprimer le BVR
