@@ -14,10 +14,10 @@
   - if @invoice.invoice_template.show_invoice_value
     / FIXME Not DRY
     .bvr_value1
-      - @invoice.value_with_taxes.cents.to_s.split('').reverse.each.with_index do |digit, index|
+      - @invoice.balance_value.abs.cents.to_s.split('').reverse.each.with_index do |digit, index|
         %div{class: "digit#{index + 1}"}= digit
     .bvr_value2
-      - @invoice.value_with_taxes.cents.to_s.split('').reverse.each.with_index do |digit, index|
+      - @invoice.balance_value.abs.cents.to_s.split('').reverse.each.with_index do |digit, index|
         %div{class: "digit#{index + 1}"}= digit
   - else
     .bvr_value1
