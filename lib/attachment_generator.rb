@@ -35,7 +35,7 @@ class AttachmentGenerator
     # Object used in document as placeholder
     # TODO It has to be a clone because render_odt is corrupting object. Text field contains <text:line-break/>
     # instead of \n afterwards !
-    @o = object.dup
+    @o = object
   end
 
   def pdf
