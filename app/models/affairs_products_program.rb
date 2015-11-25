@@ -224,6 +224,22 @@ class AffairsProductsProgram < ActiveRecord::Base
     end
   end
 
+  #
+  # Discount value, helper for templates
+  #
+  # @return [Money] value of discount
+  def discount_value
+    value - bid_price
+  end
+
+  #
+  # Does this item have a discount?
+  #
+  # @return [Boolean] true if the bid_price and the value are not equal
+  def discount?
+    value != bid_price
+  end
+
   # override sibilings method so nil parent doesn't returns the whole product_items database
   def siblings
     if parent
