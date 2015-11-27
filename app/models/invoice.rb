@@ -224,7 +224,7 @@ class Invoice < ActiveRecord::Base
   # Returns the reference number for BVRs, the upper and shorter line.
   def bvr_reference_number(options = {})
     if invoice_template.account_identification.blank?
-      ref = ApplicationSetting.value(:application_id).rjust(6, '0') # application id
+      ref = ApplicationSetting.value(:application_id).to_s.rjust(6, '0') # application id
     else
       ref = invoice_template.account_identification
     end
@@ -291,7 +291,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def compute_vat
-    return 0.to_money if ApplicationSetting.value('use_vat') != "true"
+    return 0.to_money if ApplicationSetting.value('use_vat')
     value * (100.0 / vat_percentage)
   end
 
@@ -462,7 +462,7 @@ class Invoice < ActiveRecord::Base
   def set_vat_percentage_if_empty
     unless self.vat_percentage
       self.vat_percentage ||= affair.vat_percentage
-      self.vat_percentage = ApplicationSetting.value('service_vat_rate').to_f
+      self.vat_percentage = ApplicationSetting.value('service_vat_rate')
     end
   end
 
@@ -474,7 +474,7 @@ class Invoice < ActiveRecord::Base
 
   def vat_calculation_availability
     extras.each do |i|
-      if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f
+      if i.vat_percentage != ApplicationSetting.value("service_vat_rate")
         errors.add(:base,
            I18n.t('affair.errors.unable_to_compute_value_without_taxes_if_extras_have_different_vat_values'))
         return false

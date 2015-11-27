@@ -62,7 +62,7 @@ class New extends App.ExtendedController
 
     @setup_vat
       ids_prefix: 'person_affair_invoice_'
-      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
+      bind_events: App.ApplicationSetting.value('use_vat')
 
     PersonAffair.bind('refresh', @active)
     PersonAffairInvoice.bind('refresh', @active)
@@ -139,7 +139,7 @@ class Edit extends App.ExtendedController
 
     @setup_vat
       ids_prefix: 'person_affair_invoice_'
-      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
+      bind_events: App.ApplicationSetting.value('use_vat')
 
   active: (params) ->
     @can = params.can if params.can
@@ -154,7 +154,7 @@ class Edit extends App.ExtendedController
     @affair = PersonAffair.find(@invoice.affair_id)
     @html @view('people/affairs/invoices/form')(@)
 
-    if App.ApplicationSetting.value('use_vat') == "true"
+    if App.ApplicationSetting.value('use_vat')
       @highlight_vat()
 
   submit: (e) ->

@@ -16,7 +16,7 @@
         %td= i.printed_address
         %td= i.title
         %td
-          - if App.ApplicationSetting.value('use_vat') == "true"
+          - if App.ApplicationSetting.value('use_vat')
             - without_taxes_translation = I18n.t("affair.views.value.without_taxes")
           - else
             - without_taxes_translation = I18n.t("affair.views.value.value")
@@ -25,7 +25,7 @@
               %td= i.value?.to_view(i.value_currency)
               %td= without_taxes_translation
 
-            - if App.ApplicationSetting.value('use_vat') == "true"
+            - if App.ApplicationSetting.value('use_vat')
               %tr
                 %td= i.vat?.to_view(i.value_currency)
                 %td= I18n.t("affair.views.value.vat")

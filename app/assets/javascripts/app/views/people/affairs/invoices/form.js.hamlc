@@ -130,7 +130,7 @@
                 != @partial('select_currency')(currency: @invoice.value_currency, name: 'value_currency', value: @invoice.value)
 
         .col-sm-6
-          - if App.ApplicationSetting.value('use_vat') == "true"
+          - if App.ApplicationSetting.value('use_vat')
             .form-group
               %label
               .checkbox
@@ -142,7 +142,7 @@
                           value: 1 }
                   = I18n.t('affair.views.custom_value_with_taxes')
 
-      - if App.ApplicationSetting.value('use_vat') == "true"
+      - if App.ApplicationSetting.value('use_vat')
         != @partial('edit_vat')(object: @invoice, prefix: @ids_prefix)
 
       .row

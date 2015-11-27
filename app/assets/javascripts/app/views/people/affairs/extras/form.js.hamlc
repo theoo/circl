@@ -64,7 +64,7 @@
                   name: 'position',
                   value: @extra.position }
 
-    - if App.ApplicationSetting.value('use_vat') == "true"
+    - if App.ApplicationSetting.value('use_vat')
       != @partial('edit_vat')(object: @extra, prefix: @ids_prefix)
 
     .row

@@ -30,7 +30,7 @@ class New extends App.ExtendedController
     super
     @setup_vat
       ids_prefix: 'person_affair_extra_'
-      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
+      bind_events: App.ApplicationSetting.value('use_vat')
 
   active: (params) =>
     if params
@@ -75,7 +75,7 @@ class Edit extends App.ExtendedController
     @ids_prefix = 'person_affair_extra_'
     @setup_vat
       ids_prefix: @ids_prefix
-      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
+      bind_events: App.ApplicationSetting.value('use_vat')
 
   active: (params) =>
     if params
@@ -96,7 +96,7 @@ class Edit extends App.ExtendedController
     @extra = PersonAffairExtra.find(@id)
     @html @view('people/affairs/extras/form')(@)
     @show()
-    if App.ApplicationSetting.value('use_vat') == "true"
+    if App.ApplicationSetting.value('use_vat')
       @highlight_vat()
 
     if @disabled() then @disable_panel() else @enable_panel()

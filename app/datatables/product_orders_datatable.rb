@@ -40,8 +40,8 @@ class ProductOrdersDatatable
   private
 
   def data
-    warning_date = Time.now + ApplicationSetting.value_in_seconds("product_item_warning_threshold")
-    danger_date = Time.now + ApplicationSetting.value_in_seconds("product_item_danger_threshold")
+    warning_date = Time.now + ApplicationSetting.value("product_item_warning_threshold")
+    danger_date = Time.now + ApplicationSetting.value("product_item_danger_threshold")
 
     product_items.map do |product_item|
 

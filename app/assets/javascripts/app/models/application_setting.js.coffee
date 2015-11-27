@@ -26,4 +26,15 @@ class App.ApplicationSetting extends Spine.Model
     super
 
   @value: (key) ->
-   (a.value for a in @all() when a.key == key)[0]
+    setting = (a for a in @all() when a.key == key)[0]
+    return undefined unless setting
+
+    switch setting.type_for_validation
+      when 'boolean'
+        setting.value == 'true'
+      when 'integer'
+        parseInt(setting.value)
+      when 'float'
+        parseFloat(setting.value)
+      else
+        setting.value

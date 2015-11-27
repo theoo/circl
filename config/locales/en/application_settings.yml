@@ -1,0 +1,13 @@
+---
+en:
+  application_settings:
+    errors:
+      value_should_be_#{type_for_validation}: 'value should be #{type for validation}'
+      value_should_be_boolean: value should be 'boolean'
+      value_should_be_email: value should be 'email'
+      value_should_be_float: value should be 'float'
+      value_should_be_integer: value should be 'integer'
+      value_should_be_string: value should be 'string'
+      value_should_be_time: value should be 'time'
+      value_should_be_url: value should be 'url'
+    formats: formats

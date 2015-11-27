@@ -123,7 +123,7 @@ class New extends App.ExtendedController
     super
     @setup_vat
       ids_prefix: 'admin_creditors_'
-      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
+      bind_events: App.ApplicationSetting.value('use_vat')
 
   active: (params) =>
     if params and params.clone_id
@@ -168,7 +168,7 @@ class Edit extends App.ExtendedController
     super
     @setup_vat
       ids_prefix: 'admin_creditors_'
-      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
+      bind_events: App.ApplicationSetting.value('use_vat')
 
   active: (params) ->
     # Toggle ids or id so it's easier to know when I'm group editing.

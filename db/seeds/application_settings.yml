@@ -1,85 +1,130 @@
 ---
 - key: application_id
-  value: '0'
+  value: 0
+  type_for_validation: integer
 - key: me
-  value: '1'
+  value: 1
+  type_for_validation: integer
 - key: default_locale
   value: 'en'
+  type_for_validation: string
 - key: mailchimp_list_name
   value: 'name'
+  type_for_validation: string
 - key: mailchimp_api_key
   value: '00000000000000000000000000000000-us0'
+  type_for_validation: string
 - key: mailchimp_connection_secure
-  value: 'true'
+  value: true
+  type_for_validation: boolean
 - key: mailchimp_connection_timeout
-  value: '120'
+  value: 120
+  type_for_validation: integer
 - key: invoices_prefix
   value: invoices
+  type_for_validation: string
 - key: invoices_debit_account
   value: 'changeme'
+  type_for_validation: string
 - key: invoices_credit_account
   value: 'changeme'
+  type_for_validation: string
 - key: invoices_vat_code
   value: 'changeme'
+  type_for_validation: string
 - key: receipts_prefix
   value: receipts
+  type_for_validation: string
 - key: receipts_debit_account
   value: 'changeme'
+  type_for_validation: string
 - key: receipts_credit_account
   value: 'changeme'
+  type_for_validation: string
 - key: receipts_vat_code
   value: '1300'
+  type_for_validation: string
 - key: salaries_prefix
   value: salary
+  type_for_validation: string
 - key: salaries_employee_deductions_prefix
   value: employee deductions
+  type_for_validation: string
 - key: salaries_employer_deductions_prefix
   value: employer deductions
+  type_for_validation: string
 - key: banana_accounting_headers_mapping
   value: '{"Date": "date", "Description": "description", "Amount": "value", "AccountDebit": "account", "AccountCredit": "counterpart_account"}'
+  type_for_validation: string
 - key: export_invoice_description
   value: '{"attributes": ["id", "title", "owner.try(:name)", "owner.try(:id)"], "separator": "/"}'
+  type_for_validation: string
 - key: export_receipt_description
   value: '{"attributes": ["id", "invoice.title", "owner.try(:name)", "owner.try(:id)"], "separator": "/"}'
+  type_for_validation: string
 - key: export_salary_description
   value: ''
+  type_for_validation: string
 - key: export_salary_and_taxes_description
   value: '{"attributes": ["id", "title", "person.try(:name)", "person.try(:id)", "from.strftime(\"%d-%m\")", "to.strftime(\"%d-%m\")"], "separator": "/"}'
+  type_for_validation: string
 - key: service_vat_rate
-  value: '8.0'
+  value: 8.0
+  type_for_validation: float
 - key: service_vat_number
   value: 'CHE-123.456.789 TVA'
+  type_for_validation: string
 - key: use_vat
-  value: 'true'
+  value: true
+  type_for_validation: boolean
 - key: default_currency
   value: 'CHF'
+  type_for_validation: string
 - key: default_affair_conditions
   value: 'pay to confirm order'
+  type_for_validation: string
 - key: default_invoice_conditions
   value: '10 days'
+  type_for_validation: string
 - key: default_product_category_name
   value: 'Product'
+  type_for_validation: string
 - key: affairs_description_placeholder
   value: 'edit me in application settings: affairs_description_placeholder'
+  type_for_validation: string
 - key: affairs_notes_placeholder
   value: 'edit me in application settings: affairs_notes_placeholder'
+  type_for_validation: string
 - key: affairs_footer_placeholder
   value: 'edit me in application settings: affairs_footer_placeholder'
+  type_for_validation: string
 - key: affairs_execution_notes_placeholder
   value: 'edit me in application settings: affairs_execution_notes_placeholder'
+  type_for_validation: string
 - key: product_item_warning_threshold
-  value: '2.month'
+  value: 2.month
+  type_for_validation: time
 - key: product_item_danger_threshold
-  value: '1.month'
+  value: 1.month
+  type_for_validation: time
 - key: creditor_prefix
   value: creditor
+  type_for_validation: string
 - key: creditor_paid_prefix
   value: creditor_paid
+  type_for_validation: string
 - key: creditor_discount_prefix
   value: creditor_discount
+  type_for_validation: string
 - key: creditor_paid_account
   value: 'bank'
+  type_for_validation: string
 - key: creditor_vat_code
   value: 'changeme'
+  type_for_validation: string
 - key: export_creditor_description
   value: '{"attributes": ["id", "title", "creditor.try(:name)", "creditor.try(:id)", "affair.try(:title)"], "separator": "/"}'
+  type_for_validation: string
+- key: bvr_bottom_offset_in_mm
+  value: 0
+  type_for_validation: integer

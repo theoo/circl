@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917115411) do
+ActiveRecord::Schema.define(version: 20151125153731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,8 +123,9 @@ ActiveRecord::Schema.define(version: 20150917115411) do
   add_index "affairs_subscriptions", ["subscription_id"], name: "index_affairs_subscriptions_on_subscription_id", using: :btree
 
   create_table "application_settings", force: true do |t|
-    t.string "key",   default: ""
-    t.text   "value", default: ""
+    t.string "key",                 default: ""
+    t.text   "value",               default: ""
+    t.string "type_for_validation", default: "string", null: false
   end
 
   add_index "application_settings", ["key"], name: "index_application_settings_on_key", using: :btree

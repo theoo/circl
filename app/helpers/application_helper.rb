@@ -99,7 +99,7 @@ module ApplicationHelper
 
     capture_haml do
       haml_tag "table.affair_value" do
-        if ApplicationSetting.value('use_vat') == "true"
+        if ApplicationSetting.value('use_vat')
           without_taxes_translation = I18n.t("affair.views.value.without_taxes")
         else
           without_taxes_translation = I18n.t("affair.views.value.value")
@@ -135,7 +135,7 @@ module ApplicationHelper
 
         end
 
-        if ApplicationSetting.value('use_vat') == "true"
+        if ApplicationSetting.value('use_vat')
 
           haml_tag :tr do
             haml_tag :td, affair.vat.to_view
@@ -157,7 +157,7 @@ module ApplicationHelper
   def invoice_value_summary(invoice)
     capture_haml do
       haml_tag "table.affair_value" do
-        if ApplicationSetting.value('use_vat') == "true"
+        if ApplicationSetting.value('use_vat')
           without_taxes_translation = I18n.t("affair.views.value.without_taxes")
         else
           without_taxes_translation = I18n.t("affair.views.value.value")
@@ -168,7 +168,7 @@ module ApplicationHelper
           haml_tag :td, without_taxes_translation
         end
 
-        if ApplicationSetting.value('use_vat') == "true"
+        if ApplicationSetting.value('use_vat')
 
           haml_tag :tr do
             haml_tag :td, invoice.vat.to_view
@@ -190,7 +190,7 @@ module ApplicationHelper
   def creditor_value_summary(creditor)
     capture_haml do
       haml_tag "table.affair_value" do
-        if ApplicationSetting.value('use_vat') == "true"
+        if ApplicationSetting.value('use_vat')
           without_taxes_translation = I18n.t("affair.views.value.without_taxes")
         else
           without_taxes_translation = I18n.t("affair.views.value.value")
@@ -201,14 +201,14 @@ module ApplicationHelper
           haml_tag :td, without_taxes_translation
         end
 
-        if ApplicationSetting.value('use_vat') == "true"
+        if ApplicationSetting.value('use_vat')
           haml_tag :tr do
             haml_tag :td, creditor.vat.to_view
             haml_tag :td, I18n.t("affair.views.value.vat")
           end
         end
 
-        if ApplicationSetting.value('use_vat') == "true"
+        if ApplicationSetting.value('use_vat')
           haml_tag :tr do
             haml_tag :td, creditor.value_with_taxes.to_view
             haml_tag :td, I18n.t("affair.views.value.with_taxes")

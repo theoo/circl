@@ -324,7 +324,7 @@
                     != @partial('select_currency')(currency: @affair.value_currency, name: 'value_currency', value: @affair.value)
 
             .col-sm-6
-              - if App.ApplicationSetting.value('use_vat') == "true"
+              - if App.ApplicationSetting.value('use_vat')
                 .form-group
                   %label
                   .checkbox
@@ -336,7 +336,7 @@
                               value: 1 }
                       = I18n.t('affair.views.custom_value_with_taxes')
 
-          - if App.ApplicationSetting.value('use_vat') == "true"
+          - if App.ApplicationSetting.value('use_vat')
             != @partial('edit_vat')(object: @affair, prefix: @ids_prefix)
 
           .row
@@ -350,7 +350,7 @@
                     = I18n.t("affair.views.bid_value")
                     = (@affair.computed_value - @affair.value)?.to_view(@affair.value_currency)
             .col-sm-6
-              - if App.ApplicationSetting.value('use_vat') == "true"
+              - if App.ApplicationSetting.value('use_vat')
                 %small.help-block
                   = I18n.t("affair.views.computed_value_with_taxes_is")
                   = @affair.computed_value_with_taxes?.to_view(@affair.computed_value_with_taxes_currency)

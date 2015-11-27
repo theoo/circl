@@ -276,7 +276,7 @@ class Affair < ActiveRecord::Base
     h[:arts_count]                         = arts_count
     h[:arts_value]                         = arts_value.try(:to_f)
     h[:arts_value_currency]                = arts_value.currency.try(:iso_code)
-    h[:vat_count]                          = extras.each_with_object([]){|i,a| a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f}.size + 1
+    h[:vat_count]                          = extras.each_with_object([]){|i,a| a << i if i.vat_percentage != ApplicationSetting.value("service_vat_rate")}.size + 1
     h[:vat]                                = vat.try(:to_f)
     h[:vat_currency]                       = vat.currency.try(:iso_code)
     h[:statuses]                           = translated_statuses
@@ -360,10 +360,10 @@ class Affair < ActiveRecord::Base
   end
 
   def compute_vat(forced_value = self.value)
-    return 0.to_money if ApplicationSetting.value('use_vat') != "true"
+    return 0.to_money if ApplicationSetting.value('use_vat')
 
     percentage = vat_percentage
-    percentage ||= ApplicationSetting.value("service_vat_rate").to_f
+    percentage ||= ApplicationSetting.value("service_vat_rate")
 
     # Variable VAT, extract extras with different vat rate
     extra_with_different_vat_rate = extras.each_with_object([]) do |i,a|
@@ -593,7 +593,7 @@ class Affair < ActiveRecord::Base
   end
 
   def set_vat_percentage
-    self.vat_percentage = ApplicationSetting.value("service_vat_rate").to_f
+    self.vat_percentage = ApplicationSetting.value("service_vat_rate")
   end
 
   def compute_value_without_taxes
@@ -603,7 +603,7 @@ class Affair < ActiveRecord::Base
 
   def vat_calculation_availability
     extras.each do |i|
-      if i.vat_percentage != ApplicationSetting.value("service_vat_rate").to_f
+      if i.vat_percentage != ApplicationSetting.value("service_vat_rate")
         errors.add(:base,
            I18n.t('affair.errors.unable_to_compute_value_without_taxes_if_extras_have_different_vat_values'))
         return false
