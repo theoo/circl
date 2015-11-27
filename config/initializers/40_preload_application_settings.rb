@@ -19,5 +19,13 @@
 if ActiveRecord::Base.connection.table_exists? 'application_settings' \
     and ENV['force_application_settings'] != 'true' \
     and Rails.env != 'test'
-  Rails.configuration.application_settings = ApplicationSetting.all.inject({}){|h, a| h[a.key.to_sym] = a.value; h }
+
+  Rails.configuration.application_settings = ApplicationSetting.all.inject({}) do |h, as|
+    # TODO condition can be removed after type_for_validation migration
+    if as.respond_to? :type_for_validation
+      h[as.key.to_sym] = [as.value, as.type_for_validation]
+    end
+    h
+  end
+
 end

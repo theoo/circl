@@ -1,6 +1,6 @@
 #boundaries_with_bvr
 
-.bvr
+.bvr{style: "top: #{190 - ApplicationSetting.value("bvr_bottom_offset_in_mm")}mm"}
   .bvr_organisation_address1
     %pre= @invoice.invoice_template.bvr_address
   .bvr_organisation_address2

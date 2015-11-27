@@ -61,6 +61,7 @@ class ApplicationSetting < ActiveRecord::Base
       if Rails.configuration.try :application_settings
         # Variable way, faster
         setting = Rails.configuration.application_settings[key.to_sym]
+        puts setting.inspect
 
         if setting
           convert_value(*setting)
@@ -166,7 +167,7 @@ class ApplicationSetting < ActiveRecord::Base
         url: /^(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?$/,
       }
 
-      unless value.match(regex[type_for_validation.to_sym])
+      unless value.to_s.match(regex[type_for_validation.to_sym])
         # i18n-tasks-use I18n.t("application_settings.errors.value_should_be_boolean")
         # i18n-tasks-use I18n.t("application_settings.errors.value_should_be_email")
         # i18n-tasks-use I18n.t("application_settings.errors.value_should_be_float")
