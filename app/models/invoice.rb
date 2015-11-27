@@ -323,7 +323,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def translated_age
-    helper.distance_of_time_in_words_to_now(created_at)
+    helper.distance_of_time_in_words_to_now(created_at, highest_measure_only: true, vague: true)
   end
 
   # Attributes overridden - JSON API

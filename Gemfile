@@ -40,7 +40,7 @@ gem 'haml_coffee_assets', '1.1.0'
 gem 'sass-rails', '4.0.3'
 gem 'haml-rails', '0.5.3'
 gem 'spine-rails', '0.1.0'
-gem 'dotiw', '0.4.1'
+gem 'dotiw', github: 'radar/dotiw'
 gem 'coffee-rails', '4.0.1'
 
 gem 'jquery-turbolinks', '2.0.2'

@@ -66,7 +66,7 @@ class OpenInvoicesDatatable
 
       {
         0 => invoice.id,
-        1 => invoice.created_at.to_s + "<br />" + invoice.translated_age,
+        1 => invoice.created_at.to_date.to_s + "<br />" + invoice.translated_age,
         2 => description,
         'id' => invoice.buyer.id
       }
