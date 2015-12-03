@@ -273,9 +273,11 @@ class Product < ActiveRecord::Base
 
             next if !! skip_columns.index(t.to_s)
 
-            program_name  = p.send("program_group_" + t.to_s)
-            buying_price  = p.send("buying_price_" + t.to_s)
-            selling_price = p.send("selling_price_" + t.to_s)
+            program_name  = p.send(["program_group", t.to_s].join("_"))
+            buying_price  = p.send(["buying_price", t.to_s].join("_"))
+            selling_price = p.send(["selling_price", t.to_s].join("_"))
+            art           = p.send(["art", t.to_s].join("_"))
+            skip_currency = skip_columns.index("currency_symbol")
 
             next if program_name.blank? or selling_price.blank?
 
@@ -290,13 +292,24 @@ class Product < ActiveRecord::Base
             updated_prices << pg.program_group if pg
             pg ||= prod.variants.new
 
-            %w(program_group buying_price selling_price art).each do |i|
-              column_name = [i,t.to_s].join("_")
-              pg.assign_attributes i.to_sym => p.send(column_name) unless skip_columns.index( column_name )
-              pg.assign_attributes program_group: program_name
+            unless skip_columns.index(program_name)
+              pg.program_group = program_name
             end
 
-            raise ArgumentError, program_name.inspect if pg.program_group.blank?
+            unless skip_columns.index(buying_price)
+              curr = skip_currency ? pg.buying_price_currency : p.currency_symbol
+              pg.buying_price = buying_price.to_money(curr)
+            end
+
+            unless skip_columns.index(selling_price)
+              curr = skip_currency ? pg.selling_price_currency : p.currency_symbol
+              pg.selling_price = selling_price.to_money(curr)
+            end
+
+            unless skip_columns.index(art)
+              curr = skip_currency ? pg.art_currency : p.currency_symbol
+              pg.art = art.to_money(curr)
+            end
 
             # force update
             prod.variants << pg unless pg.new_record?
