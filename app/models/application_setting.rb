@@ -61,7 +61,6 @@ class ApplicationSetting < ActiveRecord::Base
       if Rails.configuration.try :application_settings
         # Variable way, faster
         setting = Rails.configuration.application_settings[key.to_sym]
-        puts setting.inspect
 
         if setting
           convert_value(*setting)

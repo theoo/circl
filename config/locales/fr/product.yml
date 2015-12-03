@@ -6,7 +6,7 @@ fr:
       line: ligne
       missing_program: Programme %{program_name} manquant
       no_file_submitted: Pas de fichier soumis
-      product_failed_to_imported: Impossible d'importer le produit
+      product_failed_to_imported: Impossible d'importer les produits
       unable_to_parse_file: Impossible d'interpreter le fichier
     notices:
       no_existing_product_alert: Le catalogue des produits est vide, veuillez en créer pour en ajouter à une affaire.

@@ -293,7 +293,10 @@ class Product < ActiveRecord::Base
             %w(program_group buying_price selling_price art).each do |i|
               column_name = [i,t.to_s].join("_")
               pg.assign_attributes i.to_sym => p.send(column_name) unless skip_columns.index( column_name )
+              pg.assign_attributes program_group: program_name
             end
+
+            raise ArgumentError, program_name.inspect if pg.program_group.blank?
 
             # force update
             prod.variants << pg unless pg.new_record?

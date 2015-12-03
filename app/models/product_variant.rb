@@ -31,6 +31,11 @@ class ProductVariant < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
+  before_validation do
+    # TODO migrate column type to default 0 and remove validation
+    self.selling_price_in_cents ||= 0
+  end
+
 
   #################
   ### RELATIONS ###
