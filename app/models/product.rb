@@ -183,22 +183,22 @@ class Product < ActiveRecord::Base
       :selling_price_14,
       :selling_price_15,
       :selling_price_16,
-      :art_value_1,
-      :art_value_2,
-      :art_value_3,
-      :art_value_4,
-      :art_value_5,
-      :art_value_6,
-      :art_value_7,
-      :art_value_8,
-      :art_value_9,
-      :art_value_10,
-      :art_value_11,
-      :art_value_12,
-      :art_value_13,
-      :art_value_14,
-      :art_value_15,
-      :art_value_16,
+      :art_1,
+      :art_2,
+      :art_3,
+      :art_4,
+      :art_5,
+      :art_6,
+      :art_7,
+      :art_8,
+      :art_9,
+      :art_10,
+      :art_11,
+      :art_12,
+      :art_13,
+      :art_14,
+      :art_15,
+      :art_16,
       :program_group_1,
       :program_group_2,
       :program_group_3,
@@ -289,11 +289,11 @@ class Product < ActiveRecord::Base
             pg = prod.variants.where(program_group: program_name).first
             updated_prices << pg.program_group if pg
             pg ||= prod.variants.new
-            pg.assign_attributes(
-              program_group: program_name,
-              buying_price: buying_price.to_money(p.currency_symbol),
-              selling_price: selling_price.to_money(p.currency_symbol),
-              art: p.send("art_value_" + t.to_s).to_money(p.currency_symbol) )
+
+            %w(program_group buying_price selling_price art).each do |i|
+              column_name = [i,t.to_s].join("_")
+              pg.assign_attributes i.to_sym => p.send(column_name) unless skip_columns.index( column_name )
+            end
 
             # force update
             prod.variants << pg unless pg.new_record?
@@ -318,6 +318,7 @@ class Product < ActiveRecord::Base
       # continue
 
     rescue Exception => e
+      raise ArgumentError, e.inspect
       products = I18n.t("product.errors.unable_to_parse_file") + " (" + e.inspect + ")"
     end
 

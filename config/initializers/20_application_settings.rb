@@ -26,7 +26,7 @@ if ActiveRecord::Base.connection.table_exists? 'application_settings' \
     and ENV['force_application_settings'] != 'true' \
     and Rails.env != 'test'
 
-  print "Verifing ApplicationSettings: "
+  print "Verifing and preloading ApplicationSettings: "
 
   if ApplicationSetting.count > 0
     mandatory_fields.each do |mf|
@@ -38,6 +38,14 @@ if ActiveRecord::Base.connection.table_exists? 'application_settings' \
         raise ArgumentError, message
       end
     end
+  end
+
+  Rails.configuration.application_settings = ApplicationSetting.all.inject({}) do |h, as|
+    # TODO condition can be removed after type_for_validation migration
+    if as.respond_to? :type_for_validation
+      h[as.key.to_sym] = [as.value, as.type_for_validation]
+    end
+    h
   end
 
   puts green("done") + "."

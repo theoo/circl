@@ -52,7 +52,10 @@ if ActiveRecord::Base.connection.table_exists? 'currencies' \
     Money::Currency.register(h)
   end
 
-  Money.default_currency = Money::Currency.new(ApplicationSetting.value("default_currency"))
+  # Some migration may temporarly disable ApplicationSettings. Ensure initializer doesn't depend on it.
+  default_currency = ApplicationSetting.value("default_currency", silent: true)
+  default_currency ||= "CHF"
+  Money.default_currency = Money::Currency.new(default_currency)
 
   module MoneyClassExtension
 

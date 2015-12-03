@@ -56,7 +56,7 @@ class ApplicationSetting < ActiveRecord::Base
   #####################
 
   class << self
-    def value(key, options = {:silent => false})
+    def value(key, options = {silent: false})
 
       if Rails.configuration.try :application_settings
         # Variable way, faster
@@ -79,7 +79,7 @@ class ApplicationSetting < ActiveRecord::Base
         end
 
         setting = where(:key => key).first
-        if setting
+        if setting and setting.try :type_for_validation
           convert_value(setting.value, setting.type_for_validation)
         elsif ! options[:silent]
           msg = "ApplicationSetting key '#{key}' is missing."
