@@ -110,7 +110,7 @@ class New extends App.ExtendedController
 
     @setup_vat
       ids_prefix: 'person_affair_'
-      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
+      bind_events: App.ApplicationSetting.value('use_vat')
 
   active: (params) =>
     @person = Person.find(@person_id) if Person.exists(@person_id)
@@ -220,7 +220,7 @@ class Edit extends App.ExtendedController
 
     @setup_vat
       ids_prefix: 'person_affair_'
-      bind_events: (App.ApplicationSetting.value('use_vat') == "true")
+      bind_events: App.ApplicationSetting.value('use_vat')
 
   active: (params) ->
     @id = params.id if params.id
@@ -325,7 +325,7 @@ class Edit extends App.ExtendedController
     @affair = PersonAffair.find(@id)
     @html @view('people/affairs/form')(@)
 
-    if App.ApplicationSetting.value('use_vat') == "true"
+    if App.ApplicationSetting.value('use_vat')
       @highlight_vat()
 
     # tooltips
