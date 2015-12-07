@@ -360,7 +360,7 @@ class Affair < ActiveRecord::Base
   end
 
   def compute_vat(forced_value = self.value)
-    return 0.to_money if ApplicationSetting.value('use_vat')
+    return 0.to_money unless ApplicationSetting.value('use_vat')
 
     percentage = vat_percentage
     percentage ||= ApplicationSetting.value("service_vat_rate")
