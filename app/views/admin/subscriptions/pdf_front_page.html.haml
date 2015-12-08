@@ -11,19 +11,19 @@
     %dd= @subscription.id
 
     %dt= I18n.t("subscription.pdf.front_page.subscription_created_at")
-    %dd= I18n.l(@subscription.created_at, format: :long)
+    %dd= I18n.l(@subscription.created_at, format: :long) if @subscription.created_at
 
     %dt= I18n.t("subscription.pdf.front_page.subscription_updated_at")
-    %dd= I18n.l(@subscription.updated_at, format: :long)
+    %dd= I18n.l(@subscription.updated_at, format: :long) if @subscription.updated_at
 
     %dt= I18n.t("subscription.pdf.front_page.pdf_updated_at")
-    %dd= I18n.l(@subscription.pdf_updated_at, format: :long)
+    %dd= I18n.l(@subscription.pdf_updated_at, format: :long) if @subscription.pdf_updated_at
 
     %dt= I18n.t("subscription.pdf.front_page.pdf_file_size")
-    %dd= (@subscription.pdf_file_size / 1024).to_s + " kilobytes"
+    %dd= (@subscription.pdf_file_size / 1024).to_s + " kilobytes" if @subscription.pdf_file_size
 
     %dt= I18n.t("subscription.pdf.front_page.invoices_count")
-    %dd= @subscription.invoices.count
+    %dd= @subscription.invoices.try :count
 
     %dt= I18n.t("subscription.pdf.front_page.order_query")
     %dd= @query[:attributes_order].join(", ") if @query and @query[:attributes_order]
