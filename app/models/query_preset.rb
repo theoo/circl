@@ -59,9 +59,22 @@ class QueryPreset < ActiveRecord::Base
   # Validate fields of type 'string' length
   validates_length_of :name, maximum: 255
 
+  before_save do
+    if self_is_first_preset? and not self.query["search_string"].blank?
+      errors.add :base, I18n.t("search_attribute.errors.default_query_preset_cannot_contain_a_query_string")
+      false
+    end
+  end
+
   before_destroy do
-    errors.add :base, I18n.t("search_attribute.errors.unable_to_destroy_default_query_preset")
-    false
+    if self_is_first_preset?
+      errors.add :base, I18n.t("search_attribute.errors.unable_to_destroy_default_query_preset")
+      false
+    end
+  end
+
+  def self_is_first_preset?
+    self == QueryPreset.reorder(:id).first
   end
 
   private

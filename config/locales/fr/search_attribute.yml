@@ -2,6 +2,7 @@
 fr:
   search_attribute:
     errors:
+      default_query_preset_cannot_contain_a_query_string: Le pré-réglage par défaut ne peut pas contenir de chaîne de recherche (text).
       mapping_doesnt_look_like_a_hash: La représentation ne semble pas être un 'Hash' correcte.
       not_json: 'Mauvais protocole (attendu: JSON)'
       unable_to_destroy_default_query_preset: Impossible de supprimer le premier pré-réglage, il est employé par défaut

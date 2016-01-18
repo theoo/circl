@@ -2,6 +2,7 @@
 en:
   search_attribute:
     errors:
+      default_query_preset_cannot_contain_a_query_string: The default query preset cannot contain a query string.
       mapping_doesnt_look_like_a_hash: Mapping doesn't look like a valid 'Hash'
       not_json: not json
       unable_to_destroy_default_query_preset: Unable to destroy the first query preset, it is used for default queries
