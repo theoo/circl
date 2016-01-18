@@ -134,13 +134,13 @@ class ApplicationSetting < ActiveRecord::Base
   end
 
   def type_for_validation_format_translation
-    # i18n-tasks-use I18n.t("application_settings.formats.boolean")
-    # i18n-tasks-use I18n.t("application_settings.formats.email")
-    # i18n-tasks-use I18n.t("application_settings.formats.float")
-    # i18n-tasks-use I18n.t("application_settings.formats.integer")
-    # i18n-tasks-use I18n.t("application_settings.formats.string")
-    # i18n-tasks-use I18n.t("application_settings.formats.time")
-    # i18n-tasks-use I18n.t("application_settings.formats.url")
+    # i18n-tasks-use I18n.t("application_setting.formats.boolean")
+    # i18n-tasks-use I18n.t("application_setting.formats.email")
+    # i18n-tasks-use I18n.t("application_setting.formats.float")
+    # i18n-tasks-use I18n.t("application_setting.formats.integer")
+    # i18n-tasks-use I18n.t("application_setting.formats.string")
+    # i18n-tasks-use I18n.t("application_setting.formats.time")
+    # i18n-tasks-use I18n.t("application_setting.formats.url")
     I18n.t("application_settings.formats." + self.type_for_validation)
   end
 

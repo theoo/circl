@@ -126,5 +126,5 @@
   value: '{"attributes": ["id", "title", "creditor.try(:name)", "creditor.try(:id)", "affair.try(:title)"], "separator": "/"}'
   type_for_validation: string
 - key: bvr_bottom_offset_in_mm
-  value: 0
-  type_for_validation: integer
+  value: 0.0
+  type_for_validation: float
