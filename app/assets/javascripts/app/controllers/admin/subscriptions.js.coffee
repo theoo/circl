@@ -156,6 +156,8 @@ class New extends ValueItemsController
         Subscription.fetch(id: @parent_id)
     else
       # @template is cleared, render it to wipe previous @template if existing
+      @template = { values: [{value: 0}] }
+
       @render()
 
   render: =>

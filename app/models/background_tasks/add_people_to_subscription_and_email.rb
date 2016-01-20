@@ -93,7 +93,7 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
         a.invoices.create!(title: subscription.title,
                            value: subscription.value_for(p),
                            invoice_template: subscription.invoice_template_for(p),
-                           printed_address: p.address_for_bvr )
+                           printed_address: buyer.address_for_bvr )
 
         new_people_ids << p.id
       end
