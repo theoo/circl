@@ -32,6 +32,7 @@ class Currency < ActiveRecord::Base
   #################
 
   before_destroy :ensure_currency_is_not_used
+  before_save :ensure_currency_is_not_used
   before_save :default_values
   after_save :create_currencies_conversion_items
   after_destroy :remove_currencies_conversion_items
@@ -113,56 +114,60 @@ class Currency < ActiveRecord::Base
   end
 
   def ensure_currency_is_not_used
+
+    # If there is another currency with the same iso_code, validates
+    return true if Currency.where(iso_code: iso_code).where.not(id: id).count > 0
+
     count = 0
-    count += Affair.where(value_currency: self.iso_code).count
-    count += Extra.where(value_currency: self.iso_code).count
-    count += Extra.where(vat_currency: self.iso_code).count
-    count += Invoice.where(value_currency: self.iso_code).count
-    count += Invoice.where(vat_currency: self.iso_code).count
-    count += ProductVariant.where(buying_price_currency: self.iso_code).count
-    count += ProductVariant.where(selling_price_currency: self.iso_code).count
-    count += ProductVariant.where(art_currency: self.iso_code).count
-    count += ProductVariant.where(vat_currency: self.iso_code).count
-    count += Receipt.where(value_currency: self.iso_code).count
-    count += Salaries::Salary.where(yearly_salary_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_food_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_transport_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_food_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_logding_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_misc_salary_car_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_misc_salary_other_value_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_non_periodic_value_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_capital_value_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_participation_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_compentation_admin_members_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_misc_other_value_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_avs_ac_aanp_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_lpp_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_buy_lpp_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_is_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_alloc_traveling_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_alloc_food_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_alloc_other_actual_cost_value_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_alloc_representation_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_alloc_car_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_alloc_other_fixed_fees_value_currency: self.iso_code).count
-    count += Salaries::Salary.where(cert_formation_currency: self.iso_code).count
-    count += Salaries::TaxData.where(employer_value_currency: self.iso_code).count
-    count += Salaries::TaxData.where(employee_value_currency: self.iso_code).count
-    count += Salaries::Item.where(value_currency: self.iso_code).count
-    count += Salaries::Taxes::Generic.where(salary_from_currency: self.iso_code).count
-    count += Salaries::Taxes::Generic.where(salary_to_currency: self.iso_code).count
-    count += Salaries::Taxes::Generic.where(employer_value_currency: self.iso_code).count
-    count += Salaries::Taxes::Generic.where(employee_value_currency: self.iso_code).count
-    count += Salaries::Taxes::Is.where(yearly_from_currency: self.iso_code).count
-    count += Salaries::Taxes::Is.where(yearly_to_currency: self.iso_code).count
-    count += Salaries::Taxes::Is.where(monthly_from_currency: self.iso_code).count
-    count += Salaries::Taxes::Is.where(monthly_to_currency: self.iso_code).count
-    count += Salaries::Taxes::Is.where(hourly_from_currency: self.iso_code).count
-    count += Salaries::Taxes::Is.where(hourly_to_currency: self.iso_code).count
-    count += Task.where(value_currency: self.iso_code).count
-    count += TaskRate.where(value_currency: self.iso_code).count
-    count += TaskType.where(value_currency: self.iso_code).count
+    count += Affair.where(value_currency: iso_code).count
+    count += Extra.where(value_currency: iso_code).count
+    count += Extra.where(vat_currency: iso_code).count
+    count += Invoice.where(value_currency: iso_code).count
+    count += Invoice.where(vat_currency: iso_code).count
+    count += ProductVariant.where(buying_price_currency: iso_code).count
+    count += ProductVariant.where(selling_price_currency: iso_code).count
+    count += ProductVariant.where(art_currency: iso_code).count
+    count += ProductVariant.where(vat_currency: iso_code).count
+    count += Receipt.where(value_currency: iso_code).count
+    count += Salaries::Salary.where(yearly_salary_currency: iso_code).count
+    count += Salaries::Salary.where(cert_food_currency: iso_code).count
+    count += Salaries::Salary.where(cert_transport_currency: iso_code).count
+    count += Salaries::Salary.where(cert_food_currency: iso_code).count
+    count += Salaries::Salary.where(cert_logding_currency: iso_code).count
+    count += Salaries::Salary.where(cert_misc_salary_car_currency: iso_code).count
+    count += Salaries::Salary.where(cert_misc_salary_other_value_currency: iso_code).count
+    count += Salaries::Salary.where(cert_non_periodic_value_currency: iso_code).count
+    count += Salaries::Salary.where(cert_capital_value_currency: iso_code).count
+    count += Salaries::Salary.where(cert_participation_currency: iso_code).count
+    count += Salaries::Salary.where(cert_compentation_admin_members_currency: iso_code).count
+    count += Salaries::Salary.where(cert_misc_other_value_currency: iso_code).count
+    count += Salaries::Salary.where(cert_avs_ac_aanp_currency: iso_code).count
+    count += Salaries::Salary.where(cert_lpp_currency: iso_code).count
+    count += Salaries::Salary.where(cert_buy_lpp_currency: iso_code).count
+    count += Salaries::Salary.where(cert_is_currency: iso_code).count
+    count += Salaries::Salary.where(cert_alloc_traveling_currency: iso_code).count
+    count += Salaries::Salary.where(cert_alloc_food_currency: iso_code).count
+    count += Salaries::Salary.where(cert_alloc_other_actual_cost_value_currency: iso_code).count
+    count += Salaries::Salary.where(cert_alloc_representation_currency: iso_code).count
+    count += Salaries::Salary.where(cert_alloc_car_currency: iso_code).count
+    count += Salaries::Salary.where(cert_alloc_other_fixed_fees_value_currency: iso_code).count
+    count += Salaries::Salary.where(cert_formation_currency: iso_code).count
+    count += Salaries::TaxData.where(employer_value_currency: iso_code).count
+    count += Salaries::TaxData.where(employee_value_currency: iso_code).count
+    count += Salaries::Item.where(value_currency: iso_code).count
+    count += Salaries::Taxes::Generic.where(salary_from_currency: iso_code).count
+    count += Salaries::Taxes::Generic.where(salary_to_currency: iso_code).count
+    count += Salaries::Taxes::Generic.where(employer_value_currency: iso_code).count
+    count += Salaries::Taxes::Generic.where(employee_value_currency: iso_code).count
+    count += Salaries::Taxes::Is.where(yearly_from_currency: iso_code).count
+    count += Salaries::Taxes::Is.where(yearly_to_currency: iso_code).count
+    count += Salaries::Taxes::Is.where(monthly_from_currency: iso_code).count
+    count += Salaries::Taxes::Is.where(monthly_to_currency: iso_code).count
+    count += Salaries::Taxes::Is.where(hourly_from_currency: iso_code).count
+    count += Salaries::Taxes::Is.where(hourly_to_currency: iso_code).count
+    count += Task.where(value_currency: iso_code).count
+    count += TaskRate.where(value_currency: iso_code).count
+    count += TaskType.where(value_currency: iso_code).count
 
     if count > 0
       errors.add(:base,
