@@ -281,8 +281,10 @@ class Subscription < ActiveRecord::Base
   # TODO Idealy this method should be in a callback but it takes
   # time to run it. So it has been moved in background task and is
   # called on subscriptions#update.
-  def update_invoices
+  def update_invoices!
     invoices.each do |i|
+      i.update_attributes title: title
+
       # Skip invoice if template and value are already the same
       if i.invoice_template_id == invoice_template_for(i.buyer) and i.value == value_for(i.buyer)
         next
@@ -295,10 +297,14 @@ class Subscription < ActiveRecord::Base
     end
   end
 
-  # TODO same a update_invoices
-  def update_affairs
+  # TODO Put this and update_invoices in a background task so it doesn't block UI
+  def update_affairs!
     # affair value should probably be ajusted if subscription values have change
-    affairs.each { |a| a.save } # Saving it will call compute_value callback, touching isn't enough
+    # Saving isn't enough, only estimations will see their value changed.
+    affairs.each do |a|
+      a.update_attributes title: title
+      a.update_value!
+    end
   end
 
   private

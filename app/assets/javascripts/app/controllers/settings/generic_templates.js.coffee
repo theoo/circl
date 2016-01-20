@@ -45,11 +45,19 @@ class New extends ClassNamesExtension
   constructor: ->
     super
 
-  active: ->
+  active: (params) ->
+    console.log "test"
+    if params and params.clone_id
+      clone = GenericTemplate.find(params.clone_id)
+      @_template = clone.attributes()
+      @_template.id = null
+    else
+      @_template = {plural: false}
+
     @render()
 
   render: ->
-    @template = new GenericTemplate(plural: false)
+    @template = new GenericTemplate(@_template)
     @html @view('settings/generic_templates/form')(@)
 
   submit: (e) ->
@@ -65,6 +73,7 @@ class Edit extends ClassNamesExtension
     'submit form' : 'submit'
     'click a[name="cancel"]': 'cancel'
     'click button[name=settings-template-destroy]': 'destroy'
+    'click button[name=settings-template-copy]': 'copy'
     'click #settings_template_upload': 'stack_upload_window'
 
   active: (params) ->
@@ -85,6 +94,10 @@ class Edit extends ClassNamesExtension
     @template.load(data)
     @template.plural = data.plural?
     @save_with_notifications @template
+
+  copy: (e) ->
+    e.preventDefault()
+    @trigger 'copy', {clone_id: @id, type: 'copy'}
 
   destroy: (e) ->
     e.preventDefault()
@@ -207,6 +220,10 @@ class App.SettingsGenericTemplates extends Spine.Controller
     @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
+
+    @edit.bind 'copy', (params) =>
+      @new.active(params)
+      @edit.hide()
 
   activate: ->
     super

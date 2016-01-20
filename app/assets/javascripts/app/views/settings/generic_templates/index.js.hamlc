@@ -2,8 +2,9 @@
   %thead
     %tr
       %th= I18n.t('template.views.thumb')
+      %th.number= I18n.t('common.id')
       %th= I18n.t('template.views.class_name')
-      %th= I18n.t('common.title')
+      %th.desc= I18n.t('common.title')
       %th.number= I18n.t('template.views.associations')
       %th.desc= I18n.t('common.updated_at')
   %tbody
@@ -14,6 +15,7 @@
             %img{src: template.thumb_url, alt: 'thumbnail', class: 'template-thumbnail'}
           - else
             %img{src: "/assets/missing_thumbnail.png", alt: 'thumbnail', class: 'template-thumbnail'}
+        %td.number= template.id
         %td= @class_names[template.class_name]
         %td= template.title
         %td.number= template.association_count

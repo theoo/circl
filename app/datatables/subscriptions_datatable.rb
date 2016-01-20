@@ -36,13 +36,11 @@ class SubscriptionsDatatable
 
   def data
     subscriptions.map do |subscription|
-      values_summary = subscription.values.map do |v|
-        if v.private_tag
-          "#{v.private_tag.name}: #{v.value.to_view}"
-        else
-          "*: #{v.value.to_view}"
-        end
-      end.join("<br />")
+      if subscription.values.count > 0
+        values_summary = I18n.t("subscription.views.rules", count: subscription.values.count)
+      else
+        values_summary = v.value.to_view
+      end
 
       {
         0 => subscription.id,

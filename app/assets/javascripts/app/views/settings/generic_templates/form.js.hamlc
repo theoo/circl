@@ -62,10 +62,6 @@
         .pull-right
           != @partial("save_and_cancel_buttons")(@template)
 
-        .visible-xs.visible-md.visible-lg
-          %br
-          %br
-
         - unless @template.isNew()
           .btn-group
             %button{type: 'button',
@@ -73,6 +69,11 @@
                     class: 'btn btn-danger'}
               .icon-remove
               = I18n.t("common.destroy")
+
+            %button{name: "settings-template-copy",
+                    class: 'btn btn-default' }
+              .icon-copy
+              = I18n.t("common.copy")
 
             - classes = ['btn', 'btn-default']
             %a{ class: classes.join(" "),
@@ -87,4 +88,3 @@
                 title: I18n.t("template.views.upload_new_template")}
               .icon-cloud-upload
               = I18n.t("common.upload")
-

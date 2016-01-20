@@ -161,6 +161,8 @@ class Invoice < ActiveRecord::Base
   # validates_attachment :pdf,
   #   content_type: { content_type: "application/pdf" }
 
+  validate :prevent_title_change, if: 'title_changed?'
+
   #####################
   ### CLASS METHODS ###
   #####################
@@ -479,6 +481,13 @@ class Invoice < ActiveRecord::Base
            I18n.t('affair.errors.unable_to_compute_value_without_taxes_if_extras_have_different_vat_values'))
         return false
       end
+    end
+  end
+
+  def prevent_title_change
+    if subscriptions.count > 0 and subscriptions.first.title != title
+      errors.add(:title, I18n.t('affair.errors.cant_update_title_if_it_has_subscriptions'))
+      false
     end
   end
 

@@ -93,6 +93,11 @@
               .icon-remove
               = I18n.t("common.destroy")
 
+            %button{name: "settings-invoice-template-copy",
+                    class: 'btn btn-default' }
+              .icon-copy
+              = I18n.t("common.copy")
+
             - classes = ['btn', 'btn-default']
             %a{ class: classes.join(" "),
                 id: 'settings_invoice_template_download',

@@ -68,6 +68,7 @@ fr:
       receipts_value: total des reçus
       reminder: rappel
       renewal: renouvellement
+      rules: "%{count} règles tarifaires"
       sort_people_for_pdf_generation_of: Tri des personnes pour la génération du PDF de l'inscription
       sort_people_message: Veuillez définir l'ordre de tri des personnes pour la fusion des factures dans un PDF, les autres attributs ne seront pas prit en compte. Pour modifier l'ordre de tri il faut afficher un pré-réglage (le crayon).
       subscription: inscription
@@ -85,4 +86,4 @@ fr:
       values:
         invoice_template: modèle de factures
         private_tag: tag privé
-      values_title: valeurs associées aux tags privés
+      values_title: Règles tarifaires

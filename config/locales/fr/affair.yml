@@ -2,7 +2,8 @@
 fr:
   affair:
     errors:
-      cant_delete_affair_who_has_invoices: Il est impossible de détruire une affaire dont dépend une facture.
+      cant_delete_affair_which_has_invoices: Il est impossible de détruire une affaire dont dépend une facture.
+      cant_update_title_if_it_has_subscriptions: Il est impossible de modifier le titre lorsqu'une inscription est attachée à l'affaire.
       parent_id_cannot_be_self: Le parent ne peut pas être l'affaire elle-même.
       unable_to_compute_value_without_taxes_if_extras_have_different_vat_values: Il est impossible de calculer la valeur hors taxe si l'affaire contient des extras aux TVA différentes.
       wrong_date: Mauvaise date

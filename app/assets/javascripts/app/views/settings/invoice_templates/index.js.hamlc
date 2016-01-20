@@ -2,9 +2,10 @@
   %thead
     %tr
       %th= I18n.t('invoice_template.views.thumb')
-      %th= I18n.t('common.title')
+      %th.number= I18n.t('common.id')
+      %th.desc= I18n.t('common.title')
       %th= I18n.t('invoice_template.views.language')
-      %th= I18n.t('invoice_template.views.invoices')
+      %th.number= I18n.t('invoice_template.views.invoices')
       %th.desc= I18n.t('common.created_at')
   %tbody
     - for invoice_template in App.InvoiceTemplate.all()
@@ -15,6 +16,7 @@
           - else
             %img{src: "/assets/missing_thumbnail.png", alt: 'thumbnail', class: 'template-thumbnail'}
 
+        %td.number= invoice_template.id
         %td= invoice_template.title
         %td= invoice_template.language_name
         %td.number= invoice_template.invoices_count

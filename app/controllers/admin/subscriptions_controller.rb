@@ -280,6 +280,7 @@ class Admin::SubscriptionsController < ApplicationController
         end
       end
 
+      # TODO ideally this should be in after_save callback in Subscription model. Only current_person (email) prevent it.
       BackgroundTasks::UpdateSubscriptionInvoicesAndEmail.schedule( subscription_id: @subscription.id,
                                                                     person: current_person )
 

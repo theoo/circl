@@ -3,13 +3,13 @@
     %tr
       %th= I18n.t('common.id')
       %th= I18n.t('common.parent')
-      %th= I18n.t('common.title')
+      %th.desc= I18n.t('common.title')
       %th= I18n.t('common.value')
-      %th= I18n.t('subscription.views.invoices')
-      %th= I18n.t('subscription.views.receipts')
-      %th= I18n.t('subscription.views.invoices_value')
-      %th= I18n.t('subscription.views.receipts_value')
-      %th= I18n.t('subscription.views.overpaid_value')
+      %th.number= I18n.t('subscription.views.invoices')
+      %th.number= I18n.t('subscription.views.receipts')
+      %th.number= I18n.t('subscription.views.invoices_value')
+      %th.number= I18n.t('subscription.views.receipts_value')
+      %th.number= I18n.t('subscription.views.overpaid_value')
       %th.desc= I18n.t('common.created_at')
   %tbody
     %tr

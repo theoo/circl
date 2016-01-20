@@ -63,13 +63,21 @@ class Affair < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
-  after_save :update_elasticsearch
-  after_save :cancel_open_invoices, if: 'unbillable'
-  before_save :update_value, if: 'value_in_cents.blank?'
-  before_save :update_vat, if: 'vat_in_cents.blank?'
-  before_save :set_vat_percentage, if: 'vat_percentage.blank?'
-  before_save :compute_value_without_taxes, if: 'custom_value_with_taxes'
-  before_save :update_statuses
+  after_save do
+    update_elasticsearch
+    cancel_open_invoices if unbillable
+  end
+
+  before_save do
+    update_value if value_in_cents.blank?
+    update_vat if vat_in_cents.blank?
+    set_vat_percentage if vat_percentage.blank?
+    compute_value_without_taxes if custom_value_with_taxes
+    update_statuses
+
+    true
+  end
+
   before_validation  :ensure_buyer_and_receiver_person_exists
   before_destroy :do_not_destroy_if_has_invoices
   before_destroy { subscriptions.clear }
@@ -192,6 +200,7 @@ class Affair < ActiveRecord::Base
   validates_length_of :execution_notes, maximum: 65536
   validate :vat_calculation_availability, if: 'custom_value_with_taxes'
   validate :parent_id_is_not_self, if: 'parent_id'
+  validate :prevent_title_change, if: 'title_changed?'
 
   ########################
   #### CLASS METHODS #####
@@ -692,22 +701,27 @@ class Affair < ActiveRecord::Base
 
   def do_not_destroy_if_has_invoices
     unless invoices.empty?
-      errors.add(:base,
-                 I18n.t('affair.errors.cant_delete_affair_who_has_invoices'))
+      errors.add(:base, I18n.t('affair.errors.cant_delete_affair_which_has_invoices'))
       false
     end
   end
 
   def parent_id_is_not_self
     if id == parent_id
-      errors.add(:base,
-                 I18n.t('affair.errors.parent_id_cannot_be_self'))
+      errors.add(:base, I18n.t('affair.errors.parent_id_cannot_be_self'))
       false
     end
   end
 
   def cancel_open_invoices
     invoices.open.each{|i| i.update_attributes cancelled: true}
+  end
+
+  def prevent_title_change
+    if subscriptions.count > 0 and subscriptions.first.title != title
+      errors.add(:title, I18n.t('affair.errors.cant_update_title_if_it_has_subscriptions'))
+      false
+    end
   end
 
 end

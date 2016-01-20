@@ -43,8 +43,8 @@ class BackgroundTasks::UpdateSubscriptionInvoicesAndEmail < BackgroundTask
     # elasticsearch for the entire app.
     Rails.configuration.settings['elasticsearch']['enable_index'] = false
 
-    subscription.update_invoices
-    subscription.update_affairs
+    subscription.update_invoices!
+    subscription.update_affairs!
 
     Rails.configuration.settings['elasticsearch']['enable_index'] = true
 

@@ -71,6 +71,7 @@ en:
       receipts_value: receipts value
       reminder: reminder
       renewal: renewal
+      rules: "%{count} price rules"
       sort_people_for_pdf_generation_of: sort people for pdf generation of
       sort_people_message: sort people message
       subscription: subscription
@@ -88,4 +89,4 @@ en:
       values:
         invoice_template: invoice template
         private_tag: private tag
-      values_title: values title
+      values_title: Price rules

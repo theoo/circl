@@ -30,11 +30,18 @@ class New extends App.ExtendedController
   constructor: ->
     super
 
-  active: ->
+  active: (params) ->
+    if params and params.clone_id
+      clone = InvoiceTemplate.find(params.clone_id)
+      @template = clone.attributes()
+      @template.id = null
+    else
+      @template = {}
+
     @render()
 
   render: =>
-    @invoice_template = new InvoiceTemplate
+    @invoice_template = new InvoiceTemplate(@template)
     @invoice_template.with_bvr = true
     @invoice_template.show_invoice_value = true
     @html @view('settings/invoice_templates/form')(@)
@@ -52,6 +59,7 @@ class Edit extends App.ExtendedController
     'submit form': 'submit'
     'click a[name="cancel"]': 'cancel'
     'click button[name=settings-invoice-template-destroy]': 'destroy'
+    'click button[name=settings-invoice-template-copy]': 'copy'
     'click #settings_invoice_template_upload': 'stack_upload_window'
 
   constructor: ->
@@ -80,6 +88,10 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @confirm I18n.t('common.are_you_sure'), 'warning', =>
       @destroy_with_notifications @invoice_template, @hide
+
+  copy: (e) ->
+    e.preventDefault()
+    @trigger 'copy', {clone_id: @id, type: 'copy'}
 
   stack_upload_window: (e) ->
     e.preventDefault()
@@ -196,6 +208,10 @@ class App.SettingsInvoiceTemplates extends Spine.Controller
     @edit.bind 'destroyError', (id, errors) =>
       @edit.active id: id
       @edit.render_errors errors
+
+    @edit.bind 'copy', (params) =>
+      @new.active(params)
+      @edit.hide()
 
   activate: ->
     super
