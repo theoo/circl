@@ -293,7 +293,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def compute_vat
-    return 0.to_money if ApplicationSetting.value('use_vat')
+    return 0.to_money unless ApplicationSetting.value('use_vat')
     value * (100.0 / vat_percentage)
   end
 

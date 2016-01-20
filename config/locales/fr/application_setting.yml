@@ -4,9 +4,18 @@ fr:
     errors:
       cant_change_key: Il est impossible de changer la clé.
       missing_attribute: La clé '%{key}' n'est pas définie.
+    formats:
+      boolean: Booléen
+      email: Email
+      float: Flottant
+      integer: Entier
+      string: Chaîne de charactères
+      time: Intervalle de temps
+      url: URL
     notices:
       application_restarted: CIRCL a redémarré.
       restart_warning: "<b>Attention!</b><br/> Redémarrer l'application provoque l'interruption temporaire de l'accès à tous les services (Web, LDAP, etc.). La durée de cette interruption varie en fonction de la configuration. Veillez à <b>ne pas redémarrer</b> l'annuaire si des tâches d'arrière plan sont en cours."
     views:
       key: clé
       restart: Redémarrer CIRCL
+      type_for_validation: Format

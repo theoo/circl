@@ -3,8 +3,10 @@
     %tr
       %th.asc= I18n.t('application_setting.views.key')
       %th= I18n.t('common.value')
+      %th= I18n.t('application_setting.views.type_for_validation')
   %tbody
     - for application_setting in App.ApplicationSetting.all()
       %tr{:data-id => application_setting.id, class: 'item' }
         %td= application_setting.key
         %td= application_setting.value
+        %td= I18n.t("application_setting.formats." + application_setting.type_for_validation)

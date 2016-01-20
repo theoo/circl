@@ -4,6 +4,14 @@ en:
     errors:
       cant_change_key: The key cannot be modified.
       missing_attribute: The following key is not defined '%{key}'
+    formats:
+      boolean: Noolean
+      email: Email
+      float: Float
+      integer: Integer
+      string: String
+      time: Time
+      url: URL
     notice:
       application_restarted: CIRCL has restarted.
     notices:
@@ -12,3 +20,4 @@ en:
     views:
       key: key
       restart: Restart CIRCL
+      type_for_validation: Type of value
