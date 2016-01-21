@@ -39,6 +39,7 @@ en:
       comments: comments
       copy_reference_message: copy reference message
       copy_reference_title: copy reference title
+      download_current_database: Download current data
       employer_account: employer account
       employer_part: employer part
       export_interval_explanation: export interval explanation
@@ -64,3 +65,4 @@ en:
       taxes: taxes
       template: salary template
       templates: salary templates
+      upload_new_row_in_database: Upload new data

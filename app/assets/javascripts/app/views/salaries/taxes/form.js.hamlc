@@ -7,8 +7,7 @@
     .row
       .col-lg-3.col-sm-6
         .form-group
-          %label{for: 'tax_title'}
-            %br
+          %label
             = I18n.t('common.title')
           %input{ type: 'text',
                   name: 'title',
@@ -18,8 +17,7 @@
 
       .col-lg-3.col-sm-6
         .form-group
-          %label{for: 'tax_model'}
-            %br
+          %label
             = I18n.t('tax.views.model')
           %select{name: 'model',
                   id: 'tax_model',
@@ -32,7 +30,7 @@
 
       .col-lg-2.col-sm-4
         .form-group
-          %label{for: 'tax_employee_account'}
+          %label
             = I18n.t('tax.views.employee_account')
           %input{ type: 'text',
                   name: 'employee_account',
@@ -41,7 +39,7 @@
                   class: 'form-control' }
       .col-lg-2.col-sm-4
         .form-group
-          %label{for: 'tax_employer_account'}
+          %label
             = I18n.t('tax.views.employer_account')
           %input{ type: 'text',
                   name: 'employer_account',
@@ -51,7 +49,7 @@
 
       .col-lg-2.col-sm-4
         .form-group
-          %label{for: 'tax_exporter_group'}
+          %label
             = I18n.t('tax.views.exporter_group')
           - available_groups = { none: I18n.t("common.none"), exporter_avs_group: 'AVS', exporter_lpp_group: 'LPP', exporter_is_group: 'IS' }
           - # only one group can be set as true
@@ -89,8 +87,15 @@
               .icon-remove
               = I18n.t("common.destroy")
 
-            %button{name: "tax-upload",
-                    class: 'btn btn-default' }
-              .icon-cloud-upload
-              = I18n.t('common.upload')
+            - classes = ['btn', 'btn-default']
+            %button{ class: classes.join(" "),
+                name: 'tax_download',
+                title: I18n.t("salary.views.download_current_database")}
+              .icon-cloud-download
+              = I18n.t("common.download")
 
+            %button{ class: classes.join(" "),
+                name: 'tax_upload',
+                title: I18n.t("salary.views.upload_new_row_in_database")}
+              .icon-cloud-upload
+              = I18n.t("common.upload")

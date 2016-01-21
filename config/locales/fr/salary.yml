@@ -39,6 +39,7 @@ fr:
       comments: commentaires
       copy_reference_message: Copie du salaire de référence vers un groupe de personne.
       copy_reference_title: Copie du salaire de référence
+      download_current_database: Télécharger les données actuelles
       employer_account: compte part employeur
       employer_part: part employeur
       export_interval_explanation: L'intervalle sélectionné doit correspondre à l'intervalle couvert par les salaires et non à leurs dates de création.
@@ -64,3 +65,4 @@ fr:
       taxes: Déductions
       template: modèle de salaire
       templates: Modèles de salaire
+      upload_new_row_in_database: Envoyer une mise à jour de données

@@ -54,7 +54,8 @@ class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click a[name="cancel"]': 'cancel'
-    'click button[name=tax-upload]':  'stack_upload_window'
+    'click button[name=tax_upload]':  'stack_upload_window'
+    'click button[name=tax_download]':  'tax_download'
     'click button[name=tax-destroy]': 'destroy'
 
   constructor: ->
@@ -74,6 +75,9 @@ class Edit extends App.ExtendedController
     @show()
     @tax = SalaryTax.find(@id)
     @html @view('salaries/taxes/form')(@)
+
+    @el.find("[name=tax_upload]").tooltip(placement: 'bottom', container: 'body')
+    @el.find("[name=tax_download]").tooltip(placement: 'bottom', container: 'body')
 
   submit: (e) ->
     e.preventDefault()
@@ -100,6 +104,11 @@ class Edit extends App.ExtendedController
 
     controller.activate()
     win.modal('show')
+
+  tax_download: (e) ->
+    e.preventDefault()
+    url = SalaryTax.url() + "/#{@tax.id}.csv"
+    window.location = url
 
   destroy: (e) ->
     e.preventDefault()

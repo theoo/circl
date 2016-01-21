@@ -88,27 +88,31 @@ class Salaries::Tax < ActiveRecord::Base
   ########################
 
   def compute(reference_value, year, infos)
-    model.constantize.compute(reference_value, year, infos, self)
+    source_model.compute(reference_value, year, infos, self)
   end
 
   def process_data(data)
-    model.constantize.process_data(self, data)
+    source_model.process_data(self, data)
   end
 
   def copy_year_data(from, to)
-    model.constantize.where(year: from).each do |item|
+    source_model.where(year: from).each do |item|
       new_item = item.dup
       new_item.year = to
       new_item.save!
     end
   end
 
+  def rows
+    source_model.where(tax_id: self.id)
+  end
+
   def number_of_rows
-    model.constantize.where(tax_id: self.id).count
+    rows.count
   end
 
   def available_years
-    model.constantize.where(tax_id: self.id).select("DISTINCT year").map(&:year)
+    rows.select("DISTINCT year").map(&:year).sort
   end
 
   # attributes overridden - JSON API
@@ -124,6 +128,10 @@ class Salaries::Tax < ActiveRecord::Base
 
     h[:errors] = errors
     h
+  end
+
+  def source_model
+    model.constantize
   end
 
   private

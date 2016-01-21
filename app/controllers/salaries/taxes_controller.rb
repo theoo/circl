@@ -61,6 +61,25 @@ class Salaries::TaxesController < ApplicationController
   def edit
     respond_to do |format|
       format.json { render json: @tax }
+      format.csv do
+
+        tempfile = Tempfile.new('pg_tax_data')
+        File.chmod(0777, tempfile.path)
+
+        # FIXME pluck ids can limit the query size
+        arel = @tax.rows
+
+        cmd = "Copy (#{arel.to_sql}) To '#{tempfile.path}' With CSV;"
+        ActiveRecord::Base.connection.execute(cmd)
+
+        csv = @tax.source_model.column_names.join(", ")
+        csv << "\n"
+        csv << tempfile.read
+        send_data csv, type: Mime::CSV, filename: "tax.csv"
+
+        tempfile.unlink
+      end
+
     end
   end
 
