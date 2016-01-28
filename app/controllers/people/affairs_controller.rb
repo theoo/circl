@@ -71,16 +71,21 @@ class People::AffairsController < ApplicationController
   end
 
   def create
-    success = false
+    errors = {}
     parent_ids = {}
+    # This will create a variant
     @parent = Affair.find params[:parent_id] if not params[:copy_parent].blank? and not params[:parent_id].blank?
 
+    # TODO Move action like "create a variant" in model
     Affair.transaction do
       @affair.value = Money.new(params[:value].to_f * 100, params[:value_currency])
       @affair.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
 
       # raise the error and rollback transaction if validation fails
-      raise ActiveRecord::Rollback unless @affair.save
+      unless @affair.save
+        errors = @affair.errors
+        raise ActiveRecord::Rollback, errors.inspect
+      end
 
       # append stakeholders
       unless params[:affairs_stakeholders].blank?
@@ -102,7 +107,11 @@ class People::AffairsController < ApplicationController
         @parent.tasks.each do |t|
           nt = t.dup
           nt.affair = @affair
-          raise ActiveRecord::Rollback unless nt.save
+
+          unless nt.save
+            errors = nt.errors
+            raise ActiveRecord::Rollback, errors.inspect
+          end
           nt
         end
 
@@ -118,22 +127,30 @@ class People::AffairsController < ApplicationController
           end
 
           nt.category = cat
-          raise ActiveRecord::Rollback unless nt.save
+
+          unless nt.save
+            errors = nt.errors
+            raise ActiveRecord::Rollback, errors.inspect
+          end
           # Require to prevent removal of unused categories, it reloads product_items
           @affair.reload
           parent_ids[t.id] = nt.id
           nt
         end
-        @affair.product_items.where("parent_id is not null").each do |t|
-          unless t.update_attributes(parent_id: parent_ids[t.parent_id])
-            raise ActiveRecord::Rollback
+        @affair.product_items.where("parent_id is not null").each do |nt|
+          unless nt.update_attributes(parent_id: parent_ids[nt.parent_id])
+            errors = nt.errors
+            raise ActiveRecord::Rollback, errors.inspect
           end
         end
 
         @parent.extras.each do |t|
           nt = t.dup
           nt.affair = @affair
-          raise ActiveRecord::Rollback unless nt.save
+          unless nt.save
+            errors = nt.errors
+            raise ActiveRecord::Rollback, errors.inspect
+          end
           nt
         end
 
@@ -145,15 +162,18 @@ class People::AffairsController < ApplicationController
 
       end
 
-      success = @affair.save
+      unless @affair.save
+        errors = @affair.errors
+        raise ActiveRecord::Rollback, errors
+      end
 
     end # transaction
 
     respond_to do |format|
-      if success
+      if errors.blank?
         format.json { render json: @affair }
       else
-        format.json { render json: @affair.errors, status: :unprocessable_entity }
+        format.json { render json: errors, status: :unprocessable_entity }
       end
     end
   end

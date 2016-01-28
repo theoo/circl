@@ -67,6 +67,7 @@ class App.ExtendedController extends Spine.Controller
       $(field_with_error).find('input, textarea, checkbox, select').popover('destroy')
       $(field_with_error).removeClass('has-error')
 
+  # TODO when error field is not found, raise a generic error.
   render_errors: (errors) ->
     @reset_notifications()
 
