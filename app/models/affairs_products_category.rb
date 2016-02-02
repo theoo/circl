@@ -37,7 +37,7 @@ class AffairsProductsCategory < ActiveRecord::Base
   belongs_to  :affair
   has_many    :product_items,
               -> { order(:position) },
-              class_name: 'AffairsProductsProgram',
+              class_name: 'ProductItem',
               foreign_key: 'category_id'
 
   ###################

@@ -43,7 +43,7 @@ class ProductProgram < ActiveRecord::Base
   ### RELATIONS ###
   #################
 
-  has_many :product_items, class_name: 'AffairsProductsProgram',
+  has_many :product_items, class_name: 'ProductItem',
    foreign_key: 'program_id',
    dependent: :destroy
   has_many :products, through: :product_items

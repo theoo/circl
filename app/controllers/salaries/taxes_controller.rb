@@ -62,6 +62,7 @@ class Salaries::TaxesController < ApplicationController
     respond_to do |format|
       format.json { render json: @tax }
       format.csv do
+        # TODO Use postgres-copy gem instead
 
         tempfile = Tempfile.new('pg_tax_data')
         File.chmod(0777, tempfile.path)
@@ -69,7 +70,7 @@ class Salaries::TaxesController < ApplicationController
         # FIXME pluck ids can limit the query size
         arel = @tax.rows
 
-        cmd = "Copy (#{arel.to_sql}) To '#{tempfile.path}' With CSV;"
+        cmd = "COPY (#{arel.to_sql}) TO '#{tempfile.path}' WITH CSV;"
         ActiveRecord::Base.connection.execute(cmd)
 
         csv = @tax.source_model.column_names.join(", ")

@@ -31,7 +31,7 @@ class ProductOrdersDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: AffairsProductsProgram.count,
+      iTotalRecords: ProductItem.count,
       iTotalDisplayRecords: product_items.total_entries,
       aaData: data
     }
@@ -109,7 +109,7 @@ class ProductOrdersDatatable
 
   # TODO: improve search like "Firstname Lastname", actually returns zero results.
   def fetch_product_items
-    product_items = AffairsProductsProgram.joins(:affair, :category, :product, :program)
+    product_items = ProductItem.joins(:affair, :category, :product, :program)
     product_items = product_items.order("#{sort_column} #{sort_direction} NULLS last")
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes

@@ -22,7 +22,7 @@
 - subject: ProductVariant
   action: manage
 
-- subject: AffairsProductsProgram
+- subject: ProductItem
   action: manage
 
 - subject: AffairsProductsCategory
