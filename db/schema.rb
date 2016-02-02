@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125153731) do
+ActiveRecord::Schema.define(version: 20160202222931) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20151125153731) do
     t.integer  "parent_id"
     t.text     "footer"
     t.text     "conditions"
-    t.integer  "seller_id",                 default: 1,     null: false
+    t.integer  "seller_id",                 default: 1684,  null: false
     t.integer  "condition_id"
     t.boolean  "unbillable",                default: false, null: false
     t.text     "notes"
@@ -73,37 +73,6 @@ ActiveRecord::Schema.define(version: 20151125153731) do
 
   add_index "affairs_products_categories", ["affair_id"], name: "index_affairs_products_categories_on_affair_id", using: :btree
   add_index "affairs_products_categories", ["position"], name: "index_affairs_products_categories_on_position", using: :btree
-
-  create_table "affairs_products_programs", force: true do |t|
-    t.integer  "parent_id"
-    t.integer  "affair_id"
-    t.integer  "product_id"
-    t.integer  "program_id"
-    t.float    "position"
-    t.float    "quantity"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "bid_percentage"
-    t.integer  "value_in_cents", default: 0,     null: false
-    t.string   "value_currency", default: "CHF", null: false
-    t.integer  "category_id"
-    t.text     "comment"
-    t.datetime "ordered_at"
-    t.datetime "confirmed_at"
-    t.datetime "delivery_at"
-    t.date     "warranty_begin"
-    t.date     "warranty_end"
-  end
-
-  add_index "affairs_products_programs", ["affair_id", "product_id", "position"], name: "affairs_products_programs_unique_position", using: :btree
-  add_index "affairs_products_programs", ["affair_id"], name: "index_affairs_products_programs_on_affair_id", using: :btree
-  add_index "affairs_products_programs", ["category_id"], name: "index_affairs_products_programs_on_category_id", using: :btree
-  add_index "affairs_products_programs", ["confirmed_at"], name: "index_affairs_products_programs_on_confirmed_at", using: :btree
-  add_index "affairs_products_programs", ["delivery_at"], name: "index_affairs_products_programs_on_delivery_at", using: :btree
-  add_index "affairs_products_programs", ["ordered_at"], name: "index_affairs_products_programs_on_ordered_at", using: :btree
-  add_index "affairs_products_programs", ["parent_id"], name: "index_affairs_products_programs_on_parent_id", using: :btree
-  add_index "affairs_products_programs", ["product_id"], name: "index_affairs_products_programs_on_product_id", using: :btree
-  add_index "affairs_products_programs", ["program_id"], name: "index_affairs_products_programs_on_program_id", using: :btree
 
   create_table "affairs_stakeholders", force: true do |t|
     t.integer "person_id"
@@ -543,6 +512,37 @@ ActiveRecord::Schema.define(version: 20151125153731) do
   add_index "private_tags", ["name"], name: "index_private_tags_on_name", using: :btree
   add_index "private_tags", ["parent_id"], name: "index_private_tags_on_parent_id", using: :btree
 
+  create_table "product_items", force: true do |t|
+    t.integer  "parent_id"
+    t.integer  "affair_id"
+    t.integer  "product_id"
+    t.integer  "program_id"
+    t.float    "position"
+    t.float    "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "bid_percentage"
+    t.integer  "value_in_cents", default: 0,     null: false
+    t.string   "value_currency", default: "CHF", null: false
+    t.integer  "category_id"
+    t.text     "comment"
+    t.datetime "ordered_at"
+    t.datetime "confirmed_at"
+    t.datetime "delivery_at"
+    t.date     "warranty_begin"
+    t.date     "warranty_end"
+  end
+
+  add_index "product_items", ["affair_id", "product_id", "position"], name: "affairs_products_programs_unique_position", using: :btree
+  add_index "product_items", ["affair_id"], name: "index_product_items_on_affair_id", using: :btree
+  add_index "product_items", ["category_id"], name: "index_product_items_on_category_id", using: :btree
+  add_index "product_items", ["confirmed_at"], name: "index_product_items_on_confirmed_at", using: :btree
+  add_index "product_items", ["delivery_at"], name: "index_product_items_on_delivery_at", using: :btree
+  add_index "product_items", ["ordered_at"], name: "index_product_items_on_ordered_at", using: :btree
+  add_index "product_items", ["parent_id"], name: "index_product_items_on_parent_id", using: :btree
+  add_index "product_items", ["product_id"], name: "index_product_items_on_product_id", using: :btree
+  add_index "product_items", ["program_id"], name: "index_product_items_on_program_id", using: :btree
+
   create_table "product_programs", force: true do |t|
     t.string   "key",                           null: false
     t.string   "program_group",                 null: false
@@ -726,8 +726,8 @@ ActiveRecord::Schema.define(version: 20151125153731) do
     t.string   "cert_others_title",                                     default: "",    null: false
     t.text     "cert_notes",                                            default: "",    null: false
     t.string   "employer_account",                                      default: ""
-    t.string   "yearly_salary_currency",                                default: "CHF", null: false
     t.text     "comments"
+    t.string   "yearly_salary_currency",                                default: "CHF", null: false
   end
 
   add_index "salaries", ["is_reference"], name: "index_salaries_on_is_template", using: :btree
@@ -789,6 +789,7 @@ ActiveRecord::Schema.define(version: 20151125153731) do
     t.boolean  "archive",            default: false, null: false
   end
 
+  add_index "salaries_taxes", ["archive"], name: "index_salaries_taxes_on_archive", using: :btree
   add_index "salaries_taxes", ["exporter_avs_group"], name: "index_salaries_taxes_on_exporter_avs_group", using: :btree
   add_index "salaries_taxes", ["exporter_is_group"], name: "index_salaries_taxes_on_exporter_is_group", using: :btree
   add_index "salaries_taxes", ["exporter_lpp_group"], name: "index_salaries_taxes_on_exporter_lpp_group", using: :btree

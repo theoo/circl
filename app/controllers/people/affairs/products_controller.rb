@@ -30,7 +30,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def index
-    authorize! :read, @person => AffairsProductsProgram
+    authorize! :read, @person => ProductItem
 
     params[:items] = JSON.parse(params[:items]) if params[:items]
 
@@ -103,12 +103,12 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def create
-    authorize! :create, @person => AffairsProductsProgram
+    authorize! :create, @person => ProductItem
 
     # If @affair.product_items << OBJ is used, then update_on_prestation_alteration is called
     # which will fail as long as the product item is not saved.
     params[:affair_id] = @affair.id
-    @product = AffairsProductsProgram.new(product_params)
+    @product = ProductItem.new(product_params)
 
     respond_to do |format|
       if @product.save
@@ -122,7 +122,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def edit
-    authorize! :read, @person => AffairsProductsProgram
+    authorize! :read, @person => ProductItem
 
     @product = @affair.product_items.find(params[:id])
 
@@ -132,7 +132,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def update
-    authorize! :update, @person => AffairsProductsProgram
+    authorize! :update, @person => ProductItem
 
     @product = @affair.product_items.find(params[:id])
 
@@ -146,7 +146,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def group_update
-    authorize! :update, @person => AffairsProductsProgram
+    authorize! :update, @person => ProductItem
 
     errors = nil
     success = false
@@ -178,7 +178,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def destroy
-    authorize! :destroy, @person => AffairsProductsProgram
+    authorize! :destroy, @person => ProductItem
 
     @product = @affair.product_items.find(params[:id])
 
@@ -192,7 +192,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def group_destroy
-    authorize! :destroy, @person => AffairsProductsProgram
+    authorize! :destroy, @person => ProductItem
 
     errors = nil
     success = false
@@ -212,7 +212,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def search
-    authorize! :read, @person => AffairsProductsProgram
+    authorize! :read, @person => ProductItem
 
     hash = {}
     if ! params[:term].blank?
@@ -220,10 +220,10 @@ class People::Affairs::ProductsController < ApplicationController
       param = params[:term].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       result = Product
         .joins(:product_items)
-        .where("affairs_products_programs.affair_id = ?", @affair.id)
+        .where("product_items.affair_id = ?", @affair.id)
 
       if param.is_i?
-        result = result.where("affairs_products_programs.position = ?", param)
+        result = result.where("product_items.position = ?", param)
       else
         result = result.where("products.key ~* ? OR products.title ~* ?", *([param]*2))
       end
@@ -253,7 +253,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def categories
-    authorize! :read, @person => AffairsProductsProgram
+    authorize! :read, @person => ProductItem
 
     hash = {}
     if ! params[:term].blank?
@@ -272,12 +272,12 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def change_position
-    authorize! :update, @person => AffairsProductsProgram
-    @product = AffairsProductsProgram.find(params[:id])
+    authorize! :update, @person => ProductItem
+    @product = ProductItem.find(params[:id])
 
     # send table index position
     success = @product.update_table_index_position(params[:toPosition].to_i - 1)
-    # success = AffairsProductsProgram.update_position(@product.id, params[:fromPosition].to_i, params[:toPosition].to_i)
+    # success = ProductItem.update_position(@product.id, params[:fromPosition].to_i, params[:toPosition].to_i)
 
     respond_to do |format|
       if success
@@ -289,7 +289,7 @@ class People::Affairs::ProductsController < ApplicationController
   end
 
   def reorder
-    authorize! :update, @person => AffairsProductsProgram
+    authorize! :update, @person => ProductItem
 
     success = @affair.reorder_product_items!
 

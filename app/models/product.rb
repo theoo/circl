@@ -63,7 +63,7 @@ class Product < ActiveRecord::Base
     class_name: 'ProductVariant',
     dependent: :destroy
 
-  has_many :product_items, class_name: 'AffairsProductsProgram',
+  has_many :product_items, class_name: 'ProductItem',
                            dependent: :destroy
 
   has_many :programs, -> { uniq }, through: :product_items

@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class AffairsProductsProgram < ActiveRecord::Base
+class ProductItem < ActiveRecord::Base
 
   ################
   ### INCLUDES ###
@@ -131,7 +131,7 @@ class AffairsProductsProgram < ActiveRecord::Base
     positions.insert(to_pos, p)
 
     # rename position of all items
-    AffairsProductsProgram.transaction do
+    ProductItem.transaction do
 
       mapping = affair.product_items_positions(positions).keys
 

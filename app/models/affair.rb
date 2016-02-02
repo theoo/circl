@@ -136,7 +136,6 @@ class Affair < ActiveRecord::Base
 
   has_many    :product_items,
               -> { order(:position) },
-              class_name: 'AffairsProductsProgram',
               dependent: :destroy,
               after_add: :update_on_prestation_alteration,
               after_remove: :update_on_prestation_alteration
@@ -360,7 +359,7 @@ class Affair < ActiveRecord::Base
 
   def arts_value(category_name = nil)
     pi = category_name ? product_items_for_category(category_name) : product_items
-    # See AffairsProductsProgram#variant definition
+    # See ProductItem#variant definition
     sum = 0.to_money
     pi.each do |i|
       v = i.variant
@@ -579,7 +578,7 @@ class Affair < ActiveRecord::Base
   # Dates
   %w(created_at updated_at ordered_at confirmed_at delivery_at warranty_begin warranty_end).each do |d|
     define_method("product_items_" + d) do
-      dates = product_items.reorder(nil).select("DISTINCT(affairs_products_programs.#{d})").map{|i| i.send(d)}
+      dates = product_items.reorder(nil).select("DISTINCT(product_items.#{d})").map{|i| i.send(d)}
       dates.delete(nil)
       dates
     end
