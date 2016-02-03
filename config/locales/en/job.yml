@@ -1,9 +1,0 @@
----
-en:
-  job:
-    errors:
-      cannot_contain_comma: cannot contain comma
-    views:
-      actions:
-        view_members: view members
-      members_count: members count

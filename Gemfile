@@ -52,7 +52,8 @@ gem 'gon'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.12.1', platforms: :ruby
 gem 'i18n-js', '2.1.2'
-gem 'i18n-tasks', '~> 0.5.4'
+gem 'i18n-tasks'
+gem 'lit'
 gem 'yui-compressor', '0.12.0'
 
 ### maps
@@ -117,4 +118,4 @@ end
 #   gem 'sdoc', require: false
 # end
 
-ruby '2.1.2'
+ruby '2.3.0'

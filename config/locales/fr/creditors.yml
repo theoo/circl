@@ -1,6 +1,0 @@
----
-fr:
-  creditors:
-    errors:
-      date_field_unkown: MISSING_TRANSLATION date field unkown
-      invalid_status: MISSING_TRANSLATION invalid status

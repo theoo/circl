@@ -1,9 +1,0 @@
----
-fr:
-  comment:
-    views:
-      actions:
-        close: clore
-        reopen: réouvrir
-      comment: commentaire
-      editor: "éditeur"
