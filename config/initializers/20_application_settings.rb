@@ -40,13 +40,7 @@ if ActiveRecord::Base.connection.table_exists? 'application_settings' \
     end
   end
 
-  Rails.configuration.application_settings = ApplicationSetting.all.inject({}) do |h, as|
-    # TODO condition can be removed after type_for_validation migration
-    if as.respond_to? :type_for_validation
-      h[as.key.to_sym] = [as.value, as.type_for_validation]
-    end
-    h
-  end
+  ApplicationSetting.enable_caching
 
   puts green("done") + "."
 end

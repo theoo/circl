@@ -75,7 +75,7 @@ gem 'mailchimp-api', require: 'mailchimp'
 
 ### rake
 gem 'rake-progressbar', '0.0.5'
-gem 'rake', '10.3.2'
+gem 'rake'
 
 # Monitoring
 gem 'rails_exception_handler', "~> 2"
@@ -119,3 +119,5 @@ end
 # end
 
 ruby '2.3.0'
+
+gem "redis"

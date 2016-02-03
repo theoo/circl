@@ -107,6 +107,20 @@ class ApplicationSetting < ActiveRecord::Base
       :use_vat]
     end
 
+    def disable_caching
+      Rails.configuration.application_settings = nil
+    end
+
+    def enable_caching
+      Rails.configuration.application_settings = ApplicationSetting.all.inject({}) do |h, as|
+        # TODO condition can be removed after type_for_validation migration
+        if as.respond_to? :type_for_validation
+          h[as.key.to_sym] = [as.value, as.type_for_validation]
+        end
+        h
+      end
+    end
+
     private
 
       def convert_value(val, type = 'string')
