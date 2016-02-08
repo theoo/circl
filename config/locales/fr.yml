@@ -2,7 +2,6 @@
 fr:
   activity:
     views:
-      action: action
       resource_id: resource
       resource_type: type de ressource
   admin:
@@ -76,7 +75,6 @@ fr:
       footer: commentaires
       format: format
       invoices: Factures
-      invoices_count: nombre de factures
       invoices_value: valeur des factures
       legend:
         closed_affairs: Closed affairs
@@ -90,7 +88,6 @@ fr:
       person: contact
       products: Produits
       receipts: Reçus
-      receipts_count: nombre de reçus
       receipts_value: valeur des reçus
       receiver: receveur
       relations: relations
@@ -100,19 +97,18 @@ fr:
       stakeholders: intervenants
       status: statut
       statuses:
-        cancelled: annulée
-        offered: offerte
-        open: ouverte
-        overpaid: surpayée
-        paid: payée
-        partially_paid: partiellement payée
-        to_be_billed: à facturer
+        cancelled: Cancelled
+        offered: Offered
+        open: Open
+        overpaid: Overpaid
+        paid: Paid
+        partially_paid: Partially paid
+        to_be_billed: To be billed
         unbillable: non facturable
-        underpaid: sous-payée
+        underpaid: Underpaid
       subscription_names_filter: filtre pour le nom des inscriptions
       subscriptions: Inscriptions
       tasks: Services
-      taxes: taxes
       template: modèle de document
       threshold_overpaid_global: limite de la somme des surpaiements
       threshold_overpaid_unit: limite de surpaiement
@@ -130,14 +126,12 @@ fr:
         without_taxes: HT
       value_with_taxes_is: La valeur TTC est
       variant_prefix: Variante
-      vat: TVA
   affairs_condition:
     views:
       affairs: affaires
   application_setting:
     errors:
       cant_change_key: Il est impossible de changer la clé.
-      missing_attribute: La clé '%{key}' n'est pas définie.
     formats:
       boolean: Booléen
       email: Email
@@ -146,8 +140,6 @@ fr:
       string: Chaîne de charactères
       time: Intervalle de temps
       url: URL
-    notice:
-      application_restarted: CIRCL has restarted.
     notices:
       application_restarted: CIRCL a redémarré.
       restart_warning: "<b>Attention!</b><br/> Redémarrer l'application provoque l'interruption temporaire de l'accès à tous les services (Web, LDAP, etc.). La durée de cette interruption varie en fonction de la configuration. Veillez à <b>ne pas redémarrer</b> l'annuaire si des tâches d'arrière plan sont en cours."
@@ -157,7 +149,6 @@ fr:
       type_for_validation: Format
   application_settings:
     errors:
-      value_should_be_#{type_for_validation}: 'La valeur devrait être du type #{type for validation}'
       value_should_be_boolean: La valeur devrait être du type 'booléen'
       value_should_be_email: La valeur devrait être du type 'email'
       value_should_be_float: La valeur devrait être du type 'floatant'
@@ -165,7 +156,6 @@ fr:
       value_should_be_string: La valeur devrait être du type 'chaine'
       value_should_be_time: La valeur devrait être du type 'temps'
       value_should_be_url: La valeur devrait être du type 'URL'
-    formats: formats
   background_task:
     mail:
       error_report_title: Rapport d'erreur
@@ -184,14 +174,7 @@ fr:
       update_index_for_people: Mise à jour de l'index du moteur de recherche pour %{people_count} personne(s)
       update_subscription_invoices_and_email: Mise à jour des indices et factures pour l'inscription %{subscription_id} - %{subscription_title}
     views:
-      actions:
-        destroy_background_task: détruire la tâche
-      background_tasks_list_title: Liste des tâche d'arrière plan
       status: statut
-      statuses:
-        pending: en attente
-        running: en cours d'exécution
-      tasks_pending: tâche(s) d'arrière plan
   bank_import_history:
     views:
       account: compte
@@ -270,7 +253,6 @@ fr:
       failed_to_retrieve_data: Impossible de récupérer les données.
       failed_to_update: échec lors de la mise à jour.
       from_should_be_before_to: "'de' devrait être avant 'à'"
-      if_you_think_it_s_a_bug: 'Si vous pensez qu''il s''agit d''un bug, veuillez nous écire par email à l''adresse: <a href=''mailto:support@circl.ch''>support@circl.ch</a>'
       invalid_date: La date n'est pas valide.
       invalid_phone: Le format n'est pas valide, vous devez utiliser un format comme "+11 22 333 44 55" (entre 7 et 18 chiffres).
       must_provide_first_name_if_last_name: Il doit y avoir un prénom s'il y a un nom de famille.
@@ -381,7 +363,6 @@ fr:
       invalid_line: ligne invalide
       line: ligne
       unable_to_parse_file: impossible d'évaluer le fichier
-      wrong_date: Mauvais format de date
     notices:
       creditor_imported: Créanciers importés
       the_counterpart_is_assigned_on_providers_page: La contrepartie est indiquée sur la fiche du fournisseur
@@ -409,7 +390,6 @@ fr:
       discount_account: compte d'escompte
       discount_ends_on: échéance de l'escompte
       discount_percentage: escompte %
-      example_files_explanation: Le fichier exemple ci-dessous peut être employé pour préparer les données à importer.
       export: exporter
       ignore_theses_columns: ignorer ces colonnes
       import_creditors: Importer des créanciers
@@ -427,10 +407,6 @@ fr:
       value: valeur
       vat_account: code TVA
       vat_discount_account: code escompte TVA
-  creditors:
-    errors:
-      date_field_unkown: MISSING_TRANSLATION date field unkown
-      invalid_status: MISSING_TRANSLATION invalid status
   currency:
     errors:
       unable_to_destroy_a_currency_which_is_used: Il est impossible de supprimer une devise employée
@@ -509,19 +485,15 @@ fr:
       query_empty: Aucune requête transmise, veuillez en fournir une et recommencer.
       query_invalid: requête "%{query}" invalide
       search_error: erreur lors de la recherche -> %{error}
-      wrong_file_format: Mauvais format de fichier
       you_need_to_select_at_least_one_attribute_to_display: Au moins un attributs à afficher doit être sélectionné.
     import:
       main_communication_language: langue de communication principale
       row: ligne
     notices:
-      add_members_email_will_be_sent: Le processus d'import des membres à commencé, un rapport sera envoyé par email à %{email} lorsqu'il sera fini.
       people_imported: Les personnes ont été importées, un rapport a été envoyé par email à %{email}.
       result_return_only_one_person: Un seul contact trouvé.
       use_ctrl_plus_click: CTRL + Click = multisélection
     views:
-      actions:
-        change_person_password: changer le mot de passe
       add_person: ajouter un contact
       custom_action_introduction: Vous avez été redirigé sur la page du moteur de recherche pour effectuer une action spéciale.
       custom_action_warning: Vous pouvez rechercher dans l'annuaire de manière ordinaire, lorsque le résultat de la recherche vous conviendra, cliquez sur 'continuer' pour poursuivre le processus en cours.
@@ -534,7 +506,6 @@ fr:
         sorting_order: Ordre de tri
       import_people: Importer des personnes
       new_preset: Nouveau pré-réglage
-      people_example_file: fichier d'exemple
       people_file_errors: erreur(s) dans le fichier
       people_found_in_file: personne(s) trouvée(s) dans le fichier
       people_import_help: Voici les personnes qui ont été trouvées dans le fichier.<br> Verifiez l'exactitude des informations, puis cliquez sur le bouton 'suivant' pour confirmer l'import.<br><br> Si la validation des lignes échoue, les lignes concernées seront colorées en rouge et vous devrez recommencer le processus avec un fichier corrigé.<br>En passant la souris sur une ligne rouge vous pourrez obtenir plus d'information sur l'erreur.
@@ -546,8 +517,6 @@ fr:
       score: score
       search_the_directory: Rechercher dans CIRCL
       show_on_a_map: afficher sur une carte
-      sync_mailchimp: synchroniser mailchimp
-      tools: Outils
       top20_private_tags: Top 20 tags privés
       top20_public_tags: Top 20 tags publics
   employment_contract:
@@ -558,21 +527,6 @@ fr:
       interval_ends_on: fin de l'intervalle
       interval_starts_on: début de l'intervalle
       percentage: pourcentage
-  extra:
-    pdf:
-      created_at: date de saisie
-      description: description
-      id: id
-      position: pos.
-      quantity: qt.
-      title: titre
-      updated_at: date de mise à jour
-      value: valeur
-      value_currency: devise
-      value_in_cents: valeur en centimes
-    views:
-      extra_list_pdf_title: Liste des extras pour l'affair %{affair_title}
-  hours: heures
   invoice:
     errors:
       cant_destroy_if_existing_receipt: Il n'est pas possible de détruire cette facture si un reçu y est lié.
@@ -583,7 +537,6 @@ fr:
       actions:
         add_receipt: ajouter un reçu
         preview_pdf_in_new_tab: aperçu dans un nouvel onglet
-      age: age
       balance_value: balance
       buyer: payeur
       cancelled: annulée
@@ -599,12 +552,12 @@ fr:
       select_generation_interval: Sélectionner l'intervalle d'émission
       status: statut
       statuses:
-        cancelled: annulée
-        offered: offerte
-        open: ouverte
-        overpaid: surpayée
-        paid: payée
-        underpaid: sous-payée
+        cancelled: Cancelled
+        offered: Offered
+        open: Open
+        overpaid: Overpaid
+        paid: Paid
+        underpaid: Underpaid
       subscription_title: titre de l'inscription
       wipe_content_to_update_address: Vider le contenu de l'adresse pour mettre à jour selon les informations du payeur.
   invoice_template:
@@ -613,11 +566,8 @@ fr:
       bvr_address_and_bvr_account_are_required_if_with_bvr_is_set: Le numéro de compte BVR et l'adresse doivent être saisi si vous sélectionnez "imprimer le BVR"
       can_not_delete_if_invoices_are_subscribed: Il est impossible de supprimer le modèle si des factures y sont liées.
       can_not_delete_if_subscriptions_are_subscribed: Il est impossible de supprimer le modèle si des inscriptions y sont liées.
-      failed_to_substitute_iterator: ERREUR LORS DE LA SUBSTITUTION DE L'ITÉRATEUR "%{iterator}"
     views:
       account_identification: n° compte-identification
-      body: corps du texte
-      bvr_account: compte BVR
       bvr_account_number: numéro de compte BVR
       bvr_address: adresse figurant sur le BVR
       invoices: factures
@@ -628,12 +578,9 @@ fr:
       with_bvr: imprimer le BVR
   item:
     views:
-      actions: actions
       category: catégorie
       line: ligne
   job:
-    errors:
-      cannot_contain_comma: cannot contain comma
     views:
       actions:
         view_members: voir les membres
@@ -659,12 +606,9 @@ fr:
       no_parent_location: aucun parent n'a été défini
     views:
       actions:
-        destroy_location: détruire cette localité
-        edit_location: modifier la localité
         view_members: voir les membres
       iso_alpha2: iso alpha2
       iso_alpha3: iso alpha3
-      iso_code_a2: iso code a2
       iso_numerical: iso numerical
       phone_prefix: préfixe téléphonique
       post_code_or_zip: code postal ou zip
@@ -676,30 +620,16 @@ fr:
       failed_to_synchronize: La synchronisation a échouée
       failure_report: Rapport d'échec
       if_the_count_doesnt_match_query: Si le compte des contacts ne correspond pas à la requête, veuillez vérifier que vos contacts ont bien un email valide.
-      job_report: Rapport de la tâche
       message: message
       sync_report_title: Rapport de synchronisation
       synchronization_succeed: La synchronisation a réussi
       synchronizing_people_on_list: "%{count} contacts ont été synchronisés avec la list %{list_id}."
-  minutes: minutes
-  months: mois
   permission:
     errors:
-      attribute_not_found: L'attribut n'a pas été trouvé.
       condition_does_not_evaluate: Cette condition ne peut pas être évaluée.
       forbidden: Accès refusé
-      forbidden_explanation: Vous n'avez pas accès à cette ressource.
-      internal_server_error: Erreur interne du serveur
-      internal_server_error_explanation: Un problème interne empêche le bon fonctionnement du programme.
       invalid_parameters: paramètres invalides
-      invalid_request: Requête invalide
-      invalid_request_explanation: Le format ou le contenu de la requête est inapporprié.
-      page_not_found: Page non trouvé
-      page_not_found_explanation: La page recherchée n'existe pas.
       record_not_found: Enregistrement non trouvé
-      record_not_found_explanation: L'enregistrement cherché n'existe pas.
-      service_unavailable: Service indisponible
-      service_unavailable_explanation: Le service est temporairement indisponible
       subject_must_point_to_model_if_condition_present: Le sujet doit pointer vers un modèle si une condition est présente.
     views:
       action: action
@@ -722,7 +652,6 @@ fr:
         open_invoices: Factures ouvertes
         open_salaries: Salaires ouverts
         shortcuts: Raccourcis
-        statistics: Statistiques
         timesheet: Pointeuse
         your_activity: Votre activité
       tech_support: support technique
@@ -749,20 +678,10 @@ fr:
       the_required_information_about_this_employee_are_not_satisfied: Cette personne a des salaires. L'attribut '%{field}' est requis.
     import:
       cannot_parse: Impossible d'analyser le fichier.
-      invalid_#{name}: "#{name} est un nom invalide"
-      invalid_communication_language: Langue de communication invalide "%{communication_language}"
-      invalid_job: Métier invalide "%{job}"
       invalid_line: Ligne non valide
       invalid_location: Localité invalide "%{location}"
-      invalid_main_communication_language: Langue principale de communication invalide "%{main_communication_language}"
-      invalid_private_tag: Tag privé invalide "%{private_tag}"
-      invalid_public_tag: Tag public invalide "%{public_tag}"
-      invalid_role: Rôle invalide "%{role}"
       line: ligne
-      not_existing_: 'not existing '
       not_existing_job: Le métier "%{job}" sera créé.
-      not_existing_private_tag: Le tag privé "%{tag}" sera créé.
-      not_existing_public_tag: Le tag public "%{tag}" sera créé.
     mail:
       admin_receipts_were_generated: Génération des documents de reçus
       admin_receipts_were_generated_explanation: Vous pouvez télécharger le document généré à l'adresse suivante
@@ -786,16 +705,12 @@ fr:
         directory_id: ID unique de l'annuaire
         directory_name: Nom de l'annuaire
         exception_trace: Backtrace de l'exception
-        person: Personne
         something_wrong_happened: Quelque chose d'incorrect est arrivé sur un annuaire en production. Veuillez consulter le backtrace ci-dessous et le fichier de log production.log.
-        title: Une erreur critique a eu lieu sur un serveur en production
       report_error_subject: Une erreur critique (500) a eu lieu sur un serveur en production
       subscription_were_merged: Les inscriptions [(%{source_id}) %{source_title}] -> [(%{destination_id}) %{destination_title}] ont été fusionnées
       subscription_were_updated: L'inscription [(%{id}) %{title}] à été mise à jour
     notices:
       identifier_explanation: "<h3>Commencez par un identifiant</h3> L'identifiant doit être composé au moins de l'un des trois éléments suivants: <ul><li>un nom d'organisation</li><li>une paire prénom-nom</li><li>une adresse email</li></ul>"
-      not_enough_information_to_point_this_person_on_a_map: Il n'y a pas assez d'informations pour pointer précisément l'adresse de ce contact sur une carte.
-      not_enough_information_to_render_a_map: Il n'y a pas assez d'informations sur l'adresse de ce contact pour générer une carte.
       successfully_created_explanation: "<h3><i>%{name}</i> a bien été créé</h3> Vous pouvez désormais attribuer des tags, affaires, salaires, etc. a ce contact."
     views:
       account_settings: paramètres du compte
@@ -829,8 +744,6 @@ fr:
       fax_number: numéro de fax
       female: féminin
       first_name: prénom
-      full_address: adresse complète
-      full_name: nom complet
       gender: genre
       generate_authentication_token: "(re)générer"
       geographic_coordinates: coordonnées géographiques
@@ -862,7 +775,6 @@ fr:
       second_email: email secondaire
       second_phone: téléphone secondaire
       statistics: Statistiques
-      this_person_uniq_id: Identifiant unique de cette personne (ID)
       unlock_account: déverrouiller
       update_password: mettre à jour le mot de passe
       website: adresse du site internet (URL)
@@ -871,7 +783,6 @@ fr:
       invalid_line: ligne invalide
       line: ligne
       missing_program: Programme %{program_name} manquant
-      no_file_submitted: Pas de fichier soumis
       product_failed_to_imported: Impossible d'importer les produits
       unable_to_parse_file: Impossible d'interpreter le fichier
     notices:
@@ -883,33 +794,7 @@ fr:
       the_following_prices_will_be_updated: les prix suivants seront mis à jour
       this_product_will_be_removed_in_all_related_affairs: Ce produit sera supprimé de toutes les affaires relatives.
       you_are_editing_many_product_at_a_time: Attention! Vous êtes sur le point de modifier une série de %{products_count} produits d'un coup. <br /> Si vous modifiez un champs qui affecte généralement la valeur et souhaitez que cette dernière soit mise à jour, cochez la case de la valeur en laissant le champs vide.
-    pdf:
-      parent_position: position du parent
-      parent_product_key: titre du produit parent
-      product_key: clé du produit
-      product_title: titre du produit
-      program_description: description du programme
-      program_key: clé du programme
-      program_title: titre du programme
-    units:
-      cm:
-        symbol: cm
-        title: centimètres
-      g:
-        symbol: g
-        title: grammes
-      kg:
-        symbol: kg
-        title: kilogrammes
-      m:
-        symbol: m
-        title: mètres
-      mm:
-        symbol: mm
-        title: milimètres
-      pc:
-        symbol: pc
-        title: unité
+    units: unités
     views:
       affair: affaire
       after_sale: après-vente
@@ -926,12 +811,9 @@ fr:
       comments: commentaires
       confirmed_at: confirmation
       delivery_at: livraison
-      example_files_explanation: Le fichier exemple ci-dessous peut être employé pour préparer les données à importer.
-      example_files_title: Fichier d'exemple
       has_accessories: accessoires
       ignore_theses_columns: Ignorer ces collones
       import_products: Importer des produits
-      key: clé
       normal_price: prix normal
       options: Options
       ordered_at: commande
@@ -943,7 +825,6 @@ fr:
       product_search: produit
       products_example_file_desc: Modèle pour l'importation
       products_found_in_file: produits trouvés dans le fichier
-      products_list_pdf_title: List des produits pour l'affaire <i>%{affair_title}</i>
       program_group: Program group
       program_groups: groupe de programme
       provider: fournisseur
@@ -955,42 +836,20 @@ fr:
       title: titre
       unit: unité
       unit_symbol: symbole d'unité
-      upload_a_new_file_description: veuillez choisir un fichier
-      upload_a_new_file_title: téléverser un nouveau fichier
       variants: variantes
       warranty_begin: début garantie
       warranty_end: fin garantie
-  product_item:
-    pdf:
-      category: catégorie
-      created_at: date de saisie
-      description: description
-      id: id
-      key: clé
-      parent_id: id parent
-      quantity: qt.
-      title: titre
-      updated_at: date de mise à jour
-      value: valeur
-      value_currency: devise
-      value_in_cents: valeur en centimes
   product_program:
     errors:
       program_failed_to_imported: Impossible d'importer le programme de produit
     notices:
       program_imported: Programmes de produit importés
     views:
-      example_files_explanation: Le fichier exemple ci-dessous peut être employé pour préparer les données à importer.
-      example_files_title: Fichier d'exemple
       product-programs_example_file_desc: Fichier d'exemple pour programmes de produit
-      products_example_file_desc: Modèle pour l'importation
       program_group: groupe de variante
       program_search: programme
       table:
         program_group: grp.
-      upload_a_new_file_description: veuillez choisir un fichier
-      upload_a_new_file_title: téléverser un nouveau fichier
-      variant_name: nom de la variante
   product_variant:
     errors:
       parent_cannot_be_the_child_of_another_product_item: Un parent ne peut pas être l'enfant d'un autre élément.
@@ -1004,7 +863,6 @@ fr:
   receipt:
     errors:
       no_receipts_selected: aucun reçu n'a été sélectionnés
-      owner_required: Une personne est requise.
     import:
       already_imported: déjà importé
       already_imported_but_corresponding_receipt_not_found: La ligne a déjà été importée mais le reçu correspondant est introuvable!
@@ -1023,11 +881,6 @@ fr:
       total_mismatch: Le total ne correspond pas (%{total} != %{computed_total})
       total_receipts_count_mismatch: Le nombre de reçus ne correspond pas (%{receipts_count} != %{computed_receipts_count})
       unknown_type: type inconnu
-    import_status:
-      already_imported: déjà importé
-      correct: correct
-      error: erreur
-      rectification: réctification
     mail:
       account: compte
       affair: affaire
@@ -1064,14 +917,6 @@ fr:
     notices:
       sort_people_for_pdf_generation: Génération des documents de reçu
       sort_people_message: Veuillez sélectionner le groupe de personne et l'ordre de tri pour lequel générer les documents de reçu.
-    pdf:
-      created_at: date de création
-      id: id
-      invoice_id: id de la facture
-      means_of_payment: moyen de paiement
-      updated_at: date de mise à jour
-      value: valeur
-      value_date: date de valeur
     views:
       actions:
         edit_receipt: modifier le reçu
@@ -1124,8 +969,6 @@ fr:
       no_existing_template_alert: Il n'existe pas de modèle de salaire, veuillez en créer avant de poursuivre avec la création d'un salaire.
       please_try_again: Veuillez corriger les éléments et réessayer.
       reference_were_copied: Le salaire de référence à été copié vers %{members_count} personnes.
-    template_item_category: Revenus
-    template_item_title: Revenu brut
     views:
       accounting: Logiciel de comptabilité
       actions:
@@ -1137,7 +980,6 @@ fr:
       annual_earning_total: revenu annuel total
       annual_salary: Salaire annuel
       brut_account: salaire brut
-      category: categorie
       children_count: nombre d'enfants
       civil_status: état civil
       comments: commentaires
@@ -1158,23 +1000,18 @@ fr:
       net: net
       net_account: salaire net
       net_salary: salaire net
-      net_salary_total: salaire net total
       reference: référence
       reference_title: titre de la référence
       references: Références
       salaries: Salaires
       salaries_count: Salaires
-      summary: Résumé
-      tax_data: données de retenue
       taxes: Déductions
       template: modèle de salaire
-      templates: Modèles de salaire
       upload_new_row_in_database: Envoyer une mise à jour de données
   search_attribute:
     errors:
       default_query_preset_cannot_contain_a_query_string: Le pré-réglage par défaut ne peut pas contenir de chaîne de recherche (text).
       mapping_doesnt_look_like_a_hash: La représentation ne semble pas être un 'Hash' correcte.
-      not_json: 'Mauvais protocole (attendu: JSON)'
       unable_to_destroy_default_query_preset: Impossible de supprimer le premier pré-réglage, il est employé par défaut
     notices:
       search_engine_will_be_inaccessible_during_the_reindexing: Le moteur de recherche sera inaxessible durant la réindexation. Cette opération peut prendre quelques minutes jusqu'à des heures selon les annuaires.
@@ -1183,7 +1020,6 @@ fr:
       indexing: indexation
       mapping: représentation
       model: modèle
-  seconds: secondes
   settings:
     views:
       advanced: Avancé
@@ -1232,15 +1068,11 @@ fr:
       invoice_template: modèle de facture
       is_an_organization: est une organisation
       last_name: nom
-      member_added_to_subscription_title: Des membres ont été ajouté à l'inscription
       members_count: compte des membres
       organization_name: nom de l'organisation
       person_id: ID de la personne
       please_find_a_link_to_access_the_subscription_pdf: Veuillez trouver ci-joint un lien vers le PDF de l'inscription
       private_tag: tag privé
-      subscription_and_its_invoices_were_updated: L'inscription et ses factures ont étées mis à jour
-      subscription_pdf_title: PDF de l'inscription
-      subscription_were_merged: L'inscription à correctement été fusionnée
       the_following_members_were_added_to_the_subscription: Les membres suivants ont étés ajouté à l'inscription
       the_following_members_were_already_in_the_subscription: Les membres suivants étaient déjà dans l'inscription
       the_following_members_were_updated: Les membres suivants ont étés mis à jour
@@ -1257,10 +1089,6 @@ fr:
         subscription_created_at: Date de création de l'inscription
         subscription_id: ID de l'inscription
         subscription_updated_at: Date de la dernière mise à jour de l'inscription
-      interval_ends_on: fin de l'intervalle
-      interval_starts_on: début de l'intervalle
-      title: title
-      value: value
     views:
       actions:
         add_members_to_subscription: ajouter des membres à l'inscription
@@ -1275,7 +1103,6 @@ fr:
         view_subscription_members: voir les membres
         view_subscription_members_who_didnt_paid: voir les membres qui n'ont pas payé
         view_subscription_members_who_paid: voir les membres qui ont payé
-        view_subscription_pdf: view subscription pdf
         view_subscription_receivers: voir les receveurs
       add_members_message: Les personnes sélectionnées seront ajoutées à l'inscription.
       add_members_title: Ajouter des personnes à l'inscription
@@ -1336,22 +1163,6 @@ fr:
       no_existing_task_type_button: Ajouter un type de tâche
       no_rate_selected_alert: Aucun tarif n'a été sélectionné pour cette personne, veuillez en sélectionner un ci-dessous.
       the_value_is_automaticaly_computed: La valeur est calculée automatiquement à l'enregistrement.
-    pdf:
-      created_at: date de saisie
-      description: description
-      duration: durée (min)
-      executer_name: exécutant
-      id: id
-      position: pos.
-      start_date: date
-      task_type_description: description du type de tâche
-      task_type_ratio: ratio du type de tâche
-      task_type_title: type de tâche
-      task_type_value: valeur du type de tâche
-      updated_at: date de mise à jour
-      value: valeur
-      value_currency: devise
-      value_in_cents: valeur en centimes
     views:
       affair: affaire
       affairs_found:
@@ -1359,16 +1170,9 @@ fr:
         other: "%{count} affaires trouvées"
       duration: durée
       duration_help: en minutes
-      end_date: date de fin
       executer_name: exécutant
       owner: client
-      start_date: date de début
-      task_rate: tarif
-      task_rates: tarifs
       task_type: type de tâche
-      task_type_title: type
-      task_types: types de tâche
-      tasks_list_pdf_title: List des tâches pour l'affaire <i>%{affair_title}</i>
       times_help: 'Par ex: 9:15, 915, 9'
   task_rate:
     errors:
@@ -1413,26 +1217,17 @@ fr:
   template:
     errors:
       unable_to_destroy_a_template_which_has_salaries: Il est impossible de détruire un modèle dont des salaires dépendent.
-    help:
-      remove_content_if_you_dont_want_footer: Supprimer le contenu pour ne pas afficher de pied de page.
-      remove_content_if_you_dont_want_header: Supprimer le contenu pour ne pas afficher d'entête.
     views:
-      actions:
-        edit_template: modifier le modèle
       associations: associations
-      body: Corps du texte
       class_name: ressource
       download_current_template: récupérer le modèle actuel
       example_files_explanation: Vous trouverez ci-dessous une liste de fichier exemple pour l'adaptation des modèles. Veuillez consulter <a href='https://doc.circl.ch' target='_blank'>https://doc.circl.ch</a> pour plus d'informations.
       example_files_title: Fichier d'exemple
-      footer: Pied de page
-      header: Entête
       invoice_with_bvr_file: Facture avec BVR
       invoice_without_bvr_file: Facture sans BVR
       language: langue
       plural: ressource plurielle
       plural_explanation: Il s'agit d'une liste d'éléments et non de l'élément lui-même.
-      template: modèle
       template_file:
         address_book: "(Personnes) Carnet d'adresses"
         affair_statement: "(Affaires) Relevé de compte"
@@ -1450,4 +1245,3 @@ fr:
         tasks_report: "(Services) Liste des tâches"
       thumb: aperçu
       upload_new_template: envoyer au serveur un nouveau modèle
-  years: années
