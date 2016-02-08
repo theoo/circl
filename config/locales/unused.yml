@@ -1,0 +1,591 @@
+---
+en:
+  activity:
+    views:
+      action: action
+  affair:
+    views:
+      invoices_count: invoice count
+      receipts_count: receipt count
+      statuses:
+        cancelled: cancelled
+        offered: free
+        open: open
+        overpaid: overpaid
+        paid: paid
+        partially_paid: partially paid
+        to_be_billed: to bill
+        underpaid: underpaid
+      taxes: taxes
+      vat: VAT
+  application_setting:
+    errors:
+      missing_attribute: The following key is not defined '%{key}'
+    notice:
+      application_restarted: CIRCL has restarted.
+  application_settings:
+    errors:
+      value_should_be_#{type_for_validation}: 'value should be #{type for validation}'
+    formats: formats
+  background_task:
+    views:
+      actions:
+        destroy_background_task: destroy background task
+      background_tasks_list_title: Background tasklist
+      statuses:
+        pending: pending
+        running: running
+      tasks_pending: tasks pending
+  common:
+    errors:
+      if_you_think_it_s_a_bug: If you think it is a bug, please contact us at <a href='mailto:support@circl.ch'>support@circl.ch</a>
+  creditor:
+    errors:
+      wrong_date: wrong date
+    views:
+      example_files_explanation: example files explanation
+  creditors:
+    errors:
+      date_field_unkown: MISSING_TRANSLATION date field unkown
+      invalid_status: MISSING_TRANSLATION invalid status
+  directory:
+    errors:
+      wrong_file_format: Wrong file format
+    notices:
+      add_members_email_will_be_sent: The member import process has started, a report
+        will be sent to you at %{email} upon completion.
+    views:
+      actions:
+        change_person_password: Reset the person's password
+      people_example_file: example file
+      sync_mailchimp: Synchronize Mailchimp
+      tools: Tools
+  extra:
+    pdf:
+      created_at: creation date
+      description: description
+      id: id
+      position: pos.
+      quantity: qt.
+      title: title
+      updated_at: update date
+      value: value
+      value_currency: currency
+      value_in_cents: value in cents
+    views:
+      extra_list_pdf_title: Extra list for affair %{affair_title}
+  hours: hours
+  invoice:
+    views:
+      age: age
+      statuses:
+        cancelled: cancelled
+        offered: offered
+        open: open
+        overpaid: overpaid
+        paid: paid
+        underpaid: underpaid
+  invoice_template:
+    errors:
+      failed_to_substitute_iterator: ERROR WHILE SUBSTITUTING PLACEHOLDER "%{iterator}"
+    views:
+      body: body
+      bvr_account: bvr account
+  item:
+    views:
+      actions: actions
+  job:
+    errors:
+      cannot_contain_comma: cannot contain comma
+  location:
+    views:
+      actions:
+        destroy_location: destroy location
+        edit_location: edit location
+      iso_code_a2: iso code a2
+  mailchimp:
+    mail:
+      job_report: job report
+  minutes: minutes
+  months: months
+  permission:
+    errors:
+      attribute_not_found: attribute not found
+      forbidden_explanation: forbidden explanation
+      internal_server_error: internal server error
+      internal_server_error_explanation: internal server error explanation
+      invalid_request: invalid request
+      invalid_request_explanation: invalid request explanation
+      page_not_found: page not found
+      page_not_found_explanation: page not found explanation
+      record_not_found_explanation: record not found explanation
+      service_unavailable: service unavailable
+      service_unavailable_explanation: service unavailable explanation
+  person:
+    dashboard:
+      panels:
+        statistics: statistics
+    import:
+      invalid_#{name}: 'invalid #{name}'
+      invalid_communication_language: Invalid communication language "%{communication_language}"
+      invalid_job: Invalid job "%{job}"
+      invalid_main_communication_language: Invalid main communication language "%{main_communication_language}"
+      invalid_private_tag: Invalid private tag "%{private_tag}"
+      invalid_public_tag: Invalid public tag "%{public_tag}"
+      invalid_role: Invalid role "%{role}"
+      not_existing_: 'not existing '
+      not_existing_private_tag: The private tag "%{tag}" will be created.
+      not_existing_public_tag: The public tag "%{tag}" will be created.
+    mail:
+      report_error:
+        person: Person
+        title: A critical error happened on a production directory
+    notices:
+      not_enough_information_to_point_this_person_on_a_map: There is not enough information
+        to point this contact's address on a map.
+      not_enough_information_to_render_a_map: There is not enough information about
+        this contact's address to generate a map.
+    views:
+      full_address: full address
+      full_name: full name
+      this_person_uniq_id: this person uniq
+  product:
+    errors:
+      no_file_submitted: no file submitted
+    pdf:
+      parent_position: parent position
+      parent_product_key: parent product key
+      product_key: product key
+      product_title: product title
+      program_description: program description
+      program_key: program key
+      program_title: program title
+    units:
+      cm:
+        symbol: cm
+        title: centimeters
+      g:
+        symbol: g
+        title: grams
+      kg:
+        symbol: kg
+        title: kilograms
+      m:
+        symbol: m
+        title: meters
+      mm:
+        symbol: mm
+        title: milimeters
+      pc:
+        symbol: pc
+        title: unit
+    views:
+      example_files_explanation: Example file as template to prepare data before importation.
+      example_files_title: Example file
+      key: key
+      products_list_pdf_title: products list pdf title
+      upload_a_new_file_description: please select a file.
+      upload_a_new_file_title: upload a new file
+  product_item:
+    pdf:
+      category: category
+      created_at: creation date
+      description: description
+      id: id
+      key: key
+      parent_id: parent id
+      quantity: qt.
+      title: title
+      updated_at: update date
+      value: value
+      value_currency: currency
+      value_in_cents: value in cents
+  product_program:
+    views:
+      example_files_explanation: Example file as template to prepare data before importation.
+      example_files_title: Example file
+      products_example_file_desc: Product program import template
+      upload_a_new_file_description: please select a file.
+      upload_a_new_file_title: upload a new file
+      variant_name: variant name
+  receipt:
+    errors:
+      owner_required: owner required
+    import_status:
+      already_imported: déjà importé
+      correct: correct
+      error: erreur
+      rectification: réctification
+    pdf:
+      created_at: creation date
+      id: id
+      invoice_id: invoice id
+      means_of_payment: means of payment
+      updated_at: update date
+      value: value
+      value_date: value date
+  salary:
+    template_item_category: template item category
+    template_item_title: template item title
+    views:
+      category: category
+      net_salary_total: net salary total
+      summary: summary
+      tax_data: tax data
+      templates: salary templates
+  search_attribute:
+    errors:
+      not_json: not json
+  seconds: seconds
+  subscription:
+    mail:
+      member_added_to_subscription_title: member added to subscription title
+      subscription_and_its_invoices_were_updated: subscription and its invoices were
+        updated
+      subscription_pdf_title: subscription pdf title
+      subscription_were_merged: subscription were merged
+    pdf:
+      interval_ends_on: interval end
+      interval_starts_on: interval start
+      title: title
+      value: value
+    views:
+      actions:
+        view_subscription_pdf: view subscription pdf
+  task:
+    pdf:
+      created_at: creation date
+      description: description
+      duration: duration (min)
+      executer_name: performer
+      id: id
+      position: pos.
+      start_date: start date
+      task_type_description: task type description
+      task_type_ratio: task type ratio
+      task_type_title: task type
+      task_type_value: task type value
+      updated_at: update date
+      value: value
+      value_currency: currency
+      value_in_cents: value in cents
+    views:
+      end_date: end date
+      start_date: start date
+      task_rate: task rate
+      task_rates: task rates
+      task_type_title: type
+      task_types: task types
+      tasks_list_pdf_title: Task list for affair %{affair_title}
+  template:
+    help:
+      remove_content_if_you_dont_want_footer: remove content if you dont want footer
+      remove_content_if_you_dont_want_header: remove content if you dont want header
+    views:
+      actions:
+        edit_template: edit template
+      body: body
+      footer: footer
+      header: header
+      template: template
+  years: years
+fr:
+  activity:
+    views:
+      action: action
+  affair:
+    views:
+      invoices_count: nombre de factures
+      receipts_count: nombre de reçus
+      statuses:
+        cancelled: annulée
+        offered: offerte
+        open: ouverte
+        overpaid: surpayée
+        paid: payée
+        partially_paid: partiellement payée
+        to_be_billed: à facturer
+        underpaid: sous-payée
+      taxes: taxes
+      vat: TVA
+  application_setting:
+    errors:
+      missing_attribute: La clé '%{key}' n'est pas définie.
+    notice:
+      application_restarted: CIRCL has restarted.
+  application_settings:
+    errors:
+      value_should_be_#{type_for_validation}: 'La valeur devrait être du type #{type
+        for validation}'
+    formats: formats
+  background_task:
+    views:
+      actions:
+        destroy_background_task: détruire la tâche
+      background_tasks_list_title: Liste des tâche d'arrière plan
+      statuses:
+        pending: en attente
+        running: en cours d'exécution
+      tasks_pending: tâche(s) d'arrière plan
+  common:
+    errors:
+      if_you_think_it_s_a_bug: 'Si vous pensez qu''il s''agit d''un bug, veuillez
+        nous écire par email à l''adresse: <a href=''mailto:support@circl.ch''>support@circl.ch</a>'
+  creditor:
+    errors:
+      wrong_date: Mauvais format de date
+    views:
+      example_files_explanation: Le fichier exemple ci-dessous peut être employé pour
+        préparer les données à importer.
+  creditors:
+    errors:
+      date_field_unkown: MISSING_TRANSLATION date field unkown
+      invalid_status: MISSING_TRANSLATION invalid status
+  directory:
+    errors:
+      wrong_file_format: Mauvais format de fichier
+    notices:
+      add_members_email_will_be_sent: Le processus d'import des membres à commencé,
+        un rapport sera envoyé par email à %{email} lorsqu'il sera fini.
+    views:
+      actions:
+        change_person_password: changer le mot de passe
+      people_example_file: fichier d'exemple
+      sync_mailchimp: synchroniser mailchimp
+      tools: Outils
+  extra:
+    pdf:
+      created_at: date de saisie
+      description: description
+      id: id
+      position: pos.
+      quantity: qt.
+      title: titre
+      updated_at: date de mise à jour
+      value: valeur
+      value_currency: devise
+      value_in_cents: valeur en centimes
+    views:
+      extra_list_pdf_title: Liste des extras pour l'affair %{affair_title}
+  hours: heures
+  invoice:
+    views:
+      age: age
+      statuses:
+        cancelled: annulée
+        offered: offerte
+        open: ouverte
+        overpaid: surpayée
+        paid: payée
+        underpaid: sous-payée
+  invoice_template:
+    errors:
+      failed_to_substitute_iterator: ERREUR LORS DE LA SUBSTITUTION DE L'ITÉRATEUR
+        "%{iterator}"
+    views:
+      body: corps du texte
+      bvr_account: compte BVR
+  item:
+    views:
+      actions: actions
+  job:
+    errors:
+      cannot_contain_comma: cannot contain comma
+  location:
+    views:
+      actions:
+        destroy_location: détruire cette localité
+        edit_location: modifier la localité
+      iso_code_a2: iso code a2
+  mailchimp:
+    mail:
+      job_report: Rapport de la tâche
+  minutes: minutes
+  months: mois
+  permission:
+    errors:
+      attribute_not_found: L'attribut n'a pas été trouvé.
+      forbidden_explanation: Vous n'avez pas accès à cette ressource.
+      internal_server_error: Erreur interne du serveur
+      internal_server_error_explanation: Un problème interne empêche le bon fonctionnement
+        du programme.
+      invalid_request: Requête invalide
+      invalid_request_explanation: Le format ou le contenu de la requête est inapporprié.
+      page_not_found: Page non trouvé
+      page_not_found_explanation: La page recherchée n'existe pas.
+      record_not_found_explanation: L'enregistrement cherché n'existe pas.
+      service_unavailable: Service indisponible
+      service_unavailable_explanation: Le service est temporairement indisponible
+  person:
+    dashboard:
+      panels:
+        statistics: Statistiques
+    import:
+      invalid_#{name}: "#{name} est un nom invalide"
+      invalid_communication_language: Langue de communication invalide "%{communication_language}"
+      invalid_job: Métier invalide "%{job}"
+      invalid_main_communication_language: Langue principale de communication invalide
+        "%{main_communication_language}"
+      invalid_private_tag: Tag privé invalide "%{private_tag}"
+      invalid_public_tag: Tag public invalide "%{public_tag}"
+      invalid_role: Rôle invalide "%{role}"
+      not_existing_: 'not existing '
+      not_existing_private_tag: Le tag privé "%{tag}" sera créé.
+      not_existing_public_tag: Le tag public "%{tag}" sera créé.
+    mail:
+      report_error:
+        person: Personne
+        title: Une erreur critique a eu lieu sur un serveur en production
+    notices:
+      not_enough_information_to_point_this_person_on_a_map: Il n'y a pas assez d'informations
+        pour pointer précisément l'adresse de ce contact sur une carte.
+      not_enough_information_to_render_a_map: Il n'y a pas assez d'informations sur
+        l'adresse de ce contact pour générer une carte.
+    views:
+      full_address: adresse complète
+      full_name: nom complet
+      this_person_uniq_id: Identifiant unique de cette personne (ID)
+  product:
+    errors:
+      no_file_submitted: Pas de fichier soumis
+    pdf:
+      parent_position: position du parent
+      parent_product_key: titre du produit parent
+      product_key: clé du produit
+      product_title: titre du produit
+      program_description: description du programme
+      program_key: clé du programme
+      program_title: titre du programme
+    units:
+      cm:
+        symbol: cm
+        title: centimètres
+      g:
+        symbol: g
+        title: grammes
+      kg:
+        symbol: kg
+        title: kilogrammes
+      m:
+        symbol: m
+        title: mètres
+      mm:
+        symbol: mm
+        title: milimètres
+      pc:
+        symbol: pc
+        title: unité
+    views:
+      example_files_explanation: Le fichier exemple ci-dessous peut être employé pour
+        préparer les données à importer.
+      example_files_title: Fichier d'exemple
+      key: clé
+      products_list_pdf_title: List des produits pour l'affaire <i>%{affair_title}</i>
+      upload_a_new_file_description: veuillez choisir un fichier
+      upload_a_new_file_title: téléverser un nouveau fichier
+  product_item:
+    pdf:
+      category: catégorie
+      created_at: date de saisie
+      description: description
+      id: id
+      key: clé
+      parent_id: id parent
+      quantity: qt.
+      title: titre
+      updated_at: date de mise à jour
+      value: valeur
+      value_currency: devise
+      value_in_cents: valeur en centimes
+  product_program:
+    views:
+      example_files_explanation: Le fichier exemple ci-dessous peut être employé pour
+        préparer les données à importer.
+      example_files_title: Fichier d'exemple
+      products_example_file_desc: Modèle pour l'importation
+      upload_a_new_file_description: veuillez choisir un fichier
+      upload_a_new_file_title: téléverser un nouveau fichier
+      variant_name: nom de la variante
+  receipt:
+    errors:
+      owner_required: Une personne est requise.
+    import_status:
+      already_imported: déjà importé
+      correct: correct
+      error: erreur
+      rectification: réctification
+    pdf:
+      created_at: date de création
+      id: id
+      invoice_id: id de la facture
+      means_of_payment: moyen de paiement
+      updated_at: date de mise à jour
+      value: valeur
+      value_date: date de valeur
+  salary:
+    template_item_category: Revenus
+    template_item_title: Revenu brut
+    views:
+      category: categorie
+      net_salary_total: salaire net total
+      summary: Résumé
+      tax_data: données de retenue
+      templates: Modèles de salaire
+  search_attribute:
+    errors:
+      not_json: 'Mauvais protocole (attendu: JSON)'
+  seconds: secondes
+  subscription:
+    mail:
+      member_added_to_subscription_title: Des membres ont été ajouté à l'inscription
+      subscription_and_its_invoices_were_updated: L'inscription et ses factures ont
+        étées mis à jour
+      subscription_pdf_title: PDF de l'inscription
+      subscription_were_merged: L'inscription à correctement été fusionnée
+    pdf:
+      interval_ends_on: fin de l'intervalle
+      interval_starts_on: début de l'intervalle
+      title: title
+      value: value
+    views:
+      actions:
+        view_subscription_pdf: view subscription pdf
+  task:
+    pdf:
+      created_at: date de saisie
+      description: description
+      duration: durée (min)
+      executer_name: exécutant
+      id: id
+      position: pos.
+      start_date: date
+      task_type_description: description du type de tâche
+      task_type_ratio: ratio du type de tâche
+      task_type_title: type de tâche
+      task_type_value: valeur du type de tâche
+      updated_at: date de mise à jour
+      value: valeur
+      value_currency: devise
+      value_in_cents: valeur en centimes
+    views:
+      end_date: date de fin
+      start_date: date de début
+      task_rate: tarif
+      task_rates: tarifs
+      task_type_title: type
+      task_types: types de tâche
+      tasks_list_pdf_title: List des tâches pour l'affaire <i>%{affair_title}</i>
+  template:
+    help:
+      remove_content_if_you_dont_want_footer: Supprimer le contenu pour ne pas afficher
+        de pied de page.
+      remove_content_if_you_dont_want_header: Supprimer le contenu pour ne pas afficher
+        d'entête.
+    views:
+      actions:
+        edit_template: modifier le modèle
+      body: Corps du texte
+      footer: Pied de page
+      header: Entête
+      template: modèle
+  years: années

@@ -86,12 +86,8 @@ search:
     # - 'errors.messages.{accepted,blank,invalid,too_short,too_long}'
 
 ## Consider these keys used:
-  ignore_unused:
-    - '{devise,activerecord,date,datetime,time,number,support,helpers}.*'
-    # - '{devise,kaminari,will_paginate}.*'
-    # - 'simple_form.{yes,no}'
-    # - 'simple_form.{placeholders,hints,labels}.*'
-    # - 'simple_form.{error_notification,required}.:'
+ignore_unused:
+  - '{devise,activerecord,date,datetime,time,number,support,helpers}.*'
 
 ## Exclude these keys from the `i18n-tasks eq-base' report:
 # ignore_eq_base:
