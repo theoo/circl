@@ -758,7 +758,6 @@ fr:
       invalid_private_tag: Tag privé invalide "%{private_tag}"
       invalid_public_tag: Tag public invalide "%{public_tag}"
       invalid_role: Rôle invalide "%{role}"
-      invalid_translation_aptitude: Aptitude de traduction invalide "%{translation_aptitude}"
       line: ligne
       not_existing_: 'not existing '
       not_existing_job: Le métier "%{job}" sera créé.
@@ -864,7 +863,6 @@ fr:
       second_phone: téléphone secondaire
       statistics: Statistiques
       this_person_uniq_id: Identifiant unique de cette personne (ID)
-      translation_aptitudes: Aptitudes de traduction
       unlock_account: déverrouiller
       update_password: mettre à jour le mot de passe
       website: adresse du site internet (URL)
@@ -1452,11 +1450,4 @@ fr:
         tasks_report: "(Services) Liste des tâches"
       thumb: aperçu
       upload_new_template: envoyer au serveur un nouveau modèle
-  translation_aptitude:
-    errors:
-      translation_aptitude_languages_should_be_different: Les deux langues devraient être différentes.
-      translation_aptitude_should_be_uniq_for_a_person: Une paire de langue devrait être unique pour une même personne.
-    views:
-      actions:
-        destroy_translation_aptitude: détruire l'aptitude à traduire
   years: années

@@ -46,6 +46,3 @@
 
 - subject: Task
   action: read
-
-- subject: TranslationAptitude
-  action: read

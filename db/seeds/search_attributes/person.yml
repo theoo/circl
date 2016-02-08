@@ -425,15 +425,6 @@
   group: Relations
 
 - model: Person
-  name: translation_aptitudes
-  indexing: translation_aptitudes.map(&:as_indexed_json)
-  mapping:
-    type: object
-    properties: TranslationAptitude.mapping
-    include_in_all: false
-  group: Relations
-
-- model: Person
   name: main_communication_language
   indexing: main_communication_language.try(:as_indexed_json)
   mapping:

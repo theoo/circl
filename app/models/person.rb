@@ -149,11 +149,6 @@ class Person < ActiveRecord::Base
               as: :resource,
               dependent: :destroy
 
-  has_many  :translation_aptitudes,
-            dependent: :destroy
-
-  accepts_nested_attributes_for :translation_aptitudes
-
   # monitored_habtm :roles,
   has_many  :people_roles # for permissions
   has_many  :roles,
@@ -407,7 +402,6 @@ class Person < ActiveRecord::Base
       :roles,
       :main_communication_language,
       :communication_languages,
-      :translation_aptitudes,
       :private_tags,
       :public_tags,
       :hidden,
@@ -465,7 +459,6 @@ class Person < ActiveRecord::Base
         parser.parse_roles(r.roles)
         parser.parse_main_communication_language(r.main_communication_language)
         parser.parse_communication_languages(r.communication_languages)
-        parser.parse_translation_aptitudes(r.translation_aptitudes)
 
         private_tags = parser.parse_private_tags(r.private_tags)
         infos[:private_tags] << private_tags unless private_tags.empty?

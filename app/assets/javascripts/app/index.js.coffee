@@ -127,7 +127,6 @@ class @PersonEdit extends App
         @sub_nav.one 'info', =>
           @subapp($('#person'), 'People')
           @subapp($('#person_communication_languages'), 'PersonCommunicationLanguages')
-          # @subapp($('#person_translation_aptitudes'), 'PersonTranslationAptitudes')
           @subapp($('#person_private_tags'), 'PersonPrivateTags')
           @subapp($('#person_public_tags'), 'PersonPublicTags')
 

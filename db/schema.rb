@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160203004146) do
+ActiveRecord::Schema.define(version: 20160208194808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1006,15 +1006,5 @@ ActiveRecord::Schema.define(version: 20160203004146) do
   add_index "tasks", ["task_type_id"], name: "index_tasks_on_task_type_id", using: :btree
   add_index "tasks", ["value_currency"], name: "index_tasks_on_value_currency", using: :btree
   add_index "tasks", ["value_in_cents"], name: "index_tasks_on_value_in_cents", using: :btree
-
-  create_table "translation_aptitudes", force: true do |t|
-    t.integer "person_id"
-    t.integer "from_language_id"
-    t.integer "to_language_id"
-  end
-
-  add_index "translation_aptitudes", ["from_language_id"], name: "index_translation_aptitudes_on_from_language_id", using: :btree
-  add_index "translation_aptitudes", ["person_id"], name: "index_translation_aptitudes_on_person_id", using: :btree
-  add_index "translation_aptitudes", ["to_language_id"], name: "index_translation_aptitudes_on_to_language_id", using: :btree
 
 end

@@ -758,7 +758,6 @@ en:
       invalid_private_tag: Invalid private tag "%{private_tag}"
       invalid_public_tag: Invalid public tag "%{public_tag}"
       invalid_role: Invalid role "%{role}"
-      invalid_translation_aptitude: Invalid translation aptitude "%{translation_aptitude}"
       line: line
       not_existing_: 'not existing '
       not_existing_job: The job "%{job}" will be created.
@@ -864,7 +863,6 @@ en:
       second_phone: second phone
       statistics: Statistics
       this_person_uniq_id: this person uniq
-      translation_aptitudes: translation aptitudes
       unlock_account: unlock
       update_password: update password
       website: website url
@@ -1452,11 +1450,4 @@ en:
         tasks_report: "(Services) List of tasks"
       thumb: thumb
       upload_new_template: upload the new template (odt)
-  translation_aptitude:
-    errors:
-      translation_aptitude_languages_should_be_different: translation aptitude languages should be different
-      translation_aptitude_should_be_uniq_for_a_person: translation aptitude should be uniq for a person
-    views:
-      actions:
-        destroy_translation_aptitude: destroy translation aptitude
   years: years
