@@ -117,4 +117,4 @@ end
 #   gem 'sdoc', require: false
 # end
 
-ruby '2.1.2'
+ruby '2.3.0'

@@ -62,7 +62,6 @@ class PrivateTag < ActiveRecord::Base
 
   has_and_belongs_to_many :people,
                           -> { uniq },
-                          after_add: :update_elasticsearch_index,
                           after_add: [:update_elasticsearch_index, :select_parents],
                           after_remove: :update_elasticsearch_index
   has_many :subscription_values,
