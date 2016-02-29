@@ -2,6 +2,7 @@
 fr:
   affair:
     errors:
+      can_not_delete_if_has_children: Il est impossible de détruire une affaire dont dépend d'autres affaires.
       cant_delete_affair_which_has_invoices: Il est impossible de détruire une affaire dont dépend une facture.
       cant_update_title_if_it_has_subscriptions: Il est impossible de modifier le titre lorsqu'une inscription est attachée à l'affaire.
       parent_id_cannot_be_self: Le parent ne peut pas être l'affaire elle-même.

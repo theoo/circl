@@ -2,6 +2,7 @@
 en:
   affair:
     errors:
+      can_not_delete_if_has_children: An affair with affair linked to it cannot be deleted.
       cant_delete_affair_which_has_invoices: An affair with an invoice linked to it cannot be deleted.
       cant_update_title_if_it_has_subscriptions: Title cannot be updated as long as subscriptions are attached to this affair.
       parent_id_cannot_be_self: Parent cannot be the current affair.

@@ -80,6 +80,7 @@ class Affair < ActiveRecord::Base
 
   before_validation  :ensure_buyer_and_receiver_person_exists
   before_destroy :do_not_destroy_if_has_invoices
+  before_destroy :do_not_destroy_if_has_children
   before_destroy { subscriptions.clear }
 
   #################
@@ -702,6 +703,13 @@ class Affair < ActiveRecord::Base
   def do_not_destroy_if_has_invoices
     unless invoices.empty?
       errors.add(:base, I18n.t('affair.errors.cant_delete_affair_which_has_invoices'))
+      false
+    end
+  end
+
+  def do_not_destroy_if_has_children
+    if children.count > 0
+      errors.add(:base, I18n.t('affair.errors.can_not_delete_if_has_children'))
       false
     end
   end
