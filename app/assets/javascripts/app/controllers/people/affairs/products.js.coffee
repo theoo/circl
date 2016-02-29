@@ -265,7 +265,6 @@ class Index extends App.ExtendedController
     'click a[name=affair_products_csv]': 'csv'
     'click a[name=affair_products_pdf]': 'pdf'
     'click a[name=affair_products_odt]': 'odt'
-    'click a[name=affair_products_preview]': 'preview'
     'click button[name=affair-product-items-reorder]': 'reorder'
     'click button[name=affair-product-items-group-edit]': 'group_edit'
     'change input[name="select_all"]': 'toggle_checks'
@@ -375,43 +374,6 @@ class Index extends App.ExtendedController
     e.preventDefault()
     @template_id = @el.find("#affair_products_template").val()
     window.location = @url_for('odt')
-
-  preview: (e) ->
-    e.preventDefault()
-    @template_id = @el.find("#affair_products_template").val()
-
-    win = $("<div class='modal fade' id='affair-products-preview' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
-
-    # Update title
-    win.find('h4').text I18n.t('common.preview')
-
-    url = @url_for('html')
-    # Insert iframe to content
-    iframe = $("<iframe src='" +
-                url +
-                "' width='100%' " + "height='" + ($(window).height() - 60) +
-                "'></iframe>")
-    win.find('.modal-body').html iframe
-
-    # Adapt width to A4
-    win.find('.modal-dialog').css(width: 900)
-
-    # Add preview in new tab button
-    btn = "<button type='button' name='affair-products-preview-in-new-tab' class='btn btn-default'>"
-    btn += I18n.t('affair.views.actions.preview_in_new_tab')
-    btn += "</button>"
-    btn = $(btn)
-    win.find('.modal-footer').append btn
-    btn.on 'click', (e) =>
-      e.preventDefault()
-      window.open url,
-        "affair_products_preview"
-
-    win.modal('show')
 
   reorder: (e) ->
     e.preventDefault()

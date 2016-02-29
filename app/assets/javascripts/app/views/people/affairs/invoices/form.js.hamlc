@@ -152,33 +152,18 @@
 
           - unless @invoice.isNew()
             .btn-group
-              %a{ name: "invoice-destroy",
-                  class: 'btn btn-danger' }
+              %a{ name: "invoice-destroy", class: 'btn btn-danger' }
                 .icon-remove
                 = I18n.t('common.destroy')
 
-              %a{name: "invoice-add-receipt",
-                      class: 'btn btn-default' }
+              %a{name: "invoice-add-receipt", class: 'btn btn-default' }
                 .icon-plus
                 = I18n.t('invoice.views.actions.add_receipt')
 
-              .btn-group
-                %a{ :data-toggle => 'dropdown',
-                    type: 'button',
-                    class: 'btn btn-default dropdown-toggle' }
-                  .icon-paper-clip
-                  = I18n.t('common.pdf')
-                  .caret
+              %a{name: 'affair_invoice_pdf', class: 'btn btn-default' }
+                .icon-paper-clip
+                = I18n.t('common.pdf')
 
-                %ul.dropdown-menu
-                  %li
-                    %a{href: '#', name: 'affair_invoice_pdf'}
-                      .icon-eye-open
-                      = I18n.t('common.preview')
-                  %li
-                    %a{href: '#', name: 'affair_invoice_pdf'}
-                      .icon-download-alt
-                      = I18n.t('common.download')
 - else
   .panel-body
     .alert.alert-warning

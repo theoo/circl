@@ -258,10 +258,6 @@
 
                     %ul.dropdown-menu
                       %li
-                        %a{href: '#', name: 'salary-preview-pdf'}
-                          .icon-eye-open
-                          = I18n.t('common.preview')
-                      %li
                         %a{href: '#', name: 'salary-download-pdf'}
                           .icon-download-alt
                           = I18n.t('common.pdf')

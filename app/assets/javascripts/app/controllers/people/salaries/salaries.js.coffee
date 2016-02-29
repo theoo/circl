@@ -122,7 +122,6 @@ class Edit extends App.ExtendedController
     'change #person_salary_parent_id':     'reference_selected'
     'click a[name="salary-download-pdf"]': 'pdf'
     'click a[name="salary-download-odt"]': 'odt'
-    'click a[name="salary-preview-pdf"]':  'preview'
     'click button[name="salary-destroy"]': 'destroy'
 
   constructor: (params) ->
@@ -208,40 +207,6 @@ class Edit extends App.ExtendedController
   odt: (e) ->
     e.preventDefault()
     window.location = "#{PersonSalary.url()}/#{@salary.id}.odt"
-
-  preview: (e) ->
-    e.preventDefault()
-
-    win = $("<div class='modal fade' id='salary-preview' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
-
-    # Update title
-    win.find('h4').text I18n.t('common.preview') + ": " + @salary.title
-
-    # Insert iframe to content
-    iframe = $("<iframe src='" +
-                "#{PersonSalary.url()}/#{@salary.id}.html" +
-                "' width='100%' " + "height='" + ($(window).height() - 60) +
-                "'></iframe>")
-    win.find('.modal-body').html iframe
-
-    # Adapt width to A4
-    win.find('.modal-dialog').css(width: 900)
-
-    # Add preview in new tab button
-    btn = "<button type='button' name='salary-preview-in-new-tab' class='btn btn-default'>"
-    btn += I18n.t('salary.views.actions.preview_in_new_tab')
-    btn += "</button>"
-    btn = $(btn)
-    win.find('.modal-footer').append btn
-    btn.on 'click', (e) =>
-      e.preventDefault()
-      window.open "#{PersonSalary.url()}/#{@salary.id}.html", "salary_preview"
-
-    win.modal('show')
 
   destroy: (e) ->
     e.preventDefault()

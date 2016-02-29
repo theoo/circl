@@ -204,7 +204,6 @@ class Edit extends App.ExtendedController
     'click a[name="affair-destroy"]': 'destroy'
     'click a[name="affair-copy"]': 'copy'
     'click button[name=reset_value]': 'reset_value'
-    'click a[name="affair_preview"]': 'preview'
     'click a[name="affair_pdf"]': 'pdf'
     'click a[name="affair_odt"]': 'odt'
     'change select[name="condition_id"]': 'update_conditions'
@@ -374,41 +373,6 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @template_id = @el.find("#affair_template").val()
     window.location = "#{PersonAffair.url()}/#{@affair.id}.odt?template_id=#{@template_id}"
-
-  preview: (e) ->
-    e.preventDefault()
-    @template_id = @el.find("#affair_template").val()
-
-    win = $("<div class='modal fade' id='affair-preview' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
-
-    # Update title
-    win.find('h4').text I18n.t('common.preview') + ": " + @affair.title
-
-    # Insert iframe to content
-    iframe = $("<iframe src='" +
-                "#{PersonAffair.url()}/#{@affair.id}.html?template_id=#{@template_id}" +
-                "' width='100%' " + "height='" + ($(window).height() - 60) +
-                "'></iframe>")
-    win.find('.modal-body').html iframe
-
-    # Adapt width to A4
-    win.find('.modal-dialog').css(width: 900)
-
-    # Add preview in new tab button
-    btn = "<button type='button' name='affair-preview-in-new-tab' class='btn btn-default'>"
-    btn += I18n.t('affair.views.actions.preview_in_new_tab')
-    btn += "</button>"
-    btn = $(btn)
-    win.find('.modal-footer').append btn
-    btn.on 'click', (e) =>
-      e.preventDefault()
-      window.open "#{PersonAffair.url()}/#{@affair.id}.html?template_id=#{@template_id}", "affair_preview"
-
-    win.modal('show')
 
   copy: (e) ->
     e.preventDefault()

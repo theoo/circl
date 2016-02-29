@@ -107,7 +107,6 @@ class Edit extends App.TimesheetExtension
     'blur .time': 'on_time_change'
     'click button[name=reset_value]': 'reset_value'
     'change select[name=task_type_id]': 'update_task_type_description'
-    'click a[name="affair_tasks_preview"]': 'preview'
     'click a[name="affair_tasks_pdf"]': 'pdf'
     'click a[name="affair_tasks_odt"]': 'odt'
 
@@ -162,10 +161,9 @@ class Index extends App.ExtendedController
   events:
     'click tr.item': 'edit'
     'datatable_redraw': 'table_redraw'
-    'click a[name=affair-tasks-csv]': 'csv'
-    'click a[name=affair-tasks-pdf]': 'pdf'
-    'click a[name=affair-tasks-odt]': 'odt'
-    'click a[name=affair-tasks-preview]': 'preview'
+    'click a[name=affair_tasks_csv]': 'csv'
+    'click a[name=affair_tasks_pdf]': 'pdf'
+    'click a[name=affair_tasks_odt]': 'odt'
 
   constructor: (params) ->
     super
@@ -204,40 +202,6 @@ class Index extends App.ExtendedController
     @template_id = @el.find("#affair_tasks_template").val()
     window.location = PersonTask.url() + ".odt?template_id=#{@template_id}"
 
-  preview: (e) ->
-    e.preventDefault()
-    @template_id = @el.find("#affair_tasks_template").val()
-
-    win = $("<div class='modal fade' id='affair-tasks-preview' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
-
-    # Update title
-    win.find('h4').text I18n.t('common.preview')
-
-    # Insert iframe to content
-    iframe = $("<iframe src='" +
-                "#{PersonTask.url()}.html?template_id=#{@template_id}" +
-                "' width='100%' " + "height='" + ($(window).height() - 60) +
-                "'></iframe>")
-    win.find('.modal-body').html iframe
-
-    # Adapt width to A4
-    win.find('.modal-dialog').css(width: 900)
-
-    # Add preview in new tab button
-    btn = "<button type='button' name='affair-tasks-preview-in-new-tab' class='btn btn-default'>"
-    btn += I18n.t('affair.views.actions.preview_in_new_tab')
-    btn += "</button>"
-    btn = $(btn)
-    win.find('.modal-footer').append btn
-    btn.on 'click', (e) =>
-      e.preventDefault()
-      window.open "#{PersonTask.url()}.html?template_id=#{@template_id}", "affair_tasks_preview"
-
-    win.modal('show')
 
 class App.PersonAffairTasks extends Spine.Controller
   className: 'tasks'

@@ -126,7 +126,6 @@ class Edit extends App.ExtendedController
   events:
     'submit form': 'submit'
     'click a[name="cancel"]': 'cancel'
-    'click a[name="affair_invoice_preview"]': 'preview'
     'click a[name="affair_invoice_pdf"]': 'pdf'
     'click a[name="invoice-destroy"]': 'destroy'
     'click a[name="invoice-add-receipt"]': 'add_receipt'
@@ -181,40 +180,6 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     window.location = "#{PersonAffairInvoice.url()}/#{@invoice.id}.pdf"
 
-  preview: (e) ->
-    e.preventDefault()
-
-    win = $("<div class='modal fade' id='invoice-preview' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
-
-    # Update title
-    win.find('h4').text I18n.t('common.preview') + ": " + @invoice.title
-
-    # Insert iframe to content
-    iframe = $("<iframe src='" +
-                "#{PersonAffairInvoice.url()}/#{@invoice.id}.html" +
-                "' width='100%' " + "height='" + ($(window).height() - 60) +
-                "'></iframe>")
-    win.find('.modal-body').html iframe
-
-    # Adapt width to A4
-    win.find('.modal-dialog').css(width: 900)
-
-    # Add preview in new tab button
-    btn = "<button type='button' name='invoice-preview-pdf-new-tab' class='btn btn-default'>"
-    btn += I18n.t('invoice.views.actions.preview_pdf_in_new_tab')
-    btn += "</button>"
-    btn = $(btn)
-    win.find('.modal-footer').append btn
-    btn.on 'click', (e) =>
-      e.preventDefault()
-      window.open "#{PersonAffairInvoice.url()}/#{@invoice.id}.html", "invoice_preview"
-
-    win.modal('show')
-
   add_receipt: (e) ->
     e.preventDefault()
     person_affair_receipts_ctrl = $("#person_affair_receipts").data('controller')
@@ -232,7 +197,6 @@ class Index extends App.ExtendedController
     'click a[name=affair_invoices_csv]': 'csv'
     'click a[name=affair_invoices_pdf]': 'pdf'
     'click a[name=affair_invoices_odt]': 'odt'
-    'click a[name=affair_invoices_preview]': 'preview'
 
   constructor: (params) ->
     super
@@ -309,40 +273,6 @@ class Index extends App.ExtendedController
     @template_id = @el.find("#affair_invoices_template").val()
     window.location = PersonAffairInvoice.url() + ".odt?template_id=#{@template_id}"
 
-  preview: (e) ->
-    e.preventDefault()
-    @template_id = @el.find("#affair_invoices_template").val()
-
-    win = $("<div class='modal fade' id='affair-invoices-preview' tabindex='-1' role='dialog' />")
-    # render partial to modal
-    modal = JST["app/views/helpers/modal"]()
-    win.append modal
-    win.modal(keyboard: true, show: false)
-
-    # Update title
-    win.find('h4').text I18n.t('common.preview')
-
-    # Insert iframe to content
-    iframe = $("<iframe src='" +
-                "#{PersonAffairInvoice.url()}.html?template_id=#{@template_id}" +
-                "' width='100%' " + "height='" + ($(window).height() - 60) +
-                "'></iframe>")
-    win.find('.modal-body').html iframe
-
-    # Adapt width to A4
-    win.find('.modal-dialog').css(width: 900)
-
-    # Add preview in new tab button
-    btn = "<button type='button' name='affair-invoices-preview-in-new-tab' class='btn btn-default'>"
-    btn += I18n.t('affair.views.actions.preview_in_new_tab')
-    btn += "</button>"
-    btn = $(btn)
-    win.find('.modal-footer').append btn
-    btn.on 'click', (e) =>
-      e.preventDefault()
-      window.open "#{PersonAffairInvoice.url()}.html?template_id=#{@template_id}", "affair_invoices_preview"
-
-    win.modal('show')
 
 class App.PersonAffairInvoices extends Spine.Controller
   className: 'invoices'
