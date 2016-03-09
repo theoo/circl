@@ -85,16 +85,29 @@ class New extends PersonAffairProductExtension
     super
 
   active: (params) =>
+    @template = { quantity: 1, unit_symbol: "?" }
+
     if params
-      @person_id = params.person_id if params.person_id
-      @affair_id = params.affair_id if params.affair_id
+      @template.person_id = params.person_id if params.person_id
+      @template.affair_id = params.affair_id if params.affair_id
+
       @can = params.can if params.can
+
+      if params.clone_id
+        clone = ProductItem.find(params.clone_id)
+        @template = clone.attributes()
+        @template.key         = clone.key
+        @template.program_key = clone.program_key
+        @template.category    = clone.category
+        @template.parent_key  = clone.parent_key
+        @template.unit_symbol = clone.unit_symbol
+        @template.id = null
 
     @render()
 
   render: =>
     @show()
-    @product = new ProductItem(quantity: 1, unit_symbol: "?")
+    @product = new ProductItem(@template)
     @html @view('people/affairs/products/form')(@)
     @init_locals()
 
@@ -120,6 +133,7 @@ class Edit extends PersonAffairProductExtension
     'submit form': 'submit'
     'click a[name="cancel"]': 'cancel'
     'click button[name=person-affair-product-destroy]': 'destroy'
+    'click button[name="person-affair-product-copy"]': 'copy'
     'click button[name=reset_value]': 'reset_value'
     'change #person_affair_product_bid_percentage': 'clear_value'
     'change #person_affair_product_quantity': 'clear_value'
@@ -245,6 +259,10 @@ class Edit extends PersonAffairProductExtension
           @hide()
           ProductItem.fetch()
           PersonAffair.fetch(id: @affair_id)
+
+  copy: (e) ->
+    e.preventDefault()
+    @trigger 'copy', {clone_id: @id, type: 'copy'}
 
   reset_value: (e) ->
     e.preventDefault()
@@ -460,6 +478,10 @@ class App.PersonAffairProducts extends Spine.Controller
 
     @index.bind 'edit', (id) =>
       @edit.active person_id: @person_id, affair_id: @affair_id, id: id
+
+    @edit.bind 'copy', (params) =>
+      @new.active(params)
+      @edit.hide()
 
     @edit.bind 'show', => @new.hide()
     @edit.bind 'hide', => @new.show()

@@ -172,7 +172,7 @@
           .input-group-addon
             != @partial('select_currency')(currency: @product.value_currency, name: 'value_currency', value: @product.value)
 
-        - if @product.value and @product.value != @product.bid_price
+        - if @product.value and @product.bid_price and @product.value != @product.bid_price
           %small.help-block
             = I18n.t('product.views.normal_price') + ": "
             = @product.value.to_view(@product.value_currency)
@@ -262,11 +262,17 @@
 
 
         - if not @product.isNew() or @ids
-          %button{type: 'button',
-                  class: 'btn btn-danger',
-                  name: 'person-affair-product-destroy'}
-            .icon-remove
-            = I18n.t("common.destroy")
+          .btn-group
+            %button{type: 'button',
+                    class: 'btn btn-danger',
+                    name: 'person-affair-product-destroy'}
+              .icon-remove
+              = I18n.t("common.destroy")
+
+            %button{name: "person-affair-product-copy",
+                    class: 'btn btn-default' }
+              .icon-copy
+              = I18n.t("common.copy")
 - else
   .panel-body
     .alert.alert-warning

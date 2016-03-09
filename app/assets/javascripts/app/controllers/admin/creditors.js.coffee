@@ -256,7 +256,6 @@ class Edit extends App.ExtendedController
     e.preventDefault()
     @trigger 'copy', {clone_id: @id, type: 'copy'}
 
-
   check_replace_value: (e) ->
     $(e.target).parents(".form-group").find('.replace_value').prop(checked: true)
 
