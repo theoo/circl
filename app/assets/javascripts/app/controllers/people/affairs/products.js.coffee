@@ -88,8 +88,8 @@ class New extends PersonAffairProductExtension
     @template = { quantity: 1, unit_symbol: "?" }
 
     if params
-      @template.person_id = params.person_id if params.person_id
-      @template.affair_id = params.affair_id if params.affair_id
+      @person_id = @template.person_id = params.person_id if params.person_id
+      @affair_id = @template.affair_id = params.affair_id if params.affair_id
 
       @can = params.can if params.can
 
