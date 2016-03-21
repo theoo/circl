@@ -254,9 +254,14 @@
       .col-lg-12
         .pull-right
           - if @product.isNew() and not @ids
-            %button{type: 'submit', class: 'btn btn-primary'}
-              .icon-plus
-              = I18n.t('common.add')
+            .btn-group
+              %a{name: 'reset', class: 'btn btn-default'}
+                .icon-refresh
+                = I18n.t('common.reset')
+              %button{type: 'submit', class: 'btn btn-primary'}
+                .icon-plus
+                = I18n.t('common.add')
+
           - else
             != @partial('save_and_cancel_buttons')(@affair)
 

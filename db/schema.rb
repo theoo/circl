@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20160202222931) do
     t.integer  "parent_id"
     t.text     "footer"
     t.text     "conditions"
-    t.integer  "seller_id",                 default: 1684,  null: false
+    t.integer  "seller_id",                 default: 1,     null: false
     t.integer  "condition_id"
     t.boolean  "unbillable",                default: false, null: false
     t.text     "notes"
@@ -726,8 +726,8 @@ ActiveRecord::Schema.define(version: 20160202222931) do
     t.string   "cert_others_title",                                     default: "",    null: false
     t.text     "cert_notes",                                            default: "",    null: false
     t.string   "employer_account",                                      default: ""
-    t.text     "comments"
     t.string   "yearly_salary_currency",                                default: "CHF", null: false
+    t.text     "comments"
   end
 
   add_index "salaries", ["is_reference"], name: "index_salaries_on_is_template", using: :btree
@@ -789,7 +789,6 @@ ActiveRecord::Schema.define(version: 20160202222931) do
     t.boolean  "archive",            default: false, null: false
   end
 
-  add_index "salaries_taxes", ["archive"], name: "index_salaries_taxes_on_archive", using: :btree
   add_index "salaries_taxes", ["exporter_avs_group"], name: "index_salaries_taxes_on_exporter_avs_group", using: :btree
   add_index "salaries_taxes", ["exporter_is_group"], name: "index_salaries_taxes_on_exporter_is_group", using: :btree
   add_index "salaries_taxes", ["exporter_lpp_group"], name: "index_salaries_taxes_on_exporter_lpp_group", using: :btree
