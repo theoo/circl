@@ -1,0 +1,21 @@
+---
+- model: Comment
+  name: id
+  indexing: id
+  mapping:
+    type: integer
+    index: not_analyzed
+
+- model: Comment
+  name: title
+  indexing: title
+  mapping:
+    type: string
+    index: not_analyzed
+
+- model: Comment
+  name: description
+  indexing: description
+  mapping:
+    type: string
+    index: not_analyzed

@@ -40,6 +40,8 @@ class Comment < ActiveRecord::Base
   ################
 
   # include ChangesTracker
+  include ElasticSearch::Mapping
+  include ElasticSearch::Indexing
 
   #################
   ### RELATIONS ###
