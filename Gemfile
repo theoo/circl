@@ -18,6 +18,7 @@ gem 'acts_as_tree', '2.0.0'
 
 # elasticsearch
 gem 'tire', '0.6.2'
+# gem "redis"
 
 # LDAP
 gem 'net-ldap', :git => 'git://github.com/ruby-ldap/ruby-net-ldap.git'
@@ -87,6 +88,7 @@ gem 'rails_exception_handler', "~> 2"
 group :development, :test do
   ### Documentation
   gem 'railroady', '1.1.1'
+  gem 'byebug'
 
   ### Test
   gem 'factory_girl_rails', '4.4.0'
@@ -118,6 +120,4 @@ end
 #   gem 'sdoc', require: false
 # end
 
-ruby '2.3.0'
-
-gem "redis"
+ruby '2.1.2'

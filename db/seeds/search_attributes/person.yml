@@ -79,7 +79,7 @@
         type: boolean
         index: not_analyzed
       sort:
-        type: boolean
+        type: string
         index: not_analyzed
   group: Person
 
@@ -93,7 +93,7 @@
         type: boolean
         index: not_analyzed
       sort:
-        type: boolean
+        type: string
         index: not_analyzed
   group: Person
 
