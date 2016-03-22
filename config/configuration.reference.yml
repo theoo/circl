@@ -33,7 +33,7 @@ elasticsearch:
   enable_indexing: true # it won't make sense to disable it here
   url: http://127.0.0.1:9200
   name: people
-  max_per_page: 1000000
+  max_per_page: 5000
   index:
     number_of_shards: 5
     number_of_replicas: 0 # should be 1 if you have a replica

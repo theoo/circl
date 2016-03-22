@@ -78,9 +78,6 @@
       hidden:
         type: boolean
         index: not_analyzed
-      sort:
-        type: boolean
-        index: not_analyzed
   group: Person
 
 - model: Person
@@ -90,9 +87,6 @@
     type: multi_field
     fields:
       is_an_organization:
-        type: boolean
-        index: not_analyzed
-      sort:
         type: boolean
         index: not_analyzed
   group: Person
