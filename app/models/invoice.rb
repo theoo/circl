@@ -382,12 +382,12 @@ class Invoice < ActiveRecord::Base
 
   # Append a background task in the queue to update the PDF.
   def update_pdf
-    BackgroundTasks::GenerateInvoicePdf.schedule(invoice_id: self.id)
+    GenerateInvoicePdf.perform(invoice_id: self.id)
   end
 
   # Run immediately a background task to update the PDF.
   def update_pdf!
-    BackgroundTasks::GenerateInvoicePdf.process!(invoice_id: self.id)
+    GenerateInvoicePdf.perform(invoice_id: self.id)
   end
 
   # Placeholder proxy

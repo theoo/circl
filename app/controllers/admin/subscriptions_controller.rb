@@ -43,7 +43,7 @@ class Admin::SubscriptionsController < ApplicationController
           send_data File.read(@subscription.pdf.path), filename: "subscription_#{params[:id]}.pdf", type: 'application/pdf'
         else
           if params[:query]
-            BackgroundTasks::PrepareSubscriptionPdfsAndEmail.schedule(subscription_id: @subscription.id,
+            PrepareSubscriptionPdfsAndEmail.perform(subscription_id: @subscription.id,
                                                                       people_ids: people.map{ |p| p.id.to_i },
                                                                       person: current_person,
                                                                       query: query,
@@ -71,9 +71,9 @@ class Admin::SubscriptionsController < ApplicationController
         }
       else
         people = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order])
-        BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(subscription_id: @subscription.id,
+        AddPeopleToSubscriptionAndEmail.perform(subscription_id: @subscription.id,
                                                                   people_ids: people.map{ |p| p.id.to_i },
-                                                                  person: current_person)
+                                                                  person: current_person, nil, nil)
         flash[:notice] = I18n.t('admin.notices.add_members_email_will_be_sent', email: current_person.email)
         format.json { render json: {} }
         format.html do
@@ -219,7 +219,7 @@ class Admin::SubscriptionsController < ApplicationController
           people_ids = Subscription.find(params[:parent_id]).get_people_from_affairs_status(:paid).map(&:id)
         end
 
-        BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(subscription_id: @subscription.id,
+        AddPeopleToSubscriptionAndEmail.perform(subscription_id: @subscription.id,
           people_ids: people_ids,
           person: current_person,
           parent_subscription_id: params[:parent_id],
@@ -281,7 +281,7 @@ class Admin::SubscriptionsController < ApplicationController
       end
 
       # TODO ideally this should be in after_save callback in Subscription model. Only current_person (email) prevent it.
-      BackgroundTasks::UpdateSubscriptionInvoicesAndEmail.schedule( subscription_id: @subscription.id,
+      UpdateSubscriptionInvoicesAndEmail.perform( subscription_id: @subscription.id,
                                                                     person: current_person )
 
       succeed = true
@@ -421,7 +421,7 @@ class Admin::SubscriptionsController < ApplicationController
       if @errors.size > 0
         format.json { render json: @errors , status: :unprocessable_entity }
       else
-        BackgroundTasks::MergeSubscriptions.schedule(
+        MergeSubscriptions.perform(
           source_subscription_id: params[:id],
           destination_subscription_id: params[:transfer_to_subscription_id],
           person: current_person)

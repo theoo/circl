@@ -79,6 +79,9 @@ gem 'rake', '10.3.2'
 # Monitoring
 gem 'rails_exception_handler', "~> 2"
 
+# Background jobs
+gem 'resque'
+
 ### custom gem
 # gem 'plugin', :path => 'path/to/circl/plugin'
 

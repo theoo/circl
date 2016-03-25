@@ -55,7 +55,7 @@ class People::Salaries::SalariesController < ApplicationController
 
       format.pdf do
         if ! @salary.pdf_up_to_date? or ! @salary.pdf.exists?
-          BackgroundTasks::GenerateSalaryPdf.process!(salary_id: @salary.id)
+          GenerateSalaryPdf.perform(@salary.id)
           @salary.reload
         end
         send_data File.read(@salary.pdf.path),
