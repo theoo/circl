@@ -224,7 +224,7 @@ class Admin::ReceiptsController < ApplicationController
     respond_to do |format|
       if errors.empty?
         people = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order])
-        GenerateReceiptsDocumentAndEmail.perform(people_ids: people.map{ |p| p.id.to_i },
+        Resque.enqueue(Receipts::GenerateDocumentAndEmail, people_ids: people.map{ |p| p.id.to_i },
           person: current_person,
           from: from,
           to: to,

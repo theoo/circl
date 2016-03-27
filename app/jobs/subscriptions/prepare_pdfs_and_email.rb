@@ -29,7 +29,8 @@
 #++
 
 # Options are: :subscription_id, :person, :query, :current_locale
-class PrepareSubscriptionPdfsAndEmail
+class Subscriptions::PreparePdfsAndEmail
+  @queue = :prepare_pdfs_and_email
 
   def self.perform(subscription_id, people_ids, person, query, current_locale)
     # Compute invoice_ids and generate PDF if necessary
@@ -47,7 +48,7 @@ class PrepareSubscriptionPdfsAndEmail
         end
       end
     end
-    ConcatAndEmailSubscriptionPdf.perform(subscription_id: subscription_id,
+    Subscriptions::ConcatAndEmailPdf.perform(subscription_id: subscription_id,
                                                             invoices_ids: invoices_ids,
                                                             person: person,
                                                             query: query,

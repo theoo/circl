@@ -29,7 +29,7 @@
 #++
 
 # Options are: salary_id, :person
-class GenerateSalaryPdf
+class Salaries::GenerateSalaryPdf
 
   def self.perform(salary_id)
     @salary = Salaries::Salary.find(salary_id)

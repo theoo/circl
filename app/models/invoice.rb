@@ -382,7 +382,7 @@ class Invoice < ActiveRecord::Base
 
   # Append a background task in the queue to update the PDF.
   def update_pdf
-    GenerateInvoicePdf.perform(invoice_id: self.id)
+    Resque.enqueue(GenerateInvoicePdf, invoice_id: self.id)
   end
 
   # Run immediately a background task to update the PDF.

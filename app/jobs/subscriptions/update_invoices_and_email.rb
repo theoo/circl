@@ -29,7 +29,8 @@
 #++
 
 # Options are: subscription_id, :person
-class UpdateSubscriptionInvoicesAndEmail
+class UpdateInvoicesAndEmail
+  @queue = :update_invoices_and_email
 
   def self.perform(subscription_id, person)
     subscription = Subscription.find(subscription_id)

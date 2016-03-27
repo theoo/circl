@@ -90,7 +90,7 @@ class Language < ActiveRecord::Base
 
   def reindex_people
     ids = main_people.map(&:id) + communication_people.map(&:id)
-    UpdateIndexForPeople.perform(people_ids: ids.uniq)
+    Resque.enqueue(UpdateIndexForPeople, people_ids: ids.uniq)
     true
   end
 

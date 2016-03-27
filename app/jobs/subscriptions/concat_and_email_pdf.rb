@@ -29,7 +29,7 @@
 #++
 
 # Options are: :person, :people_ids
-class ConcatAndEmailSubscriptionPdf
+class Subscriptions::ConcatAndEmailPdf
 
   def self.perform(subscription_id)
     I18n.locale = options[:current_locale]

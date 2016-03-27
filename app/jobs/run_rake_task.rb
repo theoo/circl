@@ -30,6 +30,7 @@
 
 # Options are: :name, :argument, :person
 class RunRakeTask 
+  @queue = :run_rake_task
 
   def self.perform(arguments)
     # There's two ways of calling rake tasks with arguments

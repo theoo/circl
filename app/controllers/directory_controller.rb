@@ -165,12 +165,9 @@ class DirectoryController < ApplicationController
       else
 
         flash[:notice] = I18n.t('common.notices.synchronization_started', email: current_person.email)
-        SynchronizeMailchimp.perform(
-          person_id: current_person.id,
+        Resque.enqueue(Synchronizes::Mailchimp, person_id: current_person.id,
           list_id: params[:id],
-          directory_query: query[:search_string]
-          )
-
+          directory_query: query[:search_string])
       end
 
       respond_to do |format|
@@ -301,7 +298,7 @@ class DirectoryController < ApplicationController
 
 
       # Reindex the whole database
-      RunRakeTask.perform(name: 'elasticsearch:sync')
+      Resque.enqueue(RunRakeTask, name: 'elasticsearch:sync')
     end
 
     # Ensure ES and geoloc are enable again, whatever happend during transaction

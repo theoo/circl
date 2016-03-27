@@ -30,6 +30,7 @@
 
 # Options are: :people_ids, :person
 class UpdateIndexForPeople 
+  @queue = :update_index_for_people
 
   def self.perform(people_ids)
     people = Person.where(id: people_ids)
