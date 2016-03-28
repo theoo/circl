@@ -72,7 +72,7 @@ class Admin::SubscriptionsController < ApplicationController
         people = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order])
         Resque.enqueue(Subscriptions::AddPeopleAndEmail, subscription_id: @subscription.id,
                                                                   people_ids: people.map{ |p| p.id.to_i },
-                                                                  person: current_person, nil, nil)
+                                                                  person: current_person, parent_subscription_id: nil, status: nil)
         flash[:notice] = I18n.t('admin.notices.add_members_email_will_be_sent', email: current_person.email)
         format.json { render json: {} }
         format.html do

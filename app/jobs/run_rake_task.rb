@@ -34,7 +34,7 @@ class RunRakeTask
 
   def self.perform(arguments)
     # There's two ways of calling rake tasks with arguments
-    arguments.is_a?(Hash)
+    if arguments.is_a?(Hash)
       options[:arguments].each do |k, v|
         ENV[k.to_s.upcase] = v.to_s
       end
