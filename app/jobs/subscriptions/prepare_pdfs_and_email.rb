@@ -30,7 +30,8 @@
 
 # Options are: :subscription_id, :person, :query, :current_locale
 class Subscriptions::PreparePdfsAndEmail
-  @queue = :prepare_pdfs_and_email
+
+  @queue = :notifications
 
   def self.perform(subscription_id, people_ids, person, query, current_locale)
     # Compute invoice_ids and generate PDF if necessary

@@ -30,7 +30,7 @@
 
 # Options are: :subscription_id, :person, :query
 class Receipts::GenerateDocumentAndEmail
-  @queue = :generate_document_and_email
+  @queue = :documents
 
   # options => :people_ids, :person, :from, :to, :generic_template_id, :unit_value, :global_value, :unit_overpaid, :global_overpaid
   def self.perform(people_ids)

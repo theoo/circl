@@ -19,7 +19,8 @@
 # Options are:
 #   required: [:source_subscriptions_id, :destination_subscriptions_id, :person]
 class MergeSubscriptions
-  @queue = :merge_subscriptions
+
+  @queue = :processing
 
   def self.perform(source_subscription_id, destination_subscription_id, person)
     source_subscription = Subscription.find(source_subscription_id)

@@ -22,7 +22,8 @@
 # :directory_query,
 
 class Synchronizes::Mailchimp
-  @queue = :mail_chimp 
+
+  @queue = :synchonizing 
 
   def self.perform(person_id, list_id, directory_query)
 

@@ -102,3 +102,12 @@ maps:
   tile_url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
   attribution: CIRCL
   max_zoom: 18
+
+# Redis
+redis:
+  name: tasks
+  environments:
+    development: localhost:6379
+    test: localhost:6379
+    production: localhost:6379
+  

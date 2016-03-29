@@ -31,6 +31,8 @@
 # Options are: salary_id, :person
 class GenerateGenericTemplateJpg
 
+  @queue = :documents
+
   def self.perform(generic_template_id)
     generic_template = GenericTemplate.find(generic_template_id)
     generic_template.take_snapshot

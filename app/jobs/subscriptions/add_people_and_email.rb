@@ -32,7 +32,8 @@
 #   required: [:subscriptions_id, :person, :people_ids]
 #   optional: [:parent_subscription_id, :status]
 class Subscriptions::AddPeopleAndEmail
-  @queue = :add_people_and_email
+
+  @queue = :notifications
 
   def self.perform(subscription_id, people_ids, person, parent_subscription_id, status)
     subscription = Subscription.find(subscription_id, parent_subscription_id, person, people_ids, status)

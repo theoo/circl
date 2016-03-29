@@ -31,6 +31,8 @@
 # Options are: salary_id, :person
 class Salaries::GenerateSalaryPdf
 
+  @queue = :documents
+
   def self.perform(salary_id)
     @salary = Salaries::Salary.find(salary_id)
     generator = AttachmentGenerator.new(@salary)

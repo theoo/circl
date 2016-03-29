@@ -31,6 +31,8 @@
 # Options are: :person, :people_ids
 class Subscriptions::ConcatAndEmailPdf
 
+  @queue = :notifications
+
   def self.perform(subscription_id)
     I18n.locale = options[:current_locale]
     subscription = Subscription.find subscription_id

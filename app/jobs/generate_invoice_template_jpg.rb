@@ -31,8 +31,10 @@
 # Options are: :invoice_template_id, :person
 class GenerateInvoiceTemplateJpg
 
+  @queue = :documents
+
   def self.perform(invoice_template_id)
-    invoice_template = InvoiceTemplate.find(invoice_template_id, person)
+    invoice_template = InvoiceTemplate.find(invoice_template_id)
     invoice_template.take_snapshot
   end
 end

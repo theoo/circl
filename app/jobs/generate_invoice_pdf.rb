@@ -30,7 +30,8 @@
 
 # Options are: :invoice_id, :person
 class GenerateInvoicePdf
-  @queue = :generate_invoice_pdf
+
+  @queue = :documents
 
   include Rails.application.routes.url_helpers
 

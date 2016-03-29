@@ -29,8 +29,9 @@
 #++
 
 # Options are: :name, :argument, :person
-class RunRakeTask 
-  @queue = :run_rake_task
+class RunRakeTask
+
+  @queue = :processing
 
   def self.perform(arguments)
     # There's two ways of calling rake tasks with arguments

@@ -30,7 +30,8 @@
 
 # Options are: subscription_id, :person
 class UpdateInvoicesAndEmail
-  @queue = :update_invoices_and_email
+  
+  @queue = :notifications
 
   def self.perform(subscription_id, person)
     subscription = Subscription.find(subscription_id)
