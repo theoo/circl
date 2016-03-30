@@ -1,31 +1,34 @@
 require 'spec_helper'
 
-describe GenerateDocumentAndEmail do
+describe Receipts::GenerateDocumentAndEmail do
   
   # def self.perform(people_ids, person, from, to, format, generic_template_id, 
   # subscriptions_filter, unit_value, global_value, unit_overpaid, global_overpaid)
 
   before :all do
-    @person = FactoryGirl.create(:person)
+    @person1 = FactoryGirl.create(:person)
     
     @members = []
     10.times do 
-      @members << FactoryGirl.create(:person)
+      @person = FactoryGirl.create(:person)
+      @affair = @person.affairs.create(:title => "affair test")
+      @invoice = @affair.invoices.create!(:value => 100, :title => 'transfer invoice', :invoice_template_id => 1)
+      @receipt = @invoice.receipts.create!(:value => 200, :value_date => Time.now)
+      @members << @person
     end
-
-    @subscription = FactoryGirl.create(:subscription, members: @members)
-
   end
 
   it "should return a CachedDocument" do
+    initial_count = CachedDocument.count
+    Receipts::GenerateDocumentAndEmail.perform(@members, @person1, nil, nil, 'pdf', 1, nil, nil, nil, nil, nil)
+    (initial_count + 1).should eq(CachedDocument.count)
   end
 
   it "should send an email" do
+    #Need smtp settings to send emails.
   end
 
   it "should take people_ids array in account" do
-    # cd = call task
-    # ensure cd matches expectations
   end
 
   it "should send to the right person" do
