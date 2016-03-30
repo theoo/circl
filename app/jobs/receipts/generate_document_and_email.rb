@@ -28,14 +28,17 @@
 # == Schema Information End
 #++
 
+# This task purpose is to concatenate receipts in a file (pdf or csv), depending
+#   on subscription filter, interval, amount limits.
+
 # Options are: :subscription_id, :person, :query
 class Receipts::GenerateDocumentAndEmail
   @queue = :documents
 
   # options => :people_ids, :person, :from, :to, :generic_template_id, :unit_value, :global_value, :unit_overpaid, :global_overpaid
-  def self.perform(people_ids)
+  def self.perform(people_ids, person, from, to, format, generic_template_id, subscriptions_filter, unit_value, global_value, unit_overpaid, global_overpaid)
 
-    if options[:format] == 'pdf'
+    if format == 'pdf'
       files = []
     else
       lines = []
@@ -47,36 +50,36 @@ class Receipts::GenerateDocumentAndEmail
 
       receipts = person.receipts.order(:invoice_id, :value_date)
 
-      if options[:subscriptions_filter]
+      if subscriptions_filter
         begin # Postgresql may trow an error if regexp is not correct
-          receipts = receipts.joins(:subscriptions).where("subscriptions.title ~ ?", options[:subscriptions_filter])
+          receipts = receipts.joins(:subscriptions).where("subscriptions.title ~ ?", subscriptions_filter)
         end
       end
 
-      if options[:from] and options[:to]
-        from = options[:from].is_a?(Date) ? options[:from] : Date.parse(options[:from])
-        to = options[:to].is_a?(Date) ? options[:to] : Date.parse(options[:to])
+      if from and to
+        from = from.is_a?(Date) ? from : Date.parse(from)
+        to = to.is_a?(Date) ? to : Date.parse(to)
         receipts = receipts.where("value_date BETWEEN ? AND ?", from, to)
       end
 
       # exclude receipts for which value is below unit threshold
-      if options[:unit_value]
-        receipts = receipts.reject{|a| a.value < options[:unit_value]}
+      if unit_value
+        receipts = receipts.reject{|a| a.value < unit_value}
       end
 
-      if options[:global_value]
+      if global_value
         total_value = receipts.map(&:value).sum
-        receipts = [] if total_value < options[:global_value].to_i
+        receipts = [] if total_value < global_value.to_i
       end
 
       # exclude receipts for which overpaid value is below unit threshold
-      if options[:unit_overpaid]
-        receipts = receipts.reject{|a| a.overpaid_value < options[:unit_overpaid]}
+      if unit_overpaid
+        receipts = receipts.reject{|a| a.overpaid_value < unit_overpaid}
       end
 
-      if options[:global_overpaid]
+      if global_overpaid
         total_overpaid_value = receipts.map(&:overpaid_value).sum
-        receipts = [] if total_overpaid_value < options[:global_overpaid].to_i
+        receipts = [] if total_overpaid_value < global_overpaid.to_i
       end
 
       receipts.uniq!
@@ -85,10 +88,10 @@ class Receipts::GenerateDocumentAndEmail
         # compile the file and add its file path to a hash
 
         ######### RENDER ############
-        if options[:format] == 'pdf'
+        if format == 'pdf'
           # build generator using selected generic template
           fake_object = OpenStruct.new
-          fake_object.template = GenericTemplate.find options[:generic_template_id]
+          fake_object.template = GenericTemplate.find generic_template_id
           fake_object.person = person
           fake_object.receipts = receipts
 
@@ -118,7 +121,7 @@ class Receipts::GenerateDocumentAndEmail
     end
 
     # merge files in one file
-    if options[:format] == 'pdf'
+    if format == 'pdf'
       document = Tempfile.new(["admin_receipts_file", '.pdf'], encoding: 'ascii-8bit')
       script = Tempfile.new(['script', '.sh'], encoding: 'ascii-8bit')
       script.write("#!/bin/bash\n")
@@ -159,6 +162,6 @@ class Receipts::GenerateDocumentAndEmail
     document.unlink
 
     # send an email to the file
-    PersonMailer.send_receipts_document_link(options[:person], cd).deliver
+    PersonMailer.send_receipts_document_link(person, cd).deliver
   end
 end
