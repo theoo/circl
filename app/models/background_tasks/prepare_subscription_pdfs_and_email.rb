@@ -39,20 +39,23 @@ class BackgroundTasks::PrepareSubscriptionPdfsAndEmail < BackgroundTask
 
   def process!
     # Compute invoice_ids and generate PDF if necessary
-    # We do a manual loop because using #map and #select blew the RAM
+    # We do a manual loop because using #map and #select blow the RAM
     invoices_ids = []
+    subscription = Subscription.find(options[:subscription_id])
     options[:people_ids].each do |id|
-      Person.find(id).invoices.each do |i|
-        next unless i.affair.subscription_ids.include?(options[:subscription_id])
-        invoices_ids << i.id
-        if i.pdf_up_to_date?
-          logger.info "PDF for invoice #{i.id} is up to date, skipping..."
-        else
-          logger.info "PDF for invoice #{i.id} is not up to date, generating..."
-          BackgroundTasks::GenerateInvoicePdf.process!(invoice_id: i.id)
-        end
+
+      invoice = subscription.invoices.joins(:affair).where("affairs.buyer_id" => id).first
+      invoices_ids << invoice.id
+
+      if invoice.pdf_up_to_date?
+        logger.info "PDF for invoice #{invoice.id} is up to date, skipping..."
+      else
+        logger.info "PDF for invoice #{invoice.id} is not up to date, generating..."
+        BackgroundTasks::GenerateInvoicePdf.process!(invoice_id: invoice.id)
       end
+
     end
+
     BackgroundTasks::ConcatAndEmailSubscriptionPdf.process!(subscription_id: options[:subscription_id],
                                                             invoices_ids: invoices_ids,
                                                             person: options[:person],
