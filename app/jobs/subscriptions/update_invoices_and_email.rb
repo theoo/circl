@@ -29,7 +29,7 @@
 #++
 
 # Options are: subscription_id, :person
-class UpdateInvoicesAndEmail
+class Subscriptions::UpdateInvoicesAndEmail
   
   @queue = :notifications
 
@@ -47,7 +47,7 @@ class UpdateInvoicesAndEmail
 
     subscription.people.each{|p| p.update_index}
 
-    PersonMailer.send_subscription_invoices_updated(:person,
+    PersonMailer.send_subscription_invoices_updated(person,
                                                     subscription.id).deliver
   end
 end
