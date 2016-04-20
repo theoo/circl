@@ -49,10 +49,6 @@ class Subscriptions::PreparePdfsAndEmail
         end
       end
     end
-    Subscriptions::ConcatAndEmailPdf.perform(subscription_id: subscription_id,
-                                                            invoices_ids: invoices_ids,
-                                                            person: person,
-                                                            query: query,
-                                                            current_locale: current_locale)
+    Subscriptions::ConcatAndEmailPdf.perform(subscription_id, invoices_ids, person, query, current_locale)
   end
 end
