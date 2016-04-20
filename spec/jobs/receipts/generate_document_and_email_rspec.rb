@@ -1,15 +1,15 @@
 require 'spec_helper'
 
 describe Receipts::GenerateDocumentAndEmail do
-  
-  # def self.perform(people_ids, person, from, to, format, generic_template_id, 
+
+  # def self.perform(people_ids, person, from, to, format, generic_template_id,
   # subscriptions_filter, unit_value, global_value, unit_overpaid, global_overpaid)
 
   before :all do
     @person1 = FactoryGirl.create(:person)
-    
+
     @members = []
-    10.times do 
+    10.times do
       @person = FactoryGirl.create(:person)
       @affair = @person.affairs.create(:title => "affair test")
       @invoice = @affair.invoices.create!(:value => 100, :title => 'transfer invoice', :invoice_template_id => 1)
@@ -30,13 +30,13 @@ describe Receipts::GenerateDocumentAndEmail do
   end
 
   it "should send to the right person" do
-  end  
+  end
 
   it "should take interval param in account" do
-  end  
+  end
 
   it "should take format param in account" do
-  end  
+  end
 
   it "should use the correct template" do
   end
