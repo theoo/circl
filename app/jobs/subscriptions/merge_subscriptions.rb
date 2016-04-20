@@ -18,7 +18,7 @@
 
 # Options are:
 #   required: [:source_subscriptions_id, :destination_subscriptions_id, :person]
-class MergeSubscriptions
+class Subscriptions::MergeSubscriptions
 
   @queue = :processing
 
@@ -44,7 +44,7 @@ class MergeSubscriptions
     source_subscription.destroy
 
     # inform current user
-    PersonMailer.send_subscriptions_merged(options[:person],
+    PersonMailer.send_subscriptions_merged(person,
                   source_subscription_id,
                   source_subscription_title,
                   destination_subscription.id).deliver
