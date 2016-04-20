@@ -19,9 +19,7 @@ describe Receipts::GenerateDocumentAndEmail do
   end
 
   it "should return a CachedDocument" do
-    initial_count = CachedDocument.count
-    Receipts::GenerateDocumentAndEmail.perform(@members, @person1, nil, nil, 'pdf', 1, nil, nil, nil, nil, nil)
-    (initial_count + 1).should eq(CachedDocument.count)
+    expect {Receipts::GenerateDocumentAndEmail.perform(@members, @person1, nil, nil, 'pdf', 1, nil, nil, nil, nil, nil)}.to change(CachedDocument, :count).by(1)
   end
 
   it "should send an email" do
