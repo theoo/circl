@@ -36,7 +36,8 @@ class Subscriptions::AddPeopleAndEmail
   @queue = :notifications
 
   def self.perform(subscription_id, people_ids, person, parent_subscription_id, status)
-    subscription = Subscription.find(subscription_id, parent_subscription_id, person, people_ids, status)
+    byebug
+    subscription = Subscription.find(subscription_id)
 
     existing_people_ids = []
     new_people_ids = []
@@ -45,7 +46,6 @@ class Subscriptions::AddPeopleAndEmail
       parent_and_reminders = Subscription.find(parent_subscription_id).self_and_descendants.map(&:id)
     end
 
-    transaction do
       people_ids.each do |id|
         p = Person.find(id)
 
@@ -92,7 +92,6 @@ class Subscriptions::AddPeopleAndEmail
 
         new_people_ids << p.id
       end
-    end
 
     PersonMailer.send_members_added_to_subscription(person,
                   subscription.id,
