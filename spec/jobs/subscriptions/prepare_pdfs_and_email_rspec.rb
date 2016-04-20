@@ -9,6 +9,9 @@ describe Subscriptions::PreparePdfsAndEmail do
     @members = []
     10.times do 
       @person = FactoryGirl.create(:person)
+      @affair = @person.affairs.create(:title => "affair test")
+      @invoice = @affair.invoices.create!(:value => 100, :title => 'transfer invoice', :invoice_template_id => 1)
+      @receipt = @invoice.receipts.create!(:value => 200, :value_date => Time.now)
       @members << @person
     end
   end
