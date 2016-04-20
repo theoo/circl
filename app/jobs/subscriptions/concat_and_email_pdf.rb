@@ -33,13 +33,13 @@ class Subscriptions::ConcatAndEmailPdf
 
   @queue = :notifications
 
-  def self.perform(subscription_id)
-    I18n.locale = options[:current_locale]
+  def self.perform(subscription_id, invoices_ids, person, query, current_locale)
+    I18n.locale = current_locale
     subscription = Subscription.find subscription_id
 
     # GENERATE FRONTPAGE
     controller = Admin::SubscriptionsController.new
-    html = controller.render_to_string( inline: controller.pdf_front_page(subscription, options[:query]))
+    html = controller.render_to_string( inline: controller.pdf_front_page(subscription, query))
     html.assets_to_full_path!
 
     front_page = Tempfile.new(["subscription#{subscription.id}_front_page", '.pdf'], encoding: 'ascii-8bit')
@@ -51,7 +51,7 @@ class Subscriptions::ConcatAndEmailPdf
     front_page.flush
 
     # MAP PDF URLS
-    paths = options[:invoices_ids].map{ |id| Invoice.find(id).pdf.path }
+    paths = invoices_ids.map{ |id| Invoice.find(id).pdf.path }
     paths.insert(0, front_page.path)
 
     file = Tempfile.new(["subscription#{subscription.id}", ".pdf"], encoding: 'ascii-8bit')
@@ -68,12 +68,12 @@ class Subscriptions::ConcatAndEmailPdf
 
     # append the query at the end, if everything succeed.
     # TODO: transaction, validation
-    subscription.last_pdf_generation_query = options[:query].to_json
+    subscription.last_pdf_generation_query = query.to_json
     subscription.save
 
     file.unlink
     script.unlink
 
-    PersonMailer.send_subscription_pdf_link(options[:person], subscription.id).deliver
+    PersonMailer.send_subscription_pdf_link(person, subscription.id).deliver
   end
 end
