@@ -14,7 +14,6 @@
                   = I18n.t('common.title')
                 %input{type: 'text',
                        name: 'title',
-                       id: 'admin_subscription_title',
                        class: 'required form-control',
                        value: @subscription.title}
 
@@ -24,7 +23,6 @@
                   = I18n.t('common.parent')
                 %input{ type: 'search',
                         name: 'subscription_parent_title',
-                        id: 'admin_subscription_parent',
                         class: 'form-control',
                         value: @subscription.parent_title,
                         action: '/admin/subscriptions/search' }
@@ -44,7 +42,6 @@
                   = I18n.t('common.description')
                 %textarea{name: 'description',
                           rows: 5,
-                          id: 'admin_subscription_description',
                           class: 'form-control'}
                   = @subscription.description
 

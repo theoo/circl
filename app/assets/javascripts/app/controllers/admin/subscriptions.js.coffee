@@ -125,7 +125,7 @@ class New extends ValueItemsController
 
               @render()
               # Lock the parent field so user cannot change it by mistake
-              @el.find("input[name='subscription_parent_title']").button(disabled: true)
+              @el.find("input[name='subscription_parent_title']").attr(disabled: true)
 
           when 'renewal'
             Subscription.one 'refresh', =>
@@ -151,7 +151,7 @@ class New extends ValueItemsController
 
               @render()
               # Lock the parent field so user cannot add one by mistake
-              @el.find("input[name='subscription_parent_title']").button(disabled: true)
+              @el.find("input[name='subscription_parent_title']").attr(disabled: true)
 
         Subscription.fetch(id: @parent_id)
     else
