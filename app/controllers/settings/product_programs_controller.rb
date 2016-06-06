@@ -33,7 +33,7 @@ class Settings::ProductProgramsController < ApplicationController
         render json: @product_programs
       end
       format.csv do
-        render inline: csv_ify(Product.all, [
+        render inline: csv_ify(ProductProgram.all, [
           :key,
           :program_group,
           :title,
