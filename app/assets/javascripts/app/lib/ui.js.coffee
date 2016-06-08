@@ -28,9 +28,8 @@ class Ui
     @load_minicolors(context)
     @override_rails(context)
     @timeout_info_alerts(context)
+    @load_doc(context)
 
-    # FIXME http://getbootstrap.com/javascript/#tooltips the event
-    # should be trigged without calling this line (?)
     $('a[data-toggle=tooltip]').tooltip()
 
   # TODO Move this in applications.js.coffee
@@ -664,5 +663,38 @@ class Ui
             $(@).attr('value', num.toFixed(2))
         else
           $(@).attr('value', num.toFixed(2))
+
+  load_doc: (context) ->
+    # Toggle button - top right of a panel
+    toggler = context.find(".toggle-doc")
+    toggler.append($("<i class='icon-question-sign icon-large'>"))
+    toggler.attr(title: I18n.t('common.help'))
+    toggler.tooltip(placement: 'bottom', container: 'body')
+    toggler.on 'click', (e) ->
+      obj = $(e.target)
+      if obj.data("display") != 'on'
+        obj.data(display: 'on')
+        context.find(".doc").fadeIn()
+      else
+        obj.data(display: 'off')
+        context.find(".doc").fadeOut()
+
+    toggler.on 'mouseover', (e) ->
+      obj = $(e.target)
+      context.find(".doc").fadeIn()
+      context.find(".main-doc").show("blind")
+
+    toggler.on 'mouseout', (e) ->
+      obj = $(e.target)
+      if obj.data("display") != 'on'
+        context.find(".doc").fadeOut()
+        context.find(".main-doc").hide("blind")
+
+    # Inline doc, hidden by default
+    doc = context.find(".doc")
+    doc.tooltip(placement: 'bottom', container: 'body')
+    doc.addClass("text-info")
+    doc.append($("<i class='icon-question-sign'>"))
+    doc.hide()
 
 window.Ui = new Ui

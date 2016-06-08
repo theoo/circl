@@ -194,7 +194,6 @@ class New extends App.ExtendedController
     @html @view('people/affairs/form')(@)
     @adjust_vat()
     @setup_estimate_and_sold_date()
-    @el.find(".doc").tooltip(placement: 'bottom', container: 'body')
 
   submit: (e) =>
     e.preventDefault()
@@ -210,6 +209,7 @@ class New extends App.ExtendedController
     @affair.vat_currency = App.ApplicationSetting.value("default_currency") unless @affair.vat_currency
     @affair.estimate = data.estimate?
     @affair.unbillable = data.unbillable?
+    @affair.archive = data.archive?
     @affair.custom_value_with_taxes = data.custom_value_with_taxes?
     @save_with_notifications @affair, redirect_to_edit
 
@@ -355,6 +355,8 @@ class Edit extends App.ExtendedController
       placement: 'bottom'
       title: @affair.tasks_duration_translation
 
+    @setup_estimate_and_sold_date()
+
   submit: (e) ->
     e.preventDefault()
     data = $(e.target).serializeObject()
@@ -362,6 +364,7 @@ class Edit extends App.ExtendedController
     @affair.affairs_stakeholders = @fetch_items()
     @affair.estimate = data.estimate?
     @affair.unbillable = data.unbillable?
+    @affair.archive = data.archive?
     @affair.custom_value_with_taxes = data.custom_value_with_taxes?
     @save_with_notifications @affair
 

@@ -97,12 +97,14 @@
     #affairs_tab.tab-pane
       .row
         .col-md-12
-          - # TODO Adjust access to every panel
           - if can? :read, @person => Affair
             #person_affairs{class: 'panel panel-primary ignore-affix', 'data-primary_panel' => "true"}
               .panel-heading
                 .panel-title
                   = I18n.t('person.views.affairs')
+                  .pull-right
+                    .toggle-doc
+              / .panel-body.main-doc
 
         .col-md-12
           - if can? :read, @person => Affair

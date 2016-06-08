@@ -49,8 +49,7 @@
                         checked: @affair.archive,
                         value: 1 }
                 = I18n.t('affair.views.archive')
-                .doc.label.label-info{title: I18n.t("affair.views.archive_howto")}
-                  = I18n.t("common.help")
+                .doc{title: I18n.t("affair.views.archive_howto")}
 
           .col-xs-4
             .checkbox
@@ -61,10 +60,9 @@
                         checked: @affair.estimate,
                         value: 1 }
                 = I18n.t('affair.views.estimate')
-                .doc.label.label-info{title: I18n.t("affair.views.estimate_howto")}
-                  = I18n.t("common.help")
+                .doc{title: I18n.t("affair.views.estimate_howto")}
 
-          .col-xs-4 
+          .col-xs-4
             .checkbox
               %label.control-label
                 %input{ type: 'checkbox',
@@ -73,8 +71,7 @@
                         checked: @affair.unbillable,
                         value: 1 }
                 = I18n.t('affair.views.statuses.unbillable')
-                .doc.label.label-info{title: I18n.t("affair.views.unbillable_howto")}
-                  = I18n.t("common.help")
+                .doc{title: I18n.t("affair.views.unbillable_howto")}
 
         .row
           .col-sm-4.form-group

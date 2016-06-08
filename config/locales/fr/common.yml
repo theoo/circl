@@ -72,7 +72,7 @@ fr:
     global: Global
     good: bon
     group_edit: "édition groupée"
-    help: "?"
+    help: "cliquez pour afficher ou cacher l'aide en ligne"
     height: hauteur
     hour: heure
     id: id

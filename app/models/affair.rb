@@ -72,6 +72,7 @@ class Affair < ActiveRecord::Base
 
   before_save do
     self.unbillable = true if archive
+    self.touch(:sold_at) if not estimate and estimate_was
 
     update_value if value_in_cents.blank?
     update_vat if vat_in_cents.blank?
@@ -297,6 +298,7 @@ class Affair < ActiveRecord::Base
     h[:vat_currency]                       = vat.currency.try(:iso_code)
     h[:statuses]                           = translated_statuses
     h[:affairs_stakeholders]               = affairs_stakeholders.as_json
+    h[:sold_at]                            = sold_at.try(:to_date)
     h
   end
 
