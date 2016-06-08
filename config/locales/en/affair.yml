@@ -25,6 +25,7 @@ en:
       affair_number: Affair n°%{number}
       alias_name: alias
       arts: ART
+      archive: archive
       available_statuses: available statuses
       bid_value: The bid value is
       buyer: buyer
@@ -70,6 +71,7 @@ en:
         underpaid: underpaid
       subscription_names_filter: subscription names filter
       subscriptions: subscriptions
+      sold_date: sold date
       tasks: Services
       taxes: taxes
       template: template

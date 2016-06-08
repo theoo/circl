@@ -31,7 +31,7 @@ class App.ApplicationSetting extends Spine.Model
 
     switch setting.type_for_validation
       when 'boolean'
-        setting.value == 'true'
+        ['t', 'true', 'True', 1].indexOf(setting.value) >= 0
       when 'integer'
         parseInt(setting.value)
       when 'float'

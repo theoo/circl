@@ -72,6 +72,7 @@ fr:
     global: Global
     good: bon
     group_edit: "édition groupée"
+    help: "?"
     height: hauteur
     hour: heure
     id: id

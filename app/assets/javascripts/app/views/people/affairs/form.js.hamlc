@@ -40,7 +40,19 @@
                       value: @affair.parent_id }
 
         .row
-          .col-sm-4
+          .col-xs-4
+            .checkbox
+              %label.control-label
+                %input{ type: 'checkbox',
+                        id: 'affair_archive',
+                        name: 'archive',
+                        checked: @affair.archive,
+                        value: 1 }
+                = I18n.t('affair.views.archive')
+                .doc.label.label-info{title: I18n.t("affair.views.archive_howto")}
+                  = I18n.t("common.help")
+
+          .col-xs-4
             .checkbox
               %label.control-label
                 %input{ type: 'checkbox',
@@ -49,7 +61,10 @@
                         checked: @affair.estimate,
                         value: 1 }
                 = I18n.t('affair.views.estimate')
+                .doc.label.label-info{title: I18n.t("affair.views.estimate_howto")}
+                  = I18n.t("common.help")
 
+          .col-xs-4 
             .checkbox
               %label.control-label
                 %input{ type: 'checkbox',
@@ -58,7 +73,10 @@
                         checked: @affair.unbillable,
                         value: 1 }
                 = I18n.t('affair.views.statuses.unbillable')
+                .doc.label.label-info{title: I18n.t("affair.views.unbillable_howto")}
+                  = I18n.t("common.help")
 
+        .row
           .col-sm-4.form-group
             %label{for: 'affair_alias_name'}
               = I18n.t('affair.views.alias_name')
@@ -66,6 +84,14 @@
                    name: 'alias_name',
                    class: 'form-control',
                    value: @affair.alias_name}
+
+          .col-sm-4.form-group
+            %label
+              = I18n.t('affair.views.sold_date')
+            %input{ type: 'text',
+                    name: 'sold_at',
+                    class: 'datepicker form-control',
+                    value: @affair.sold_at }
 
           .col-sm-4.form-group
             %label

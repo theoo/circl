@@ -24,6 +24,7 @@ fr:
         show_owner: consulter la page du propriétaire
       affair_number: Affaire n°%{number}
       alias_name: alias
+      archive: archive
       arts: TAR
       available_statuses: status disponibles
       bid_value: La valeur HT de la remise est
@@ -70,6 +71,7 @@ fr:
         underpaid: sous-payée
       subscription_names_filter: filtre pour le nom des inscriptions
       subscriptions: Inscriptions
+      sold_date: date de vente
       tasks: Services
       taxes: taxes
       template: modèle de document

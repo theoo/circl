@@ -65,10 +65,14 @@ class Affair < ActiveRecord::Base
 
   after_save do
     update_elasticsearch
-    cancel_open_invoices if unbillable
+    cancel_open_invoices if unbillable or archive
+
+    true
   end
 
   before_save do
+    self.unbillable = true if archive
+
     update_value if value_in_cents.blank?
     update_vat if vat_in_cents.blank?
     set_vat_percentage if vat_percentage.blank?
@@ -172,6 +176,9 @@ class Affair < ActiveRecord::Base
     where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
   }
 
+  scope :alive, -> { where(archive: false) }
+  scope :archived, -> { where(archive: true) }
+
   scope :estimates,  -> { where estimate: true }
   scope :effectives, -> { where estimate: false}
 
@@ -227,7 +234,7 @@ class Affair < ActiveRecord::Base
        :paid,           # 8
        :overpaid,       # 9
        :unbillable,     # 10
-       nil,             # 11
+       :archived,       # 11
        nil,             # 12
        nil,             # 13
        nil,             # 14
@@ -558,7 +565,7 @@ class Affair < ActiveRecord::Base
   # alteration.
   # Only update when affair is an estimate
   def update_on_prestation_alteration(record = nil)
-    if estimate
+    if estimate and ApplicationSetting.value("automatically_calculate_affair_value")
       self.update_attribute(:value, compute_value)
       self.update_attribute(:vat, compute_vat)
       self.update_attribute(:status, update_statuses)
@@ -625,6 +632,7 @@ class Affair < ActiveRecord::Base
   def update_statuses
     statuses = []
     statuses << :cancelled if cancelled?
+    statuses << :archived if archive
 
     if unbillable or value_with_taxes == 0
       statuses << :unbillable

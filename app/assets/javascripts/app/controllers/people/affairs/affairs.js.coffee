@@ -86,6 +86,25 @@ LocalUi =
       $('a[href=#affairs_tab] .badge').html PersonAffair.count()
     PersonAffair.fetch_count()
 
+  toggle_estimate: (el) ->
+    @estimate_checkbox = el.find("[name=estimate]")
+    @sold_at_input = el.find("[name=sold_at]")
+
+    if @estimate_checkbox.is(":checked")
+      @sold_at_input.attr(disabled: true)
+    else
+      @sold_at_input.removeAttr('disabled')
+      if @sold_at_input.val() != ""
+        @estimate_checkbox.attr(disabled: true)
+      else
+        @estimate_checkbox.removeAttr('disabled')
+
+  setup_estimate_and_sold_date: ->
+    @toggle_estimate(@el)
+    # Using anonymouse function with phat arrow allowes me to not search for @el in the toggle_estimate function
+    $("[name=estimate], [name=sold_at]").on 'change', => @toggle_estimate(@el)
+
+
 class New extends App.ExtendedController
 
   @include ConditionsController
@@ -138,6 +157,7 @@ class New extends App.ExtendedController
             description:          parent.description
             value_in_cents:       parent.value_in_cents
             value_currency:       parent.currency
+            archive:              parent.archive?
             estimate:             parent.estimate?
             unbillable:           parent.unbillable?
             parent_id:            parent.id
@@ -154,8 +174,9 @@ class New extends App.ExtendedController
     else
       @template =
         affairs_stakeholders: []
+        archive: false
+        estimate: App.ApplicationSetting.value("estimate_checkbox_default")
         unbillable: false
-        estimate: false
         seller_id: App.current_user.id
         seller_name: App.current_user.name
         description: App.ApplicationSetting.value("affairs_description_placeholder")
@@ -172,6 +193,8 @@ class New extends App.ExtendedController
     @affair = new PersonAffair(@template)
     @html @view('people/affairs/form')(@)
     @adjust_vat()
+    @setup_estimate_and_sold_date()
+    @el.find(".doc").tooltip(placement: 'bottom', container: 'body')
 
   submit: (e) =>
     e.preventDefault()

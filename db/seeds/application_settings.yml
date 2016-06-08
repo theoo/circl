@@ -128,3 +128,9 @@
 - key: bvr_bottom_offset_in_mm
   value: 0.0
   type_for_validation: float
+- key: automatically_calculate_affair_value
+  value: true
+  type_for_validation: boolean
+- key: estimate_checkbox_default
+  value: true
+  type_for_validation: boolean
