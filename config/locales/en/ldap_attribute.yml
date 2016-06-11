@@ -1,7 +1,0 @@
----
-en:
-  ldap_attribute:
-    notices:
-      ldap_will_be_inaccessible_during_the_reindexing: The LDAP directory will be inaxessible during the reindexing. The duration of this operation varies directories size, it may takes few minutes.
-    views:
-      mapping: mapping

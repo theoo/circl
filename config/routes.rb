@@ -133,7 +133,6 @@ CIRCL::Application.routes.draw do
     end
 
     resources :tasks, :controller => 'people/tasks'
-    resources :translation_aptitudes, :controller => 'people/translation_aptitudes'
   end
 
   get 'salaries' => 'salaries#index'

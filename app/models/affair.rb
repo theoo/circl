@@ -218,6 +218,16 @@ class Affair < ActiveRecord::Base
     # Returns the list of available statuses as an array. Order in array matter.
     # Watch the sources to read available statuses.
     def available_statuses
+      # i18n-tasks-use I18n.t("affair.views.statuses.open")
+      # i18n-tasks-use I18n.t("affair.views.statuses.underpaid")
+      # i18n-tasks-use I18n.t("affair.views.statuses.partially_paid")
+      # i18n-tasks-use I18n.t("affair.views.statuses.to_be_billed")
+      # i18n-tasks-use I18n.t("affair.views.statuses.cancelled")
+      # i18n-tasks-use I18n.t("affair.views.statuses.paid")
+      # i18n-tasks-use I18n.t("affair.views.statuses.overpaid")
+      # i18n-tasks-use I18n.t("affair.views.statuses.unbillable")
+      # i18n-tasks-use I18n.t("affair.views.statuses.offered")
+
       [
                         # under bit weight 256 (bits 0-7),
                         # invoices are not (fully) paid

@@ -108,6 +108,11 @@ class People::Salaries::SalariesController < ApplicationController
   end
 
   def update_items
+    # i18n-tasks-use I18n.t("tax_data.views.employee_value")
+    # i18n-tasks-use I18n.t("tax_data.views.employer_value")
+    # i18n-tasks-use I18n.t("tax_data.views.reference_value")
+    # i18n-tasks-use I18n.t("tax_data.views.taxed_value")
+
     items = params[:items].each_with_object([]) do |(unused, attributes), arr|
       attributes[:tax_ids] ||= [] # make sure this is reset if not sent
       item = attributes.has_key?(:id) ? Salaries::Item.find(attributes[:id]) : Salaries::Item.new
@@ -145,6 +150,11 @@ class People::Salaries::SalariesController < ApplicationController
   end
 
   def update_tax_data
+    # i18n-tasks-use I18n.t("tax_data.views.employee_value")
+    # i18n-tasks-use I18n.t("tax_data.views.employer_value")
+    # i18n-tasks-use I18n.t("tax_data.views.reference_value")
+    # i18n-tasks-use I18n.t("tax_data.views.taxed_value")
+
     tax_data = params[:tax_data].each_with_object([]) do |(unused, attributes), arr|
       item = Salaries::TaxData.find(attributes[:id])
       item.assign_attributes(attributes)

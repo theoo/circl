@@ -1,9 +1,0 @@
----
-fr:
-  tax_data:
-    views:
-      actions: actions
-      employee_value: valeur employé
-      employer_value: valeur employeur
-      reference_value: valeur de référence
-      taxed_value: valeur déduite

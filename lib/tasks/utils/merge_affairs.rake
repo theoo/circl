@@ -3,7 +3,7 @@ namespace :utils do
   task :merge_affairs => :environment do
 
     # Disable SearchAttribute callbacks so it's faster
-    %w{Person TranslationAptitude Affair Subscription Invoice Task EmploymentContract Receipt}.each do |model|
+    %w{Person Affair Subscription Invoice Task EmploymentContract Receipt}.each do |model|
       model = model.constantize
       model.reset_callbacks(:save)
       model.reset_callbacks(:commit)

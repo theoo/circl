@@ -1,9 +1,0 @@
----
-en:
-  translation_aptitude:
-    errors:
-      translation_aptitude_languages_should_be_different: translation aptitude languages should be different
-      translation_aptitude_should_be_uniq_for_a_person: translation aptitude should be uniq for a person
-    views:
-      actions:
-        destroy_translation_aptitude: destroy translation aptitude

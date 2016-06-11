@@ -193,6 +193,13 @@ class Invoice < ActiveRecord::Base
   # Returns the list of available statuses as an array.
   # Watch the sources to read available statuses.
   def self.available_statuses
+    # i18n-tasks-use I18n.t("invoice.views.statuses.open")
+    # i18n-tasks-use I18n.t("invoice.views.statuses.underpaid")
+    # i18n-tasks-use I18n.t("invoice.views.statuses.cancelled")
+    # i18n-tasks-use I18n.t("invoice.views.statuses.paid")
+    # i18n-tasks-use I18n.t("invoice.views.statuses.overpaid")
+    # i18n-tasks-use I18n.t("invoice.views.statuses.offered")
+
     [
                  # under bit weight 256 (bits 0-7),
                  # invoice is not (fully) paid

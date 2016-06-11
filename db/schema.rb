@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160606154722) do
+=======
+ActiveRecord::Schema.define(version: 20160208194808) do
+>>>>>>> origin/refactoring
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +35,7 @@ ActiveRecord::Schema.define(version: 20160606154722) do
     t.integer  "parent_id"
     t.text     "footer"
     t.text     "conditions"
-    t.integer  "seller_id",                 default: 1,     null: false
+    t.integer  "seller_id",                 default: 1684,  null: false
     t.integer  "condition_id"
     t.boolean  "unbillable",                default: false, null: false
     t.text     "notes"
@@ -730,8 +734,8 @@ ActiveRecord::Schema.define(version: 20160606154722) do
     t.string   "cert_others_title",                                     default: "",    null: false
     t.text     "cert_notes",                                            default: "",    null: false
     t.string   "employer_account",                                      default: ""
-    t.string   "yearly_salary_currency",                                default: "CHF", null: false
     t.text     "comments"
+    t.string   "yearly_salary_currency",                                default: "CHF", null: false
   end
 
   add_index "salaries", ["is_reference"], name: "index_salaries_on_is_template", using: :btree
@@ -793,6 +797,7 @@ ActiveRecord::Schema.define(version: 20160606154722) do
     t.boolean  "archive",            default: false, null: false
   end
 
+  add_index "salaries_taxes", ["archive"], name: "index_salaries_taxes_on_archive", using: :btree
   add_index "salaries_taxes", ["exporter_avs_group"], name: "index_salaries_taxes_on_exporter_avs_group", using: :btree
   add_index "salaries_taxes", ["exporter_is_group"], name: "index_salaries_taxes_on_exporter_is_group", using: :btree
   add_index "salaries_taxes", ["exporter_lpp_group"], name: "index_salaries_taxes_on_exporter_lpp_group", using: :btree
@@ -1009,15 +1014,5 @@ ActiveRecord::Schema.define(version: 20160606154722) do
   add_index "tasks", ["task_type_id"], name: "index_tasks_on_task_type_id", using: :btree
   add_index "tasks", ["value_currency"], name: "index_tasks_on_value_currency", using: :btree
   add_index "tasks", ["value_in_cents"], name: "index_tasks_on_value_in_cents", using: :btree
-
-  create_table "translation_aptitudes", force: true do |t|
-    t.integer "person_id"
-    t.integer "from_language_id"
-    t.integer "to_language_id"
-  end
-
-  add_index "translation_aptitudes", ["from_language_id"], name: "index_translation_aptitudes_on_from_language_id", using: :btree
-  add_index "translation_aptitudes", ["person_id"], name: "index_translation_aptitudes_on_person_id", using: :btree
-  add_index "translation_aptitudes", ["to_language_id"], name: "index_translation_aptitudes_on_to_language_id", using: :btree
 
 end

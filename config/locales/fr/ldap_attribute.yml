@@ -1,7 +1,0 @@
----
-fr:
-  ldap_attribute:
-    notices:
-      ldap_will_be_inaccessible_during_the_reindexing: L'annuaire LDAP sera inaxessible durant la réindexation. La durée de cette opération varie selon la taille de l'annuaire, elle ne prend généralement que quelques minutes.
-    views:
-      mapping: mapping

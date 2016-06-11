@@ -49,7 +49,6 @@ class Language < ActiveRecord::Base
   has_many :main_people,
            class_name: 'Person',
            foreign_key: :main_communication_language_id
-  has_many  :translation_aptitudes
   has_many  :invoice_templates
   has_many  :salaries_templates
 

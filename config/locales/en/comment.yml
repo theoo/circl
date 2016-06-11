@@ -1,9 +1,0 @@
----
-en:
-  comment:
-    views:
-      actions:
-        close: close
-        reopen: reopen
-      comment: comment
-      editor: editor

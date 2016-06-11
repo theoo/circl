@@ -78,6 +78,9 @@
       hidden:
         type: boolean
         index: not_analyzed
+      sort:
+        type: string
+        index: not_analyzed
   group: Person
 
 - model: Person
@@ -88,6 +91,9 @@
     fields:
       is_an_organization:
         type: boolean
+        index: not_analyzed
+      sort:
+        type: string
         index: not_analyzed
   group: Person
 

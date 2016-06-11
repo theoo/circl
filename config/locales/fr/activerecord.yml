@@ -179,7 +179,6 @@ fr:
         task_rate: tarif
         title: titre
         town: localité
-        translation_aptitudes: aptitude de traduction
         unlock_token: jeton de déblocage de la session
         unpaid_affairs: affaires impayées
         unpaid_subscriptions: inscriptions impayées
@@ -254,11 +253,6 @@ fr:
         id: ID
         ratio: ratio
         title: titre
-      translation_aptitude:
-        from_language_id: de la langue
-        id: ID
-        person_id: ID de la personne
-        to_language_id: "à la langue"
     errors:
       format: "%{attribute} %{message}"
       messages:
@@ -332,7 +326,6 @@ fr:
       task_type: Type de tâche
       tax: Déduction
       template: Modèle de Salaire
-      translation_aptitude: Aptitude de traduction
   date:
     abbr_day_names:
     - dim

@@ -18,6 +18,7 @@ gem 'acts_as_tree', '2.0.0'
 
 # elasticsearch
 gem 'tire', '0.6.2'
+# gem "redis"
 
 # LDAP
 gem 'net-ldap', :git => 'git://github.com/ruby-ldap/ruby-net-ldap.git'
@@ -52,7 +53,8 @@ gem 'gon'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.12.1', platforms: :ruby
 gem 'i18n-js', '2.1.2'
-gem 'i18n-tasks', '~> 0.5.4'
+gem 'i18n-tasks'
+gem 'lit'
 gem 'yui-compressor', '0.12.0'
 
 ### maps
@@ -74,7 +76,7 @@ gem 'mailchimp-api', require: 'mailchimp'
 
 ### rake
 gem 'rake-progressbar', '0.0.5'
-gem 'rake', '10.3.2'
+gem 'rake'
 
 # Monitoring
 gem 'rails_exception_handler', "~> 2"
@@ -86,6 +88,7 @@ gem 'rails_exception_handler', "~> 2"
 group :development, :test do
   ### Documentation
   gem 'railroady', '1.1.1'
+  gem 'byebug'
 
   ### Test
   gem 'factory_girl_rails', '4.4.0'

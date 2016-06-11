@@ -1,9 +1,0 @@
----
-en:
-  task_type:
-    errors:
-      cannot_destroy_if_task_present: It is not possible to destroy a task type which has associated tasks.
-      should_have_a_ratio_or_a_title: Should have a ratio or a title
-    views:
-      ratio: ratio
-      tasks_count: tasks

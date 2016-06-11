@@ -83,18 +83,6 @@ class PersonRelationsParser
     parse_multiple_items(languages, Language, :communication_language)
   end
 
-  def parse_translation_aptitudes(aptitudes)
-    # TODO fixme or remove me
-    aptitudes.split(/\s*,\s*/).each do |aptitude|
-      begin
-        from, to = aptitude.match(/\s*(\w+)\s*->\s*(\w+)\s*/).captures.map{ |l| Language.find_by_name!(l) }
-        @person.translation_aptitudes.build(:from_language => from, :to_language => to)
-      rescue
-        @person.errors.add(:translation_aptitudes, I18n.t('person.import.invalid_translation_aptitude', :translation_aptitude => aptitude))
-      end
-    end
-  end
-
   def parse_private_tags(private_tags)
     parse_multiple_tags(private_tags, PrivateTag)
   end

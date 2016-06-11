@@ -9,7 +9,7 @@ namespace :utils do
       puts 'destroying...'
 
       # Tables using person_id
-      tables_with_person_id = %w{ comments employment_contracts logs people_communication_languages people_private_tags people_public_tags people_roles translation_aptitudes }
+      tables_with_person_id = %w{ comments employment_contracts logs people_communication_languages people_private_tags people_public_tags people_roles }
       statements = tables_with_person_id.map{ |table| "delete from #{table} where person_id != #{person_id}" }
 
       # Tables using foo_id

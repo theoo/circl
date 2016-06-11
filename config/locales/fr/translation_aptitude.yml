@@ -1,9 +1,0 @@
----
-fr:
-  translation_aptitude:
-    errors:
-      translation_aptitude_languages_should_be_different: Les deux langues devraient être différentes.
-      translation_aptitude_should_be_uniq_for_a_person: Une paire de langue devrait être unique pour une même personne.
-    views:
-      actions:
-        destroy_translation_aptitude: détruire l'aptitude à traduire

@@ -179,7 +179,6 @@ en:
         task_rate: rate
         title: title
         town: city
-        translation_aptitudes: translation aptitudes
         unlock_token: unlock token
         unpaid_affairs: unpaid affairs
         unpaid_subscriptions: unpaid subscriptions
@@ -254,11 +253,6 @@ en:
         id: ID
         ratio: ratio
         title: title
-      translation_aptitude:
-        from_language_id: from language
-        id: ID
-        person_id: person ID
-        to_language_id: to language
     errors:
       format: "%{attribute} %{message}"
       messages:
@@ -332,7 +326,6 @@ en:
       task_type: Task Type
       tax: tax
       template: template
-      translation_aptitude: Translation Aptitude
   date:
     abbr_day_names:
     - Sun
@@ -430,6 +423,7 @@ en:
       minute: Minute
       month: Month
       second: Seconds
+      week: Semaine
       year: Year
   helpers:
     select:
