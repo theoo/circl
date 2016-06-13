@@ -354,6 +354,7 @@ en:
     width: width
     year: year
     help: Help
+    toggle_help: Toggle help
   creditor:
     date_fields:
       creation: creation

@@ -42,7 +42,7 @@ fr:
       parent_id_cannot_be_self: Le parent ne peut pas être l'affaire elle-même.
       unable_to_compute_value_without_taxes_if_extras_have_different_vat_values: Il est impossible de calculer la valeur hors taxe si l'affaire contient des extras aux TVA différentes.
       wrong_date: Mauvaise date
-      can_not_delete_if_has_children: Can not delete if has children
+      can_not_delete_if_has_children: Il est impossible de détruire une affaire qui a des variantes.
     notices:
       destroy: 'Détruire une affaire supprimera tout son contenu: facture, inscriptions, services, produits et extras ! <br /> Il est impossilbe de détruire une affaire dont des reçus dépendent.'
       document_export_explanation: Veuillez sélectionner ci-dessous les critères de tri pour la génération du document.
@@ -80,9 +80,8 @@ fr:
         closed_affairs: Affaires bouclées
         estimates: Devis
         open_affairs: Affaires ouvertes
-        open_invoices_with_canceled_or_offered_invoices: Affaires ouvertes avec des factures offertes ou annulées
+        open_affairs_with_canceled_or_offered_invoices: Affaires ouvertes avec des factures offertes ou annulées
         unbillable_affairs: Affaire non-facturables
-        open_affairs_with_canceled_or_offered_invoices: Open invoices with canceled or offered invoices
       new_affair: Nouvelle affaire
       notes: notes
       owner: propriétaire
@@ -98,21 +97,21 @@ fr:
       stakeholders: intervenants
       status: statut
       statuses:
-        cancelled: Cancelled
-        offered: Offered
-        open: Open
-        overpaid: Overpaid
-        paid: Paid
-        partially_paid: Partially paid
-        to_be_billed: To be billed
+        cancelled: annulée
+        offered: offerte
+        open: ouverte
+        overpaid: sur-payée
+        paid: payée
+        partially_paid: partiellement payée
+        to_be_billed: "à facturer"
         unbillable: non facturable
-        underpaid: Underpaid
+        underpaid: sous-payée
       subscription_names_filter: filtre pour le nom des inscriptions
       subscriptions: Inscriptions
       tasks: Services
       template: modèle de document
-      threshold_overpaid_global: limite de la somme des surpaiements
-      threshold_overpaid_unit: limite de surpaiement
+      threshold_overpaid_global: limite de la somme des sur-paiements
+      threshold_overpaid_unit: limite de sur-paiement
       threshold_value_global: limite de la somme des valeurs
       threshold_value_unit: valeur limite
       title: titre
@@ -129,8 +128,8 @@ fr:
       variant_prefix: Variante
       archive: archive
       archive_howto: "(WORK IN PROGRESS) Sauf sélection explicite dans les listings, une affaire archivée ne sera plus listée."
-      estimate_howto: "Si cette affaire n'a pas encore été commandée, il s'agit alors probablement d'un devis. Lorsque cette coche est décochée pour la première fois, le champs <b>date de vente</b> est automatiquement mis à la date du jour. Tant qu'une <b>date de vente</b> est saisie, l'affaire ne peux pas être cochée comme devis.<br />L'état par défaut de cette coche peut être changé dans les <b>Paramètres de l'application</b>"
-      unbillable_howto: "L'affaire ne sera pas considérée comme <b>ouverte</b>, même si elle n'est pas payée ou partiellement payée. Les factures associées seront automatiquement <b>annulées</b>"
+      estimate_howto: Si cette affaire n'a pas encore été commandée, il s'agit alors probablement d'un devis. Lorsque cette coche est décochée pour la première fois, le champs <b>date de vente</b> est automatiquement mis à la date du jour. Tant qu'une <b>date de vente</b> est saisie, l'affaire ne peux pas être cochée comme devis.<br />L'état par défaut de cette coche peut être changé dans les <b>Paramètres de l'application</b>
+      unbillable_howto: L'affaire ne sera pas considérée comme <b>ouverte</b>, même si elle n'est pas payée ou partiellement payée. Les factures associées seront automatiquement <b>annulées</b>
       sold_date: date de vente
   affairs_condition:
     views:
@@ -355,6 +354,7 @@ fr:
     width: largeur
     year: année
     toggle_help: Afficher/cacher l'aide en ligne
+    help: Aide
   creditor:
     date_fields:
       creation: création
@@ -557,12 +557,12 @@ fr:
       select_generation_interval: Sélectionner l'intervalle d'émission
       status: statut
       statuses:
-        cancelled: Cancelled
-        offered: Offered
-        open: Open
-        overpaid: Overpaid
-        paid: Paid
-        underpaid: Underpaid
+        cancelled: annulée
+        offered: offerte
+        open: ouverte
+        overpaid: sur-payée
+        paid: payée
+        underpaid: sous-payée
       subscription_title: titre de l'inscription
       wipe_content_to_update_address: Vider le contenu de l'adresse pour mettre à jour selon les informations du payeur.
   invoice_template:
@@ -687,7 +687,7 @@ fr:
       invalid_location: Localité invalide "%{location}"
       line: ligne
       not_existing_job: Le métier "%{job}" sera créé.
-      not_existing_: 'Not existing '
+      not_existing_: 'Non existant '
     mail:
       admin_receipts_were_generated: Génération des documents de reçus
       admin_receipts_were_generated_explanation: Vous pouvez télécharger le document généré à l'adresse suivante
@@ -806,10 +806,10 @@ fr:
       after_sale_id: id après-vente
       art: TAR
       art_values: valeur de la TAR
-      attribute: Attribute
+      attribute: attributs
       bid: remise
       bid_price: prix avec remise
-      buying_price: Buying price
+      buying_price: prix d'achat
       buying_prices: prix d'achat
       category: catégorie
       clear_variants: Supprimer les variantes existantes avant d'importer les mises à jour.
@@ -830,8 +830,8 @@ fr:
       product_search: produit
       products_example_file_desc: Modèle pour l'importation
       products_found_in_file: produits trouvés dans le fichier
-      program_group: Program group
-      program_groups: groupe de programme
+      program_group: groupe de programme
+      program_groups: groupes de programme
       provider: fournisseur
       provider_id: id du fournisseur
       quantity: quantité
@@ -937,7 +937,7 @@ fr:
       line: ligne
       means_of_payment: moyen de règlement
       media_date: date du fichier
-      overpaid_value: surpaiement
+      overpaid_value: sur-paiement
       owner: propriétaire
       owner_name: propriétaire
       receipts_count: reçus
