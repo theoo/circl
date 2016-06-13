@@ -264,9 +264,16 @@ class Invoice < ActiveRecord::Base
     account_tokens[0] = account_tokens[0].rjust(2, '0')
     account_tokens[1] = account_tokens[1].rjust(6, '0')
 
-    codeline  = '01'                                        # type (01: CHF BVR)
-    codeline += value_with_taxes.cents.to_s.rjust(10, '0')  # value
-    codeline += codeline.to_i.mod10rec.to_s                 # checksum
+    codeline = ""
+
+    if value > 0 and template.show_invoice_value
+      codeline += '01'                                        # type (01: CHF BVR)
+      codeline += value_with_taxes.cents.to_s.rjust(10, '0')  # value
+      codeline += codeline.to_i.mod10rec.to_s                 # checksum
+    else
+      codeline += '042'                                        # type (042: ??) # TODO doc
+    end
+
     codeline += '>'                                         # separator
     codeline += bvr_reference_number                        # reference number
     codeline += '+'                                         # separator
@@ -274,7 +281,9 @@ class Invoice < ActiveRecord::Base
     codeline += account_tokens.join                         # account
     codeline += '>'                                         # separator
 
-    raise RuntimeError, "bvr_codeline error #{codeline.size} != 53" unless codeline.size == 53
+    unless [43, 53].include? codeline.size
+      raise RuntimeError, "bvr_codeline lenght error #{codeline.size}. Allowed: 43, 53"
+    end
     codeline
   end
 
