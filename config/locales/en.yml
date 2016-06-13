@@ -355,6 +355,7 @@ en:
     year: year
     help: Help
     toggle_help: Toggle help
+    sold_at: Sold at
   creditor:
     date_fields:
       creation: creation

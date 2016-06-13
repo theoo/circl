@@ -355,6 +355,7 @@ fr:
     year: année
     toggle_help: Afficher/cacher l'aide en ligne
     help: Aide
+    sold_at: date de vente
   creditor:
     date_fields:
       creation: création
