@@ -52,7 +52,8 @@ gem 'gon'
 # gem 'jbuilder'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.12.1', platforms: :ruby
-gem 'i18n-js', '2.1.2'
+# gem 'i18n-js', '2.1.2'
+gem "i18n-js", ">= 3.0.0.rc12"
 gem 'i18n-tasks'
 gem 'lit'
 gem 'yui-compressor', '0.12.0'

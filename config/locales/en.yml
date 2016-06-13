@@ -42,6 +42,7 @@ en:
       parent_id_cannot_be_self: Parent cannot be the current affair.
       unable_to_compute_value_without_taxes_if_extras_have_different_vat_values: It's impossible to compute the value without taxes if the affair has extras with differents VAT values.
       wrong_date: wrong date
+      can_not_delete_if_has_children: Can not delete if has children
     notices:
       destroy: 'Destroying an affair will remove all its content: invoices, subscriptions, services, products and extras ! <br /> It is impossible to destroy an affair which have related receipts.'
       document_export_explanation: Please select sorting criterias for the generation.
@@ -54,7 +55,6 @@ en:
     views:
       actions:
         edit_affair: edit affair
-        preview_in_new_tab: preview in new tab
         show_owner: show owner's page
       affair_number: Affair n°%{number}
       alias_name: alias
@@ -80,7 +80,7 @@ en:
         closed_affairs: Closed affairs
         estimates: Estimates
         open_affairs: Open affairs
-        open_invoices_with_canceled_or_offered_invoices: Open invoices with canceled or offered invoices
+        open_affairs_with_canceled_or_offered_invoices: Open invoices with canceled or offered invoices
         unbillable_affairs: Unbillable affairs
       new_affair: New affair
       notes: notes
@@ -126,6 +126,11 @@ en:
         without_taxes: wo/ taxes
       value_with_taxes_is: The value with taxes is
       variant_prefix: Variant
+      archive: Archive
+      archive_howto: Archive howto
+      estimate_howto: Estimate howto
+      unbillable_howto: Unbillable howto
+      sold_date: Sold date
   affairs_condition:
     views:
       affairs: affairs
@@ -348,6 +353,7 @@ en:
     weight: weight
     width: width
     year: year
+    help: Help
   creditor:
     date_fields:
       creation: creation
@@ -378,7 +384,6 @@ en:
       accounting: accounting
       affair_id: ID affaire
       affair_name: nom de l'affair
-      counterpart_account: counterpart account
       creditor_attributes: creditor attributes
       creditor_name: name
       creditors_example_file_desc: creditors example file desc
@@ -536,7 +541,6 @@ en:
       account: account
       actions:
         add_receipt: add receipt
-        preview_pdf_in_new_tab: preview in new tab
       balance_value: balance value
       buyer: buyer
       cancelled: cancelled
@@ -653,7 +657,7 @@ en:
         open_salaries: open salaries
         shortcuts: shortcuts
         timesheet: timesheet
-        your_activity: your activity
+        statistics: Statistics
       tech_support: tech support
       welcome: welcome
     errors:
@@ -682,6 +686,7 @@ en:
       invalid_location: Invalid location "%{location}"
       line: line
       not_existing_job: The job "%{job}" will be created.
+      not_existing_: 'Not existing '
     mail:
       admin_receipts_were_generated: Receipt documents generation
       admin_receipts_were_generated_explanation: You can download the requested file by clicking the following link
@@ -713,7 +718,6 @@ en:
       identifier_explanation: "<h3>Start with an identifier</h3> The identifier should contain at least with one of the three following requirements: <ul><li>an organization name</li><li>a first name/last name pair</li><li>an email address</li></ul>"
       successfully_created_explanation: "<h3><i>%{name}</i> has successfully been created</h3> You can now set tags, affairs, salaries, etc to this contact."
     views:
-      account_settings: account settings
       activities: activities
       address: address
       affairs: affairs
@@ -975,7 +979,6 @@ en:
         check_as_paid: check as paid
         copy_reference: copy reference
         new_reference: new reference
-        preview_in_new_tab: preview in new tab
       activity_rate: activity rate
       annual_earning_total: annual earning total
       annual_salary: annual salary

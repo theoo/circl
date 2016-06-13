@@ -32,7 +32,7 @@
     - #    = I18n.t("affair.views.legend.unbillable_affairs")
     - #
     - #  .bg-info
-    - #    = I18n.t("affair.views.legend.open_invoices_with_canceled_or_offered_invoices")
+    - #    = I18n.t("affair.views.legend.open_affairs_with_canceled_or_offered_invoices")
     - #
     - #  .bg-white
     - #    = I18n.t("affair.views.legend.closed_affairs")

@@ -30,7 +30,7 @@ class Ui
     @timeout_info_alerts(context)
     @load_doc(context)
 
-    $('a[data-toggle=tooltip]').tooltip()
+    $('a[data-toggle=tooltip]').tooltip(html: true)
 
   # TODO Move this in applications.js.coffee
   initialize_ui: =>
@@ -668,8 +668,8 @@ class Ui
     # Toggle button - top right of a panel
     toggler = context.find(".toggle-doc")
     toggler.append($("<i class='icon-question-sign icon-large'>"))
-    toggler.attr(title: I18n.t('common.help'))
-    toggler.tooltip(placement: 'bottom', container: 'body')
+    toggler.attr(title: I18n.t('common.toggle_help'))
+    toggler.tooltip(placement: 'bottom', container: 'body', html: true)
     toggler.on 'click', (e) ->
       obj = $(e.target)
       if obj.data("display") != 'on'
@@ -692,7 +692,7 @@ class Ui
 
     # Inline doc, hidden by default
     doc = context.find(".doc")
-    doc.tooltip(placement: 'bottom', container: 'body')
+    doc.tooltip(placement: 'bottom', container: 'body', html: true)
     doc.addClass("text-info")
     doc.append($("<i class='icon-question-sign'>"))
     doc.hide()

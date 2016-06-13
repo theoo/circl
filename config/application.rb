@@ -52,8 +52,6 @@ module CIRCL
     config.assets.precompile += ['main.css',
       'application.js',
       'i18n.js',
-      'i18n/fr.js',
-      'i18n/en.js',
       'i18n/datatables/fr.js',
       'i18n/datatables/en.js' ]
 
@@ -73,6 +71,9 @@ module CIRCL
 
     # Allow mass assignment (so be carefull in controllers)
     config.active_record.whitelist_attributes = false
+
+    # Export javascript translation on reload
+    # config.middleware.use I18n::JS::Middleware
 
   end
 end

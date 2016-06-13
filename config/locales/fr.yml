@@ -42,6 +42,7 @@ fr:
       parent_id_cannot_be_self: Le parent ne peut pas être l'affaire elle-même.
       unable_to_compute_value_without_taxes_if_extras_have_different_vat_values: Il est impossible de calculer la valeur hors taxe si l'affaire contient des extras aux TVA différentes.
       wrong_date: Mauvaise date
+      can_not_delete_if_has_children: Can not delete if has children
     notices:
       destroy: 'Détruire une affaire supprimera tout son contenu: facture, inscriptions, services, produits et extras ! <br /> Il est impossilbe de détruire une affaire dont des reçus dépendent.'
       document_export_explanation: Veuillez sélectionner ci-dessous les critères de tri pour la génération du document.
@@ -54,7 +55,6 @@ fr:
     views:
       actions:
         edit_affair: modifier l'affaire
-        preview_in_new_tab: prévisualiser dans un nouvel onglet
         show_owner: consulter la page du propriétaire
       affair_number: Affaire n°%{number}
       alias_name: alias
@@ -77,11 +77,12 @@ fr:
       invoices: Factures
       invoices_value: valeur des factures
       legend:
-        closed_affairs: Closed affairs
-        estimates: Estimates
-        open_affairs: Open affairs
-        open_invoices_with_canceled_or_offered_invoices: Open invoices with canceled or offered invoices
-        unbillable_affairs: Unbillable affairs
+        closed_affairs: Affaires bouclées
+        estimates: Devis
+        open_affairs: Affaires ouvertes
+        open_invoices_with_canceled_or_offered_invoices: Affaires ouvertes avec des factures offertes ou annulées
+        unbillable_affairs: Affaire non-facturables
+        open_affairs_with_canceled_or_offered_invoices: Open invoices with canceled or offered invoices
       new_affair: Nouvelle affaire
       notes: notes
       owner: propriétaire
@@ -126,6 +127,11 @@ fr:
         without_taxes: HT
       value_with_taxes_is: La valeur TTC est
       variant_prefix: Variante
+      archive: archive
+      archive_howto: "Sauf sélection explicite dans les listings, une affaire archivée ne sera plus listée."
+      estimate_howto: "Si cette affaire n'a pas encore été commandée, il s'agit alors probablement d'un devis. Lorsque cette coche est décochée pour la première fois, le champs <b>date de vente</b> est automatiquement mis à la date du jour. Tant qu'une <b>date de vente</b> est saisie, l'affaire ne peux pas être cochée comme devis.<br />L'état par défaut de cette coche peut être changé dans les <b>Paramètres de l'application</b>"
+      unbillable_howto: "L'affaire ne sera pas considérée comme <b>ouverte</b>, même si elle n'est pas payée ou partiellement payée. Les factures associées seront automatiquement <b>annulées</b>"
+      sold_date: date de vente
   affairs_condition:
     views:
       affairs: affaires
@@ -197,7 +203,7 @@ fr:
         close: clore
         reopen: réouvrir
       comment: commentaire
-      editor: éditeur
+      editor: "éditeur"
   common:
     a_webapp_developped_by: Une application développée par
     accounting: Comptabilité
@@ -251,7 +257,7 @@ fr:
       error: erreur
       failed_to_destroy: Echec lors de la destruction.
       failed_to_retrieve_data: Impossible de récupérer les données.
-      failed_to_update: échec lors de la mise à jour.
+      failed_to_update: "échec lors de la mise à jour."
       from_should_be_before_to: "'de' devrait être avant 'à'"
       invalid_date: La date n'est pas valide.
       invalid_phone: Le format n'est pas valide, vous devez utiliser un format comme "+11 22 333 44 55" (entre 7 et 18 chiffres).
@@ -269,7 +275,7 @@ fr:
     from: de
     global: Global
     good: bon
-    group_edit: édition groupée
+    group_edit: "édition groupée"
     height: hauteur
     hour: heure
     id: id
@@ -326,7 +332,7 @@ fr:
     this_application_unique_id: L'identifiant unique de cette application est
     this_document_will_be_accessible_for_this_duration: Ce document sera accessible durant %{duration}.
     title: titre
-    to: à
+    to: "à"
     toolbox_export: Exporter
     toolbox_import: Importer
     toolbox_import_bank_file: Importer un fichier bancaire
@@ -335,7 +341,7 @@ fr:
     total: total
     'true': vrai
     unit_value: valeur unit
-    unpaid: à payer
+    unpaid: "à payer"
     update: mettre à jour
     updated_at: mise à jour
     upload: téléverser
@@ -348,12 +354,13 @@ fr:
     weight: poid
     width: largeur
     year: année
+    toggle_help: Afficher/cacher l'aide en ligne
   creditor:
     date_fields:
       creation: création
-      discount_end: échéance de l'escompte
+      discount_end: "échéance de l'escompte"
       invoice_books_recording: saisie compta. du document
-      invoice_end: échéance de la facture
+      invoice_end: "échéance de la facture"
       payment_books_recording: saisie compta. du payement
       payment_date: payment
       reception: réception
@@ -378,7 +385,6 @@ fr:
       accounting: Comptabilité
       affair_id: ID affaire
       affair_name: nom de l'affaire
-      counterpart_account: contrepartie
       creditor_attributes: attributs des créanciers
       creditor_name: fournisseur
       creditors_example_file_desc: Fichiers d'example pour créanciers
@@ -388,14 +394,14 @@ fr:
       dates_field: référence pour l'intervale
       discount: escompte
       discount_account: compte d'escompte
-      discount_ends_on: échéance de l'escompte
+      discount_ends_on: "échéance de l'escompte"
       discount_percentage: escompte %
       export: exporter
       ignore_theses_columns: ignorer ces colonnes
       import_creditors: Importer des créanciers
-      invoice_ends_on: échéance
+      invoice_ends_on: "échéance"
       invoice_in_books_on: facture compta.
-      invoice_received_on: émission
+      invoice_received_on: "émission"
       paid_on: payé
       payment_in_books_on: payement compta.
       proceed_with_import: importer
@@ -497,7 +503,7 @@ fr:
       add_person: ajouter un contact
       custom_action_introduction: Vous avez été redirigé sur la page du moteur de recherche pour effectuer une action spéciale.
       custom_action_warning: Vous pouvez rechercher dans l'annuaire de manière ordinaire, lorsque le résultat de la recherche vous conviendra, cliquez sur 'continuer' pour poursuivre le processus en cours.
-      edit_preset_filters: Édition des filtres du pré-réglage
+      edit_preset_filters: "Édition des filtres du pré-réglage"
       fields:
         available_attributes: Attributs disponibles
         drag_and_drop_me: glisser-déposer ici
@@ -536,7 +542,6 @@ fr:
       account: compte
       actions:
         add_receipt: ajouter un reçu
-        preview_pdf_in_new_tab: aperçu dans un nouvel onglet
       balance_value: balance
       buyer: payeur
       cancelled: annulée
@@ -653,7 +658,7 @@ fr:
         open_salaries: Salaires ouverts
         shortcuts: Raccourcis
         timesheet: Pointeuse
-        your_activity: Votre activité
+        statistics: Statistics
       tech_support: support technique
       welcome: Bienvenue
     errors:
@@ -682,13 +687,14 @@ fr:
       invalid_location: Localité invalide "%{location}"
       line: ligne
       not_existing_job: Le métier "%{job}" sera créé.
+      not_existing_: 'Not existing '
     mail:
       admin_receipts_were_generated: Génération des documents de reçus
       admin_receipts_were_generated_explanation: Vous pouvez télécharger le document généré à l'adresse suivante
       admin_receipts_were_generated_title: Génération des documents terminée
       background_task_error_report: Rapport d'erreur de la tâche d'arrière plan
-      creditor_import_report: MISSING_TRANSLATION creditor import report
-      creditors_import_report_title: MISSING_TRANSLATION creditors import report title
+      creditor_import_report: Rapport d'import des créditeurs
+      creditors_import_report_title: Rapport d'import des créditeurs
       imported_people: Personnes importées
       mailchimp_synchronisation_report: Rapport de synchronisation Mailchimp
       members_were_added_to_subscription: Des membres ont été ajouté à l'inscription [(%{id}) %{title}]
@@ -713,7 +719,6 @@ fr:
       identifier_explanation: "<h3>Commencez par un identifiant</h3> L'identifiant doit être composé au moins de l'un des trois éléments suivants: <ul><li>un nom d'organisation</li><li>une paire prénom-nom</li><li>une adresse email</li></ul>"
       successfully_created_explanation: "<h3><i>%{name}</i> a bien été créé</h3> Vous pouvez désormais attribuer des tags, affaires, salaires, etc. a ce contact."
     views:
-      account_settings: paramètres du compte
       activities: Activités
       address: adresse
       affairs: Affaires
@@ -975,13 +980,12 @@ fr:
         check_as_paid: marquer comme payé
         copy_reference: copier la référence vers un groupe de personnes
         new_reference: Nouvelle référence
-        preview_in_new_tab: aperçu dans un nouvel onglet
       activity_rate: taux d'occupation
       annual_earning_total: revenu annuel total
       annual_salary: Salaire annuel
       brut_account: salaire brut
       children_count: nombre d'enfants
-      civil_status: état civil
+      civil_status: "état civil"
       comments: commentaires
       copy_reference_message: Copie du salaire de référence vers un groupe de personne.
       copy_reference_title: Copie du salaire de référence
@@ -1127,7 +1131,7 @@ fr:
         members_following_theses_attributes: Les membres suivants les attributs suivants
         of_a: d'une inscription
         private_tag_name: nom du tag privé
-        subscription_at_this_date: à la date suivante
+        subscription_at_this_date: "à la date suivante"
         tag_name_missing: nom du tag privé manquant
         tag_tool: outil à tagger
         tag_with: tagger avec

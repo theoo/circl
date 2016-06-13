@@ -13,7 +13,7 @@
     = favicon_link_tag
     = stylesheet_link_tag 'main', "data-turbolinks-track" => true
     = javascript_include_tag "i18n.js", "data-turbolinks-track" => true # part of i18n-js gem
-    = javascript_include_tag "i18n/#{I18n.locale}.js", "data-turbolinks-track" => true
+    = javascript_include_tag "#{I18n.locale}.js", "data-turbolinks-track" => true
     = javascript_include_tag "i18n/datatables/#{I18n.locale}.js", "data-turbolinks-track" => true
     = javascript_include_tag 'application', 'leaflet', "data-turbolinks-track" => true
 
