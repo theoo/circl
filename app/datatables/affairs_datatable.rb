@@ -77,6 +77,7 @@ class AffairsDatatable
         5 => "#{affair.receipts_sum.to_money.to_view} (#{affair.receipts_count})",
         6 => affair.translated_statuses,
         7 => affair.created_at,
+        8 => affair.sold_at.try(:to_date),
         'id' => affair.id,
         'actions' => [ I18n.t('affair.views.actions.edit_affair') ],
         'classes' => classes.join(" "),
@@ -131,7 +132,8 @@ class AffairsDatatable
                 :invoices_sum,
                 :receipts_sum,
                 :status,
-                :created_at ]
+                :created_at,
+                :sold_at ]
     columns[params[:iSortCol_0].to_i]
   end
 

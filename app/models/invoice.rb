@@ -271,7 +271,7 @@ class Invoice < ActiveRecord::Base
       codeline += value_with_taxes.cents.to_s.rjust(10, '0')  # value
       codeline += codeline.to_i.mod10rec.to_s                 # checksum
     else
-      codeline += '042'                                        # type (042: ??) # TODO doc
+      codeline += '          042'                             # type (042: ??) # TODO doc
     end
 
     codeline += '>'                                         # separator

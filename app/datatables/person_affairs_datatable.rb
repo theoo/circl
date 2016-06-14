@@ -77,7 +77,7 @@ class PersonAffairsDatatable
         5 => affair.receipts_value.to_view, # sql shortcut
         6 => affair.translated_statuses,
         7 => affair.created_at,
-        7 => affair.sold_at,
+        8 => affair.sold_at.try(:to_date),
         'id' => affair.id,
         'number_columns' => [3,4,5],
         'classes' => classes.join(" ")
@@ -113,6 +113,7 @@ class PersonAffairsDatatable
                       a.value_currency,
                       a.vat_in_cents,
                       a.vat_currency,
+                      a.sold_at,
                       a.created_at,
                       a.updated_at,
                       a.status,
