@@ -132,18 +132,20 @@ class Settings::ProductsController < ApplicationController
       raise ActiveRecord::Rollback unless @product.save
 
       # append variants
-      params[:variants].each do |v|
-        pv = @product.variants.new(v)
+      if params[:variants] and params[:variants].is_a? Array
+        params[:variants].each do |v|
+          pv = @product.variants.new(v)
 
-        pv.buying_price = Money.new(v[:buying_price].to_f * 100, v[:buying_price_currency])
-        pv.selling_price = Money.new(v[:selling_price].to_f * 100, v[:selling_price_currency])
-        pv.art = Money.new(v[:art].to_f * 100, v[:art_currency])
+          pv.buying_price = Money.new(v[:buying_price].to_f * 100, v[:buying_price_currency])
+          pv.selling_price = Money.new(v[:selling_price].to_f * 100, v[:selling_price_currency])
+          pv.art = Money.new(v[:art].to_f * 100, v[:art_currency])
 
-        unless pv.save
-          pv.errors.messages.each do |k,v|
-            @product.errors.add(("variants[][" + k.to_s + "]").to_sym, v.join(", "))
+          unless pv.save
+            pv.errors.messages.each do |k,v|
+              @product.errors.add(("variants[][" + k.to_s + "]").to_sym, v.join(", "))
+            end
+            raise ActiveRecord::Rollback
           end
-          raise ActiveRecord::Rollback
         end
       end
 

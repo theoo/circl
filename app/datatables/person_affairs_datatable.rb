@@ -77,6 +77,7 @@ class PersonAffairsDatatable
         5 => affair.receipts_value.to_view, # sql shortcut
         6 => affair.translated_statuses,
         7 => affair.created_at,
+        7 => affair.sold_at,
         'id' => affair.id,
         'number_columns' => [3,4,5],
         'classes' => classes.join(" ")
@@ -149,7 +150,7 @@ class PersonAffairsDatatable
   end
 
   def sort_column
-    columns = %w(id parent_id title value_in_cents invoices_sum receipts_sum status created_at)
+    columns = %w(id parent_id title value_in_cents invoices_sum receipts_sum status created_at sold_at)
     columns[params[:iSortCol_0].to_i]
   end
 

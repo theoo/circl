@@ -354,6 +354,8 @@ en:
     width: width
     year: year
     help: Help
+    toggle_help: Toggle help
+    sold_at: Sold at
   creditor:
     date_fields:
       creation: creation
@@ -798,7 +800,6 @@ en:
       the_following_prices_will_be_updated: the following prices will be updated
       this_product_will_be_removed_in_all_related_affairs: This product will be removed from all related affairs.
       you_are_editing_many_product_at_a_time: Warning! You are about to edit %{products_count} products in a row. <br /> If you edit a parameter and whant value to be updated, check the value checkbox and leave empty its value.
-    units: Units
     views:
       affair: affair
       after_sale: after sale
@@ -843,6 +844,25 @@ en:
       variants: variants
       warranty_begin: warranty begin
       warranty_end: warranty end
+    units:
+      cm:
+        symbol: cm
+        title: centimeter
+      g:
+        symbol: g
+        title: gram
+      kg:
+        symbol: kg
+        title: kilogram
+      m:
+        symbol: m
+        title: meter
+      mm:
+        symbol: mm
+        title: millimeter
+      pc:
+        symbol: pc
+        title: unit
   product_program:
     errors:
       program_failed_to_imported: Program failed to imported

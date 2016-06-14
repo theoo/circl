@@ -127,6 +127,18 @@ class Product < ActiveRecord::Base
     ProductProgram.actives.where(program_group: program_groups)
   end
 
+  # i18n-tasks-use I18n.t("product.units.cm.symbol")
+  # i18n-tasks-use I18n.t("product.units.cm.title")
+  # i18n-tasks-use I18n.t("product.units.g.symbol")
+  # i18n-tasks-use I18n.t("product.units.g.title")
+  # i18n-tasks-use I18n.t("product.units.kg.symbol")
+  # i18n-tasks-use I18n.t("product.units.kg.title")
+  # i18n-tasks-use I18n.t("product.units.m.symbol")
+  # i18n-tasks-use I18n.t("product.units.m.title")
+  # i18n-tasks-use I18n.t("product.units.mm.symbol")
+  # i18n-tasks-use I18n.t("product.units.mm.title")
+  # i18n-tasks-use I18n.t("product.units.pc.symbol")
+  # i18n-tasks-use I18n.t("product.units.pc.title")
   def unit_symbol_translated
     I18n.t!("product.units." + self.unit_symbol + ".symbol")
   rescue

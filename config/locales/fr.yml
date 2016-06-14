@@ -80,7 +80,6 @@ fr:
         closed_affairs: Affaires bouclées
         estimates: Devis
         open_affairs: Affaires ouvertes
-        open_invoices_with_canceled_or_offered_invoices: Affaires ouvertes avec des factures offertes ou annulées
         unbillable_affairs: Affaire non-facturables
         open_affairs_with_canceled_or_offered_invoices: Open invoices with canceled or offered invoices
       new_affair: Nouvelle affaire
@@ -129,8 +128,8 @@ fr:
       variant_prefix: Variante
       archive: archive
       archive_howto: "(WORK IN PROGRESS) Sauf sélection explicite dans les listings, une affaire archivée ne sera plus listée."
-      estimate_howto: "Si cette affaire n'a pas encore été commandée, il s'agit alors probablement d'un devis. Lorsque cette coche est décochée pour la première fois, le champs <b>date de vente</b> est automatiquement mis à la date du jour. Tant qu'une <b>date de vente</b> est saisie, l'affaire ne peux pas être cochée comme devis.<br />L'état par défaut de cette coche peut être changé dans les <b>Paramètres de l'application</b>"
-      unbillable_howto: "L'affaire ne sera pas considérée comme <b>ouverte</b>, même si elle n'est pas payée ou partiellement payée. Les factures associées seront automatiquement <b>annulées</b>"
+      estimate_howto: Si cette affaire n'a pas encore été commandée, il s'agit alors probablement d'un devis. Lorsque cette coche est décochée pour la première fois, le champs <b>date de vente</b> est automatiquement mis à la date du jour. Tant qu'une <b>date de vente</b> est saisie, l'affaire ne peux pas être cochée comme devis.<br />L'état par défaut de cette coche peut être changé dans les <b>Paramètres de l'application</b>
+      unbillable_howto: L'affaire ne sera pas considérée comme <b>ouverte</b>, même si elle n'est pas payée ou partiellement payée. Les factures associées seront automatiquement <b>annulées</b>
       sold_date: date de vente
   affairs_condition:
     views:
@@ -355,6 +354,8 @@ fr:
     width: largeur
     year: année
     toggle_help: Afficher/cacher l'aide en ligne
+    help: Help
+    sold_at: Sold at
   creditor:
     date_fields:
       creation: création
@@ -799,7 +800,6 @@ fr:
       the_following_prices_will_be_updated: les prix suivants seront mis à jour
       this_product_will_be_removed_in_all_related_affairs: Ce produit sera supprimé de toutes les affaires relatives.
       you_are_editing_many_product_at_a_time: Attention! Vous êtes sur le point de modifier une série de %{products_count} produits d'un coup. <br /> Si vous modifiez un champs qui affecte généralement la valeur et souhaitez que cette dernière soit mise à jour, cochez la case de la valeur en laissant le champs vide.
-    units: unités
     views:
       affair: affaire
       after_sale: après-vente
@@ -844,6 +844,25 @@ fr:
       variants: variantes
       warranty_begin: début garantie
       warranty_end: fin garantie
+    units:
+      cm:
+        symbol: cm
+        title: centimètre
+      g:
+        symbol: g
+        title: gramme
+      kg:
+        symbol: kg
+        title: kilogramme
+      m:
+        symbol: m
+        title: mètre
+      mm:
+        symbol: mm
+        title: millimètre
+      pc:
+        symbol: pc
+        title: pièce
   product_program:
     errors:
       program_failed_to_imported: Impossible d'importer le programme de produit

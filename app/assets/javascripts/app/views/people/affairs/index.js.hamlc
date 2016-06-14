@@ -8,6 +8,7 @@
       %th.number= I18n.t('affair.views.invoices_value')
       %th.number= I18n.t('affair.views.receipts_value')
       %th= I18n.t('affair.views.status')
+      %th.desc= I18n.t('common.sold_at')
       %th.desc= I18n.t('common.created_at')
   %tbody
     %tr

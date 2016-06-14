@@ -81,9 +81,9 @@ search:
 #   api_key: "AbC-dEf5"
 
 ## Do not consider these keys missing:
-  # ignore_missing:
-    # - '{devise,activerecord,date,datetime,time,number,support,helpers}.*'
-    # - 'errors.messages.{accepted,blank,invalid,too_short,too_long}'
+  # - 'errors.messages.{accepted,blank,invalid,too_short,too_long}'
+ignore_missing:
+  - 'product.units'
 
 ## Consider these keys used:
 ignore_unused:
