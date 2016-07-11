@@ -115,8 +115,9 @@ class ProductOrdersDatatable
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       product_items = product_items.where("affairs.title ~* ?
                                OR affairs_products_categories.title ~* ?
+                               OR products.key ~* ?
                                OR products.title ~* ?
-                               OR product_programs.title ~* ?", *([param] * 4))
+                               OR product_programs.title ~* ?", *([param] * 5))
     end
     product_items = product_items.page(page).per_page(per_page)
     product_items

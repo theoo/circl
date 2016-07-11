@@ -187,7 +187,7 @@ class Ui
       fnStateLoad: @datatable_local_storage_load_callback
       bJQueryUI: false # We'll use bootstrap only, not the ui-state-default classes mess
       sPaginationType: 'bootstrap'
-      fnDrawCallback: (oSettings) -> @trigger('datatable_redraw'), # Catch this in Spine!
+      fnDrawCallback: (oSettings) -> @trigger('datatable_redraw') # Catch this in Spine!
       sDom: "<'row'<'col-xs-3 col-lg-5 form-inline'lr><'col-xs-9 col-lg-7'f>><'datatable_wrapper't><'panel-body'<'row'<'col-md-12 pagination-footer'pi>>"
 
     action = table.attr('action')
