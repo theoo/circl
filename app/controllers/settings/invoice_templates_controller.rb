@@ -35,7 +35,7 @@ class Settings::InvoiceTemplatesController < ApplicationController
       format.json { render json: @invoice_template }
       format.jpg do
         unless @invoice_template.snapshot.path and File.exists? @invoice_template.snapshot.path
-          @invoice_template.take_snapshot
+          Templates::GenericThumbnails.perform(@invoice_template.id)
           @invoice_template.reload
         end
         redirect_to @invoice_template.snapshot.url
@@ -46,7 +46,7 @@ class Settings::InvoiceTemplatesController < ApplicationController
   def create
     respond_to do |format|
       if @invoice_template.save
-        @invoice_template.take_snapshot
+        Templates::GenericThumbnails.perform(@invoice_template.id)
         @invoice_template.reload
         format.json { render json: @invoice_template }
       else
@@ -65,7 +65,7 @@ class Settings::InvoiceTemplatesController < ApplicationController
   def update
     respond_to do |format|
       if @invoice_template.update_attributes(params[:invoice_template])
-        @invoice_template.take_snapshot
+        Templates::GenericThumbnails.perform(@invoice_template.id)
         @invoice_template.reload
         format.json { render json: @invoice_template }
         format.html do
@@ -100,7 +100,7 @@ class Settings::InvoiceTemplatesController < ApplicationController
 
     respond_to do |format|
       if @invoice_template.save
-        @invoice_template.take_snapshot
+        Templates::GenericThumbnails.perform(@invoice_template.id)
         format.json { render json: @invoice_template }
       else
         format.json { render json: {errors: @invoice_template.errors}, status: :unprocessable_entity }

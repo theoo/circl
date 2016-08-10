@@ -110,4 +110,3 @@ redis:
     development: localhost:6379
     test: localhost:6379
     production: localhost:6379
-  

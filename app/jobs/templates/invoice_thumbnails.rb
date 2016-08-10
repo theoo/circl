@@ -15,30 +15,20 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
-# == Schema Information
-#
-# Table name: background_tasks
-#
-# *id*::         <tt>integer, not null, primary key</tt>
-# *type*::       <tt>string(255)</tt>
-# *options*::    <tt>text</tt>
-# *created_at*:: <tt>datetime</tt>
-# *updated_at*:: <tt>datetime</tt>
-#--
-# == Schema Information End
-#++
 
-# Options are: :people_ids, :person
-class BackgroundTasks::UpdateIndexForPeople < BackgroundTask
-  def self.generate_title(options)
-    I18n.t("background_task.tasks.update_index_for_people",
-      people_count: options[:people_ids].size)
- end
+# Options are: :invoice_template_id, :person
+class Templates::InvoiceThumbnails
 
-  def process!
-    people = Person.where(id: options[:people_ids])
-    people.each do |person|
-      person.update_index
+  @queue = :documents
+
+  def self.perform(ids = nil)
+    ids ||= InvoiceTemplate.all.map(&:id)
+
+    InvoiceTemplate.find([ids].flatten).each do |it|
+      AttachmentGenerator.take_snapshot(it)
     end
+
+    true
   end
+
 end

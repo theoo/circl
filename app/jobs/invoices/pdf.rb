@@ -15,32 +15,16 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
-# == Schema Information
-#
-# Table name: background_tasks
-#
-# *id*::         <tt>integer, not null, primary key</tt>
-# *type*::       <tt>string(255)</tt>
-# *options*::    <tt>text</tt>
-# *created_at*:: <tt>datetime</tt>
-# *updated_at*:: <tt>datetime</tt>
-#--
-# == Schema Information End
-#++
 
 # Options are: :invoice_id, :person
-class BackgroundTasks::GenerateInvoicePdf < BackgroundTask
+class Invoices::Pdf
+
+  @queue = :documents
 
   include Rails.application.routes.url_helpers
 
-  def self.generate_title(options)
-    I18n.t("background_task.tasks.generate_invoice_pdf",
-      invoice_id: options[:invoice_id],
-      invoice_title: Invoice.find(options[:invoice_id]).title)
-  end
-
-  def process!
-    @invoice = Invoice.find(options[:invoice_id])
+  def self.perform(invoice_id)
+    @invoice = Invoice.find(invoice_id)
 
     # GENERATE INVOICE FROM ODT TEMPLATE
     file = Tempfile.new(['invoice_body', '.pdf'], encoding: 'ascii-8bit')

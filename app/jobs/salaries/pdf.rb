@@ -15,29 +15,21 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
-# == Schema Information
-#
-# Table name: background_tasks
-#
-# *id*::         <tt>integer, not null, primary key</tt>
-# *type*::       <tt>string(255)</tt>
-# *options*::    <tt>text</tt>
-# *created_at*:: <tt>datetime</tt>
-# *updated_at*:: <tt>datetime</tt>
-#--
-# == Schema Information End
-#++
 
 # Options are: salary_id, :person
-class BackgroundTasks::GenerateGenericTemplateJpg < BackgroundTask
-  def self.generate_title(options)
-    I18n.t("background_task.tasks.generate_template_jpg",
-      generic_template_id: options[:salary_id],
-      generic_template_title: GenericTemplate.find(options[:generic_template_id]).title)
-  end
+class Salaries::Pdf
 
-  def process!
-    generic_template = GenericTemplate.find(options[:generic_template_id])
-    generic_template.take_snapshot
+  @queue = :documents
+
+  def self.perform(salary_id)
+    @salary = Salaries::Salary.find(salary_id)
+    generator = AttachmentGenerator.new(@salary)
+    generator.pdf do |o, pdf|
+      o.update_attributes pdf: pdf
+
+      # this won't touch updated_at column and thereby set PDF as uptodate
+      o.update_column(:pdf_updated_at, Time.now)
+    end
+
   end
 end

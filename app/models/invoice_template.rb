@@ -106,22 +106,6 @@ class InvoiceTemplate < ActiveRecord::Base
     snapshot.url(:thumb) if snapshot_file_name
   end
 
-  def take_snapshot
-    # TODO move to AttachmentGenerator
-    # Convert to PDF in the same dir
-    if odt.try(:path)
-      system("lowriter --headless --convert-to pdf \"#{odt.path}\" --outdir \"#{odt.path.gsub(/([^\/]+.odt)$/, "")}\"")
-
-      # Open new file
-      pdf_path = odt.path.gsub(/\.odt$/,".pdf")
-      pdf_file = File.open(pdf_path, "r")
-
-      # will be converted in png when calling :thumb
-      self.snapshot = pdf_file
-      self.save
-    end
-  end
-
   def as_json(options = nil)
     h = super(options)
 

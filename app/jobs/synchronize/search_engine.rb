@@ -17,9 +17,9 @@
 =end
 
 # Options are: :people_ids, :person
-class UpdateIndexForPeople
- 
-  @queue = :synchronizing
+class Synchronize::SearchEngine
+
+  @queue = :sync
 
   def self.perform(people_ids)
     people = Person.where(id: people_ids)
@@ -27,4 +27,5 @@ class UpdateIndexForPeople
       person.update_index
     end
   end
+
 end

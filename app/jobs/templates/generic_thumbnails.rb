@@ -16,13 +16,19 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Options are: :invoice_template_id, :person
-class GenerateInvoiceTemplateJpg
+# Options are: salary_id, :person
+class Templates::GenericThumbnails
 
   @queue = :documents
 
-  def self.perform(invoice_template_id)
-    invoice_template = InvoiceTemplate.find(invoice_template_id)
-    invoice_template.take_snapshot
+  def self.perform(ids = nil)
+    ids ||= GenericTemplate.all.map(&:id)
+
+    GenericTemplate.find([ids].flatten).each do |gt|
+      AttachmentGenerator.take_snapshot(gt)
+    end
+
+    true
   end
+
 end

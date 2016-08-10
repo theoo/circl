@@ -21,6 +21,7 @@
 
 # Options are: :subscription_id, :person, :query
 class Receipts::GenerateDocumentAndEmail
+
   @queue = :documents
 
   # options => :people_ids, :person, :from, :to, :generic_template_id, :unit_value, :global_value, :unit_overpaid, :global_overpaid

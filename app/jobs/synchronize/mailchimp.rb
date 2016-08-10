@@ -16,9 +16,9 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Synchronizes::Mailchimp
+class Synchronize::Mailchimp
 
-  @queue = :synchonizing 
+  @queue = :sync
 
   def self.perform(person_id, list_id, directory_query)
 

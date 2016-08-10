@@ -16,20 +16,12 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Options are: salary_id, :person
-class Salaries::GenerateSalaryPdf
+class Cleanup::Attachments
 
-  @queue = :documents
+  @queue = :cleanup
 
-  def self.perform(salary_id)
-    @salary = Salaries::Salary.find(salary_id)
-    generator = AttachmentGenerator.new(@salary)
-    generator.pdf do |o, pdf|
-      o.update_attributes pdf: pdf
-
-      # this won't touch updated_at column and thereby set PDF as uptodate
-      o.update_column(:pdf_updated_at, Time.now)
-    end
-
+  def self.perform
+    # Find old attachment that can be regenerated (like invoices) and remove them to gain some space.
   end
+
 end
