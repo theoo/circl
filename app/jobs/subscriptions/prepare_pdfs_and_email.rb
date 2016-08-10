@@ -15,18 +15,6 @@
   You should have received a copy of the GNU Affero General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
-# == Schema Information
-#
-# Table name: background_tasks
-#
-# *id*::         <tt>integer, not null, primary key</tt>
-# *type*::       <tt>string(255)</tt>
-# *options*::    <tt>text</tt>
-# *created_at*:: <tt>datetime</tt>
-# *updated_at*:: <tt>datetime</tt>
-#--
-# == Schema Information End
-#++
 
 # Options are: :subscription_id, :person, :query, :current_locale
 class Subscriptions::PreparePdfsAndEmail

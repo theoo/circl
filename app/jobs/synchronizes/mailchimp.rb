@@ -16,11 +16,6 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Options are:
-# :person_id,
-# :list_id
-# :directory_query,
-
 class Synchronizes::Mailchimp
 
   @queue = :synchonizing 
