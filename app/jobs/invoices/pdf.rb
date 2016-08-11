@@ -16,15 +16,19 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Options are: :invoice_id, :person
 class Invoices::Pdf
 
   @queue = :documents
 
   include Rails.application.routes.url_helpers
 
-  def self.perform(invoice_id)
-    @invoice = Invoice.find(invoice_id)
+  def self.perform(params = {})
+
+    # Validation
+    raise ArgumentError, "Expecting a Hash with at least :invoice_id key." unless params.is_a? Hash
+    raise ArgumentError, "':invoice_id' parameter required." unless params[:invoice_id]
+
+    @invoice = Invoice.find(params[:invoice_id])
 
     # GENERATE INVOICE FROM ODT TEMPLATE
     file = Tempfile.new(['invoice_body', '.pdf'], encoding: 'ascii-8bit')
@@ -67,8 +71,7 @@ class Invoices::Pdf
     end
 
     @invoice.pdf = file
-    @invoice.save
-    if @invoice.errors.size > 0
+    unless @invoice.save
       raise ArgumentError, "Failed to save invoice #{@invoice.inspect}, #{@invoice.errors.inspect}"
     end
 
@@ -76,5 +79,9 @@ class Invoices::Pdf
     @invoice.update_column(:pdf_updated_at, Time.now)
 
     file.unlink
+
+    true
+
   end
+
 end

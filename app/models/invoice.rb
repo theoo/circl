@@ -382,12 +382,12 @@ class Invoice < ActiveRecord::Base
 
   # Append a background task in the queue to update the PDF.
   def update_pdf
-    Resque.enqueue(GenerateInvoicePdf, invoice_id: self.id)
+    Resque.enqueue(Invoices::Pdf, invoice_id: self.id)
   end
 
   # Run immediately a background task to update the PDF.
   def update_pdf!
-    GenerateInvoicePdf.perform(invoice_id: self.id)
+    Invoices::Pdf.perform(invoice_id: self.id)
   end
 
   # Placeholder proxy
@@ -413,7 +413,7 @@ class Invoice < ActiveRecord::Base
   def check_presence_of_receipt
     unless receipts.empty?
       errors.add(:base,
-                 I18n.t('invoice.errors.cant_destroy_if_existing_receipt'))
+        I18n.t('invoice.errors.cant_destroy_if_existing_receipt'))
       false
     end
   end

@@ -33,7 +33,7 @@ class Subscriptions::PreparePdfsAndEmail
           logger.info "PDF for invoice #{i.id} is up to date, skipping..."
         else
           logger.info "PDF for invoice #{i.id} is not up to date, generating..."
-          GenerateInvoicePdf.perform(invoice_id: i.id)
+          Invoices::Pdf.perform(invoice_id: i.id)
         end
       end
     end

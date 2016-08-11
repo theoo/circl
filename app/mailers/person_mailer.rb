@@ -107,9 +107,10 @@ class PersonMailer < ActionMailer::Base
           id: @subscription.id))
   end
 
-  def send_receipts_document_link(person, cached_doc)
+  def send_receipts_document_link(person_id, cached_doc)
+    person = Person.find(person_id)
     @document = cached_doc
-    I18n.locale = person.main_communication_language.try(:symbol)
+    I18n.locale = person.main_communication_language.try(:symbol) if person.main_communication_language
     mail(to: person.email,
       subject: I18n.t('person.mail.admin_receipts_were_generated'))
   end

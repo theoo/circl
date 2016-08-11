@@ -22,18 +22,23 @@ class CachedDocument < ActiveRecord::Base
 
   validates_attachment_content_type :document, :content_type => /\A.*\Z/ # Disable validation
 
+  # TODO Private ApplicationSetting for duration value
+  scope :outdated_documents, -> { where("created_at < ?", 1.day.ago) }
+
   before_save do
     self.validity_time = 1.day.seconds
   end
 
-  def self.outdated_documents
-    where("created_at::time < (now()::time - ('123'||' seconds')::interval)")
+  # Class methods
+  class << self
+
+    def erase_outdated_documents
+      outdated_documents.destroy_all
+    end
+
   end
 
-  def self.erase_outdated_documents
-    self.outdated_documents.destroy_all
-  end
-
+  # Instance methods
   def public_url
     Rails.configuration.settings["directory_url"] + document.url
   end

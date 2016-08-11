@@ -20,8 +20,13 @@ class Cleanup::Attachments
 
   @queue = :cleanup
 
-  def self.perform
-    # Find old attachment that can be regenerated (like invoices) and remove them to gain some space.
+  class << self
+
+    def self.perform
+      # Find old attachment that can be regenerated (like invoices) and remove them to gain some space.
+      CachedDocument.erase_outdated_documents
+    end
+
   end
 
 end
