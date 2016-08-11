@@ -2,13 +2,14 @@ require 'net/ssh'
 require 'net/sftp'
 
 def validate_params(params)
-  %i(host path loner).each do |i|
+  %i(host loner).each do |i|
     raise ArgumentError, "'#{i}' argument missing" unless params[i]
   end
 
   defaults = {
     user: 'root',
     port: 22,
+    path: '/var/rails/prod',
     backup_dir: '/backups',
     pg_user: 'circl',
     pg_host: 'localhost'
@@ -28,7 +29,7 @@ def validate_params(params)
 
 end
 
-ARGS = [:host, :path, :loner, :user, :port]
+ARGS = [:host, :loner, :port, :user, :path, :backup_dir, :pg_user, :pg_host]
 
 namespace :prod do
 
@@ -53,11 +54,15 @@ namespace :prod do
 
     puts "Importing a copy of '#{args[:loner]}' database..."
     db_name = Rails.configuration.database_configuration["development"]["database"]
-    exec("gunzip -c #{[Rails.root, "snapshot-#{args[:loner]}.sql.gz"].join("/")} | psql #{db_name}" )
 
-    # TODO import elasticsearch index too
+    # Without checking anyth!
+    # TODO: backup with pg_dump and restore with pg_restore --no-acl --no-owner
+    `gunzip -c #{[Rails.root, "snapshot-#{args[:loner]}.sql.gz"].join("/")} | psql #{db_name}`
+
+    # # TODO import elasticsearch index too
 
     conn.close
+    puts "Loner imported."
 
   end
 
@@ -100,7 +105,8 @@ namespace :prod do
     include ColorizedOutput
 
     puts red("THIS IS A DESTRUCTIVE ACTION, LOCAL DEVELOPMENT DATABASE WILL BE ERASED!")
-    puts green("Type OK if you want to continue.")
+    puts "Type OK if you want to continue."
+    print green("Do you dare?: ")
     answer = $stdin.gets.chomp
 
     if answer == 'OK'
