@@ -16,14 +16,19 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Options are: salary_id, :person
 class Salaries::Pdf
 
   @queue = :documents
 
-  def self.perform(salary_id)
-    @salary = Salaries::Salary.find(salary_id)
+  include ResqueHelper
+
+  def self.perform(params = {})
+
+    validates(params, [:salary_id])
+
+    @salary = Salaries::Salary.find(@salary_id)
     generator = AttachmentGenerator.new(@salary)
+
     generator.pdf do |o, pdf|
       o.update_attributes pdf: pdf
 
@@ -32,4 +37,5 @@ class Salaries::Pdf
     end
 
   end
+
 end

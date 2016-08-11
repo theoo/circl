@@ -75,8 +75,9 @@ class PersonMailer < ActionMailer::Base
           id: @subscription.id))
   end
 
-  def send_members_added_to_subscription(person, subscription_id, new_people_ids, existing_people_ids)
-    I18n.locale = person.main_communication_language.try(:symbol)
+  def send_members_added_to_subscription(user_id, subscription_id, new_people_ids, existing_people_ids)
+    person = Person.find(user_id)
+    I18n.locale = person.main_communication_language.try(:symbol) if person.main_communication_language
     @new_people = new_people_ids.map{ |id| Person.find(id) }
     @existing_people = existing_people_ids.map{ |id| Person.find(id) }
     @subscription = Subscription.find(subscription_id)

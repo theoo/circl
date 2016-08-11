@@ -20,15 +20,14 @@ class Invoices::Pdf
 
   @queue = :documents
 
+  include ResqueHelper
   include Rails.application.routes.url_helpers
 
   def self.perform(params = {})
 
-    # Validation
-    raise ArgumentError, "Expecting a Hash with at least :invoice_id key." unless params.is_a? Hash
-    raise ArgumentError, "':invoice_id' parameter required." unless params[:invoice_id]
+    validates(params, [:invoice_id])
 
-    @invoice = Invoice.find(params[:invoice_id])
+    @invoice = Invoice.find(@invoice_id)
 
     # GENERATE INVOICE FROM ODT TEMPLATE
     file = Tempfile.new(['invoice_body', '.pdf'], encoding: 'ascii-8bit')

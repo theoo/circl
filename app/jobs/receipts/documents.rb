@@ -20,19 +20,15 @@ class Receipts::Documents
 
   @queue = :documents
 
+  include ResqueHelper
+
   class << self
 
     def perform(params = {})
-      params.symbolize_keys!
 
-      # Validation
       required = %i(query user_id from to format generic_template_id subscriptions_filter unit_value global_value unit_overpaid)
       required += %i(global_overpaid)
-      raise ArgumentError, "Expecting a Hash with at least #{required.inspect} keys." unless params.is_a? Hash
-      required.each do |r|
-        raise ArgumentError, "#{r.inspect} parameter required." unless params.include?(r)
-        instance_variable_set("@#{r}", params[r]) unless params[r].blank?
-      end
+      validates(params, required)
 
       people_ids = ElasticSearch.search(
         @query[:search_string],
@@ -122,10 +118,10 @@ class Receipts::Documents
       # send an email to the file
       PersonMailer.send_receipts_document_link(@user_id, cd).deliver
 
-    rescue Exception => e
-      msg = "An error occured while running #{self.class}:"
-      Rails.logger.warn [msg, e.to_s, e.backtrace].flatten.join("\n")
-      raise e
+    # rescue Exception => e
+    #   msg = "An error occured while running #{self.class}:"
+    #   Rails.logger.warn [msg, e.to_s, e.backtrace].flatten.join("\n")
+    #   raise e
     end
 
     private

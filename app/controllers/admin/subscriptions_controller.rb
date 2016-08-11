@@ -69,15 +69,18 @@ class Admin::SubscriptionsController < ApplicationController
           redirect_to admin_path(anchor: 'affairs')
         }
       else
-        people = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order])
-        Resque.enqueue(Subscriptions::AddPeopleAndEmail, subscription_id: @subscription.id,
-                                                                  people_ids: people.map{ |p| p.id.to_i },
-                                                                  person: current_person, parent_subscription_id: nil, status: nil)
+        Resque.enqueue(Subscriptions::AddPeopleAndEmail,
+          query: query,
+          subscription_id: @subscription.id,
+          user_id: current_person.id,
+          parent_subscription_id: nil,
+          status: nil)
+
         flash[:notice] = I18n.t('admin.notices.add_members_email_will_be_sent', email: current_person.email)
         format.json { render json: {} }
         format.html do
           # TODO improve report
-          flash[:notice] = I18n.t("subscription.notices.members_added", members_count: people.count)
+          flash[:notice] = I18n.t("subscription.notices.members_added")
           redirect_to admin_path(anchor: 'affairs')
         end
       end
@@ -218,11 +221,17 @@ class Admin::SubscriptionsController < ApplicationController
           people_ids = Subscription.find(params[:parent_id]).get_people_from_affairs_status(:paid).map(&:id)
         end
 
-        Subscriptions::AddPeopleAndEmail.perform(subscription_id: @subscription.id,
-          people_ids: people_ids,
-          person: current_person,
-          parent_subscription_id: params[:parent_id],
-          status: params[:status])
+        unless people_ids.empty?
+          search_string = "id:(#{people_ids.join(' ')})"
+
+          Resque.enqueue(Subscriptions::AddPeopleAndEmail,
+            subscription_id: @subscription.id,
+            query: { search_string: search_string },
+            user_id: current_person.id,
+            parent_subscription_id: params[:parent_id],
+            status: params[:status])
+        end
+
       end
       succeed = true
     end
@@ -420,7 +429,7 @@ class Admin::SubscriptionsController < ApplicationController
       if @errors.size > 0
         format.json { render json: @errors , status: :unprocessable_entity }
       else
-        Resque.enqueue(Subscriptions::MergeSubscriptions, 
+        Resque.enqueue(Subscriptions::MergeSubscriptions,
           source_subscription_id: params[:id],
           destination_subscription_id: params[:transfer_to_subscription_id],
           person: current_person)
