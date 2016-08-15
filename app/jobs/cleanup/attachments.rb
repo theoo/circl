@@ -19,14 +19,15 @@
 class Cleanup::Attachments
 
   @queue = :cleanup
+  include ResqueHelper
 
-  class << self
+  def perform(params = nil)
+    params || options
+    # i18n-tasks-use I18n.t("admin.background_tasks.cleanup.attachments.title")
+    set_status(translation_options: ["admin.background_tasks.cleanup.attachments.title"])
 
-    def self.perform
-      # Find old attachment that can be regenerated (like invoices) and remove them to gain some space.
-      CachedDocument.erase_outdated_documents
-    end
-
+    # Find old attachment that can be regenerated (like invoices) and remove them to gain some space.
+    CachedDocument.erase_outdated_documents
   end
 
 end

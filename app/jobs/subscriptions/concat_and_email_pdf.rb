@@ -25,7 +25,8 @@ class Subscriptions::ConcatAndEmailPdf
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    set_status(title: I18n.t("subscriptions.background_tasks.concat_and_email_pdf.title"))
+    # i18n-tasks-use I18n.t("subscriptions.background_tasks.concat_and_email_pdf.title")
+    set_status(translation_options: ["subscriptions.background_tasks.concat_and_email_pdf.title"])
 
     required = %i(subscription_id query invoice_ids user_id current_locale)
     validates(params, required)
@@ -81,7 +82,7 @@ class Subscriptions::ConcatAndEmailPdf
 
     PersonMailer.send_subscription_pdf_link(@user_id, @subscription_id).deliver
 
-    completed(message: I18n.t("subscriptions.background_tasks.concat_and_email_pdf.an_email_have_been_sent"))
+    completed(message: ["subscriptions.background_tasks.concat_and_email_pdf.an_email_have_been_sent"])
 
   end
 end

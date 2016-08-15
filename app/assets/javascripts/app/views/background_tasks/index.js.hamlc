@@ -7,15 +7,46 @@
       %th.ignore-sort
 
   %tbody
-    - for background_task in App.BackgroundTask.all()
-      %tr{:data-id => background_task.id}
-        %td= background_task.created_at
+    - for task in App.BackgroundTask.all()
+      %tr{:data-id => task.uuid}
+        %td= task.created_at
         %td
-          %b= background_task.person_name
-          = background_task.title
-        %td= I18n.t("background_task.views.statuses." + background_task.status)
+          = task.title
+          - if task.status == 'queued'
+            .progress
+              .progress-bar.progress-bar-info{'aria-valuenow': 100,
+                'aria-valuemin': 0,
+                'aria-valuemax': 100,
+                style: "width: 100%"}
+                = I18n.t("common.waiting")
+
+          - else if task.status == 'completed'
+            .progress
+              .progress-bar.progress-bar-success{'aria-valuenow': 100,
+                'aria-valuemin': 0,
+                'aria-valuemax': 100,
+                style: "width: 100%"}
+                = I18n.t("common.waiting")
+
+          - else if task.status == 'working'
+            .progress
+              .progress-bar{'aria-valuenow': task.percentage,
+                'aria-valuemin': 0,
+                'aria-valuemax': 100,
+                style: "width: #{task.percentage}%"}
+                = task.num + "/" + task.total
+
+          - else if task.status == 'failed'
+            .progress
+              .progress-bar.progress-bar-danger{'aria-valuenow': 100,
+                'aria-valuemin': 0,
+                'aria-valuemax': 100,
+                style: "width: 100%"}
+                = I18n.t("common.contact_admin")
+
+        %td= task.status
         %td.ignore-click
           %button{type: 'button',
-                  class: 'btn btn-danger btn-xs',
-                  name: 'background-task-destroy'}
+            class: 'btn btn-danger btn-xs',
+            name: 'background-task-destroy'}
             .icon-remove

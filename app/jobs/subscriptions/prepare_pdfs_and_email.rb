@@ -25,7 +25,8 @@ class Subscriptions::PreparePdfsAndEmail
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    set_status(title: I18n.t("subscriptions.background_tasks.prepare_pdf_and_email.title"))
+    # i18n-tasks-use I18n.t("subscriptions.background_tasks.prepare_pdf_and_email.title")
+    set_status(translation_options: ["subscriptions.background_tasks.prepare_pdf_and_email.title"])
 
     required = %i(subscription_id query user_id status)
     validates(params, required)
@@ -55,7 +56,7 @@ class Subscriptions::PreparePdfsAndEmail
       end
     end
 
-    completed(message: I18n.t("subscriptions.background_tasks.prepare_pdf_and_email.invoices_generation_succeed"))
+    completed(message: ["subscriptions.background_tasks.prepare_pdf_and_email.invoices_generation_succeed"])
 
     Subscriptions::ConcatAndEmailPdf.perform(
       subscription_id: @subscription_id,

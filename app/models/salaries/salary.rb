@@ -257,7 +257,7 @@ class Salaries::Salary < ActiveRecord::Base
   end
 
   def update_pdf
-    BackgroundTasks::GenerateSalaryPdf.schedule(invoice_id: self.id)
+    Salaries::Pdf.create invoice_id: self.id
   end
 
   def has_reference?

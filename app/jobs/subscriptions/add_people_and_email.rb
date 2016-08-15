@@ -25,7 +25,8 @@ class Subscriptions::AddPeopleAndEmail
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    set_status(title: I18n.t("subscriptions.background_tasks.add_people_and_email.title"))
+    # i18n-tasks-use I18n.t("subscriptions.background_tasks.add_people_and_email.title")
+    set_status(translation_options: ["subscriptions.background_tasks.add_people_and_email.title"])
 
     required = %i(query subscription_id user_id parent_subscription_id status)
     validates(params, required)
@@ -47,7 +48,7 @@ class Subscriptions::AddPeopleAndEmail
 
     total = people_ids.size
     people_ids.each_with_index do |id, index|
-      at(index + 1, total, I18n.t("backgroun_tasks.progress", index: index + 1, total: total))
+      at(index + 1, total, I18n.t("background_tasks.progress", index: index + 1, total: total))
 
       p = Person.find(id)
 
@@ -100,7 +101,7 @@ class Subscriptions::AddPeopleAndEmail
       new_people_ids,
       existing_people_ids).deliver
 
-    completed(message: I18n.t("subscriptions.background_tasks.add_people_and_email.an_email_have_been_sent"))
+    completed(message: ["subscriptions.background_tasks.add_people_and_email.an_email_have_been_sent"])
 
   end
 end

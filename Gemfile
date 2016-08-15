@@ -48,7 +48,7 @@ gem 'turbolinks', '2.2.2'
 
 gem 'gon'
 
-# gem 'jbuilder'
+gem 'jbuilder'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.12.1', platforms: :ruby
 gem 'i18n-js', '2.1.2'

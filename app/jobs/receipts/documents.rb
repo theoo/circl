@@ -26,7 +26,8 @@ class Receipts::Documents
 
     # Resque::Plugins::Status options
     params ||= options
-    set_status(title: I18n.t("receipts.background_tasks.documents.title"))
+    # i18n-tasks-use I18n.t("receipts.background_tasks.documents.title")
+    set_status(translation_options: ["receipts.background_tasks.documents.title"])
 
     required = %i(query user_id from to format generic_template_id subscriptions_filter unit_value global_value unit_overpaid)
     required += %i(global_overpaid)

@@ -25,7 +25,8 @@ class Synchronize::SearchEngine
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    set_status(title: I18n.t("admin.background_tasks.search_engine.title"))
+    # i18n-tasks-use I18n.t("admin.background_tasks.search_engine.title"))
+    set_status(translation_options: ["admin.background_tasks.search_engine.title"])
 
     required = %i(people_ids)
     validates(params, required)
@@ -38,7 +39,7 @@ class Synchronize::SearchEngine
       person.update_index
     end
 
-    completed(message: I18n.t("admin.background_tasks.mailchimp.completed"))
+    completed(message: ["admin.background_tasks.mailchimp.completed"])
 
   end
 

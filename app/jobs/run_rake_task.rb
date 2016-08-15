@@ -24,7 +24,8 @@ class RunRakeTask
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    set_status(title: I18n.t("admin.background_tasks.run_rake_task.title"))
+    # i18n-tasks-use I18n.t("admin.background_tasks.run_rake_task.title")
+    set_status(translation_options: ["admin.background_tasks.run_rake_task.title"])
 
     # There's two ways of calling rake tasks with arguments
     if options.is_a?(Hash)

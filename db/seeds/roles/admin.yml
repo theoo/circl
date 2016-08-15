@@ -41,9 +41,6 @@
 - subject: Setting
   action: manage
 
-- subject: BackgroundTask
-  action: manage
-
 - subject: Task
   action: manage
 

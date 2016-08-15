@@ -25,10 +25,14 @@ class People::PermissionsController < ApplicationController
     hash = params[:can].each_with_object({}) do |(model, permissions), h|
       h[model] ||= {}
       permissions.each do |permission|
-        if person
-          subject = (model == 'person') ? person : { person => model.classify.constantize }
-        else
-          subject = model.classify.constantize
+        begin
+          if person
+            subject = (model == 'person') ? person : { person => model.classify.constantize }
+          else
+            subject = model.classify.constantize
+          end
+        rescue
+          subject = false
         end
         h[model][permission] = can?(permission.to_sym, subject)
       end

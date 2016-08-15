@@ -18,25 +18,30 @@
 
 class BackgroundTasksController < ApplicationController
 
-  load_and_authorize_resource
-
-  # monitor_changes :@background_task, only: [:create, :update, :update_password, :destroy]
-
   layout false
 
   def index
+    # TODO refactor permissions
+    authorize! :index, Person
+
+    @tasks = Resque::Plugins::Status::Hash.statuses
+
     respond_to do |format|
-      format.json { render json: @background_tasks }
+      format.json { }
     end
   end
 
   def destroy
+    # TODO refactor permissions
+    authorize! :destroy, Person
+
     respond_to do |format|
-      if @background_task.destroy
+      if @task.kill(params[:job_id])
         format.json { render json: {} }
       else
         format.json do
-          render json: @background_task.errors, status: :unprocessable_entity
+          errors = { errors: { base: [I18n.t("admin.background_tasks.errors.unable_to_destroy")]} }
+          render json: errors, status: :unprocessable_entity
         end
       end
     end
