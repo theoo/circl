@@ -22,7 +22,10 @@ class Salaries::Pdf
 
   include ResqueHelper
 
-  def self.perform(params = {})
+  def perform(params = nil)
+    # Resque::Plugins::Status options
+    params ||= options
+    set_status(title: I18n.t("salaries.background_tasks.pdf.title"))
 
     validates(params, [:salary_id])
 

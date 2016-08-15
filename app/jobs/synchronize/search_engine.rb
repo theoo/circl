@@ -22,15 +22,23 @@ class Synchronize::SearchEngine
 
   include ResqueHelper
 
-  def self.perform(params = {})
+  def perform(params = nil)
+    # Resque::Plugins::Status options
+    params ||= options
+    set_status(title: I18n.t("admin.background_tasks.search_engine.title"))
 
     required = %i(people_ids)
     validates(params, required)
 
     people = Person.where(id: people_ids)
-    people.each do |person|
+
+    total = people.count
+    people.each_with_index do |p, index|
+      at(index + 1, total, I18n.t("backgroun_tasks.progress", index: index + 1, total: total))
       person.update_index
     end
+
+    completed(message: I18n.t("admin.background_tasks.mailchimp.completed"))
 
   end
 

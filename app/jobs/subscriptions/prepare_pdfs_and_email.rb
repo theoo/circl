@@ -22,7 +22,10 @@ class Subscriptions::PreparePdfsAndEmail
 
   include ResqueHelper
 
-  def self.perform(params = {})
+  def perform(params = nil)
+    # Resque::Plugins::Status options
+    params ||= options
+    set_status(title: I18n.t("subscriptions.background_tasks.prepare_pdf_and_email.title"))
 
     required = %i(subscription_id query user_id status)
     validates(params, required)
@@ -36,7 +39,10 @@ class Subscriptions::PreparePdfsAndEmail
     # Compute invoice_ids and generate PDF if necessary
     # We do a manual loop because using #map and #select blew the RAM
     invoices_ids = []
-    people_ids.each do |id|
+    total = people_ids.size
+    people_ids.each_with_index do |id, index|
+      at(index + 1, total, I18n.t("backgroun_tasks.progress", index: index + 1, total: total))
+
       Person.find(id).invoices.each do |i|
         next unless i.affair.subscription_ids.include?(@subscription_id)
         invoices_ids << i.id
@@ -48,6 +54,8 @@ class Subscriptions::PreparePdfsAndEmail
         end
       end
     end
+
+    completed(message: I18n.t("subscriptions.background_tasks.prepare_pdf_and_email.invoices_generation_succeed"))
 
     Subscriptions::ConcatAndEmailPdf.perform(
       subscription_id: @subscription_id,

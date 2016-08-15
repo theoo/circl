@@ -21,9 +21,13 @@ class RunRakeTask
 
   @queue = :processing
 
-  def self.perform(arguments)
+  def perform(params = nil)
+    # Resque::Plugins::Status options
+    params ||= options
+    set_status(title: I18n.t("admin.background_tasks.run_rake_task.title"))
+
     # There's two ways of calling rake tasks with arguments
-    if arguments.is_a?(Hash)
+    if options.is_a?(Hash)
       options[:arguments].each do |k, v|
         ENV[k.to_s.upcase] = v.to_s
       end

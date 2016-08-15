@@ -22,7 +22,10 @@ class Subscriptions::AddPeopleAndEmail
 
   include ResqueHelper
 
-  def self.perform(params = {})
+  def perform(params = nil)
+    # Resque::Plugins::Status options
+    params ||= options
+    set_status(title: I18n.t("subscriptions.background_tasks.add_people_and_email.title"))
 
     required = %i(query subscription_id user_id parent_subscription_id status)
     validates(params, required)
@@ -42,7 +45,10 @@ class Subscriptions::AddPeopleAndEmail
       parent_and_reminders = Subscription.find(@parent_subscription_id).self_and_descendants.map(&:id)
     end
 
-    people_ids.each do |id|
+    total = people_ids.size
+    people_ids.each_with_index do |id, index|
+      at(index + 1, total, I18n.t("backgroun_tasks.progress", index: index + 1, total: total))
+
       p = Person.find(id)
 
       # Do not add existing people which already are in this subscription
@@ -93,6 +99,8 @@ class Subscriptions::AddPeopleAndEmail
       subscription.id,
       new_people_ids,
       existing_people_ids).deliver
+
+    completed(message: I18n.t("subscriptions.background_tasks.add_people_and_email.an_email_have_been_sent"))
 
   end
 end

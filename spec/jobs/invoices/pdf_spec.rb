@@ -10,5 +10,4 @@ describe Invoices::Pdf do
   it "should generate invoice pdf" do
   end
 
-
 end

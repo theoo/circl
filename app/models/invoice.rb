@@ -380,12 +380,18 @@ class Invoice < ActiveRecord::Base
     true
   end
 
-  # Append a background task in the queue to update the PDF.
+  #
+  # Generate the PDF in a background task
+  #
+  # @return [String] Resque::Plugins::Status job id (UUID)
   def update_pdf
-    Resque.enqueue(Invoices::Pdf, invoice_id: self.id)
+    Invoices::Pdf.create invoice_id: self.id
   end
 
-  # Run immediately a background task to update the PDF.
+  #
+  # Generate the PDF right away
+  #
+  # @return [boolean] true if it succeed
   def update_pdf!
     Invoices::Pdf.perform(invoice_id: self.id)
   end

@@ -22,7 +22,10 @@ class Subscriptions::UpdateInvoicesAndEmail
 
   include ResqueHelper
 
-  def self.perform(params = {})
+  def perform(params = nil)
+    # Resque::Plugins::Status options
+    params ||= options
+    set_status(title: I18n.t("subscriptions.background_tasks.update_invoices_and_email.title"))
 
     required = %i(subscription_id user_id)
     validates(params, required)
@@ -38,9 +41,15 @@ class Subscriptions::UpdateInvoicesAndEmail
 
     Rails.configuration.settings['elasticsearch']['enable_index'] = true
 
-    subscription.people.each{|p| p.update_index}
+    total = subscription.people.count
+    subscription.people.each_with_index do |p, index|
+      at(index + 1, total, I18n.t("backgroun_tasks.progress", index: index + 1, total: total))
+      p.update_index
+    end
 
     PersonMailer.send_subscription_invoices_updated(@user_id, @subscription_id).deliver
+
+    completed(message: I18n.t("subscriptions.background_tasks.update_invoices_and_email.an_email_have_been_sent"))
 
   end
 end

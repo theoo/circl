@@ -81,6 +81,7 @@ gem 'rails_exception_handler', "~> 2"
 
 # Background jobs
 gem 'resque'
+gem 'resque-status'
 
 ### custom gem
 # gem 'plugin', :path => 'path/to/circl/plugin'
@@ -111,7 +112,7 @@ group :development, :test do
 end
 
 # FUTURE
-# gem 'websocket-rails'
+# gem 'websocket-rails' # RAILS 5
 
 # iCalendar
 # gem 'icalendar'

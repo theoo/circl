@@ -24,7 +24,10 @@ class Subscriptions::MergeSubscriptions
 
   include ResqueHelper
 
-  def self.perform(params = {})
+  def perform(params = nil)
+    # Resque::Plugins::Status options
+    params ||= options
+    set_status(title: I18n.t("subscriptions.background_tasks.merge_subscriptions.title"))
 
     required = %i(source_subscription_id destination_subscription_id user_id)
     validates(params, required)
@@ -33,7 +36,9 @@ class Subscriptions::MergeSubscriptions
     destination_subscription = Subscription.find(@destination_subscription_id)
 
     # add destination subscription to all current affairs
-    source_subscription.affairs.each do |a|
+    total = source_subscription.affairs.count
+    source_subscription.affairs.each_with_index do |a, index|
+      at(index + 1, total, I18n.t("backgroun_tasks.progress", index: index + 1, total: total))
       # Append the new subscription to the current subscription's affair
     	a.subscriptions << destination_subscription
       # Change affair's title so it's easier to read
@@ -51,5 +56,8 @@ class Subscriptions::MergeSubscriptions
       @source_subscription_id,
       source_subscription.title,
       @destination_subscription_id).deliver
+
+    completed(message: I18n.t("subscriptions.background_tasks.merge_subscriptions.an_email_have_been_sent"))
+
   end
 end

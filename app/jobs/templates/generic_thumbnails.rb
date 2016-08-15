@@ -21,10 +21,17 @@ class Templates::GenericThumbnails
 
   @queue = :documents
 
-  def self.perform(ids = nil)
+  def perform(params = nil)
+    # Resque::Plugins::Status options
+    params ||= options
+    set_status(title: I18n.t("templates.background_tasks.generic_thumbnails.title"))
+
     ids ||= GenericTemplate.all.map(&:id)
 
-    GenericTemplate.find([ids].flatten).each do |gt|
+    gts = GenericTemplate.find([ids].flatten)
+    total = gts.count
+    gts.each_with_index do |gt, index|
+      at(index + 1, total, I18n.t("backgroun_tasks.progress", index: index + 1, total: total))
       AttachmentGenerator.take_snapshot(gt)
     end
 

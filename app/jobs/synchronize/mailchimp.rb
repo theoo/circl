@@ -20,7 +20,10 @@ class Synchronize::Mailchimp
 
   @queue = :sync
 
-  def self.perform(params = {})
+  def perform(params = nil)
+    # Resque::Plugins::Status options
+    params ||= options
+    set_status(title: I18n.t("admin.background_tasks.mailchimp.title"))
 
     required = %i(user_id list_id query)
     validates(params, required)
@@ -58,6 +61,8 @@ class Synchronize::Mailchimp
     result = mc.session.lists.batch_subscribe(@list_id, subscribers, false, true, false)
 
     PersonMailer.send_mailchimp_sync_report(@user_id, @list_id, result["errors"], people.count).deliver
+
+    completed(message: I18n.t("admin.background_tasks.mailchimp.completed"))
 
   end
 end
