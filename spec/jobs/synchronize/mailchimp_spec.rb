@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Synchronizes::Mailchimp do
+describe Synchronize::Mailchimp do
   it "configure mailchimp" do
   end
 end

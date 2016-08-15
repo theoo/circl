@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Receipts::GenerateDocumentAndEmail do
+describe Receipts::Documents do
 
   # def self.perform(people_ids, person, from, to, format, generic_template_id,
   # subscriptions_filter, unit_value, global_value, unit_overpaid, global_overpaid)

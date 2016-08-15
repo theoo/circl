@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UpdateIndexForPeople do
+describe Synchronize::SearchEngine do
 
   it "Changing person should update cache" do
     original_name = 'original_name'
