@@ -342,7 +342,7 @@ class Settings::ProductsController < ApplicationController
 
     respond_to do |format|
       if success
-        PersonMailer.send_products_import_report(current_person, @products, @columns).deliver
+        PersonMailer.send_products_import_report(current_person.id, @products, @columns).deliver
         flash[:notice] = I18n.t('product.notices.product_imported', email: current_person.email)
         format.html { redirect_to settings_path(anchor: 'affairs')  }
       else

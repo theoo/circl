@@ -18,11 +18,10 @@
 
 class Subscriptions::AddPeopleAndEmail
 
-  @queue = :notifications
+  @queue = :processing
 
   include ResqueHelper
 
-  # def self.perform(subscription_id, query, user_id, parent_subscription_id, status)
   def self.perform(params = {})
 
     required = %i(query subscription_id user_id parent_subscription_id status)
@@ -94,5 +93,6 @@ class Subscriptions::AddPeopleAndEmail
       subscription.id,
       new_people_ids,
       existing_people_ids).deliver
+
   end
 end

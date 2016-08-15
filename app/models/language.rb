@@ -90,7 +90,8 @@ class Language < ActiveRecord::Base
 
   def reindex_people
     ids = main_people.map(&:id) + communication_people.map(&:id)
-    Resque.enqueue(UpdateIndexForPeople, people_ids: ids.uniq)
+    Resque.enqueue(Synchronize::SearchEngine,
+      people_ids: ids.uniq)
     true
   end
 

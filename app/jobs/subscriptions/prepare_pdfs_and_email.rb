@@ -16,18 +16,29 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Options are: :subscription_id, :person, :query, :current_locale
 class Subscriptions::PreparePdfsAndEmail
 
-  @queue = :notifications
+  @queue = :processing
 
-  def self.perform(subscription_id, people_ids, person, query, current_locale)
+  include ResqueHelper
+
+  def self.perform(params = {})
+
+    required = %i(subscription_id query user_id status)
+    validates(params, required)
+
+    people_ids = ElasticSearch.search(
+      @query[:search_string],
+      @query[:selected_attributes],
+      @query[:attributes_order])
+      .map(&:id)
+
     # Compute invoice_ids and generate PDF if necessary
     # We do a manual loop because using #map and #select blew the RAM
     invoices_ids = []
     people_ids.each do |id|
       Person.find(id).invoices.each do |i|
-        next unless i.affair.subscription_ids.include?(subscription_id)
+        next unless i.affair.subscription_ids.include?(@subscription_id)
         invoices_ids << i.id
         if i.pdf_up_to_date?
           logger.info "PDF for invoice #{i.id} is up to date, skipping..."
@@ -37,6 +48,13 @@ class Subscriptions::PreparePdfsAndEmail
         end
       end
     end
-    Subscriptions::ConcatAndEmailPdf.perform(subscription_id, invoices_ids, person, query, current_locale)
+
+    Subscriptions::ConcatAndEmailPdf.perform(
+      subscription_id: @subscription_id,
+      query: @query,
+      invoice_ids: invoices_ids,
+      user_id: @user_id,
+      current_locale: @current_locale)
+
   end
 end

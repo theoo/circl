@@ -77,9 +77,9 @@ class Admin::BankImportHistoriesController < ApplicationController
         end
       end
 
-      PersonMailer.send_receipts_import_report( current_person,
-                                                params[:receipts],
-                                                params[:errors]).deliver
+      PersonMailer.send_receipts_import_report( current_person.id,
+        params[:receipts],
+        params[:errors]).deliver
       flash[:notice] = I18n.t('admin.notices.receipts_imported', email: current_person.email)
       Activity.create!( person: current_person,
                         resource_type: 'Admin',

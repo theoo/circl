@@ -16,16 +16,22 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Options are: :people_ids, :person
 class Synchronize::SearchEngine
 
   @queue = :sync
 
-  def self.perform(people_ids)
+  include ResqueHelper
+
+  def self.perform(params = {})
+
+    required = %i(people_ids)
+    validates(params, required)
+
     people = Person.where(id: people_ids)
     people.each do |person|
       person.update_index
     end
+
   end
 
 end

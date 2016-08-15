@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
 
     # Simple method to collect error messages on email admin.
     # rescue_from StandardError do |exception|
-    #   PersonMailer.send_report_error_to_admin(current_person, exception).deliver
+    #   PersonMailer.send_report_error_to_admin(current_person.id, exception).deliver
     #   raise exception
     # end
 

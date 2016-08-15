@@ -22,9 +22,15 @@ class Subscriptions::MergeSubscriptions
 
   @queue = :processing
 
-  def self.perform(source_subscription_id, destination_subscription_id, person)
-    source_subscription = Subscription.find(source_subscription_id)
-    destination_subscription = Subscription.find(destination_subscription_id)
+  include ResqueHelper
+
+  def self.perform(params = {})
+
+    required = %i(source_subscription_id destination_subscription_id user_id)
+    validates(params, required)
+
+    source_subscription = Subscription.find(@source_subscription_id)
+    destination_subscription = Subscription.find(@destination_subscription_id)
 
     # add destination subscription to all current affairs
     source_subscription.affairs.each do |a|
@@ -37,16 +43,13 @@ class Subscriptions::MergeSubscriptions
     # detach from all affairs
     source_subscription.affairs = []
 
-    source_subscription_title = source_subscription.title
-    source_subscription_id = source_subscription.id
-
     # and remove
     source_subscription.destroy
 
     # inform current user
-    PersonMailer.send_subscriptions_merged(person,
-                  source_subscription_id,
-                  source_subscription_title,
-                  destination_subscription.id).deliver
+    PersonMailer.send_subscriptions_merged(@user_id,
+      @source_subscription_id,
+      source_subscription.title,
+      @destination_subscription_id).deliver
   end
 end

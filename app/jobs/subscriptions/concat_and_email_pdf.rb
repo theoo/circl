@@ -16,21 +16,35 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Options are: :person, :people_ids
 class Subscriptions::ConcatAndEmailPdf
 
-  @queue = :notifications
+  @queue = :processing
 
-  def self.perform(subscription_id, invoices_ids, person, query, current_locale)
-    I18n.locale = current_locale
-    subscription = Subscription.find subscription_id
+  include ResqueHelper
+
+  def self.perform(params = {})
+
+    required = %i(subscription_id query invoice_ids user_id current_locale)
+    validates(params, required)
+
+    # TODO This should do the trick if @query is validated in a first place.
+    # people_ids = ElasticSearch.search(*@query).map(&:id)
+    people_ids = ElasticSearch.search(
+      @query[:search_string],
+      @query[:selected_attributes],
+      @query[:attributes_order])
+      .map(&:id)
+
+    I18n.locale = @current_locale
+
+    subscription = Subscription.find(@subscription_id)
 
     # GENERATE FRONTPAGE
     controller = Admin::SubscriptionsController.new
-    html = controller.render_to_string( inline: controller.pdf_front_page(subscription, query))
+    html = controller.render_to_string( inline: controller.pdf_front_page(subscription, @query))
     html.assets_to_full_path!
 
-    front_page = Tempfile.new(["subscription#{subscription.id}_front_page", '.pdf'], encoding: 'ascii-8bit')
+    front_page = Tempfile.new(["subscription#{@subscription_id}_front_page", '.pdf'], encoding: 'ascii-8bit')
     front_page.binmode
 
     kit = PDFKit.new(html)
@@ -39,10 +53,10 @@ class Subscriptions::ConcatAndEmailPdf
     front_page.flush
 
     # MAP PDF URLS
-    paths = invoices_ids.map{ |id| Invoice.find(id).pdf.path }
+    paths = @invoice_ids.map{ |id| Invoice.find(id).pdf.path }
     paths.insert(0, front_page.path)
 
-    file = Tempfile.new(["subscription#{subscription.id}", ".pdf"], encoding: 'ascii-8bit')
+    file = Tempfile.new(["subscription#{@subscription_id}", ".pdf"], encoding: 'ascii-8bit')
     file.binmode
     script = Tempfile.new(['script', '.sh'], encoding: 'ascii-8bit')
     script.write("#!/bin/bash\n")
@@ -56,12 +70,13 @@ class Subscriptions::ConcatAndEmailPdf
 
     # append the query at the end, if everything succeed.
     # TODO: transaction, validation
-    subscription.last_pdf_generation_query = query.to_json
+    subscription.last_pdf_generation_query = @query.to_json
     subscription.save
 
     file.unlink
     script.unlink
 
-    PersonMailer.send_subscription_pdf_link(person, subscription.id).deliver
+    PersonMailer.send_subscription_pdf_link(@user_id, @subscription_id).deliver
+
   end
 end

@@ -16,13 +16,18 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Options are: subscription_id, :person
 class Subscriptions::UpdateInvoicesAndEmail
-  
-  @queue = :notifications
 
-  def self.perform(subscription_id, person)
-    subscription = Subscription.find(subscription_id)
+  @queue = :processing
+
+  include ResqueHelper
+
+  def self.perform(params = {})
+
+    required = %i(subscription_id user_id)
+    validates(params, required)
+
+    subscription = Subscription.find(@subscription_id)
 
     # A rake task is runned in a closed context, doing this doesn't disable
     # elasticsearch for the entire app.
@@ -35,7 +40,7 @@ class Subscriptions::UpdateInvoicesAndEmail
 
     subscription.people.each{|p| p.update_index}
 
-    PersonMailer.send_subscription_invoices_updated(person,
-                                                    subscription.id).deliver
+    PersonMailer.send_subscription_invoices_updated(@user_id, @subscription_id).deliver
+
   end
 end

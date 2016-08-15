@@ -20,11 +20,20 @@ class Synchronize::Mailchimp
 
   @queue = :sync
 
-  def self.perform(person_id, list_id, directory_query)
+  def self.perform(params = {})
+
+    required = %i(user_id list_id query)
+    validates(params, required)
+
+    people_ids = ElasticSearch.search(
+      @query[:search_string],
+      @query[:selected_attributes],
+      @query[:attributes_order])
+      .map(&:id)
 
     # require an arel
     people = Person
-      .where(id: ElasticSearch.search(directory_query).map(&:id))
+      .where(id: people_ids)
       .where("people.email != ''")
 
     mc = MailchimpSession.new
@@ -46,10 +55,9 @@ class Synchronize::Mailchimp
         }
       }
     end
-    result = mc.session.lists.batch_subscribe(list_id, subscribers, false, true, false)
+    result = mc.session.lists.batch_subscribe(@list_id, subscribers, false, true, false)
 
-    # TODO send an email
-    PersonMailer.send_mailchimp_sync_report(person_id, list_id, result["errors"], people.count).deliver
+    PersonMailer.send_mailchimp_sync_report(@user_id, @list_id, result["errors"], people.count).deliver
 
   end
 end
