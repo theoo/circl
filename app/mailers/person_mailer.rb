@@ -32,8 +32,8 @@ class PersonMailer < ActionMailer::Base
 
   layout 'mail'
 
-  def send_mailchimp_sync_report(person_id, list_id, errors, people_count)
-    person = Person.find(person_id)
+  def send_mailchimp_sync_report(user_id, list_id, errors, people_count)
+    person = Person.find(user_id)
     I18n.locale = person.main_communication_language.try(:symbol)
     @list_id = list_id
     @errors = errors
@@ -42,14 +42,8 @@ class PersonMailer < ActionMailer::Base
           subject: I18n.t('person.mail.mailchimp_synchronisation_report'))
   end
 
-  def send_background_task_error_report(email, messages)
-    # No locale is set as there is no user involved, only email address from configuration.yml
-    @messages = messages
-    mail( to: email,
-          subject: I18n.t('person.mail.background_task_error_report'))
-  end
-
-  def send_receipts_import_report(person, receipts = [], errors = [])
+  def send_receipts_import_report(user_id, receipts = [], errors = [])
+    person = Person.find(user_id)
     I18n.locale = person.main_communication_language.try(:symbol)
     @receipts = receipts
     @errors   = errors
@@ -57,7 +51,8 @@ class PersonMailer < ActionMailer::Base
           subject: I18n.t('person.mail.receipts_import_report'))
   end
 
-  def send_people_import_report(person, people)
+  def send_people_import_report(user_id, people)
+    person = Person.find(user_id)
     I18n.locale = person.main_communication_language.try(:symbol)
     @valid_people = []
     @invalid_people = []
@@ -66,7 +61,8 @@ class PersonMailer < ActionMailer::Base
           subject: I18n.t('person.mail.people_import_report'))
   end
 
-  def send_subscription_pdf_link(person, subscription_id)
+  def send_subscription_pdf_link(user_id, subscription_id)
+    person = Person.find(user_id)
     I18n.locale = person.main_communication_language.try(:symbol)
     @subscription = Subscription.find(subscription_id)
     mail( to: person.email,
@@ -87,7 +83,8 @@ class PersonMailer < ActionMailer::Base
           id: @subscription.id))
   end
 
-  def send_subscriptions_merged(person, source_subscription_id, source_subscription_title, destination_subscription_id)
+  def send_subscriptions_merged(user_id, source_subscription_id, source_subscription_title, destination_subscription_id)
+    person = Person.find(user_id)
     I18n.locale = person.main_communication_language.try(:symbol)
     @source_subscription_title, @source_subscription_id = source_subscription_title, source_subscription_id
     @destination_subscription = Subscription.find(destination_subscription_id)
@@ -99,7 +96,8 @@ class PersonMailer < ActionMailer::Base
           source_id: @source_subscription_id))
   end
 
-  def send_subscription_invoices_updated(person, subscription_id)
+  def send_subscription_invoices_updated(user_id, subscription_id)
+    person = Person.find(user_id)
     I18n.locale = person.main_communication_language.try(:symbol)
     @subscription = Subscription.find subscription_id
     mail( to: person.email,
@@ -108,24 +106,25 @@ class PersonMailer < ActionMailer::Base
           id: @subscription.id))
   end
 
-  def send_receipts_document_link(person_id, cached_doc)
-    person = Person.find(person_id)
+  def send_receipts_document_link(user_id, cached_doc)
+    person = Person.find(user_id)
     @document = cached_doc
     I18n.locale = person.main_communication_language.try(:symbol) if person.main_communication_language
     mail(to: person.email,
       subject: I18n.t('person.mail.admin_receipts_were_generated'))
   end
 
-  def send_report_error_to_admin(current_person, exception)
+  def send_report_error_to_admin(user_id, exception)
     # No locale is set as there is no user involved, only email address from configuration.yml
     @exception = exception
-    @current_person = current_person
+    @current_person = Person.find(user_id)
     mail( to: Rails.configuration.settings['directory_admin_email'],
           subject: I18n.t("person.mail.report_error_subject"),
           layout: false)
   end
 
-  def send_products_import_report(person, products, columns)
+  def send_products_import_report(user_id, products, columns)
+    person = Person.find(user_id)
     @products = products
     @columns = columns
     I18n.locale = person.main_communication_language.try(:symbol)
@@ -133,7 +132,8 @@ class PersonMailer < ActionMailer::Base
           subject: I18n.t('person.mail.products_import_report'))
   end
 
-  def send_product_programs_import_report(person, programs, columns)
+  def send_product_programs_import_report(user_id, programs, columns)
+    person = Person.find(user_id)
     @programs = programs
     @columns = columns
     I18n.locale = person.main_communication_language.try(:symbol)
@@ -141,12 +141,13 @@ class PersonMailer < ActionMailer::Base
           subject: I18n.t('person.mail.product_programs_import_report'))
   end
 
-  def send_creditors_import_report(person, creditors, columns)
-    @creditors = creditors
-    @columns = columns
-    I18n.locale = person.main_communication_language.try(:symbol)
-    mail( to: person.email,
-          subject: I18n.t('person.mail.creditor_import_report'))
-  end
+  # def send_creditors_import_report(user_id, creditors, columns)
+  #   person = Person.find(user_id)
+  #   @creditors = creditors
+  #   @columns = columns
+  #   I18n.locale = person.main_communication_language.try(:symbol)
+  #   mail( to: person.email,
+  #         subject: I18n.t('person.mail.creditor_import_report'))
+  # end
 
 end
