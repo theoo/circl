@@ -35,7 +35,7 @@ class Settings::GenericTemplatesController < ApplicationController
       format.json { render json: @generic_template }
       format.jpg do
         unless @generic_template.snapshot.path and File.exists? @generic_template.snapshot.path
-          Templates::GenericThumbnails.perform(@generic_template.id)
+          Templates::GenericThumbnails.perform(nil, ids: @generic_template.id)
           @generic_template.reload
         end
         redirect_to @generic_template.snapshot.url
@@ -46,7 +46,7 @@ class Settings::GenericTemplatesController < ApplicationController
   def create
     respond_to do |format|
       if @generic_template.save
-        Templates::GenericThumbnails.perform(@generic_template.id)
+        Templates::GenericThumbnails.perform(nil, ids: @generic_template.id)
         @generic_template.reload
         format.json { render json: @generic_template }
       else
@@ -65,7 +65,7 @@ class Settings::GenericTemplatesController < ApplicationController
   def update
     respond_to do |format|
       if @generic_template.update_attributes(params[:generic_template])
-        Templates::GenericThumbnails.perform(@generic_template.id)
+        Templates::GenericThumbnails.perform(nil, ids: @generic_template.id)
         @generic_template.reload
         format.json { render json: @generic_template }
         format.html do
@@ -100,7 +100,7 @@ class Settings::GenericTemplatesController < ApplicationController
 
     respond_to do |format|
       if @generic_template.save
-        Templates::GenericThumbnails.perform(@generic_template.id)
+        Templates::GenericThumbnails.perform(nil, ids: @generic_template.id)
         format.json { render json: @generic_template }
       else
         format.json { render json: {errors: @generic_template.errors}, status: :unprocessable_entity }

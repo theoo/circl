@@ -16,16 +16,17 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Options are: salary_id, :person
 class Templates::GenericThumbnails
 
   @queue = :documents
+  include ResqueHelper
 
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
     set_status(title: I18n.t("templates.background_tasks.generic_thumbnails.title"))
 
+    ids = params[:ids]
     ids ||= GenericTemplate.all.map(&:id)
 
     gts = GenericTemplate.find([ids].flatten)

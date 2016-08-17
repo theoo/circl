@@ -393,7 +393,7 @@ class Invoice < ActiveRecord::Base
   #
   # @return [boolean] true if it succeed
   def update_pdf!
-    Invoices::Pdf.perform(invoice_id: self.id)
+    Invoices::Pdf.perform(nil, invoice_id: self.id)
   end
 
   # Placeholder proxy
