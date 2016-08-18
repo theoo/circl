@@ -42,8 +42,7 @@ namespace :db do
         task :reset => :environment do
           GenericTemplate.all.each do |template|
             print "Reseting generic template snapshot for #{template.title}... "
-            GenerateGenericTemplateJpg.perform(
-              :generic_template_id => template.id)
+            Templates::GenericThumbnails.perform(nil, :generic_template_id => template.id)
             puts 'done!'
           end
         end

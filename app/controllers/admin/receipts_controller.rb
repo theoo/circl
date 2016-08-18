@@ -225,7 +225,7 @@ class Admin::ReceiptsController < ApplicationController
 
       if errors.empty?
 
-        Resque.enqueue(Receipts::Documents,
+        Receipts::Documents.create(
           query: query,
           user_id: current_person.id,
           from: from,

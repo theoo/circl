@@ -51,14 +51,14 @@ class Subscriptions::PreparePdfsAndEmail
           logger.info "PDF for invoice #{i.id} is up to date, skipping..."
         else
           logger.info "PDF for invoice #{i.id} is not up to date, generating..."
-          Invoices::Pdf.perform(invoice_id: i.id)
+          Invoices::Pdf.perform(nil, invoice_id: i.id)
         end
       end
     end
 
     completed(message: ["subscriptions.background_tasks.prepare_pdf_and_email.invoices_generation_succeed"])
 
-    Subscriptions::ConcatAndEmailPdf.perform(
+    Subscriptions::ConcatAndEmailPdf.perform(nil,
       subscription_id: @subscription_id,
       query: @query,
       invoice_ids: invoices_ids,
