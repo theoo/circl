@@ -20,6 +20,7 @@
 class RunRakeTask
 
   @queue = :processing
+  include ResqueHelper
 
   def perform(params = nil)
     # Resque::Plugins::Status options
@@ -39,4 +40,5 @@ class RunRakeTask
       Rake::Task[options[:name]].invoke(*options[:arguments])
     end
   end
+
 end

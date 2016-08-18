@@ -1,6 +1,5 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
+
   factory :creditor do
     creditor_id 1
     affair_id 1
@@ -17,4 +16,5 @@ FactoryGirl.define do
     paid_on "2015-07-20"
     payment_in_books_on "2015-07-20"
   end
+
 end

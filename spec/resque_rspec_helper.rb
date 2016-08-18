@@ -1,6 +1,6 @@
 RSpec.configure do |config|
-  REDIS_PID = "#{Rails.root}/tmp/pids/redis-test.pid"
-  REDIS_CACHE_PATH = "#{Rails.root}/tmp/cache/"
+  REDIS_PID = [Rails.root, "tmp/pids/redis-test.pid"].join("/")
+  REDIS_CACHE_PATH = [Rails.root, "/tmp/cache/"].join("/")
 
   config.before(:suite) do
     redis_options = {
@@ -16,8 +16,8 @@ RSpec.configure do |config|
       "loglevel"      => "debug",
       "logfile"       => "stdout",
       "databases"     => 16
-    }.map { |k, v| "#{k} \"#{v}\"" }.join("\n")
-    `echo '#{redis_options}' | redis-server -`
+    }.map { |k, v| "--#{k} #{v}" }.join(" ")
+    puts `redis-server #{redis_options}`
   end
 
   config.after(:suite) do

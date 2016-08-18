@@ -1,40 +1,31 @@
 # encoding: utf-8
 
 FactoryGirl.define do
+
   factory :affair do
     sequence(:title) { |n| "affair #{n}" }
     association :owner, :factory => :person
     association :buyer, :factory => :person
     association :receiver, :factory => :person
-    subscriptions { [FactoryGirl.create(:subscription)] }
+    # subscriptions { [FactoryGirl.create(:subscription)] }
   end
 
-  factory :invoice do
-    sequence(:title) { |n| "invoice #{n}" }
-    value 100
-    affair
-    invoice_template
+  factory :affairs_conditions do
   end
 
-  factory :receipt do
-    value 100
-    value_date Date.today
-    invoice
+  # TODO rename affairs_products_category in affair_products_category everywhere
+  factory :affairs_products_category do
   end
 
-  factory :subscription do
-    sequence(:title) { |n| "subscription #{n}" }
+  # TODO rename affairs_stakeholder in affair_stakeholder everywhere
+  factory :affairs_stakeholder do
   end
 
-  factory :subscription_value do
-    invoice_template
-    value 100
-    position 0
+  # TODO rename affairs_subscription in affair_subscription everywhere
+  factory :affairs_subscription do
   end
 
-  factory :invoice_template do
-    sequence(:title) { |n| "invoice template #{n}" }
-    sequence(:html)  { |n| "html #{n}" }
-    language
+  factory :extra do
   end
+
 end
