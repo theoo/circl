@@ -27,8 +27,6 @@ CIRCL::Application.configure do
 ### logger tweaking
 #  Rails.logger = Logger.new(STDOUT)
 #  Rails.logger = Log4r::Logger.new("Application Log")
-  # SQL_REGEX_KEYWORD = 'REGEXP' # mysql
-  SQL_REGEX_KEYWORD = '~*' # postgresql, case insensitive
 
   # RAILS UPDATES
   # Raise exception on mass assignment protection for Active Record models

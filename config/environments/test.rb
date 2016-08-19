@@ -26,11 +26,10 @@ CIRCL::Application.configure do
   # This is necessary if your schema can't be completely dumped by the schema dumper,
   # like if you have constraints or database-specific column types
   # config.active_record.schema_format = :sql
+  config.assets.debug = true
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
-
-  SQL_REGEX_KEYWORD = 'REGEXP' # mysql
 
   # RAILS UPDATES
   # Raise exception on mass assignment protection for Active Record models
