@@ -29,8 +29,8 @@ class Receipts::Documents
     # i18n-tasks-use I18n.t("receipts.background_tasks.documents.title")
     set_status(translation_options: ["receipts.background_tasks.documents.title"])
 
-    required = %i(query user_id from to format generic_template_id subscriptions_filter unit_value global_value unit_overpaid)
-    required += %i(global_overpaid)
+    required = %i(query user_id from to format generic_template_id)
+    # optional_params = %i(subscriptions_filter unit_value global_value unit_overpaid global_overpaid)
     validates(params, required)
 
     people_ids = ElasticSearch.search(

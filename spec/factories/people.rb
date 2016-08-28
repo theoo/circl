@@ -68,4 +68,11 @@ FactoryGirl.define do
     # creditor_discount_account
   end
 
+  factory :user, parent: :person do
+
+    # Add trait to define role, yet is only admin
+    roles { Role.all }
+
+  end
+
 end

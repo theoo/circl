@@ -95,6 +95,7 @@ group :development, :test do
   gem 'factory_girl_rails', '4.4.0'
   gem 'rspec-rails', '3.0.2'
   gem 'syntax', '1.2.0'
+  gem 'database_cleaner'
 
   ### IRB
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'

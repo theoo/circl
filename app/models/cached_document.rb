@@ -20,7 +20,11 @@ class CachedDocument < ActiveRecord::Base
 
   has_attached_file :document, use_timestamp: true
 
-  validates_attachment_content_type :document, :content_type => /\A.*\Z/ # Disable validation
+  do_not_validate_attachment_file_type :document
+  # validates_attachment :document,
+  #   presence: true,
+  #   content_type: { content_type: /\A.*\Z/ },
+  #   size: { in: 0..100.megabytes }
 
   # TODO Private ApplicationSetting for duration value
   scope :outdated_documents, -> { where("created_at < ?", 1.day.ago) }

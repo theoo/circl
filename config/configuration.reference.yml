@@ -27,6 +27,9 @@ mailers:
       password: secret
       authentication: plain
       enable_starttls_auto: true
+  test:
+    default:
+      from: directories@circl.ch
 
 # Elasticsearch
 elasticsearch:

@@ -18,12 +18,14 @@
 
 # TODO is this the right place to set this ?
 ActionMailer::Base.class_eval do
+
   def mail_with_prefix(headers={}, &block)
     headers[:subject] = "CIRCL: " + (headers[:subject] || '')
     mail_without_prefix(headers, &block)
   end
 
   alias_method_chain :mail, :prefix
+
 end
 
 class PersonMailer < ActionMailer::Base
