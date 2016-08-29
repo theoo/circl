@@ -11,29 +11,29 @@ FactoryGirl.define do
   factory :comment do
     person
     association :resource, :factory => :person
-    sequence(:title)       { |n| "comment #{n}" }
+    sequence(:title)       { |n| "comment #{n} - #{SecureRandom.hex}" }
     sequence(:description) { |n| "Temporary description" }
     is_closed false
   end
 
   factory :job do
-    sequence(:name)        { |n| "job #{n}" }
+    sequence(:name)        { |n| "job #{n} - #{SecureRandom.hex}" }
     sequence(:description) { |n| "Temporary description" }
   end
 
   factory :language do
-    sequence(:name) { |n| "language #{n}" }
+    sequence(:name) { |n| "language #{n} - #{SecureRandom.hex}" }
     code SecureRandom.hex(2)
   end
 
   factory :ldap_attribute do
-    sequence(:name) { |n| "ldap attribute #{n}" }
+    sequence(:name) { |n| "ldap attribute #{n} - #{SecureRandom.hex}" }
     sequence(:mapping) { |n| "mapping #{n}" }
   end
 
   factory :location do
     parent_id 1
-    sequence(:name) { |n| "location #{n}" }
+    sequence(:name) { |n| "location #{n} - #{SecureRandom.hex}" }
     iso_code_a2 SecureRandom.hex(2)
     iso_code_a3 SecureRandom.hex(2)
     iso_code_num SecureRandom.hex(2)
@@ -58,18 +58,18 @@ FactoryGirl.define do
 
   factory :private_tag do
     # parent
-    sequence(:name) { |n| "private tag #{n}" }
+    sequence(:name) { |n| "private tag #{n} - #{SecureRandom.hex}" }
     color "#" + SecureRandom.hex(3)
   end
 
   factory :public_tag do
     # parent
-    sequence(:name) { |n| "public tag #{n}" }
+    sequence(:name) { |n| "public tag #{n} - #{SecureRandom.hex}" }
     color "#" + SecureRandom.hex(3)
   end
 
   factory :query_preset do
-    sequence(:name) { |n| "query preset #{n}" }
+    sequence(:name) { |n| "query preset #{n} - #{SecureRandom.hex}" }
     sequence(:query) { |n| "private_tags.id:#{n}" }
   end
 

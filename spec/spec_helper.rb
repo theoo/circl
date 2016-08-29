@@ -64,7 +64,7 @@ RSpec.configure do |config|
   # DatabaseCleaner
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction #
-    DatabaseCleaner.clean_with(:truncation, { except: %w(application_settings) })
+    DatabaseCleaner.clean_with(:truncation, { except: %w(application_settings search_attributes ldap_attributes locations) })
   end
 
   config.before(:each) do

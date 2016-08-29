@@ -37,8 +37,10 @@ class SubscriptionValue < ActiveRecord::Base
   ### CALLBACKS ##
   ################
 
-  before_validation :set_position_if_none_given
-  # before_destroy :ensure_is_destroyable
+  before_validation do
+    set_template_if_none_given
+    set_position_if_none_given
+  end
 
   ################
   ### INCLUDES ###
@@ -46,7 +48,6 @@ class SubscriptionValue < ActiveRecord::Base
 
   # include ChangesTracker
   extend  MoneyComposer
-
 
   #################
   ### RELATIONS ###
@@ -75,6 +76,10 @@ class SubscriptionValue < ActiveRecord::Base
   money :value
 
   private
+
+  def set_template_if_none_given
+    self.invoice_template = InvoiceTemplate.first unless invoice_template
+  end
 
   def set_position_if_none_given
     pos = self.position

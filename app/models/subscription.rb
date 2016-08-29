@@ -55,6 +55,10 @@ class Subscription < ActiveRecord::Base
   ### CALLBACKS ###
   #################
 
+  before_save do
+    values.new(value: 0) if values.count == 0
+  end
+
   before_destroy :ensure_is_destroyable
   before_destroy :destroy_affairs
   after_commit :add_catchall_value_if_not_existing

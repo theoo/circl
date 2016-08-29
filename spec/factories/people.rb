@@ -72,6 +72,7 @@ FactoryGirl.define do
 
     # Add trait to define role, yet is only admin
     roles { Role.all }
+    association :task_rate
 
   end
 

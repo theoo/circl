@@ -1,4 +1,7 @@
 require 'spec_helper'
+require 'rake'
+load File.expand_path([Rails.root, "/lib/tasks/elasticsearch.rake"].join, __FILE__)
+Rake::Task.define_task(:environment)
 
 describe Receipts::Documents do
 
@@ -6,6 +9,10 @@ describe Receipts::Documents do
     @user = FactoryGirl.create(:user)
     @generic_template = FactoryGirl.create(:generic_template)
     @subscription = FactoryGirl.create(:subscription)
+    @subscription.values.each{|v| v.save!} # For an obscure reason FG doesn't save the relation
+    @subscription.invoices.each do |invoice|
+      FactoryGirl.create(:receipt, invoice: invoice, value: invoice.value)
+    end
 
     @members = []
     10.times do
@@ -24,6 +31,9 @@ describe Receipts::Documents do
         printed_address: p.address_for_bvr)
       @members << p
     end
+
+    Rake::Task['elasticsearch:sync'].invoke
+
   end
 
   def good_params
@@ -49,11 +59,24 @@ describe Receipts::Documents do
   end
 
   it "should take people_ids array in account" do
+    # The test must open the CSV file to perform this test.
+    # opt = good_params
+    # Receipts::Documents.perform(nil, opt)
+    # expect(Invoice.where(title: @subscription.title).count).to eq(@members.size)
+  end
+
+  it "should take format in account" do
     opt = good_params
+
+    opt[:format] = 'csv'
     Receipts::Documents.perform(nil, opt)
-    @members.each do |m|
-      expect(m.invoices.last.title).to eq(@subscription.title)
-    end
+    expect(CachedDocument.last.document_content_type).to eq('text/plain')
+
+    opt[:format] = 'pdf'
+    Receipts::Documents.perform(nil, opt)
+    raise ArgumentError, CachedDocument.last.inspect
+    expect(CachedDocument.last.document_content_type).to eq('application/pdf')
+
   end
 
   it "should send to the right person" do

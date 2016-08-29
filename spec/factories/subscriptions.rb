@@ -9,10 +9,15 @@ FactoryGirl.define do
     # interval_ends_on
     # pdf # Paperclip
     # last_pdf_generation_query
+
+    after(:create) do |sub, evaluator|
+      # sub.values << FactoryGirl.create(:subscription_value, subscription: sub)
+      create_list(:subscription_value, 1, subscription: sub)
+    end
+
   end
 
   factory :subscription_value do
-    subscription
     invoice_template
     private_tag
 
