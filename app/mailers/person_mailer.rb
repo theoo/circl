@@ -112,8 +112,14 @@ class PersonMailer < ActionMailer::Base
     person = Person.find(user_id)
     @document = cached_doc
     I18n.locale = person.main_communication_language.try(:symbol) if person.main_communication_language
-    mail(to: person.email,
-      subject: I18n.t('person.mail.admin_receipts_were_generated'))
+    if @document
+      mail(to: person.email,
+        subject: I18n.t('person.mail.admin_receipts_were_generated'))
+    else
+      mail(to: person.email,
+        subject: I18n.t('person.mail.admin_receipts_generation_failed'),
+        template_name: 'send_receipts_document_failure')
+    end
   end
 
   def send_report_error_to_admin(user_id, exception)

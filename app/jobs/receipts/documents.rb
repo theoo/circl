@@ -59,19 +59,21 @@ class Receipts::Documents
         files << tmpfile
       end
 
-      document = Tempfile.new(["admin_receipts_file", '.pdf'], encoding: 'ascii-8bit')
-      script = Tempfile.new(['script', '.sh'], encoding: 'ascii-8bit')
-      script.write("#!/bin/bash\n")
-      script.write("pdftk #{files.map(&:path).join(' ')} cat output #{document.path}")
-      script.flush
+      unless files.empty?
+        document = Tempfile.new(["admin_receipts_file", '.pdf'], encoding: 'ascii-8bit')
+        script = Tempfile.new(['script', '.sh'], encoding: 'ascii-8bit')
+        script.write("#!/bin/bash\n")
+        script.write("pdftk #{files.map(&:path).join(' ')} cat output #{document.path}")
+        script.flush
 
-      system "chmod +x #{script.path}"
-      system "bash #{script.path}"
+        system "chmod +x #{script.path}"
+        system "bash #{script.path}"
 
-      script.unlink
+        script.unlink
 
-      # Remove previously created fake tempfile
-      files.each {|f| File.delete(f) }
+        # Remove previously created fake tempfile
+        files.each {|f| File.delete(f) }
+      end
 
     else
 
@@ -115,11 +117,15 @@ class Receipts::Documents
     end
 
     # Store document in cache_documents table
-    cd = CachedDocument.create!(document: document)
-    document.unlink if document
+    if document and document.size > 0
+      cd = CachedDocument.create!(document: document)
+      document.unlink if document
 
-    # send an email to the file
-    PersonMailer.send_receipts_document_link(@user_id, cd).deliver
+      # send an email to the file
+      PersonMailer.send_receipts_document_link(@user_id, cd).deliver
+    else
+      PersonMailer.send_receipts_document_link(@user_id, nil).deliver
+    end
 
   # rescue Exception => e
   #   msg = "An error occured while running #{self.class}:"
