@@ -25,8 +25,8 @@ class Salaries::Pdf
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    # i18n-tasks-use I18n.t("salaries.background_tasks.pdf.title")
-    set_status(translation_options: ["salaries.background_tasks.pdf.title"])
+    # i18n-tasks-use I18n.t("salaries.jobs.pdf.title")
+    set_status(translation_options: ["salaries.jobs.pdf.title"])
 
     validates(params, [:salary_id])
 

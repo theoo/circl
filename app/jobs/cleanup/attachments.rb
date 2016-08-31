@@ -23,8 +23,8 @@ class Cleanup::Attachments
 
   def perform(params = nil)
     params || options
-    # i18n-tasks-use I18n.t("admin.background_tasks.cleanup.attachments.title")
-    set_status(translation_options: ["admin.background_tasks.cleanup.attachments.title"])
+    # i18n-tasks-use I18n.t("admin.jobs.cleanup.attachments.title")
+    set_status(translation_options: ["admin.jobs.cleanup.attachments.title"])
 
     # Find old attachment that can be regenerated (like invoices) and remove them to gain some space.
     CachedDocument.erase_outdated_documents

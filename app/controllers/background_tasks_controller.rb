@@ -40,7 +40,7 @@ class BackgroundTasksController < ApplicationController
         format.json { render json: {} }
       else
         format.json do
-          errors = { errors: { base: [I18n.t("admin.background_tasks.errors.unable_to_destroy")]} }
+          errors = { errors: { base: [I18n.t("admin.jobs.errors.unable_to_destroy")]} }
           render json: errors, status: :unprocessable_entity
         end
       end

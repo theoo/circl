@@ -24,7 +24,7 @@ class Templates::InvoiceThumbnails
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    set_status(title: I18n.t("templates.background_tasks.invoice_thumbnails.title"))
+    set_status(title: I18n.t("templates.jobs.invoice_thumbnails.title"))
 
     ids = params[:ids]
     ids ||= InvoiceTemplate.all.map(&:id)
@@ -32,7 +32,7 @@ class Templates::InvoiceThumbnails
     its = InvoiceTemplate.find([ids].flatten)
     total = its.count
     its.each_with_index do |it, index|
-      at(index + 1, total, I18n.t("backgroun_tasks.progress", index: index + 1, total: total))
+      at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
       AttachmentGenerator.take_snapshot(it)
     end
 

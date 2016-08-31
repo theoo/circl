@@ -70,10 +70,14 @@ search:
 
   ## Alternatively, the only files or `File.fnmatch patterns` to search in `paths`:
   ## If specified, this settings takes priority over `exclude`, but `exclude` still applies.
-  # include: ["*.rb", "*.html.slim"]
+  # only: ["*.rb", "*.html.slim"]
 
-  ## Default scanner finds t() and I18n.t() calls.
-  # scanner: I18n::Tasks::Scanners::PatternWithScopeScanner
+  ## If `strict` is `false`, guess usages such as t("categories.#{category}.title"). The default is `true`.
+  # strict: true
+
+  ## Multiple scanners can be used. Their results are merged.
+  ## The options specified above are passed down to each scanner. Per-scanner options can be specified as well.
+  ## See this example of a custom scanner: https://github.com/glebm/i18n-tasks/wiki/A-custom-scanner-example
 
 ## Google Translate
 # translation:
@@ -81,11 +85,21 @@ search:
 #   api_key: "AbC-dEf5"
 
 ## Do not consider these keys missing:
-  # - 'errors.messages.{accepted,blank,invalid,too_short,too_long}'
+# ignore_missing:
+# - 'errors.messages.{accepted,blank,invalid,too_short,too_long}'
+# - '{devise,simple_form}.*'
+
+## Consider these keys used:
+# ignore_unused:
+# - 'activerecord.attributes.*'
+# - '{devise,kaminari,will_paginate}.*'
+# - 'simple_form.{yes,no}'
+# - 'simple_form.{placeholders,hints,labels}.*'
+# - 'simple_form.{error_notification,required}.:'
+
 ignore_missing:
   - 'product.units'
 
-## Consider these keys used:
 ignore_unused:
   - '{devise,activerecord,date,datetime,time,number,support,helpers}.*'
 
@@ -99,3 +113,16 @@ ignore_unused:
 ## Ignore these keys completely:
 # ignore:
 #  - kaminari.*
+
+## Sometimes, it isn't possible for i18n-tasks to match the key correctly,
+## e.g. in case of a relative key defined in a helper method.
+## In these cases you can use the built-in PatternMapper to map patterns to keys, e.g.:
+#
+# <%#= I18n::Tasks.add_scanner 'I18n::Tasks::Scanners::PatternMapper',
+#        only: %w(*.html.haml *.html.slim),
+#        patterns: [['= title\b', '.page_title']] %>
+#
+# The PatternMapper can also match key literals via a special %{key} interpolation, e.g.:
+#
+# <%#= I18n::Tasks.add_scanner 'I18n::Tasks::Scanners::PatternMapper',
+#        patterns: [['\bSpree\.t[( ]\s*%{key}', 'spree.%{key}']] %>

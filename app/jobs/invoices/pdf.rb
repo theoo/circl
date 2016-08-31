@@ -26,8 +26,8 @@ class Invoices::Pdf
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    # i18n-tasks-use I18n.t("invoices.background_tasks.pdf.title")
-    set_status(translation_options: ["invoices.background_tasks.pdf.title"])
+    # i18n-tasks-use I18n.t("invoices.jobs.pdf.title")
+    set_status(translation_options: ["invoices.jobs.pdf.title"])
 
     validates(params, [:invoice_id])
 

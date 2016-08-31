@@ -3,7 +3,7 @@
     %tr
       %th.desc= I18n.t('common.created_at')
       %th= I18n.t('common.description')
-      %th= I18n.t('background_task.views.status')
+      %th= I18n.t('common.jobs.status')
       %th.ignore-sort
 
   %tbody

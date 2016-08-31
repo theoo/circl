@@ -8,6 +8,18 @@ en:
     errors:
       no_file_submitted: no file submitted
       wrong_file_format: wrong file format
+    jobs:
+      cleanup:
+        attachments:
+          title: Title
+      errors:
+        unable_to_destroy: Unable to destroy
+      mailchimp:
+        title: Title
+      run_rake_task:
+        title: Title
+      search_engine:
+        title: Title
     notices:
       add_members_email_will_be_sent: add members email will be sent
       pdf_will_be_sent: You will receive an email at %{email} containing a link to the PDF when it will be ready.
@@ -37,12 +49,12 @@ en:
       tags: Tags
   affair:
     errors:
+      can_not_delete_if_has_children: Can not delete if has children
       cant_delete_affair_which_has_invoices: An affair with an invoice linked to it cannot be deleted.
       cant_update_title_if_it_has_subscriptions: Title cannot be updated as long as subscriptions are attached to this affair.
       parent_id_cannot_be_self: Parent cannot be the current affair.
       unable_to_compute_value_without_taxes_if_extras_have_different_vat_values: It's impossible to compute the value without taxes if the affair has extras with differents VAT values.
       wrong_date: wrong date
-      can_not_delete_if_has_children: Can not delete if has children
     notices:
       destroy: 'Destroying an affair will remove all its content: invoices, subscriptions, services, products and extras ! <br /> It is impossible to destroy an affair which have related receipts.'
       document_export_explanation: Please select sorting criterias for the generation.
@@ -58,6 +70,8 @@ en:
         show_owner: show owner's page
       affair_number: Affair n°%{number}
       alias_name: alias
+      archive: Archive
+      archive_howto: Archive howto
       arts: ART
       available_statuses: available statuses
       bid_value: The bid value is
@@ -70,6 +84,7 @@ en:
       description: description
       document_export: Documents generation
       estimate: estimate
+      estimate_howto: Estimate howto
       execution_notes: execution notes
       extras: Extras
       footer: comments
@@ -94,6 +109,7 @@ en:
       select_payment_interval: Select extraction interval
       select_thresholds: Select minimum threshold
       seller: seller
+      sold_date: Sold date
       stakeholders: stakeholders
       status: status
       statuses:
@@ -116,6 +132,7 @@ en:
       threshold_value_unit: value threshold
       title: title
       title_filter: title filter
+      unbillable_howto: Unbillable howto
       update_date: last update
       value:
         bid: bid
@@ -126,11 +143,6 @@ en:
         without_taxes: wo/ taxes
       value_with_taxes_is: The value with taxes is
       variant_prefix: Variant
-      archive: Archive
-      archive_howto: Archive howto
-      estimate_howto: Estimate howto
-      unbillable_howto: Unbillable howto
-      sold_date: Sold date
   affairs_condition:
     views:
       affairs: affairs
@@ -231,6 +243,7 @@ en:
     color: color
     confirm: Confirm please
     contact: contact
+    contact_admin: Contact admin
     copy: copy
     create: create
     created_at: created at
@@ -245,6 +258,7 @@ en:
     destroy: destroy
     directory: Directory
     documents: documents
+    done: Done
     double_check_confirm: Really confirm the action
     download: download
     errors:
@@ -276,6 +290,7 @@ en:
     good: good
     group_edit: group edit
     height: height
+    help: Help
     hour: hour
     id: ID
     import: import
@@ -285,6 +300,9 @@ en:
     item_selected:
       one: one item selected
       other: "%{count} items selected"
+    jobs:
+      progress: Progress
+      status: Status
     key: key
     line: line
     members: members
@@ -318,6 +336,7 @@ en:
     save: save
     select_file: Please select a file
     settings: Settings
+    sold_at: Sold at
     step: step
     strong: strong
     successfully_updated: mise à jour réussie
@@ -332,6 +351,7 @@ en:
     this_document_will_be_accessible_for_this_duration: This document will be accessible during %{duration}.
     title: title
     to: to
+    toggle_help: Toggle help
     toolbox_export: Export
     toolbox_import: Import
     toolbox_import_bank_file: Import a bank file
@@ -349,13 +369,11 @@ en:
     value_with_taxes: value with taxes
     vat: VAT
     volume: volume
+    waiting: Waiting
     weak: weak
     weight: weight
     width: width
     year: year
-    help: Help
-    toggle_help: Toggle help
-    sold_at: Sold at
   creditor:
     date_fields:
       creation: creation
@@ -386,6 +404,7 @@ en:
       accounting: accounting
       affair_id: ID affaire
       affair_name: nom de l'affair
+      counterpart_account: Counterpart account
       creditor_attributes: creditor attributes
       creditor_name: name
       creditors_example_file_desc: creditors example file desc
@@ -582,6 +601,10 @@ en:
       show_invoice_value: show invoice value
       thumb: thumb
       with_bvr: with bvr
+  invoices:
+    jobs:
+      pdf:
+        title: Title
   item:
     views:
       category: category
@@ -658,8 +681,9 @@ en:
         open_invoices: open invoices
         open_salaries: open salaries
         shortcuts: shortcuts
-        timesheet: timesheet
         statistics: Statistics
+        timesheet: timesheet
+        your_activity: Your activity
       tech_support: tech support
       welcome: welcome
     errors:
@@ -687,9 +711,12 @@ en:
       invalid_line: Invalid line
       invalid_location: Invalid location "%{location}"
       line: line
-      not_existing_job: The job "%{job}" will be created.
       not_existing_: 'Not existing '
+      not_existing_job: The job "%{job}" will be created.
     mail:
+      admin_receipts_ensure_your_selection_returns_receipts: Admin receipts ensure your selection returns receipts
+      admin_receipts_failed_to_generate: Admin receipts failed to generate
+      admin_receipts_generation_failed: Admin receipts generation failed
       admin_receipts_were_generated: Receipt documents generation
       admin_receipts_were_generated_explanation: You can download the requested file by clicking the following link
       admin_receipts_were_generated_title: Receipt documents generation succeed
@@ -720,6 +747,7 @@ en:
       identifier_explanation: "<h3>Start with an identifier</h3> The identifier should contain at least with one of the three following requirements: <ul><li>an organization name</li><li>a first name/last name pair</li><li>an email address</li></ul>"
       successfully_created_explanation: "<h3><i>%{name}</i> has successfully been created</h3> You can now set tags, affairs, salaries, etc to this contact."
     views:
+      account_settings: Account settings
       activities: activities
       address: address
       affairs: affairs
@@ -800,6 +828,25 @@ en:
       the_following_prices_will_be_updated: the following prices will be updated
       this_product_will_be_removed_in_all_related_affairs: This product will be removed from all related affairs.
       you_are_editing_many_product_at_a_time: Warning! You are about to edit %{products_count} products in a row. <br /> If you edit a parameter and whant value to be updated, check the value checkbox and leave empty its value.
+    units:
+      cm:
+        symbol: cm
+        title: centimeter
+      g:
+        symbol: g
+        title: gram
+      kg:
+        symbol: kg
+        title: kilogram
+      m:
+        symbol: m
+        title: meter
+      mm:
+        symbol: mm
+        title: millimeter
+      pc:
+        symbol: pc
+        title: unit
     views:
       affair: affair
       after_sale: after sale
@@ -844,25 +891,6 @@ en:
       variants: variants
       warranty_begin: warranty begin
       warranty_end: warranty end
-    units:
-      cm:
-        symbol: cm
-        title: centimeter
-      g:
-        symbol: g
-        title: gram
-      kg:
-        symbol: kg
-        title: kilogram
-      m:
-        symbol: m
-        title: meter
-      mm:
-        symbol: mm
-        title: millimeter
-      pc:
-        symbol: pc
-        title: unit
   product_program:
     errors:
       program_failed_to_imported: Program failed to imported
@@ -963,6 +991,10 @@ en:
       subscription_title: subscription title
       value_date: value date
       value_total: value total
+  receipts:
+    jobs:
+      documents:
+        title: Title
   role:
     errors:
       cant_delete_if_in_use: cant delete if in use
@@ -973,6 +1005,10 @@ en:
         view_role_members: view role members
       members: members
       permissions: permissions
+  salaries:
+    jobs:
+      pdf:
+        title: Title
   salary:
     errors:
       from_and_to_dates_should_be_in_the_same_year: From and to dates should be in the same year
@@ -1160,6 +1196,18 @@ en:
         invoice_template: invoice template
         private_tag: private tag
       values_title: Price rules
+  subscriptions:
+    jobs:
+      add_people_and_email:
+        title: Title
+      concat_and_email_pdf:
+        title: Title
+      merge_subscriptions:
+        title: Title
+      prepare_pdf_and_email:
+        title: Title
+      update_invoices_and_email:
+        title: Title
   tag:
     errors:
       cannot_be_its_own_parent: cannot be its own parent
@@ -1268,3 +1316,9 @@ en:
         tasks_report: "(Services) List of tasks"
       thumb: thumb
       upload_new_template: upload the new template (odt)
+  templates:
+    jobs:
+      generic_thumbnails:
+        title: Title
+      invoice_thumbnails:
+        title: Title

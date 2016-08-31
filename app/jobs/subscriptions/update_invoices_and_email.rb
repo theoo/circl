@@ -25,8 +25,8 @@ class Subscriptions::UpdateInvoicesAndEmail
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    # i18n-tasks-use I18n.t("subscriptions.background_tasks.update_invoices_and_email.title")
-    set_status(translation_options: ["subscriptions.background_tasks.update_invoices_and_email.title"])
+    # i18n-tasks-use I18n.t("subscriptions.jobs.update_invoices_and_email.title")
+    set_status(translation_options: ["subscriptions.jobs.update_invoices_and_email.title"])
 
     required = %i(subscription_id user_id)
     validates(params, required)
@@ -44,13 +44,13 @@ class Subscriptions::UpdateInvoicesAndEmail
 
     total = subscription.people.count
     subscription.people.each_with_index do |p, index|
-      at(index + 1, total, I18n.t("backgroun_tasks.progress", index: index + 1, total: total))
+      at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
       p.update_index
     end
 
     PersonMailer.send_subscription_invoices_updated(@user_id, @subscription_id).deliver
 
-    completed(message: ["subscriptions.background_tasks.update_invoices_and_email.an_email_have_been_sent"])
+    completed(message: ["subscriptions.jobs.update_invoices_and_email.an_email_have_been_sent"])
 
   end
 end

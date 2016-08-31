@@ -25,8 +25,8 @@ class Subscriptions::PreparePdfsAndEmail
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    # i18n-tasks-use I18n.t("subscriptions.background_tasks.prepare_pdf_and_email.title")
-    set_status(translation_options: ["subscriptions.background_tasks.prepare_pdf_and_email.title"])
+    # i18n-tasks-use I18n.t("subscriptions.jobs.prepare_pdf_and_email.title")
+    set_status(translation_options: ["subscriptions.jobs.prepare_pdf_and_email.title"])
 
     required = %i(subscription_id query user_id current_locale)
     validates(params, required)
@@ -45,7 +45,7 @@ class Subscriptions::PreparePdfsAndEmail
     invoices_ids = []
     total = people_ids.size
     people_ids.each_with_index do |id, index|
-      at(index + 1, total, I18n.t("backgroun_tasks.progress", index: index + 1, total: total))
+      at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
 
       Person.find(id).invoices.each do |i|
         next unless i.affair.subscription_ids.include?(@subscription_id)
@@ -59,7 +59,7 @@ class Subscriptions::PreparePdfsAndEmail
       end
     end
 
-    completed(message: ["subscriptions.background_tasks.prepare_pdf_and_email.invoices_generation_succeed"])
+    completed(message: ["subscriptions.jobs.prepare_pdf_and_email.invoices_generation_succeed"])
 
     Subscriptions::ConcatAndEmailPdf.perform(nil,
       subscription_id: @subscription_id,
