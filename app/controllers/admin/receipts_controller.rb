@@ -222,10 +222,12 @@ class Admin::ReceiptsController < ApplicationController
     errors[:search_string] = I18n.t('activerecord.errors.messages.blank') if query[:search_string].blank?
 
     respond_to do |format|
+
       if errors.empty?
-        people = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order])
-        BackgroundTasks::GenerateReceiptsDocumentAndEmail.schedule(people_ids: people.map{ |p| p.id.to_i },
-          person: current_person,
+
+        Receipts::Documents.create(
+          query: query,
+          user_id: current_person.id,
           from: from,
           to: to,
           format: params[:format],
@@ -235,24 +237,30 @@ class Admin::ReceiptsController < ApplicationController
           global_value: params[:global_value],
           unit_overpaid: params[:unit_overpaid],
           global_overpaid: params[:global_overpaid])
+
         format.json { render json: {} }
+
         format.any do
           # TODO improve report
-          flash[:notice] = I18n.t("admin.notices.receipts_generation_started",
-            members_count: people.count,
-            email: current_person.email)
+          flash[:notice] = I18n.t("admin.notices.receipts_generation_started", email: current_person.email)
           redirect_to admin_path(anchor: 'finances')
         end
+
       else
+
         format.json do
           render json: errors, status: :unprocessable_entity
         end
+
         format.any do
           flash[:alert] = I18n.t("directory.errors.query_empty") if errors[:search_string]
           redirect_to admin_path(anchor: 'finances')
         end
+
       end
+
     end
+
   end
 
   private

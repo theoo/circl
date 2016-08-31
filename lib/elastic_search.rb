@@ -152,7 +152,7 @@ module ElasticSearch
           if person.new_record? # If validation failed, it may try to update anyways.
             return false # returning false should prevent association from beeing saved.
           else
-            BackgroundTasks::UpdateIndexForPeople.schedule(:people_ids => [person.id])
+            Synchronize::SearchEngine.create(:people_ids => [person.id])
           end
         end
 
@@ -174,7 +174,7 @@ module ElasticSearch
         end
 
         def reindex_people
-          BackgroundTasks::UpdateIndexForPeople.schedule(:people_ids => people.map(&:id)) if people.count > 0
+          Synchronize::SearchEngine.create(:people_ids => people.map(&:id)) if people.count > 0
           true
         end
       end

@@ -167,7 +167,7 @@ class Settings::ProductProgramsController < ApplicationController
 
     respond_to do |format|
       if success
-        PersonMailer.send_product_programs_import_report(current_person, @programs, @columns).deliver
+        PersonMailer.send_product_programs_import_report(current_person.id, @programs, @columns).deliver
         flash[:notice] = I18n.t('product_program.notices.program_imported', email: current_person.email)
         format.html { redirect_to settings_path(anchor: 'affairs')  }
       else

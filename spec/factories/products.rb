@@ -1,6 +1,58 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
+
   factory :product do
+    # provider
+    # after_sale
+    sequence(:key) { |n| "key #{SecureRandom.hex}"}
+    sequence(:title) { |n| "product #{n}"}
+    sequence(:category) { |n| "category #{n}"}
+    description "Temporary description"
+    has_accessories false
+    archive false
+    unit_symbol I18n.t("product.units").keys.sample
+    price_to_unit_rate 1
+    # width
+    # height
+    # depth
+    # volume
+    # weight
   end
+
+  factory :product_item do
+    # parent
+    affair
+    product
+    association :program, factory: :product_program
+    association :category, factory: :affairs_products_category
+
+    sequence(:position) {|n| n}
+    quantity { rand(10) }
+    bid_percentage { rand(50) }
+    value { rand(100) }
+    # comment
+    # ordered_at
+    # confirmed_at
+    # delivery_at
+    # warranty_begin
+    # warranty_end
+  end
+
+  factory :product_program do
+    sequence(:key) { |n| "pg #{n} "}
+    sequence(:program_group) { |n| "product group #{n} "}
+    sequence(:title) { |n| "product program #{n} "}
+    description "Temporary description"
+    archive false
+  end
+
+  factory :product_variant do
+    product
+
+    program_group { ProductProgram.select("DISTINCT product_programs.program_group").map(&:program_group).sample }
+    sequence(:title) { |n| "product variant #{n} "}
+    buying_price { rand(100) }
+    selling_price { rand(100) }
+    art { rand(10) }
+  end
+
 end

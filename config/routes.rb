@@ -1,4 +1,8 @@
+require 'resque/server'
+
 CIRCL::Application.routes.draw do
+
+  mount Resque::Server.new, at: "/resque"
 
   get 'requires_browser_update' => 'settings#requires_browser_update'
 

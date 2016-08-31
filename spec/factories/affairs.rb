@@ -1,40 +1,50 @@
 # encoding: utf-8
 
 FactoryGirl.define do
+
+  ### Basic Pupets
   factory :affair do
     sequence(:title) { |n| "affair #{n}" }
     association :owner, :factory => :person
     association :buyer, :factory => :person
     association :receiver, :factory => :person
-    subscriptions { [FactoryGirl.create(:subscription)] }
   end
 
-  factory :invoice do
-    sequence(:title) { |n| "invoice #{n}" }
-    value 100
+  factory :affairs_condition do
+    sequence(:title) { |n| "condition #{n}" }
+    description "Temporary description"
+    archive false
+  end
+
+  # TODO rename affairs_products_category in affair_products_category everywhere
+  factory :affairs_products_category do
     affair
-    invoice_template
+    sequence(:title) { |n| "category #{n}" }
+    sequence(:position) { |n| n }
   end
 
-  factory :receipt do
-    value 100
-    value_date Date.today
-    invoice
+  # TODO rename affairs_stakeholder in affair_stakeholder everywhere
+  factory :affairs_stakeholder do
+    person
+    affair
+    sequence(:title) { |n| "stakeholder #{n}" }
   end
 
-  factory :subscription do
-    sequence(:title) { |n| "subscription #{n}" }
+  # TODO rename affairs_subscription in affair_subscription everywhere
+  factory :affairs_subscription do
+    affair
+    subscription
   end
 
-  factory :subscription_value do
-    invoice_template
-    value 100
-    position 0
+  factory :extra do
+    affair
+    sequence(:title) { |n| "extra #{n}" }
+    description "Temporary description"
+    value { rand(1000) }
+    quantity { rand(10) }
+    sequence(:position) { |n| n }
   end
 
-  factory :invoice_template do
-    sequence(:title) { |n| "invoice template #{n}" }
-    sequence(:html)  { |n| "html #{n}" }
-    language
-  end
+  ### Extended Pupets
+
 end

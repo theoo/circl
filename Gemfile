@@ -49,7 +49,7 @@ gem 'turbolinks', '2.2.2'
 
 gem 'gon'
 
-# gem 'jbuilder'
+gem 'jbuilder'
 gem 'execjs', '1.4.0'
 gem 'therubyracer', '0.12.1', platforms: :ruby
 # gem 'i18n-js', '2.1.2'
@@ -82,6 +82,10 @@ gem 'rake'
 # Monitoring
 gem 'rails_exception_handler', "~> 2"
 
+# Background jobs
+gem 'resque'
+gem 'resque-status'
+
 ### custom gem
 # gem 'plugin', :path => 'path/to/circl/plugin'
 
@@ -95,6 +99,7 @@ group :development, :test do
   gem 'factory_girl_rails', '4.4.0'
   gem 'rspec-rails', '3.0.2'
   gem 'syntax', '1.2.0'
+  gem 'database_cleaner'
 
   ### IRB
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
@@ -104,14 +109,17 @@ group :development, :test do
   gem 'spork-rails', '4.0.0'
   gem 'spring', '1.1.3'
 
-  gem 'web-console', '~> 2.0'
   gem 'quiet_assets'
 
   gem 'meta_request'
+  gem 'net-ssh'
+  gem 'net-sftp'
 end
 
+gem 'web-console', group: :development
+
 # FUTURE
-# gem 'websocket-rails'
+# gem 'websocket-rails' # RAILS 5
 
 # iCalendar
 # gem 'icalendar'

@@ -1,20 +1,26 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
+
+  ### Basic Pupets
   factory :creditor do
-    creditor_id 1
-    affair_id 1
-    title "MyString"
-    description "MyText"
-    value_in_cents 1
-    value_currency "MyString"
-    vat_in_cents 1
-    vat_currency "MyString"
-    invoice_received_on "2015-07-20"
-    invoice_end_on "2015-07-20"
-    invoice_in_books_on "2015-07-20"
-    discount_percentage 1.5
-    paid_on "2015-07-20"
-    payment_in_books_on "2015-07-20"
+    association :creditor, factory: :person
+    # affair
+    sequence(:title) { |n| "credit #{n}" }
+    description "Temporary description"
+    value { rand(1000) }
+    invoice_received_on 1.day.ago
+    invoice_ends_on 1.month.since
+    invoice_in_books_on 1.weeks.since
+    discount_percentage 10
+    discount_ends_on 2.weeks.since
+    paid_on 1.week.since
+    payment_in_books_on 6.weeks.since
+    sequence(:account) { |n| SecureRandom.hex }
+    sequence(:transitional_account) { |n| SecureRandom.hex }
+    sequence(:discount_account) { |n| SecureRandom.hex }
+    sequence(:vat_account) { |n| SecureRandom.hex }
+    sequence(:vat_discount_account) { |n| SecureRandom.hex }
   end
+
+  ### Extended Pupets
+
 end

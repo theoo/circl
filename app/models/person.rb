@@ -231,8 +231,6 @@ class Person < ActiveRecord::Base
             class_name: 'Salaries::Salary',
             dependent: :destroy
 
-  has_many  :background_tasks
-
   # tasks this person have edited
   has_many  :executed_tasks,
             class_name: '::Task',

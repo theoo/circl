@@ -22,6 +22,31 @@ class AttachmentGenerator
 
   include Serenity::Generator
 
+  class << self
+
+    def take_snapshot(obj)
+      # Convert to PDF in the same dir
+      if obj.odt.try(:path)
+        system("lowriter --headless --convert-to pdf \"#{obj.odt.path}\" --outdir \"#{obj.odt.path.gsub(/([^\/]+.odt)$/, "")}\"")
+
+        # Open new file
+        pdf_path = obj.odt.path.gsub(/\.odt$/,".pdf")
+        pdf_file = File.open(pdf_path, "r")
+
+        # will be converted in png when calling :thumb
+        obj.snapshot = pdf_file
+        obj.save
+      end
+
+    rescue Exception => e
+
+      puts e.inspect
+      false
+
+    end
+
+  end
+
   # TODO remove useless reference and provide template overriding instead.
   def initialize(object, reference = nil, relations = [])
     # TODO limit access to object, provide a list of allowd methods

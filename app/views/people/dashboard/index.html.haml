@@ -72,7 +72,7 @@
             .panel-title
               = I18n.t('person.dashboard.panels.messages')
 
-      - if can? :read, BackgroundTask
+      - if can? :read, @person
         #dashboard_background_tasks.panel.panel-default
           .panel-heading
             .panel-title

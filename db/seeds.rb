@@ -24,5 +24,6 @@ end
 # Schedule that we need to generate the invoice templates' screenshots
 # *after* the server has started, otherwise it cannot serve assets
 # needed for the snapshot creation
-BackgroundTasks::RunRakeTask.create!(:options => { :name => 'db:seed:invoice_templates:snapshots:reset' })
-BackgroundTasks::RunRakeTask.create!(:options => { :name => 'db:seed:generic_templates:snapshots:reset' })
+RunRakeTask.perform(nil, :name => 'db:stored_procedures:load')
+# RunRakeTask.perform(nil, :name => 'db:seed:invoice_templates:snapshots:reset')
+# RunRakeTask.create!(nil, :name => 'db:seed:generic_templates:snapshots:reset')

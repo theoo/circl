@@ -1,5 +1,7 @@
 *.swp
 .DS_Store
+._*
+Thumbs.db
 .bundle
 .rvmrc
 /Gemfile.lock

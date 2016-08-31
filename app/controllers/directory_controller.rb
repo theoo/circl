@@ -165,12 +165,10 @@ class DirectoryController < ApplicationController
       else
 
         flash[:notice] = I18n.t('common.notices.synchronization_started', email: current_person.email)
-        BackgroundTasks::SynchronizeMailchimp.schedule(
-          person_id: current_person.id,
+        Synchronize::Mailchimp.create(
+          user_id: current_person.id,
           list_id: params[:id],
-          directory_query: query[:search_string]
-          )
-
+          query: query)
       end
 
       respond_to do |format|
@@ -301,7 +299,7 @@ class DirectoryController < ApplicationController
 
 
       # Reindex the whole database
-      BackgroundTasks::RunRakeTask.schedule(name: 'elasticsearch:sync')
+      RunRakeTask.create(name: 'elasticsearch:sync')
     end
 
     # Ensure ES and geoloc are enable again, whatever happend during transaction
@@ -316,7 +314,7 @@ class DirectoryController < ApplicationController
     rescue
     end
 
-    PersonMailer.send_people_import_report(current_person, report[:people]).deliver
+    PersonMailer.send_people_import_report(current_person.id, report[:people]).deliver
     flash[:notice] = I18n.t('directory.notices.people_imported', email: current_person.email)
     Activity.create!(person: current_person, resource_type: 'Admin', resource_id: '0', action: 'info', data: { people: "imported at #{Time.now}" })
     redirect_to directory_path

@@ -31,24 +31,26 @@ class Admin::SubscriptionsController < ApplicationController
   end
 
   def show
-    if params[:query]
-      query = HashWithIndifferentAccess.new(JSON.parse(params[:query]))
-      people = ElasticSearch.search("subscriptions.id:#{@subscription.id}", query[:selected_attributes], query[:attributes_order])
-    end
+    query = JSON.parse params[:query]
+    query ||= {}
+    query.symbolize_keys!
+    # Enforce search string, keep attributes order.
+    query[:search_string] = "subscriptions.id:#{@subscription_id}"
 
     respond_to do |format|
       format.json { render json: @subscription }
       format.pdf do
         if @subscription.pdf_up_to_date?(query) and File.exist?(@subscription.pdf.path)
-          send_data File.read(@subscription.pdf.path), filename: "subscription_#{params[:id]}.pdf", type: 'application/pdf'
+          send_data File.read(@subscription.pdf.path),
+            filename: "subscription_#{params[:id]}.pdf",
+            type: 'application/pdf'
         else
           if params[:query]
-            BackgroundTasks::PrepareSubscriptionPdfsAndEmail.schedule(subscription_id: @subscription.id,
-                                                                      people_ids: people.map{ |p| p.id.to_i },
-                                                                      person: current_person,
-                                                                      query: query,
-                                                                      current_locale: I18n.locale)
-
+            Subscriptions::PreparePdfsAndEmail.create(
+              subscription_id: @subscription.id,
+              query: query,
+              user_id: current_person.id,
+              current_locale: I18n.locale)
             flash[:notice] = I18n.t('admin.notices.pdf_will_be_sent', email: current_person.email)
           else
             flash[:error] = I18n.t('directory.errors.query_invalid')
@@ -63,6 +65,7 @@ class Admin::SubscriptionsController < ApplicationController
     respond_to do |format|
       query = JSON.parse params[:query]
       query.symbolize_keys!
+
       if query[:search_string].blank?
         format.json { render json: { search_string: [I18n.t('activerecord.errors.messages.blank')] }, status: :unprocessable_entity }
         format.html {
@@ -70,15 +73,18 @@ class Admin::SubscriptionsController < ApplicationController
           redirect_to admin_path(anchor: 'affairs')
         }
       else
-        people = ElasticSearch.search(query[:search_string], query[:selected_attributes], query[:attributes_order])
-        BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(subscription_id: @subscription.id,
-                                                                  people_ids: people.map{ |p| p.id.to_i },
-                                                                  person: current_person)
+        Subscriptions::AddPeopleAndEmail.create(
+          query: query,
+          subscription_id: @subscription.id,
+          user_id: current_person.id,
+          parent_subscription_id: nil,
+          status: nil)
+
         flash[:notice] = I18n.t('admin.notices.add_members_email_will_be_sent', email: current_person.email)
         format.json { render json: {} }
         format.html do
           # TODO improve report
-          flash[:notice] = I18n.t("subscription.notices.members_added", members_count: people.count)
+          flash[:notice] = I18n.t("subscription.notices.members_added")
           redirect_to admin_path(anchor: 'affairs')
         end
       end
@@ -111,9 +117,9 @@ class Admin::SubscriptionsController < ApplicationController
       Subscription.transaction do
         @subscription.affairs.each do |affair|
           new_affair = Affair.new title: transfer_to.title,
-                                  owner_id: affair.owner_id,
-                                  created_at: affair.created_at,
-                                  updated_at: affair.updated_at
+            owner_id: affair.owner_id,
+            created_at: affair.created_at,
+            updated_at: affair.updated_at
 
           # Affair requires to be saved before adding subscriptions
           new_affair.save!
@@ -132,11 +138,11 @@ class Admin::SubscriptionsController < ApplicationController
             # Create the new invoice
             overpaid_value = invoice.overpaid_value
             new_invoice = Invoice.new value: overpaid_value,
-                                      title: new_affair.title,
-                                      affair_id: new_affair.id,
-                                      invoice_template_id: transfer_to.invoice_template_for(invoice.owner),
-                                      created_at: invoice.created_at,
-                                      updated_at: invoice.updated_at
+              title: new_affair.title,
+              affair_id: new_affair.id,
+              invoice_template_id: transfer_to.invoice_template_for(invoice.owner),
+              created_at: invoice.created_at,
+              updated_at: invoice.updated_at
             unless new_invoice.save
               errors = new_invoice.errors
               raise ActiveRecord::Rollback
@@ -164,11 +170,11 @@ class Admin::SubscriptionsController < ApplicationController
 
             # Create the new receipt
             new_receipt = Receipt.new value: new_invoice.value,
-                                      invoice_id: new_invoice.id,
-                                      value_date: receipt.value_date,
-                                      means_of_payment: receipt.means_of_payment,
-                                      created_at: receipt.created_at,
-                                      updated_at: receipt.updated_at
+              invoice_id: new_invoice.id,
+              value_date: receipt.value_date,
+              means_of_payment: receipt.means_of_payment,
+              created_at: receipt.created_at,
+              updated_at: receipt.updated_at
             unless new_receipt.save
               errors = new_receipt.errors
               raise ActiveRecord::Rollback
@@ -199,10 +205,10 @@ class Admin::SubscriptionsController < ApplicationController
 
       # append values
       params[:values].each do |v|
-        sv =  @subscription.values.new(value: v[:value],
-                position: v[:position],
-                private_tag_id: v[:private_tag_id],
-                invoice_template_id: v[:invoice_template_id])
+        sv = @subscription.values.new(value: v[:value],
+          position: v[:position],
+          private_tag_id: v[:private_tag_id],
+          invoice_template_id: v[:invoice_template_id])
         unless sv.save
           sv.errors.messages.each do |k,v|
             @subscription.errors.add(("values[][" + k.to_s + "]").to_sym, v.join(", "))
@@ -219,11 +225,17 @@ class Admin::SubscriptionsController < ApplicationController
           people_ids = Subscription.find(params[:parent_id]).get_people_from_affairs_status(:paid).map(&:id)
         end
 
-        BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(subscription_id: @subscription.id,
-          people_ids: people_ids,
-          person: current_person,
-          parent_subscription_id: params[:parent_id],
-          status: params[:status])
+        unless people_ids.empty?
+          search_string = "id:(#{people_ids.join(' ')})"
+
+          Subscriptions::AddPeopleAndEmail.create(
+            subscription_id: @subscription.id,
+            query: { search_string: search_string },
+            user_id: current_person.id,
+            parent_subscription_id: params[:parent_id],
+            status: params[:status])
+        end
+
       end
       succeed = true
     end
@@ -267,9 +279,9 @@ class Admin::SubscriptionsController < ApplicationController
           sv.invoice_template_id = v[:invoice_template_id]
         else
           sv = @subscription.values.new(value: v[:value],
-                position: v[:position],
-                private_tag_id: v[:private_tag_id],
-                invoice_template_id: v[:invoice_template_id])
+            position: v[:position],
+            private_tag_id: v[:private_tag_id],
+            invoice_template_id: v[:invoice_template_id])
         end
 
         unless sv.save
@@ -281,12 +293,12 @@ class Admin::SubscriptionsController < ApplicationController
       end
 
       # TODO ideally this should be in after_save callback in Subscription model. Only current_person (email) prevent it.
-      BackgroundTasks::UpdateSubscriptionInvoicesAndEmail.schedule( subscription_id: @subscription.id,
-                                                                    person: current_person )
+      Subscriptions::UpdateInvoicesAndEmail.create(
+        subscription_id: @subscription.id,
+        user_id: current_person.id)
 
       succeed = true
     end
-
 
     respond_to do |format|
       if succeed
@@ -421,10 +433,10 @@ class Admin::SubscriptionsController < ApplicationController
       if @errors.size > 0
         format.json { render json: @errors , status: :unprocessable_entity }
       else
-        BackgroundTasks::MergeSubscriptions.schedule(
+        Subscriptions::MergeSubscriptions.create(
           source_subscription_id: params[:id],
           destination_subscription_id: params[:transfer_to_subscription_id],
-          person: current_person)
+          user_id: current_person.id)
 
         format.json { render json: {} }
       end

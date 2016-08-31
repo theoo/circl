@@ -89,7 +89,7 @@ class Language < ActiveRecord::Base
 
   def reindex_people
     ids = main_people.map(&:id) + communication_people.map(&:id)
-    BackgroundTasks::UpdateIndexForPeople.schedule(people_ids: ids.uniq)
+    Synchronize::SearchEngine.create(people_ids: ids.uniq)
     true
   end
 

@@ -79,10 +79,10 @@ class Product < ActiveRecord::Base
   ###################
 
   validates :key, presence: true,
-                  length: { maximum: 255 },
-                  uniqueness: true
+    length: { maximum: 255 },
+    uniqueness: true
   validates :unit_symbol, presence: true,
-                          length: { maximum: 255 }
+    length: { maximum: 255 }
   validates :price_to_unit_rate, presence: true
 
   ########################

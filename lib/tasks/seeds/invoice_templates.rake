@@ -44,8 +44,10 @@ namespace :db do
         task :reset => :environment do
           InvoiceTemplate.all.each do |invoice_template|
             print "Reseting invoice template snapshot for #{invoice_template.title}... "
-            BackgroundTasks::GenerateInvoiceTemplateJpg.process!(:invoice_template_id => invoice_template.id,
-              :person => Person.find(ApplicationSetting.value(:me)))
+            Templates::InvoiceThumbnails.perform(
+              nil,
+              :invoice_template_id => invoice_template.id,
+              :person => Person.find(ApplicationSetting.value(:me)) )
             puts 'done!'
           end
         end

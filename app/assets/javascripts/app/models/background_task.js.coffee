@@ -16,9 +16,7 @@
 
 class App.BackgroundTask extends Spine.Model
 
-  @configure 'BackgroundTask', 'id', 'type', 'options', 'person_id',
-  						'person_name', 'title', 'update_at', 'created_at', 'ui_trigger',
-  						'status'
+  @configure 'BackgroundTask', 'uuid'
 
   @extend Spine.Model.Ajax
   @url: ->
