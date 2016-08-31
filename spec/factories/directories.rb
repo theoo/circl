@@ -23,7 +23,7 @@ FactoryGirl.define do
 
   factory :language do
     sequence(:name) { |n| "language #{n} - #{SecureRandom.hex}" }
-    code SecureRandom.hex(2)
+    code { I18n.available_locales.sample }
   end
 
   factory :ldap_attribute do

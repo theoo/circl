@@ -41,7 +41,7 @@ class PersonMailer < ActionMailer::Base
     @errors = errors
     @people_count = people_count
     mail( to: person.email,
-          subject: I18n.t('person.mail.mailchimp_synchronisation_report'))
+      subject: I18n.t('person.mail.mailchimp_synchronisation_report'))
   end
 
   def send_receipts_import_report(user_id, receipts = [], errors = [])
@@ -50,7 +50,7 @@ class PersonMailer < ActionMailer::Base
     @receipts = receipts
     @errors   = errors
     mail( to: person.email,
-          subject: I18n.t('person.mail.receipts_import_report'))
+      subject: I18n.t('person.mail.receipts_import_report'))
   end
 
   def send_people_import_report(user_id, people)
@@ -60,7 +60,7 @@ class PersonMailer < ActionMailer::Base
     @invalid_people = []
     people.each{|p| (p.errors.empty? ? @valid_people : @invalid_people) << p }
     mail( to: person.email,
-          subject: I18n.t('person.mail.people_import_report'))
+      subject: I18n.t('person.mail.people_import_report'))
   end
 
   def send_subscription_pdf_link(user_id, subscription_id)
@@ -68,9 +68,9 @@ class PersonMailer < ActionMailer::Base
     I18n.locale = person.main_communication_language.try(:symbol)
     @subscription = Subscription.find(subscription_id)
     mail( to: person.email,
-          subject: I18n.t('person.mail.pdf_for_subscription',
-          title: @subscription.title,
-          id: @subscription.id))
+      subject: I18n.t('person.mail.pdf_for_subscription',
+        title: @subscription.title,
+        id: @subscription.id))
   end
 
   def send_members_added_to_subscription(user_id, subscription_id, new_people_ids, existing_people_ids)
@@ -79,10 +79,10 @@ class PersonMailer < ActionMailer::Base
     @new_people = new_people_ids.map{ |id| Person.find(id) }
     @existing_people = existing_people_ids.map{ |id| Person.find(id) }
     @subscription = Subscription.find(subscription_id)
-    mail( to: person.email,
-          subject: I18n.t('person.mail.members_were_added_to_subscription',
-          title: @subscription.title,
-          id: @subscription.id))
+    mail to: person.email,
+      subject: I18n.t('person.mail.members_were_added_to_subscription',
+        title: @subscription.title,
+        id: @subscription.id)
   end
 
   def send_subscriptions_merged(user_id, source_subscription_id, source_subscription_title, destination_subscription_id)
@@ -90,22 +90,22 @@ class PersonMailer < ActionMailer::Base
     I18n.locale = person.main_communication_language.try(:symbol)
     @source_subscription_title, @source_subscription_id = source_subscription_title, source_subscription_id
     @destination_subscription = Subscription.find(destination_subscription_id)
-    mail( to: person.email,
-          subject: I18n.t('person.mail.subscription_were_merged',
-          destination_title: @destination_subscription.title,
-          destination_id: @destination_subscription.id,
-          source_title: @source_subscription_title,
-          source_id: @source_subscription_id))
+    mail to: person.email,
+      subject: I18n.t('person.mail.subscription_were_merged',
+        destination_title: @destination_subscription.title,
+        destination_id: @destination_subscription.id,
+        source_title: @source_subscription_title,
+        source_id: @source_subscription_id)
   end
 
   def send_subscription_invoices_updated(user_id, subscription_id)
     person = Person.find(user_id)
     I18n.locale = person.main_communication_language.try(:symbol)
     @subscription = Subscription.find subscription_id
-    mail( to: person.email,
-          subject: I18n.t('person.mail.subscription_were_updated',
-          title: @subscription.title,
-          id: @subscription.id))
+    mail to: person.email,
+      subject: I18n.t('person.mail.subscription_were_updated',
+        title: @subscription.title,
+        id: @subscription.id)
   end
 
   def send_receipts_document_link(user_id, cached_doc)
@@ -127,8 +127,8 @@ class PersonMailer < ActionMailer::Base
     @exception = exception
     @current_person = Person.find(user_id)
     mail( to: Rails.configuration.settings['directory_admin_email'],
-          subject: I18n.t("person.mail.report_error_subject"),
-          layout: false)
+      subject: I18n.t("person.mail.report_error_subject"),
+      layout: false)
   end
 
   def send_products_import_report(user_id, products, columns)
@@ -137,7 +137,7 @@ class PersonMailer < ActionMailer::Base
     @columns = columns
     I18n.locale = person.main_communication_language.try(:symbol)
     mail( to: person.email,
-          subject: I18n.t('person.mail.products_import_report'))
+      subject: I18n.t('person.mail.products_import_report'))
   end
 
   def send_product_programs_import_report(user_id, programs, columns)
@@ -146,7 +146,7 @@ class PersonMailer < ActionMailer::Base
     @columns = columns
     I18n.locale = person.main_communication_language.try(:symbol)
     mail( to: person.email,
-          subject: I18n.t('person.mail.product_programs_import_report'))
+      subject: I18n.t('person.mail.product_programs_import_report'))
   end
 
   # def send_creditors_import_report(user_id, creditors, columns)

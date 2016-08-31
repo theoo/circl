@@ -22,7 +22,7 @@ FactoryGirl.define do
   factory :person do
     # job
     # location
-    # main_communication_language
+    main_communication_language factory: :language
     task_rate
 
     is_an_organization false

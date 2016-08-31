@@ -1,7 +1,4 @@
 require 'spec_helper'
-require 'rake'
-load File.expand_path([Rails.root, "/lib/tasks/elasticsearch.rake"].join, __FILE__)
-Rake::Task.define_task(:environment)
 
 describe Receipts::Documents do
 

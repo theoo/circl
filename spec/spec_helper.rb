@@ -5,6 +5,10 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+require 'rake'
+load File.expand_path([Rails.root, "/lib/tasks/elasticsearch.rake"].join, __FILE__)
+Rake::Task.define_task(:environment)
+
 Spork.prefork do
   # Loading more in this block will cause your tests to run faster. However,
   # if you change any configuration or code from libraries loaded here, you'll

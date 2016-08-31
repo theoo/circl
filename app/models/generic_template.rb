@@ -118,7 +118,7 @@ class GenericTemplate < ActiveRecord::Base
   def ensure_template_has_no_salaries
     if salaries.count > 0
       errors.add(:base,
-                 I18n.t('template.errors.unable_to_destroy_a_template_which_has_salaries'))
+        I18n.t('template.errors.unable_to_destroy_a_template_which_has_salaries'))
       false
     end
   end

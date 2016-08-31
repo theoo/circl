@@ -28,9 +28,12 @@ class Subscriptions::PreparePdfsAndEmail
     # i18n-tasks-use I18n.t("subscriptions.background_tasks.prepare_pdf_and_email.title")
     set_status(translation_options: ["subscriptions.background_tasks.prepare_pdf_and_email.title"])
 
-    required = %i(subscription_id query user_id status)
+    required = %i(subscription_id query user_id current_locale)
     validates(params, required)
 
+    I18n.locale = @current_locale
+
+    # Query is enforced to "subscriptions.id:#{@subscription_id}" in the controller, so people always matches the subscription
     people_ids = ElasticSearch.search(
       @query[:search_string],
       @query[:selected_attributes],

@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'resque_rspec_helper'
 
 describe Invoices::Pdf do
 

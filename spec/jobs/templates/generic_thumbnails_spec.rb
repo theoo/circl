@@ -1,14 +1,18 @@
 require 'spec_helper'
 
 describe Templates::GenericThumbnails do
-  it "should generate generic template jpg for person" do
-  	generic_template = FactoryGirl.create(:generic_template, :class => GenericTemplate)
-  	generic_template.take_snapshot
-  	take_snapshot1 = generic_template.snapshot
-  	GenerateGenericTemplateJpg.perform(generic_template.id)
-  	generic_template.reload
-  	take_snapshot2 = generic_template.snapshot
 
-  	expect(take_snapshot1).to eq(take_snapshot2)
+  before :all do
+    @template = FactoryGirl.create(:generic_template)
   end
+
+  it "should generate a thumbnail for the given template" do
+    # FIXME paperclip default_url doesn't work in this case. Newly created template doesn't have an odt attached.
+    expect(@template.snapshot_updated_at).to be_nil
+    Templates::GenericThumbnails.perform(nil, ids: @template.id)
+    @template.reload
+    expect(@template.snapshot_updated_at).to be_instance_of ActiveSupport::TimeWithZone
+    expect(@template.snapshot_updated_at).to be > 2.seconds.ago
+  end
+
 end

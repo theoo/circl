@@ -31,14 +31,6 @@ class Subscriptions::ConcatAndEmailPdf
     required = %i(subscription_id query invoice_ids user_id current_locale)
     validates(params, required)
 
-    # TODO This should do the trick if @query is validated in a first place.
-    # people_ids = ElasticSearch.search(*@query).map(&:id)
-    people_ids = ElasticSearch.search(
-      @query[:search_string],
-      @query[:selected_attributes],
-      @query[:attributes_order])
-      .map(&:id)
-
     I18n.locale = @current_locale
 
     subscription = Subscription.find(@subscription_id)
