@@ -24,4 +24,5 @@
 CIRCL::Application.config.session_store :active_record_store
 
 # https://github.com/plataformatec/devise/issues/2734#issuecomment-39364922
-ActiveRecord::SessionStore::Session.attr_accessible :data, :session_id
+# TODO remove after migration: Not working with rails 5
+# ActiveRecord::SessionStore::Session.attr_accessible :data, :session_id

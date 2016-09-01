@@ -747,7 +747,8 @@ class Person < ActiveRecord::Base
   #######################
 
   attr_accessor :renew_authentication_token
-  attr_protected :authentication_token
+  # FIXME This belongs to old protected_attributes, should be handled by strong attributes yet.
+  # attr_protected :authentication_token
 
   #######################
   ### PRIVATE METHODS ###

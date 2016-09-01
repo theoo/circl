@@ -1,90 +1,79 @@
 source 'http://rubygems.org'
 
-gem 'rails', '4.1.4'
-gem 'tilt', '1.4.1'
+gem 'rails', '5.0.0'
+gem 'tilt'
+gem 'rake-progressbar'
+gem 'rake'
 
 # Servers
 gem 'foreman'
 gem 'passenger'
-gem 'activerecord-session_store', '0.1.0'
-# TODO: Move from protected attributes to Strong Parameters
-gem 'protected_attributes', '1.0.8'
+gem 'activerecord-session_store'
 
 ### database
-gem 'pg', '0.17.1'
-
-# acts as tree
-gem 'acts_as_tree', '2.0.0'
-
-# elasticsearch
+gem 'pg'
+gem 'redis'
 gem 'tire', '0.6.2'
-# gem "redis"
-
-# LDAP
+gem 'acts_as_tree'
 gem 'net-ldap', :git => 'git://github.com/ruby-ldap/ruby-net-ldap.git'
 
 # pdf and images
-gem 'pdfkit', '0.8.2'
-gem 'imgkit', '1.3.6'
-gem 'paperclip', '4.3.1'
+gem 'pdfkit'
+gem 'imgkit'
+gem 'paperclip'
 gem 'serenity', '0.2.4', :git => 'git://github.com/theoo/serenity.git'
-gem 'rubyzip', '1.1.0'
-gem 'recursive-open-struct', '0.4.5'
-
-# password validation
-gem 'password_strength', '0.3.2'
+gem 'rubyzip'
+gem 'recursive-open-struct'
 
 ### Views/UI specific
-gem 'will_paginate', '3.0.7'
-gem 'haml_coffee_assets', '1.1.0'
+gem 'responders'
+gem 'will_paginate'
+gem 'haml_coffee_assets'
 
-gem 'sass-rails', '4.0.3'
-gem 'haml-rails', '0.5.3'
-gem 'spine-rails', '0.1.0'
+gem 'sass-rails'
+gem 'haml-rails'
+gem 'spine-rails'
 gem 'dotiw', github: 'radar/dotiw'
-gem 'coffee-rails', '4.0.1'
+gem 'coffee-rails'
 
-gem 'jquery-turbolinks', '2.0.2'
-gem 'turbolinks', '2.2.2'
+gem 'jquery-turbolinks'
+gem 'turbolinks'
 
 gem 'gon'
 
 gem 'jbuilder'
-gem 'execjs', '1.4.0'
-gem 'therubyracer', '0.12.1', platforms: :ruby
-# gem 'i18n-js', '2.1.2'
+gem 'execjs'
+gem 'therubyracer', platforms: :ruby
 gem "i18n-js", ">= 3.0.0.rc12"
 gem 'i18n-tasks'
 gem 'lit'
-gem 'yui-compressor', '0.12.0'
+gem 'yui-compressor'
 
 ### maps
-gem 'geoip', '1.3.3'
-gem 'geokit', '1.7.1'
+gem 'geoip'
+gem 'geokit'
 
 ### authentication and authorization
-gem 'devise', '3.2.4'
-gem 'devise-i18n', '0.10.4'
-gem 'devise-encryptable', '0.2.0'
-gem 'cancancan', '~> 1.7.0'
+gem 'password_strength'
+gem 'devise'
+gem 'devise-i18n'
+gem 'devise-encryptable'
+gem 'cancancan'
 
 ### Finances
-gem 'money', '6.5.0'
-gem 'monetize', '1.1.0'
+gem 'money'
+gem 'monetize'
 
 ### MailChimp
 gem 'mailchimp-api', require: 'mailchimp'
 
-### rake
-gem 'rake-progressbar', '0.0.5'
-gem 'rake'
-
-# Monitoring
-gem 'rails_exception_handler', "~> 2"
-
 # Background jobs
 gem 'resque'
 gem 'resque-status'
+gem 'sinatra', "~>1.4.7"
+
+# Monitoring
+gem 'rails_exception_handler', "~> 2"
 
 ### custom gem
 # gem 'plugin', :path => 'path/to/circl/plugin'
@@ -92,24 +81,21 @@ gem 'resque-status'
 ### development console and testing
 group :development, :test do
   ### Documentation
-  gem 'railroady', '1.1.1'
+  gem 'railroady'
   gem 'byebug'
 
   ### Test
-  gem 'factory_girl_rails', '4.4.0'
-  gem 'rspec-rails', '3.0.2'
-  gem 'syntax', '1.2.0'
+  gem 'factory_girl_rails'
+  gem 'rspec-rails'
+  gem 'syntax'
   gem 'database_cleaner'
 
   ### IRB
-  gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
+  # gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
 
   ### Misc
   gem 'pry-byebug'
-  gem 'spork-rails', '4.0.0'
-  gem 'spring', '1.1.3'
-
-  gem 'quiet_assets'
+  gem 'spring'
 
   gem 'meta_request'
   gem 'net-ssh'
@@ -117,9 +103,6 @@ group :development, :test do
 end
 
 gem 'web-console', group: :development
-
-# FUTURE
-# gem 'websocket-rails' # RAILS 5
 
 # iCalendar
 # gem 'icalendar'

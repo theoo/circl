@@ -23,14 +23,11 @@ CIRCL::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
 
   config.assets.debug = true
+  config.assets.quiet = true
 
 ### logger tweaking
 #  Rails.logger = Logger.new(STDOUT)
 #  Rails.logger = Log4r::Logger.new("Application Log")
-
-  # RAILS UPDATES
-  # Raise exception on mass assignment protection for Active Record models
-  config.active_record.mass_assignment_sanitizer = :strict
 
   config.eager_load = false
 end

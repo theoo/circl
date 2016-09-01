@@ -11,10 +11,10 @@ Geokit::Geocoders::request_timeout = 3
 # These setting can be nil if not needed, otherwise, addr and port must be
 # filled in at a minimum.  If the proxy requires authentication, the username
 # and password can be provided as well.
-Geokit::Geocoders::proxy_addr = nil
-Geokit::Geocoders::proxy_port = nil
-Geokit::Geocoders::proxy_user = nil
-Geokit::Geocoders::proxy_pass = nil
+# Geokit::Geocoders::proxy_addr = nil
+# Geokit::Geocoders::proxy_port = nil
+# Geokit::Geocoders::proxy_user = nil
+# Geokit::Geocoders::proxy_pass = nil
 
 # This is your yahoo application key for the Yahoo Geocoder.
 # See http://developer.yahoo.com/faq/index.html#appid
@@ -37,7 +37,7 @@ Geokit::Geocoders::proxy_pass = nil
 # usage tied to an account, the value should be set to username:password.
 # See http://geocoder.us
 # and http://geocoder.us/user/signup
-Geokit::Geocoders::geocoder_us = false
+# Geokit::Geocoders::geocoder_us = false
 
 # This is your authorization key for geocoder.ca.
 # To use the free service, the value can be set to nil or false.  For
@@ -45,7 +45,7 @@ Geokit::Geocoders::geocoder_us = false
 # Geocoder.ca.
 # See http://geocoder.ca
 # and http://geocoder.ca/?register=1
-Geokit::Geocoders::geocoder_ca = false
+# Geokit::Geocoders::geocoder_ca = false
 
 # require "external_geocoder.rb"
 # Please see the section "writing your own geocoders" for more information.

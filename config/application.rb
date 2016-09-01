@@ -69,11 +69,10 @@ module CIRCL
     # Setup Devise custom layout for email
     config.to_prepare { Devise::Mailer.layout "mail" }
 
-    # Allow mass assignment (so be carefull in controllers)
-    config.active_record.whitelist_attributes = false
-
     # Export javascript translation on reload
     # config.middleware.use I18n::JS::Middleware
+
+    config.active_record.raise_in_transactional_callbacks = true
 
   end
 end

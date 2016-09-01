@@ -42,7 +42,7 @@
                 'aria-valuemin': 0,
                 'aria-valuemax': 100,
                 style: "width: 100%"}
-                = I18n.t("common.contact_admin")
+                = I18n.t("common.failed")
 
         %td= task.status
         %td.ignore-click
