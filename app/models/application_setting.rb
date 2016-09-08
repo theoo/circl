@@ -27,7 +27,7 @@
 # == Schema Information End
 #++
 
-class ApplicationSetting < ActiveRecord::Base
+class ApplicationSetting < ApplicationRecord
 
   # Custom error caught in application_controller
   class MissingAttribute < StandardError; end

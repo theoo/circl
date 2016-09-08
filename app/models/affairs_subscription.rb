@@ -26,7 +26,7 @@
 # == Schema Information End
 #++
 
-class AffairsSubscription < ActiveRecord::Base
+class AffairsSubscription < ApplicationRecord
 
   #################
   ### RELATIONS ###

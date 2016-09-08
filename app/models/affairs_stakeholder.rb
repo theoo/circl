@@ -1,4 +1,4 @@
-class AffairsStakeholder < ActiveRecord::Base
+class AffairsStakeholder < ApplicationRecord
 
   ################
   ### INCLUDES ###

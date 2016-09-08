@@ -27,7 +27,7 @@
 # == Schema Information End
 #++
 
-class Job < ActiveRecord::Base
+class Job < ApplicationRecord
 
   ################
   ### INCLUDES ###

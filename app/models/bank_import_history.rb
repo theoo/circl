@@ -29,7 +29,7 @@
 
 # This class should remain simple, no relations, just a backup/log of
 # previoulsy imported files/lines
-class BankImportHistory < ActiveRecord::Base
+class BankImportHistory < ApplicationRecord
 
   validates :file_name, presence: true
   validates :reference_line, uniqueness: true, presence: true

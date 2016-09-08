@@ -42,7 +42,7 @@
 #++
 
 # TODO refactor this into a polymorphic association
-class Salaries::Taxes::Is < ActiveRecord::Base
+class Salaries::Taxes::Is < ApplicationRecord
 
   self.table_name = :salaries_taxes_is
 

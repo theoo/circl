@@ -27,7 +27,7 @@
 # == Schema Information End
 #++
 
-class PublicTag < ActiveRecord::Base
+class PublicTag < ApplicationRecord
 
   ################
   ### INCLUDES ###

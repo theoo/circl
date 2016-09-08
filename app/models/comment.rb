@@ -33,7 +33,7 @@
 # == Schema Information End
 #++
 
-class Comment < ActiveRecord::Base
+class Comment < ApplicationRecord
 
   ################
   ### INCLUDES ###

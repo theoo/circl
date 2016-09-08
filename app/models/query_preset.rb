@@ -27,7 +27,7 @@
 # == Schema Information End
 #++
 
-class QueryPreset < ActiveRecord::Base
+class QueryPreset < ApplicationRecord
 
   ################
   ### INCLUDES ###

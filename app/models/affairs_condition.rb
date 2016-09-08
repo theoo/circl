@@ -1,4 +1,4 @@
-class AffairsCondition < ActiveRecord::Base
+class AffairsCondition < ApplicationRecord
 
   ################
   ### INCLUDES ###

@@ -36,7 +36,7 @@
 # == Schema Information End
 #++
 
-class Task < ActiveRecord::Base
+class Task < ApplicationRecord
 
   ################
   ### INCLUDES ###

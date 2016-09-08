@@ -29,7 +29,7 @@
 # == Schema Information End
 #++
 
-class LdapAttribute < ActiveRecord::Base
+class LdapAttribute < ApplicationRecord
 
   ################
   ### INCLUDES ###

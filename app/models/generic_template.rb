@@ -33,7 +33,7 @@
 # == Schema Information End
 #++
 
-class GenericTemplate < ActiveRecord::Base
+class GenericTemplate < ApplicationRecord
 
   # templates table name is a reserved words
   self.table_name = :generic_templates

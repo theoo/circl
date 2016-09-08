@@ -27,7 +27,7 @@
 # == Schema Information End
 #++
 
-class PrivateTag < ActiveRecord::Base
+class PrivateTag < ApplicationRecord
 
   ################
   ### INCLUDES ###

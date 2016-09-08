@@ -33,7 +33,7 @@
 # If you change a mapping inside db/seeds/elasticsearch, you'd reindex and restart the server:
 #   rake elasticsearch:sync
 #   touch tmp/restart.txt
-class SearchAttribute < ActiveRecord::Base
+class SearchAttribute < ApplicationRecord
 
   ################
   ### INCLUDES ###

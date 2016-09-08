@@ -40,7 +40,7 @@
 # == Schema Information End
 #++
 
-class Invoice < ActiveRecord::Base
+class Invoice < ApplicationRecord
 
   ################
   ### INCLUDES ###

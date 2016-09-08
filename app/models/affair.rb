@@ -34,7 +34,7 @@
 # == Schema Information End
 #++
 
-class Affair < ActiveRecord::Base
+class Affair < ApplicationRecord
 
   ################
   ### INCLUDES ###

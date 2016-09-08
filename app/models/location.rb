@@ -32,7 +32,7 @@
 # == Schema Information End
 #++
 
-class Location < ActiveRecord::Base
+class Location < ApplicationRecord
 
   #################
   ### CALLBACKS ###

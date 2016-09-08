@@ -27,7 +27,7 @@
 # == Schema Information End
 #++
 
-class Language < ActiveRecord::Base
+class Language < ApplicationRecord
 
   ################
   ### INCLUDES ###

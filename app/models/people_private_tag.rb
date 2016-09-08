@@ -26,7 +26,7 @@
 # == Schema Information End
 #++
 
-class PeoplePrivateTag < ActiveRecord::Base
+class PeoplePrivateTag < ApplicationRecord
   #################
   ### RELATIONS ###
   #################

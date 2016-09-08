@@ -40,7 +40,7 @@
 
 
 # TODO refactor this into a polymorphic association
-class Salaries::Taxes::Generic < ActiveRecord::Base
+class Salaries::Taxes::Generic < ApplicationRecord
 
   self.table_name = :salaries_taxes_generic
 

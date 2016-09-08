@@ -32,7 +32,7 @@
 # == Schema Information End
 #++
 
-class Receipt < ActiveRecord::Base
+class Receipt < ApplicationRecord
 
   ################
   ### INCLUDES ###

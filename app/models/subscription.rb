@@ -40,7 +40,7 @@
 # == Schema Information End
 #++
 
-class Subscription < ActiveRecord::Base
+class Subscription < ApplicationRecord
 
   ################
   ### INCLUDES ###

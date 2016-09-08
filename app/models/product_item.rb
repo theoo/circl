@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class ProductItem < ActiveRecord::Base
+class ProductItem < ApplicationRecord
 
   ################
   ### INCLUDES ###

@@ -32,7 +32,7 @@
 # == Schema Information End
 #++
 
-class Activity < ActiveRecord::Base
+class Activity < ApplicationRecord
 
   ################
   ### INCLUDES ###

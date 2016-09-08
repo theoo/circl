@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class ProductVariant < ActiveRecord::Base
+class ProductVariant < ApplicationRecord
 
   ################
   ### INCLUDES ###

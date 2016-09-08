@@ -31,7 +31,7 @@
 # == Schema Information End
 #++
 
-class SubscriptionValue < ActiveRecord::Base
+class SubscriptionValue < ApplicationRecord
 
   ################
   ### CALLBACKS ##

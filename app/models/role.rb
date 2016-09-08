@@ -29,7 +29,7 @@
 # == Schema Information End
 #++
 
-class Role < ActiveRecord::Base
+class Role < ApplicationRecord
 
   ################
   ### INCLUDES ###

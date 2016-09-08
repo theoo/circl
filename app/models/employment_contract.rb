@@ -32,7 +32,7 @@
 # == Schema Information End
 #++
 
-class EmploymentContract < ActiveRecord::Base
+class EmploymentContract < ApplicationRecord
   
   ################
   ### INCLUDES ###

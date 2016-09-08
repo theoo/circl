@@ -38,7 +38,7 @@
 
 
 # TODO refactor this into a polymorphic association
-class Salaries::Taxes::Age < ActiveRecord::Base
+class Salaries::Taxes::Age < ApplicationRecord
 
   self.table_name = :salaries_taxes_age
 

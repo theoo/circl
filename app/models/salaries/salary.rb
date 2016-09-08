@@ -98,7 +98,7 @@
 # == Schema Information End
 #++
 
-class Salaries::Salary < ActiveRecord::Base
+class Salaries::Salary < ApplicationRecord
 
   self.table_name = :salaries
 

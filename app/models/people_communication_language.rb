@@ -26,7 +26,7 @@
 # == Schema Information End
 #++
 
-class PeopleCommunicationLanguage < ActiveRecord::Base
+class PeopleCommunicationLanguage < ApplicationRecord
   #################
   ### RELATIONS ###
   #################

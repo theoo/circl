@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class CachedDocument < ActiveRecord::Base
+class CachedDocument < ApplicationRecord
 
   has_attached_file :document, use_timestamp: true
 

@@ -26,7 +26,7 @@
 # == Schema Information End
 #++
 
-class PeopleRole < ActiveRecord::Base
+class PeopleRole < ApplicationRecord
   #################
   ### RELATIONS ###
   #################

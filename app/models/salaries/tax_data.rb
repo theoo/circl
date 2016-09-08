@@ -36,7 +36,7 @@
 # == Schema Information End
 #++
 
-class Salaries::TaxData < ActiveRecord::Base
+class Salaries::TaxData < ApplicationRecord
 
   #################
   ### CALLBACKS ###

@@ -33,7 +33,7 @@
 # == Schema Information End
 #++
 
-class Salaries::Item < ActiveRecord::Base
+class Salaries::Item < ApplicationRecord
 
   #################
   ### CALLBACKS ###

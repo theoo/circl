@@ -31,7 +31,7 @@
 # == Schema Information End
 #++
 
-class Permission < ActiveRecord::Base
+class Permission < ApplicationRecord
 
   ################
   ### INCLUDES ###
