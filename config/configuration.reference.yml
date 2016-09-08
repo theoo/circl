@@ -1,6 +1,7 @@
 # General
 host: www.hostname.com
-directory_url: http://www.hostname.com/path
+ssl: true
+directory_url: https://www.hostname.com/path
 directory_admin_email: alert@circl.ch
 
 # Mailers

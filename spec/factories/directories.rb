@@ -1,11 +1,15 @@
 
 FactoryGirl.define do
 
-  app_models = Module.constants.select do |constant_name|
-    constant = eval(constant_name.to_s)
-    if not constant.nil? and constant.is_a? Class and constant.superclass == ActiveRecord::Base
-      constant
+  if ActiveRecord::Base.connection.table_exists? 'application_settings'
+    app_models = Module.constants.select do |constant_name|
+      constant = eval(constant_name.to_s)
+      if not constant.nil? and constant.is_a? Class and constant.superclass == ActiveRecord::Base
+        constant
+      end
     end
+  else
+    app_models = []
   end
 
   factory :comment do
@@ -73,14 +77,16 @@ FactoryGirl.define do
     sequence(:query) { |n| "private_tags.id:#{n}" }
   end
 
-  factory :search_attribute do
-    m = app_models.sample
-    col = m.to_s.constantize.column_names.sample
-    model m
-    name col
-    indexing col
-    mapping { {type: 'integer', index: 'not_analyzed'} }
-    group nil
+  unless app_models.empty?
+    factory :search_attribute do
+      m = app_models.sample
+      col = m.to_s.constantize.column_names.sample
+      model m
+      name col
+      indexing col
+      mapping { {type: 'integer', index: 'not_analyzed'} }
+      group nil
+    end
   end
 
 end

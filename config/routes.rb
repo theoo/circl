@@ -1,8 +1,7 @@
-require 'resque/server'
+Rails.application.routes.draw do
 
-CIRCL::Application.routes.draw do
+  mount ResqueWeb::Engine => "/resque"
 
-  mount Resque::Server.new, at: "/resque"
 
   get 'requires_browser_update' => 'settings#requires_browser_update'
 

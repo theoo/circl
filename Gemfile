@@ -69,8 +69,8 @@ gem 'mailchimp-api', require: 'mailchimp'
 
 # Background jobs
 gem 'resque'
+gem 'resque-web', require: 'resque_web'
 gem 'resque-status'
-gem 'sinatra', "~>1.4.7"
 
 # Monitoring
 gem 'rails_exception_handler', "~> 2"
