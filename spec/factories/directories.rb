@@ -1,10 +1,12 @@
 
 FactoryGirl.define do
 
-  if ActiveRecord::Base.connection.table_exists? 'application_settings'
+  # FIXME load models in a different way, this way raises a deprecation warning (system and templates too)
+  # TODO load this globally, other factories require it.
+  if ActiveRecord::Base.connection.data_source_exists? 'application_settings'
     app_models = Module.constants.select do |constant_name|
       constant = eval(constant_name.to_s)
-      if not constant.nil? and constant.is_a? Class and constant.superclass == ActiveRecord::Base
+      if not constant.nil? and constant.is_a? Class and constant.superclass == ApplicationRecord
         constant
       end
     end

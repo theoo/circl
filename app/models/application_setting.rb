@@ -72,7 +72,7 @@ class ApplicationSetting < ApplicationRecord
       else
         # AREL way, slow
         begin
-          return false unless ActiveRecord::Base.connection.table_exists? 'application_settings'
+          return false unless ActiveRecord::Base.connection.data_source_exists? 'application_settings'
         rescue ActiveRecord::NoDatabaseError
           return false
         end

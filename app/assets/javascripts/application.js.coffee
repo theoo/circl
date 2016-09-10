@@ -15,18 +15,17 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # require turbolinks
+# require jquery.turbolinks
 #= require jquery
-#= require jquery-ujs
+#= require jquery_ujs
 #= require jquery.cookie
 #= require jquery.hotkeys
 #= require jquery.iframe-transport
-#= require jquery_serialize_object
-# require jquery.turbolinks
+#= require jquery.serialize-object
 #
 #= require extensions
 #
 #= require jquery-ui
-#= require password_strength
 #= require jquery.minicolors
 #= require jquery.strength
 #
@@ -34,6 +33,17 @@
 #= require bootstrap-slider.js
 #
 #= require hamlcoffee
+#
+#= require spine/spine
+#= require spine/ajax
+#= require spine/bindings
+#= require spine/list
+#= require spine/local
+#= require spine/manager
+#= require spine/relation
+#= require spine/route
+#
+#= require underscore
 #= require app
 #= require_tree ./datatables
 #= require ./flot/jquery.flot

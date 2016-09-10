@@ -14,15 +14,6 @@
 #  You should have received a copy of the GNU Affero General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#= require json2
-#= require jquery
-#= require underscore
-#= require spine
-#= require spine/manager
-#= require spine/ajax
-#= require spine/route
-#= require spine/relation
-
 #= require_self
 #= require_tree ./lib
 #= require_tree ./models

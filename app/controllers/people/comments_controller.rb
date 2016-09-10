@@ -21,9 +21,9 @@ class People::CommentsController < ApplicationController
   layout false
 
   load_resource :person
-  before_filter :load_comments, only: [:index, :count]
-  before_filter :create_comment, only: :create
-  before_filter :load_comment, except: [:index, :create, :count]
+  before_action :load_comments, only: [:index, :count]
+  before_action :create_comment, only: :create
+  before_action :load_comment, except: [:index, :create, :count]
   authorize_resource
 
   monitor_changes :@comment

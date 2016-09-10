@@ -68,7 +68,5 @@ module CIRCL
     # Export javascript translation on reload
     # config.middleware.use I18n::JS::Middleware
 
-    config.active_record.raise_in_transactional_callbacks = true
-
   end
 end

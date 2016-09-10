@@ -22,7 +22,7 @@ class People::TasksController < ApplicationController
 
   # monitor_changes :@task
 
-  before_filter do
+  before_action do
     @person = Person.find(params[:person_id])
   end
 

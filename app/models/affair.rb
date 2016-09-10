@@ -172,6 +172,7 @@ class Affair < ApplicationRecord
   money :value
   money :vat
 
+  # FIXME open is a private method from ActiveRecord, do not override it (change name)
   scope :open, -> {
     mask = Affair.statuses_value_for(:to_be_billed)
     where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)

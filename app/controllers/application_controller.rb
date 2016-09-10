@@ -23,11 +23,11 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery
 
-  before_filter :authenticate_person_from_token!
-  before_filter :authenticate_person!
-  before_filter :set_locale
-  before_filter :route_browser
-  before_filter :cleanup_session
+  before_action :authenticate_person_from_token!
+  before_action :authenticate_person!
+  before_action :set_locale
+  before_action :route_browser
+  before_action :cleanup_session
 
   protected
 

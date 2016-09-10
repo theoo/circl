@@ -30,9 +30,10 @@ gem 'responders'
 gem 'will_paginate'
 gem 'haml_coffee_assets'
 
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'sass-rails'
 gem 'haml-rails'
-gem 'spine-rails'
 gem 'dotiw', github: 'radar/dotiw'
 gem 'coffee-rails'
 
@@ -90,11 +91,13 @@ group :development, :test do
   gem 'syntax'
   gem 'database_cleaner'
 
-  ### IRB
-  # gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
-
   ### Misc
+  gem 'pry'
+  gem 'pry-rails'
   gem 'pry-byebug'
+  gem 'awesome_print'
+  gem 'coolline'
+  gem 'coderay'
   gem 'spring'
 
   gem 'meta_request'

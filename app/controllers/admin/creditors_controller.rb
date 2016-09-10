@@ -26,7 +26,7 @@ class Admin::CreditorsController < ApplicationController
 
   load_and_authorize_resource except: [:index, :check_item, :uncheck_item, :group_destroy, :group_update]
 
-  before_filter :set_money, only: [:create, :update]
+  before_action :set_money, only: [:create, :update]
 
   def index
     authorize! :index, Creditor

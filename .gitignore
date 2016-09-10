@@ -4,7 +4,6 @@
 Thumbs.db
 .bundle
 .rvmrc
-/Gemfile.lock
 /config/configuration.yml
 /config/secrets.yml
 /config/database.yml
