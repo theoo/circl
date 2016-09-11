@@ -454,12 +454,10 @@
         .col-sm-4
           - unless @affair.isNew?()
             .btn-group
-              %a{name: "affair-destroy",
-                 class: 'btn btn-danger' }
+              %a{name: "affair-destroy", class: 'btn btn-danger'}
                 .icon-remove
                 = I18n.t('common.destroy')
-              %a{name: "affair-copy",
-                 class: 'btn btn-default' }
+                %a{name: "affair-copy", class: 'btn btn-default'}
                 .icon-copy
                 = I18n.t('affair.views.create_variant')
 
@@ -478,10 +476,7 @@
       .row
         .col-sm-12
           .pull-right
-            %button{name: "affair-show-owner",
-                    class: 'btn btn-primary' }
+            %button{name: "affair-show-owner", class: 'btn btn-primary' }
               .icon-eye-open
               = I18n.t('affair.views.actions.show_owner')
-
-
 
