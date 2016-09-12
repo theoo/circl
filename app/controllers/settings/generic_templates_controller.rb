@@ -42,6 +42,7 @@ class Settings::GenericTemplatesController < ApplicationController
   end
 
   def create
+    @generic_template = GenericTemplate.new(generic_template_params)
     respond_to do |format|
       if @generic_template.save
         Templates::GenericThumbnails.perform(nil, ids: @generic_template.id)
@@ -62,7 +63,7 @@ class Settings::GenericTemplatesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @generic_template.update_attributes(params[:generic_template])
+      if @generic_template.update_attributes(generic_template_params)
         Templates::GenericThumbnails.perform(nil, ids: @generic_template.id)
         @generic_template.reload
         format.json { render json: @generic_template }
@@ -111,5 +112,20 @@ class Settings::GenericTemplatesController < ApplicationController
       format.json { render json: {count: GenericTemplate.count} }
     end
   end
+
+  private
+
+    def generic_template_params
+      params.require(:generic_template).permit(
+        :title,
+        :snapshot,
+        :created_at,
+        :updated_at,
+        :language_id,
+        :class_name,
+        :odt,
+        :plural
+      )
+    end
 
 end

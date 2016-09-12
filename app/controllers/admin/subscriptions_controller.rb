@@ -194,6 +194,7 @@ class Admin::SubscriptionsController < ApplicationController
   def create
     succeed = false
 
+    @subscription = Subscription.new(subscription_params)
     Subscription.transaction do
       # Only allow reminders to be the child of a subscription
       @subscription.parent_id = nil unless params[:status] == 'reminder'
@@ -259,9 +260,9 @@ class Admin::SubscriptionsController < ApplicationController
     # Update the subscription
     Subscription.transaction do
       # remove parent if not sent
-      params[:subscription][:parent_id] = nil unless params[:subscription][:parent_id]
+      subscription_params[:parent_id] = nil unless subscription_params[:parent_id]
       # raise the error and rollback transaction if validation fails
-      raise ActiveRecord::Rollback unless @subscription.update_attributes(params[:subscription])
+      raise ActiveRecord::Rollback unless @subscription.update_attributes(subscription_params)
 
       # Only keep values that are returned
       surplus_values = @subscription.values.map(&:id) - params[:values].map{|v| v[:id].to_i}
@@ -453,5 +454,24 @@ class Admin::SubscriptionsController < ApplicationController
     render_to_string("pdf_front_page")
 
   end
+
+  private
+
+    def subscription_params
+      params.require(:subscription).permit(
+        :title,
+        :description,
+        :interval_starts_on,
+        :interval_ends_on,
+        :created_at,
+        :updated_at,
+        :pdf_file_name,
+        :pdf_content_type,
+        :pdf_file_size,
+        :pdf_updated_at,
+        :last_pdf_generation_query,
+        :parent_id
+      )
+    end
 
 end

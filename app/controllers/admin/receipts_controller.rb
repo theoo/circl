@@ -79,6 +79,7 @@ class Admin::ReceiptsController < ApplicationController
   def create
     errors = {}
 
+    # TODO why so ?
     # Validate params
     [:owner_id, :value_date, :value, :invoice_template_id].each do |k|
       errors[k] = [I18n.t("activerecord.errors.messages.blank")] if params[k].blank?
@@ -182,7 +183,7 @@ class Admin::ReceiptsController < ApplicationController
   def update
     @receipt.value = params[:value]
     respond_to do |format|
-      if @receipt.update_attributes(params[:receipt])
+      if @receipt.update_attributes(receipt_params)
         format.json { render json: @receipt }
       else
         format.json { render json: @receipt.errors, status: :unprocessable_entity }
@@ -265,35 +266,48 @@ class Admin::ReceiptsController < ApplicationController
 
   private
 
-  def validate_export_input(params)
-    errors = {}
-    # pseudo validation
-    unless params[:from].blank?
-      if validate_date_format(params[:from])
-        from = Date.parse params[:from]
-      else
-        errors[:from] = I18n.t("affair.errors.wrong_date")
+    def validate_export_input(params)
+      errors = {}
+      # pseudo validation
+      unless params[:from].blank?
+        if validate_date_format(params[:from])
+          from = Date.parse params[:from]
+        else
+          errors[:from] = I18n.t("affair.errors.wrong_date")
+        end
       end
-    end
 
-    unless params[:to].blank?
-      if validate_date_format(params[:to])
-        to = Date.parse params[:to]
-      else
-        errors[:to] = I18n.t("affair.errors.wrong_date")
+      unless params[:to].blank?
+        if validate_date_format(params[:to])
+          to = Date.parse params[:to]
+        else
+          errors[:to] = I18n.t("affair.errors.wrong_date")
+        end
       end
-    end
 
-    if from and to and from > to
-      errors[:from] = I18n.t("salary.errors.from_date_should_be_before_to_date")
-    end
-
-    if params[:format] != 'csv'
-      unless params[:generic_template_id]
-        errors[:generic_template_id] = I18n.t("activerecord.errors.messages.blank")
+      if from and to and from > to
+        errors[:from] = I18n.t("salary.errors.from_date_should_be_before_to_date")
       end
+
+      if params[:format] != 'csv'
+        unless params[:generic_template_id]
+          errors[:generic_template_id] = I18n.t("activerecord.errors.messages.blank")
+        end
+      end
+
+      [errors, from, to]
     end
 
-    [errors, from, to]
-  end
+    def receipt_params
+      params.require(:receipt).permit(
+        :invoice_id,
+        :value_in_cents,
+        :value_currency,
+        :value_date,
+        :means_of_payment,
+        :created_at,
+        :updated_at
+        )
+    end
+
 end

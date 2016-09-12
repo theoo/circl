@@ -33,7 +33,7 @@ class Index extends App.ExtendedController
     e.preventDefault()
 
     id = $(e.target).parents('[data-id]').data('id')
-    window.location = "#{Spine.Model.host}/people/#{id}"
+    window.location = "/people/#{id}"
 
 class App.DashboardLastPeopleAdded extends Spine.Controller
   className: 'last_people_added'
@@ -43,7 +43,7 @@ class App.DashboardLastPeopleAdded extends Spine.Controller
     @person_id = params.person_id
 
     LastPerson.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/dashboard/last_people_added"
+      "/people/#{@person_id}/dashboard/last_people_added"
 
     @index = new Index
     @append(@index)

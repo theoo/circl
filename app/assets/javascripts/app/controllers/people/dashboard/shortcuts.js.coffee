@@ -32,19 +32,19 @@ class Index extends App.ExtendedController
     e.preventDefault()
     id = @el.find("input[name='dashboard_shortcuts_person_id']").val()
     if id
-      window.location = "#{Spine.Model.host}/people/#{id}"
+      window.location = "/people/#{id}"
 
   select_affair: (e) ->
     e.preventDefault()
     id = @el.find("input[name='dashboard_shortcuts_affair_id']").val()
     if id
-      window.location = "#{Spine.Model.host}/admin/affairs/#{id}"
+      window.location = "/admin/affairs/#{id}"
 
   select_invoice: (e) ->
     e.preventDefault()
     id = @el.find("input[name='dashboard_shortcuts_invoice_id']").val()
     if id
-      window.location = "#{Spine.Model.host}/admin/invoices/#{id}"
+      window.location = "/admin/invoices/#{id}"
 
 class App.DashboardShortcuts extends Spine.Controller
   className: 'shortcuts'

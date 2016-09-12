@@ -60,7 +60,7 @@ class People::CommentsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @comment.update_attributes(params[:comment])
+      if @comment.update_attributes(comment_params)
         format.json { render json: @comment }
       else
         format.json { render json: @comment.errors, status: :unprocessable_entity }
@@ -91,11 +91,27 @@ class People::CommentsController < ApplicationController
   end
 
   def create_comment
-    @comment = current_person.edited_comments.new params[:comment]
+    @comment = current_person.edited_comments.new comment_params
   end
 
   def load_comment
     @comment = @person.comments_edited_by_others.find params[:id]
   end
+
+  private
+
+    def comment_params
+      params.require(:comment).permit(
+        :person_id,
+        :resource_id,
+        :resource_type,
+        :title,
+        :description,
+        :is_closed,
+        :created_at,
+        :updated_at
+        )
+    end
+
 
 end

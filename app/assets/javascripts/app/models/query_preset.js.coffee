@@ -20,7 +20,7 @@ class App.QueryPreset extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/directory/query_presets"
+    "/directory/query_presets"
 
   constructor: (params) ->
     super

@@ -21,7 +21,7 @@ class App.Currency extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/settings/currencies"
+    "/settings/currencies"
 
   constructor: ->
     super

@@ -25,7 +25,7 @@ class App.Subscription extends Spine.Model
   @extend Spine.Extensions.RemoteCount
 
   @url: ->
-    "#{Spine.Model.host}/admin/subscriptions"
+    "/admin/subscriptions"
 
   members_count: 0
 

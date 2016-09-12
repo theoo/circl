@@ -256,7 +256,7 @@ class Edit extends App.ExtendedController
       person_affair_subscriptions_ctrl = $("#person_affair_subscriptions").data('controller')
       person_affair_subscriptions_ctrl.activate(person_id: @person_id, affair_id: @id)
       PersonAffairSubscription.url = =>
-        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/subscriptions"
+        "/people/#{@person_id}/affairs/#{@id}/subscriptions"
       PersonAffairSubscription.refresh([], clear: true)
       PersonAffairSubscription.fetch()
 
@@ -265,7 +265,7 @@ class Edit extends App.ExtendedController
       person_affair_tasks_ctrl = $("#person_affair_tasks").data('controller')
       person_affair_tasks_ctrl.activate(person_id: @person_id, affair_id: @id)
       PersonTask.url = =>
-        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/tasks"
+        "/people/#{@person_id}/affairs/#{@id}/tasks"
       PersonTask.refresh([], clear: true)
       PersonTask.fetch()
 
@@ -274,11 +274,11 @@ class Edit extends App.ExtendedController
       person_affair_products_ctrl.activate(person_id: @person_id, affair_id: @id)
 
       PersonAffairProductsCategory.url = =>
-        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/product_categories"
+        "/people/#{@person_id}/affairs/#{@id}/product_categories"
       PersonAffairProductsCategory.refresh([], clear: true)
 
       PersonAffairProductsProgram.url = =>
-        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/products"
+        "/people/#{@person_id}/affairs/#{@id}/products"
 
       PersonAffairProductsCategory.one 'refresh', =>
         PersonAffairProductsProgram.refresh([], clear: true)
@@ -291,7 +291,7 @@ class Edit extends App.ExtendedController
       person_affair_extras_ctrl = $("#person_affair_extras").data('controller')
       person_affair_extras_ctrl.activate(person_id: @person_id, affair_id: @id)
       PersonAffairExtra.url = =>
-        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/extras"
+        "/people/#{@person_id}/affairs/#{@id}/extras"
       PersonAffairExtra.refresh([], clear: true)
       PersonAffairExtra.fetch()
 
@@ -302,7 +302,7 @@ class Edit extends App.ExtendedController
       person_affair_invoices_ctrl = $("#person_affair_invoices").data('controller')
       person_affair_invoices_ctrl.activate(person_id: @person_id, affair_id: @id)
       PersonAffairInvoice.url = =>
-        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/invoices"
+        "/people/#{@person_id}/affairs/#{@id}/invoices"
       PersonAffairInvoice.refresh([], clear: true)
       PersonAffairInvoice.fetch()
 
@@ -310,7 +310,7 @@ class Edit extends App.ExtendedController
       person_affair_receipts_ctrl = $("#person_affair_receipts").data('controller')
       person_affair_receipts_ctrl.activate(person_id: @person_id, affair_id: @id)
       PersonAffairReceipt.url = =>
-        "#{Spine.Model.host}/people/#{@person_id}/affairs/#{@id}/receipts"
+        "/people/#{@person_id}/affairs/#{@id}/receipts"
       PersonAffairReceipt.refresh([], clear: true)
       PersonAffairReceipt.fetch()
 
@@ -620,7 +620,7 @@ class App.PersonAffairs extends Spine.Controller
     @person_id = params.person_id
 
     PersonAffair.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/affairs"
+      "/people/#{@person_id}/affairs"
 
     @index = new Index(person_id: @person_id)
     @edit = new Edit

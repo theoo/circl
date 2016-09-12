@@ -23,7 +23,7 @@ class App.Product extends Spine.Model
   @extend Spine.Model.Ajax
   @extend Spine.Extensions.RemoteCount
 
-  @url: -> "#{Spine.Model.host}/settings/products"
+  @url: -> "/settings/products"
 
   constructor: ->
     super

@@ -20,7 +20,7 @@ class App.PublicTag extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/admin/public_tags"
+    "/admin/public_tags"
 
   members_count: 0
 

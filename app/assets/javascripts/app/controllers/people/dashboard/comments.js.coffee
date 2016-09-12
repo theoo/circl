@@ -36,7 +36,7 @@ class Index extends App.ExtendedController
     # but there is no pluralize method nor a way to convert
     # rails path to a decent route.
     id = $(e.target).parents('[data-id]').data('id')
-    window.location = "#{Spine.Model.host}/people/#{id}#activities"
+    window.location = "/people/#{id}#activities"
 
 class App.DashboardComments extends Spine.Controller
   className: 'comments'
@@ -46,7 +46,7 @@ class App.DashboardComments extends Spine.Controller
     @person_id = params.person_id
 
     PersonComment.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/dashboard/comments"
+      "/people/#{@person_id}/dashboard/comments"
 
     @index = new Index
     @append(@index)

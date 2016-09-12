@@ -82,7 +82,7 @@ class People::Affairs::TasksController < ApplicationController
   def create
     authorize! :create, ::Task
 
-    @task = ::Task.new(params[:task])
+    @task = ::Task.new(task_params)
     override_posted_values
 
     respond_to do |format|
@@ -108,7 +108,7 @@ class People::Affairs::TasksController < ApplicationController
     override_posted_values
 
     respond_to do |format|
-      if @task.update_attributes(params[:task])
+      if @task.update_attributes(task_params)
         format.json { render json: @task }
       else
         format.json { render json: @task.errors, status: :unprocessable_entity }
@@ -132,10 +132,29 @@ class People::Affairs::TasksController < ApplicationController
 
   private
 
-  def override_posted_values
-    @task.affair_id = params[:affair_id]
-    @task.executer_id = current_person.id
-    @task.value = Money.new(params[:value].to_f * 100, params[:value_currency])
-  end
+    def override_posted_values
+      @task.affair_id = params[:affair_id]
+      @task.executer_id = current_person.id
+      @task.value = Money.new(params[:value].to_f * 100, params[:value_currency])
+    end
+
+    def task_params
+      params.require(:task).permit(
+        :executer_id,
+        :executer_name,
+        :creator_id,
+        :creator_name,
+        :description,
+        :duration,
+        :affair_id,
+        :task_type_id,
+        :value_in_cents,
+        :value_currency,
+        :salary_id,
+        :start_date,
+        :created_at,
+        :updated_at
+        )
+    end
 
 end

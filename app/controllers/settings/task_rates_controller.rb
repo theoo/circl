@@ -36,6 +36,7 @@ class Settings::TaskRatesController < ApplicationController
   end
 
   def create
+    @task_rate = TaskRate.new(task_rate_params)
     @task_rate.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @task_rate.save
@@ -55,7 +56,7 @@ class Settings::TaskRatesController < ApplicationController
   def update
     @task_rate.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
-      if @task_rate.update_attributes(params[:task_rate])
+      if @task_rate.update_attributes(task_rate_params)
         format.json { render json: @task_rate }
       else
         format.json { render json: @task_rate.errors, status: :unprocessable_entity }
@@ -72,5 +73,19 @@ class Settings::TaskRatesController < ApplicationController
       end
     end
   end
+
+  private
+
+    def task_rate_params
+      params.require(:task_rate).permit(
+        :title,
+        :description,
+        :value_in_cents,
+        :value_currency,
+        :archive,
+        :created_at,
+        :updated_at
+      )
+    end
 
 end

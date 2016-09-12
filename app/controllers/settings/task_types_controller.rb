@@ -36,6 +36,7 @@ class Settings::TaskTypesController < ApplicationController
   end
 
   def create
+    @task_type = TaskType.new(task_type_params)
     @task_type.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
       if @task_type.save
@@ -55,7 +56,7 @@ class Settings::TaskTypesController < ApplicationController
   def update
     @task_type.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     respond_to do |format|
-      if @task_type.update_attributes(params[:task_type])
+      if @task_type.update_attributes(task_type_params)
         format.json { render json: @task_type }
       else
         format.json { render json: @task_type.errors, status: :unprocessable_entity }
@@ -72,5 +73,19 @@ class Settings::TaskTypesController < ApplicationController
       end
     end
   end
+
+  private
+
+    def task_type_params
+      params.require(:task_type).permit(
+        :title,
+        :description,
+        :ratio,
+        :value_in_cents,
+        :value_currency,
+        :archive
+        )
+    end
+
 
 end

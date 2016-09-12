@@ -34,6 +34,7 @@ class Admin::PrivateTagsController < ApplicationController
   end
 
   def create
+    @private_tag = PrivateTag.new(private_tag_params)
     respond_to do |format|
       if @private_tag.save
         format.json { render json: @private_tag }
@@ -51,7 +52,7 @@ class Admin::PrivateTagsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @private_tag.update_attributes(params[:private_tag])
+      if @private_tag.update_attributes(private_tag_params)
         format.json { render json: @private_tag }
       else
         format.json { render json: @private_tag.errors, status: :unprocessable_entity }
@@ -134,5 +135,16 @@ class Admin::PrivateTagsController < ApplicationController
       format.json { render json: {} }
     end
   end
+
+  private
+
+    def private_tag_params
+      params.require(:private_tag)
+        .permit(
+          :parent_id,
+          :name,
+          :color
+        )
+    end
 
 end

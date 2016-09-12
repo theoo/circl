@@ -33,6 +33,7 @@ class Settings::JobsController < ApplicationController
   end
 
   def create
+    @job = Job.new(job_params)
     respond_to do |format|
       if @job.save
         format.json { render json: @job }
@@ -50,7 +51,7 @@ class Settings::JobsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @job.update_attributes(params[:job])
+      if @job.update_attributes(job_params)
         format.json { render json: @job }
       else
         format.json { render json: @job.errors, status: :unprocessable_entity }
@@ -80,5 +81,11 @@ class Settings::JobsController < ApplicationController
       format.json { render json: result.map{|t| {id: t.id, label: t.name}}}
     end
   end
+
+  private
+
+    def job_params
+      params.require(:job).permit(:name, :description)
+    end
 
 end

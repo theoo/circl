@@ -23,7 +23,7 @@ class App.InvoiceTemplate extends Spine.Model
   @extend Spine.Extensions.RemoteCount
 
   @url: ->
-    "#{Spine.Model.host}/settings/invoice_templates"
+    "/settings/invoice_templates"
 
   constructor: ->
     super

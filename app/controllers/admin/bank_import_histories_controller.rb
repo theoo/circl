@@ -128,4 +128,5 @@ class Admin::BankImportHistoriesController < ApplicationController
       end
     end
   end
+
 end

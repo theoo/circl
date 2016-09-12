@@ -20,7 +20,7 @@ class App.Role extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/settings/roles"
+    "/settings/roles"
 
   constructor: ->
     super

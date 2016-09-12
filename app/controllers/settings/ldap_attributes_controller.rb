@@ -33,6 +33,7 @@ class Settings::LdapAttributesController < ApplicationController
   end
 
   def create
+    @ldap_attribute = LdapAttribute.new(ldap_attribute_params)
     respond_to do |format|
       if @ldap_attribute.save
         format.json  { render json: @ldap_attribute }
@@ -50,7 +51,7 @@ class Settings::LdapAttributesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @ldap_attribute.update_attributes(params[:ldap_attribute])
+      if @ldap_attribute.update_attributes(ldap_attribute_params)
         format.json  { render json: @ldap_attribute }
       else
         format.json  { render json: @ldap_attribute.errors, status: :unprocessable_entity }
@@ -78,5 +79,17 @@ class Settings::LdapAttributesController < ApplicationController
 
     redirect_to settings_path
   end
+
+  private
+
+    def ldap_attribute_params
+      params.require(:ldap_attribute).permit(
+        :name,
+        :mapping,
+        :created_at,
+        :updated_at
+      )
+    end
+
 
 end

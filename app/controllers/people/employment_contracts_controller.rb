@@ -51,7 +51,7 @@ class People::EmploymentContractsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @employment_contract.update_attributes(params[:employment_contract])
+      if @employment_contract.update_attributes(employment_contract_params)
         format.json { render json: @employment_contract }
       else
         format.json { render json: @employment_contract.errors, status: :unprocessable_entity }
@@ -68,5 +68,19 @@ class People::EmploymentContractsController < ApplicationController
       end
     end
   end
+
+  private
+
+    def employment_contract_params
+      params.require(:employment_contract).permit(
+        :person_id,
+        :percentage,
+        :interval_starts_on,
+        :interval_ends_on,
+        :description,
+        :created_at,
+        :updated_at
+        )
+    end
 
 end

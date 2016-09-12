@@ -84,7 +84,7 @@ class Edit extends App.ExtendedController
       permissions_controller.activate(role_id: @id)
 
       RolePermission.url = =>
-       "#{Spine.Model.host}/settings/roles/#{@id}/permissions"
+       "/settings/roles/#{@id}/permissions"
 
       RolePermission.refresh([], clear: true)
       RolePermission.fetch()

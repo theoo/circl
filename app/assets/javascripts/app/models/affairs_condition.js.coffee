@@ -20,7 +20,7 @@ class App.AffairsCondition extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/settings/affairs_conditions"
+    "/settings/affairs_conditions"
 
   constructor: ->
     super

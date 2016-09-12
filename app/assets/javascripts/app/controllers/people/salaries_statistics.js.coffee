@@ -25,7 +25,7 @@ class App.PersonSalariesStatistics extends Spine.Controller
     super
 
     @person_id = params.person_id
-    @url = "#{Spine.Model.host}/people/#{@person_id}/salaries/statistics.json"
+    @url = "/people/#{@person_id}/salaries/statistics.json"
 
     # Defaults
     d = new Date

@@ -34,6 +34,7 @@ class Admin::PublicTagsController < ApplicationController
   end
 
   def create
+    @public_tag = PublicTag.new(public_tag_params)
     respond_to do |format|
       if @public_tag.save
         format.json { render json: @public_tag }
@@ -51,7 +52,7 @@ class Admin::PublicTagsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @public_tag.update_attributes(params[:public_tag])
+      if @public_tag.update_attributes(public_tag_params)
         format.json { render json: @public_tag }
       else
         format.json { render json: @public_tag.errors, status: :unprocessable_entity }
@@ -131,5 +132,16 @@ class Admin::PublicTagsController < ApplicationController
       end
     end
   end
+
+  private
+
+    def public_tag_params
+      params.require(:public_tag)
+        .permit(
+          :parent_id,
+          :name,
+          :color
+        )
+    end
 
 end

@@ -124,6 +124,8 @@ class Settings::ProductsController < ApplicationController
   def create
     succeed = false
 
+    @product = Product.new(product_params)
+
     Product.transaction do
 
       # raise the error and rollback transaction if validation fails
@@ -172,8 +174,8 @@ class Settings::ProductsController < ApplicationController
 
     Product.transaction do
       # Force removal of relation if not sent
-      params[:product][:provider_id] = nil unless params[:product][:provider_id]
-      params[:product][:after_sale_id] = nil unless params[:product][:after_sale_id]
+      product_params[:provider_id] = nil unless product_params[:provider_id]
+      product_params[:after_sale_id] = nil unless product_params[:after_sale_id]
 
       # Only keep variants that are returned
       if params[:variants]
@@ -205,7 +207,7 @@ class Settings::ProductsController < ApplicationController
       end
 
       # raise the error and rollback transaction if validation fails
-      raise ActiveRecord::Rollback unless @product.update_attributes(params[:product])
+      raise ActiveRecord::Rollback unless @product.update_attributes(product_params)
 
       succeed = true
     end
@@ -359,5 +361,29 @@ class Settings::ProductsController < ApplicationController
     rescue
     end
   end
+
+  private
+
+    def product_params
+      params.require(:product).permit(
+        :provider_id,
+        :after_sale_id,
+        :key,
+        :title,
+        :category,
+        :description,
+        :has_accessories,
+        :archive,
+        :created_at,
+        :updated_at,
+        :unit_symbol,
+        :price_to_unit_rate,
+        :width,
+        :height,
+        :depth,
+        :volume,
+        :weight
+      )
+    end
 
 end

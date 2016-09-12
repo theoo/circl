@@ -141,7 +141,7 @@ class App.PersonComments extends Spine.Controller
     @person_id = params.person_id
 
     PersonComment.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/comments"
+      "/people/#{@person_id}/comments"
 
     @index = new Index
     @edit = new Edit(person_id: @person_id)

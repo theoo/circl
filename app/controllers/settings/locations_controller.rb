@@ -34,6 +34,7 @@ class Settings::LocationsController < ApplicationController
   end
 
   def create
+    @location = Location.new(location_params)
     respond_to do |format|
       if @location.save
         format.json { render json: @location }
@@ -51,7 +52,7 @@ class Settings::LocationsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @location.update_attributes(params[:location])
+      if @location.update_attributes(location_params)
         format.json { render json: @location }
       else
         format.json { render json: @location.errors, status: :unprocessable_entity }
@@ -100,5 +101,26 @@ class Settings::LocationsController < ApplicationController
       format.json { render json: result.map{ |t| {id: t.id, label: t.full_name }}}
     end
   end
+
+  private
+
+    def location_params
+      params.require(:location).permit(
+        :executer_id,
+        :executer_name,
+        :creator_id,
+        :creator_name,
+        :description,
+        :duration,
+        :affair_id,
+        :task_type_id,
+        :value_in_cents,
+        :value_currency,
+        :salary_id,
+        :start_date,
+        :created_at,
+        :updated_at
+      )
+    end
 
 end

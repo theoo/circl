@@ -26,7 +26,7 @@ class App.SettingsMailchimp extends Spine.Controller
     list_name = @el.find("option[value='#{list_id}']").text()
 
     query       = new App.QueryPreset
-    url         = "#{Spine.Model.host}/directory/#{list_id}/mailchimp"
+    url         = "/directory/#{list_id}/mailchimp"
     title       = I18n.t('settings.views.sync_mailchimp_title', name: list_name)
     message     = I18n.t('settings.views.sync_mailchimp_message')
 

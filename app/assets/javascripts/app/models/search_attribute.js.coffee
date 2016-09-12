@@ -20,7 +20,7 @@ class App.SearchAttribute extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/settings/search_attributes"
+    "/settings/search_attributes"
 
   constructor: ->
     super

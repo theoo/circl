@@ -38,7 +38,7 @@ class People::TasksController < ApplicationController
 
   def create
     authorize! :create, ::Task
-    @task = ::Task.new(params[:task])
+    @task = ::Task.new(task_params)
     @task.creator_id = current_person.id
     @task.value = params[:value] if params[:value]
 
@@ -66,7 +66,7 @@ class People::TasksController < ApplicationController
     @task.value = params[:value] if params[:value]
 
     respond_to do |format|
-      if @task.update_attributes(params[:task])
+      if @task.update_attributes(task_params)
         format.json { render json: @task }
       else
         format.json { render json: @task.errors, status: :unprocessable_entity }
@@ -86,5 +86,26 @@ class People::TasksController < ApplicationController
       end
     end
   end
+
+  private
+
+    def task_params
+      params.require(:task).permit(
+        :executer_id,
+        :executer_name,
+        :creator_id,
+        :creator_name,
+        :description,
+        :duration,
+        :affair_id,
+        :task_type_id,
+        :value_in_cents,
+        :value_currency,
+        :salary_id,
+        :start_date,
+        :created_at,
+        :updated_at
+      )
+    end
 
 end

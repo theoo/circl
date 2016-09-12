@@ -20,7 +20,7 @@ class App.Job extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/settings/jobs"
+    "/settings/jobs"
 
   constructor: ->
     super

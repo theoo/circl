@@ -169,7 +169,7 @@ class Edit extends App.ExtendedController
       App.SalaryTax.one 'refresh', =>
         # Items
         PersonSalaryItem.url = =>
-          "#{Spine.Model.host}/people/#{@person_id}/salaries/#{@id}/items"
+          "/people/#{@person_id}/salaries/#{@id}/items"
         PersonSalaryItem.refresh([], clear: true)
         PersonSalaryItem.fetch()
         person_salary_items_ctrl = $("#person_salary_items").data('controller')
@@ -177,7 +177,7 @@ class Edit extends App.ExtendedController
 
         # TaxData
         PersonSalaryTaxData.url = =>
-          "#{Spine.Model.host}/people/#{@person_id}/salaries/#{@id}/tax_data"
+          "/people/#{@person_id}/salaries/#{@id}/tax_data"
         PersonSalaryTaxData.refresh([], clear: true)
         PersonSalaryTaxData.fetch()
         person_salary_tax_data_ctrl = $("#person_salary_tax_datas").data('controller')
@@ -271,7 +271,7 @@ class App.PersonSalaries extends Spine.Controller
     @person_id = params.person_id
 
     PersonSalary.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/salaries"
+      "/people/#{@person_id}/salaries"
 
     @new = new New(person_id: @person_id)
     @edit = new Edit(person_id: @person_id)

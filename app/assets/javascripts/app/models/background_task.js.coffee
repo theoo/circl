@@ -20,7 +20,7 @@ class App.BackgroundTask extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/background_tasks"
+    "/background_tasks"
 
   constructor: ->
     super

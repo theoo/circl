@@ -35,6 +35,7 @@ class Settings::AffairsConditionsController < ApplicationController
   end
 
   def create
+    @affairs_condition = AffairsCondition.new(affair_condition_params)
     respond_to do |format|
       if @affairs_condition.save
         format.json { render json: @affairs_condition }
@@ -52,7 +53,7 @@ class Settings::AffairsConditionsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @affairs_condition.update_attributes(params[:affairs_condition])
+      if @affairs_condition.update_attributes(affair_condition_params)
         format.json { render json: @affairs_condition }
       else
         format.json { render json: @affairs_condition.errors, status: :unprocessable_entity }
@@ -69,5 +70,15 @@ class Settings::AffairsConditionsController < ApplicationController
       end
     end
   end
+
+  private
+
+    def affair_condition_params
+      params.require(:affair_condition).permit(
+        :title,
+        :description,
+        :archive
+      )
+    end
 
 end

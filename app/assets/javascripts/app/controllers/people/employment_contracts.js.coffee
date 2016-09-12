@@ -97,7 +97,7 @@ class App.PersonEmploymentContracts extends Spine.Controller
     @person_id = params.person_id
 
     PersonEmploymentContract.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/employment_contracts"
+      "/people/#{@person_id}/employment_contracts"
 
     @index = new Index
     @edit = new Edit

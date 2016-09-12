@@ -40,6 +40,7 @@ class Settings::SearchAttributesController < ApplicationController
   end
 
   def create
+    @search_attribute = SearchAttribute.new(search_attribute_params)
     respond_to do |format|
       if @search_attribute.save
         format.json  { render json: @search_attribute }
@@ -57,7 +58,7 @@ class Settings::SearchAttributesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @search_attribute.update_attributes(params[:search_attribute])
+      if @search_attribute.update_attributes(search_attribute_params)
         format.json { render json: @search_attribute }
       else
         format.json { render json: @search_attribute.errors, status: :unprocessable_entity }
@@ -85,5 +86,17 @@ class Settings::SearchAttributesController < ApplicationController
 
     redirect_to settings_path, anchor: 'searchengine'
   end
+
+  private
+
+    def search_attribute_params
+      params.require(:search_attribute).permit(
+        :model,
+        :name,
+        :indexing,
+        :mapping,
+        :group
+      )
+    end
 
 end

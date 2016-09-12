@@ -20,7 +20,7 @@ class App.CurrencyRate extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/settings/currency_rates"
+    "/settings/currency_rates"
 
   constructor: ->
     super

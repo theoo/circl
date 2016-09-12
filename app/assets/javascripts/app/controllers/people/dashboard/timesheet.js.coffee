@@ -148,7 +148,7 @@ class App.DashboardTimesheet extends Spine.Controller
     @person_id = params.person_id
 
     PersonTask.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/tasks"
+      "/people/#{@person_id}/tasks"
 
     @index = new Index
     @edit = new Edit

@@ -23,7 +23,7 @@ class App.ProductProgram extends Spine.Model
   @extend Spine.Extensions.RemoteCount
 
   @url: ->
-    "#{Spine.Model.host}/settings/product_programs"
+    "/settings/product_programs"
 
   constructor: (params) ->
     super(params)

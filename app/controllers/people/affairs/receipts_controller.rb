@@ -84,6 +84,7 @@ class People::Affairs::ReceiptsController < ApplicationController
   end
 
   def create
+    @receipt = @affair.receipts.new(receipt_params)
     @receipt.value = params[:value]
     respond_to do |format|
       if @receipt.save
@@ -103,7 +104,7 @@ class People::Affairs::ReceiptsController < ApplicationController
   def update
     @receipt.value = params[:value]
     respond_to do |format|
-      if @receipt.update_attributes(params[:receipt])
+      if @receipt.update_attributes(receipt_params)
         format.json { render json: @receipt }
       else
         format.json { render json: @receipt.errors, status: :unprocessable_entity }
@@ -120,5 +121,19 @@ class People::Affairs::ReceiptsController < ApplicationController
       end
     end
   end
+
+  private
+
+    def receipt_params
+      params.require(:receipt).permit(
+        :invoice_id,
+        :value_in_cents,
+        :value_currency,
+        :value_date,
+        :means_of_payment,
+        :created_at,
+        :updated_at
+        )
+    end
 
 end

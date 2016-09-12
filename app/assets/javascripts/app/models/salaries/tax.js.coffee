@@ -23,7 +23,7 @@ class App.SalaryTax extends Spine.Model
   @extend Spine.Extensions.RemoteCount
 
   @url: ->
-    "#{Spine.Model.host}/salaries/taxes"
+    "/salaries/taxes"
 
   constructor: ->
     super

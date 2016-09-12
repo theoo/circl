@@ -22,7 +22,7 @@ class App.GenericTemplate extends Spine.Model
   @extend Spine.Extensions.RemoteCount
 
   @url: ->
-    "#{Spine.Model.host}/settings/generic_templates"
+    "/settings/generic_templates"
 
   constructor: ->
     super

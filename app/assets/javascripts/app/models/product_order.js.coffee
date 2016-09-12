@@ -22,7 +22,7 @@ class App.ProductOrder extends Spine.Model
   @extend Spine.Extensions.RemoteCount
 
   @url: ->
-    "#{Spine.Model.host}/admin/product_orders"
+    "/admin/product_orders"
 
   constructor: (params) ->
     super(params)

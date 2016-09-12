@@ -20,7 +20,7 @@ class App.PrivateTag extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/admin/private_tags"
+    "/admin/private_tags"
 
   members_count: 0
 

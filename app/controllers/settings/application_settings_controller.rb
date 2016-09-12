@@ -26,6 +26,7 @@ class Settings::ApplicationSettingsController < ApplicationController
     default_currency = ApplicationSetting.value("default_currency")
     if Currency.where(iso_code: default_currency).count > 0
       h = { key: 'default_currency_details', value: Currency.where(iso_code: default_currency).first.attributes.to_json }
+      @application_settings = @application_settings.to_a
       @application_settings << h
     end
 
@@ -39,6 +40,7 @@ class Settings::ApplicationSettingsController < ApplicationController
   end
 
   def create
+    @application_setting = ApplicationSetting.new(application_setting_params)
     respond_to do |format|
       if @application_setting.save
         format.json { render json: @application_setting }
@@ -56,7 +58,7 @@ class Settings::ApplicationSettingsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @application_setting.update_attributes(params[:application_setting])
+      if @application_setting.update_attributes(application_setting_params)
         format.json { render json: @application_setting }
       else
         format.json { render json: @application_setting.errors, status: :unprocessable_entity }
@@ -83,5 +85,15 @@ class Settings::ApplicationSettingsController < ApplicationController
       format.html { redirect_to settings_path(anchor: :advanced) }
     end
   end
+
+  private
+
+    def application_setting_params
+      params.require(:application_setting).permit(
+        :key,
+        :value,
+        :type_for_validation
+      )
+    end
 
 end

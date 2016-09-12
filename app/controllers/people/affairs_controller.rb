@@ -69,6 +69,9 @@ class People::AffairsController < ApplicationController
   end
 
   def create
+
+    @affair = @person.affairs.new(affair_params)
+
     errors = {}
     parent_ids = {}
     # This will create a variant
@@ -193,7 +196,7 @@ class People::AffairsController < ApplicationController
       # raise the error and rollback transaction if validation fails
       # TODO migrate to strong_parameters !
       params[:affair].delete(:id)
-      raise ActiveRecord::Rollback unless @affair.update_attributes(params[:affair])
+      raise ActiveRecord::Rollback unless @affair.update_attributes(affair_params)
 
       # Only keep values that are returned
       if params[:affairs_stakeholders].blank?
@@ -577,5 +580,38 @@ class People::AffairsController < ApplicationController
 
     [errors, from, to]
   end
+
+  private
+
+    def affair_params
+      params.require(:affair).permit(
+        :owner_id,
+        :buyer_id,
+        :receiver_id,
+        :title,
+        :description,
+        :value_in_cents,
+        :value_currency,
+        :created_at,
+        :updated_at,
+        :status,
+        :estimate,
+        :parent_id,
+        :footer,
+        :conditions,
+        :seller_id,
+        :condition_id,
+        :unbillable,
+        :notes,
+        :vat_percentage,
+        :vat_in_cents,
+        :vat_currency,
+        :alias_name,
+        :execution_notes,
+        :archive,
+        :sold_at
+        )
+    end
+
 
 end

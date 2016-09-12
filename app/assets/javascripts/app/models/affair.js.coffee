@@ -22,7 +22,7 @@ class App.Affair extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/admin/affairs"
+    "/admin/affairs"
 
   constructor: ->
     super

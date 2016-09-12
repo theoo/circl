@@ -177,7 +177,7 @@ class App.People extends Spine.Controller
     @person_id = params.person_id if params
 
     PersonCommentSummary.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/comments?summary=true"
+      "/people/#{@person_id}/comments?summary=true"
 
     @edit = new Edit(id: @person_id)
     @new = new New()

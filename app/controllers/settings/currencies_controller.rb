@@ -35,6 +35,7 @@ class Settings::CurrenciesController < ApplicationController
   end
 
   def create
+    @currency = Currency.new(currency_params)
     respond_to do |format|
       if @currency.save
         format.json do
@@ -54,7 +55,7 @@ class Settings::CurrenciesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @currency.update_attributes(params[:currency])
+      if @currency.update_attributes(currency_params)
         format.json do
           render json: @currency
         end
@@ -89,5 +90,21 @@ class Settings::CurrenciesController < ApplicationController
       format.json { render json: results.map{ |p| { label: p.iso_code, desc: p.name, id: p.id }}}
     end
   end
+
+  private
+
+    def currency_params
+      params.require(:currency).permit(
+        :priority,
+        :iso_code,
+        :iso_numeric,
+        :name,
+        :symbol,
+        :subunit,
+        :subunit_to_unit,
+        :separator,
+        :delimiter
+      )
+    end
 
 end

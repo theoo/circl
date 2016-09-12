@@ -35,6 +35,7 @@ class Settings::RolesController < ApplicationController
   end
 
   def create
+    @role = Role.new(role_params)
     respond_to do |format|
       if @role.save
         format.json do
@@ -54,7 +55,7 @@ class Settings::RolesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @role.update_attributes(params[:role])
+      if @role.update_attributes(role_params)
         format.json do
           render json: @role
         end
@@ -73,5 +74,17 @@ class Settings::RolesController < ApplicationController
       end
     end
   end
+
+  private
+
+    def role_params
+      params.require(:role).permit(
+        :name,
+        :description,
+        :created_at,
+        :updated_at
+      )
+    end
+
 
 end

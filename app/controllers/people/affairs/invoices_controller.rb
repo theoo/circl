@@ -105,6 +105,7 @@ class People::Affairs::InvoicesController < ApplicationController
   end
 
   def create
+    @invoice = @affair.invoices.new(invoice_params)
     @invoice.custom_value_with_taxes = params[:custom_value_with_taxes]
     @invoice.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     @invoice.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
@@ -136,7 +137,7 @@ class People::Affairs::InvoicesController < ApplicationController
     @invoice.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     @invoice.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
-      if @invoice.update_attributes(params[:invoice])
+      if @invoice.update_attributes(invoice_params)
         format.json { render json: @invoice }
       else
         format.json { render json: @invoice.errors, status: :unprocessable_entity }
@@ -170,5 +171,31 @@ class People::Affairs::InvoicesController < ApplicationController
   end
 
   private
+
+    def invoice_params
+      params.require(:invoice).permit(
+        :title,
+        :description,
+        :value_in_cents,
+        :value_currency,
+        :created_at,
+        :updated_at,
+        :affair_id,
+        :printed_address,
+        :invoice_template_id,
+        :pdf_file_name,
+        :pdf_content_type,
+        :pdf_file_size,
+        :pdf_updated_at,
+        :status,
+        :cancelled,
+        :offered,
+        :vat_in_cents,
+        :vat_currency,
+        :vat_percentage,
+        :conditions,
+        :condition_id
+        )
+    end
 
 end

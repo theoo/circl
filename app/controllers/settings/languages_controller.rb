@@ -33,6 +33,7 @@ class Settings::LanguagesController < ApplicationController
   end
 
   def create
+    @language = Language.new(language_params)
     respond_to do |format|
       if @language.save
         format.json  { render json: @language }
@@ -50,7 +51,7 @@ class Settings::LanguagesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @language.update_attributes(params[:language])
+      if @language.update_attributes(language_params)
         format.json  { render json: @language }
       else
         format.json  { render json: @language.errors, status: :unprocessable_entity }
@@ -67,5 +68,11 @@ class Settings::LanguagesController < ApplicationController
       end
     end
   end
+
+  private
+
+    def language_params
+      params.require(:language).permit(:name, :code)
+    end
 
 end

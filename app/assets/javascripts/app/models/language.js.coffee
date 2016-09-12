@@ -20,7 +20,7 @@ class App.Language extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/settings/languages"
+    "/settings/languages"
 
   constructor: ->
     super

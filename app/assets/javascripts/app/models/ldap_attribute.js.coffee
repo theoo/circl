@@ -20,7 +20,7 @@ class App.LdapAttribute extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/settings/ldap_attributes"
+    "/settings/ldap_attributes"
 
   constructor: ->
     super

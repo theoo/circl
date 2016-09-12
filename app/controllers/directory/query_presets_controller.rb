@@ -32,6 +32,7 @@ class Directory::QueryPresetsController < ApplicationController
   end
 
   def create
+    @query_preset = QueryPreset.new(query_preset_params)
     respond_to do |format|
       if @query_preset.save
         format.json  { render json: @query_preset }
@@ -49,7 +50,7 @@ class Directory::QueryPresetsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @query_preset.update_attributes(params[:query_preset])
+      if @query_preset.update_attributes(query_preset_params)
         format.json { render json: @query_preset }
       else
         format.json { render json: @query_preset.errors, status: :unprocessable_entity }
@@ -66,5 +67,11 @@ class Directory::QueryPresetsController < ApplicationController
       end
     end
   end
+
+  private
+
+    def query_preset_params
+      params.require(:query_preset).permit(:name, :query)
+    end
 
 end

@@ -24,7 +24,7 @@ class App.Receipt extends Spine.Model
   @extend Spine.Model.Ajax
 
   @url: ->
-    "#{Spine.Model.host}/admin/receipts"
+    "/admin/receipts"
 
   constructor: ->
     super

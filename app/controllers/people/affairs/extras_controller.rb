@@ -81,6 +81,7 @@ class People::Affairs::ExtrasController < ApplicationController
   end
 
   def create
+    @extra = @affair.extras.new(extra_params)
     @extra.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     @extra.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
@@ -102,7 +103,7 @@ class People::Affairs::ExtrasController < ApplicationController
     @extra.value = Money.new(params[:value].to_f * 100, params[:value_currency])
     @extra.vat = Money.new(params[:vat].to_f * 100, params[:value_currency])
     respond_to do |format|
-      if @extra.update_attributes(params[:extra])
+      if @extra.update_attributes(extra_params)
         format.json { render json: @extra }
       else
         format.json { render json: @extra.errors, status: :unprocessable_entity }
@@ -154,4 +155,22 @@ class People::Affairs::ExtrasController < ApplicationController
     end
   end
 
+  private
+
+    def extra_params
+      params.require(:extra).permit(
+        :affair_id,
+        :title,
+        :description,
+        :value_in_cents,
+        :value_currency,
+        :quantity,
+        :position,
+        :created_at,
+        :updated_at,
+        :vat_in_cents,
+        :vat_currency,
+        :vat_percentage
+        )
+    end
 end

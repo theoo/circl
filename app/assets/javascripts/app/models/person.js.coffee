@@ -28,7 +28,7 @@ class App.Person extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/people"
+    "/people"
 
   constructor: ->
     @is_an_organization = @hidden = false

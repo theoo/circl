@@ -109,7 +109,7 @@ class PeopleController < ApplicationController
   def create
 
     find_or_create_job
-    validates_permissions_on_params
+    @person = Person.new(person_params)
 
     # FIXME: strange behavior here, callbacks before_save not working so I have to force it to nil (cancan set it to "")
     @person.authentication_token = nil unless params[:generate_authentication_token]
@@ -127,7 +127,6 @@ class PeopleController < ApplicationController
   def update
 
     find_or_create_job
-    validates_permissions_on_params
 
     respond_to do |format|
       if @person.update_attributes(person_params)
@@ -379,21 +378,8 @@ class PeopleController < ApplicationController
       end
     end
 
-    def validates_permissions_on_params
-
-      unless can?(:restricted_attributes, @person)
-        Person::RESTRICTED_ATTRIBUTES.each { |s| person_params.delete(s) }
-      end
-
-      if can?(:authenticate_using_token, @person) and params[:generate_authentication_token]
-        params[:renew_authentication_token] = true
-      end
-    end
-
     def person_params
-      params
-        .require(:person)
-        .permit(
+      p = params.require(:person).permit(
         :address,
         :address_for_bvr,
         :authentication_token,
@@ -438,6 +424,17 @@ class PeopleController < ApplicationController
         :creditor_vat_account,
         :creditor_vat_discount_account
         )
+
+      unless can?(:restricted_attributes, @person)
+        Person::RESTRICTED_ATTRIBUTES.each { |s| p.delete(s) }
+      end
+
+      if can?(:authenticate_using_token, @person) and params[:generate_authentication_token]
+        p[:renew_authentication_token] = true
+      end
+
+      p
+
     end
 
 end

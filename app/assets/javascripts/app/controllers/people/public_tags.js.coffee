@@ -67,7 +67,7 @@ class App.PersonPublicTags extends Spine.Controller
     @person_id = params.person_id
 
     PersonPublicTag.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/public_tags"
+      "/people/#{@person_id}/public_tags"
 
     @edit = new Edit
     @append(@edit)

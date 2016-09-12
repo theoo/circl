@@ -20,7 +20,7 @@ class App.BankImportHistory extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/admin/bank_import_histories"
+    "/admin/bank_import_histories"
 
   constructor: ->
     super

@@ -36,7 +36,7 @@ class App.DashboardActivities extends Spine.Controller
     @person_id = params.person_id
 
     PersonActivity.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/dashboard/activities"
+      "/people/#{@person_id}/dashboard/activities"
 
     @index = new Index
     @append(@index)

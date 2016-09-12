@@ -25,7 +25,7 @@ class App.Creditor extends Spine.Model
   @extend Spine.Model.Ajax
 
   @url: ->
-    "#{Spine.Model.host}/admin/creditors"
+    "/admin/creditors"
 
   constructor: ->
     super

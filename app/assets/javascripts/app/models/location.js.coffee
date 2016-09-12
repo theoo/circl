@@ -20,7 +20,7 @@ class App.Location extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/settings/locations"
+    "/settings/locations"
 
   constructor: ->
     super

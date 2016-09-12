@@ -34,7 +34,7 @@ class Index extends App.ExtendedController
 
     id = $(e.target).parents('[data-id]').data('id')
     personId = Salary.find(id).person_id
-    window.location = "#{Spine.Model.host}/people/#{personId}#salaries"
+    window.location = "/people/#{personId}#salaries"
 
 class App.DashboardOpenSalaries extends Spine.Controller
   className: 'open_salaries'
@@ -44,7 +44,7 @@ class App.DashboardOpenSalaries extends Spine.Controller
     @person_id = params.person_id
 
     Salary.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/dashboard/open_salaries"
+      "/people/#{@person_id}/dashboard/open_salaries"
 
     @index = new Index
     @append(@index)

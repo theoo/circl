@@ -372,8 +372,8 @@ class Ui
       # Trigger tab content loading (which is caught in index.js.coffee)
       nav.trigger tab_name
 
-    tab_link = nav.find("a[href=#" + ctrl + "_tab]")
-    tab_link = nav.find("a:first") if tab_link.length == 0
+    tab_link = nav.find("a[href='#" + ctrl + "_tab']") if ctrl
+    tab_link = nav.find("a:first") unless tab_link
     tab_link.tab('show')
 
   load_password_strength: (context) ->

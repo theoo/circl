@@ -70,7 +70,7 @@ class App.PersonCommunicationLanguages extends Spine.Controller
     @person_id = params.person_id
 
     PersonCommunicationLanguage.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/communication_languages"
+      "/people/#{@person_id}/communication_languages"
 
     @edit = new Edit
     @append(@edit)

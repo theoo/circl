@@ -322,14 +322,14 @@ class DirectoryController < ApplicationController
 
   private
 
-  # Effectively search in ES with the giver attributes
-  def es_search
-    if ! @query[:search_string].blank?
-      ElasticSearch::search( @query[:search_string],
-        @query[:selected_attributes],
-        @query[:attributes_order],
-        @current_person)
+    # Effectively search in ES with the giver attributes
+    def es_search
+      if ! @query[:search_string].blank?
+        ElasticSearch::search( @query[:search_string],
+          @query[:selected_attributes],
+          @query[:attributes_order],
+          @current_person)
+      end
     end
-  end
 
 end

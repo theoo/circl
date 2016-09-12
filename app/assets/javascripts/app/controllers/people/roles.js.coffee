@@ -60,7 +60,7 @@ class App.PersonRoles extends Spine.Controller
     @person_id = params.person_id
 
     PersonRole.url = =>
-      "#{Spine.Model.host}/people/#{@person_id}/roles"
+      "/people/#{@person_id}/roles"
 
     @index = new Index
     @append(@index)

@@ -36,6 +36,7 @@ class Settings::Roles::PermissionsController < ApplicationController
   end
 
   def create
+    @permission = Permission.new(permission_params)
     respond_to do |format|
       if @permission.save
         format.json do
@@ -55,7 +56,7 @@ class Settings::Roles::PermissionsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @permission.update_attributes(params[:permission])
+      if @permission.update_attributes(permission_params)
         format.json do
           render json: @permission
         end
@@ -74,5 +75,18 @@ class Settings::Roles::PermissionsController < ApplicationController
       end
     end
   end
+
+  private
+
+    def permission_params
+      params.require(:permission).permit(
+        :role_id,
+        :action,
+        :subject,
+        :hash_conditions,
+        :created_at,
+        :updated_at
+      )
+    end
 
 end

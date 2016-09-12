@@ -25,6 +25,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_person_from_token!
   before_action :authenticate_person!
+  before_action :load_gon_globals
   before_action :set_locale
   before_action :route_browser
   before_action :cleanup_session
@@ -104,6 +105,21 @@ class ApplicationController < ActionController::Base
     locale = params[:locale] if params[:locale]
     locale ||= default_locale
     I18n.locale = locale
+  end
+
+  # TODO Preload pages with gon
+  def load_gon_globals
+
+    # # TODO organize private/public settings
+    # application_settings = ApplicationSetting.all.to_a
+
+    # default_currency = ApplicationSetting.value("default_currency")
+    # if Currency.where(iso_code: default_currency).count > 0
+    #   h = { key: 'default_currency_details', value: Currency.where(iso_code: default_currency).first.attributes.to_json }
+    #   application_settings << h
+    # end
+    # gon.application_settings = application_settings
+
   end
 
   def route_browser

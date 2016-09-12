@@ -24,7 +24,7 @@ class App.Salary extends Spine.Model
   @extend Spine.Model.Ajax
 
   @url: ->
-    "#{Spine.Model.host}/salaries/salaries"
+    "/salaries/salaries"
 
   constructor: ->
     @items = []

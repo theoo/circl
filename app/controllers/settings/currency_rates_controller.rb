@@ -35,6 +35,7 @@ class Settings::CurrencyRatesController < ApplicationController
   end
 
   def create
+    @currency_rate = CurrencyRate.new(currency_rate_params)
     respond_to do |format|
       if @currency_rate.save
         Money.default_bank.update_rates
@@ -55,7 +56,7 @@ class Settings::CurrencyRatesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @currency_rate.update_attributes(params[:currency_rate])
+      if @currency_rate.update_attributes(currency_rate_params)
         Money.default_bank.update_rates
         format.json do
           render json: @currency_rate
@@ -85,5 +86,18 @@ class Settings::CurrencyRatesController < ApplicationController
       format.json { render json: {target_value: target_value.to_f} }
     end
   end
+
+  private
+
+    def currency_rate_params
+      params.require(:currency_rate).permit(
+        :from_currency_id,
+        :to_currency_id,
+        :rate,
+        :created_at,
+        :updated_at
+      )
+    end
+
 
 end

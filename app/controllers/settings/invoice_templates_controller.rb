@@ -42,6 +42,7 @@ class Settings::InvoiceTemplatesController < ApplicationController
   end
 
   def create
+    @invoice_template = InvoiceTemplate.new(invoice_template_params)
     respond_to do |format|
       if @invoice_template.save
         Templates::InvoiceThumbnails.perform(nil, ids: @invoice_template.id)
@@ -62,7 +63,7 @@ class Settings::InvoiceTemplatesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @invoice_template.update_attributes(params[:invoice_template])
+      if @invoice_template.update_attributes(invoice_template_params)
         Templates::InvoiceThumbnails.perform(nil, ids: @invoice_template.id)
         @invoice_template.reload
         format.json { render json: @invoice_template }
@@ -111,5 +112,24 @@ class Settings::InvoiceTemplatesController < ApplicationController
       format.json { render json: {count: InvoiceTemplate.count} }
     end
   end
+
+  private
+
+    def invoice_template_params
+      params.require(:invoice_template).permit(
+        :title,
+        :html,
+        :created_at,
+        :updated_at,
+        :with_bvr,
+        :bvr_address,
+        :bvr_account,
+        :snapshot,
+        :show_invoice_value,
+        :language_id,
+        :account_identification,
+        :odt
+      )
+    end
 
 end

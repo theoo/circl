@@ -20,7 +20,7 @@ class App.Permission extends Spine.Model
 
   @extend Spine.Model.Ajax
   @url: ->
-    "#{Spine.Model.host}/settings/permissions"
+    "/settings/permissions"
 
   constructor: ->
     super
