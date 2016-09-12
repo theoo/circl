@@ -174,12 +174,6 @@ class ApplicationController < ActionController::Base
     language.scan(/^[a-z]{2}/).first if language
   end
 
-  # TODO: Re-enable monitor change and ChangesTracker with a version which allows rollback
-  # Monitor changes disabled
-  def self.monitor_changes(instance_name, options = { only: [:create, :update, :destroy] })
-    return # disabled
-  end
-
   # For every session variables, ensure it is removed if the context doesn't needs it anymore
   # TODO add all variable
   def cleanup_session

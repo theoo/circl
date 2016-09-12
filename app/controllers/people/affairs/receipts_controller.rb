@@ -24,8 +24,6 @@ class People::Affairs::ReceiptsController < ApplicationController
   load_resource :affair
   load_and_authorize_resource through: :affair
 
-  monitor_changes :@receipt
-
   def index
     @affair = Affair.find(params[:affair_id])
     @receipts = @affair.receipts

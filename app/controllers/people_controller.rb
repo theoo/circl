@@ -20,8 +20,6 @@ class PeopleController < ApplicationController
 
   load_and_authorize_resource except: :welcome
 
-  monitor_changes :@person, only: [:create, :update, :update_password, :destroy]
-
   layout false
 
   def index

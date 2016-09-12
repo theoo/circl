@@ -22,8 +22,6 @@ class Settings::ApplicationSettingsController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@application_setting
-
   def index
     default_currency = ApplicationSetting.value("default_currency")
     if Currency.where(iso_code: default_currency).count > 0

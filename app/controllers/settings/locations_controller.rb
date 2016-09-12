@@ -22,8 +22,6 @@ class Settings::LocationsController < ApplicationController
 
   load_and_authorize_resource except: :index
 
-  monitor_changes :@location
-
   def index
     authorize! :index, Location
     respond_to do |format|

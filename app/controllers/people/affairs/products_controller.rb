@@ -22,8 +22,6 @@ class People::Affairs::ProductsController < ApplicationController
 
   layout false
 
-  monitor_changes :@product
-
   before_action do
     @person = Person.find params[:person_id]
     @affair = Affair.find params[:affair_id]

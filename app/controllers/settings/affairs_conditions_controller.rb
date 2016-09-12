@@ -22,8 +22,6 @@ class Settings::AffairsConditionsController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@affairs_condition
-
   def index
     @affairs_conditions = @affairs_conditions.actives if params[:actives]
 

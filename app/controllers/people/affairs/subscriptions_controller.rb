@@ -23,8 +23,6 @@ class People::Affairs::SubscriptionsController < ApplicationController
   load_resource :person
   load_resource :affair
 
-  monitor_changes :@affair
-
   def self.model
     AffairsSubscription
   end

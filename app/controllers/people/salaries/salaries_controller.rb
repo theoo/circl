@@ -28,8 +28,6 @@ class People::Salaries::SalariesController < ApplicationController
   # load_and_authorize_resource class: model, through: :person
   load_resource class: model, through: :person
 
-  monitor_changes :@salary
-
   class TimeHelper
     include ActionView::Helpers::DateHelper
   end

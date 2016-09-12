@@ -22,8 +22,6 @@ class Admin::PrivateTagsController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@private_tag
-
   def index
     respond_to do |format|
       format.json { render json: @private_tags }

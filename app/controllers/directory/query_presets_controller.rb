@@ -21,8 +21,6 @@ class Directory::QueryPresetsController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@query_preset
-
   def index
     respond_to do |format|
       format.json { render json: @query_presets.order(:id) }

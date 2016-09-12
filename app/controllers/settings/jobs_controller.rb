@@ -22,8 +22,6 @@ class Settings::JobsController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@job
-
   def index
     respond_to do |format|
       format.json { render json: @jobs }

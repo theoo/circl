@@ -22,8 +22,6 @@ class Settings::InvoiceTemplatesController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@invoice_template
-
   def index
     respond_to do |format|
       format.json { render json: @invoice_templates }

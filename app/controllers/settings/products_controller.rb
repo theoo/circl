@@ -22,8 +22,6 @@ class Settings::ProductsController < ApplicationController
 
   load_and_authorize_resource except: :index
 
-  monitor_changes :@product
-
   def index
     authorize! :index, Product
 

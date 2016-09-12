@@ -23,8 +23,6 @@ class Settings::Roles::PermissionsController < ApplicationController
   load_resource :role
   load_and_authorize_resource through: :role
 
-  monitor_changes :@permission
-
   def index
     respond_to do |format|
       format.json do

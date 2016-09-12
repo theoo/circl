@@ -22,8 +22,6 @@ class Settings::LdapAttributesController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@ldap_attribute
-
   def index
     respond_to do |format|
       format.json { render json: @ldap_attributes }

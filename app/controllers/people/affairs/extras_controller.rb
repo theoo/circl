@@ -24,8 +24,6 @@ class People::Affairs::ExtrasController < ApplicationController
   load_resource :affair
   load_and_authorize_resource through: :affair
 
-  monitor_changes :@extra
-
   def index
 
     @affair = Affair.find(params[:affair_id])

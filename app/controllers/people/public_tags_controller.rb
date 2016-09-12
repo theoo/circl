@@ -22,8 +22,6 @@ class People::PublicTagsController < ApplicationController
 
   load_resource :person
 
-  monitor_changes :@person
-
   def self.model
     PeoplePublicTag
   end

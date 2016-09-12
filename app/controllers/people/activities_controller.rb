@@ -23,8 +23,6 @@ class People::ActivitiesController < ApplicationController
   load_resource :person
   load_and_authorize_resource through: :person
 
-  monitor_changes :@activity
-
   def index
     respond_to do |format|
       format.json { render json: @activities }

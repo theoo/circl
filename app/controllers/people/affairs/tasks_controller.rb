@@ -20,8 +20,6 @@ class People::Affairs::TasksController < ApplicationController
 
   layout false
 
-  monitor_changes :@task
-
   def index
     authorize! :index, ::Task
 

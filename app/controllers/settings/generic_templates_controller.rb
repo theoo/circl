@@ -22,8 +22,6 @@ class Settings::GenericTemplatesController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@generic_template
-
   def index
     respond_to do |format|
       format.json { render json: @generic_templates }

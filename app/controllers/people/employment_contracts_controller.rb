@@ -23,8 +23,6 @@ class People::EmploymentContractsController < ApplicationController
   load_resource :person
   load_and_authorize_resource through: :person
 
-  monitor_changes :@employment_contract
-
   def index
     respond_to do |format|
       format.json { render json: @employment_contracts }

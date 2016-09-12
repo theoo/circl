@@ -22,8 +22,6 @@ class Settings::RolesController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@role
-
   def index
     respond_to do |format|
       format.json do

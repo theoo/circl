@@ -20,8 +20,6 @@ class People::TasksController < ApplicationController
 
   layout false
 
-  # monitor_changes :@task
-
   before_action do
     @person = Person.find(params[:person_id])
   end

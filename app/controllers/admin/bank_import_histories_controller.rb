@@ -20,8 +20,6 @@ class Admin::BankImportHistoriesController < ApplicationController
 
   layout false
 
-  monitor_changes :@bank_import_history
-
   def index
     authorize! :index, BankImportHistory
     respond_to do |format|

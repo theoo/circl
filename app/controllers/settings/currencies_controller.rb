@@ -22,8 +22,6 @@ class Settings::CurrenciesController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@currency
-
   def index
     respond_to do |format|
       format.json do

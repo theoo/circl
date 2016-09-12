@@ -26,8 +26,6 @@ class Salaries::TaxesController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@tax
-
   def index
     respond_to do |format|
       format.json { render json: @taxes }

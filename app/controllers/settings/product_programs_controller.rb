@@ -22,8 +22,6 @@ class Settings::ProductProgramsController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@product_program
-
   def index
 
     @product_program = @product_programs.actives if params[:actives]

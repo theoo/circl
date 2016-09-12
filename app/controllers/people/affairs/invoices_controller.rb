@@ -29,8 +29,6 @@ class People::Affairs::InvoicesController < ApplicationController
   # NOTE Only for testing purpose
   skip_filter :authenticate_person!
 
-  monitor_changes :@invoice
-
   def index
     @affair = Affair.find(params[:affair_id])
     @invoices = @affair.invoices

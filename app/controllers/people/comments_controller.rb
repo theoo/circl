@@ -26,8 +26,6 @@ class People::CommentsController < ApplicationController
   before_action :load_comment, except: [:index, :create, :count]
   authorize_resource
 
-  monitor_changes :@comment
-
   def index
     respond_to do |format|
       format.json do

@@ -21,7 +21,6 @@ class People::CommunicationLanguagesController < ApplicationController
   layout false
 
   load_resource :person
-  monitor_changes :@person
 
   def self.model
     PeopleCommunicationLanguage

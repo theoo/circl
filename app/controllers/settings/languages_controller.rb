@@ -22,8 +22,6 @@ class Settings::LanguagesController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@language
-
   def index
     respond_to do |format|
       format.json { render json: @languages }

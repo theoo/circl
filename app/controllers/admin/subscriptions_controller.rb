@@ -22,8 +22,6 @@ class Admin::SubscriptionsController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@subscription
-
   def index
     respond_to do |format|
       format.json { render json: SubscriptionsDatatable.new(view_context) }

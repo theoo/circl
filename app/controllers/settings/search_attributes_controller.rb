@@ -21,8 +21,6 @@ class Settings::SearchAttributesController < ApplicationController
 
   load_and_authorize_resource
 
-  monitor_changes :@search_attribute
-
   def index
     respond_to do |format|
       format.json { render json: @search_attributes.order(:id) }

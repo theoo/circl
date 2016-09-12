@@ -26,8 +26,6 @@ class Salaries::SalariesController < ApplicationController
 
   load_and_authorize_resource except: :index
 
-  monitor_changes :@salary
-
   def index
     authorize! :index, Salaries::Salary
 

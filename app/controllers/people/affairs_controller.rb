@@ -25,8 +25,6 @@ class People::AffairsController < ApplicationController
   load_resource :person
   load_and_authorize_resource through: :person
 
-  monitor_changes :@affair
-
   def index
     respond_to do |format|
       format.json do
