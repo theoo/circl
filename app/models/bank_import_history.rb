@@ -32,7 +32,7 @@
 class BankImportHistory < ActiveRecord::Base
 
   validates :file_name, presence: true
-  validates :reference_line, uniqueness: true, presence: true
+  validates :reference_line, presence: true
   validates :media_date, presence: true
   validates_with DateValidator, attribute: :media_date
 

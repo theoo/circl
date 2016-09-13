@@ -61,8 +61,8 @@ class Admin::BankImportHistoriesController < ApplicationController
 
           # keep a track of each imported lines
           BankImportHistory.create!(file_name: file_name,
-                                    media_date: file_date,
-                                    reference_line: info[:line] )
+            media_date: file_date,
+            reference_line: info[:line] )
 
           tmp = info.dup
           if info[:rectification] == 'true'
@@ -78,14 +78,9 @@ class Admin::BankImportHistoriesController < ApplicationController
       end
 
       PersonMailer.send_receipts_import_report( current_person,
-                                                params[:receipts],
-                                                params[:errors]).deliver
+        params[:receipts],
+        params[:errors]).deliver
       flash[:notice] = I18n.t('admin.notices.receipts_imported', email: current_person.email)
-      Activity.create!( person: current_person,
-                        resource_type: 'Admin',
-                        resource_id: '0',
-                        action: 'info',
-                        data: { receipts: "Imported at #{Time.now}" })
       redirect_to admin_path(anchor: 'finances')
 
     else
