@@ -402,7 +402,7 @@ class Invoice < ApplicationRecord
   #
   # @return [String] Resque::Plugins::Status job id (UUID)
   def update_pdf
-    Invoices::Pdf.create invoice_id: self.id
+    Invoices::PdfJob.create invoice_id: self.id
   end
 
   #
@@ -410,7 +410,7 @@ class Invoice < ApplicationRecord
   #
   # @return [boolean] true if it succeed
   def update_pdf!
-    Invoices::Pdf.perform(nil, invoice_id: self.id)
+    Invoices::PdfJob.perform(nil, invoice_id: self.id)
   end
 
   # Placeholder proxy

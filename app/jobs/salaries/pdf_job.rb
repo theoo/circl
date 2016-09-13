@@ -16,27 +16,28 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Templates::GenericThumbnails
+class Salaries::PdfJob < ApplicationJob
 
-  @queue = :documents
-  include ResqueHelper
+  queue_as :documents
 
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    set_status(title: I18n.t("templates.jobs.generic_thumbnails.title"))
+    # i18n-tasks-use I18n.t("salaries.jobs.pdf.title")
+    set_status(translation_options: ["salaries.jobs.pdf.title"])
 
-    ids = params[:ids]
-    ids ||= GenericTemplate.all.map(&:id)
+    validates(params, [:salary_id])
 
-    gts = GenericTemplate.find([ids].flatten)
-    total = gts.count
-    gts.each_with_index do |gt, index|
-      at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
-      AttachmentGenerator.take_snapshot(gt)
+    @salary = Salaries::Salary.find(@salary_id)
+    generator = AttachmentGenerator.new(@salary)
+
+    generator.pdf do |o, pdf|
+      o.update_attributes pdf: pdf
+
+      # this won't touch updated_at column and thereby set PDF as uptodate
+      o.update_column(:pdf_updated_at, Time.now)
     end
 
-    true
   end
 
 end

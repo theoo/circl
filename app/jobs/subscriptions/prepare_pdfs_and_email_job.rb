@@ -16,11 +16,9 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Subscriptions::PreparePdfsAndEmail
+class Subscriptions::PreparePdfsAndEmailJob < ApplicationJob
 
-  @queue = :processing
-
-  include ResqueHelper
+  queue_as :processing
 
   def perform(params = nil)
     # Resque::Plugins::Status options
@@ -54,14 +52,14 @@ class Subscriptions::PreparePdfsAndEmail
           logger.info "PDF for invoice #{i.id} is up to date, skipping..."
         else
           logger.info "PDF for invoice #{i.id} is not up to date, generating..."
-          Invoices::Pdf.perform(nil, invoice_id: i.id)
+          Invoices::PdfJob.perform(nil, invoice_id: i.id)
         end
       end
     end
 
     completed(message: ["subscriptions.jobs.prepare_pdf_and_email.invoices_generation_succeed"])
 
-    Subscriptions::ConcatAndEmailPdf.perform(nil,
+    Subscriptions::ConcatAndEmailPdfJob.perform(nil,
       subscription_id: @subscription_id,
       query: @query,
       invoice_ids: invoices_ids,

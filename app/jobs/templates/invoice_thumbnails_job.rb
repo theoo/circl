@@ -16,18 +16,26 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Cleanup::Attachments
+class Templates::InvoiceThumbnailsJob < ApplicationJob
 
-  @queue = :cleanup
-  include ResqueHelper
+  queue_as :documents
 
   def perform(params = nil)
-    params || options
-    # i18n-tasks-use I18n.t("admin.jobs.cleanup.attachments.title")
-    set_status(translation_options: ["admin.jobs.cleanup.attachments.title"])
+    # Resque::Plugins::Status options
+    params ||= options
+    set_status(title: I18n.t("templates.jobs.invoice_thumbnails.title"))
 
-    # Find old attachment that can be regenerated (like invoices) and remove them to gain some space.
-    CachedDocument.erase_outdated_documents
+    ids = params[:ids]
+    ids ||= InvoiceTemplate.all.map(&:id)
+
+    its = InvoiceTemplate.find([ids].flatten)
+    total = its.count
+    its.each_with_index do |it, index|
+      at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
+      AttachmentGenerator.take_snapshot(it)
+    end
+
+    true
   end
 
 end

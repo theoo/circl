@@ -16,31 +16,19 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Synchronize::SearchEngine
+class Cleanup::AttachmentsJob < ApplicationJob
 
-  @queue = :sync
+  queue_as :cleanup
 
   include ResqueHelper
 
   def perform(params = nil)
-    # Resque::Plugins::Status options
-    params ||= options
-    # i18n-tasks-use I18n.t("admin.jobs.search_engine.title")
-    set_status(translation_options: ["admin.jobs.search_engine.title"])
+    params || options
+    # i18n-tasks-use I18n.t("admin.jobs.cleanup.attachments.title")
+    set_status(translation_options: ["admin.jobs.cleanup.attachments.title"])
 
-    required = %i(people_ids)
-    validates(params, required)
-
-    people = Person.where(id: people_ids)
-
-    total = people.count
-    people.each_with_index do |p, index|
-      at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
-      person.update_index
-    end
-
-    completed(message: ["admin.jobs.mailchimp.completed"])
-
+    # Find old attachment that can be regenerated (like invoices) and remove them to gain some space.
+    CachedDocument.erase_outdated_documents
   end
 
 end

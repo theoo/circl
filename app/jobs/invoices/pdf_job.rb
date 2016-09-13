@@ -16,11 +16,10 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Invoices::Pdf
+class Invoices::PdfJob < ApplicationJob
 
-  @queue = :documents
+  queue_as :documents
 
-  include ResqueHelper
   include Rails.application.routes.url_helpers
 
   def perform(params = nil)

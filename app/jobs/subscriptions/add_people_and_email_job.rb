@@ -16,11 +16,9 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Subscriptions::AddPeopleAndEmail
+class Subscriptions::AddPeopleAndEmailJob < ApplicationJob
 
-  @queue = :processing
-
-  include ResqueHelper
+  queue_as :processing
 
   def perform(params = nil)
     # Resque::Plugins::Status options

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Subscriptions::MergeSubscriptions do
+describe Subscriptions::MergeSubscriptionsJob, type: :job do
 
   before :all do
     @user = FactoryGirl.create(:user)

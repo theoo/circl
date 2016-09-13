@@ -16,29 +16,26 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# Options are: :name, :argument, :person
-class RunRakeTask
+class Templates::GenericThumbnailsJob < ApplicationJob
 
-  @queue = :processing
-  include ResqueHelper
+  queue_as :documents
 
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    # i18n-tasks-use I18n.t("admin.jobs.run_rake_task.title")
-    set_status(translation_options: ["admin.jobs.run_rake_task.title"])
+    set_status(title: I18n.t("templates.jobs.generic_thumbnails.title"))
 
-    # There's two ways of calling rake tasks with arguments
-    if options.is_a?(Hash)
-      options[:arguments].each do |k, v|
-        ENV[k.to_s.upcase] = v.to_s
-      end
-      # Equivalent of 'rake sometask ARG1=foo ARG2=23'
-      Rake::Task[options[:name]].invoke
-    else
-      # Equivalent of 'rake sometask[foo, 23]'
-      Rake::Task[options[:name]].invoke(*options[:arguments])
+    ids = params[:ids]
+    ids ||= GenericTemplate.all.map(&:id)
+
+    gts = GenericTemplate.find([ids].flatten)
+    total = gts.count
+    gts.each_with_index do |gt, index|
+      at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
+      AttachmentGenerator.take_snapshot(gt)
     end
+
+    true
   end
 
 end

@@ -16,30 +16,29 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Salaries::Pdf
+# Options are: :name, :argument, :person
+class RunRakeTaskJob < ApplicationJob
 
-  @queue = :documents
-
+  queue_as :processing
   include ResqueHelper
 
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    # i18n-tasks-use I18n.t("salaries.jobs.pdf.title")
-    set_status(translation_options: ["salaries.jobs.pdf.title"])
+    # i18n-tasks-use I18n.t("admin.jobs.run_rake_task.title")
+    set_status(translation_options: ["admin.jobs.run_rake_task.title"])
 
-    validates(params, [:salary_id])
-
-    @salary = Salaries::Salary.find(@salary_id)
-    generator = AttachmentGenerator.new(@salary)
-
-    generator.pdf do |o, pdf|
-      o.update_attributes pdf: pdf
-
-      # this won't touch updated_at column and thereby set PDF as uptodate
-      o.update_column(:pdf_updated_at, Time.now)
+    # There's two ways of calling rake tasks with arguments
+    if options.is_a?(Hash)
+      options[:arguments].each do |k, v|
+        ENV[k.to_s.upcase] = v.to_s
+      end
+      # Equivalent of 'rake sometask ARG1=foo ARG2=23'
+      Rake::Task[options[:name]].invoke
+    else
+      # Equivalent of 'rake sometask[foo, 23]'
+      Rake::Task[options[:name]].invoke(*options[:arguments])
     end
-
   end
 
 end

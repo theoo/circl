@@ -26,6 +26,9 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  # Use a real queuing backend for Active Job
+  config.active_job.queue_adapter = :resque
+
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
 

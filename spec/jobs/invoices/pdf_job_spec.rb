@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Invoices::Pdf do
+describe Invoices::PdfJob, type: :job do
 
   it "should raise an error if params are missing" do
     expect { Invoices::Pdf.perform(nil, {}) }.to raise_error(ArgumentError)

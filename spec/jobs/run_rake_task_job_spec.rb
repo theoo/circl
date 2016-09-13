@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RunRakeTaskSpec do
+describe RunRakeTaskSpecJob, type: :job do
   it "should test something" do
   end
 end

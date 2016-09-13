@@ -18,11 +18,9 @@
 
 # Options are:
 #   required: [:source_subscriptions_id, :destination_subscriptions_id, :person]
-class Subscriptions::MergeSubscriptions
+class Subscriptions::MergeSubscriptionsJob < ApplicationJob
 
-  @queue = :processing
-
-  include ResqueHelper
+  queue_as :processing
 
   def perform(params = nil)
     # Resque::Plugins::Status options

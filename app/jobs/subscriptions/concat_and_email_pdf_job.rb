@@ -16,11 +16,9 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Subscriptions::ConcatAndEmailPdf
+class Subscriptions::ConcatAndEmailPdfJob < ApplicationJob
 
-  @queue = :processing
-
-  include ResqueHelper
+  queue_as :processing
 
   def perform(params = nil)
     # Resque::Plugins::Status options

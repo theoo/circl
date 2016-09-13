@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Receipts::Documents do
+describe Receipts::DocumentsJob, type: :job do
 
   before :all do
     @user = FactoryGirl.create(:user)

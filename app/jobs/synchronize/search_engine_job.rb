@@ -16,27 +16,29 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Templates::InvoiceThumbnails
+class Synchronize::SearchEngineJob < ApplicationJob
 
-  @queue = :documents
-  include ResqueHelper
+  queue_as :sync
 
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
-    set_status(title: I18n.t("templates.jobs.invoice_thumbnails.title"))
+    # i18n-tasks-use I18n.t("admin.jobs.search_engine.title")
+    set_status(translation_options: ["admin.jobs.search_engine.title"])
 
-    ids = params[:ids]
-    ids ||= InvoiceTemplate.all.map(&:id)
+    required = %i(people_ids)
+    validates(params, required)
 
-    its = InvoiceTemplate.find([ids].flatten)
-    total = its.count
-    its.each_with_index do |it, index|
+    people = Person.where(id: people_ids)
+
+    total = people.count
+    people.each_with_index do |p, index|
       at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
-      AttachmentGenerator.take_snapshot(it)
+      person.update_index
     end
 
-    true
+    completed(message: ["admin.jobs.mailchimp.completed"])
+
   end
 
 end

@@ -16,9 +16,9 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Synchronize::Mailchimp
+class Synchronize::MailchimpJob < ApplicationJob
 
-  @queue = :sync
+  queue_as :sync
 
   def perform(params = nil)
     # Resque::Plugins::Status options

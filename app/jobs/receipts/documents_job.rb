@@ -16,11 +16,9 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class Receipts::Documents
+class Receipts::DocumentsJob < ApplicationJob
 
-  @queue = :documents
-
-  include ResqueHelper
+  queue_as :documents
 
   def perform(params = nil)
 

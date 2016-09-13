@@ -1,4 +1,4 @@
-module ResqueHelper
+class ApplicationJob < ActiveJob::Base
 
   def self.included(base)
     base.include(Resque::Plugins::Status)

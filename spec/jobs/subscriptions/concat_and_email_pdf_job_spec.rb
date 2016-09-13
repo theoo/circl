@@ -1,10 +1,14 @@
 require 'spec_helper'
 
-describe Subscriptions::PreparePdfsAndEmail do
+describe Subscriptions::ConcatAndEmailPdfJob, type: :job do
+
   before :all do
     @user = FactoryGirl.create(:user)
+    # @generic_template = FactoryGirl.create(:generic_template)
+    @parent_subscription = FactoryGirl.create(:subscription)
+    @parent_subscription.values.each{|v| v.save!} # For an obscure reason FG doesn't save the relation
 
-    @subscription = FactoryGirl.create(:subscription)
+    @subscription = FactoryGirl.create(:subscription, parent_id: @parent_subscription.id)
     @subscription.values.each{|v| v.save!} # For an obscure reason FG doesn't save the relation
 
     @invoices = []
@@ -28,6 +32,13 @@ describe Subscriptions::PreparePdfsAndEmail do
       @invoices << invoice
     end
 
+    # @subscription.reload
+    # @subscription.invoices.each do |invoice|
+    #   FactoryGirl.create(:receipt, invoice: invoice, value: invoice.value)
+    # end
+
+    Rake::Task['elasticsearch:sync'].invoke
+
   end
 
   def good_params
@@ -35,25 +46,31 @@ describe Subscriptions::PreparePdfsAndEmail do
       query: { search_string: "subscriptions.id:#{@subscription.id}" },
       user_id: @user.id,
       subscription_id: @subscription.id,
+      invoice_ids: @invoices.map(&:id),
       current_locale: @user.main_communication_language.try(:symbol)
     }
   end
 
   it "should raise an error if params are missing" do
-    required = %i(subscription_id query user_id current_locale)
+    required = %i(subscription_id query invoice_ids user_id current_locale)
     required.each do |key|
       opt = good_params
       opt.delete(key)
-      expect { Subscriptions::PreparePdfsAndEmail.perform(nil, opt) }.to raise_error(ArgumentError)
+      expect { Subscriptions::ConcatAndEmailPdf.perform(nil, opt) }.to raise_error(ArgumentError)
     end
   end
 
-  it "should generate and invoice for each person in the given subscription" do
-
+  it "should generate a pdf with the same number of page than there is invoices" do
   end
 
-  it "should trigger ConcatAndEmail job at the end" do
+  it "page order should be invoice order" do
+    # ? how to check this ?
+  end
 
+  it "should send an email to correct recipent" do
+    Subscriptions::ConcatAndEmailPdf.perform(nil, good_params)
+    email = ActionMailer::Base.deliveries.last
+    expect(email.to).to include(@user.email)
   end
 
 end

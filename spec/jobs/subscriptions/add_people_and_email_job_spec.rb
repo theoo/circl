@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Subscriptions::AddPeopleAndEmail do
+describe Subscriptions::AddPeopleAndEmailJob, type: :job do
 
   before :all do
     @user = FactoryGirl.create(:user)
