@@ -42,18 +42,22 @@ class BackgroundTasks::SynchronizeMailchimp < BackgroundTask
     result = mc.session.lists.batch_unsubscribe(list_id, mc.session.lists.members(list_id)["data"], true, false, false)
 
     # Resubscribe all
-    # TODO sync second email (and all if more)
-    subscribers = people.map do |p|
-      {
-        "EMAIL" => {
-          "email" => p.email
-        },
+    subscribers = []
+    people.each do |p|
+      emails = [p.email]
+      emails << p.second_email unless p.second_email.blank?
+      emails.each do |email|
+        subscribers << {
+          "EMAIL" => {
+            "email" => email
+          },
 
-        :merge_vars => {
-          "FIRSTNAME" => p.first_name,
-          "LASTNAME"  => p.last_name
+          :merge_vars => {
+            "FIRSTNAME" => p.first_name,
+            "LASTNAME"  => p.last_name
+          }
         }
-      }
+      end
     end
     result = mc.session.lists.batch_subscribe(list_id, subscribers, false, true, false)
 
