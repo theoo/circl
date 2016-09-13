@@ -28,12 +28,11 @@ gem 'recursive-open-struct'
 ### Views/UI specific
 gem 'responders'
 gem 'will_paginate'
-gem 'haml_coffee_assets'
-
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'sass-rails'
 gem 'haml-rails'
+gem 'haml_coffee_assets', github: "emilioforrer/haml_coffee_assets", branch: "release/v2.0.0"
 gem 'dotiw', github: 'radar/dotiw'
 gem 'coffee-rails'
 

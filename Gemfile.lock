@@ -1,4 +1,14 @@
 GIT
+  remote: git://github.com/emilioforrer/haml_coffee_assets.git
+  revision: 00ce4448dde9873c8874aebd104c8dc45f09a2d0
+  branch: release/v2.0.0
+  specs:
+    haml_coffee_assets (2.0.0)
+      coffee-script (>= 2)
+      sprockets (>= 3)
+      tilt (>= 2)
+
+GIT
   remote: git://github.com/radar/dotiw.git
   revision: 3be9d26046f94f1f1fd735d360226a751dc9b543
   specs:
@@ -138,10 +148,6 @@ GEM
       haml (>= 4.0.6, < 5.0)
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
-    haml_coffee_assets (1.16.2)
-      coffee-script (>= 2)
-      sprockets (>= 2)
-      tilt (>= 1)
     hashr (0.0.22)
     highline (1.7.8)
     html2haml (2.0.0)
@@ -420,7 +426,7 @@ DEPENDENCIES
   geokit
   gon
   haml-rails
-  haml_coffee_assets
+  haml_coffee_assets!
   i18n-js (>= 3.0.0.rc12)
   i18n-tasks
   imgkit
