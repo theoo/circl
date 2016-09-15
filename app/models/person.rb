@@ -152,14 +152,14 @@ class Person < ApplicationRecord
   # monitored_habtm :roles,
   has_many  :people_roles # for permissions
   has_many  :roles,
-            -> { uniq },
+            -> { distinct },
             class_name: 'Role',
             through: :people_roles,
             after_add: :update_elasticsearch_index,
             after_remove: :update_elasticsearch_index
 
   has_many  :permissions,
-            -> { uniq },
+            -> { distinct },
             through: :roles
 
   has_many  :people_public_tags # for permissions
@@ -167,7 +167,7 @@ class Person < ApplicationRecord
 
   # monitored_habtm :public_tags,
   has_many  :public_tags,
-            -> { uniq },
+            -> { distinct },
             class_name: 'PublicTag',
             through: :people_public_tags,
             after_add: [:update_elasticsearch_index, :select_parents],
@@ -175,7 +175,7 @@ class Person < ApplicationRecord
 
   # monitored_habtm :private_tags,
   has_many  :private_tags,
-            -> { uniq },
+            -> { distinct },
             class_name: 'PrivateTag',
             through: :people_private_tags,
             after_add: [:update_elasticsearch_index, :select_parents],
@@ -186,7 +186,7 @@ class Person < ApplicationRecord
 
   # monitored_habtm :communication_languages,
   has_many  :communication_languages,
-            -> { uniq },
+            -> { distinct },
             class_name: 'Language',
             through: :people_communication_languages,
             source: :language,
@@ -208,21 +208,21 @@ class Person < ApplicationRecord
 
   has_many  :affairs_stakeholders
   has_many  :affairs_as_stakeholder,
-            -> { uniq },
+            -> { distinct },
             through: :affairs_stakeholders,
             source: :affair
 
   has_many  :invoices,
-            -> { uniq },
+            -> { distinct },
             through: :affairs,
             foreign_key: 'owner_id'
 
   has_many  :receipts,
-            -> { uniq },
+            -> { distinct },
             through: :invoices
 
   has_many  :subscriptions,
-            -> { uniq },
+            -> { distinct },
             through: :affairs
 
 

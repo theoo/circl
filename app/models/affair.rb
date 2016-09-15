@@ -124,7 +124,7 @@ class Affair < ApplicationRecord
               dependent: :destroy
 
   has_many    :receipts,
-              -> { uniq },
+              -> { distinct },
               through: :invoices
 
   has_many    :extras,

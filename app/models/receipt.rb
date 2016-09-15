@@ -74,7 +74,7 @@ class Receipt < ApplicationRecord
           through: :affair
 
   has_many :subscriptions,
-          -> { uniq },
+          -> { distinct },
           through: :affair
 
   # money

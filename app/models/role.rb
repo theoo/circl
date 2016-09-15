@@ -54,7 +54,7 @@ class Role < ApplicationRecord
 
   has_many  :people_roles # for permissions
   has_many  :people,
-            -> { uniq },
+            -> { distinct },
             class_name: 'Person',
             through: :people_roles,
             after_add: :update_elasticsearch_index,

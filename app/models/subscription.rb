@@ -70,18 +70,18 @@ class Subscription < ApplicationRecord
   acts_as_tree
 
   has_and_belongs_to_many :affairs,
-                          -> { uniq }
+                          -> { distinct }
 
   has_many  :invoices,
-            -> { uniq },
+            -> { distinct },
             through: :affairs
 
   has_many  :receipts,
-            -> { uniq },
+            -> { distinct },
             through: :affairs
 
   has_many  :people,
-            -> { uniq },
+            -> { distinct },
             through: :invoices,
             source: :owner
 

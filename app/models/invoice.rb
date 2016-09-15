@@ -103,19 +103,19 @@ class Invoice < ApplicationRecord
               through: :affair
 
   has_many    :subscriptions,
-              -> { uniq },
+              -> { distinct },
                through: :affair
 
   has_many    :tasks,
-              -> { uniq },
+              -> { distinct },
                through: :affair
 
   has_many    :product_items,
-              -> { uniq },
+              -> { distinct },
                through: :affair
 
   has_many    :extras,
-              -> { uniq },
+              -> { distinct },
                through: :affair
 
   # paperclip
@@ -410,7 +410,7 @@ class Invoice < ApplicationRecord
   #
   # @return [boolean] true if it succeed
   def update_pdf!
-    Invoices::PdfJob.perform(nil, invoice_id: self.id)
+    Invoices::PdfJob.perform_now(nil, invoice_id: self.id)
   end
 
   # Placeholder proxy

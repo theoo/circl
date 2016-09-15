@@ -1,8 +1,6 @@
 class ApplicationJob < ActiveJob::Base
 
-  def self.included(base)
-    base.include(Resque::Plugins::Status)
-  end
+  include Resque::Plugins::Status
 
   #
   # Validate input Hash using required Array and load Hash's key as instance variable
@@ -13,7 +11,7 @@ class ApplicationJob < ActiveJob::Base
   def validates(params, required)
     params.symbolize_keys!
 
-    raise ArgumentError, "Expecting a Hash with at least #{required.inspect} keys." unless params.is_a? Hash
+    raise ArgumentError, "Expecting a Hash with at least #{required.inspect} keys." unless params.is_a? ::Hash
     required.each do |r|
       raise ArgumentError, "#{r.inspect} parameter required." unless params.include?(r)
       instance_variable_set("@#{r}", params[r]) unless params[r].blank?

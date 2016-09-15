@@ -351,7 +351,7 @@ class Edit extends App.ExtendedController
       @highlight_vat()
 
     # tooltips
-    @el.find("a[href=#person_affair_tasks]").tooltip
+    @el.find("a[href='#person_affair_tasks']").tooltip
       placement: 'bottom'
       title: @affair.tasks_duration_translation
 
@@ -656,8 +656,9 @@ class App.PersonAffairs extends Spine.Controller
     super
 
     # TODO use Spine.Route instead
-    anchor = Spine.Route.getFragment()
-    if anchor
+    # anchor = Spine.Route.getFragment()
+    console.log "TODO: fix URL fragment with Spine.Route"
+    if false # anchor
       path = anchor.split("/")
       ctrl = path[0]
       @resource = path[1] if path.length > 1

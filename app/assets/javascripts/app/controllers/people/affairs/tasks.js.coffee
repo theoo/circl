@@ -107,8 +107,6 @@ class Edit extends App.TimesheetExtension
     'blur .time': 'on_time_change'
     'click button[name=reset_value]': 'reset_value'
     'change select[name=task_type_id]': 'update_task_type_description'
-    'click a[name="affair_tasks_pdf"]': 'pdf'
-    'click a[name="affair_tasks_odt"]': 'odt'
 
   constructor: ->
     super

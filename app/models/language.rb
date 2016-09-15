@@ -53,7 +53,7 @@ class Language < ApplicationRecord
   has_many  :salaries_templates
 
   has_and_belongs_to_many :communication_people, #communication_languages
-                          -> { uniq },
+                          -> { distinct },
                           class_name: 'Person',
                           join_table: 'people_communication_languages',
                           after_add: :update_elasticsearch_index,

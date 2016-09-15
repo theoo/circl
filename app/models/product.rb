@@ -66,8 +66,8 @@ class Product < ApplicationRecord
   has_many :product_items, class_name: 'ProductItem',
                            dependent: :destroy
 
-  has_many :programs, -> { uniq }, through: :product_items
-  has_many :affairs, -> { uniq }, through: :product_items
+  has_many :programs, -> { distinct }, through: :product_items
+  has_many :affairs, -> { distinct }, through: :product_items
 
 
   scope :actives,  -> { where(archive: false)}
