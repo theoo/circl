@@ -16,7 +16,6 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# TODO apply money instead of composed_of to every models
 module MoneyComposer
   def money(name, cents_attr = nil, currency_attr = nil)
     cents_attr     ||= name.to_s + "_in_cents"

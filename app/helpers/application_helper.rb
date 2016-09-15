@@ -68,7 +68,7 @@ module ApplicationHelper
     case obj
     when Array
       obj.map{ |o| relation_to_string(o) }.join ', '
-    when Tire::Results::Item
+    when Hash # FIXME migrate Tire::Results::Item to ElasticSearch
       if obj.full_name
         return obj.full_name
       elsif obj.string

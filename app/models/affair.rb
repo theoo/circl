@@ -43,10 +43,9 @@ class Affair < ApplicationRecord
   # Monetize deprecation warning
   require 'monetize/core_extensions'
 
-  # include ChangesTracker
   include StatusExtension
-  include ElasticSearch::Mapping
-  include ElasticSearch::Indexing
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
   include VatExtension
   extend  MoneyComposer
 

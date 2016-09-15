@@ -4,8 +4,6 @@ class AffairsCondition < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  # include ChangesTracker
-
   #####################
   ### MISCEALLENOUS ###
   #####################

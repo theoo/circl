@@ -33,9 +33,8 @@ class Language < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  # include ChangesTracker
-  include ElasticSearch::Mapping
-  include ElasticSearch::Indexing
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   #################
   ### CALLBACKS ###
@@ -89,7 +88,7 @@ class Language < ApplicationRecord
 
   def reindex_people
     ids = main_people.map(&:id) + communication_people.map(&:id)
-    Synchronize::SearchEngineJob.create(people_ids: ids.uniq)
+    Synchronize::SearchEngineJob.create(ids: ids.uniq)
     true
   end
 

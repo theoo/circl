@@ -16,14 +16,10 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class DateValidator < ActiveModel::Validator
+class Validators::PresenceOfIdentifier < ActiveModel::Validator
   def validate(record)
-    # To validate that the date is correct, we leverage Rail's automagic date parsing.
-    # If there was some data sent, but the attribute is nil it means Rails couldn't
-    # parse the date, and thus that the data is not a valid date string.
-    parsed_attribute   = record.send("#{options[:attribute]}")
-    original_attribute = record.send("#{options[:attribute]}_before_type_cast")
-    return if original_attribute.blank? || parsed_attribute
-    record.errors.add(options[:attribute], I18n.t('common.errors.invalid_date'))
+    if record.full_name.blank? && record.has_no_email? && record.organization_name.blank?
+      record.errors[:base] << I18n.t('common.errors.absence_of_identifier')
+    end
   end
 end

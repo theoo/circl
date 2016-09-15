@@ -87,7 +87,7 @@ class Task < ApplicationRecord
   ### VALIDATIONS ###
   ###################
 
-  validates_with DateValidator, attribute: :start_date
+  validates_with Validators::Date, attribute: :start_date
   validates_presence_of :description,
                         :affair_id,
                         :task_type_id,

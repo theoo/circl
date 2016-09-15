@@ -25,9 +25,8 @@ class Creditor < ApplicationRecord
   # Monetize deprecation warning
   require 'monetize/core_extensions'
 
-  # include ChangesTracker
-  include ElasticSearch::Mapping
-  include ElasticSearch::Indexing
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
   include VatExtension
   extend  MoneyComposer
 

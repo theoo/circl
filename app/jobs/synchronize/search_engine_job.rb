@@ -26,10 +26,9 @@ class Synchronize::SearchEngineJob < ApplicationJob
     # i18n-tasks-use I18n.t("admin.jobs.search_engine.title")
     set_status(translation_options: ["admin.jobs.search_engine.title"])
 
-    required = %i(people_ids)
-    validates(params, required)
+    validates(params, %i(ids))
 
-    people = Person.where(id: people_ids)
+    people = Person.where(id: ids)
 
     total = people.count
     people.each_with_index do |p, index|

@@ -35,10 +35,8 @@ class Role < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  # include ChangesTracker
-  include ElasticSearch::Mapping
-  include ElasticSearch::Indexing
-  include ElasticSearch::AutomaticPeopleReindexing
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   #################
   ### CALLBACKS ###

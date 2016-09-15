@@ -16,15 +16,10 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class IntervalValidator < ActiveModel::Validator
-
-  # validates that end_interval is a date after start_interval
+class Validators::Phone < ActiveModel::Validator
   def validate(record)
-    return if record.interval_starts_on.blank? ||
-              record.interval_ends_on.blank? ||
-              record.interval_starts_on <= record.interval_ends_on
-
-    record.errors.add(:interval_ends_on, I18n.t('common.errors.end_must_be_after_start'))
+    parsed_attribute = record.send("#{options[:attribute]}")
+    return if parsed_attribute.blank? || parsed_attribute.match(/^\+?[\d\s]{7,18}$/)
+    record.errors.add(options[:attribute], I18n.t('common.errors.invalid_phone'))
   end
-
 end

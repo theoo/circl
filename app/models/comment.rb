@@ -39,9 +39,8 @@ class Comment < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  # include ChangesTracker
-  include ElasticSearch::Mapping
-  include ElasticSearch::Indexing
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   #################
   ### RELATIONS ###
@@ -55,7 +54,7 @@ class Comment < ApplicationRecord
   ### VALIDATIONS ###
   ###################
   validates_presence_of :title, :description, :resource_type, :resource_id
-  validates_with PointsToModelValidator, attr: :resource_type
+  validates_with Validators::PointsToModel, attr: :resource_type
 
   # Validate fields of type 'string' length
   validates_length_of :title, maximum: 255

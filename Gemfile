@@ -13,7 +13,8 @@ gem 'activerecord-session_store'
 ### database
 gem 'pg'
 gem 'redis'
-gem 'tire', '0.6.2'
+gem 'elasticsearch-rails'
+gem 'elasticsearch-model'
 gem 'acts_as_tree'
 gem 'net-ldap', :git => 'git://github.com/ruby-ldap/ruby-net-ldap.git'
 

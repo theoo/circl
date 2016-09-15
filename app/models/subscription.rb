@@ -46,10 +46,8 @@ class Subscription < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  # include ChangesTracker
-  include ElasticSearch::Mapping
-  include ElasticSearch::Indexing
-  include ElasticSearch::AutomaticPeopleReindexing
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   #################
   ### CALLBACKS ###
@@ -99,9 +97,9 @@ class Subscription < ApplicationRecord
 
   validates_presence_of :title
   validates_uniqueness_of :title
-  validates_with IntervalValidator
-  validates_with DateValidator, attribute: :interval_starts_on
-  validates_with DateValidator, attribute: :interval_ends_on
+  validates_with Validators::Interval
+  validates_with Validators::Date, attribute: :interval_starts_on
+  validates_with Validators::Date, attribute: :interval_ends_on
 
   # Validate fields of type 'string' length
   validates_length_of :title, maximum: 255

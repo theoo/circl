@@ -46,9 +46,8 @@ class Salaries::Tax < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  # include ChangesTracker
-  include ElasticSearch::Mapping
-  include ElasticSearch::Indexing
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
 
   #################
   ### VALIDATIONS #

@@ -69,7 +69,7 @@ class Activity < ApplicationRecord
   ###################
 
   validates_presence_of :action, :data, :resource_type, :resource_id
-  validates_with PointsToModelValidator, attr: :resource_type
+  validates_with Validators::PointsToModel, attr: :resource_type
 
   # Validate fields of type 'string' length
   validates_length_of :action, maximum: 255

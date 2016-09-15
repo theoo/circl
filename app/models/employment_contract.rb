@@ -65,9 +65,9 @@ class EmploymentContract < ApplicationRecord
                             less_than_or_equal_to: 100,
                             only_integer: false
 
-  validates_with IntervalValidator
-  validates_with DateValidator, attribute: :interval_starts_on
-  validates_with DateValidator, attribute: :interval_ends_on
+  validates_with Validators::Interval
+  validates_with Validators::Date, attribute: :interval_starts_on
+  validates_with Validators::Date, attribute: :interval_ends_on
 
   validate :person_exists
 

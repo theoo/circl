@@ -41,9 +41,8 @@ class Receipt < ApplicationRecord
   # Monetize deprecation warning
   require 'monetize/core_extensions'
 
-  # include ChangesTracker
-  include ElasticSearch::Mapping
-  include ElasticSearch::Indexing
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
   extend  MoneyComposer
 
   #################
@@ -85,7 +84,7 @@ class Receipt < ApplicationRecord
   ###################
 
   validates_presence_of :value_date, :invoice_id
-  validates_with DateValidator, attribute: :value_date
+  validates_with Validators::Date, attribute: :value_date
   validates :value, presence: true,
     numericality: { more_than_or_equal: -99999999.99, less_than_or_equal: 99999999.99 } # BVR limit
 

@@ -16,7 +16,15 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-module FormatValidations
-  EMAIL_REGEX = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+class Validators::Interval < ActiveModel::Validator
+
+  # validates that end_interval is a date after start_interval
+  def validate(record)
+    return if record.interval_starts_on.blank? ||
+              record.interval_ends_on.blank? ||
+              record.interval_starts_on <= record.interval_ends_on
+
+    record.errors.add(:interval_ends_on, I18n.t('common.errors.end_must_be_after_start'))
+  end
 
 end

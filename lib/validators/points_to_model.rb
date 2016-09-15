@@ -16,28 +16,20 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class FullNameValidator < ActiveModel::Validator
+# validate that record.resource_type is a string representation of a rails model
+
+class Validators::PointsToModel < ActiveModel::Validator
+  include Reflection
+
+  def initialize(options)
+    super
+    @validate_me = options[:attr]
+
+  end
 
   def validate(record)
-    return if record.first_name.blank? && record.last_name.blank?
-
-    if first_name_valid_for(record) && !last_name_valid_for(record)
-      record.errors[:last_name] << I18n.t('common.errors.must_provide_last_name_if_first_name')
-    end
-
-    if last_name_valid_for(record) && !first_name_valid_for(record)
-      record.errors[:first_name] << I18n.t('common.errors.must_provide_first_name_if_last_name')
-    end
-
-  end
-
-private
-  def first_name_valid_for(record)
-    !record.first_name.blank?
-  end
-
-  def last_name_valid_for(record)
-    !record.last_name.blank?
+    record.errors[@validate_me] << I18n.t('common.errors.does_not_point_to_valid_model') unless
+      list_model_names.include?(record.send (@validate_me))
   end
 
 end

@@ -16,4 +16,5 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-Tire::Configuration.url(Rails.configuration.settings['elasticsearch']['url'])
+Elasticsearch::Model.client = Elasticsearch::Client.new log: true,
+  host: Rails.configuration.settings['elasticsearch']['url']

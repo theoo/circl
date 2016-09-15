@@ -53,8 +53,8 @@ class Invoice < ApplicationRecord
   include StatusExtension
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::TagHelper
-  include ElasticSearch::Mapping
-  include ElasticSearch::Indexing
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
   include VatExtension
   extend  MoneyComposer
 
@@ -143,7 +143,7 @@ class Invoice < ApplicationRecord
 
   validates_presence_of :title, :invoice_template_id, :affair_id
   validates_presence_of :created_at, on: :update
-  validates_with DateValidator, attribute: :created_at
+  validates_with Validators::Date, attribute: :created_at
 
   # Validate fields of type 'string' length
   validates_length_of :title, maximum: 255

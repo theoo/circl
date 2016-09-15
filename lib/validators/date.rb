@@ -16,41 +16,14 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-require 'mailchimp'
-
-class MailchimpAccount
-
-  LOCK_FILE = File.join(Rails.root.to_s, 'tmp', 'mailchimp_sync_process.lock')
-
-  attr_accessor :session
-
-  def initialize()
-    @api_key = ApplicationSetting.value(:mailchimp_api_key)
-    @session = Mailchimp::API.new(@api_key)
+class Validators::Date < ActiveModel::Validator
+  def validate(record)
+    # To validate that the date is correct, we leverage Rail's automagic date parsing.
+    # If there was some data sent, but the attribute is nil it means Rails couldn't
+    # parse the date, and thus that the data is not a valid date string.
+    parsed_attribute   = record.send("#{options[:attribute]}")
+    original_attribute = record.send("#{options[:attribute]}_before_type_cast")
+    return if original_attribute.blank? || parsed_attribute
+    record.errors.add(options[:attribute], I18n.t('common.errors.invalid_date'))
   end
-
-  def lists
-    h = {}
-    @session.lists.list['data'].map{|l| h[l['name']] = l['id']}
-    h
-  end
-
-  def segments(list_id)
-    h = {}
-    @session.lists.segments(list_id, 'static')['static'].map{|s| h[s['name']] = s['id']}
-    h
-  end
-
-  def process_running?
-    File.file? LOCK_FILE
-  end
-
-  def lock_job
-    FileUtils.touch(LOCK_FILE)
-  end
-
-  def unlock_job
-    FileUtils.rm(LOCK_FILE) if process_running?
-  end
-
 end

@@ -68,11 +68,7 @@ class Person < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  # Inclusion order matter
-  # include ChangesTracker
-  include Tire::Model::Callbacks
-  include ElasticSearch::Mapping
-  include ElasticSearch::Indexing
+  include Elasticsearch::Model
 
   attr_accessor :notices
   attr_accessor :template
@@ -86,25 +82,30 @@ class Person < ApplicationRecord
   ### CALLBACKS ###
   #################
 
-  # person
+  before_validation :nilify_authentication_token_if_blank
+
+  before_save :reset_authentication_token_if_requested, :verify_employee_information, :update_geographic_coordinates
+  after_save do
+    Synchronize::SearchEngineJob.perform_async(nil, ids: self.id)
+  end
+
   before_destroy :do_not_destroy_if_has_invoices
   before_destroy :do_not_destroy_if_has_salaries
   before_destroy :do_not_destroy_if_first_admin
   before_destroy :do_not_destroy_if_has_running_contracts
   before_destroy :do_not_destroy_if_linked_to_products
   before_destroy :clear_affairs_as_buyer_and_affairs_as_receiver
-  # TODO remove password if removing last email.
-
   before_destroy do
     roles.clear
     communication_languages.clear
     private_tags.clear
     public_tags.clear
   end
+  # TODO remove password if removing last email.
 
-  # API key
-  before_validation :nilify_authentication_token_if_blank
-  before_save :reset_authentication_token_if_requested, :verify_employee_information, :update_geographic_coordinates
+  after_destroy do
+    Synchronize::SearchEngineJob.perform_async(nil, ids: self.id)
+  end
 
   # LDAP
   if Rails.configuration.ldap_enabled
@@ -280,14 +281,14 @@ class Person < ApplicationRecord
   ### VALIDATIONS ###
   ###################
 
-  validates_with PresenceOfIdentifierValidator
-  validates_with FullNameValidator
-  validates_with DateValidator, attribute: :birth_date
+  validates_with Validators::PresenceOfIdentifier
+  validates_with Validators::FullName
+  validates_with Validators::Date, attribute: :birth_date
 
-  validates_with PhoneValidator, attribute: :phone
-  validates_with PhoneValidator, attribute: :second_phone
-  validates_with PhoneValidator, attribute: :mobile
-  validates_with PhoneValidator, attribute: :fax_number
+  validates_with Validators::Phone, attribute: :phone
+  validates_with Validators::Phone, attribute: :second_phone
+  validates_with Validators::Phone, attribute: :mobile
+  validates_with Validators::Phone, attribute: :fax_number
 
   validate :cannot_use_same_first_name_and_last_name_unless_has_email
 
@@ -302,8 +303,8 @@ class Person < ApplicationRecord
   validates_uniqueness_of :authentication_token, allow_nil: true
   validates_uniqueness_of :email, if: :has_email?
   validates_uniqueness_of :second_email, if: :has_second_email?
-  validates_format_of :email, with: FormatValidations::EMAIL_REGEX, if: :has_email?
-  validates_format_of :second_email, with: FormatValidations::EMAIL_REGEX, if: :has_second_email?
+  validates_format_of :email, with: EMAIL_REGEX, if: :has_email?
+  validates_format_of :second_email, with: EMAIL_REGEX, if: :has_second_email?
   validates :website, format: URI::regexp(%w(http https)), unless: 'website.blank?'
   validate :avs_number_format
   validate :second_email_is_different, if: lambda { has_email? && has_second_email? }
