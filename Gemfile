@@ -63,7 +63,7 @@ gem 'geoip', '1.3.3'
 gem 'geokit', '1.7.1'
 
 ### authentication and authorization
-gem 'devise', '3.2.4'
+gem 'devise', '3.5.6'
 gem 'devise-i18n', '0.10.4'
 gem 'devise-encryptable', '0.2.0'
 gem 'cancancan', '~> 1.7.0'
