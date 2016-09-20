@@ -44,7 +44,7 @@ class Admin::SubscriptionsController < ApplicationController
             type: 'application/pdf'
         else
           if params[:query]
-            Subscriptions::PreparePdfsAndEmailJob.create(
+            Subscriptions::PreparePdfsAndEmailJob.perform_later(
               subscription_id: @subscription.id,
               query: query,
               user_id: current_person.id,
@@ -71,7 +71,7 @@ class Admin::SubscriptionsController < ApplicationController
           redirect_to admin_path(anchor: 'affairs')
         }
       else
-        Subscriptions::AddPeopleAndEmailJob.create(
+        Subscriptions::AddPeopleAndEmailJob.perform_later(
           query: query,
           subscription_id: @subscription.id,
           user_id: current_person.id,
@@ -227,7 +227,7 @@ class Admin::SubscriptionsController < ApplicationController
         unless people_ids.empty?
           search_string = "id:(#{people_ids.join(' ')})"
 
-          Subscriptions::AddPeopleAndEmailJob.create(
+          Subscriptions::AddPeopleAndEmailJob.perform_later(
             subscription_id: @subscription.id,
             query: { search_string: search_string },
             user_id: current_person.id,
@@ -292,7 +292,7 @@ class Admin::SubscriptionsController < ApplicationController
       end
 
       # TODO ideally this should be in after_save callback in Subscription model. Only current_person (email) prevent it.
-      Subscriptions::UpdateInvoicesAndEmailJob.create(
+      Subscriptions::UpdateInvoicesAndEmailJob.perform_later(
         subscription_id: @subscription.id,
         user_id: current_person.id)
 
@@ -432,7 +432,7 @@ class Admin::SubscriptionsController < ApplicationController
       if @errors.size > 0
         format.json { render json: @errors , status: :unprocessable_entity }
       else
-        Subscriptions::MergeSubscriptionsJob.create(
+        Subscriptions::MergeSubscriptionsJob.perform_later(
           source_subscription_id: params[:id],
           destination_subscription_id: params[:transfer_to_subscription_id],
           user_id: current_person.id)

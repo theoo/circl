@@ -1,6 +1,6 @@
 class ApplicationJob < ActiveJob::Base
 
-  include Resque::Plugins::Status
+  # include Resque::Plugins::Status
 
   #
   # Validate input Hash using required Array and load Hash's key as instance variable

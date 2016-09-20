@@ -226,7 +226,7 @@ class Admin::ReceiptsController < ApplicationController
 
       if errors.empty?
 
-        Receipts::DocumentsJob.create(
+        Receipts::DocumentsJob.perform_later(
           query: query,
           user_id: current_person.id,
           from: from,

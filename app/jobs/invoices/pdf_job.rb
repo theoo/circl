@@ -26,7 +26,7 @@ class Invoices::PdfJob < ApplicationJob
     # Resque::Plugins::Status options
     params ||= options
     # i18n-tasks-use I18n.t("invoices.jobs.pdf.title")
-    set_status(translation_options: ["invoices.jobs.pdf.title"])
+    # set_status(translation_options: ["invoices.jobs.pdf.title"])
 
     validates(params, [:invoice_id])
 

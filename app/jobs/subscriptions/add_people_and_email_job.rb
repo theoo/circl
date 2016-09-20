@@ -24,7 +24,7 @@ class Subscriptions::AddPeopleAndEmailJob < ApplicationJob
     # Resque::Plugins::Status options
     params ||= options
     # i18n-tasks-use I18n.t("subscriptions.jobs.add_people_and_email.title")
-    set_status(translation_options: ["subscriptions.jobs.add_people_and_email.title"])
+    # set_status(translation_options: ["subscriptions.jobs.add_people_and_email.title"])
 
     required = %i(query subscription_id user_id parent_subscription_id status)
     validates(params, required)
@@ -46,7 +46,7 @@ class Subscriptions::AddPeopleAndEmailJob < ApplicationJob
 
     total = people_ids.size
     people_ids.each_with_index do |id, index|
-      at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
+      # at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
 
       p = Person.find(id)
 
@@ -99,7 +99,7 @@ class Subscriptions::AddPeopleAndEmailJob < ApplicationJob
       new_people_ids,
       existing_people_ids).deliver
 
-    completed(message: ["subscriptions.jobs.add_people_and_email.an_email_have_been_sent"])
+    # completed(message: ["subscriptions.jobs.add_people_and_email.an_email_have_been_sent"])
 
   end
 end

@@ -86,7 +86,7 @@ class Person < ApplicationRecord
 
   before_save :reset_authentication_token_if_requested, :verify_employee_information, :update_geographic_coordinates
   after_save do
-    Synchronize::SearchEngineJob.perform_async(nil, ids: self.id)
+    Synchronize::SearchEngineJob.perform_later(ids: self.id)
   end
 
   before_destroy :do_not_destroy_if_has_invoices
@@ -104,7 +104,7 @@ class Person < ApplicationRecord
   # TODO remove password if removing last email.
 
   after_destroy do
-    Synchronize::SearchEngineJob.perform_async(nil, ids: self.id)
+    Synchronize::SearchEngineJob.perform_later(ids: self.id)
   end
 
   # LDAP

@@ -256,7 +256,7 @@ class Salaries::Salary < ApplicationRecord
   end
 
   def update_pdf
-    Salaries::PdfJob.create salary_id: self.id
+    Salaries::PdfJob.perform_later salary_id: self.id
   end
 
   def has_reference?

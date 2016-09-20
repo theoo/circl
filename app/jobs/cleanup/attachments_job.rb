@@ -20,8 +20,6 @@ class Cleanup::AttachmentsJob < ApplicationJob
 
   queue_as :cleanup
 
-  include ResqueHelper
-
   def perform(params = nil)
     params || options
     # i18n-tasks-use I18n.t("admin.jobs.cleanup.attachments.title")

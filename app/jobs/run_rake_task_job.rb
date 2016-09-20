@@ -20,13 +20,12 @@
 class RunRakeTaskJob < ApplicationJob
 
   queue_as :processing
-  include ResqueHelper
 
   def perform(params = nil)
     # Resque::Plugins::Status options
     params ||= options
     # i18n-tasks-use I18n.t("admin.jobs.run_rake_task.title")
-    set_status(translation_options: ["admin.jobs.run_rake_task.title"])
+    # set_status(translation_options: ["admin.jobs.run_rake_task.title"])
 
     # There's two ways of calling rake tasks with arguments
     if options.is_a?(Hash)

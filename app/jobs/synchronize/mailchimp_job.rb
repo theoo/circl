@@ -24,7 +24,7 @@ class Synchronize::MailchimpJob < ApplicationJob
     # Resque::Plugins::Status options
     params ||= options
     # i18n-tasks-use I18n.t("admin.jobs.mailchimp.title")
-    set_status(translation_options: ["admin.jobs.mailchimp.title"])
+    # set_status(translation_options: ["admin.jobs.mailchimp.title"])
 
     required = %i(user_id list_id query)
     validates(params, required)
@@ -63,7 +63,7 @@ class Synchronize::MailchimpJob < ApplicationJob
 
     PersonMailer.send_mailchimp_sync_report(@user_id, @list_id, result["errors"], people.count).deliver
 
-    completed(message: ["admin.jobs.mailchimp.completed"])
+    # completed(message: ["admin.jobs.mailchimp.completed"])
 
   end
 end

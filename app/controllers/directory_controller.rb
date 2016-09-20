@@ -23,22 +23,23 @@ class DirectoryController < ApplicationController
   # FIXME this causes stranges persmissions with the name of methods from this helper
   include ApplicationHelper
 
-  rescue_from Tire::Search::SearchRequestFailed do |error|
-    # Indicate incorrect query to the user
-    if error.message =~ /SearchParseException/ && params[:query]
-      query = HashWithIndifferentAccess.new(JSON.parse(params[:query]))
-      message = I18n.t('directory.errors.query_invalid', query: query[:search_string])
-    else
-      message = I18n.t('directory.errors.search_error', error: error.message)
-    end
+  # TODO Tire migration
+  # rescue_from Tire::Search::SearchRequestFailed do |error|
+  #   # Indicate incorrect query to the user
+  #   if error.message =~ /SearchParseException/ && params[:query]
+  #     query = HashWithIndifferentAccess.new(JSON.parse(params[:query]))
+  #     message = I18n.t('directory.errors.query_invalid', query: query[:search_string])
+  #   else
+  #     message = I18n.t('directory.errors.search_error', error: error.message)
+  #   end
 
-    if request.format.json?
-      render json: { search_string: [message] }, status: :unprocessable_entity
-    elsif request.format.html?
-      flash[:error] = message
-      redirect_to directory_path
-    end
-  end
+  #   if request.format.json?
+  #     render json: { search_string: [message] }, status: :unprocessable_entity
+  #   elsif request.format.html?
+  #     flash[:error] = message
+  #     redirect_to directory_path
+  #   end
+  # end
 
   def index
     authorize! :index, Directory
@@ -72,8 +73,9 @@ class DirectoryController < ApplicationController
           @results_count = ElasticSearch::count(@query[:search_string])
         end
       else
-        raise Tire::Search::SearchRequestFailed,
-          I18n.t('directory.errors.you_need_to_select_at_least_one_attribute_to_display')
+        # TODO Tire migration
+        # raise Tire::Search::SearchRequestFailed,
+        #   I18n.t('directory.errors.you_need_to_select_at_least_one_attribute_to_display')
       end
     end
 
@@ -165,7 +167,7 @@ class DirectoryController < ApplicationController
       else
 
         flash[:notice] = I18n.t('common.notices.synchronization_started', email: current_person.email)
-        Synchronize::MailchimpJob.create(
+        Synchronize::MailchimpJob.perform_later(
           user_id: current_person.id,
           list_id: params[:id],
           query: query)
@@ -197,7 +199,8 @@ class DirectoryController < ApplicationController
           @results_count = ElasticSearch::count(@query[:search_string])
         end
       else
-        raise Tire::Search::SearchRequestFailed, I18n.t('directory.errors.you_need_to_select_at_least_one_attribute_to_display')
+        # TODO Tire migration
+        # raise Tire::Search::SearchRequestFailed, I18n.t('directory.errors.you_need_to_select_at_least_one_attribute_to_display')
       end
 
     end
@@ -268,7 +271,7 @@ class DirectoryController < ApplicationController
       # Create missing jobs
       if params[:jobs]
         params[:jobs].each do |job|
-          Job.create(name: job)
+          Job.perform_later(name: job)
         end
       end
 
@@ -299,7 +302,7 @@ class DirectoryController < ApplicationController
 
 
       # Reindex the whole database
-      RunRakeTaskJob.create(name: 'elasticsearch:sync')
+      RunRakeTaskJob.perform_later(name: 'elasticsearch:sync')
     end
 
     # Ensure ES and geoloc are enable again, whatever happend during transaction

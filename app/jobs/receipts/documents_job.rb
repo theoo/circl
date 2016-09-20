@@ -25,7 +25,7 @@ class Receipts::DocumentsJob < ApplicationJob
     # Resque::Plugins::Status options
     params ||= options
     # i18n-tasks-use I18n.t("receipts.jobs.documents.title")
-    set_status(translation_options: ["receipts.jobs.documents.title"])
+    # set_status(translation_options: ["receipts.jobs.documents.title"])
 
     required = %i(query user_id from to format generic_template_id)
     # optional_params = %i(subscriptions_filter unit_value global_value unit_overpaid global_overpaid)

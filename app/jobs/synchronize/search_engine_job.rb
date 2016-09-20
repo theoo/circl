@@ -24,19 +24,19 @@ class Synchronize::SearchEngineJob < ApplicationJob
     # Resque::Plugins::Status options
     params ||= options
     # i18n-tasks-use I18n.t("admin.jobs.search_engine.title")
-    set_status(translation_options: ["admin.jobs.search_engine.title"])
+    # set_status(translation_options: ["admin.jobs.search_engine.title"])
 
     validates(params, %i(ids))
 
-    people = Person.where(id: ids)
+    people = Person.where(id: @ids)
 
     total = people.count
     people.each_with_index do |p, index|
-      at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
-      person.update_index
+      # at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
+      p.update_index
     end
 
-    completed(message: ["admin.jobs.mailchimp.completed"])
+    # completed(message: ["admin.jobs.mailchimp.completed"])
 
   end
 

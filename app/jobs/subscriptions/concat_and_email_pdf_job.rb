@@ -24,7 +24,7 @@ class Subscriptions::ConcatAndEmailPdfJob < ApplicationJob
     # Resque::Plugins::Status options
     params ||= options
     # i18n-tasks-use I18n.t("subscriptions.jobs.concat_and_email_pdf.title")
-    set_status(translation_options: ["subscriptions.jobs.concat_and_email_pdf.title"])
+    # set_status(translation_options: ["subscriptions.jobs.concat_and_email_pdf.title"])
 
     required = %i(subscription_id query invoice_ids user_id current_locale)
     validates(params, required)
@@ -72,7 +72,7 @@ class Subscriptions::ConcatAndEmailPdfJob < ApplicationJob
 
     PersonMailer.send_subscription_pdf_link(@user_id, @subscription_id).deliver
 
-    completed(message: ["subscriptions.jobs.concat_and_email_pdf.an_email_have_been_sent"])
+    # completed(message: ["subscriptions.jobs.concat_and_email_pdf.an_email_have_been_sent"])
 
   end
 end

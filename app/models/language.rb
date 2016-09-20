@@ -88,7 +88,7 @@ class Language < ApplicationRecord
 
   def reindex_people
     ids = main_people.map(&:id) + communication_people.map(&:id)
-    Synchronize::SearchEngineJob.create(ids: ids.uniq)
+    Synchronize::SearchEngineJob.perform_later(ids: ids.uniq)
     true
   end
 

@@ -24,7 +24,7 @@ class Salaries::PdfJob < ApplicationJob
     # Resque::Plugins::Status options
     params ||= options
     # i18n-tasks-use I18n.t("salaries.jobs.pdf.title")
-    set_status(translation_options: ["salaries.jobs.pdf.title"])
+    # set_status(translation_options: ["salaries.jobs.pdf.title"])
 
     validates(params, [:salary_id])
 

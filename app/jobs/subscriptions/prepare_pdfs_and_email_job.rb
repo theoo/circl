@@ -24,7 +24,7 @@ class Subscriptions::PreparePdfsAndEmailJob < ApplicationJob
     # Resque::Plugins::Status options
     params ||= options
     # i18n-tasks-use I18n.t("subscriptions.jobs.prepare_pdf_and_email.title")
-    set_status(translation_options: ["subscriptions.jobs.prepare_pdf_and_email.title"])
+    # set_status(translation_options: ["subscriptions.jobs.prepare_pdf_and_email.title"])
 
     required = %i(subscription_id query user_id current_locale)
     validates(params, required)
@@ -43,7 +43,7 @@ class Subscriptions::PreparePdfsAndEmailJob < ApplicationJob
     invoices_ids = []
     total = people_ids.size
     people_ids.each_with_index do |id, index|
-      at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
+      # at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
 
       Person.find(id).invoices.each do |i|
         next unless i.affair.subscription_ids.include?(@subscription_id)
@@ -52,14 +52,14 @@ class Subscriptions::PreparePdfsAndEmailJob < ApplicationJob
           logger.info "PDF for invoice #{i.id} is up to date, skipping..."
         else
           logger.info "PDF for invoice #{i.id} is not up to date, generating..."
-          Invoices::PdfJob.perform(nil, invoice_id: i.id)
+          Invoices::PdfJob.perform_now(invoice_id: i.id)
         end
       end
     end
 
-    completed(message: ["subscriptions.jobs.prepare_pdf_and_email.invoices_generation_succeed"])
+    # completed(message: ["subscriptions.jobs.prepare_pdf_and_email.invoices_generation_succeed"])
 
-    Subscriptions::ConcatAndEmailPdfJob.perform(nil,
+    Subscriptions::ConcatAndEmailPdfJob.perform_now(
       subscription_id: @subscription_id,
       query: @query,
       invoice_ids: invoices_ids,
