@@ -18,7 +18,5 @@
 /tmp/*
 /public/system
 /bin
-.ruby-version
-.ruby-gemset
 
 .tags*
