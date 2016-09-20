@@ -18,9 +18,7 @@
 
 module VatExtension
 
-  ########################
-  ### INSTANCE METHODS ###
-  ########################
+  extend ActiveSupport::Concern
 
   # Takes a value taxes included
   def reverse_vat(val)

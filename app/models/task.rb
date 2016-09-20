@@ -58,7 +58,7 @@ class Task < ApplicationRecord
   ### CALLBACKS ###
   #################
 
-  after_commit  :update_elasticsearch
+  after_commit  :update_people_in_search_engine
   before_save   :set_value
   after_save 'affair.update_on_prestation_alteration'
 
@@ -181,8 +181,9 @@ class Task < ApplicationRecord
     end
   end
 
-  def update_elasticsearch
-    person.update_index unless self.changes.empty?
+  # FIXME Why this ?
+  def update_people_in_search_engine
+    person.update_search_engine unless self.changes.empty?
   end
 
 end

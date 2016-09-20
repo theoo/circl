@@ -63,7 +63,7 @@ class Affair < ApplicationRecord
   #################
 
   after_save do
-    update_elasticsearch
+    update_people_in_search_engine
     cancel_open_invoices if unbillable or archive
 
     true
@@ -685,16 +685,17 @@ class Affair < ApplicationRecord
     self.buyer = self.owner unless self.buyer
   end
 
-  def update_elasticsearch
+  # FIXME Why this ?
+  def update_people_in_search_engine
     # It may have some custom search attributes which
     # depends on this affair through it's relations.
     # so update relations' indices no mater what changes
     unless self.changes.empty?
       # update current relations' indices
-      owner.update_index
+      owner.update_search_engine
       if buyer != owner
-        buyer.update_index
-        receiver.update_index if buyer != receiver
+        buyer.update_search_engine
+        receiver.update_search_engine if buyer != receiver
       end
 
       # and former relations' indices
@@ -703,7 +704,7 @@ class Affair < ApplicationRecord
         buyer_id = self.changes['buyer_id'][0]
         if Person.exists?(buyer_id) # in case former person doesn't exists
           p = Person.find(buyer_id)
-          p.update_index
+          p.update_search_engine
         end
       end
 
@@ -712,7 +713,7 @@ class Affair < ApplicationRecord
         receiver_id = self.changes['receiver_id'][0]
         if Person.exists?(receiver_id)
           p = Person.find(receiver_id)
-          p.update_index
+          p.update_search_engine
         end
       end
     end

@@ -66,3 +66,49 @@ end
 class String
   include StringExtension
 end
+
+module ArrayClassExtension
+
+  # expect a bidimentional array
+  def to_csv
+    CSV.generate do |csv|
+      self.each do |line|
+        if line.is_a? Array
+          csv << line
+        else
+          csv << line.to_a
+        end
+      end
+    end
+  end
+
+end
+
+class Array
+  include ArrayClassExtension
+end
+
+module IntegerExtension
+  def mod10rec
+        code = [ 0, 9, 4, 6, 8, 2, 7, 1, 3, 5 ]
+        num = 0
+        self.to_s.each_char do |char|
+            num = code[ (num + char.to_i) % 10 ]
+        end
+        return (10 - num) % 10
+  end
+end
+
+class Integer
+  include IntegerExtension
+end
+
+module FloatExtension
+  def to_doc
+    self.to_i == self ? self.to_i : self
+  end
+end
+
+class Float
+  include FloatExtension
+end

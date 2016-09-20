@@ -88,7 +88,8 @@ class ApplicationSetting < ApplicationRecord
       end
     end
 
-    # NOTE Mandatory fields are not defined in the database (non sense)
+    # NOTE Mandatory fields are not defined in the database yet.
+    # TODO Use a flag to set mandatory (admin) fields in the DB.
     def mandatory_fields
       [:application_id,
       :mailchimp_list_name,

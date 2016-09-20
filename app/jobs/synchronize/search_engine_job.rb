@@ -33,7 +33,7 @@ class Synchronize::SearchEngineJob < ApplicationJob
     total = people.count
     people.each_with_index do |p, index|
       # at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
-      p.update_index
+      p.update_search_engine
     end
 
     # completed(message: ["admin.jobs.mailchimp.completed"])

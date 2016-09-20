@@ -21,6 +21,7 @@ extend ColorizedOutput
 
 mandatory_fields = ApplicationSetting.mandatory_fields
 
+# ApplicationSetting
 # Table may not exist on rake db:schema:load
 if ActiveRecord::Base.connection.data_source_exists? 'application_settings' \
     and ENV['force_application_settings'] != 'true' \
@@ -41,6 +42,17 @@ if ActiveRecord::Base.connection.data_source_exists? 'application_settings' \
   end
 
   ApplicationSetting.enable_caching
+
+  puts green("done") + "."
+end
+
+# SearchAttribute
+if ActiveRecord::Base.connection.data_source_exists? 'search_attributes' \
+    and ENV['force_application_settings'] != 'true'
+
+  print "Preloading SearchAttributes: "
+
+  SearchAttribute.enable_caching
 
   puts green("done") + "."
 end

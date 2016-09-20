@@ -33,7 +33,7 @@
 #++
 
 class EmploymentContract < ApplicationRecord
-  
+
   ################
   ### INCLUDES ###
   ################
@@ -45,7 +45,7 @@ class EmploymentContract < ApplicationRecord
   #################
 
   before_destroy :check_interval_is_in_past_or_future
-  after_commit :update_elasticsearch
+  after_commit :update_people_in_search_engine
 
   #################
   ### RELATIONS ###
@@ -108,22 +108,11 @@ class EmploymentContract < ApplicationRecord
     end
   end
 
-  ## attributes overridden - JSON API
-  #def as_json(options = nil)
-  #  h = super(options)
-  #
-  #  h[:person_name] = person.try(:name)
-  #
-  #  # add errors if any
-  #  h[:errors] = errors
-  #  h
-  #end
-
-
   private
 
-  def update_elasticsearch
-    person.update_index unless self.changes.empty?
+  # FIXME Why this ?
+  def update_people_in_search_engine
+    person.update_search_engine unless self.changes.empty?
   end
 
 end

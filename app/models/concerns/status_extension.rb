@@ -20,6 +20,8 @@
 # Requires a 'status' attribute as unsigned int(16)
 module StatusExtension
 
+  extend ActiveSupport::Concern
+
   def self.included(base)
     base.extend(ClassMethods)
   end

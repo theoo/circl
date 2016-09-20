@@ -68,7 +68,7 @@ class Person < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  include Elasticsearch::Model
+  include SearchEngine
 
   attr_accessor :notices
   attr_accessor :template
@@ -86,7 +86,7 @@ class Person < ApplicationRecord
 
   before_save :reset_authentication_token_if_requested, :verify_employee_information, :update_geographic_coordinates
   after_save do
-    Synchronize::SearchEngineJob.perform_later(ids: self.id)
+    update_search_engine
   end
 
   before_destroy :do_not_destroy_if_has_invoices
@@ -104,7 +104,7 @@ class Person < ApplicationRecord
   # TODO remove password if removing last email.
 
   after_destroy do
-    Synchronize::SearchEngineJob.perform_later(ids: self.id)
+    update_search_engine
   end
 
   # LDAP
@@ -156,8 +156,8 @@ class Person < ApplicationRecord
             -> { distinct },
             class_name: 'Role',
             through: :people_roles,
-            after_add: :update_elasticsearch_index,
-            after_remove: :update_elasticsearch_index
+            after_add: :update_search_engine,
+            after_remove: :update_search_engine
 
   has_many  :permissions,
             -> { distinct },
@@ -171,16 +171,16 @@ class Person < ApplicationRecord
             -> { distinct },
             class_name: 'PublicTag',
             through: :people_public_tags,
-            after_add: [:update_elasticsearch_index, :select_parents],
-            after_remove: :update_elasticsearch_index
+            after_add: [:update_search_engine, :select_parents],
+            after_remove: :update_search_engine
 
   # monitored_habtm :private_tags,
   has_many  :private_tags,
             -> { distinct },
             class_name: 'PrivateTag',
             through: :people_private_tags,
-            after_add: [:update_elasticsearch_index, :select_parents],
-            after_remove: :update_elasticsearch_index
+            after_add: [:update_search_engine, :select_parents],
+            after_remove: :update_search_engine
 
   # secondary communication languages
   has_many  :people_communication_languages # for permissions
@@ -191,8 +191,8 @@ class Person < ApplicationRecord
             class_name: 'Language',
             through: :people_communication_languages,
             source: :language,
-            after_add: :update_elasticsearch_index,
-            after_remove: :update_elasticsearch_index
+            after_add: :update_search_engine,
+            after_remove: :update_search_engine
 
   # Financial
   has_many  :affairs,

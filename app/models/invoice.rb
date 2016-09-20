@@ -77,7 +77,7 @@ class Invoice < ApplicationRecord
   after_save      :update_affair
   before_destroy  :check_presence_of_receipt
   after_destroy   :update_affair
-  after_commit    :update_elasticsearch
+  after_commit    :update_people_in_search_engine
 
   #################
   ### RELATIONS ###
@@ -470,8 +470,9 @@ class Invoice < ApplicationRecord
   end
 
   # Updates the search engine
-  def update_elasticsearch
-    owner.update_index unless self.changes.empty?
+  # FIXME Why this ?
+  def update_people_in_search_engine
+    owner.update_search_engine unless self.changes.empty?
   end
 
   # Callback method to reset printed_address field if empty.

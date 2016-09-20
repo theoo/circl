@@ -70,6 +70,28 @@ class SearchAttribute < ApplicationRecord
   scope :searchable, -> { where("#{table_name}.group <> ''") }
   scope :orderable,  -> { searchable.where("#{table_name}.mapping NOT LIKE '%object%'") }
 
+  class << self
+
+    def mapping_for_model(model_name)
+      Rails.configuration.search_attributes[model_name]
+    end
+
+    def disable_caching
+      Rails.configuration.search_attributes = nil
+    end
+
+    def enable_caching
+      Rails.configuration.search_attributes = SearchAttribute.all.each_with_object({}) do |sa, h|
+        h[sa.model] ||= {}
+        h[sa.model][sa.name] = {
+          mapping: sa.mapping,
+          indexing: sa.indexing,
+          group: sa.group }
+      end
+    end
+
+  end
+
   ########################
   ### INSTANCE METHODS ###
   ########################

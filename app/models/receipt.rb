@@ -52,7 +52,7 @@ class Receipt < ApplicationRecord
   after_save    :update_invoice
   after_destroy :update_invoice
 
-  after_commit :update_elasticsearch
+  after_commit :update_people_in_search_engine
 
   #################
   ### RELATIONS ###
@@ -166,8 +166,9 @@ class Receipt < ApplicationRecord
 
   private
 
-  def update_elasticsearch
-    owner.update_index unless self.changes.empty?
+  # FIXME Why this?
+  def update_people_in_search_engine
+    owner.update_search_engine unless self.changes.empty?
   end
 
 end

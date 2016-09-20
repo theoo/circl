@@ -43,7 +43,7 @@ class Subscriptions::UpdateInvoicesAndEmailJob < ApplicationJob
     total = subscription.people.count
     subscription.people.each_with_index do |p, index|
       at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
-      p.update_index
+      p.update_search_engine
     end
 
     PersonMailer.send_subscription_invoices_updated(@user_id, @subscription_id).deliver

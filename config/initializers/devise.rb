@@ -16,6 +16,21 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
+# LDAPSHA1 Encryptor - required for LDAP
+module Devise
+  module Encryptable
+    module Encryptors
+      class Ldapsha1 < Base
+        def self.digest(password, stretches, salt, pepper)
+          # str = [password, salt].flatten.compact.join
+          Digest::SHA1.base64digest(password)
+        end
+      end
+    end
+  end
+end
+
+
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
