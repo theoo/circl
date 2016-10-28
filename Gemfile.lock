@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/emilioforrer/haml_coffee_assets.git
-  revision: 00ce4448dde9873c8874aebd104c8dc45f09a2d0
+  revision: 5d3419ab74b559731625900c71b46d8238006560
   branch: release/v2.0.0
   specs:
     haml_coffee_assets (2.0.0)

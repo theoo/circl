@@ -319,7 +319,6 @@ class DirectoryController < ApplicationController
 
     PersonMailer.send_people_import_report(current_person.id, report[:people]).deliver
     flash[:notice] = I18n.t('directory.notices.people_imported', email: current_person.email)
-    Activity.create!(person: current_person, resource_type: 'Admin', resource_id: '0', action: 'info', data: { people: "imported at #{Time.now}" })
     redirect_to directory_path
   end
 

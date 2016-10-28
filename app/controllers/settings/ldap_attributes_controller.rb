@@ -71,7 +71,6 @@ class Settings::LdapAttributesController < ApplicationController
 
   def synchronize
     if RunRakeTaskJob.perform_later(name: 'ldap:sync')
-      Activity.create!(person: current_person, resource_type: 'LdapAttribute', resource_id: '0', action: 'info', data: { synchronize: "Sync started at #{Time.now}" })
       flash[:notice] = I18n.t('common.notices.synchronization_started', email: current_person.email)
     else
       flash[:alert] = I18n.t('common.errors.already_synchronizing')

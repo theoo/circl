@@ -18,7 +18,7 @@
 
 # Allow any class to inherit the status manipulation methods.
 # Requires a 'status' attribute as unsigned int(16)
-module StatusExtension
+module StatusConcern
 
   extend ActiveSupport::Concern
 

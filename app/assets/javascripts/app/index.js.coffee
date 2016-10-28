@@ -130,7 +130,6 @@ class @PersonEdit extends App
 
         @sub_nav.one 'activities', =>
           @subapp($('#person_comments'), 'PersonComments')
-          @subapp($('#person_activities'), 'PersonActivities')
 
         App.GenericTemplate.one 'refresh', =>
           @sub_nav.one 'affairs', =>

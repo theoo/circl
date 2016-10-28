@@ -22,8 +22,7 @@ class Currency < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include SearchEngineConcern
   extend  MoneyComposer
 
   #################

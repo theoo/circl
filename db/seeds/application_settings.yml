@@ -134,3 +134,6 @@
 - key: estimate_checkbox_default
   value: true
   type_for_validation: boolean
+- key: default_language
+  value: fr
+  type_for_validation: string

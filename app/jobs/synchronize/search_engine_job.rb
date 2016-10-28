@@ -26,14 +26,22 @@ class Synchronize::SearchEngineJob < ApplicationJob
     # i18n-tasks-use I18n.t("admin.jobs.search_engine.title")
     # set_status(translation_options: ["admin.jobs.search_engine.title"])
 
-    validates(params, %i(ids))
+    ids = params[:ids]
+    if ids
 
-    people = Person.where(id: @ids)
+      people = Person.where(id: ids)
 
-    total = people.count
-    people.each_with_index do |p, index|
-      # at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
-      p.update_search_engine
+      total = people.count
+      people.each_with_index do |p, index|
+        # at(index + 1, total, I18n.t("common.jobs.progress", index: index + 1, total: total))
+        p.__elasticsearch__.update_document
+      end
+
+    else
+
+      # NOTE without status, not possible to display a progressbar
+      Person.import
+
     end
 
     # completed(message: ["admin.jobs.mailchimp.completed"])

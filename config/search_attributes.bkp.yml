@@ -1,0 +1,855 @@
+#
+# This is the mapping for a directory search engine. It doesn't make sense to index object unrelated to the object Person.
+#
+---
+Person:
+  id:
+    :mapping:
+      type: multi_field
+      fields:
+        id:
+          type: integer
+          index: not_analyzed
+        sort:
+          type: integer
+          index: not_analyzed
+      :type: string
+    :indexing: id
+    :group: Person
+  title:
+    :mapping:
+      type: multi_field
+      fields:
+        title:
+          type: string
+          index: not_analyzed
+        sort:
+          type: string
+      :type: string
+    :indexing: title
+    :group: Person
+  first_name:
+    :mapping:
+      type: multi_field
+      fields:
+        first_name:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: first_name
+    :group: Person
+  last_name:
+    :mapping:
+      type: multi_field
+      fields:
+        last_name:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: last_name
+    :group: Person
+  hidden:
+    :mapping:
+      type: multi_field
+      fields:
+        hidden:
+          type: boolean
+          index: not_analyzed
+        sort:
+          type: boolean
+          index: not_analyzed
+      :type: string
+    :indexing: hidden
+    :group: Person
+  is_an_organization:
+    :mapping:
+      type: multi_field
+      fields:
+        is_an_organization:
+          type: boolean
+          index: not_analyzed
+        sort:
+          type: boolean
+          index: not_analyzed
+      :type: string
+    :indexing: is_an_organization
+    :group: Person
+  organization_name:
+    :mapping:
+      type: multi_field
+      fields:
+        organization_name:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: organization_name
+    :group: Person
+  phone:
+    :mapping:
+      type: multi_field
+      fields:
+        phone:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: phone
+    :group: Person
+  second_phone:
+    :mapping:
+      type: multi_field
+      fields:
+        second_phone:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: second_phone
+    :group: Person
+  mobile:
+    :mapping:
+      type: multi_field
+      fields:
+        mobile:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: mobile
+    :group: Person
+  address:
+    :mapping:
+      type: multi_field
+      fields:
+        address:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: address
+    :group: Person
+  email:
+    :mapping:
+      type: multi_field
+      fields:
+        email:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: email
+    :group: Person
+  second_email:
+    :mapping:
+      type: multi_field
+      fields:
+        second_email:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: second_email
+    :group: Person
+  npa:
+    :mapping:
+      type: multi_field
+      fields:
+        npa:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: location.try(:postal_code_prefix)
+    :group: Person
+  town:
+    :mapping:
+      type: multi_field
+      fields:
+        town:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: location.try(:name)
+    :group: Person
+  npa_town:
+    :mapping:
+      type: multi_field
+      fields:
+        npa_town:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: location.try(:npa_town)
+    :group: Person
+  country:
+    :mapping:
+      type: multi_field
+      fields:
+        country:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: location.try(:country).try(:name)
+    :group: Person
+  birth_date:
+    :mapping:
+      type: multi_field
+      fields:
+        birth_date:
+          type: date
+          index: not_analyzed
+        sort:
+          type: string
+      :type: string
+    :indexing: birth_date.try(:iso8601)
+    :group: Person
+  nationality:
+    :mapping:
+      type: multi_field
+      fields:
+        nationality:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: nationality
+    :group: Person
+  avs_number:
+    :mapping:
+      type: multi_field
+      fields:
+        avs_number:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: avs_number
+    :group: Person
+  bank_informations:
+    :mapping:
+      type: multi_field
+      fields:
+        bank_informations:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: bank_informations
+    :group: Person
+  created_at:
+    :mapping:
+      type: multi_field
+      fields:
+        created_at:
+          type: date
+          index: not_analyzed
+        sort:
+          type: string
+      :type: string
+    :indexing: created_at.iso8601
+    :group: Person
+  job:
+    :mapping:
+      type: object
+      properties: Job.mapping
+      include_in_all: false
+      :type: string
+    :indexing: job.try(:as_indexed_json)
+    :group: Relations
+  private_tags:
+    :mapping:
+      type: object
+      properties: PrivateTag.mapping
+      include_in_all: false
+      :type: string
+    :indexing: private_tags.map(&:as_indexed_json)
+    :group: Relations
+  public_tags:
+    :mapping:
+      type: object
+      properties: PublicTag.mapping
+      include_in_all: false
+      :type: string
+    :indexing: public_tags.map(&:as_indexed_json)
+    :group: Relations
+  roles:
+    :mapping:
+      type: object
+      properties: Role.mapping
+      include_in_all: false
+      :type: string
+    :indexing: roles.map(&:as_indexed_json)
+    :group: Relations
+  main_communication_language:
+    :mapping:
+      type: object
+      properties: Language.mapping
+      include_in_all: false
+      :type: string
+    :indexing: main_communication_language.try(:as_indexed_json)
+    :group: Relations
+  communication_languages:
+    :mapping:
+      type: object
+      properties: Language.mapping
+      include_in_all: false
+      :type: string
+    :indexing: communication_languages.map(&:as_indexed_json)
+    :group: Relations
+  subscriptions:
+    :mapping:
+      type: object
+      properties: Subscription.mapping
+      include_in_all: false
+      :type: string
+    :indexing: subscriptions.map(&:as_indexed_json)
+    :group: Relations
+  affairs:
+    :mapping:
+      type: object
+      properties: Affair.mapping
+      include_in_all: false
+      :type: string
+    :indexing: affairs.map(&:as_indexed_json)
+    :group: Relations
+  invoices:
+    :mapping:
+      type: object
+      properties: Invoice.mapping
+      include_in_all: false
+      :type: string
+    :indexing: invoices.map(&:as_indexed_json)
+    :group: Relations
+  receipts:
+    :mapping:
+      type: object
+      properties: Receipt.mapping
+      include_in_all: false
+      :type: string
+    :indexing: receipts.map(&:as_indexed_json)
+    :group: Relations
+  accessible_by:
+    :mapping:
+      type: string
+      index: not_analyzed
+      include_in_all: false
+      :type: string
+    :indexing: accessible_by
+    :group:
+  paid_subscriptions:
+    :mapping:
+      type: object
+      properties: Subscription.mapping
+      include_in_all: false
+    :indexing: paid_subscriptions.map(&:as_indexed_json)
+    :group: Relations
+  unpaid_subscriptions:
+    :mapping:
+      type: object
+      properties: Subscription.mapping
+      include_in_all: false
+    :indexing: unpaid_subscriptions.map(&:as_indexed_json)
+    :group: Relations
+  subscriptions_as_buyer:
+    :mapping:
+      type: object
+      properties: Subscription.mapping
+      include_in_all: false
+    :indexing: subscriptions_as_buyer.map(&:as_indexed_json)
+    :group: Relations
+  subscriptions_as_receiver:
+    :mapping:
+      type: object
+      properties: Subscription.mapping
+      include_in_all: false
+    :indexing: subscriptions_as_receiver.map(&:as_indexed_json)
+    :group: Relations
+  paid_affairs:
+    :mapping:
+      type: object
+      properties: Subscription.mapping
+      include_in_all: false
+    :indexing: paid_affairs.map(&:as_indexed_json)
+    :group: Relations
+  unpaid_affairs:
+    :mapping:
+      type: object
+      properties: Subscription.mapping
+      include_in_all: false
+    :indexing: unpaid_affairs.map(&:as_indexed_json)
+    :group: Relations
+  affairs_as_buyer:
+    :mapping:
+      type: object
+      properties: Subscription.mapping
+      include_in_all: false
+    :indexing: affairs_as_buyer.map(&:as_indexed_json)
+    :group: Relations
+  affairs_as_receiver:
+    :mapping:
+      type: object
+      properties: Subscription.mapping
+      include_in_all: false
+    :indexing: affairs_as_receiver.map(&:as_indexed_json)
+    :group: Relations
+  paid_subscriptions_or_reminders:
+    :mapping:
+      type: object
+      properties: Subscription.mapping
+      include_in_all: false
+      :type: string
+    :indexing: paid_subscriptions.map{|s| s.self_and_parents.map(&:as_indexed_json)
+      or s.self_and_descendants.map(&:as_indexed_json)}.flatten
+    :group: Relations
+  name:
+    :mapping:
+      type: multi_field
+      fields:
+        last_name:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: name
+    :group: Person
+  latitude:
+    :mapping:
+      type: multi_field
+      fields:
+        latitude:
+          type: float
+        sort:
+          type: float
+      :type: string
+    :indexing: latitude
+    :group: Person
+  longitude:
+    :mapping:
+      type: multi_field
+      fields:
+        longitude:
+          type: float
+        sort:
+          type: float
+      :type: string
+    :indexing: longitude
+    :group: Person
+  location:
+    :mapping:
+      type: object
+      properties: Location.mapping
+      include_in_all: false
+      :type: string
+    :indexing: location.try(:as_indexed_json)
+    :group: Relations
+  fax_number:
+    :mapping:
+      type: multi_field
+      fields:
+        fax_number:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: fax_number
+    :group: Person
+  website:
+    :mapping:
+      type: multi_field
+      fields:
+        website:
+          type: string
+          analyzer: snowball
+        sort:
+          type: string
+      :type: string
+    :indexing: website
+    :group: Person
+  alias_name:
+    :mapping:
+      type: multi_field
+      fields:
+        alias_name:
+          type: string
+          index: not_analyzed
+        sort:
+          type: string
+      :type: string
+    :indexing: alias_name
+    :group: Person
+  task_rate:
+    :mapping:
+      type: object
+      properties: TaskRate.mapping
+      include_in_all: false
+      :type: string
+    :indexing: task_rate.try(:as_indexed_json)
+    :group: Relations
+  private_tags_colors:
+    :mapping:
+      type: string
+      include_in_all: false
+      :type: string
+    :indexing: 'private_tags.each_with_object([]){|t,a| a << "<div class=''color_square''
+      style=''background-color: #{t.color};''>" + "</div>" if t.color}.join(" ")'
+    :group: Relations
+  public_tags_colors:
+    :mapping:
+      type: string
+      include_in_all: false
+      :type: string
+    :indexing: 'public_tags.each_with_object([]){|t,a| a << "<div class=''color_square''
+      style=''background-color: #{t.color};''>" + "</div>" if t.color}.join(" ")'
+    :group: Relations
+  comments:
+    :mapping:
+      type: object
+      properties: Comment.mapping
+      include_in_all: false
+      :type: string
+    :indexing: comments_edited_by_others.map(&:as_indexed_json)
+    :group: Relations
+
+Location:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  name:
+    :mapping:
+      type: string
+      analyzer: snowball
+    :indexing: name
+    :group:
+  postal_code_prefix:
+    :mapping:
+      type: string
+      analyzer: snowball
+    :indexing: postal_code_prefix
+    :group:
+  country:
+    :mapping:
+      type: string
+      analyzer: snowball
+    :indexing: country.try(:name)
+    :group:
+
+Role:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  name:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: name
+    :group:
+
+Invoice:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  title:
+    :mapping:
+      type: string
+      analyzer: snowball
+    :indexing: title
+    :group:
+  value:
+    :mapping:
+      type: float
+      index: not_analyzed
+    :indexing: value.to_f
+    :group:
+  created_at:
+    :mapping:
+      type: date
+      index: not_analyzed
+    :indexing: created_at.iso8601
+    :group:
+  statuses:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: get_statuses
+    :group:
+
+Receipt:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  value:
+    :mapping:
+      type: float
+      index: not_analyzed
+    :indexing: value.to_f
+    :group:
+  value_date:
+    :mapping:
+      type: date
+      index: not_analyzed
+    :indexing: value_date.iso8601
+    :group:
+  means_of_payment:
+    :mapping:
+      type: string
+      analyzer: snowball
+    :indexing: means_of_payment
+    :group:
+  created_at:
+    :mapping:
+      type: date
+      index: not_analyzed
+    :indexing: created_at.iso8601
+    :group:
+
+PrivateTag:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  name:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: name
+    :group:
+  parent_id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: parent.try(:id)
+    :group:
+  parent_name:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: parent.try(:name)
+    :group:
+  color:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: color
+    :group:
+
+Affair:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  owner_id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: owner_id
+    :group:
+  buyer_id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: buyer_id
+    :group:
+  receiver_id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: receiver_id
+    :group:
+  title:
+    :mapping:
+      type: string
+      analyzer: snowball
+    :indexing: title
+    :group:
+  value:
+    :mapping:
+      type: float
+      index: not_analyzed
+    :indexing: value.to_f
+    :group:
+  created_at:
+    :mapping:
+      type: date
+      index: not_analyzed
+    :indexing: created_at.iso8601
+    :group:
+  statuses:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: get_statuses
+    :group:
+
+TranslationAptitude:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  from:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: from_language.name
+    :group:
+  to:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: to_language.name
+    :group:
+  string:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: as_string
+    :group:
+
+Language:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  name:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: name
+    :group:
+
+Subscription:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  title:
+    :mapping:
+      type: string
+      analyzer: snowball
+    :indexing: title
+    :group: ''
+  parent_id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: parent_id
+    :group:
+
+Job:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  name:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: name
+    :group:
+
+PublicTag:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  name:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: name
+    :group:
+  parent_id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: parent.try(:id)
+    :group:
+  parent_name:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: parent.try(:name)
+    :group:
+
+TaskRate:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  title:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: title
+    :group:
+
+Comment:
+  id:
+    :mapping:
+      type: integer
+      index: not_analyzed
+    :indexing: id
+    :group:
+  title:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: title
+    :group:
+  description:
+    :mapping:
+      type: string
+      index: not_analyzed
+    :indexing: description
+    :group:

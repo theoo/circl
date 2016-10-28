@@ -1,0 +1,142 @@
+#
+---
+Person:
+  nesting:
+    location:
+      class_name: Location
+      indexing: location
+    roles:
+      class_name: Role
+      indexing: roles
+  mapping:
+    id:
+      type: integer
+      index: not_analyzed
+    title:
+      type: string
+      index: not_analyzed
+    first_name:
+      type: string
+      analyzer: standard
+    last_name:
+      type: string
+      analyzer: standard
+    hidden:
+      type: boolean
+      index: not_analyzed
+
+Location:
+  mapping:
+    id:
+      type: integer
+    name:
+      type: string
+    postal_code_prefix:
+      type: string
+    country:
+      type: string
+
+Role:
+  mapping:
+    id:
+      type: integer
+
+  # invoices:
+  #   group: Relations
+  #   indexing: invoices
+  #   mapping:
+  #     type: object
+  #     include_in_all: false
+  #     properties:
+  #       id:
+  #         type: integer
+
+  # receipts:
+  #   group: Relations
+  #   indexing: receipts
+  #   mapping:
+  #     type: object
+  #     include_in_all: false
+  #     properties:
+  #       id:
+  #         type: integer
+
+  # private_tags:
+  #   group: Relations
+  #   indexing: private_tags
+  #   mapping:
+  #     type: object
+  #     include_in_all: false
+  #     properties:
+  #       id:
+  #         type: integer
+
+  # affairs:
+  #   group: Relations
+  #   indexing: affairs
+  #   mapping:
+  #     type: object
+  #     include_in_all: false
+  #     properties:
+  #       id:
+  #         type: integer
+
+  # languages:
+  #   group: Relations
+  #   indexing: communication_languages
+  #   mapping:
+  #     type: object
+  #     include_in_all: false
+  #     properties:
+  #       id:
+  #         type: integer
+
+  # subscriptions:
+  #   group: Relations
+  #   indexing: subscriptions
+  #   mapping:
+  #     type: object
+  #     include_in_all: false
+  #     properties:
+  #       id:
+  #         type: integer
+
+  # job:
+  #   group: Relations
+  #   indexing: job
+  #   mapping:
+  #     type: object
+  #     include_in_all: false
+  #     properties:
+  #       id:
+  #         type: integer
+
+  # public_tags:
+  #   group: Relations
+  #   indexing: public_tags
+  #   mapping:
+  #     type: object
+  #     include_in_all: false
+  #     properties:
+  #       id:
+  #         type: integer
+
+  # task_rate:
+  #   group: Relations
+  #   indexing: task_rate
+  #   mapping:
+  #     type: object
+  #     include_in_all: false
+  #     properties:
+  #       id:
+  #         type: integer
+
+  # comments:
+  #   group: Relations
+  #   indexing: edited_comments
+  #   mapping:
+  #     type: object
+  #     include_in_all: false
+  #     properties:
+  #       id:
+  #         type: integer

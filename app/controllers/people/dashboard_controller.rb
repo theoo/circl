@@ -41,15 +41,6 @@ class People::DashboardController < ApplicationController
     end
   end
 
-  def activities
-    authorize! :dashboard_activities, @person
-    @activities = @person.activities.order("created_at desc").limit(10)
-
-    respond_to do |format|
-      format.json { render json: @activities }
-    end
-  end
-
   def last_people_added
     authorize! :dashboard_last_people_added, @person
     @last_people_added = Person.order("created_at desc").limit(10)

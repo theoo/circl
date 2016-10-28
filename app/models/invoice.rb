@@ -49,13 +49,11 @@ class Invoice < ApplicationRecord
   # Monetize deprecation warning
   require 'monetize/core_extensions'
 
-  # include ChangesTracker
-  include StatusExtension
+  include StatusConcern
+  include VatConcern
+  include SearchEngineConcern
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::TagHelper
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-  include VatExtension
   extend  MoneyComposer
 
   # TODO: Move this to jsbuilder

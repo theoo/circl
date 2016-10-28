@@ -18,7 +18,7 @@
 
 class Admin::AffairsController < ApplicationController
 
-  include ControllerExtensions::Affairs
+  include AffairsConcern
 
   layout false
 

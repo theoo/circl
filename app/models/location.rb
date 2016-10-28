@@ -44,8 +44,7 @@ class Location < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include SearchEngineConcern
 
   #################
   ### RELATIONS ###
@@ -109,7 +108,7 @@ class Location < ApplicationRecord
     end
   end
 
-  def as_json(options)
+  def as_json(options = {})
     h = super(options)
 
     h[:parent_name] = parent.try(:name)

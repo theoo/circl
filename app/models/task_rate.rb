@@ -22,9 +22,7 @@ class TaskRate < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  # include ChangesTracker
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include SearchEngineConcern
   extend  MoneyComposer
 
   #################

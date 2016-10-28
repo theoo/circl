@@ -10,36 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815155903) do
+ActiveRecord::Schema.define(version: 20160923160338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "affairs", force: :cascade do |t|
-    t.integer  "owner_id",                        null: false
-    t.integer  "buyer_id",                        null: false
-    t.integer  "receiver_id",                     null: false
-    t.string   "title",           default: "",    null: false
-    t.text     "description",     default: ""
-    t.bigint   "value_in_cents",  default: 0,     null: false
-    t.string   "value_currency",  default: "CHF", null: false
+    t.integer  "owner_id",                                    null: false
+    t.integer  "buyer_id",                                    null: false
+    t.integer  "receiver_id",                                 null: false
+    t.string   "title",           limit: 255, default: "",    null: false
+    t.text     "description",                 default: ""
+    t.bigint   "value_in_cents",              default: 0,     null: false
+    t.string   "value_currency",  limit: 255, default: "CHF", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "status",          default: 0,     null: false
-    t.boolean  "estimate",        default: false, null: false
+    t.integer  "status",                      default: 0,     null: false
+    t.boolean  "estimate",                    default: false, null: false
     t.integer  "parent_id"
     t.text     "footer"
     t.text     "conditions"
-    t.integer  "seller_id",       default: 1,     null: false
+    t.integer  "seller_id",                   default: 1684,  null: false
     t.integer  "condition_id"
-    t.boolean  "unbillable",      default: false, null: false
+    t.boolean  "unbillable",                  default: false, null: false
     t.text     "notes"
     t.float    "vat_percentage"
-    t.integer  "vat_in_cents",    default: 0,     null: false
-    t.string   "vat_currency",    default: "CHF", null: false
-    t.string   "alias_name"
+    t.integer  "vat_in_cents",                default: 0,     null: false
+    t.string   "vat_currency",    limit: 255, default: "CHF", null: false
+    t.string   "alias_name",      limit: 255
     t.text     "execution_notes"
-    t.boolean  "archive",         default: false, null: false
+    t.boolean  "archive",                     default: false, null: false
     t.datetime "sold_at"
     t.index ["alias_name"], name: "index_affairs_on_alias_name", using: :btree
     t.index ["archive"], name: "index_affairs_on_archive", using: :btree
@@ -62,15 +62,15 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "affairs_conditions", force: :cascade do |t|
-    t.string  "title"
+    t.string  "title",       limit: 255
     t.text    "description"
-    t.boolean "archive",     default: false, null: false
+    t.boolean "archive",                 default: false, null: false
   end
 
   create_table "affairs_products_categories", force: :cascade do |t|
-    t.integer "affair_id", null: false
-    t.string  "title"
-    t.integer "position",  null: false
+    t.integer "affair_id",             null: false
+    t.string  "title",     limit: 255
+    t.integer "position",              null: false
     t.index ["affair_id"], name: "index_affairs_products_categories_on_affair_id", using: :btree
     t.index ["position"], name: "index_affairs_products_categories_on_position", using: :btree
   end
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   create_table "affairs_stakeholders", force: :cascade do |t|
     t.integer "person_id"
     t.integer "affair_id"
-    t.string  "title"
+    t.string  "title",     limit: 255
     t.index ["affair_id"], name: "index_affairs_stakeholders_on_affair_id", using: :btree
     t.index ["person_id"], name: "index_affairs_stakeholders_on_person_id", using: :btree
   end
@@ -91,30 +91,30 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "application_settings", force: :cascade do |t|
-    t.string "key",                 default: ""
-    t.text   "value",               default: ""
-    t.string "type_for_validation", default: "string", null: false
+    t.string "key",                 limit: 255, default: ""
+    t.text   "value",                           default: ""
+    t.string "type_for_validation", limit: 255, default: "string", null: false
     t.index ["key"], name: "index_application_settings_on_key", using: :btree
   end
 
   create_table "background_tasks", force: :cascade do |t|
-    t.string   "type"
+    t.string   "type",        limit: 255
     t.text     "options"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "title"
+    t.string   "title",       limit: 255
     t.integer  "person_id"
-    t.string   "ui_trigger"
-    t.string   "api_trigger"
-    t.string   "status"
+    t.string   "ui_trigger",  limit: 255
+    t.string   "api_trigger", limit: 255
+    t.string   "status",      limit: 255
     t.index ["created_at"], name: "index_background_tasks_on_created_at", using: :btree
     t.index ["person_id"], name: "index_background_tasks_on_person_id", using: :btree
     t.index ["updated_at"], name: "index_background_tasks_on_updated_at", using: :btree
   end
 
   create_table "bank_import_histories", force: :cascade do |t|
-    t.string   "file_name"
-    t.string   "reference_line"
+    t.string   "file_name",      limit: 255
+    t.string   "reference_line", limit: 255
     t.datetime "media_date"
     t.index ["media_date"], name: "index_bank_import_histories_on_media_date", using: :btree
   end
@@ -123,8 +123,8 @@ ActiveRecord::Schema.define(version: 20160815155903) do
     t.integer  "validity_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "document_file_name"
-    t.string   "document_content_type"
+    t.string   "document_file_name",    limit: 255
+    t.string   "document_content_type", limit: 255
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
     t.index ["created_at"], name: "index_cached_documents_on_created_at", using: :btree
@@ -133,10 +133,10 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   create_table "comments", force: :cascade do |t|
     t.integer  "person_id"
     t.integer  "resource_id"
-    t.string   "resource_type"
-    t.string   "title",         default: ""
-    t.text     "description",   default: ""
-    t.boolean  "is_closed",     default: false, null: false
+    t.string   "resource_type", limit: 255
+    t.string   "title",         limit: 255, default: ""
+    t.text     "description",               default: ""
+    t.boolean  "is_closed",                 default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["created_at"], name: "index_comments_on_created_at", using: :btree
@@ -150,27 +150,27 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   create_table "creditors", force: :cascade do |t|
     t.integer  "creditor_id"
     t.integer  "affair_id"
-    t.string   "title"
+    t.string   "title",                limit: 255
     t.text     "description"
-    t.integer  "value_in_cents",       default: 0,     null: false
-    t.string   "value_currency",       default: "CHF", null: false
-    t.integer  "vat_in_cents",         default: 0,     null: false
-    t.string   "vat_currency",         default: "CHF", null: false
-    t.string   "vat_percentage"
+    t.integer  "value_in_cents",                   default: 0,     null: false
+    t.string   "value_currency",       limit: 255, default: "CHF", null: false
+    t.integer  "vat_in_cents",                     default: 0,     null: false
+    t.string   "vat_currency",         limit: 255, default: "CHF", null: false
+    t.string   "vat_percentage",       limit: 255
     t.date     "invoice_received_on"
     t.date     "invoice_ends_on"
     t.date     "invoice_in_books_on"
-    t.float    "discount_percentage",  default: 0.0
+    t.float    "discount_percentage",              default: 0.0
     t.date     "discount_ends_on"
     t.date     "paid_on"
     t.date     "payment_in_books_on"
-    t.string   "account"
-    t.string   "transitional_account"
+    t.string   "account",              limit: 255
+    t.string   "transitional_account", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "discount_account"
-    t.string   "vat_account"
-    t.string   "vat_discount_account"
+    t.string   "discount_account",     limit: 255
+    t.string   "vat_account",          limit: 255
+    t.string   "vat_discount_account", limit: 255
     t.index ["affair_id"], name: "index_creditors_on_affair_id", using: :btree
     t.index ["creditor_id"], name: "index_creditors_on_creditor_id", using: :btree
     t.index ["discount_ends_on"], name: "index_creditors_on_discount_ends_on", using: :btree
@@ -183,14 +183,14 @@ ActiveRecord::Schema.define(version: 20160815155903) do
 
   create_table "currencies", force: :cascade do |t|
     t.integer "priority"
-    t.string  "iso_code",        null: false
-    t.string  "iso_numeric"
-    t.string  "name"
-    t.string  "symbol"
-    t.string  "subunit"
+    t.string  "iso_code",        limit: 255, null: false
+    t.string  "iso_numeric",     limit: 255
+    t.string  "name",            limit: 255
+    t.string  "symbol",          limit: 255
+    t.string  "subunit",         limit: 255
     t.integer "subunit_to_unit"
-    t.string  "separator"
-    t.string  "delimiter"
+    t.string  "separator",       limit: 255
+    t.string  "delimiter",       limit: 255
     t.index ["iso_code"], name: "index_currencies_on_iso_code", using: :btree
     t.index ["priority"], name: "index_currencies_on_priority", using: :btree
   end
@@ -223,16 +223,16 @@ ActiveRecord::Schema.define(version: 20160815155903) do
 
   create_table "extras", force: :cascade do |t|
     t.integer  "affair_id"
-    t.string   "title"
+    t.string   "title",          limit: 255
     t.text     "description"
     t.integer  "value_in_cents"
-    t.string   "value_currency"
+    t.string   "value_currency", limit: 255
     t.float    "quantity"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "vat_in_cents",   default: 0,     null: false
-    t.string   "vat_currency",   default: "CHF", null: false
+    t.integer  "vat_in_cents",               default: 0,     null: false
+    t.string   "vat_currency",   limit: 255, default: "CHF", null: false
     t.float    "vat_percentage"
     t.index ["affair_id"], name: "index_extras_on_affair_id", using: :btree
     t.index ["position"], name: "index_extras_on_position", using: :btree
@@ -241,66 +241,66 @@ ActiveRecord::Schema.define(version: 20160815155903) do
     t.index ["vat_in_cents"], name: "index_extras_on_vat_in_cents", using: :btree
   end
 
-  create_table "generic_templates", force: :cascade do |t|
-    t.string   "title",                                 null: false
-    t.string   "snapshot_file_name"
-    t.string   "snapshot_content_type"
+  create_table "generic_templates", id: :integer, default: -> { "nextval('salaries_html_templates_id_seq'::regclass)" }, force: :cascade do |t|
+    t.string   "title",                 limit: 255,                 null: false
+    t.string   "snapshot_file_name",    limit: 255
+    t.string   "snapshot_content_type", limit: 255
     t.integer  "snapshot_file_size"
     t.datetime "snapshot_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "language_id",                           null: false
-    t.string   "class_name"
-    t.string   "odt_file_name"
-    t.string   "odt_content_type"
+    t.integer  "language_id",                                       null: false
+    t.string   "class_name",            limit: 255
+    t.string   "odt_file_name",         limit: 255
+    t.string   "odt_content_type",      limit: 255
     t.integer  "odt_file_size"
     t.datetime "odt_updated_at"
-    t.boolean  "plural",                default: false, null: false
+    t.boolean  "plural",                            default: false, null: false
     t.index ["language_id"], name: "index_salaries_salary_templates_on_language_id", using: :btree
     t.index ["odt_updated_at"], name: "index_generic_templates_on_odt_updated_at", using: :btree
   end
 
   create_table "invoice_templates", force: :cascade do |t|
-    t.string   "title",                  default: "",    null: false
-    t.text     "html",                   default: "",    null: false
+    t.string   "title",                  limit: 255, default: "",    null: false
+    t.text     "html",                               default: "",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "with_bvr",               default: false
-    t.text     "bvr_address",            default: ""
-    t.string   "bvr_account",            default: ""
-    t.string   "snapshot_file_name"
-    t.string   "snapshot_content_type"
+    t.boolean  "with_bvr",                           default: false
+    t.text     "bvr_address",                        default: ""
+    t.string   "bvr_account",            limit: 255, default: ""
+    t.string   "snapshot_file_name",     limit: 255
+    t.string   "snapshot_content_type",  limit: 255
     t.integer  "snapshot_file_size"
     t.datetime "snapshot_updated_at"
-    t.boolean  "show_invoice_value",     default: true
-    t.integer  "language_id",                            null: false
-    t.string   "account_identification"
-    t.string   "odt_file_name"
-    t.string   "odt_content_type"
+    t.boolean  "show_invoice_value",                 default: true
+    t.integer  "language_id",                                        null: false
+    t.string   "account_identification", limit: 255
+    t.string   "odt_file_name",          limit: 255
+    t.string   "odt_content_type",       limit: 255
     t.integer  "odt_file_size"
     t.datetime "odt_updated_at"
     t.index ["language_id"], name: "index_invoice_templates_on_language_id", using: :btree
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.string   "title",               default: ""
-    t.text     "description",         default: ""
-    t.bigint   "value_in_cents",                      null: false
-    t.string   "value_currency"
+    t.string   "title",               limit: 255, default: ""
+    t.text     "description",                     default: ""
+    t.bigint   "value_in_cents",                                  null: false
+    t.string   "value_currency",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "affair_id"
-    t.text     "printed_address",     default: ""
-    t.integer  "invoice_template_id",                 null: false
-    t.string   "pdf_file_name"
-    t.string   "pdf_content_type"
+    t.text     "printed_address",                 default: ""
+    t.integer  "invoice_template_id",                             null: false
+    t.string   "pdf_file_name",       limit: 255
+    t.string   "pdf_content_type",    limit: 255
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
-    t.integer  "status",              default: 0,     null: false
-    t.boolean  "cancelled",           default: false, null: false
-    t.boolean  "offered",             default: false, null: false
-    t.integer  "vat_in_cents",        default: 0,     null: false
-    t.string   "vat_currency",        default: "CHF", null: false
+    t.integer  "status",                          default: 0,     null: false
+    t.boolean  "cancelled",                       default: false, null: false
+    t.boolean  "offered",                         default: false, null: false
+    t.integer  "vat_in_cents",                    default: 0,     null: false
+    t.string   "vat_currency",        limit: 255, default: "CHF", null: false
     t.float    "vat_percentage"
     t.text     "conditions"
     t.integer  "condition_id"
@@ -317,34 +317,26 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.string "name",        default: ""
-    t.text   "description", default: ""
+    t.string "name",        limit: 255, default: ""
+    t.text   "description",             default: ""
     t.index ["name"], name: "index_jobs_on_name", using: :btree
   end
 
   create_table "languages", force: :cascade do |t|
-    t.string "name", default: ""
-    t.string "code", default: ""
+    t.string "name", limit: 255, default: ""
+    t.string "code", limit: 255, default: ""
     t.index ["code"], name: "index_languages_on_code", using: :btree
     t.index ["name"], name: "index_languages_on_name", using: :btree
   end
 
-  create_table "ldap_attributes", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.string   "mapping",    null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["name"], name: "index_ldap_attributes_on_name", using: :btree
-  end
-
   create_table "locations", force: :cascade do |t|
     t.integer "parent_id"
-    t.string  "name",               default: ""
-    t.string  "iso_code_a2",        default: ""
-    t.string  "iso_code_a3",        default: ""
-    t.string  "iso_code_num",       default: ""
-    t.string  "postal_code_prefix", default: ""
-    t.string  "phone_prefix",       default: ""
+    t.string  "name",               limit: 255, default: ""
+    t.string  "iso_code_a2",        limit: 255, default: ""
+    t.string  "iso_code_a3",        limit: 255, default: ""
+    t.string  "iso_code_num",       limit: 255, default: ""
+    t.string  "postal_code_prefix", limit: 255, default: ""
+    t.string  "phone_prefix",       limit: 255, default: ""
     t.index ["iso_code_a2"], name: "index_locations_on_iso_code_a2", using: :btree
     t.index ["iso_code_a3"], name: "index_locations_on_iso_code_a3", using: :btree
     t.index ["name"], name: "index_locations_on_name", using: :btree
@@ -355,8 +347,8 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   create_table "logs", force: :cascade do |t|
     t.integer  "person_id"
     t.integer  "resource_id"
-    t.string   "resource_type"
-    t.string   "action"
+    t.string   "resource_type", limit: 255
+    t.string   "action",        limit: 255
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -372,34 +364,34 @@ ActiveRecord::Schema.define(version: 20160815155903) do
     t.integer  "location_id"
     t.integer  "main_communication_language_id"
     t.boolean  "is_an_organization",                         default: false, null: false
-    t.string   "organization_name",                          default: ""
-    t.string   "title",                                      default: ""
-    t.string   "first_name",                                 default: ""
-    t.string   "last_name",                                  default: ""
-    t.string   "phone",                                      default: ""
-    t.string   "second_phone",                               default: ""
-    t.string   "mobile",                                     default: ""
-    t.string   "email",                                      default: "",    null: false
-    t.string   "second_email",                               default: ""
+    t.string   "organization_name",              limit: 255, default: ""
+    t.string   "title",                          limit: 255, default: ""
+    t.string   "first_name",                     limit: 255, default: ""
+    t.string   "last_name",                      limit: 255, default: ""
+    t.string   "phone",                          limit: 255, default: ""
+    t.string   "second_phone",                   limit: 255, default: ""
+    t.string   "mobile",                         limit: 255, default: ""
+    t.string   "email",                          limit: 255, default: "",    null: false
+    t.string   "second_email",                   limit: 255, default: ""
     t.text     "address",                                    default: ""
     t.date     "birth_date"
-    t.string   "nationality",                                default: ""
-    t.string   "avs_number",                                 default: ""
+    t.string   "nationality",                    limit: 255, default: ""
+    t.string   "avs_number",                     limit: 255, default: ""
     t.text     "bank_informations",                          default: ""
     t.string   "encrypted_password",             limit: 128, default: "",    null: false
-    t.string   "reset_password_token"
+    t.string   "reset_password_token",           limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",                              default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "password_salt"
+    t.string   "current_sign_in_ip",             limit: 255
+    t.string   "last_sign_in_ip",                limit: 255
+    t.string   "password_salt",                  limit: 255
     t.integer  "failed_attempts",                            default: 0
-    t.string   "unlock_token"
+    t.string   "unlock_token",                   limit: 255
     t.datetime "locked_at"
-    t.string   "authentication_token"
+    t.string   "authentication_token",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "hidden",                                     default: false, null: false
@@ -407,14 +399,14 @@ ActiveRecord::Schema.define(version: 20160815155903) do
     t.integer  "task_rate_id"
     t.float    "latitude"
     t.float    "longitude"
-    t.string   "website"
-    t.string   "alias_name",                                 default: ""
-    t.string   "fax_number",                                 default: ""
-    t.string   "creditor_account"
-    t.string   "creditor_transitional_account"
-    t.string   "creditor_vat_account"
-    t.string   "creditor_vat_discount_account"
-    t.string   "creditor_discount_account"
+    t.string   "website",                        limit: 255
+    t.string   "alias_name",                     limit: 255, default: ""
+    t.string   "fax_number",                     limit: 255, default: ""
+    t.string   "creditor_account",               limit: 255
+    t.string   "creditor_transitional_account",  limit: 255
+    t.string   "creditor_vat_account",           limit: 255
+    t.string   "creditor_vat_discount_account",  limit: 255
+    t.string   "creditor_discount_account",      limit: 255
     t.index ["authentication_token"], name: "index_people_on_authentication_token", unique: true, using: :btree
     t.index ["created_at"], name: "index_people_on_created_at", using: :btree
     t.index ["email"], name: "index_people_on_email", using: :btree
@@ -468,8 +460,8 @@ ActiveRecord::Schema.define(version: 20160815155903) do
 
   create_table "permissions", force: :cascade do |t|
     t.integer  "role_id"
-    t.string   "action",          default: ""
-    t.string   "subject",         default: ""
+    t.string   "action",          limit: 255, default: ""
+    t.string   "subject",         limit: 255, default: ""
     t.text     "hash_conditions"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -480,8 +472,8 @@ ActiveRecord::Schema.define(version: 20160815155903) do
 
   create_table "private_tags", force: :cascade do |t|
     t.integer "parent_id"
-    t.string  "name",      default: "", null: false
-    t.string  "color"
+    t.string  "name",      limit: 255, default: "", null: false
+    t.string  "color",     limit: 255
     t.index ["name"], name: "index_private_tags_on_name", using: :btree
     t.index ["parent_id"], name: "index_private_tags_on_parent_id", using: :btree
   end
@@ -496,8 +488,8 @@ ActiveRecord::Schema.define(version: 20160815155903) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "bid_percentage"
-    t.integer  "value_in_cents", default: 0,     null: false
-    t.string   "value_currency", default: "CHF", null: false
+    t.integer  "value_in_cents",             default: 0,     null: false
+    t.string   "value_currency", limit: 255, default: "CHF", null: false
     t.integer  "category_id"
     t.text     "comment"
     t.datetime "ordered_at"
@@ -517,11 +509,11 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "product_programs", force: :cascade do |t|
-    t.string   "key",                           null: false
-    t.string   "program_group",                 null: false
-    t.string   "title"
+    t.string   "key",           limit: 255,                 null: false
+    t.string   "program_group", limit: 255,                 null: false
+    t.string   "title",         limit: 255
     t.text     "description"
-    t.boolean  "archive",       default: false, null: false
+    t.boolean  "archive",                   default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["archive"], name: "index_product_programs_on_archive", using: :btree
@@ -531,19 +523,19 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "product_variants", force: :cascade do |t|
-    t.integer  "product_id",                             null: false
-    t.string   "program_group",                          null: false
-    t.string   "title"
+    t.integer  "product_id",                                         null: false
+    t.string   "program_group",          limit: 255,                 null: false
+    t.string   "title",                  limit: 255
     t.integer  "buying_price_in_cents"
-    t.string   "buying_price_currency",  default: "CHF", null: false
-    t.integer  "selling_price_in_cents",                 null: false
-    t.string   "selling_price_currency", default: "CHF"
+    t.string   "buying_price_currency",  limit: 255, default: "CHF", null: false
+    t.integer  "selling_price_in_cents",                             null: false
+    t.string   "selling_price_currency", limit: 255, default: "CHF"
     t.integer  "art_in_cents"
-    t.string   "art_currency",           default: "CHF"
+    t.string   "art_currency",           limit: 255, default: "CHF"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "vat_in_cents",           default: 0,     null: false
-    t.string   "vat_currency",           default: "CHF", null: false
+    t.integer  "vat_in_cents",                       default: 0,     null: false
+    t.string   "vat_currency",           limit: 255, default: "CHF", null: false
     t.integer  "vat_percentage"
     t.index ["art_in_cents"], name: "index_product_variants_on_art_in_cents", using: :btree
     t.index ["buying_price_in_cents"], name: "index_product_variants_on_buying_price_in_cents", using: :btree
@@ -556,15 +548,15 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   create_table "products", force: :cascade do |t|
     t.integer  "provider_id"
     t.integer  "after_sale_id"
-    t.string   "key",                                null: false
-    t.string   "title"
-    t.string   "category"
+    t.string   "key",                limit: 255,                 null: false
+    t.string   "title",              limit: 255
+    t.string   "category",           limit: 255
     t.text     "description"
-    t.boolean  "has_accessories",    default: false, null: false
-    t.boolean  "archive",            default: false, null: false
+    t.boolean  "has_accessories",                default: false, null: false
+    t.boolean  "archive",                        default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "unit_symbol"
+    t.string   "unit_symbol",        limit: 255
     t.integer  "price_to_unit_rate"
     t.integer  "width"
     t.integer  "height"
@@ -581,15 +573,15 @@ ActiveRecord::Schema.define(version: 20160815155903) do
 
   create_table "public_tags", force: :cascade do |t|
     t.integer "parent_id"
-    t.string  "name",      default: "", null: false
-    t.string  "color"
+    t.string  "name",      limit: 255, default: "", null: false
+    t.string  "color",     limit: 255
     t.index ["name"], name: "index_public_tags_on_name", using: :btree
     t.index ["parent_id"], name: "index_public_tags_on_parent_id", using: :btree
   end
 
   create_table "query_presets", force: :cascade do |t|
-    t.string "name",  default: ""
-    t.text   "query", default: ""
+    t.string "name",  limit: 255, default: ""
+    t.text   "query",             default: ""
     t.index ["name"], name: "index_query_presets_on_name", using: :btree
     t.index ["query"], name: "index_query_presets_on_query", using: :btree
   end
@@ -597,9 +589,9 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   create_table "receipts", force: :cascade do |t|
     t.integer  "invoice_id"
     t.bigint   "value_in_cents"
-    t.string   "value_currency"
+    t.string   "value_currency",   limit: 255
     t.date     "value_date"
-    t.string   "means_of_payment", default: ""
+    t.string   "means_of_payment", limit: 255, default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["created_at"], name: "index_receipts_on_created_at", using: :btree
@@ -612,8 +604,8 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "roles", force: :cascade do |t|
-    t.string   "name",        default: ""
-    t.text     "description", default: ""
+    t.string   "name",        limit: 255, default: ""
+    t.text     "description",             default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["name"], name: "index_roles_on_name", using: :btree
@@ -621,79 +613,79 @@ ActiveRecord::Schema.define(version: 20160815155903) do
 
   create_table "salaries", force: :cascade do |t|
     t.integer  "parent_id"
-    t.integer  "person_id",                                                   null: false
+    t.integer  "person_id",                                                               null: false
     t.date     "from"
     t.date     "to"
-    t.string   "title",                                                       null: false
-    t.boolean  "is_reference",                                default: false, null: false
-    t.boolean  "married",                                     default: false, null: false
-    t.integer  "children_count",                              default: 0,     null: false
+    t.string   "title",                                       limit: 255,                 null: false
+    t.boolean  "is_reference",                                            default: false, null: false
+    t.boolean  "married",                                                 default: false, null: false
+    t.integer  "children_count",                                          default: 0,     null: false
     t.bigint   "yearly_salary_in_cents"
     t.integer  "yearly_salary_count"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "generic_template_id",                                         null: false
-    t.string   "pdf_file_name"
-    t.string   "pdf_content_type"
+    t.integer  "generic_template_id",                                                     null: false
+    t.string   "pdf_file_name",                               limit: 255
+    t.string   "pdf_content_type",                            limit: 255
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.integer  "activity_rate"
-    t.boolean  "paid",                                        default: false
-    t.string   "brut_account"
-    t.string   "net_account"
-    t.bigint   "cert_transport_in_cents",                     default: 0,     null: false
-    t.string   "cert_transport_currency",                     default: "CHF", null: false
-    t.bigint   "cert_food_in_cents",                          default: 0,     null: false
-    t.string   "cert_food_currency",                          default: "CHF", null: false
-    t.bigint   "cert_logding_in_cents",                       default: 0,     null: false
-    t.string   "cert_logding_currency",                       default: "CHF", null: false
-    t.bigint   "cert_misc_salary_car_in_cents",               default: 0,     null: false
-    t.string   "cert_misc_salary_car_currency",               default: "CHF", null: false
-    t.string   "cert_misc_salary_other_title",                default: "",    null: false
-    t.bigint   "cert_misc_salary_other_value_in_cents",       default: 0,     null: false
-    t.string   "cert_misc_salary_other_value_currency",       default: "CHF", null: false
-    t.string   "cert_non_periodic_title",                     default: "",    null: false
-    t.bigint   "cert_non_periodic_value_in_cents",            default: 0,     null: false
-    t.string   "cert_non_periodic_value_currency",            default: "CHF", null: false
-    t.string   "cert_capital_title",                          default: "",    null: false
-    t.bigint   "cert_capital_value_in_cents",                 default: 0,     null: false
-    t.string   "cert_capital_value_currency",                 default: "CHF", null: false
-    t.bigint   "cert_participation_in_cents",                 default: 0,     null: false
-    t.string   "cert_participation_currency",                 default: "CHF", null: false
-    t.bigint   "cert_compentation_admin_members_in_cents",    default: 0,     null: false
-    t.string   "cert_compentation_admin_members_currency",    default: "CHF", null: false
-    t.string   "cert_misc_other_title",                       default: "",    null: false
-    t.bigint   "cert_misc_other_value_in_cents",              default: 0,     null: false
-    t.string   "cert_misc_other_value_currency",              default: "CHF", null: false
-    t.bigint   "cert_avs_ac_aanp_in_cents",                   default: 0,     null: false
-    t.string   "cert_avs_ac_aanp_currency",                   default: "CHF", null: false
-    t.bigint   "cert_lpp_in_cents",                           default: 0,     null: false
-    t.string   "cert_lpp_currency",                           default: "CHF", null: false
-    t.bigint   "cert_buy_lpp_in_cents",                       default: 0,     null: false
-    t.string   "cert_buy_lpp_currency",                       default: "CHF", null: false
-    t.bigint   "cert_is_in_cents",                            default: 0,     null: false
-    t.string   "cert_is_currency",                            default: "CHF", null: false
-    t.bigint   "cert_alloc_traveling_in_cents",               default: 0,     null: false
-    t.string   "cert_alloc_traveling_currency",               default: "CHF", null: false
-    t.bigint   "cert_alloc_food_in_cents",                    default: 0,     null: false
-    t.string   "cert_alloc_food_currency",                    default: "CHF", null: false
-    t.string   "cert_alloc_other_actual_cost_title",          default: "",    null: false
-    t.bigint   "cert_alloc_other_actual_cost_value_in_cents", default: 0,     null: false
-    t.string   "cert_alloc_other_actual_cost_value_currency", default: "CHF", null: false
-    t.bigint   "cert_alloc_representation_in_cents",          default: 0,     null: false
-    t.string   "cert_alloc_representation_currency",          default: "CHF", null: false
-    t.bigint   "cert_alloc_car_in_cents",                     default: 0,     null: false
-    t.string   "cert_alloc_car_currency",                     default: "CHF", null: false
-    t.string   "cert_alloc_other_fixed_fees_title",           default: "",    null: false
-    t.bigint   "cert_alloc_other_fixed_fees_value_in_cents",  default: 0,     null: false
-    t.string   "cert_alloc_other_fixed_fees_value_currency",  default: "CHF", null: false
-    t.bigint   "cert_formation_in_cents",                     default: 0,     null: false
-    t.string   "cert_formation_currency",                     default: "CHF", null: false
-    t.string   "cert_others_title",                           default: "",    null: false
-    t.text     "cert_notes",                                  default: "",    null: false
-    t.string   "employer_account",                            default: ""
-    t.string   "yearly_salary_currency",                      default: "CHF", null: false
+    t.boolean  "paid",                                                    default: false
+    t.string   "brut_account",                                limit: 255
+    t.string   "net_account",                                 limit: 255
+    t.bigint   "cert_transport_in_cents",                                 default: 0,     null: false
+    t.string   "cert_transport_currency",                     limit: 255, default: "CHF", null: false
+    t.bigint   "cert_food_in_cents",                                      default: 0,     null: false
+    t.string   "cert_food_currency",                          limit: 255, default: "CHF", null: false
+    t.bigint   "cert_logding_in_cents",                                   default: 0,     null: false
+    t.string   "cert_logding_currency",                       limit: 255, default: "CHF", null: false
+    t.bigint   "cert_misc_salary_car_in_cents",                           default: 0,     null: false
+    t.string   "cert_misc_salary_car_currency",               limit: 255, default: "CHF", null: false
+    t.string   "cert_misc_salary_other_title",                limit: 255, default: "",    null: false
+    t.bigint   "cert_misc_salary_other_value_in_cents",                   default: 0,     null: false
+    t.string   "cert_misc_salary_other_value_currency",       limit: 255, default: "CHF", null: false
+    t.string   "cert_non_periodic_title",                     limit: 255, default: "",    null: false
+    t.bigint   "cert_non_periodic_value_in_cents",                        default: 0,     null: false
+    t.string   "cert_non_periodic_value_currency",            limit: 255, default: "CHF", null: false
+    t.string   "cert_capital_title",                          limit: 255, default: "",    null: false
+    t.bigint   "cert_capital_value_in_cents",                             default: 0,     null: false
+    t.string   "cert_capital_value_currency",                 limit: 255, default: "CHF", null: false
+    t.bigint   "cert_participation_in_cents",                             default: 0,     null: false
+    t.string   "cert_participation_currency",                 limit: 255, default: "CHF", null: false
+    t.bigint   "cert_compentation_admin_members_in_cents",                default: 0,     null: false
+    t.string   "cert_compentation_admin_members_currency",    limit: 255, default: "CHF", null: false
+    t.string   "cert_misc_other_title",                       limit: 255, default: "",    null: false
+    t.bigint   "cert_misc_other_value_in_cents",                          default: 0,     null: false
+    t.string   "cert_misc_other_value_currency",              limit: 255, default: "CHF", null: false
+    t.bigint   "cert_avs_ac_aanp_in_cents",                               default: 0,     null: false
+    t.string   "cert_avs_ac_aanp_currency",                   limit: 255, default: "CHF", null: false
+    t.bigint   "cert_lpp_in_cents",                                       default: 0,     null: false
+    t.string   "cert_lpp_currency",                           limit: 255, default: "CHF", null: false
+    t.bigint   "cert_buy_lpp_in_cents",                                   default: 0,     null: false
+    t.string   "cert_buy_lpp_currency",                       limit: 255, default: "CHF", null: false
+    t.bigint   "cert_is_in_cents",                                        default: 0,     null: false
+    t.string   "cert_is_currency",                            limit: 255, default: "CHF", null: false
+    t.bigint   "cert_alloc_traveling_in_cents",                           default: 0,     null: false
+    t.string   "cert_alloc_traveling_currency",               limit: 255, default: "CHF", null: false
+    t.bigint   "cert_alloc_food_in_cents",                                default: 0,     null: false
+    t.string   "cert_alloc_food_currency",                    limit: 255, default: "CHF", null: false
+    t.string   "cert_alloc_other_actual_cost_title",          limit: 255, default: "",    null: false
+    t.bigint   "cert_alloc_other_actual_cost_value_in_cents",             default: 0,     null: false
+    t.string   "cert_alloc_other_actual_cost_value_currency", limit: 255, default: "CHF", null: false
+    t.bigint   "cert_alloc_representation_in_cents",                      default: 0,     null: false
+    t.string   "cert_alloc_representation_currency",          limit: 255, default: "CHF", null: false
+    t.bigint   "cert_alloc_car_in_cents",                                 default: 0,     null: false
+    t.string   "cert_alloc_car_currency",                     limit: 255, default: "CHF", null: false
+    t.string   "cert_alloc_other_fixed_fees_title",           limit: 255, default: "",    null: false
+    t.bigint   "cert_alloc_other_fixed_fees_value_in_cents",              default: 0,     null: false
+    t.string   "cert_alloc_other_fixed_fees_value_currency",  limit: 255, default: "CHF", null: false
+    t.bigint   "cert_formation_in_cents",                                 default: 0,     null: false
+    t.string   "cert_formation_currency",                     limit: 255, default: "CHF", null: false
+    t.string   "cert_others_title",                           limit: 255, default: "",    null: false
+    t.text     "cert_notes",                                              default: "",    null: false
+    t.string   "employer_account",                            limit: 255, default: ""
     t.text     "comments"
+    t.string   "yearly_salary_currency",                      limit: 255, default: "CHF", null: false
     t.index ["is_reference"], name: "index_salaries_on_is_template", using: :btree
     t.index ["paid"], name: "index_salaries_on_paid", using: :btree
     t.index ["parent_id"], name: "index_salaries_on_parent_id", using: :btree
@@ -702,14 +694,14 @@ ActiveRecord::Schema.define(version: 20160815155903) do
 
   create_table "salaries_items", force: :cascade do |t|
     t.integer  "parent_id"
-    t.integer  "salary_id",                      null: false
-    t.integer  "position",                       null: false
-    t.string   "title",                          null: false
-    t.bigint   "value_in_cents",                 null: false
-    t.string   "category"
+    t.integer  "salary_id",                                  null: false
+    t.integer  "position",                                   null: false
+    t.string   "title",          limit: 255,                 null: false
+    t.bigint   "value_in_cents",                             null: false
+    t.string   "category",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "value_currency", default: "CHF", null: false
+    t.string   "value_currency", limit: 255, default: "CHF", null: false
     t.index ["salary_id"], name: "index_salaries_items_on_salary_id", using: :btree
   end
 
@@ -721,34 +713,35 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "salaries_tax_data", force: :cascade do |t|
-    t.integer  "salary_id",                                                       null: false
-    t.integer  "tax_id",                                                          null: false
-    t.integer  "position",                                                        null: false
-    t.bigint   "employer_value_in_cents",                                         null: false
-    t.decimal  "employer_percent",        precision: 6, scale: 3,                 null: false
-    t.boolean  "employer_use_percent",                                            null: false
-    t.bigint   "employee_value_in_cents",                                         null: false
-    t.decimal  "employee_percent",        precision: 6, scale: 3,                 null: false
-    t.boolean  "employee_use_percent",                                            null: false
+    t.integer  "salary_id",                                                                   null: false
+    t.integer  "tax_id",                                                                      null: false
+    t.integer  "position",                                                                    null: false
+    t.bigint   "employer_value_in_cents",                                                     null: false
+    t.decimal  "employer_percent",                    precision: 6, scale: 3,                 null: false
+    t.boolean  "employer_use_percent",                                                        null: false
+    t.bigint   "employee_value_in_cents",                                                     null: false
+    t.decimal  "employee_percent",                    precision: 6, scale: 3,                 null: false
+    t.boolean  "employee_use_percent",                                                        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "employee_value_currency",                         default: "CHF", null: false
-    t.string   "employer_value_currency",                         default: "CHF", null: false
+    t.string   "employee_value_currency", limit: 255,                         default: "CHF", null: false
+    t.string   "employer_value_currency", limit: 255,                         default: "CHF", null: false
     t.index ["salary_id"], name: "index_salaries_tax_data_on_salary_id", using: :btree
     t.index ["tax_id"], name: "index_salaries_tax_data_on_tax_id", using: :btree
   end
 
   create_table "salaries_taxes", force: :cascade do |t|
-    t.string   "title",                              null: false
-    t.string   "model",                              null: false
+    t.string   "title",              limit: 255,                 null: false
+    t.string   "model",              limit: 255,                 null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "employee_account"
-    t.boolean  "exporter_avs_group", default: false, null: false
-    t.boolean  "exporter_lpp_group", default: false, null: false
-    t.boolean  "exporter_is_group",  default: false, null: false
-    t.string   "employer_account",   default: ""
-    t.boolean  "archive",            default: false, null: false
+    t.string   "employee_account",   limit: 255
+    t.boolean  "exporter_avs_group",             default: false, null: false
+    t.boolean  "exporter_lpp_group",             default: false, null: false
+    t.boolean  "exporter_is_group",              default: false, null: false
+    t.string   "employer_account",   limit: 255, default: ""
+    t.boolean  "archive",                        default: false, null: false
+    t.index ["archive"], name: "index_salaries_taxes_on_archive", using: :btree
     t.index ["exporter_avs_group"], name: "index_salaries_taxes_on_exporter_avs_group", using: :btree
     t.index ["exporter_is_group"], name: "index_salaries_taxes_on_exporter_is_group", using: :btree
     t.index ["exporter_lpp_group"], name: "index_salaries_taxes_on_exporter_lpp_group", using: :btree
@@ -770,86 +763,75 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "salaries_taxes_generic", force: :cascade do |t|
-    t.integer  "tax_id",                                                          null: false
-    t.integer  "year",                                                            null: false
+    t.integer  "tax_id",                                                                      null: false
+    t.integer  "year",                                                                        null: false
     t.bigint   "salary_from_in_cents"
     t.bigint   "salary_to_in_cents"
-    t.bigint   "employer_value_in_cents",                                         null: false
-    t.decimal  "employer_percent",        precision: 6, scale: 3,                 null: false
-    t.boolean  "employer_use_percent",                                            null: false
-    t.bigint   "employee_value_in_cents",                                         null: false
-    t.decimal  "employee_percent",        precision: 6, scale: 3,                 null: false
-    t.boolean  "employee_use_percent",                                            null: false
+    t.bigint   "employer_value_in_cents",                                                     null: false
+    t.decimal  "employer_percent",                    precision: 6, scale: 3,                 null: false
+    t.boolean  "employer_use_percent",                                                        null: false
+    t.bigint   "employee_value_in_cents",                                                     null: false
+    t.decimal  "employee_percent",                    precision: 6, scale: 3,                 null: false
+    t.boolean  "employee_use_percent",                                                        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "salary_from_currency",                            default: "CHF", null: false
-    t.string   "salary_to_currency",                              default: "CHF", null: false
-    t.string   "employer_value_currency",                         default: "CHF", null: false
-    t.string   "employee_value_currency",                         default: "CHF", null: false
+    t.string   "salary_from_currency",    limit: 255,                         default: "CHF", null: false
+    t.string   "salary_to_currency",      limit: 255,                         default: "CHF", null: false
+    t.string   "employer_value_currency", limit: 255,                         default: "CHF", null: false
+    t.string   "employee_value_currency", limit: 255,                         default: "CHF", null: false
     t.index ["tax_id"], name: "index_salaries_taxes_generic_on_tax_id", using: :btree
     t.index ["year"], name: "index_salaries_taxes_generic_on_year", using: :btree
   end
 
   create_table "salaries_taxes_is", force: :cascade do |t|
-    t.integer  "tax_id",                                                        null: false
-    t.integer  "year",                                                          null: false
-    t.bigint   "yearly_from_in_cents",                                          null: false
-    t.bigint   "yearly_to_in_cents",                                            null: false
-    t.bigint   "monthly_from_in_cents",                                         null: false
-    t.bigint   "monthly_to_in_cents",                                           null: false
-    t.bigint   "hourly_from_in_cents",                                          null: false
-    t.bigint   "hourly_to_in_cents",                                            null: false
-    t.decimal  "percent_alone",         precision: 7, scale: 2
-    t.decimal  "percent_married",       precision: 7, scale: 2
-    t.decimal  "percent_children_1",    precision: 7, scale: 2
-    t.decimal  "percent_children_2",    precision: 7, scale: 2
-    t.decimal  "percent_children_3",    precision: 7, scale: 2
-    t.decimal  "percent_children_4",    precision: 7, scale: 2
-    t.decimal  "percent_children_5",    precision: 7, scale: 2
+    t.integer  "tax_id",                                                                    null: false
+    t.integer  "year",                                                                      null: false
+    t.bigint   "yearly_from_in_cents",                                                      null: false
+    t.bigint   "yearly_to_in_cents",                                                        null: false
+    t.bigint   "monthly_from_in_cents",                                                     null: false
+    t.bigint   "monthly_to_in_cents",                                                       null: false
+    t.bigint   "hourly_from_in_cents",                                                      null: false
+    t.bigint   "hourly_to_in_cents",                                                        null: false
+    t.decimal  "percent_alone",                     precision: 7, scale: 2
+    t.decimal  "percent_married",                   precision: 7, scale: 2
+    t.decimal  "percent_children_1",                precision: 7, scale: 2
+    t.decimal  "percent_children_2",                precision: 7, scale: 2
+    t.decimal  "percent_children_3",                precision: 7, scale: 2
+    t.decimal  "percent_children_4",                precision: 7, scale: 2
+    t.decimal  "percent_children_5",                precision: 7, scale: 2
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "yearly_from_currency",                          default: "CHF", null: false
-    t.string   "yearly_to_currency",                            default: "CHF", null: false
-    t.string   "monthly_from_currency",                         default: "CHF", null: false
-    t.string   "monthly_to_currency",                           default: "CHF", null: false
-    t.string   "hourly_from_currency",                          default: "CHF", null: false
-    t.string   "hourly_to_currency",                            default: "CHF", null: false
+    t.string   "yearly_from_currency",  limit: 255,                         default: "CHF", null: false
+    t.string   "yearly_to_currency",    limit: 255,                         default: "CHF", null: false
+    t.string   "monthly_from_currency", limit: 255,                         default: "CHF", null: false
+    t.string   "monthly_to_currency",   limit: 255,                         default: "CHF", null: false
+    t.string   "hourly_from_currency",  limit: 255,                         default: "CHF", null: false
+    t.string   "hourly_to_currency",    limit: 255,                         default: "CHF", null: false
     t.index ["tax_id"], name: "index_salaries_taxes_is_on_tax_id", using: :btree
     t.index ["year"], name: "index_salaries_taxes_is_on_year", using: :btree
   end
 
   create_table "salaries_taxes_is2014", force: :cascade do |t|
-    t.integer  "tax_id",                               null: false
-    t.integer  "year",                                 null: false
-    t.string   "tax_group",                            null: false
-    t.integer  "children_count",                       null: false
-    t.string   "ecclesiastical",       default: "N",   null: false
-    t.integer  "salary_from_in_cents", default: 0,     null: false
-    t.string   "salary_from_currency", default: "CHF", null: false
-    t.integer  "salary_to_in_cents",   default: 0,     null: false
-    t.string   "salary_to_currency",   default: "CHF", null: false
-    t.integer  "tax_value_in_cents",   default: 0,     null: false
-    t.string   "tax_value_currency",   default: "CHF", null: false
-    t.float    "tax_value_percentage", default: 0.0,   null: false
+    t.integer  "tax_id",                                           null: false
+    t.integer  "year",                                             null: false
+    t.string   "tax_group",            limit: 255,                 null: false
+    t.integer  "children_count",                                   null: false
+    t.string   "ecclesiastical",       limit: 255, default: "N",   null: false
+    t.integer  "salary_from_in_cents",             default: 0,     null: false
+    t.string   "salary_from_currency", limit: 255, default: "CHF", null: false
+    t.integer  "salary_to_in_cents",               default: 0,     null: false
+    t.string   "salary_to_currency",   limit: 255, default: "CHF", null: false
+    t.integer  "tax_value_in_cents",               default: 0,     null: false
+    t.string   "tax_value_currency",   limit: 255, default: "CHF", null: false
+    t.float    "tax_value_percentage",             default: 0.0,   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["tax_id"], name: "index_salaries_taxes_is2014_on_tax_id", using: :btree
     t.index ["year"], name: "index_salaries_taxes_is2014_on_year", using: :btree
   end
 
-  create_table "search_attributes", force: :cascade do |t|
-    t.string "model",    default: "", null: false
-    t.string "name",     default: "", null: false
-    t.text   "indexing", default: "", null: false
-    t.text   "mapping",  default: "", null: false
-    t.string "group",    default: ""
-    t.index ["group"], name: "index_search_attributes_on_group", using: :btree
-    t.index ["model"], name: "index_search_attributes_on_model", using: :btree
-    t.index ["name"], name: "index_search_attributes_on_name", using: :btree
-  end
-
   create_table "sessions", force: :cascade do |t|
-    t.string   "session_id", null: false
+    t.string   "session_id", limit: 255, null: false
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -858,12 +840,12 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "subscription_values", force: :cascade do |t|
-    t.integer "subscription_id",                     null: false
-    t.integer "invoice_template_id",                 null: false
+    t.integer "subscription_id",                                 null: false
+    t.integer "invoice_template_id",                             null: false
     t.integer "private_tag_id"
-    t.integer "value_in_cents",      default: 0
-    t.string  "value_currency",      default: "CHF"
-    t.integer "position",                            null: false
+    t.integer "value_in_cents",                  default: 0
+    t.string  "value_currency",      limit: 255, default: "CHF"
+    t.integer "position",                                        null: false
     t.index ["position"], name: "index_subscription_values_on_position", using: :btree
     t.index ["private_tag_id"], name: "index_subscription_values_on_private_tag_id", using: :btree
     t.index ["subscription_id"], name: "index_subscription_values_on_subscription_id", using: :btree
@@ -872,14 +854,14 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "subscriptions", force: :cascade do |t|
-    t.string   "title",                     default: "", null: false
-    t.text     "description",               default: ""
+    t.string   "title",                     limit: 255, default: "", null: false
+    t.text     "description",                           default: ""
     t.date     "interval_starts_on"
     t.date     "interval_ends_on"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "pdf_file_name"
-    t.string   "pdf_content_type"
+    t.string   "pdf_file_name",             limit: 255
+    t.string   "pdf_content_type",          limit: 255
     t.integer  "pdf_file_size"
     t.datetime "pdf_updated_at"
     t.text     "last_pdf_generation_query"
@@ -894,11 +876,11 @@ ActiveRecord::Schema.define(version: 20160815155903) do
 
   create_table "task_presets", force: :cascade do |t|
     t.integer "task_type_id"
-    t.string  "title",          default: "", null: false
-    t.text    "description",    default: ""
+    t.string  "title",          limit: 255, default: "", null: false
+    t.text    "description",                default: ""
     t.float   "duration"
     t.integer "value_in_cents"
-    t.string  "value_currency"
+    t.string  "value_currency", limit: 255
     t.index ["task_type_id"], name: "index_task_presets_on_task_type_id", using: :btree
     t.index ["title"], name: "index_task_presets_on_title", using: :btree
     t.index ["value_currency"], name: "index_task_presets_on_value_currency", using: :btree
@@ -906,11 +888,11 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "task_rates", force: :cascade do |t|
-    t.string   "title",                          null: false
+    t.string   "title",          limit: 255,                 null: false
     t.text     "description"
-    t.integer  "value_in_cents",                 null: false
-    t.string   "value_currency", default: "CHF"
-    t.boolean  "archive",        default: false
+    t.integer  "value_in_cents",                             null: false
+    t.string   "value_currency", limit: 255, default: "CHF"
+    t.boolean  "archive",                    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["archive"], name: "index_task_rates_on_archive", using: :btree
@@ -919,12 +901,12 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "task_types", force: :cascade do |t|
-    t.string  "title",          default: "",    null: false
-    t.text    "description",    default: ""
-    t.float   "ratio",                          null: false
+    t.string  "title",          limit: 255, default: "",    null: false
+    t.text    "description",                default: ""
+    t.float   "ratio",                                      null: false
     t.integer "value_in_cents"
-    t.string  "value_currency", default: "CHF"
-    t.boolean "archive",        default: false
+    t.string  "value_currency", limit: 255, default: "CHF"
+    t.boolean "archive",                    default: false
     t.index ["archive"], name: "index_task_types_on_archive", using: :btree
     t.index ["title"], name: "index_task_types_on_title", using: :btree
     t.index ["value_currency"], name: "index_task_types_on_value_currency", using: :btree
@@ -932,15 +914,15 @@ ActiveRecord::Schema.define(version: 20160815155903) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.integer  "executer_id",                    null: false
-    t.text     "description",    default: ""
+    t.integer  "executer_id",                                null: false
+    t.text     "description",                default: ""
     t.integer  "duration"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "affair_id",                      null: false
-    t.integer  "task_type_id",                   null: false
-    t.bigint   "value_in_cents", default: 0,     null: false
-    t.string   "value_currency", default: "CHF", null: false
+    t.integer  "affair_id",                                  null: false
+    t.integer  "task_type_id",                               null: false
+    t.bigint   "value_in_cents",             default: 0,     null: false
+    t.string   "value_currency", limit: 255, default: "CHF", null: false
     t.integer  "salary_id"
     t.datetime "start_date"
     t.integer  "creator_id"

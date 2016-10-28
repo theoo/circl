@@ -16,21 +16,6 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# == Schema Information
-#
-# Table name: permissions
-#
-# *id*::              <tt>integer, not null, primary key</tt>
-# *role_id*::         <tt>integer</tt>
-# *action*::          <tt>string(255), default("")</tt>
-# *subject*::         <tt>string(255), default("")</tt>
-# *hash_conditions*:: <tt>text</tt>
-# *created_at*::      <tt>datetime</tt>
-# *updated_at*::      <tt>datetime</tt>
-#--
-# == Schema Information End
-#++
-
 class Permission < ApplicationRecord
 
   ################

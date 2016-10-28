@@ -1,4 +1,0 @@
-%b= @object.title
-= @object.description
-= @object.desc
-&nbsp;

@@ -16,33 +16,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-class People::HistoriesController < ApplicationController
+module VatConcern
 
-  layout false
+  extend ActiveSupport::Concern
 
-  load_resource :person
-
-  def self.model
-    Activity
+  # Takes a value taxes included
+  def reverse_vat(val)
+    val / ( 1 + (ApplicationSetting.value("service_vat_rate").to_f / 100) )
   end
 
-  def index
-    authorize! :index, self.class.model
-    @histories = @person.alterations
-
-    respond_to do |format|
-      format.json { render json: @histories }
-      format.xml  { render xml: @histories }
-      format.csv do
-        fields = []
-        fields << 'person.name'
-        fields << 'resource_type'
-        fields << 'resource_id'
-        fields << 'title'
-        fields << 'description'
-        fields << 'created_at'
-        render inline: csv_ify(@histories, fields)
-      end
-    end
-  end
 end

@@ -41,8 +41,7 @@ class Receipt < ApplicationRecord
   # Monetize deprecation warning
   require 'monetize/core_extensions'
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include SearchEngineConcern
   extend  MoneyComposer
 
   #################

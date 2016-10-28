@@ -18,7 +18,7 @@
 
 class People::Affairs::InvoicesController < ApplicationController
 
-  include ControllerExtensions::Invoices
+  include InvoicesConcern
 
   layout false
 

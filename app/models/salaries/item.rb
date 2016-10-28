@@ -53,8 +53,7 @@ class Salaries::Item < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include SearchEngineConcern
   extend  MoneyComposer
 
   #################

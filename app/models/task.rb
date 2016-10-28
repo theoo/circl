@@ -60,7 +60,10 @@ class Task < ApplicationRecord
 
   after_commit  :update_people_in_search_engine
   before_save   :set_value
-  after_save 'affair.update_on_prestation_alteration'
+
+  after_save do
+    self.affair.update_on_prestation_alteration
+  end
 
   #################
   ### RELATIONS ###

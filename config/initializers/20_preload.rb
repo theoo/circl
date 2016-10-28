@@ -47,12 +47,17 @@ if ActiveRecord::Base.connection.data_source_exists? 'application_settings' \
 end
 
 # SearchAttribute
-if ActiveRecord::Base.connection.data_source_exists? 'search_attributes' \
-    and ENV['force_application_settings'] != 'true'
+print "Preloading SearchAttributes: "
 
-  print "Preloading SearchAttributes: "
+path = Rails.root.join("config/mapping/search_attributes.yml")
+SearchAttribute.load(path)
 
-  SearchAttribute.enable_caching
+puts green("done") + "."
 
-  puts green("done") + "."
-end
+# LdapAttribute
+print "Preloading LdapAttributes: "
+
+path = Rails.root.join("config/mapping/ldap_attributes.yml")
+LdapAttribute.load(path)
+
+puts green("done") + "."

@@ -16,59 +16,13 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# == Schema Information
-#
-# Table name: people
-#
-# *id*::                             <tt>integer, not null, primary key</tt>
-# *job_id*::                         <tt>integer</tt>
-# *location_id*::                    <tt>integer</tt>
-# *main_communication_language_id*:: <tt>integer</tt>
-# *is_an_organization*::             <tt>boolean, default(FALSE), not null</tt>
-# *organization_name*::              <tt>string(255), default("")</tt>
-# *title*::                          <tt>string(255), default("")</tt>
-# *first_name*::                     <tt>string(255), default("")</tt>
-# *last_name*::                      <tt>string(255), default("")</tt>
-# *phone*::                          <tt>string(255), default("")</tt>
-# *second_phone*::                   <tt>string(255), default("")</tt>
-# *mobile*::                         <tt>string(255), default("")</tt>
-# *email*::                          <tt>string(255), default(""), not null</tt>
-# *second_email*::                   <tt>string(255), default("")</tt>
-# *address*::                        <tt>text, default("")</tt>
-# *birth_date*::                     <tt>date</tt>
-# *nationality*::                    <tt>string(255), default("")</tt>
-# *avs_number*::                     <tt>string(255), default("")</tt>
-# *bank_informations*::              <tt>text, default("")</tt>
-# *encrypted_password*::             <tt>string(128), default(""), not null</tt>
-# *reset_password_token*::           <tt>string(255)</tt>
-# *reset_password_sent_at*::         <tt>datetime</tt>
-# *remember_created_at*::            <tt>datetime</tt>
-# *sign_in_count*::                  <tt>integer, default(0)</tt>
-# *current_sign_in_at*::             <tt>datetime</tt>
-# *last_sign_in_at*::                <tt>datetime</tt>
-# *current_sign_in_ip*::             <tt>string(255)</tt>
-# *last_sign_in_ip*::                <tt>string(255)</tt>
-# *password_salt*::                  <tt>string(255)</tt>
-# *failed_attempts*::                <tt>integer, default(0)</tt>
-# *unlock_token*::                   <tt>string(255)</tt>
-# *locked_at*::                      <tt>datetime</tt>
-# *authentication_token*::           <tt>string(255)</tt>
-# *created_at*::                     <tt>datetime</tt>
-# *updated_at*::                     <tt>datetime</tt>
-# *hidden*::                         <tt>boolean, default(FALSE), not null</tt>
-# *gender*::                         <tt>boolean</tt>
-#--
-# == Schema Information End
-#++
-
-
 class Person < ApplicationRecord
 
   ################
   ### INCLUDES ###
   ################
 
-  include SearchEngine
+  include SearchEngineConcern
 
   attr_accessor :notices
   attr_accessor :template
@@ -125,18 +79,6 @@ class Person < ApplicationRecord
               class_name: 'Language'
 
   has_many    :employment_contracts,
-              dependent: :destroy
-
-  # logs what this "user" have done (to any entry)
-  has_many    :activities,
-              -> { order('created_at DESC').limit(100) },
-              dependent: :destroy
-
-  # logs what this person's entry have undergone
-  has_many    :alterations,
-              -> { order('created_at DESC').limit(100) },
-              class_name: 'Activity',
-              as: :resource,
               dependent: :destroy
 
   # comments made by this person

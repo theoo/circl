@@ -50,8 +50,7 @@ class Salaries::Taxes::Is2014 < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include SearchEngineConcern
   extend  MoneyComposer
 
   #################

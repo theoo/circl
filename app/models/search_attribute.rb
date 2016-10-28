@@ -16,105 +16,52 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# == Schema Information
-#
-# Table name: search_attributes
-#
-# *id*::       <tt>integer, not null, primary key</tt>
-# *model*::    <tt>string(255), default(""), not null</tt>
-# *name*::     <tt>string(255), default(""), not null</tt>
-# *indexing*:: <tt>string(255), default("")</tt>
-# *mapping*::  <tt>string(255), default("")</tt>
-# *group*::    <tt>string(255), default("")</tt>
-#--
-# == Schema Information End
-#++
-
-# If you change a mapping inside db/seeds/elasticsearch, you'd reindex and restart the server:
-#   rake elasticsearch:sync
-#   touch tmp/restart.txt
-class SearchAttribute < ApplicationRecord
-
-  ################
-  ### INCLUDES ###
-  ################
-
-  # include ChangesTracker
-
-  #################
-  ### CALLBACK  ###
-  #################
-
-  # homemade serialization
-  before_save :ensure_mapping_is_a_hash
-  serialize :mapping, Hash
-
-  #################
-  ### RELATIONS ###
-  #################
-
-  ###################
-  ### VALIDATIONS ###
-  ###################
-
-  validates_presence_of :model, :name, :indexing
-  validates_uniqueness_of :name, scope: :model
-
-  # Validate fields of type 'string' length
-  validates_length_of :model, maximum: 255
-  validates_length_of :name, maximum: 255
-  validates_length_of :indexing, maximum: 65535
-  validates_length_of :mapping, maximum: 65535
-  validates_length_of :group, maximum: 255
-
-  scope :searchable, -> { where("#{table_name}.group <> ''") }
-  scope :orderable,  -> { searchable.where("#{table_name}.mapping NOT LIKE '%object%'") }
+class SearchAttribute
 
   class << self
 
+    attr_reader :nested_objects
+
+    def all
+      Rails.configuration.search_attributes
+    end
+
     def mapping_for_model(model_name)
-      Rails.configuration.search_attributes[model_name]
-    end
+      sa = Rails.configuration.search_attributes[model_name.to_sym]
 
-    def disable_caching
-      Rails.configuration.search_attributes = nil
-    end
+      mapping = sa[:mapping] if sa and sa[:mapping]
+      mapping ||= {}
 
-    def enable_caching
-      Rails.configuration.search_attributes = SearchAttribute.all.each_with_object({}) do |sa, h|
-        h[sa.model] ||= {}
-        h[sa.model][sa.name] = {
-          mapping: sa.mapping,
-          indexing: sa.indexing,
-          group: sa.group }
+      if sa and sa[:nesting]
+        sa[:nesting].each do |name, opts|
+        puts opts[:class_name].constantize.inspect
+          mapping[name] = {
+            type: "object",
+            include_in_all: false,
+            properties: opts[:class_name].constantize.mapping
+          }
+        end
       end
+
+      mapping
+
     end
 
-  end
+    def load(path)
 
-  ########################
-  ### INSTANCE METHODS ###
-  ########################
+      yaml = YAML.load_file(path).deep_symbolize_keys
+      Rails.configuration.search_attributes = yaml
 
-  def as_json(options = nil)
-    h = super(options)
-    h[:searchable] = !group.blank?
-    h[:orderable] = mapping.to_s.match(/object/).nil?
-    h
-  end
-
-  private
-
-  def ensure_mapping_is_a_hash
-    # In some case mapping is not hash. On creation for instance.
-    unless mapping.is_a? Hash
-      begin
-        self.mapping = YAML.load(mapping)
-      rescue Exception => e
-        errors.add(:mapping, I18n.t("search_attribute.errors.mapping_doesnt_look_like_a_hash"))
-        return false
+      @nested_objects = yaml.each_with_object({}) do |(klass, options), o|
+        o[klass.to_sym] = options[:nesting]
       end
+
+    rescue
+
+      raise ArgumentError, "File '#{path}' is missing or invalid. Ensure the YAML file is fixed and restart the app."
+
     end
+
   end
 
 end

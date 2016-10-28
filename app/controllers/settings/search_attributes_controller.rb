@@ -19,66 +19,27 @@
 class Settings::SearchAttributesController < ApplicationController
   layout false
 
-  load_and_authorize_resource
+  authorize_resource
 
   def index
+    @search_attributes = SearchAttribute.all
     respond_to do |format|
-      format.json { render json: @search_attributes.order(:id) }
+      format.json { render json: @search_attributes }
     end
   end
 
   def searchable
-    @search_attributes = @search_attributes.searchable
+    @search_attributes = SearchAttribute.all
+    # TODO update YAML file source and preload method
+    # @search_attributes = @search_attributes.searchable
 
     respond_to do |format|
       format.json { render json: @search_attributes.as_json(except: [:mapping, :indexing]) }
     end
   end
 
-  def show
-    edit
-  end
-
-  def create
-    @search_attribute = SearchAttribute.new(search_attribute_params)
-    respond_to do |format|
-      if @search_attribute.save
-        format.json  { render json: @search_attribute }
-      else
-        format.json { render json: @search_attribute.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def edit
-    respond_to do |format|
-      format.json { render json: @search_attribute }
-    end
-  end
-
-  def update
-    respond_to do |format|
-      if @search_attribute.update_attributes(search_attribute_params)
-        format.json { render json: @search_attribute }
-      else
-        format.json { render json: @search_attribute.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def destroy
-    respond_to do |format|
-      if @search_attribute.destroy
-        format.json { render json: {} }
-      else
-        format.json { render json: @search_attribute.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   def synchronize
-    if RunRakeTaskJob.perform_later(name: 'elasticsearch:sync')
-      Activity.create!(person: current_person, resource_type: 'SearchAttribute', resource_id: '0', action: 'info', data: { synchronize: "Sync started at #{Time.now}" })
+    if Synchronize::SearchEngineJob.perform_later
       flash[:notice] = I18n.t('common.notices.synchronization_started', email: current_person.email)
     else
       flash[:alert] = I18n.t('common.errors.already_synchronizing')

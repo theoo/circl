@@ -16,7 +16,7 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-module SearchEngine
+module SearchEngineConcern
 
   extend ActiveSupport::Concern
 
@@ -34,12 +34,9 @@ module SearchEngine
 
       mappings dynamic: false do
 
-        if SearchAttribute.mapping_for_model(model_name)
-
-          SearchAttribute.mapping_for_model(model_name).each do |attribute, opt|
-            indexes attribute, opt[:mapping]
-          end
-
+        SearchAttribute.mapping_for_model(model_name).each do |attribute, opt|
+          puts [attribute, opt].inspect
+          # indexes attribute, opt['mapping']
         end
 
       end
@@ -60,6 +57,40 @@ module SearchEngine
   #   __elasticsearch__.delete_document if self.published?
   # end
 
+  #
+  # Method used by ElasticSearch to retrive document
+  # @param options = {} [Hash] JSON options
+  #
+  # @return [Hash] for ElasticSearch document
+  def as_indexed_json(options = {})
+
+    if defined?(super)
+      h = super(options)
+    else
+      h = as_json(options)
+    end
+
+    SearchAttribute.nested_objects[self.class.to_s.to_sym].each do |attribute, options|
+      if self.respond_to?(options[:indexing])
+        relation = self.send(options[:indexing])
+        if relation.send("respond_to?", :as_indexed_json)
+          h[attribute] = relation.as_indexed_json
+        else
+          h[attribute] = relation.as_json
+        end
+      else
+        raise ArgumentError, "#{options[:indexing]} doesn't exists."
+      end
+    end
+
+    h
+  end
+
+  #
+  # Update ElasticSearch document
+  # @param object = nil [Class] any ActiveRecord object
+  #
+  # @return [Boolean] false if object validation fails
   def update_search_engine(object = nil)
 
     return unless Rails.configuration.settings['elasticsearch']['enable_indexing']

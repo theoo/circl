@@ -1,0 +1,88 @@
+---
+people:
+  aliases: {}
+  mappings:
+    person:
+      dynamic: 'true'
+      properties:
+        address:
+          type: string
+        address_for_bvr:
+          type: string
+        alias_name:
+          type: string
+        created_at:
+          type: string
+        creditor_account:
+          type: string
+        creditor_discount_account:
+          type: string
+        creditor_transitional_account:
+          type: string
+        creditor_vat_account:
+          type: string
+        creditor_vat_discount_account:
+          type: string
+        email:
+          type: string
+        errors:
+          type: object
+        fax_number:
+          type: string
+        first_name:
+          type: string
+        gender:
+          type: boolean
+        geographic_coordinates:
+          type: string
+        hidden:
+          type: boolean
+        id:
+          type: long
+        is_an_organization:
+          type: boolean
+        last_name:
+          type: string
+        latitude:
+          type: double
+        location_id:
+          type: long
+        location_name:
+          type: string
+        longitude:
+          type: double
+        main_communication_language_id:
+          type: long
+        missing_employee_information:
+          type: string
+        mobile:
+          type: string
+        name:
+          type: string
+        nationality:
+          type: string
+        organization_name:
+          type: string
+        phone:
+          type: string
+        second_email:
+          type: string
+        second_phone:
+          type: string
+        task_rate_id:
+          type: long
+        title:
+          type: string
+        updated_at:
+          type: string
+        website:
+          type: string
+  settings:
+    index:
+      creation_date: '1474658834638'
+      number_of_shards: '5'
+      number_of_replicas: '1'
+      uuid: WiFI4RtJRxOAA0QxvqyVxw
+      version:
+        created: '2040099'
+  warmers: {}

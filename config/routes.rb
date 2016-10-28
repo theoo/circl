@@ -29,13 +29,12 @@ Rails.application.routes.draw do
 
     resources :dashboard, :controller => 'people/dashboard', :only => :index do
       collection do
-        get 'comments', 'activities', 'last_people_added', 'open_invoices', 'current_affairs',
+        get 'comments', 'last_people_added', 'open_invoices', 'current_affairs',
           'open_salaries'
       end
     end
 
     resources :activities, :controller => 'people/activities'
-    resources :histories, :controller => 'people/histories'
 
     resources :affairs, :controller => 'people/affairs' do
       collection do
@@ -328,7 +327,7 @@ Rails.application.routes.draw do
       resources :permissions, :controller => 'roles/permissions'
     end
 
-    resources :search_attributes do
+    resources :search_attributes, only: 'index' do
       collection do
         get 'searchable'
         post 'synchronize'

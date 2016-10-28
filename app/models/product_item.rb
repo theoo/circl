@@ -22,8 +22,7 @@ class ProductItem < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include SearchEngineConcern
   extend  MoneyComposer
 
   #################
@@ -48,7 +47,10 @@ class ProductItem < ApplicationRecord
   # TODO attr_accessor for value reset, allow value of 0
   before_save :update_value, if: 'value_in_cents.blank? || value_in_cents == 0'
 
-  after_save 'affair.update_on_prestation_alteration'
+  after_save do
+   self.affair.update_on_prestation_alteration
+  end
+
   after_save :remove_empty_categories
   after_destroy :remove_empty_categories
 

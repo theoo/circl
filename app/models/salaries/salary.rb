@@ -117,8 +117,7 @@ class Salaries::Salary < ApplicationRecord
 
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::TagHelper
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include SearchEngineConcern
   extend  MoneyComposer
 
   #################

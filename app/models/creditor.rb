@@ -25,9 +25,8 @@ class Creditor < ApplicationRecord
   # Monetize deprecation warning
   require 'monetize/core_extensions'
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-  include VatExtension
+  include SearchEngineConcern
+  include VatConcern
   extend  MoneyComposer
 
   # Used for import

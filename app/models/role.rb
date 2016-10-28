@@ -35,8 +35,7 @@ class Role < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include SearchEngineConcern
 
   #################
   ### CALLBACKS ###

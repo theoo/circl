@@ -35,8 +35,6 @@
 #++
 
 
-
-
 # TODO refactor this into a polymorphic association
 class Salaries::Taxes::Age < ApplicationRecord
 
@@ -46,8 +44,7 @@ class Salaries::Taxes::Age < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include SearchEngineConcern
 
   #################
   ### RELATIONS ###

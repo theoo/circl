@@ -16,24 +16,6 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# == Schema Information
-#
-# Table name: affairs
-#
-# *id*::             <tt>integer, not null, primary key</tt>
-# *owner_id*::       <tt>integer, not null</tt>
-# *buyer_id*::       <tt>integer, not null</tt>
-# *receiver_id*::    <tt>integer, not null</tt>
-# *title*::          <tt>string(255), default(""), not null</tt>
-# *description*::    <tt>text, default("")</tt>
-# *value_in_cents*:: <tt>integer, default(0), not null</tt>
-# *value_currency*:: <tt>string(255), default("CHF"), not null</tt>
-# *created_at*::     <tt>datetime</tt>
-# *updated_at*::     <tt>datetime</tt>
-#--
-# == Schema Information End
-#++
-
 class Affair < ApplicationRecord
 
   ################
@@ -43,10 +25,9 @@ class Affair < ApplicationRecord
   # Monetize deprecation warning
   require 'monetize/core_extensions'
 
-  include StatusExtension
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
-  include VatExtension
+  include StatusConcern
+  include VatConcern
+  include SearchEngineConcern
   extend  MoneyComposer
 
   # TODO: Move this to jsbuilder

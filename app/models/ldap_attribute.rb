@@ -16,33 +16,25 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
-# == Schema Information
-#
-# Table name: ldap_attributes
-#
-# *id*::         <tt>integer, not null, primary key</tt>
-# *name*::       <tt>string(255), not null</tt>
-# *mapping*::    <tt>string(255), not null</tt>
-# *created_at*:: <tt>datetime</tt>
-# *updated_at*:: <tt>datetime</tt>
-#--
-# == Schema Information End
-#++
+class LdapAttribute
 
-class LdapAttribute < ApplicationRecord
+  class << self
 
-  ################
-  ### INCLUDES ###
-  ################
+    def mapping
+      Rails.configuration.ldap_attributes
+    end
 
-  # include ChangesTracker
+    def load(path)
 
-  ###################
-  ### VALIDATIONS ###
-  ###################
+      yaml = YAML.load_file(path)
+      Rails.configuration.ldap_attributes = yaml
 
-  validates_presence_of :name
-  validates_presence_of :mapping
-  validates_uniqueness_of :name
+    rescue
+
+      raise ArgumentError, "File '#{path}' is missing or invalid. Ensure the YAML file is fixed and restart the app."
+
+    end
+
+  end
 
 end

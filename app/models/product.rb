@@ -22,8 +22,7 @@ class Product < ApplicationRecord
   ### INCLUDES ###
   ################
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include SearchEngineConcern
 
   # Used for import
   attr_accessor :notices
