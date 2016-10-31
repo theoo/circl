@@ -34,10 +34,20 @@ module SearchEngineConcern
 
       mappings dynamic: false do
 
-        SearchAttribute.mapping_for_model(model_name).each do |attribute, opt|
-          puts [attribute, opt].inspect
-          # indexes attribute, opt['mapping']
+        mappingz = SearchAttribute.mappings[model_name.to_sym]
+        if mappingz
+
+          mappingz.each do |attribute, opt|
+            indexes attribute, opt
+          end
+
+        elsif self.class.to_s != Elasticsearch::Model::Indexing::Mappings
+
+          puts "SearchEngineConcern is included in #{self.class.to_s} Model but the mapping \
+is not defined in config/search_attributes.yml."
+
         end
+
 
       end
 
@@ -64,23 +74,41 @@ module SearchEngineConcern
   # @return [Hash] for ElasticSearch document
   def as_indexed_json(options = {})
 
+    class_sym = self.class.to_s.to_sym
+
     if defined?(super)
       h = super(options)
     else
-      h = as_json(options)
+      mappingz = SearchAttribute.mappings[class_sym]
+      if mappingz
+        options.merge!(only: mappingz.keys)
+        h = as_json(options)
+      else
+        h = {}
+      end
     end
 
-    SearchAttribute.nested_objects[self.class.to_s.to_sym].each do |attribute, options|
-      if self.respond_to?(options[:indexing])
-        relation = self.send(options[:indexing])
-        if relation.send("respond_to?", :as_indexed_json)
-          h[attribute] = relation.as_indexed_json
+    nested_objects = SearchAttribute.nested_objects[class_sym]
+    if nested_objects
+
+      nested_objects.each do |attribute, options|
+        if self.respond_to?(options[:indexing])
+          relation = self.send(options[:indexing])
+          if relation.send("respond_to?", :as_indexed_json)
+            h[attribute] = relation.as_indexed_json
+          else
+            h[attribute] = relation.as_json
+          end
         else
-          h[attribute] = relation.as_json
+          raise ArgumentError, "#{options[:indexing]} doesn't exists."
         end
-      else
-        raise ArgumentError, "#{options[:indexing]} doesn't exists."
       end
+
+    else
+
+      puts "SearchEngineConcern is included in #{self.class.to_s} Model but the nesting is not defined \
+in config/search_attributes.yml."
+
     end
 
     h

@@ -18,33 +18,12 @@
 
 class SearchAttribute
 
-  class << self
+  extend ColorizedOutput
 
-    attr_reader :nested_objects
+  class << self
 
     def all
       Rails.configuration.search_attributes
-    end
-
-    def mapping_for_model(model_name)
-      sa = Rails.configuration.search_attributes[model_name.to_sym]
-
-      mapping = sa[:mapping] if sa and sa[:mapping]
-      mapping ||= {}
-
-      if sa and sa[:nesting]
-        sa[:nesting].each do |name, opts|
-        puts opts[:class_name].constantize.inspect
-          mapping[name] = {
-            type: "object",
-            include_in_all: false,
-            properties: opts[:class_name].constantize.mapping
-          }
-        end
-      end
-
-      mapping
-
     end
 
     def load(path)
@@ -52,14 +31,41 @@ class SearchAttribute
       yaml = YAML.load_file(path).deep_symbolize_keys
       Rails.configuration.search_attributes = yaml
 
-      @nested_objects = yaml.each_with_object({}) do |(klass, options), o|
-        o[klass.to_sym] = options[:nesting]
+    rescue Exception => e
+
+      puts red("File '#{path}' is missing or invalid. Ensure the YAML file is fixed and restart the app.")
+      raise e
+
+    end
+
+    def mappings
+
+      all.each_with_object({}) do |(class_name, sa), o|
+
+        m = sa[:mapping] if sa and sa[:mapping]
+        m ||= {}
+
+        if sa and sa[:nesting]
+          sa[:nesting].each do |name, opts|
+            m[name] = {
+              type: "object",
+              include_in_all: false,
+              properties: opts[:class_name].constantize.mapping
+            }
+          end
+        end
+
+        o[class_name] = m
+
       end
 
-    rescue
+    end
 
-      raise ArgumentError, "File '#{path}' is missing or invalid. Ensure the YAML file is fixed and restart the app."
-
+    def nested_objects
+      all.each_with_object({}) do |(class_name, options), o|
+        o[class_name.to_sym] = options[:nesting]
+        o[class_name.to_sym] ||= []
+      end
     end
 
   end

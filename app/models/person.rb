@@ -502,6 +502,7 @@ class Person < ApplicationRecord
   end
 
   # attributes overridden - JSON API
+  # FIXME: Move this to JBUILDER, extended attributes should only be used in views.
   def as_json(options = {})
     h = super({except: PROTECTED_ATTRIBUTES}.update(options || {}))
 
