@@ -134,3 +134,6 @@
 - key: estimate_checkbox_default
   value: true
   type_for_validation: boolean
+- key: subscription_value_person
+  value: "owner"
+  type_for_validation: string

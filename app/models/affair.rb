@@ -328,10 +328,19 @@ class Affair < ActiveRecord::Base
     receipts.map{ |r| r.value.try(:to_money, value_currency)}.try(:sum).try(:to_money)
   end
 
+  def person_for_subscription_value
+    case ApplicationSetting.value("subscription_value_person")
+      when "owner"    then owner
+      when "buyer"    then buyer
+      when "receiver" then receiver
+      else owner
+    end
+  end
+
   def subscriptions_value
     # Sum only leaves of a subscription tree (the last child)
     leaves = find_children(subscriptions)
-    leaves.map{|l| l.value_for(owner).try(:to_money, value_currency)}.try(:sum).try(:to_money)
+    leaves.map{|l| l.value_for(person_for_subscription_value).try(:to_money, value_currency)}.try(:sum).try(:to_money)
   end
 
   def tasks_value
