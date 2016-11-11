@@ -330,6 +330,7 @@ class Admin::SubscriptionsController < ApplicationController
     end
   end
 
+  # TODO move this to a job
   def tag_tool
     # Pseudo validation
     @errors = {}
@@ -347,12 +348,19 @@ class Admin::SubscriptionsController < ApplicationController
 
     if @errors.empty?
       begin
+        relation = case ApplicationSetting.value("subscription_value_person")
+          when "owner"    then :subscriptions
+          when "buyer"    then :subscriptions_as_buyer
+          when "receiver" then :subscriptions_as_receiver
+          else :subscriptions
+        end
+
         # Find members of a subscription
         if params[:subscription_member]
-          people_arel = Person.joins(:subscriptions)
+          people_arel = Person.joins(relation)
             .where("? BETWEEN interval_starts_on AND interval_ends_on", date)
         else
-          people_arel = Person.joins(:subscriptions)
+          people_arel = Person.joins(relation)
             .where("? NOT BETWEEN interval_starts_on AND interval_ends_on", date)
         end
 

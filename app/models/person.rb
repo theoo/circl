@@ -225,6 +225,15 @@ class Person < ActiveRecord::Base
             -> { uniq },
             through: :affairs
 
+  has_many  :subscriptions_as_buyer,
+            -> { uniq },
+            through: :affairs_as_buyer,
+            source: :subscriptions
+
+  has_many  :subscriptions_as_receiver,
+            -> { uniq },
+            through: :affairs_as_receiver,
+            source: :subscriptions
 
   # Salaries
   has_many  :salaries,
@@ -694,20 +703,6 @@ class Person < ActiveRecord::Base
     mask = Affair.statuses_value_for(:open)
     subscriptions.joins(:affairs)
       .where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
-  end
-
-  def subscriptions_as_buyer
-    # affairs_as_buyer.select{|a| a.subscriptions}.flatten.uniq
-    Subscription.joins(:affairs)
-                .where('affairs.buyer_id = ?', self.id)
-                .select("DISTINCT subscriptions.*")
-  end
-
-  def subscriptions_as_receiver
-    # affairs_as_receiver.select{|a| a.subscriptions}.flatten.uniq
-    Subscription.joins(:affairs)
-                .where('affairs.receiver_id = ?', self.id)
-                .select("DISTINCT subscriptions.*")
   end
 
   def age_at(date)
