@@ -49,7 +49,7 @@ class Admin::InvoicesController < ApplicationController
       errors[:from] = I18n.t("salary.errors.from_date_should_be_before_to_date")
     end
 
-    if ['pdf', 'odt'].index params[:format]
+    if ['pdf', 'odt'].index request.format
       unless params[:generic_template_id]
         errors[:generic_template_id] = I18n.t("activerecord.errors.messages.blank")
       end
@@ -60,7 +60,7 @@ class Admin::InvoicesController < ApplicationController
       if errors.empty?
         ######### PREPARE ############
 
-        @invoices = Invoice.order(:created_at)
+        @invoices = Invoice.billable.order(:created_at)
 
         # fetch invoices corresponding to selected statuses and interval
         if params[:statuses]
@@ -131,6 +131,10 @@ class Admin::InvoicesController < ApplicationController
         format.json do
           render json: errors, status: :unprocessable_entity
         end
+        # FIXME doesn't work in UI, no error triggered is date format is wrong
+        format.any do
+          render text: errors
+        end
       end
     end
   end
@@ -140,29 +144,42 @@ class Admin::InvoicesController < ApplicationController
     to   = Date.parse(params[:to]) if validate_date_format(params[:to])
 
     if ! params[:subscription_id].blank?
-      receipt_arel = Subscription.find(params[:subscription_id]).invoices
+      invoices = Subscription.find(params[:subscription_id]).invoices
     else
-      receipt_arel = Invoice
+      invoices = Invoice
     end
 
-    respond_to do |format|
-      format.html do
-        if from && to
+    if from && to
+
+      respond_to do |format|
+
+        format.csv do
           # NOTE to_time allow rails to search UTC date which may be different between summer and winter
-          invoices = Invoice.where('created_at >= ? AND created_at <= ?', from.to_time, to.to_time).order(:created_at)
+          invoices = invoices.where('created_at >= ? AND created_at <= ?', from.to_time, to.to_time).order(:created_at)
           exporter = Exporter::Factory.new( :invoices,
-                                            params[:type].to_sym,
-                                            { account: params["account"], counterpart_account: params['counterpart_account'] })
+            params[:type].to_sym,
+            { account: params["account"], counterpart_account: params['counterpart_account'] })
           send_data( exporter.export(invoices),
-                     type: 'application/octet-stream',
-                     filename: "invoices_#{from}_#{to}_#{params[:type]}.csv",
-                     disposition: 'attachment' )
-        else
+            type: 'text/csv',
+            filename: "invoices_#{from}_#{to}_#{params[:type]}.csv",
+            disposition: 'attachment' )
+        end
+
+      end
+
+    else
+
+      respond_to do |format|
+
+        format.csv do
           flash[:alert] = I18n.t('common.errors.date_must_match_format')
           redirect_to admin_path
         end
+
       end
+
     end
+
   end
 
   def show
