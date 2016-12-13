@@ -222,15 +222,13 @@ class Subscription < ActiveRecord::Base
   # Returns an array of people which has invoices matching the given statuses.
   def get_people_from_invoices_status(statuses)
     mask = Invoice.statuses_value_for(statuses)
-    people_from_self_and_descendants.joins(:invoices)
-      .where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+    people.joins(:invoices).where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
   end
 
   # Returns an array of people which has affairs matching the given statuses.
   def get_people_from_affairs_status(statuses)
     mask = Affair.statuses_value_for(statuses)
-    people_from_self_and_descendants.joins(:affairs)
-      .where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+    people.joins(:affairs).where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
   end
 
   # override default JSON serialization

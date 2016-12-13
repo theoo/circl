@@ -214,9 +214,16 @@ class Admin::SubscriptionsController < ApplicationController
       if ! params[:parent_id].blank?
         case params[:status]
         when 'reminder'
-          people_ids = @subscription.parents.map{ |p| p.get_people_from_affairs_status(:open).map(&:id) }.flatten
+          # FIXME .parents returns parents AND self
+          real_parents = @subscription.parents.to_a - [@subscription]
+          ary_ary = real_parents.map{ |p| p.get_people_from_affairs_status(:open).map(&:id) }
+          people_ids = ary_ary.first
+          ary_ary.each{ |a| people_ids &= a }
         when 'renewal'
-          people_ids = Subscription.find(params[:parent_id]).get_people_from_affairs_status(:paid).map(&:id)
+          people_ids = Subscription.find(params[:parent_id]).self_and_descendants.map do |d|
+            d.get_people_from_affairs_status(:paid).map(&:id)
+          end
+          people_ids.flatten!
         end
 
         BackgroundTasks::AddPeopleToSubscriptionAndEmail.schedule(subscription_id: @subscription.id,

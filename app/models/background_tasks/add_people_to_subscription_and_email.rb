@@ -72,6 +72,13 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
                         .joins(:subscriptions)
                         .where('subscription_id in (?)', parent_and_reminders)
                         .last
+          unless ref_affair
+            ref_affair = p.affairs
+              .joins(:subscriptions)
+              .where('subscription_id in (?)', subscription.root.id)
+              .last
+          end
+
           if ref_affair
             # Override owner/buyer/receiver
             owner    = ref_affair.owner
