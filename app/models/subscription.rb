@@ -98,6 +98,7 @@ class Subscription < ActiveRecord::Base
   validates_with IntervalValidator
   validates_with DateValidator, attribute: :interval_starts_on
   validates_with DateValidator, attribute: :interval_ends_on
+  validate :parent_id_is_not_id
 
   # Validate fields of type 'string' length
   validates_length_of :title, maximum: 255
@@ -353,6 +354,13 @@ class Subscription < ActiveRecord::Base
     # or return catchall value
     v ||= values.where(private_tag_id: nil).first
     v
+  end
+
+  def parent_id_is_not_id
+    if id and parent_id == id
+      errors.add(:base, I18n.t('subscription.errors.parent_id_must_be_another_subscription'))
+      return false
+    end
   end
 
 end

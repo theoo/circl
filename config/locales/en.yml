@@ -1081,6 +1081,7 @@ en:
       templates: Templates
   subscription:
     errors:
+      parent_id_must_be_another_subscription: Parent subscription should be another subscription
       can_not_delete_if_has_children: can not delete if has children
       can_not_delete_if_has_receipts: can not delete if has receipts
       cannot_remove_members_if_there_is_receipts: cannot remove members if there is receipts
