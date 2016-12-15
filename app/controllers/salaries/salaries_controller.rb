@@ -16,6 +16,24 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =end
 
+# TODO, usefull export example
+# table = [["employee", "gender", Salaries::Tax.all.map(&:title)].flatten]
+# tax_ids = Salaries::Tax.all.map(&:id)
+# table << PrivateTag.find(4).people.map do |p|
+#   o = []
+#   o << p.full_name
+#   o << (p.gender ? 'male' : 'female')
+
+#   salary_ids = p.salaries.instance_salaries.where("salaries.from BETWEEN ? AND ? AND salaries.to BETWEEN ? AND ?",
+#     Date.new(2016,1,1), Date.new(2016,12,31), Date.new(2016,1,1), Date.new(2016,12,31)).map(&:id)
+
+#   tax_ids.each do |tid|
+#     o << (Salaries::TaxData.where(salary_id: salary_ids, tax_id: tid).pluck(:employer_value_in_cents).sum / 10.0)
+#   end
+#   o
+# end
+
+
 class Salaries::SalariesController < ApplicationController
 
   layout false

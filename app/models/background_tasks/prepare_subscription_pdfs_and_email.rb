@@ -45,7 +45,11 @@ class BackgroundTasks::PrepareSubscriptionPdfsAndEmail < BackgroundTask
     options[:people_ids].each do |id|
 
       invoice = subscription.invoices.joins(:affair).where("affairs.owner_id" => id).first
-      invoices_ids << invoice.id
+      if invoice
+        invoices_ids << invoice.id
+      else
+        logger.info "Contact #{id} doesn't have a valid invoice related to inscription #{options[:subscription_id]}"
+      end
 
       if invoice.pdf_up_to_date?
         logger.info "PDF for invoice #{invoice.id} is up to date, skipping..."
