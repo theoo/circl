@@ -47,15 +47,16 @@ class BackgroundTasks::PrepareSubscriptionPdfsAndEmail < BackgroundTask
       invoice = subscription.invoices.joins(:affair).where("affairs.owner_id" => id).first
       if invoice
         invoices_ids << invoice.id
+
+        if invoice.pdf_up_to_date?
+          logger.info "PDF for invoice #{invoice.id} is up to date, skipping..."
+        else
+          logger.info "PDF for invoice #{invoice.id} is not up to date, generating..."
+          BackgroundTasks::GenerateInvoicePdf.process!(invoice_id: invoice.id)
+        end
+
       else
         logger.info "Contact #{id} doesn't have a valid invoice related to inscription #{options[:subscription_id]}"
-      end
-
-      if invoice.pdf_up_to_date?
-        logger.info "PDF for invoice #{invoice.id} is up to date, skipping..."
-      else
-        logger.info "PDF for invoice #{invoice.id} is not up to date, generating..."
-        BackgroundTasks::GenerateInvoicePdf.process!(invoice_id: invoice.id)
       end
 
     end
