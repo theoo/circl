@@ -836,7 +836,7 @@ fr:
       provider_id: id du fournisseur
       quantity: quantité
       reorder: réordrer
-      selling_price: Selling price
+      selling_price: prix de vente
       selling_prices: prix de vente
       title: titre
       unit: unité

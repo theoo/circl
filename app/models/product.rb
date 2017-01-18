@@ -285,11 +285,19 @@ class Product < ActiveRecord::Base
 
             next if !! skip_columns.index(t.to_s)
 
-            program_name  = p.send(["program_group", t.to_s].join("_"))
-            buying_price  = p.send(["buying_price", t.to_s].join("_"))
-            selling_price = p.send(["selling_price", t.to_s].join("_"))
-            art           = p.send(["art", t.to_s].join("_"))
-            skip_currency = skip_columns.index("currency_symbol")
+            col_program_name  = ["program_group", t.to_s].join("_")
+            program_name      = p.send(col_program_name)
+
+            col_buying_price  = ["buying_price", t.to_s].join("_")
+            buying_price      = p.send(col_buying_price)
+
+            col_selling_price = ["selling_price", t.to_s].join("_")
+            selling_price     = p.send(col_selling_price)
+
+            col_art           = ["art", t.to_s].join("_")
+            art               = p.send(col_art)
+
+            skip_currency     = skip_columns.index("currency_symbol")
 
             next if program_name.blank? or selling_price.blank?
 
@@ -304,21 +312,21 @@ class Product < ActiveRecord::Base
             updated_prices << pg.program_group if pg
             pg ||= prod.variants.new
 
-            unless skip_columns.index(program_name)
+            unless skip_columns.index(col_program_name)
               pg.program_group = program_name
             end
 
-            unless skip_columns.index(buying_price)
+            unless skip_columns.index(col_buying_price)
               curr = skip_currency ? pg.buying_price_currency : p.currency_symbol
               pg.buying_price = buying_price.to_money(curr)
             end
 
-            unless skip_columns.index(selling_price)
+            unless skip_columns.index(col_selling_price)
               curr = skip_currency ? pg.selling_price_currency : p.currency_symbol
               pg.selling_price = selling_price.to_money(curr)
             end
 
-            unless skip_columns.index(art)
+            unless skip_columns.index(col_art)
               curr = skip_currency ? pg.art_currency : p.currency_symbol
               pg.art = art.to_money(curr)
             end

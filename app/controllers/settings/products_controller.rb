@@ -353,13 +353,7 @@ class Settings::ProductsController < ApplicationController
       end
     end
 
-    # In rails 3.1, session is a normal Hash
-    # In rails 3.2, session is a CGI::Session
-    begin
-      session.delete(:settings_products_file_data) # Rails 3.1
-      session.data.delete(:settings_products_file_data) # Rails 3.2
-    rescue
-    end
+    session.delete(:settings_products_file_data)
   end
 
 end
