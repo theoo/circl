@@ -44,7 +44,7 @@ namespace :utils do
           puts green("Installing license.")
           license = "=begin
   CIRCL Directory
-  Copyright (C) 2011 Complex IT sàrl
+  Copyright (C) 2017 Théo Reichel
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
