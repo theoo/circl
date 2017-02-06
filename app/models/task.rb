@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: tasks
+#
+#  id             :integer          not null, primary key
+#  executer_id    :integer          not null
+#  description    :text             default("")
+#  duration       :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#  affair_id      :integer          not null
+#  task_type_id   :integer          not null
+#  value_in_cents :integer          default(0), not null
+#  value_currency :string(255)      default("CHF"), not null
+#  salary_id      :integer
+#  start_date     :datetime
+#  creator_id     :integer
+#
+
 class Task < ApplicationRecord
 
   ################

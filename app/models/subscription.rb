@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: subscriptions
+#
+#  id                        :integer          not null, primary key
+#  title                     :string(255)      default(""), not null
+#  description               :text             default("")
+#  interval_starts_on        :date
+#  interval_ends_on          :date
+#  created_at                :datetime
+#  updated_at                :datetime
+#  pdf_file_name             :string(255)
+#  pdf_content_type          :string(255)
+#  pdf_file_size             :integer
+#  pdf_updated_at            :datetime
+#  last_pdf_generation_query :text
+#  parent_id                 :integer
+#
+
 class Subscription < ApplicationRecord
 
   ################

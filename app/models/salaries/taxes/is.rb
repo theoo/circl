@@ -1,3 +1,33 @@
+# == Schema Information
+#
+# Table name: salaries_taxes_is
+#
+#  id                    :integer          not null, primary key
+#  tax_id                :integer          not null
+#  year                  :integer          not null
+#  yearly_from_in_cents  :integer          not null
+#  yearly_to_in_cents    :integer          not null
+#  monthly_from_in_cents :integer          not null
+#  monthly_to_in_cents   :integer          not null
+#  hourly_from_in_cents  :integer          not null
+#  hourly_to_in_cents    :integer          not null
+#  percent_alone         :decimal(7, 2)
+#  percent_married       :decimal(7, 2)
+#  percent_children_1    :decimal(7, 2)
+#  percent_children_2    :decimal(7, 2)
+#  percent_children_3    :decimal(7, 2)
+#  percent_children_4    :decimal(7, 2)
+#  percent_children_5    :decimal(7, 2)
+#  created_at            :datetime
+#  updated_at            :datetime
+#  yearly_from_currency  :string(255)      default("CHF"), not null
+#  yearly_to_currency    :string(255)      default("CHF"), not null
+#  monthly_from_currency :string(255)      default("CHF"), not null
+#  monthly_to_currency   :string(255)      default("CHF"), not null
+#  hourly_from_currency  :string(255)      default("CHF"), not null
+#  hourly_to_currency    :string(255)      default("CHF"), not null
+#
+
 # TODO refactor this into a polymorphic association
 class Salaries::Taxes::Is < ApplicationRecord
 

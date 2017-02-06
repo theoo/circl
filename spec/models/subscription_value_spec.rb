@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: subscription_values
+#
+#  id                  :integer          not null, primary key
+#  subscription_id     :integer          not null
+#  invoice_template_id :integer          not null
+#  private_tag_id      :integer
+#  value_in_cents      :integer          default(0)
+#  value_currency      :string(255)      default("CHF")
+#  position            :integer          not null
+#
+
 require 'spec_helper'
 
 describe SubscriptionValue, 'validations' do

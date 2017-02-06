@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: task_types
+#
+#  id             :integer          not null, primary key
+#  title          :string(255)      default(""), not null
+#  description    :text             default("")
+#  ratio          :float            not null
+#  value_in_cents :integer
+#  value_currency :string(255)      default("CHF")
+#  archive        :boolean          default(FALSE)
+#
+
 class TaskType < ApplicationRecord
 
   ################

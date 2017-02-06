@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: generic_templates
+#
+#  id                    :integer          not null, primary key
+#  title                 :string(255)      not null
+#  snapshot_file_name    :string(255)
+#  snapshot_content_type :string(255)
+#  snapshot_file_size    :integer
+#  snapshot_updated_at   :datetime
+#  created_at            :datetime
+#  updated_at            :datetime
+#  language_id           :integer          not null
+#  class_name            :string(255)
+#  odt_file_name         :string(255)
+#  odt_content_type      :string(255)
+#  odt_file_size         :integer
+#  odt_updated_at        :datetime
+#  plural                :boolean          default(FALSE), not null
+#
+
 class GenericTemplate < ApplicationRecord
 
   # templates table name is a reserved words

@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: languages
+#
+#  id   :integer          not null, primary key
+#  name :string(255)      default("")
+#  code :string(255)      default("")
+#
+
 require 'spec_helper'
 
 describe Language, 'validations' do

@@ -1,3 +1,19 @@
+# == Schema Information
+#
+# Table name: salaries_items
+#
+#  id             :integer          not null, primary key
+#  parent_id      :integer
+#  salary_id      :integer          not null
+#  position       :integer          not null
+#  title          :string(255)      not null
+#  value_in_cents :integer          not null
+#  category       :string(255)
+#  created_at     :datetime
+#  updated_at     :datetime
+#  value_currency :string(255)      default("CHF"), not null
+#
+
 require 'spec_helper'
 
 describe Salaries::Item, 'validations' do

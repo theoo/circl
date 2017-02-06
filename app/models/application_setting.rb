@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: application_settings
+#
+#  id                  :integer          not null, primary key
+#  key                 :string(255)      default("")
+#  value               :text             default("")
+#  type_for_validation :string(255)      default("string"), not null
+#
+
 class ApplicationSetting < ApplicationRecord
 
   # Custom error caught in application_controller

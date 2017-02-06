@@ -1,3 +1,57 @@
+# == Schema Information
+#
+# Table name: people
+#
+#  id                             :integer          not null, primary key
+#  job_id                         :integer
+#  location_id                    :integer
+#  main_communication_language_id :integer
+#  is_an_organization             :boolean          default(FALSE), not null
+#  organization_name              :string(255)      default("")
+#  title                          :string(255)      default("")
+#  first_name                     :string(255)      default("")
+#  last_name                      :string(255)      default("")
+#  phone                          :string(255)      default("")
+#  second_phone                   :string(255)      default("")
+#  mobile                         :string(255)      default("")
+#  email                          :string(255)      default(""), not null
+#  second_email                   :string(255)      default("")
+#  address                        :text             default("")
+#  birth_date                     :date
+#  nationality                    :string(255)      default("")
+#  avs_number                     :string(255)      default("")
+#  bank_informations              :text             default("")
+#  encrypted_password             :string(128)      default(""), not null
+#  reset_password_token           :string(255)
+#  reset_password_sent_at         :datetime
+#  remember_created_at            :datetime
+#  sign_in_count                  :integer          default(0)
+#  current_sign_in_at             :datetime
+#  last_sign_in_at                :datetime
+#  current_sign_in_ip             :string(255)
+#  last_sign_in_ip                :string(255)
+#  password_salt                  :string(255)
+#  failed_attempts                :integer          default(0)
+#  unlock_token                   :string(255)
+#  locked_at                      :datetime
+#  authentication_token           :string(255)
+#  created_at                     :datetime
+#  updated_at                     :datetime
+#  hidden                         :boolean          default(FALSE), not null
+#  gender                         :boolean
+#  task_rate_id                   :integer
+#  latitude                       :float
+#  longitude                      :float
+#  website                        :string(255)
+#  alias_name                     :string(255)      default("")
+#  fax_number                     :string(255)      default("")
+#  creditor_account               :string(255)
+#  creditor_transitional_account  :string(255)
+#  creditor_vat_account           :string(255)
+#  creditor_vat_discount_account  :string(255)
+#  creditor_discount_account      :string(255)
+#
+
 class Person < ApplicationRecord
 
   ################

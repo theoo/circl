@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: salaries_taxes_age
+#
+#  id               :integer          not null, primary key
+#  tax_id           :integer          not null
+#  year             :integer          not null
+#  men_from         :integer          not null
+#  men_to           :integer          not null
+#  women_from       :integer          not null
+#  women_to         :integer          not null
+#  employer_percent :decimal(6, 3)    not null
+#  employee_percent :decimal(6, 3)    not null
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+
 # TODO refactor this into a polymorphic association
 class Salaries::Taxes::Age < ApplicationRecord
 

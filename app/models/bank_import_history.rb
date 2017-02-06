@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: bank_import_histories
+#
+#  id             :integer          not null, primary key
+#  file_name      :string(255)
+#  reference_line :string(255)
+#  media_date     :datetime
+#
+
 class BankImportHistory < ApplicationRecord
   # This class should stay simple, no relations, just a backup/log of
   # previoulsy imported files/lines

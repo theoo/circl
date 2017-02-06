@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: salaries_taxes_is2014
+#
+#  id                   :integer          not null, primary key
+#  tax_id               :integer          not null
+#  year                 :integer          not null
+#  tax_group            :string(255)      not null
+#  children_count       :integer          not null
+#  ecclesiastical       :string(255)      default("N"), not null
+#  salary_from_in_cents :integer          default(0), not null
+#  salary_from_currency :string(255)      default("CHF"), not null
+#  salary_to_in_cents   :integer          default(0), not null
+#  salary_to_currency   :string(255)      default("CHF"), not null
+#  tax_value_in_cents   :integer          default(0), not null
+#  tax_value_currency   :string(255)      default("CHF"), not null
+#  tax_value_percentage :float            default(0.0), not null
+#  created_at           :datetime
+#  updated_at           :datetime
+#
+
 # TODO refactor this into a polymorphic association
 class Salaries::Taxes::Is2014 < ApplicationRecord
 

@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: private_tags
+#
+#  id        :integer          not null, primary key
+#  parent_id :integer
+#  name      :string(255)      default(""), not null
+#  color     :string(255)
+#
+
 class PrivateTag < ApplicationRecord
 
   ################

@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: comments
+#
+#  id            :integer          not null, primary key
+#  person_id     :integer
+#  resource_id   :integer
+#  resource_type :string(255)
+#  title         :string(255)      default("")
+#  description   :text             default("")
+#  is_closed     :boolean          default(FALSE), not null
+#  created_at    :datetime
+#  updated_at    :datetime
+#
+
 require 'spec_helper'
 
 describe Comment, 'validations' do

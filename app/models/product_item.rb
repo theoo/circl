@@ -1,3 +1,28 @@
+# == Schema Information
+#
+# Table name: product_items
+#
+#  id             :integer          not null, primary key
+#  parent_id      :integer
+#  affair_id      :integer
+#  product_id     :integer
+#  program_id     :integer
+#  position       :float
+#  quantity       :integer
+#  created_at     :datetime
+#  updated_at     :datetime
+#  bid_percentage :float
+#  value_in_cents :integer          default(0), not null
+#  value_currency :string(255)      default("CHF"), not null
+#  category_id    :integer
+#  comment        :text
+#  ordered_at     :datetime
+#  confirmed_at   :datetime
+#  delivery_at    :datetime
+#  warranty_begin :date
+#  warranty_end   :date
+#
+
 class ProductItem < ApplicationRecord
 
   ################

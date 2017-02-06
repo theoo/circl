@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: jobs
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)      default("")
+#  description :text             default("")
+#
+
 class Job < ApplicationRecord
 
   ################

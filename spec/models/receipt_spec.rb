@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: receipts
+#
+#  id               :integer          not null, primary key
+#  invoice_id       :integer
+#  value_in_cents   :integer
+#  value_currency   :string(255)
+#  value_date       :date
+#  means_of_payment :string(255)      default("")
+#  created_at       :datetime
+#  updated_at       :datetime
+#
+
 require 'spec_helper'
 
 describe Receipt, 'validations' do

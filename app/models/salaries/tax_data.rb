@@ -1,3 +1,23 @@
+# == Schema Information
+#
+# Table name: salaries_tax_data
+#
+#  id                      :integer          not null, primary key
+#  salary_id               :integer          not null
+#  tax_id                  :integer          not null
+#  position                :integer          not null
+#  employer_value_in_cents :integer          not null
+#  employer_percent        :decimal(6, 3)    not null
+#  employer_use_percent    :boolean          not null
+#  employee_value_in_cents :integer          not null
+#  employee_percent        :decimal(6, 3)    not null
+#  employee_use_percent    :boolean          not null
+#  created_at              :datetime
+#  updated_at              :datetime
+#  employee_value_currency :string(255)      default("CHF"), not null
+#  employer_value_currency :string(255)      default("CHF"), not null
+#
+
 class Salaries::TaxData < ApplicationRecord
 
   #################

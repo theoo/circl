@@ -1,3 +1,11 @@
+# == Schema Information
+#
+# Table name: affairs_subscriptions
+#
+#  affair_id       :integer
+#  subscription_id :integer
+#
+
 class AffairsSubscription < ApplicationRecord
 
   #################

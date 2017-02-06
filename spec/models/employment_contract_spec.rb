@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: employment_contracts
+#
+#  id                 :integer          not null, primary key
+#  person_id          :integer
+#  percentage         :float
+#  interval_starts_on :date
+#  interval_ends_on   :date
+#  description        :text             default("")
+#  created_at         :datetime
+#  updated_at         :datetime
+#
+
 require 'spec_helper'
 
 describe EmploymentContract, 'validations' do

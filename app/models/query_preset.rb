@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: query_presets
+#
+#  id    :integer          not null, primary key
+#  name  :string(255)      default("")
+#  query :text             default("")
+#
+
 class QueryPreset < ApplicationRecord
 
   ################

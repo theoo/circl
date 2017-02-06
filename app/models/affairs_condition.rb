@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: affairs_conditions
+#
+#  id          :integer          not null, primary key
+#  title       :string(255)
+#  description :text
+#  archive     :boolean          default(FALSE), not null
+#
+
 class AffairsCondition < ApplicationRecord
 
   ################

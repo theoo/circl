@@ -1,4 +1,85 @@
 # encoding: utf-8
+# == Schema Information
+#
+# Table name: salaries
+#
+#  id                                          :integer          not null, primary key
+#  parent_id                                   :integer
+#  person_id                                   :integer          not null
+#  from                                        :date
+#  to                                          :date
+#  title                                       :string(255)      not null
+#  is_reference                                :boolean          default(FALSE), not null
+#  married                                     :boolean          default(FALSE), not null
+#  children_count                              :integer          default(0), not null
+#  yearly_salary_in_cents                      :integer
+#  yearly_salary_count                         :integer
+#  created_at                                  :datetime
+#  updated_at                                  :datetime
+#  generic_template_id                         :integer          not null
+#  pdf_file_name                               :string(255)
+#  pdf_content_type                            :string(255)
+#  pdf_file_size                               :integer
+#  pdf_updated_at                              :datetime
+#  activity_rate                               :integer
+#  paid                                        :boolean          default(FALSE)
+#  brut_account                                :string(255)
+#  net_account                                 :string(255)
+#  cert_transport_in_cents                     :integer          default(0), not null
+#  cert_transport_currency                     :string(255)      default("CHF"), not null
+#  cert_food_in_cents                          :integer          default(0), not null
+#  cert_food_currency                          :string(255)      default("CHF"), not null
+#  cert_logding_in_cents                       :integer          default(0), not null
+#  cert_logding_currency                       :string(255)      default("CHF"), not null
+#  cert_misc_salary_car_in_cents               :integer          default(0), not null
+#  cert_misc_salary_car_currency               :string(255)      default("CHF"), not null
+#  cert_misc_salary_other_title                :string(255)      default(""), not null
+#  cert_misc_salary_other_value_in_cents       :integer          default(0), not null
+#  cert_misc_salary_other_value_currency       :string(255)      default("CHF"), not null
+#  cert_non_periodic_title                     :string(255)      default(""), not null
+#  cert_non_periodic_value_in_cents            :integer          default(0), not null
+#  cert_non_periodic_value_currency            :string(255)      default("CHF"), not null
+#  cert_capital_title                          :string(255)      default(""), not null
+#  cert_capital_value_in_cents                 :integer          default(0), not null
+#  cert_capital_value_currency                 :string(255)      default("CHF"), not null
+#  cert_participation_in_cents                 :integer          default(0), not null
+#  cert_participation_currency                 :string(255)      default("CHF"), not null
+#  cert_compentation_admin_members_in_cents    :integer          default(0), not null
+#  cert_compentation_admin_members_currency    :string(255)      default("CHF"), not null
+#  cert_misc_other_title                       :string(255)      default(""), not null
+#  cert_misc_other_value_in_cents              :integer          default(0), not null
+#  cert_misc_other_value_currency              :string(255)      default("CHF"), not null
+#  cert_avs_ac_aanp_in_cents                   :integer          default(0), not null
+#  cert_avs_ac_aanp_currency                   :string(255)      default("CHF"), not null
+#  cert_lpp_in_cents                           :integer          default(0), not null
+#  cert_lpp_currency                           :string(255)      default("CHF"), not null
+#  cert_buy_lpp_in_cents                       :integer          default(0), not null
+#  cert_buy_lpp_currency                       :string(255)      default("CHF"), not null
+#  cert_is_in_cents                            :integer          default(0), not null
+#  cert_is_currency                            :string(255)      default("CHF"), not null
+#  cert_alloc_traveling_in_cents               :integer          default(0), not null
+#  cert_alloc_traveling_currency               :string(255)      default("CHF"), not null
+#  cert_alloc_food_in_cents                    :integer          default(0), not null
+#  cert_alloc_food_currency                    :string(255)      default("CHF"), not null
+#  cert_alloc_other_actual_cost_title          :string(255)      default(""), not null
+#  cert_alloc_other_actual_cost_value_in_cents :integer          default(0), not null
+#  cert_alloc_other_actual_cost_value_currency :string(255)      default("CHF"), not null
+#  cert_alloc_representation_in_cents          :integer          default(0), not null
+#  cert_alloc_representation_currency          :string(255)      default("CHF"), not null
+#  cert_alloc_car_in_cents                     :integer          default(0), not null
+#  cert_alloc_car_currency                     :string(255)      default("CHF"), not null
+#  cert_alloc_other_fixed_fees_title           :string(255)      default(""), not null
+#  cert_alloc_other_fixed_fees_value_in_cents  :integer          default(0), not null
+#  cert_alloc_other_fixed_fees_value_currency  :string(255)      default("CHF"), not null
+#  cert_formation_in_cents                     :integer          default(0), not null
+#  cert_formation_currency                     :string(255)      default("CHF"), not null
+#  cert_others_title                           :string(255)      default(""), not null
+#  cert_notes                                  :text             default(""), not null
+#  employer_account                            :string(255)      default("")
+#  comments                                    :text
+#  yearly_salary_currency                      :string(255)      default("CHF"), not null
+#
+
 
 FactoryGirl.define do
   # factory :generic_template, :class => GenericTemplate do

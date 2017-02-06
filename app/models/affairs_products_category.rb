@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: affairs_products_categories
+#
+#  id        :integer          not null, primary key
+#  affair_id :integer          not null
+#  title     :string(255)
+#  position  :integer          not null
+#
+
 
 class AffairsProductsCategory < ApplicationRecord
 

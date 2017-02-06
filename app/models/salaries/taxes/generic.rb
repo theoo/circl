@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: salaries_taxes_generic
+#
+#  id                      :integer          not null, primary key
+#  tax_id                  :integer          not null
+#  year                    :integer          not null
+#  salary_from_in_cents    :integer
+#  salary_to_in_cents      :integer
+#  employer_value_in_cents :integer          not null
+#  employer_percent        :decimal(6, 3)    not null
+#  employer_use_percent    :boolean          not null
+#  employee_value_in_cents :integer          not null
+#  employee_percent        :decimal(6, 3)    not null
+#  employee_use_percent    :boolean          not null
+#  created_at              :datetime
+#  updated_at              :datetime
+#  salary_from_currency    :string(255)      default("CHF"), not null
+#  salary_to_currency      :string(255)      default("CHF"), not null
+#  employer_value_currency :string(255)      default("CHF"), not null
+#  employee_value_currency :string(255)      default("CHF"), not null
+#
+
 # TODO refactor this into a polymorphic association
 class Salaries::Taxes::Generic < ApplicationRecord
 

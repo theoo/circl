@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: permissions
+#
+#  id              :integer          not null, primary key
+#  role_id         :integer
+#  action          :string(255)      default("")
+#  subject         :string(255)      default("")
+#  hash_conditions :text
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
 class Permission < ApplicationRecord
 
   ################

@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: locations
+#
+#  id                 :integer          not null, primary key
+#  parent_id          :integer
+#  name               :string(255)      default("")
+#  iso_code_a2        :string(255)      default("")
+#  iso_code_a3        :string(255)      default("")
+#  iso_code_num       :string(255)      default("")
+#  postal_code_prefix :string(255)      default("")
+#  phone_prefix       :string(255)      default("")
+#
+
 class Location < ApplicationRecord
 
   #################
