@@ -180,6 +180,9 @@ en:
       update_subscription_invoices_and_email: Updating indexes and invoices for subscription %{subscription_id} - %{subscription_title}
     views:
       status: status
+      statuses:
+        pending: pending
+        running: running
   bank_import_history:
     views:
       account: account
