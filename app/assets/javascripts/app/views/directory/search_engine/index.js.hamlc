@@ -24,11 +24,13 @@
 
 .panel-footer
 
-  != @partial("generate_document")(prefix: 'people', model: 'Person', collection: true, except: ['accounting'])
-
   &nbsp;
 
   - if @query?.search_string and @results_count < 5000
+    != @partial("generate_document")(prefix: 'people', model: 'Person', collection: true, except: ['accounting'])
+
+    &nbsp;
+
     %a{ href: '#',
         name: 'directory-map',
         class: 'btn btn-default'}

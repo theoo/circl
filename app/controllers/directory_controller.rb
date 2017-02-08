@@ -111,8 +111,14 @@ class DirectoryController < ApplicationController
 
       format.csv do
         peopl = es_search.map do |p|
-          @query[:selected_attributes].each_with_object(OpenStruct.new(p.to_hash)) do |f, o|
-            o.send("#{f}=", relation_to_string(o.send(f)))
+          db_person = Person.find(p.id)
+          structure = @query[:selected_attributes].each_with_object({}){|a,o| o[a] = ""}
+          @query[:selected_attributes].each_with_object(OpenStruct.new(structure)) do |f, o|
+            if db_person.respond_to? f
+              o.send("#{f}=", relation_to_string(db_person.send(f)))
+            else
+              o.send("#{f}=", relation_to_string(p.send(f)))
+            end
           end
         end
         render inline: csv_ify(peopl, @query['selected_attributes'])

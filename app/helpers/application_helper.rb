@@ -66,23 +66,35 @@ module ApplicationHelper
     obj = obj.to_a if obj.class == Array
 
     case obj
-    when Array
-      obj.map{ |o| relation_to_string(o) }.join ', '
-    when Tire::Results::Item
-      if obj.full_name
-        return obj.full_name
-      elsif obj.string
-        return obj.string
-      elsif obj.title
-        return obj.title
+      when ActiveRecord::Associations::CollectionProxy
+        mapping = obj.map do |i|
+          if i.respond_to? :name
+            i.name
+          elsif i.respond_to? :title
+            i.title
+          else
+            i.id
+          end
+        end
+        return mapping.join(", ")
+      when Array
+        obj.map{ |o| relation_to_string(o) }.join ', '
+      when Tire::Results::Item
+        if obj.full_name
+          return obj.full_name
+        elsif obj.string
+          return obj.string
+        elsif obj.title
+          return obj.title
+        else
+          return obj.name
+        end
       else
-        return obj.name
-      end
-    else
-      %w{full_name as_string name title to_s}.each do |s|
-        return obj.send(s) if obj.respond_to?(s)
-      end
+        %w{full_name as_string name title to_s}.each do |s|
+          return obj.send(s) if obj.respond_to?(s)
+        end
     end
+
   end
 
   # To highlight results from ES
