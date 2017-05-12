@@ -25,9 +25,11 @@ class Admin::PublicTagsController < ApplicationController
   monitor_changes :@public_tag
 
   def index
+    # TODO sort using a parameter or default like this:
+    @public_tags = @public_tags.order("parent_id ASC, name ASC")
     respond_to do |format|
       format.json { render json: @public_tags }
-      format.js { render json: @public_tags, callback: params[:callback] }
+      format.js { render json: @public_tags.order("parent_id ASC, name ASC"), callback: params[:callback] }
     end
   end
 
