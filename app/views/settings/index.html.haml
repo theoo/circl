@@ -116,12 +116,6 @@
               .panel-heading
                 .panel-title
                   = I18n.t('settings.views.search_attributes')
-        .col-md-6
-          - if can? :update, LdapAttribute
-            #settings_ldap_attributes.panel.panel-default
-              .panel-heading
-                .panel-title
-                  = I18n.t('settings.views.ldap_attributes')
 
           - if can? :mailchimp, Directory
             #settings_mailchimp.panel.panel-default

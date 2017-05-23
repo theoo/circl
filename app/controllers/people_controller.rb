@@ -170,6 +170,7 @@ class PeopleController < ApplicationController
           format.html do
             # TODO usually if we reach this code path it's because ldap_remove fails
             # in the before_destroy callback. Refactor so Person#errors is updated with the reasons.
+            # NOTE LDAP has been removed on 22.05.2017
             flash[:alert] = I18n.t('common.errors.failed_to_destroy')
             render :show, layout: 'application'
           end

@@ -17,9 +17,6 @@
 - subject: Language
   action: manage
 
-- subject: LdapAttribute
-  action: manage
-
 - subject: Location
   action: manage
 

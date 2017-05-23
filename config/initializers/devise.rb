@@ -17,6 +17,8 @@
 =end
 
 # LDAPSHA1 Encryptor - required for LDAP
+# LDAP module has been removed, but stored passwords require this policy
+# TODO migrate password policy
 module Devise
   module Encryptable
     module Encryptors

@@ -53,11 +53,3 @@ path = Rails.root.join("config/mapping/search_attributes.yml")
 SearchAttribute.load(path)
 
 puts green("done") + "."
-
-# LdapAttribute
-print "Preloading LdapAttributes: "
-
-path = Rails.root.join("config/mapping/ldap_attributes.yml")
-LdapAttribute.load(path)
-
-puts green("done") + "."

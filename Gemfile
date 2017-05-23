@@ -16,7 +16,6 @@ gem 'redis'
 gem 'elasticsearch-rails'
 gem 'elasticsearch-model'
 gem 'acts_as_tree'
-gem 'net-ldap', :git => 'git://github.com/ruby-ldap/ruby-net-ldap.git'
 
 # pdf and images
 gem 'pdfkit'
@@ -33,7 +32,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'sass-rails'
 gem 'haml-rails'
-gem 'haml_coffee_assets', github: "emilioforrer/haml_coffee_assets", branch: "release/v2.0.0"
+gem 'haml_coffee_assets' #, github: "emilioforrer/haml_coffee_assets", branch: "release/v2.0.0"
 gem 'dotiw', github: 'radar/dotiw'
 gem 'coffee-rails'
 
@@ -118,4 +117,4 @@ group :doc do
   gem 'annotate'
 end
 
-ruby '2.3.1'
+ruby '2.3.3'

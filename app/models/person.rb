@@ -97,12 +97,6 @@ class Person < ApplicationRecord
     update_search_engine
   end
 
-  # LDAP
-  if Rails.configuration.ldap_enabled
-    after_save :ldap_update, unless: "self.changes.empty?"
-    before_destroy :ldap_remove
-  end
-
   #################
   ### RELATIONS ###
   #################
@@ -457,71 +451,6 @@ class Person < ApplicationRecord
     infos
 
   end
-
-  ############
-  ### LDAP ###
-  ############
-
-  # TODO if ldap_remove fails, raise an explicit error.
-  def ldap_remove
-    ldap = Rails.configuration.ldap_admin
-
-    ldap.delete(dn: ldap_dn)
-    return true if [0, 32].include?(ldap.get_operation_result.code)
-
-    File.open("#{Rails.root.to_s}/log/ldap.log", 'a') do |f|
-      f << Time.now.to_s + ": Cannot delete LDAP entry #{id}: error #{ldap.get_operation_result.code}, #{ldap.get_operation_result.message}"
-    end
-    false
-  end
-
-  def ldap_add
-    ldap = Rails.configuration.ldap_admin
-
-    return true if ldap.add(dn: ldap_dn, attributes: ldap_attributes)
-
-    File.open("#{Rails.root.to_s}/log/ldap.log", 'a') do |f|
-      f << Time.now.to_s + ": Cannot add LDAP entry #{id}: error #{ldap.get_operation_result.code}, #{ldap.get_operation_result.message}"
-    end
-    false
-  end
-
-  def ldap_update
-    ldap_remove
-    ldap_add
-  end
-
-  def ldap_attributes
-    LdapAttribute.all.each_with_object({}) do |attr, h|
-      key = attr.name.to_sym
-      value = eval(attr.mapping)
-      if value.is_a?(Array)
-        value.reject!{ |s| s.blank? }
-        h[key] = value unless value.empty?
-      else
-        h[key] = value unless value.blank?
-      end
-    end
-  end
-
-  def ldap_sn
-    cn = last_name
-    return cn unless cn.blank?
-    return email unless email.blank?
-    organization_name
-  end
-
-  def ldap_cn
-    cn = "#{first_name} #{last_name}"
-    return cn unless cn.blank?
-    return email unless email.blank?
-    organization_name
-  end
-
-  def ldap_dn
-    "uid=#{ldap_attributes[:uid]},#{Rails.configuration.settings['ldap']['admin']['base']}"
-  end
-
 
   ########################
   ### INSTANCE METHODS ###

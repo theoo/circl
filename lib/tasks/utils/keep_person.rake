@@ -25,7 +25,7 @@ namespace :utils do
       statements << "delete from people where id != #{person_id}"
 
       # Tables not related
-      tables_unrelated = %w{ application_settings background_tasks invoice_templates jobs languages ldap_attributes locations permissions private_tags public_tags query_presets roles schema_migrations sessions search_attributes subscriptions task_presets task_types }
+      tables_unrelated = %w{ application_settings background_tasks invoice_templates jobs languages locations permissions private_tags public_tags query_presets roles schema_migrations sessions search_attributes subscriptions task_presets task_types }
       statements += tables_unrelated.map{ |table| "delete from #{table}" }
 
       Person.transaction do

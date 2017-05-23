@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20160923160338) do
     t.integer  "parent_id"
     t.text     "footer"
     t.text     "conditions"
-    t.integer  "seller_id",                   default: 1684,  null: false
+    t.integer  "seller_id",                   default: 1,     null: false
     t.integer  "condition_id"
     t.boolean  "unbillable",                  default: false, null: false
     t.text     "notes"
@@ -241,7 +241,7 @@ ActiveRecord::Schema.define(version: 20160923160338) do
     t.index ["vat_in_cents"], name: "index_extras_on_vat_in_cents", using: :btree
   end
 
-  create_table "generic_templates", id: :integer, default: -> { "nextval('salaries_html_templates_id_seq'::regclass)" }, force: :cascade do |t|
+  create_table "generic_templates", force: :cascade do |t|
     t.string   "title",                 limit: 255,                 null: false
     t.string   "snapshot_file_name",    limit: 255
     t.string   "snapshot_content_type", limit: 255
@@ -484,7 +484,7 @@ ActiveRecord::Schema.define(version: 20160923160338) do
     t.integer  "product_id"
     t.integer  "program_id"
     t.float    "position"
-    t.float    "quantity"
+    t.integer  "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "bid_percentage"

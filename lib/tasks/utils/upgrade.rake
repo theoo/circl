@@ -7,7 +7,6 @@ tasks = %w{ languages
             public_tags
             application_settings
             roles
-            ldap_attributes
             search_attributes
             generic_templates
             product_programs

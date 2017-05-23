@@ -255,7 +255,6 @@ class @Settings extends App
 
       @sub_nav.one 'searchengine', =>
         @subapp($('#settings_search_attributes'), 'SettingsSearchAttributes')
-        @subapp($('#settings_ldap_attributes'), 'SettingsLdapAttributes')
         @subapp($('#settings_mailchimp'), 'SettingsMailchimp')
 
       @sub_nav.one 'privileges', =>
