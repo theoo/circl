@@ -19,6 +19,9 @@
           %input{ type: 'file',
                   id: 'admin_bankfile_import_file',
                   name: 'receipts_file'}
+          %small.help
+            = I18n.t("bank_import_history.views.v11_or_xml")
+
 
       .col-lg-4
         .pull-right

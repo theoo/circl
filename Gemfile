@@ -20,6 +20,8 @@ gem 'acts_as_tree', '2.0.0'
 gem 'tire', '0.6.2'
 # gem "redis"
 
+# gem 'nokogiri'
+
 # LDAP
 gem 'net-ldap', :git => 'git://github.com/ruby-ldap/ruby-net-ldap.git'
 
@@ -89,7 +91,7 @@ gem 'rails_exception_handler', "~> 2"
 group :development, :test do
   ### Documentation
   gem 'railroady', '1.1.1'
-  gem 'byebug'
+  # gem 'byebug'
 
   ### Test
   gem 'factory_girl_rails', '4.4.0'
@@ -97,10 +99,10 @@ group :development, :test do
   gem 'syntax', '1.2.0'
 
   ### IRB
-  gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
+  # gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
 
   ### Misc
-  gem 'pry-byebug'
+  # gem 'pry-byebug'
   gem 'spork-rails', '4.0.0'
   gem 'spring', '1.1.3'
 

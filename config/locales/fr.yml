@@ -196,6 +196,7 @@ fr:
       receipt_value: valeur du reçu
       reference_line: ligne de référence
       upload_a_new_file_title: Téléverser un nouveau fichier
+      v11_or_xml: Fichier V11 (.v11) ou camt.053 (.xml)
   comment:
     views:
       actions:
@@ -905,6 +906,8 @@ fr:
       total_mismatch: Le total ne correspond pas (%{total} != %{computed_total})
       total_receipts_count_mismatch: Le nombre de reçus ne correspond pas (%{receipts_count} != %{computed_receipts_count})
       unknown_type: type inconnu
+      error: Erreur
+      correct: Correct
     mail:
       account: compte
       affair: affaire

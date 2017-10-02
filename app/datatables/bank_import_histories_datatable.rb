@@ -36,22 +36,33 @@ class BankImportHistoriesDatatable
 
   def data
     bank_import_histories.map do |bank_import_history|
+
       dl = bank_import_history.decoded_line
-      details = [ 
-        I18n.t("bank_import_history.views.account")       + ": " + dl[:account].to_s,
-        I18n.t("bank_import_history.views.owner")         + ": " + Person.find(dl[:owner_id]).full_name + " (#{dl[:owner_id]})",
-        I18n.t("bank_import_history.views.invoice")       + ": " + dl[:invoice_id].to_s,
-        I18n.t("bank_import_history.views.invoice_date")  + ": " + dl[:invoice_date].to_s,
-        I18n.t("bank_import_history.views.receipt_value") + ": " + Money.new(dl[:value_in_cents]).to_view,
-        I18n.t("bank_import_history.views.date_entry")    + ": " + dl[:date_entry].to_s,
-        I18n.t("bank_import_history.views.date_write")    + ": " + dl[:date_write].to_s,
-        I18n.t("bank_import_history.views.date_value")    + ": " + dl[:date_value].to_s
+      details = [
+        I18n.t("bank_import_history.views.account")       + ": #{dl[:account]}",
+        I18n.t("bank_import_history.views.owner")         + ": #{Person.find(dl[:owner_id]).full_name} (#{dl[:owner_id]})",
+        I18n.t("bank_import_history.views.invoice")       + ": #{dl[:invoice_id]}",
+        I18n.t("bank_import_history.views.invoice_date")  + ": #{dl[:invoice_date]}",
+        I18n.t("bank_import_history.views.receipt_value") + ": #{Money.new(dl[:value_in_cents]).to_view}",
+        I18n.t("bank_import_history.views.date_entry")    + ": #{dl[:date_entry]}",
+        I18n.t("bank_import_history.views.date_write")    + ": #{dl[:date_write]}",
+        I18n.t("bank_import_history.views.date_value")    + ": #{dl[:date_value]}"
       ].join("<br />")
+
+      ref_line = ""
+      if not bank_import_history.account_servicer_reference.nil?
+        # xml = Nokogiri::XML bank_import_history.reference_line
+        ref_line += "XML Document"
+      else
+        ref_line += "<code>"
+        ref_line += bank_import_history.reference_line
+        ref_line += "</code>"
+      end
 
       {
         0 => bank_import_history.file_name,
         1 => bank_import_history.media_date,
-        2 => bank_import_history.reference_line,
+        2 => ref_line,
         'id' => bank_import_history.id,
         'title' => details
       }

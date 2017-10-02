@@ -199,6 +199,7 @@ en:
       receipt_value: receipt value
       reference_line: reference entry
       upload_a_new_file_title: Upload a new file
+      v11_or_xml: V11 or CAM file
   comment:
     views:
       actions:

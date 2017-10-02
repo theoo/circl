@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606154722) do
+ActiveRecord::Schema.define(version: 20171002141224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,8 +121,9 @@ ActiveRecord::Schema.define(version: 20160606154722) do
 
   create_table "bank_import_histories", force: true do |t|
     t.string   "file_name"
-    t.string   "reference_line"
+    t.text     "reference_line"
     t.datetime "media_date"
+    t.text     "account_servicer_reference"
   end
 
   add_index "bank_import_histories", ["media_date"], name: "index_bank_import_histories_on_media_date", using: :btree
@@ -522,7 +523,7 @@ ActiveRecord::Schema.define(version: 20160606154722) do
     t.integer  "product_id"
     t.integer  "program_id"
     t.float    "position"
-    t.integer  "quantity"
+    t.float    "quantity"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "bid_percentage"
@@ -730,8 +731,8 @@ ActiveRecord::Schema.define(version: 20160606154722) do
     t.string   "cert_others_title",                                     default: "",    null: false
     t.text     "cert_notes",                                            default: "",    null: false
     t.string   "employer_account",                                      default: ""
-    t.text     "comments"
     t.string   "yearly_salary_currency",                                default: "CHF", null: false
+    t.text     "comments"
   end
 
   add_index "salaries", ["is_reference"], name: "index_salaries_on_is_template", using: :btree
@@ -793,7 +794,6 @@ ActiveRecord::Schema.define(version: 20160606154722) do
     t.boolean  "archive",            default: false, null: false
   end
 
-  add_index "salaries_taxes", ["archive"], name: "index_salaries_taxes_on_archive", using: :btree
   add_index "salaries_taxes", ["exporter_avs_group"], name: "index_salaries_taxes_on_exporter_avs_group", using: :btree
   add_index "salaries_taxes", ["exporter_is_group"], name: "index_salaries_taxes_on_exporter_is_group", using: :btree
   add_index "salaries_taxes", ["exporter_lpp_group"], name: "index_salaries_taxes_on_exporter_lpp_group", using: :btree

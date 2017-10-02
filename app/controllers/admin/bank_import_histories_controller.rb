@@ -62,6 +62,7 @@ class Admin::BankImportHistoriesController < ApplicationController
           # keep a track of each imported lines
           BankImportHistory.create!(file_name: file_name,
             media_date: file_date,
+            account_servicer_reference: info[:line_number],
             reference_line: info[:line] )
 
           tmp = info.dup
