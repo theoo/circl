@@ -20,7 +20,7 @@ gem 'acts_as_tree', '2.0.0'
 gem 'tire', '0.6.2'
 # gem "redis"
 
-# gem 'nokogiri'
+gem 'nokogiri'
 
 # LDAP
 gem 'net-ldap', :git => 'git://github.com/ruby-ldap/ruby-net-ldap.git'
