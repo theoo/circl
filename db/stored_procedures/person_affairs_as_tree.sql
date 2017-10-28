@@ -17,6 +17,7 @@ CREATE FUNCTION person_affairs_as_tree() RETURNS table(
   updated_at timestamp,
   status int,
   estimate boolean,
+  archive boolean,
   sort integer[]
    ) AS $$
 
@@ -39,6 +40,7 @@ CREATE FUNCTION person_affairs_as_tree() RETURNS table(
         affairs.updated_at,
         affairs.status,
         affairs.estimate,
+        affairs.archive,
         array[affairs.id] as sort
       FROM affairs
       WHERE parent_id is null
@@ -61,6 +63,7 @@ CREATE FUNCTION person_affairs_as_tree() RETURNS table(
         a.updated_at,
         a.status,
         a.estimate,
+        a.archive,
         t.sort || a.id
       FROM tree t, affairs a
       WHERE a.parent_id = t.id )

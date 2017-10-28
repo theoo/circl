@@ -38,7 +38,10 @@ class PeopleController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { render layout: 'application' }
+      format.html do
+        gon.archived_affairs_count = @person.affairs.real_archived.count
+        render layout: 'application'
+      end
 
       format.json do
         options = {}
@@ -301,7 +304,7 @@ class PeopleController < ApplicationController
     end
 
     a = results.map do |p|
-      h = { label: p.name, desc: p.full_address, id: p.id, affairs_count: p.affairs.count }
+      h = { label: p.name, desc: p.full_address, id: p.id, affairs_count: p.affairs.alive.count }
       h[:title] = p.full_name if p.is_an_organization
 
       if params[:options].index("creditor_accounts")

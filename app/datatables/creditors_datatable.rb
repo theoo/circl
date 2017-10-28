@@ -82,22 +82,22 @@ class CreditorsDatatable
   # TODO: improve search like "Firstname Lastname", actually returns zero results.
   def fetch_creditors
     @subset ||= Creditor
-    creditors = @subset.joins(:creditor)
-    creditors = creditors.order("#{sort_column} #{sort_direction}")
+    _creditors = @subset.joins(:creditor)
+    _creditors = _creditors.order("#{sort_column} #{sort_direction}")
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       if param.is_i?
-        creditors = creditors.where("creditors.id = ?", param)
+        _creditors = _creditors.where("creditors.id = ?", param)
       else
-        creditors = creditors.where("creditors.title ~* ?
+        _creditors = _creditors.where("creditors.title ~* ?
                                  OR creditors.description ~* ?
                                  OR people.organization_name ~* ?
                                  OR people.first_name ~* ?
                                  OR people.last_name ~* ?", *([param] * 5))
       end
     end
-    creditors = creditors.page(page).per_page(per_page)
-    creditors
+    _creditors = _creditors.page(page).per_page(per_page)
+    _creditors
   end
 
   def page

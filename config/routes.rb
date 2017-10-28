@@ -170,6 +170,7 @@ CIRCL::Application.routes.draw do
     resources :affairs do
       collection do
         get 'search', 'available_statuses'
+        post 'check_items', 'uncheck_items', 'archive_items'
       end
     end
 

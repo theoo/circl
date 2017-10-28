@@ -105,6 +105,8 @@ class Creditor < ActiveRecord::Base
   ########################
 
   class << self
+
+    # TODO: This should be in a helper
     # Returns status hash with machine alias and human translation
     def statuses
       # Names should be reported in scopes and vice-versa

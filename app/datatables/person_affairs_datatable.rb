@@ -30,7 +30,7 @@ class PersonAffairsDatatable
   end
 
   def as_json(options = {})
-    total = Affair.where("owner_id = ? OR buyer_id = ? OR receiver_id = ?", *([@person.id]*3)).count
+    total = Affair.where("(owner_id = ? OR buyer_id = ? OR receiver_id = ?) AND archive = false", *([@person.id]*3)).count
     {
       sEcho: params[:sEcho].to_i,
       iTotalRecords: total,
@@ -98,6 +98,7 @@ class PersonAffairsDatatable
                             COALESCE(SUM(receipts.value_in_cents)/100.0, 0.0) as receipts_sum')
                     .from("person_affairs_as_tree() a")
                     .where("owner_id = ? OR buyer_id = ? OR receiver_id = ?", *([@person.id]*3))
+                    .where("a.archive = false") # exclude archive
                     .joins('LEFT JOIN invoices ON invoices.affair_id = a.id')
                     .joins('LEFT JOIN receipts ON receipts.invoice_id = invoices.id')
                     .joins("LEFT JOIN people ON a.owner_id = people.id")
@@ -118,6 +119,7 @@ class PersonAffairsDatatable
                       a.updated_at,
                       a.status,
                       a.estimate,
+                      a.archive,
                       a.sort,
                       people.last_name')
     if params[:sSearch].present?

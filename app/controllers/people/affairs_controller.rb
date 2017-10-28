@@ -542,7 +542,12 @@ class People::AffairsController < ApplicationController
 
   def count
     respond_to do |format|
-      format.json { render json: {count: @person.affairs.count} }
+      format.json do
+        render json: {
+          count: @person.affairs.alive.count,
+          archived: @person.affairs.real_archived.count
+        }
+      end
     end
   end
 

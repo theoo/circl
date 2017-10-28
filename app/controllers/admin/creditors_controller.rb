@@ -44,7 +44,7 @@ class Admin::CreditorsController < ApplicationController
       if errors.empty?
 
         @creditors = Creditor.joins(:creditor)
-        @creditors = @creditors.where(id: session[:admin_creditors])
+        @creditors = @creditors.where(id: session[:selected_admin_creditors])
 
         if params[:sSearch] and params[:sSearch].match("SELECTED")
           subset = @creditors
@@ -136,26 +136,26 @@ class Admin::CreditorsController < ApplicationController
   def check_items
     authorize! :index, Creditor
 
-    session[:admin_creditors] ||= []
-    session[:admin_creditors].push *select_items
-    session[:admin_creditors].uniq!
+    session[:selected_admin_creditors] ||= []
+    session[:selected_admin_creditors].push *select_items
+    session[:selected_admin_creditors].uniq!
 
     respond_to do |format|
-      format.json { render json: session[:admin_creditors] }
+      format.json { render json: session[:selected_admin_creditors] }
     end
   end
 
   def uncheck_items
     authorize! :index, Creditor
 
-    session[:admin_creditors] ||= []
-    session[:admin_creditors].delete_if {|e| select_items.index(e)}
+    session[:selected_admin_creditors] ||= []
+    session[:selected_admin_creditors].delete_if {|e| select_items.index(e)}
 
     # Sort of reset in case of complications
-    session[:admin_creditors] = [] if params[:group] == 'all'
+    session[:selected_admin_creditors] = [] if params[:group] == 'all'
 
     respond_to do |format|
-      format.json { render json: session[:admin_creditors] }
+      format.json { render json: session[:selected_admin_creditors] }
     end
   end
 

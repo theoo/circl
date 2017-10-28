@@ -1,4 +1,22 @@
-%table.datatable{ action: '/admin/affairs' }
+-# .panel-header
+-#   .legend
+-#     .bg-success
+-#       = I18n.t("affair.views.legend.open_affairs")
+
+-#     .bg-warning
+-#       = I18n.t("affair.views.legend.estimates")
+
+-#     .bg-danger
+-#       = I18n.t("affair.views.legend.unbillable_affairs")
+
+-#     .bg-info
+-#       = I18n.t("affair.views.legend.open_affairs_with_canceled_or_offered_invoices")
+
+-#     .bg-white
+-#       = I18n.t("affair.views.legend.closed_affairs")
+
+
+%table.datatable{ action: App.Affair.url() }
   %thead
     %tr.item
       %th= I18n.t('common.id')
@@ -10,30 +28,87 @@
       %th.desc= I18n.t('affair.views.status')
       %th.desc= I18n.t('common.created_at')
       %th.desc= I18n.t('common.sold_at')
+      %th.number.ignore-sort.ignore-click
+        %input{ type: 'checkbox', name: 'selected_filter' }
     %tbody
       %tr
-        %td.placeholder{colspan: 9}
+        %td.placeholder{colspan: 10}
           .icon-spin.icon-4x.icon-gear
 
-.panel-footer
-  %button{type: 'button',
-          name: 'admin-affairs-documents',
-          class: 'btn btn-default' }
-    .icon-paper-clip
-    = I18n.t("common.documents")
 
-    - #.legend
-    - #  .bg-success
-    - #    = I18n.t("affair.views.legend.open_affairs")
-    - #
-    - #  .bg-warning
-    - #    = I18n.t("affair.views.legend.estimates")
-    - #
-    - #  .bg-danger
-    - #    = I18n.t("affair.views.legend.unbillable_affairs")
-    - #
-    - #  .bg-info
-    - #    = I18n.t("affair.views.legend.open_affairs_with_canceled_or_offered_invoices")
-    - #
-    - #  .bg-white
-    - #    = I18n.t("affair.views.legend.closed_affairs")
+.panel-footer
+  .row
+    .col-md-6
+      != @partial("generate_document")(prefix: 'admin_affairs', model: 'Affair', collection: true)
+
+      .btn-group
+        %button{type: 'button',
+                :data-toggle => 'dropdown',
+                name: "admin-affairs-group-actions",
+                class: 'btn btn-default dropdown-toggle' }
+          .icon-gear
+          = I18n.t("common.group_actions")
+          .caret
+
+        %ul.dropdown-menu
+          %li
+            %a{href: '#', name: "admin-affairs-archive"}
+              .icon-circle
+              = I18n.t("affair.views.actions.archive")
+          %li
+            %a{href: '#', name: "admin-affairs-unarchive"}
+              .icon-circle-blank
+              = I18n.t("affair.views.actions.unarchive")
+          %li
+            %a{href: '#', name: "admin-affairs-unbillable"}
+              .icon-circle
+              = I18n.t("affair.views.actions.unbillable")
+          %li
+            %a{href: '#', name: "admin-affairs-billable"}
+              .icon-circle-blank
+              = I18n.t("affair.views.actions.billable")
+
+      %span#admin_affairs_select_count.item_counter
+
+    .col-md-6
+      .form-inline
+        .input-group
+          .input-group-addon
+            .icon-filter
+          %select.form-control{name: 'filter'}
+            - for name, translation of gon.affair_statuses
+              %option{"value" => name}
+                = translation
+
+      .form-inline
+        .input-group
+          .input-group-addon
+            .icon-calendar
+          %select.form-control{name: 'date_field'}
+            - for name, translation of gon.affair_date_fields
+              %option{"value" => name}
+                = translation
+
+      .form-inline
+        %input{type: 'text',
+               name: 'select-from',
+               placeholder: I18n.t('common.from'),
+               class: 'form-control small-datepicker' }
+
+      .form-inline
+        %input{type: 'text',
+               name: 'select-to',
+               placeholder: I18n.t('common.to'),
+               class: 'form-control small-datepicker' }
+
+      .form-inline
+        .btn-group
+          %button{type: 'button', class: 'btn btn-default',
+            name: 'add-to-selection',
+            title: I18n.t("common.add_to_selection") }
+            .icon-plus
+
+          %button{type: 'button', class: 'btn btn-default',
+            name: 'remove-from-selection',
+            title: I18n.t("common.remove_from_selection") }
+            .icon-minus

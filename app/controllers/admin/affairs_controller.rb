@@ -28,26 +28,6 @@ class Admin::AffairsController < ApplicationController
     authorize! :index, Affair
 
     errors = {}
-    # pseudo validation
-    unless params[:from].blank?
-      if validate_date_format(params[:from])
-        from = Date.parse params[:from]
-      else
-        errors[:from] = I18n.t("affair.errors.wrong_date")
-      end
-    end
-
-    unless params[:to].blank?
-      if validate_date_format(params[:to])
-        to = Date.parse params[:to]
-      else
-        errors[:to] = I18n.t("affair.errors.wrong_date")
-      end
-    end
-
-    if from and to and from > to
-      errors[:from] = I18n.t("salary.errors.from_date_should_be_before_to_date")
-    end
 
     if ['pdf', 'odt'].index params[:format]
       unless params[:generic_template_id]
@@ -62,20 +42,13 @@ class Admin::AffairsController < ApplicationController
 
         @affairs = Affair.order(:created_at)
 
-        # fetch affairs corresponding to selected statuses and interval
-        if params[:statuses]
-          mask = params[:statuses].map(&:to_i).sum
-          @affairs = @affairs.where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+        if session[:selected_admin_affairs]
+          @affairs = @affairs.where(id: session[:selected_admin_affairs])
         end
 
-        if params[:title_filter]
-          begin # Postgresql may trow an error if regexp is not correct
-            @affairs = @affairs.where("affairs.title ~ ?", params[:title_filter])
-          end
-        end
-
-        if from and to
-          @affairs = @affairs.where("created_at BETWEEN ? AND ?", from, to)
+        if params[:sSearch] and params[:sSearch].match("SELECTED")
+          subset = @affairs
+          params[:sSearch] = params[:sSearch].gsub("SELECTED", "").strip
         end
 
         # raise ArgumentError, @affairs.sql.inspect
@@ -93,7 +66,7 @@ class Admin::AffairsController < ApplicationController
 
         ######### RENDER ############
 
-        format.json { render json: AffairsDatatable.new(view_context) }
+        format.json { render json: AffairsDatatable.new(view_context, subset) }
 
         format.csv do
           fields = []
@@ -154,5 +127,93 @@ class Admin::AffairsController < ApplicationController
       format.json { render json: statuses }
     end
   end
+
+  def check_items
+    authorize! :index, Affair
+
+    session[:selected_admin_affairs] ||= []
+    session[:selected_admin_affairs].push *select_items
+    session[:selected_admin_affairs].uniq!
+
+    respond_to do |format|
+      format.json { render json: session[:selected_admin_affairs] }
+    end
+  end
+
+  def uncheck_items
+    authorize! :index, Affair
+
+    session[:selected_admin_affairs] ||= []
+
+    items = select_items
+    session[:selected_admin_affairs].delete_if {|e| items.include?(e)}
+
+    respond_to do |format|
+      format.json { render json: session[:selected_admin_affairs] }
+    end
+  end
+
+  def archive_items
+    authorize! :index, Affair
+
+    new_attributes = params.select{|k,v|[:archive, :unbillable].include? k.to_sym }
+
+    Affair.where(id: session[:selected_admin_affairs]).each do |a|
+      a.update_attributes(new_attributes)
+    end
+
+    respond_to do |format|
+      format.json { render json: {}, status: :ok }
+    end
+
+  end
+
+  private
+
+    def select_items
+
+      if params[:id]
+        arel = Affair.where(id: params[:id])
+      elsif params[:group]
+        valid_statuses = Affair.translated_statuses.keys
+        valid_statuses << :all
+        return [] unless valid_statuses.index(params[:group].to_sym)
+        if params[:group].to_sym == :all
+          arel = Affair
+        else
+          arel = Affair.with_status(params[:group])
+        end
+      end
+
+      return [] if arel.nil?
+
+      if params[:sSearch] and not params[:sSearch].empty?
+
+        if params[:sSearch].match("SELECTED")
+          params[:sSearch] = params[:sSearch].gsub("SELECTED", "").strip
+        end
+
+        arel = AffairsDatatable.new(view_context, arel).affairs_arel
+      end
+
+      if Affair.translated_date_fields.keys.index(params[:date_field].try(:to_sym))
+        date_field = params[:date_field]
+      else
+        date_field = "created_at"
+      end
+
+      unless params[:from].blank?
+        from = Date.parse params[:from] if validate_date_format(params[:from])
+        arel = arel.where("? <= affairs.#{date_field}", from)
+      end
+
+      unless params[:to].blank?
+        to = Date.parse params[:to] if validate_date_format(params[:to])
+        arel = arel.where("affairs.#{date_field} <= ?", to)
+      end
+
+      arel.pluck(:id)
+
+    end
 
 end

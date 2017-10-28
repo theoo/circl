@@ -282,7 +282,7 @@ class Index extends App.ExtendedController
   constructor: (params) ->
     super
     Creditor.bind 'refresh', @render
-    @selected_ids = gon.admin_creditors
+    @selected_ids = gon.selected_admin_creditors
 
   render: =>
     @html @view('admin/creditors/index')(@)

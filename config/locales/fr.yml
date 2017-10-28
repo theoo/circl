@@ -54,6 +54,10 @@ fr:
       will_match_all_selected_statuses: Tous les status sélectionnés seront employés pour le tri.
     views:
       actions:
+        archive: Archiver
+        unarchive: Restaurer
+        billable: Facturable
+        unbillable: Non-facturable
         edit_affair: modifier l'affaire
         show_owner: consulter la page du propriétaire
       affair_number: Affaire n°%{number}
@@ -67,6 +71,10 @@ fr:
       conditions: conditions
       create_variant: créer une variante
       custom_value_with_taxes: La valeur saisie est TTC
+      date_fields:
+        created_at: Création
+        updated_at: Dernière mise à jour
+        sold_at: Vente
       description: description
       document_export: Génération de documents
       estimate: devis
@@ -97,6 +105,7 @@ fr:
       stakeholders: intervenants
       status: statut
       statuses:
+        archived: archivée
         cancelled: annulée
         offered: offerte
         open: ouverte
@@ -127,10 +136,13 @@ fr:
       value_with_taxes_is: La valeur TTC est
       variant_prefix: Variante
       archive: archive
-      archive_howto: "(WORK IN PROGRESS) Sauf sélection explicite dans les listings, une affaire archivée ne sera plus listée."
+      archive_howto: "Une affaire archivée ne sera plus listée. Pour la restaurer il faut utiliser la boîte à outil Administration->Affaires"
       estimate_howto: Si cette affaire n'a pas encore été commandée, il s'agit alors probablement d'un devis. Lorsque cette coche est décochée pour la première fois, le champs <b>date de vente</b> est automatiquement mis à la date du jour. Tant qu'une <b>date de vente</b> est saisie, l'affaire ne peux pas être cochée comme devis.<br />L'état par défaut de cette coche peut être changé dans les <b>Paramètres de l'application</b>
       unbillable_howto: L'affaire ne sera pas considérée comme <b>ouverte</b>, même si elle n'est pas payée ou partiellement payée. Les factures associées seront automatiquement <b>annulées</b>
       sold_date: date de vente
+      x_affairs_archived:
+        one: "%{count} affaire archivée"
+        other: "%{count} affaires archivées"
   affairs_condition:
     views:
       affairs: affaires
@@ -275,6 +287,7 @@ fr:
     from: de
     global: Global
     good: bon
+    group_actions: Actions groupées
     group_edit: "édition groupée"
     height: hauteur
     hour: heure

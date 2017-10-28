@@ -38,3 +38,7 @@
           %a{href: '#', name: 'people-affairs-documents-receipts'}
             .icon-cloud-download
             = I18n.t('affair.views.receipts')
+
+    - if gon.archived_affairs_count > 0
+      %a.btn.btn-danger{href: "/admin#affairs"}
+        = I18n.t('affair.views.x_affairs_archived', count: gon.archived_affairs_count)

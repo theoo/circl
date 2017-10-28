@@ -22,8 +22,9 @@ class AffairsDatatable
   include ApplicationHelper
   include Haml::Helpers
 
-  def initialize(view)
+  def initialize(view, subset = nil)
     @view = view
+    @subset = subset
 
     init_haml_helpers
   end
@@ -35,6 +36,10 @@ class AffairsDatatable
       iTotalDisplayRecords: affairs.total_entries,
       aaData: data
     }
+  end
+
+  def affairs_arel
+    fetch_affairs.page(1).per_page(100000)
   end
 
   private
@@ -78,6 +83,7 @@ class AffairsDatatable
         6 => affair.translated_statuses,
         7 => affair.created_at,
         8 => affair.sold_at.try(:to_date),
+        9 => nil,
         'id' => affair.id,
         'actions' => [ I18n.t('affair.views.actions.edit_affair') ],
         'classes' => classes.join(" "),
@@ -92,7 +98,8 @@ class AffairsDatatable
 
   # TODO: improve search like "Firstname Lastname", actually returns zero results.
   def fetch_affairs
-    affairs = Affair.select('affairs.*,
+    @subset ||= Affair
+    _affairs = @subset.select('affairs.*,
                             COUNT(invoices.id) as invoices_count,
                             COUNT(receipts.id) as receipts_count,
                             COALESCE(SUM(invoices.value_in_cents)/100.0, 0.0) as invoices_sum,
@@ -101,19 +108,19 @@ class AffairsDatatable
                     .joins('LEFT JOIN receipts ON receipts.invoice_id = invoices.id')
                     .joins(:owner)
                     .group('affairs.id, people.last_name')
-    affairs = affairs.order("#{sort_column} #{sort_direction}")
+    _affairs = _affairs.order("#{sort_column} #{sort_direction}")
     if params[:sSearch].present?
       param = params[:sSearch].to_s.gsub('\\'){ '\\\\' } # We use the block form otherwise we need 8 backslashes
       if param.is_i?
-        affairs = affairs.where("affairs.id = ?", param)
+        _affairs = _affairs.where("affairs.id = ?", param)
       else
-        affairs = affairs.where("affairs.title ~* ?
+        _affairs = _affairs.where("affairs.title ~* ?
                                  OR people.first_name ~* ?
                                  OR people.last_name ~* ?", *([param] * 3))
       end
     end
-    affairs = affairs.page(page).per_page(per_page)
-    affairs
+    _affairs = _affairs.page(page).per_page(per_page)
+    _affairs
   end
 
   def page
@@ -133,7 +140,8 @@ class AffairsDatatable
                 :receipts_sum,
                 :status,
                 :created_at,
-                :sold_at ]
+                :sold_at,
+                :created_at ]
     columns[params[:iSortCol_0].to_i]
   end
 

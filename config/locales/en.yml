@@ -54,11 +54,16 @@ en:
       will_match_all_selected_statuses: will match all selected statuses
     views:
       actions:
+        archive: Archive
+        unarchive: Unarchive
+        billable: Billable
+        unbillable: Unbillable
         edit_affair: edit affair
         show_owner: show owner's page
       affair_number: Affair n°%{number}
       alias_name: alias
       arts: ART
+      toggle_archive: Archive/Unarchive
       available_statuses: available statuses
       bid_value: The bid value is
       buyer: buyer
@@ -67,6 +72,10 @@ en:
       conditions: conditions
       create_variant: create variant
       custom_value_with_taxes: The fixed value is all taxes included
+      date_fields:
+        created_at: Creation date
+        updated_at: Last update date
+        sold_at: Selling date
       description: description
       document_export: Documents generation
       estimate: estimate
@@ -97,6 +106,7 @@ en:
       stakeholders: stakeholders
       status: status
       statuses:
+        archived: Archived
         cancelled: Cancelled
         offered: Offered
         open: Open
@@ -131,6 +141,9 @@ en:
       estimate_howto: Estimate howto
       unbillable_howto: Unbillable howto
       sold_date: Sold date
+      x_affairs_archived:
+        one: "%{count} affair archived"
+        other: "%{count} affairs archived"
   affairs_condition:
     views:
       affairs: affairs
@@ -278,6 +291,7 @@ en:
     from: from
     global: Global
     good: good
+    group_actions: group actions
     group_edit: group edit
     height: height
     hour: hour

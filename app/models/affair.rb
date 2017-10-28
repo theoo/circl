@@ -172,16 +172,23 @@ class Affair < ActiveRecord::Base
   money :value
   money :vat
 
+  # TODO replace with with_status scope everywhere it's called
   scope :open, -> {
     mask = Affair.statuses_value_for(:to_be_billed)
     where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
   }
 
+  scope :with_status, -> (s) {
+    mask = Affair.statuses_value_for(s.to_sym)
+    where("(affairs.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+  }
+
   scope :alive, -> { where(archive: false) }
-  scope :archived, -> { where(archive: true) }
+  scope :real_archived, -> { where(archive: true) }
 
   scope :estimates,  -> { where estimate: true }
   scope :effectives, -> { where estimate: false}
+
 
   # Used to calculate value from value with taxes
   attr_accessor :custom_value_with_taxes
@@ -251,6 +258,23 @@ class Affair < ActiveRecord::Base
        nil,             # 14
        :offered         # 15 user defined
       ]
+    end
+
+    # TODO this should be in a helper
+    def translated_statuses
+      _available_statuses = available_statuses
+      _available_statuses.delete(nil)
+      _available_statuses.each_with_object({}) do |s,h|
+        h[s] = I18n.t("affair.views.statuses." + s.to_s)
+      end
+    end
+
+    def translated_date_fields
+      {
+        created_at: I18n.t("affair.views.date_fields.created_at"),
+        updated_at: I18n.t("affair.views.date_fields.updated_at"),
+        sold_at: I18n.t("affair.views.date_fields.sold_at")
+      }
     end
 
   end

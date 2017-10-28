@@ -27,7 +27,7 @@
           %li
             %a{href: '#affairs_tab'}
               = I18n.t('person.views.affairs')
-              .badge= @person.affairs.empty? ? nil : @person.affairs.count
+              .badge= @person.affairs.empty? ? nil : @person.affairs.alive.count
 
         - if can? :read, Salaries::Salary and @person.id
           %li
