@@ -72,7 +72,7 @@
                       %td
                         = info[:errors][:message]
                       %td{colspan: 5, title: info[:errors][:decoded_line].inspect}
-                        = info[:errors][:line]
+                        = info[:errors][:decoded_line][:bvr_ref]
                       %td= I18n.t "receipt.import." + info[:status]
                       %td
                         = hidden_field_tag "errors[][line_number]", line_number

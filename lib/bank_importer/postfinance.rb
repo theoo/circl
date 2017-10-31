@@ -438,7 +438,7 @@ module BankImporter
             rescue ParsingError => e
               # on custom ParsingError error
               infos[line_number][:errors] = { :message => e.message,
-                                              :line => h[:bvr_ref],
+                                              :line => entry.to_s,
                                               :decoded_line => h }
               infos[line_number][:status] = 'error' unless infos[line_number][:status]
               next
