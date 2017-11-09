@@ -170,6 +170,10 @@ class Subscription < ActiveRecord::Base
     anything_from_values_for(person).invoice_template
   end
 
+  def value_name_for(person)
+    anything_from_values_for(person).private_tag.try :name
+  end
+
   # money
   def value_for(person)
     anything_from_values_for(person).value
