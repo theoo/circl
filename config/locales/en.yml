@@ -1151,6 +1151,8 @@ en:
       interval_title: interval title
       invoices: invoices
       invoices_value: invoices value
+      import_paid: Only import contact having paid the original subscription
+      renewal_options: Renewal options
       members: members
       merge:
         destination_subscription_id_missing: destination subscription id missing

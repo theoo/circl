@@ -501,7 +501,7 @@ class Invoice < ActiveRecord::Base
   end
 
   def prevent_title_change
-    if subscriptions.count > 0 and subscriptions.first.title != title
+    if subscriptions.count > 0 and subscriptions.first.title != title and !new_record?
       errors.add(:title, I18n.t('affair.errors.cant_update_title_if_it_has_subscriptions'))
       false
     end

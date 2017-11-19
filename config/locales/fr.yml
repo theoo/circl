@@ -1149,6 +1149,8 @@ fr:
       interval_title: dates de l'intervalle de cette inscription
       invoices: factures
       invoices_value: total des factures
+      import_paid: N'importer que les contacts ayant payé l'inscription originale
+      renewal_options: Options de renouvellement
       members: membres
       merge:
         destination_subscription_id_missing: ID de l'inscription de destination manquant

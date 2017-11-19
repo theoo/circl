@@ -211,6 +211,7 @@ class Admin::SubscriptionsController < ApplicationController
         end
       end
 
+
       if ! params[:parent_id].blank?
         case params[:status]
         when 'reminder'
@@ -221,7 +222,11 @@ class Admin::SubscriptionsController < ApplicationController
           ary_ary.each{ |a| people_ids &= a }
         when 'renewal'
           people_ids = Subscription.find(params[:parent_id]).self_and_descendants.map do |d|
-            d.get_people_from_affairs_status(:paid).map(&:id)
+            if params[:import_paid]
+              d.get_people_from_affairs_status(:paid).map(&:id)
+            else
+              d.people.map(&:id)
+            end
           end
           people_ids.flatten!
         end

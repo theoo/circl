@@ -140,7 +140,6 @@ class New extends ValueItemsController
                 new_to = new Date(new_from.getTime() + (to - from))
 
               @template =
-                # parent_title: parent.title # parent title is hidden
                 parent_id:    parent.id # parent will be removed after renewal
                 title:        I18n.t("subscription.views.renewal") +  ": " + parent.title
                 values:       parent.values

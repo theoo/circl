@@ -19,7 +19,7 @@ class App.Subscription extends Spine.Model
   @configure 'Subscription', 'id', 'parent_id', 'parent_title', 'invoice_template_id', 'title', 'description',
     'invoices_count', 'invoices_value','receipts_count', 'receipts_value', 'overpaid_value'
     'interval_starts_on', 'interval_ends_on', 'values', 'value_currency',
-    'created_at', 'status'
+    'created_at', 'status', 'import_paid'
 
   @extend Spine.Model.Ajax
   @extend Spine.Extensions.RemoteCount
