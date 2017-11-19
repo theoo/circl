@@ -95,9 +95,8 @@ class Index extends App.ExtendedController
         @render_success()
 
       settings =
-        url: PersonAffairSubscription.url(),
-        type: 'DELETE',
-        data: JSON.stringify(subscription_id: subscription.id)
+        url: PersonAffairSubscription.url() + "/" + subscription.id,
+        type: 'DELETE'
 
       PersonAffairSubscription.ajax().ajax(settings).error(ajax_error).success(ajax_success)
 

@@ -66,7 +66,7 @@ class People::Affairs::SubscriptionsController < ApplicationController
 
   def destroy
     authorize! :destroy, @affair => self.class.model
-    @affair.subscription_ids -= [params[:subscription_id].to_i]
+    @affair.subscription_ids -= [params[:id].to_i]
     respond_to do |format|
       format.json { render json: {} }
     end
