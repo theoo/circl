@@ -51,68 +51,80 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
     end
 
     transaction do
-      options[:people_ids].each do |id|
+      options[:people_ids].uniq.sort.each do |id|
         p = Person.find(id)
 
-        # Do not add existing people which already is in this subscription
-        if p.subscriptions.include?(subscription)
-          existing_people_ids << p.id
-          next
-        end
-
-        # Set default owner/buyer/receiver
-        owner    = p
-        buyer    = p
-        receiver = p
-
-        # Depending on the status of this subscription, copy
-        # former affair's owner/buyer/receiver
+        # Copy existing subscription with its owner/buyer/receiver mapping
         if ! options[:status].blank? and parent_and_reminders # 'renewal' or 'reminder'
-          ref_affair = p.affairs
-                        .joins(:subscriptions)
-                        .where('subscription_id in (?)', parent_and_reminders)
-                        .last
-          unless ref_affair
-            ref_affair = p.affairs
+
+          original_affairs = p.affairs
+            .joins(:subscriptions)
+            .where('subscription_id in (?)', parent_and_reminders)
+
+          if original_affairs.count > 0
+            original_affairs.each do |a|
+
+              # p == a.owner_id
+              create_subscription(subscription, p, a.buyer, a.receiver)
+
+            end
+          else
+            a = p.affairs
               .joins(:subscriptions)
               .where('subscription_id in (?)', subscription.root.id)
               .last
+
+            if a
+
+              create_subscription(subscription, p, a.buyer, a.receiver)
+
+            else
+
+              raise ArgumentError, "reference affair not found for parent subscription\
+               #{options[:parent_subscription_id]} and person #{p.id}."
+
+            end
           end
 
-          if ref_affair
-            # Override owner/buyer/receiver
-            owner    = ref_affair.owner
-            buyer    = ref_affair.buyer
-            receiver = ref_affair.receiver
-          else
-            raise ArgumentError, "reference affair not found for parent subscription\
-             #{options[:parent_subscription_id]} and person #{p.id}."
-          end
+
+        else
+
+          create_subscription(subscription, p,p,p)
+
         end
-
-        a = p.affairs.create(title: subscription.title,
-                              owner: owner,
-                              buyer: buyer,
-                              receiver: receiver,
-                              subscriptions: [subscription])
-
-        subscription_value = subscription.value_for(a.person_for_subscription_value)
-        a.value = subscription_value
-        a.save!
-
-        # Append it an invoice
-        i = a.invoices.create!(title: subscription.title,
-                           value: subscription_value,
-                           invoice_template: subscription.invoice_template_for(a.person_for_subscription_value),
-                           printed_address: buyer.address_for_bvr )
 
         new_people_ids << p.id
       end
     end
 
+    subscription.update_index!
+
     PersonMailer.send_members_added_to_subscription(options[:person],
-                  subscription.id,
-                  new_people_ids,
-                  existing_people_ids).deliver
+      subscription.id,
+      new_people_ids,
+      existing_people_ids).deliver
   end
+
+
+  private
+
+    def create_subscription(subscription, owner, buyer, receiver)
+      a = owner.affairs.create(title: subscription.title,
+        owner: owner,
+        buyer: buyer,
+        receiver: receiver,
+        subscriptions: [subscription])
+
+      subscription_value = subscription.value_for(a.person_for_subscription_value)
+      a.value = subscription_value
+      a.save!
+
+      # Append it an invoice
+      i = a.invoices.create!(title: subscription.title,
+        value: subscription_value,
+        invoice_template: subscription.invoice_template_for(a.person_for_subscription_value),
+        printed_address: buyer.address_for_bvr )
+
+    end
+
 end

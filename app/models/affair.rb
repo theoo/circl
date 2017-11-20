@@ -725,10 +725,8 @@ class Affair < ActiveRecord::Base
     unless self.changes.empty?
       # update current relations' indices
       owner.update_index
-      if buyer != owner
-        buyer.update_index
-        receiver.update_index if buyer != receiver
-      end
+      receiver.update_index if buyer != receiver
+      buyer.update_index if buyer != owner
 
       # and former relations' indices
       if self.changes.keys.index('buyer_id')

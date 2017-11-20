@@ -56,14 +56,23 @@ class PersonAffairsDatatable
           classes.push("warning") if affair.estimate
       end
 
-      if affair.owner_id != @person.id
-        description = capture_haml do
-          haml_tag :b, I18n.t("affair.views.owner")  + ": " + affair.owner.try(:name)
+      description = capture_haml do
+        haml_concat affair.title
+
+        if affair.owner_id != @person.id
           haml_tag :br
-          haml_concat affair.title
+          haml_tag :b, I18n.t("affair.views.owner")  + ": " + affair.owner.try(:name)
         end
-      else
-        description = affair.title
+
+        if affair.receiver_id != @person.id
+          haml_tag :br
+          haml_tag :b, I18n.t("affair.views.receiver")  + ": " + affair.receiver.try(:name)
+        end
+
+        if affair.buyer_id != @person.id
+          haml_tag :br
+          haml_tag :b, I18n.t("affair.views.buyer")  + ": " + affair.buyer.try(:name)
+        end
       end
 
       value = affair_value_summary(affair)

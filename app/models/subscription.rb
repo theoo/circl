@@ -310,6 +310,19 @@ class Subscription < ActiveRecord::Base
     end
   end
 
+  #
+  # Update ElasticSearch index for all related people
+  #   This includes owners, receivers and buyers
+  #
+  # @return [Array<Person>] list of updated people
+  #
+  def update_index!
+    ids = affairs.pluck(:owner_id, :receiver_id, :buyer_id).flatten.uniq
+    Person.find(ids).each do |p|
+      p.update_elastic_search_index
+    end
+  end
+
   private
 
   # recusive!
