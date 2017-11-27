@@ -44,8 +44,7 @@ class BackgroundTasks::PrepareSubscriptionPdfsAndEmail < BackgroundTask
     subscription = Subscription.find(options[:subscription_id])
     options[:people_ids].each do |id|
 
-      invoice = subscription.invoices.joins(:affair).where("affairs.owner_id" => id).first
-      if invoice
+      subscription.invoices.joins(:affair).where("affairs.buyer_id" => id).each do |invoice|
         invoices_ids << invoice.id
 
         if invoice.pdf_up_to_date?
@@ -54,17 +53,14 @@ class BackgroundTasks::PrepareSubscriptionPdfsAndEmail < BackgroundTask
           logger.info "PDF for invoice #{invoice.id} is not up to date, generating..."
           BackgroundTasks::GenerateInvoicePdf.process!(invoice_id: invoice.id)
         end
-
-      else
-        logger.info "Contact #{id} doesn't have a valid invoice related to inscription #{options[:subscription_id]}"
       end
 
     end
 
     BackgroundTasks::ConcatAndEmailSubscriptionPdf.process!(subscription_id: options[:subscription_id],
-                                                            invoices_ids: invoices_ids,
-                                                            person: options[:person],
-                                                            query: options[:query],
-                                                            current_locale: options[:current_locale])
+      invoices_ids: invoices_ids,
+      person: options[:person],
+      query: options[:query],
+      current_locale: options[:current_locale])
   end
 end
