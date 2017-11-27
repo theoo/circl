@@ -36,6 +36,9 @@ class BackgroundTasks::MergeSubscriptions < BackgroundTask
     	a.subscriptions << destination_subscription
       # Change affair's title so it's easier to read
       a.update_attributes(title: destination_subscription.title)
+      a.invoices.each do |invoice|
+        invoice.update_attributes(title: destination_subscription.title)
+      end
     end
 
     # detach from all affairs
