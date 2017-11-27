@@ -225,7 +225,7 @@ class Admin::SubscriptionsController < ApplicationController
             if params[:import_paid]
               d.get_people_from_affairs_status(:paid).map(&:id)
             else
-              d.people.map(&:id)
+              d.members.map(&:id)
             end
           end
           people_ids.flatten!

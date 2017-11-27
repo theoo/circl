@@ -81,6 +81,12 @@ class Subscription < ActiveRecord::Base
             through: :invoices,
             source: :owner
 
+  has_many  :members,
+            -> { uniq },
+            through: :affairs,
+            foreign_key: :owner_id,
+            source: :owner
+
   has_many  :values,
             -> { order('position ASC') },
             class_name: 'SubscriptionValue'
@@ -227,7 +233,7 @@ class Subscription < ActiveRecord::Base
   # Returns an array of people which has invoices matching the given statuses.
   def get_people_from_invoices_status(statuses)
     mask = Invoice.statuses_value_for(statuses)
-    people.joins(:invoices).where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
+    people.where("(invoices.status::bit(16) & ?::bit(16))::int = ?", mask, mask)
   end
 
   # Returns an array of people which has affairs matching the given statuses.
