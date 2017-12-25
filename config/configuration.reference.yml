@@ -1,6 +1,6 @@
 # General
-host: www.hostname.com
-directory_url: http://www.hostname.com/path
+host: DIR_HOSTNAME.circl.ch
+directory_url: https://DIR_HOSTNAME.circl.ch
 directory_admin_email: alert@circl.ch
 
 # Mailers
@@ -32,7 +32,7 @@ mailers:
 elasticsearch:
   enable_indexing: true # it won't make sense to disable it here
   url: http://127.0.0.1:9200
-  name: people
+  name: DIR_HOSTNAME
   max_per_page: 5000
   index:
     number_of_shards: 5
@@ -45,15 +45,15 @@ elasticsearch:
 
 # LDAP
 ldap:
-  enabled: true
-  path: '/var/lib/ldap/name'
+  enabled: false
+  path: '/var/lib/ldap/DIR_HOSTNAME'
   admin:
     host: localhost
     port: 389
-    base: 'dc=name,dc=circl,dc=ch'
+    base: 'dc=DIR_HOSTNAME,dc=circl,dc=ch'
     auth:
       method: :simple
-      username: 'cn=admin,dc=name,dc=circl,dc=ch'
+      username: 'cn=admin,dc=DIR_HOSTNAME,dc=circl,dc=ch'
       password: 'password'
   config:
     host: localhost

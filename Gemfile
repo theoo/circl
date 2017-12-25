@@ -5,7 +5,7 @@ gem 'tilt', '1.4.1'
 
 # Servers
 gem 'foreman'
-gem 'passenger'
+gem 'puma'
 gem 'activerecord-session_store', '0.1.0'
 # TODO: Move from protected attributes to Strong Parameters
 gem 'protected_attributes', '1.0.8'

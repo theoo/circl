@@ -62,5 +62,25 @@ else
   raise ArgumentError, "File config/configuration.reference.yml is missing."
 end
 
+# Override config if env key is present
+if ENV["DIR_HOSTNAME"]
+  hn = ENV["DIR_HOSTNAME"]
+  @config['elasticsearch']['name'] = hn
+  @config['elasticsearch']['host'] = "#{hn}.circl.ch"
+  @config['elasticsearch']['directory_url'] = "https://#{hn}.circl.ch"
+end
+
+if ENV["MAILER"]
+  m = ENV["MAILER"]
+  @config['mailers']['production']['default']['from']                       = m['from']
+  @config['mailers']['production']['smtp_settings']['address']              = m['address']
+  @config['mailers']['production']['smtp_settings']['port']                 = m['port']
+  @config['mailers']['production']['smtp_settings']['domain']               = m['domain']
+  @config['mailers']['production']['smtp_settings']['user_name']            = m['user_name']
+  @config['mailers']['production']['smtp_settings']['password']             = m['password']
+  @config['mailers']['production']['smtp_settings']['authentication']       = m['authentication']
+  @config['mailers']['production']['smtp_settings']['enable_starttls_auto'] = m['enable_starttls_auto']
+end
+
 # Everything went fine, load config
 Rails.configuration.settings = @config
