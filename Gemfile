@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '4.1.4'
+gem 'rails', '~> 4.1.16'
 gem 'tilt', '1.4.1'
 
 # Servers
@@ -30,7 +30,7 @@ gem 'pdfkit', '0.8.2'
 gem 'imgkit', '1.3.6'
 gem 'paperclip', '4.3.1'
 gem 'serenity', '0.2.4', :git => 'git://github.com/theoo/serenity.git'
-gem 'rubyzip', '1.1.0'
+gem 'rubyzip', '~> 1.2.1'
 gem 'recursive-open-struct', '0.4.5'
 
 # password validation
