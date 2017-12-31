@@ -16,6 +16,7 @@ WORKDIR $APP_HOME
 
 RUN bundle install
 RUN cp $APP_HOME/config/configuration.reference.yml $APP_HOME/config/configuration.yml
+RUN cp $APP_HOME/config/secrets.example $APP_HOME/config/secrets.yml
 
 EXPOSE 80
 
