@@ -70,17 +70,14 @@ if ENV["DIR_HOSTNAME"]
   @config['elasticsearch']['directory_url'] = "https://#{hn}.circl.ch"
 end
 
-if ENV["MAILER"]
-  m = ENV["MAILER"]
-  @config['mailers']['production']['default']['from']                       = m['from']
-  @config['mailers']['production']['smtp_settings']['address']              = m['address']
-  @config['mailers']['production']['smtp_settings']['port']                 = m['port']
-  @config['mailers']['production']['smtp_settings']['domain']               = m['domain']
-  @config['mailers']['production']['smtp_settings']['user_name']            = m['user_name']
-  @config['mailers']['production']['smtp_settings']['password']             = m['password']
-  @config['mailers']['production']['smtp_settings']['authentication']       = m['authentication']
-  @config['mailers']['production']['smtp_settings']['enable_starttls_auto'] = m['enable_starttls_auto']
-end
+@config['mailers']['production']['default']['from']                       = ENV['MAIL_FROM'] if ENV['MAIL_FROM']
+@config['mailers']['production']['smtp_settings']['address']              = ENV['MAIL_ADDRESS'] if ENV['MAIL_ADDRESS']
+@config['mailers']['production']['smtp_settings']['port']                 = ENV['MAIL_PORT'] if ENV['MAIL_PORT']
+@config['mailers']['production']['smtp_settings']['domain']               = ENV['MAIL_DOMAIN'] if ENV['MAIL_DOMAIN']
+@config['mailers']['production']['smtp_settings']['user_name']            = ENV['MAIL_USER_NAME'] if ENV['MAIL_USER_NAME']
+@config['mailers']['production']['smtp_settings']['password']             = ENV['MAIL_PASSWORD'] if ENV['MAIL_PASSWORD']
+@config['mailers']['production']['smtp_settings']['authentication']       = ENV['MAIL_AUTHENTICATION'] if ENV['MAIL_AUTHENTICATION']
+@config['mailers']['production']['smtp_settings']['enable_starttls_auto'] = ENV['MAIL_ENABLE_STARTTLS_AUTO'] if ENV['MAIL_ENABLE_STARTTLS_AUTO']
 
 # Everything went fine, load config
 Rails.configuration.settings = @config
