@@ -80,7 +80,7 @@ end
 @config['mailers']['production']['smtp_settings=']['enable_starttls_auto'] = ENV['MAIL_ENABLE_STARTTLS_AUTO'] if ENV['MAIL_ENABLE_STARTTLS_AUTO']
 
 @config['elasticsearch']['url'] = ENV['ES_URL'] if ENV['ES_URL']
-@config['redis']['environments']['production'] = ENV['REDIS_URL'] if ENV['REDIS_URL']
+# @config['redis']['environments']['production'] = ENV['REDIS_URL'] if ENV['REDIS_URL']
 
 # Everything went fine, load config
 Rails.configuration.settings = @config

@@ -3,7 +3,7 @@ LABEL directory.circl.vendor=CIRCL
 LABEL directory.circl.name=circl_container
 
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev libxml2-dev libxslt1-dev libqt4-webkit \
-  libqt4-dev xvfb nodejs wkhtmltopdf libreoffice pdftk imagemagick logrotate zsh
+  libqt4-dev xvfb nodejs wkhtmltopdf libreoffice pdftk imagemagick logrotate zsh vim
 
 # logrotate
 RUN echo "*/5 * * * * /usr/sbin/logrotate /etc/logrotate.conf" >> /etc/crontab && \
