@@ -19,4 +19,5 @@ RUN cp $APP_HOME/config/configuration.reference.yml $APP_HOME/config/configurati
 
 EXPOSE 80
 
+ENV RACK_ENV production
 ENTRYPOINT foreman start

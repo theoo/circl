@@ -82,7 +82,7 @@ gem 'rake-progressbar', '0.0.5'
 gem 'rake', "< 11.0"
 
 # Monitoring
-gem 'rails_exception_handler', "~> 2"
+# gem 'rails_exception_handler', "~> 2"
 
 ### custom gem
 # gem 'plugin', :path => 'path/to/circl/plugin'
