@@ -95,15 +95,16 @@ class ApplicationController < ActionController::Base
   end
 
   def default_locale
-    current_person.try(:main_communication_language).try(:code).try(:downcase) ||
-    extract_locale_from_accept_language_header ||
-    ApplicationSetting.value(:default_locale)
+    # current_person.try(:main_communication_language).try(:code).try(:downcase) ||
+    # extract_locale_from_accept_language_header ||
+    # ApplicationSetting.value(:default_locale)
+    I18n.default_locale
   end
 
   def set_locale
-    locale = params[:locale] if params[:locale]
-    locale ||= default_locale
-    I18n.locale = locale
+    # locale = params[:locale] if params[:locale]
+    # locale ||= default_locale
+    I18n.locale = I18n.default_locale
   end
 
   def route_browser
