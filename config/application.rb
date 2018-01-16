@@ -26,8 +26,8 @@ module CIRCL
 
     # The default locale is :en and all translations from config/locales/*.yml are auto loaded.
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.yml').to_s]
-    config.i18n.available_locales = [:en, :fr]
-    config.i18n.default_locale = :en
+    config.i18n.available_locales = [:fr]
+    config.i18n.default_locale = :fr
     config.i18n.fallbacks = (Rails.env != 'development')
 
     # JavaScript files you want as :defaults (application.js is always included).

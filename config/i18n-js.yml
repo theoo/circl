@@ -21,6 +21,7 @@
 #       only: "*"
 #
 
-translations:
-  - file: "public/javascripts/%{locale}.js"
-    only: '*'
+sort_translation_keys: true
+# translations:
+#   - file: "public/javascripts/%{locale}.js"
+#     only: '*'

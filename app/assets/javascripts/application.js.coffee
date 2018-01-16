@@ -39,6 +39,11 @@
 #= require ./flot/jquery.flot
 #= require ./flot/jquery.flot.categories
 #= require ./flot/jquery.flot.tooltip
+#
+#= require i18n
+#= require i18n/translations
+#= require i18n/datatables/fr
+#= require i18n/datatables/en
 
 $ = jQuery
 
