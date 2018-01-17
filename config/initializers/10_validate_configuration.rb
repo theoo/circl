@@ -65,7 +65,7 @@ end
 # Override config if env key is present
 if ENV["DIR_HOSTNAME"]
   hn = ENV["DIR_HOSTNAME"]
-  @config['name'] = hn
+  @config['elasticsearch']['name'] = hn
   @config['host'] = "#{hn}.circl.ch"
   @config['directory_url'] = "https://#{hn}.circl.ch"
 end
@@ -80,7 +80,6 @@ end
 @config['mailers']['production']['smtp_settings=']['enable_starttls_auto'] = ENV['MAIL_ENABLE_STARTTLS_AUTO'] if ENV['MAIL_ENABLE_STARTTLS_AUTO']
 
 @config['elasticsearch']['url'] = ENV['ES_URL'] if ENV['ES_URL']
-# @config['redis']['environments']['production'] = ENV['REDIS_URL'] if ENV['REDIS_URL']
 
 # Everything went fine, load config
 Rails.configuration.settings = @config
