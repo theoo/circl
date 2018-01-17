@@ -65,9 +65,9 @@ end
 # Override config if env key is present
 if ENV["DIR_HOSTNAME"]
   hn = ENV["DIR_HOSTNAME"]
-  @config['elasticsearch']['name'] = hn
-  @config['elasticsearch']['host'] = "#{hn}.circl.ch"
-  @config['elasticsearch']['directory_url'] = "https://#{hn}.circl.ch"
+  @config['name'] = hn
+  @config['host'] = "#{hn}.circl.ch"
+  @config['directory_url'] = "https://#{hn}.circl.ch"
 end
 
 @config['mailers']['production']['default']['from']                        = ENV['MAIL_FROM'] if ENV['MAIL_FROM']
