@@ -3,7 +3,8 @@
   %head
     %meta{charset: 'utf-8'}
     %meta{'http-equiv' => 'content-type', content: 'text/html; charset=utf-8'}
-    = stylesheet_link_tag 'pdf_common', 'custom_fonts', media: 'all'
+    %link{href: "https://assets.circl.ch/css/pdf_common.css", media: "all", rel: "stylesheet"}
+    %link{href: "https://assets.circl.ch/css/custom_fonts.css", media: "all", rel: "stylesheet"}
 
   %body
     = yield(:layout)
