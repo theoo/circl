@@ -8,16 +8,18 @@ namespace :attachments do
     Rails.configuration.settings['elasticsearch']['enable_index'] = false
 
     invoices = Invoice.where("pdf_updated_at < ?", delay)
-    bar = RakeProgressbar.new(invoices.count)
-    invoices.in_batches(of: 100) do |i|
-      bar.inc
-      begin
-        i.pdf.clear; i.save
-      rescue
-        puts "Failed to save invoice #{i.id}"
-      end
-    end
-    bar.finished
+    puts "Clear #{invoices.count} invoices without callbacks."
+    rm_paths = invoices.map{|i| "rm #{i.pdf.path};" }.join
+    system rm_paths
+    puts %x( find #{[Rails.root, "public/system"].join('/')} -type d -empty -delete )
+
+    # without callbacks
+    invoices.update_all(
+      pdf_file_name: nil,
+      pdf_content_type: nil,
+      pdf_file_size: nil,
+      pdf_updated_at: nil
+      )
 
     subscriptions = Subscription.where("pdf_updated_at < ?", delay)
     bar = RakeProgressbar.new(subscriptions.count)
