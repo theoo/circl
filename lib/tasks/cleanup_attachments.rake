@@ -5,9 +5,11 @@ namespace :attachments do
   task :cleanup => :environment do
     delay = 2.years.ago
 
+    Rails.configuration.settings['elasticsearch']['enable_index'] = false
+
     invoices = Invoice.where("pdf_updated_at < ?", delay)
     bar = RakeProgressbar.new(invoices.count)
-    invoices.each do |i|
+    invoices.in_batches(of: 100) do |i|
       bar.inc
       begin
         i.pdf.clear; i.save
@@ -29,7 +31,9 @@ namespace :attachments do
     bar = RakeProgressbar.new(salaries.count)
     salaries.each { |i| i.pdf.clear; i.save; bar.inc }; bar.finished
 
-    puts "done"
+    puts "done. Reindexing required."
+
+    Rails.configuration.settings['elasticsearch']['enable_index'] = true
 
   end
 end
