@@ -363,7 +363,8 @@ class Affair < ActiveRecord::Base
 
   def subscriptions_value
     # Sum only leaves of a subscription tree (the last child)
-    leaves = find_children(subscriptions)
+    # leaves = find_children(subscriptions) # Why do that ?
+    leaves = subscriptions
     leaves.map{|l| l.value_for(person_for_subscription_value).try(:to_money, value_currency)}.try(:sum).try(:to_money)
   end
 

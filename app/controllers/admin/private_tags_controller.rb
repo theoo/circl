@@ -27,7 +27,7 @@ class Admin::PrivateTagsController < ApplicationController
   def index
     respond_to do |format|
       format.json { render json: @private_tags }
-      format.js { render json: @private_tag, callback: params[:callback] }
+      format.js { render json: @private_tags, callback: params[:callback] }
     end
   end
 
