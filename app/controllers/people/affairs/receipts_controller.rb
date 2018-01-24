@@ -22,7 +22,7 @@ class People::Affairs::ReceiptsController < ApplicationController
 
   load_resource :person
   load_resource :affair
-  load_and_authorize_resource through: :affair
+  # load_and_authorize_resource through: :affair
 
   monitor_changes :@receipt
 
@@ -86,6 +86,7 @@ class People::Affairs::ReceiptsController < ApplicationController
   end
 
   def create
+    @receipt = Receipt.new(params[:receipt])
     @receipt.value = params[:value]
     respond_to do |format|
       if @receipt.save
@@ -97,12 +98,14 @@ class People::Affairs::ReceiptsController < ApplicationController
   end
 
   def edit
+    @receipt = Receipt.find(params[:id])
     respond_to do |format|
       format.json { render json: @receipt }
     end
   end
 
   def update
+    @receipt = Receipt.find(params[:id])
     @receipt.value = params[:value]
     respond_to do |format|
       if @receipt.update_attributes(params[:receipt])
@@ -114,6 +117,7 @@ class People::Affairs::ReceiptsController < ApplicationController
   end
 
   def destroy
+    @receipt = Receipt.find(params[:id])
     respond_to do |format|
       if @receipt.destroy
         format.json { render json: {} }
