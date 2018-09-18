@@ -10,7 +10,7 @@ namespace :db do
       %w(first_receipt_date first_receipt_subscription first_receipt_value),
       %w(last_receipt_date last_receipt_subscription last_receipt_value),
       ].flatten]
-    Person.all.limit(10).each do |p|
+    Person.all.each do |p|
 
       line = p.attributes.values
       [2017, 2018].each do |y|
@@ -41,7 +41,7 @@ namespace :db do
 
     # Tiers payant
     affairs_csv = [%w(affair_id subscription_id subscription_title owner_id receiver_id buyer_id created_at)]
-    Affair.joins(:subscriptions).all.limit(10).each do |a|
+    Affair.joins(:subscriptions).all.each do |a|
       line = []
       line << a.id
       line << a.subscriptions.first.id
@@ -56,7 +56,7 @@ namespace :db do
     CSV.open("affairs.csv", "wb") { |csv| affairs_csv.each { |i| csv << i } }
 
     invoices_csv = [[Invoice.first.attributes.keys, %w{owner_id receiver_id buyer_id subscription_id}].flatten]
-    Invoice.all.limit(10).each do |i|
+    Invoice.all.each do |i|
       line = i.attributes.values
       line << i.owner.try(:id)
       line << i.buyer.try(:id)
@@ -66,7 +66,7 @@ namespace :db do
     CSV.open("invoices.csv", "wb") { |csv| invoices_csv.each { |i| csv << i } }
 
     receipts_csv = [[Receipt.first.attributes.keys, %w{owner_id receiver_id buyer_id subscription_id}].flatten]
-    Receipt.all.limit(10).each do |i|
+    Receipt.all.each do |i|
       line = i.attributes.values
       line << i.owner.try(:id)
       line << i.buyer.try(:id)
