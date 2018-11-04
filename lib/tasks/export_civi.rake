@@ -44,49 +44,49 @@ namespace :db do
     CSV.open("people.csv", "wb") { |csv| people_csv.each { |i| csv << i } }
 
     # Tiers payant
-    # affairs_csv = [%w(affair_id subscription_id subscription_title owner_id receiver_id buyer_id created_at)]
-    # Affair.joins(:subscriptions).all.each do |a|
-    #   line = []
-    #   line << a.id
-    #   line << a.subscriptions.first.id
-    #   line << a.subscriptions.first.title
-    #   line << a.owner_id
-    #   line << a.receiver_id
-    #   line << a.buyer_id
-    #   line << a.created_at.iso8601
-    #   affairs_csv << line
-    # end
+    affairs_csv = [%w(affair_id subscription_id subscription_title owner_id receiver_id buyer_id created_at)]
+    Affair.joins(:subscriptions).all.each do |a|
+      line = []
+      line << a.id
+      line << a.subscriptions.first.id
+      line << a.subscriptions.first.title
+      line << a.owner_id
+      line << a.receiver_id
+      line << a.buyer_id
+      line << a.created_at.iso8601
+      affairs_csv << line
+    end
 
-    # CSV.open("affairs.csv", "wb") { |csv| affairs_csv.each { |i| csv << i } }
+    CSV.open("affairs.csv", "wb") { |csv| affairs_csv.each { |i| csv << i } }
 
-    # invoices_csv = [[Invoice.first.attributes.keys, %w{owner_id receiver_id buyer_id subscription_id}].flatten]
-    # Invoice.all.each do |i|
-    #   line = i.attributes.values
-    #   line << i.owner.try(:id)
-    #   line << i.buyer.try(:id)
-    #   line << i.receiver.try(:id)
-    #   line << i.subscriptions.try(:first).try(:id)
-    #   invoices_csv << line
-    # end
-    # CSV.open("invoices.csv", "wb") { |csv| invoices_csv.each { |i| csv << i } }
+    invoices_csv = [[Invoice.first.attributes.keys, %w{owner_id receiver_id buyer_id subscription_id}].flatten]
+    Invoice.all.each do |i|
+      line = i.attributes.values
+      line << i.owner.try(:id)
+      line << i.buyer.try(:id)
+      line << i.receiver.try(:id)
+      line << i.subscriptions.try(:first).try(:id)
+      invoices_csv << line
+    end
+    CSV.open("invoices.csv", "wb") { |csv| invoices_csv.each { |i| csv << i } }
 
-    # receipts_csv = [[Receipt.first.attributes.keys, %w{owner_id receiver_id buyer_id subscription_id}].flatten]
-    # Receipt.all.each do |i|
-    #   line = i.attributes.values
-    #   line << i.owner.try(:id)
-    #   line << i.buyer.try(:id)
-    #   line << i.receiver.try(:id)
-    #   line << i.subscriptions.try(:first).try(:id)
+    receipts_csv = [[Receipt.first.attributes.keys, %w{owner_id receiver_id buyer_id subscription_id}].flatten]
+    Receipt.all.each do |i|
+      line = i.attributes.values
+      line << i.owner.try(:id)
+      line << i.buyer.try(:id)
+      line << i.receiver.try(:id)
+      line << i.subscriptions.try(:first).try(:id)
 
-    #   receipts_csv << line
-    # end
-    # CSV.open("receipts.csv", "wb") { |csv| receipts_csv.each { |i| csv << i } }
+      receipts_csv << line
+    end
+    CSV.open("receipts.csv", "wb") { |csv| receipts_csv.each { |i| csv << i } }
 
-    # subscriptions_csv = [Invoice.first.attributes.keys]
-    # Subscription.all.each do |i|
-    #   subscriptions_csv << i.attributes.values
-    # end
-    # CSV.open("subscriptions.csv", "wb") { |csv| subscriptions_csv.each { |i| csv << i } }
+    subscriptions_csv = [Invoice.first.attributes.keys]
+    Subscription.all.each do |i|
+      subscriptions_csv << i.attributes.values
+    end
+    CSV.open("subscriptions.csv", "wb") { |csv| subscriptions_csv.each { |i| csv << i } }
 
   end
 end
