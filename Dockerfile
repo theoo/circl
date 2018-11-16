@@ -1,4 +1,4 @@
-FROM ruby:2.1.2
+FROM ruby:2.1.10
 LABEL directory.circl.vendor=CIRCL
 LABEL directory.circl.name=circl_container
 
