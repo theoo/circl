@@ -50,7 +50,10 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
       parent_and_reminders = Subscription.find(options[:parent_subscription_id]).self_and_descendants.map(&:id)
     end
 
-    transaction do
+    # transaction is disable due to the limited amount of memory on the production server. This is bad practice
+    # but there is no plan to maintain the software in production longer and the experience prooves that
+    # this method doesn't fail. #dirty_hack
+    # transaction do
       options[:people_ids].uniq.sort.each do |id|
         p = Person.find(id)
 
@@ -95,7 +98,7 @@ class BackgroundTasks::AddPeopleToSubscriptionAndEmail < BackgroundTask
 
         new_people_ids << p.id
       end
-    end
+    # end
 
     subscription.update_index!
 
