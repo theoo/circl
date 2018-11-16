@@ -18,7 +18,8 @@
 
 extend ColorizedOutput
 
-required_binaries = %w{ wkhtmltopdf wkhtmltoimage lowriter convert pdftk }
+required_binaries = %w{ wkhtmltopdf wkhtmltoimage lowriter convert }
+required_binaries += pdftk if Rails.env == 'production'
 
 print "Verifing Externalities: "
 required_binaries.each do |b|
