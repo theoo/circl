@@ -192,6 +192,9 @@ fr:
       update_subscription_invoices_and_email: Mise à jour des indices et factures pour l'inscription %{subscription_id} - %{subscription_title}
     views:
       status: statut
+      statuses:
+        pending: en attente
+        running: en cours
   bank_import_history:
     views:
       account: compte
