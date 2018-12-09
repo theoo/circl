@@ -44,7 +44,7 @@ class BackgroundTasks::PrepareSubscriptionPdfsAndEmail < BackgroundTask
     subscription = Subscription.find(options[:subscription_id])
     options[:people_ids].each do |id|
 
-      subscription.invoices.joins(:affair).where("affairs.buyer_id" => id).each do |invoice|
+      subscription.invoices.joins(:affair).where("affairs.owner_id" => id).each do |invoice|
         invoices_ids << invoice.id
 
         if invoice.pdf_up_to_date?
